@@ -86,7 +86,7 @@ class ApiClientConstraintException extends ApiClientException
                 $errorCode = self::NOT_POSITIVE_LIFETIME;
                 break;
             default:
-                throw new InvalidArgumentException(sprintf('Unknown property path %s', $propertyPath));
+                throw new InvalidArgumentException(\sprintf('Unknown property path %s', $propertyPath));
         }
 
         return new self($message, $errorCode);

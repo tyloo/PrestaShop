@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\Query\GetCurrencyForEditing;
 use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\ExchangeRate;
 use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\Precision;
 
-/**
- * Class CurrencyFormDataProvider
- */
 final class CurrencyFormDataProvider implements FormDataProviderInterface
 {
     /**
@@ -46,19 +44,12 @@ final class CurrencyFormDataProvider implements FormDataProviderInterface
      */
     private $queryBus;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param array $contextShopIds
-     */
     public function __construct(CommandBusInterface $queryBus, array $contextShopIds)
     {
         $this->contextShopIds = $contextShopIds;
         $this->queryBus = $queryBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id)
     {
         /** @var \PrestaShop\PrestaShop\Core\Domain\Currency\QueryResult\EditableCurrency $result */
@@ -78,9 +69,6 @@ final class CurrencyFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         return [

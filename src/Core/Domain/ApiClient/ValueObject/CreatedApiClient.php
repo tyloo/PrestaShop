@@ -40,7 +40,7 @@ class CreatedApiClient
     {
         $this->apiClientId = new ApiClientId($apiClientId);
         if (empty($secret)) {
-            throw new ApiClientConstraintException(sprintf('Invalid api client secret "%s".', var_export($secret, true)), ApiClientConstraintException::INVALID_SECRET);
+            throw new ApiClientConstraintException(\sprintf('Invalid api client secret "%s".', var_export($secret, true)), ApiClientConstraintException::INVALID_SECRET);
         }
         $this->secret = $secret;
     }

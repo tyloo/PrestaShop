@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,24 +45,16 @@ class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $searchCriteriaApplicator;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
+        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
 
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -75,9 +68,6 @@ class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->getQueryBuilder($searchCriteria->getFilters())
@@ -87,10 +77,6 @@ class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get generic query builder.
-     *
-     * @param array $filters
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters): QueryBuilder
     {
@@ -110,40 +96,40 @@ class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $name => $value) {
-            if (!in_array($name, $allowedFilters, true)) {
+            if (! \in_array($name, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('id_employee_session' === $name) {
+            if ($name === 'id_employee_session') {
                 $qb->andWhere('es.id_employee_session = :' . $name);
                 $qb->setParameter($name, $value);
 
                 continue;
             }
 
-            if ('id_employee' === $name) {
+            if ($name === 'id_employee') {
                 $qb->andWhere('e.id_employee = :' . $name);
                 $qb->setParameter($name, $value);
 
                 continue;
             }
 
-            if ('date_upd' === $name) {
+            if ($name === 'date_upd') {
                 if (isset($value['from'])) {
                     $qb->andWhere('es.date_upd >= :date_from');
-                    $qb->setParameter('date_from', sprintf('%s 0:0:0', $value['from']));
+                    $qb->setParameter('date_from', \sprintf('%s 0:0:0', $value['from']));
                 }
 
                 if (isset($value['to'])) {
                     $qb->andWhere('es.date_upd <= :date_to');
-                    $qb->setParameter('date_to', sprintf('%s 23:59:59', $value['to']));
+                    $qb->setParameter('date_to', \sprintf('%s 23:59:59', $value['to']));
                 }
 
                 continue;
             }
 
             $qb->andWhere(
-                sprintf(
+                \sprintf(
                     'e.%s LIKE :%s',
                     $name,
                     $name

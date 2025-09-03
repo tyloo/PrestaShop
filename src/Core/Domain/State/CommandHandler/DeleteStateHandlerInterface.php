@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,8 +34,5 @@ use PrestaShop\PrestaShop\Core\Domain\State\Command\DeleteStateCommand;
  */
 interface DeleteStateHandlerInterface
 {
-    /**
-     * @param DeleteStateCommand $command
-     */
     public function handle(DeleteStateCommand $command): void;
 }

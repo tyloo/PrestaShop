@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class SetPrivateNoteAboutCustomerCommand
     private $privateNote;
 
     /**
-     * @param int $customerId
+     * @param int    $customerId
      * @param string $privateNote
      */
     public function __construct($customerId, $privateNote)
@@ -79,7 +80,7 @@ class SetPrivateNoteAboutCustomerCommand
      */
     private function assertPrivateNoteIsString($privateNote)
     {
-        if (!is_string($privateNote)) {
+        if (! \is_string($privateNote)) {
             throw new CustomerConstraintException('Invalid private note provided. Private note must be a string.', CustomerConstraintException::INVALID_PRIVATE_NOTE);
         }
     }

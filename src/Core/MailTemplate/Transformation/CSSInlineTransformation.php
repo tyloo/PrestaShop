@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,12 +48,9 @@ class CSSInlineTransformation extends AbstractTransformation
         parent::__construct(MailTemplateInterface::HTML_TYPE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function apply($templateContent, array $templateVariables)
     {
-        if (MailTemplateInterface::HTML_TYPE != $this->type) {
+        if ($this->type !== MailTemplateInterface::HTML_TYPE) {
             return $templateContent;
         }
 
@@ -93,7 +91,7 @@ class CSSInlineTransformation extends AbstractTransformation
         $cssContents = '';
         foreach ($cssUrls as $cssUrl) {
             $cssContent = @file_get_contents($cssUrl);
-            if (!empty($cssContent)) {
+            if (! empty($cssContent)) {
                 $cssContents .= $cssContent;
             }
         }

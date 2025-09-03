@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,29 +53,19 @@ final class ZoneFormDataProvider implements FormDataProviderInterface
      */
     private $defaultShopAssociation;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param bool $multistoreEnabled
-     * @param array $defaultShopAssociation
-     */
     public function __construct(
         CommandBusInterface $queryBus,
         bool $multistoreEnabled,
-        array $defaultShopAssociation
+        array $defaultShopAssociation,
     ) {
         $this->queryBus = $queryBus;
         $this->multistoreEnabled = $multistoreEnabled;
         $this->defaultShopAssociation = $defaultShopAssociation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id): array
     {
-        /**
-         * @var EditableZone
-         */
+        /** @var EditableZone $result */
         $result = $this->queryBus->handle(new GetZoneForEditing($id));
 
         $data = [
@@ -90,9 +81,6 @@ final class ZoneFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         $data = [

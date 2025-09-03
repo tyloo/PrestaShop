@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,10 +60,7 @@ class AddCustomerGroupCommand
     private $shopIds;
 
     /**
-     * @param string[] $localizedNames
-     * @param DecimalNumber $reductionPercent
-     * @param bool $displayPriceTaxExcluded
-     * @param bool $showPrice
+     * @param string[]   $localizedNames
      * @param array<int> $shopIds
      */
     public function __construct(
@@ -70,7 +68,7 @@ class AddCustomerGroupCommand
         DecimalNumber $reductionPercent,
         bool $displayPriceTaxExcluded,
         bool $showPrice,
-        array $shopIds
+        array $shopIds,
     ) {
         $this->assertReductionIsValid($reductionPercent);
 
@@ -91,25 +89,16 @@ class AddCustomerGroupCommand
         return $this->localizedNames;
     }
 
-    /**
-     * @return bool
-     */
     public function displayPriceTaxExcluded(): bool
     {
         return $this->displayPriceTaxExcluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getReductionPercent(): DecimalNumber
     {
         return $this->reductionPercent;
     }
 
-    /**
-     * @return bool
-     */
     public function showPrice(): bool
     {
         return $this->showPrice;
@@ -126,10 +115,7 @@ class AddCustomerGroupCommand
     private function assertReductionIsValid(DecimalNumber $reductionPercent): void
     {
         if ($reductionPercent->isLowerThanZero() || $reductionPercent->isGreaterThan(new DecimalNumber('100'))) {
-            throw new GroupConstraintException(
-                'Reduction percent must be between 0 and 100',
-                GroupConstraintException::INVALID_REDUCTION
-            );
+            throw new GroupConstraintException('Reduction percent must be between 0 and 100', GroupConstraintException::INVALID_REDUCTION);
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,11 @@ class DeleteStateCommand
      */
     private $stateId;
 
-    /**
-     * @param int $stateId
-     */
     public function __construct(int $stateId)
     {
         $this->stateId = $stateId !== NoStateId::NO_STATE_ID_VALUE ? new StateId($stateId) : new NoStateId();
     }
 
-    /**
-     * @return StateIdInterface
-     */
     public function getStateId(): StateIdInterface
     {
         return $this->stateId;

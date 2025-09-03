@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,17 +35,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DataColumn extends AbstractColumn
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'data';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);

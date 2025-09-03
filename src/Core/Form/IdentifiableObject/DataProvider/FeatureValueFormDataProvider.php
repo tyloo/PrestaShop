@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,13 +34,10 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\QueryResult\EditableFeatureValue;
 class FeatureValueFormDataProvider implements FormDataProviderInterface
 {
     public function __construct(
-        private readonly CommandBusInterface $queryBus
+        private readonly CommandBusInterface $queryBus,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id): array
     {
         /** @var EditableFeatureValue $featureValueForEditing */
@@ -52,9 +50,6 @@ class FeatureValueFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         return [];

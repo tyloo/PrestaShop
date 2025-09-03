@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,15 +48,12 @@ class CartRuleFormDataHandler implements FormDataHandlerInterface
 
     public function __construct(
         CommandBusInterface $commandBus,
-        CartRuleActionBuilder $cartRuleActionBuilder
+        CartRuleActionBuilder $cartRuleActionBuilder,
     ) {
         $this->commandBus = $commandBus;
         $this->cartRuleActionBuilder = $cartRuleActionBuilder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function create(array $data)
     {
         $informationData = $data['information'];
@@ -81,7 +79,7 @@ class CartRuleFormDataHandler implements FormDataHandlerInterface
             ->setQuantityPerUser((int) $conditionsData['available_per_user'])
         ;
 
-        if (!empty($conditionsData['minimum_amount']['amount'])) {
+        if (! empty($conditionsData['minimum_amount']['amount'])) {
             $amountData = $conditionsData['minimum_amount'];
             $command->setMinimumAmount(
                 (string) $amountData['amount'],
@@ -91,18 +89,14 @@ class CartRuleFormDataHandler implements FormDataHandlerInterface
             );
         }
 
-        if (!empty($conditionsData['customer'][0]['id_customer'])) {
+        if (! empty($conditionsData['customer'][0]['id_customer'])) {
             $command->setCustomerId((int) $conditionsData['customer'][0]['id_customer']);
         }
 
         $this->commandBus->handle($command);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
     }
 }

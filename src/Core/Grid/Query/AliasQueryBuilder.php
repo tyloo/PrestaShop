@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,7 @@ class AliasQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
      */
     public function __construct(Connection $connection, $dbPrefix, DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator)
     {
@@ -51,11 +50,6 @@ class AliasQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $builder = $this->getAliasQueryBuilder($searchCriteria);
@@ -69,21 +63,11 @@ class AliasQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->getAliasQueryBuilder($searchCriteria)->select('COUNT(DISTINCT(a.search))');
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     private function getAliasQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $builder = $this->connection->createQueryBuilder()
@@ -95,10 +79,6 @@ class AliasQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param SearchCriteriaInterface $searchCriteria
-     */
     private function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $searchCriteria): void
     {
         $filtersMap = [
@@ -107,7 +87,7 @@ class AliasQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($searchCriteria->getFilters() as $filterName => $filterValue) {
-            if (!array_key_exists($filterName, $filtersMap)) {
+            if (! \array_key_exists($filterName, $filtersMap)) {
                 continue;
             }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,17 +65,14 @@ class ArrayFinder implements ArrayAccess, Countable
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
-        return count($this->array);
+        return \count($this->array);
     }
 
     /**
-     * @param string|null $path selector to find the desired value. if empty, will return full array
-     * @param mixed|null $default default value to be returned if selector matches nothing
+     * @param string|null $path    selector to find the desired value. if empty, will return full array
+     * @param mixed|null  $default default value to be returned if selector matches nothing
      *
      * @return mixed|null
      *
@@ -97,7 +95,7 @@ class ArrayFinder implements ArrayAccess, Countable
             return null;
         }
 
-        if (null !== $value) {
+        if ($value !== null) {
             return $value;
         }
 
@@ -105,8 +103,8 @@ class ArrayFinder implements ArrayAccess, Countable
     }
 
     /**
-     * @param string $path selector for the value to be set
-     * @param mixed $value input value to be set inside array
+     * @param string $path  selector for the value to be set
+     * @param mixed  $value input value to be set inside array
      *
      * @return self
      *
@@ -133,7 +131,7 @@ class ArrayFinder implements ArrayAccess, Countable
      */
     public function offsetExists($offset): bool
     {
-        if (is_int($offset)) {
+        if (\is_int($offset)) {
             $offset = (string) $offset;
         }
 
@@ -154,7 +152,7 @@ class ArrayFinder implements ArrayAccess, Countable
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if (is_int($offset)) {
+        if (\is_int($offset)) {
             $offset = (string) $offset;
         }
 
@@ -168,7 +166,7 @@ class ArrayFinder implements ArrayAccess, Countable
      */
     public function offsetSet($offset, $value): void
     {
-        if (is_int($offset)) {
+        if (\is_int($offset)) {
             $offset = (string) $offset;
         }
 
@@ -186,7 +184,7 @@ class ArrayFinder implements ArrayAccess, Countable
      */
     public function offsetUnset($offset): void
     {
-        if (is_int($offset)) {
+        if (\is_int($offset)) {
             $offset = (string) $offset;
         }
 
@@ -196,10 +194,6 @@ class ArrayFinder implements ArrayAccess, Countable
     /**
      * Converts paths following format 'dot' structure a.4.9.d.10
      * to Symfony format [a][4][9][d][10]
-     *
-     * @param string $dotPath
-     *
-     * @return string
      */
     private function convertDotPathToArrayPath(string $dotPath): string
     {

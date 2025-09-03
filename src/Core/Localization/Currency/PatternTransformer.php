@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,17 +67,12 @@ class PatternTransformer
     ];
 
     /**
-     * @param string $currencyPattern
-     * @param string $transformationType
-     *
-     * @return string
-     *
      * @throws InvalidArgumentException
      */
     public function transform(string $currencyPattern, string $transformationType): string
     {
-        if (!in_array($transformationType, self::ALLOWED_TRANSFORMATIONS)) {
-            throw new InvalidArgumentException(sprintf('Invalid transformation type "%s", allowed transformations are: %s', $transformationType, implode(',', self::ALLOWED_TRANSFORMATIONS)));
+        if (! \in_array($transformationType, self::ALLOWED_TRANSFORMATIONS, true)) {
+            throw new InvalidArgumentException(\sprintf('Invalid transformation type "%s", allowed transformations are: %s', $transformationType, implode(',', self::ALLOWED_TRANSFORMATIONS)));
         }
 
         $transformedPatterns = [];
@@ -89,8 +85,6 @@ class PatternTransformer
     }
 
     /**
-     * @param string $currencyPattern
-     *
      * @return string
      */
     public function getTransformationType(string $currencyPattern)
@@ -114,9 +108,6 @@ class PatternTransformer
     }
 
     /**
-     * @param string $basePattern
-     * @param string $transformationType
-     *
      * @return string
      */
     private function transformPattern(string $basePattern, string $transformationType)
@@ -135,11 +126,6 @@ class PatternTransformer
         );
     }
 
-    /**
-     * @param string $currencyPattern
-     *
-     * @return string
-     */
     private function getRtlCharacter(string $currencyPattern): string
     {
         return (str_contains($currencyPattern, self::RTL_CHARACTER)) ? self::RTL_CHARACTER : '';

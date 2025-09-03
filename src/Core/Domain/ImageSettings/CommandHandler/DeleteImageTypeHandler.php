@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,20 +42,17 @@ use PrestaShopBundle\Entity\Repository\ImageTypeRepository;
 final class DeleteImageTypeHandler implements DeleteImageTypeHandlerInterface
 {
     public function __construct(
-        private readonly ImageTypeRepository $imageTypeRepository
+        private readonly ImageTypeRepository $imageTypeRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteImageTypeCommand $command): void
     {
         /** @var ?ImageType $imageType */
         $imageType = $this->imageTypeRepository->find($command->getImageTypeId()->getValue());
 
-        if (!$imageType) {
-            throw new ImageTypeNotFoundException(sprintf('Unable to find image type with id "%d" for deletion', $command->getImageTypeId()->getValue()));
+        if (! $imageType) {
+            throw new ImageTypeNotFoundException(\sprintf('Unable to find image type with id "%d" for deletion', $command->getImageTypeId()->getValue()));
         }
 
         $this->imageTypeRepository->delete($imageType);

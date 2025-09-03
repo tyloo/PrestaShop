@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,17 +47,11 @@ final class OrderStatesQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $criteriaApplicator;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator
-     * @param int $contextLangId
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
-        int $contextLangId
+        int $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -64,9 +59,6 @@ final class OrderStatesQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->criteriaApplicator = $criteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $searchQueryBuilder = $this->getOrderStatesQueryBuilder($searchCriteria)
@@ -91,9 +83,6 @@ final class OrderStatesQueryBuilder extends AbstractDoctrineQueryBuilder
         return $searchQueryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $countQueryBuilder = $this->getOrderStatesQueryBuilder($searchCriteria)
@@ -103,8 +92,6 @@ final class OrderStatesQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
      * @return QueryBuilder
      */
     private function getOrderStatesQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -127,9 +114,6 @@ final class OrderStatesQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply filters to order_states query builder.
-     *
-     * @param array $filters
-     * @param QueryBuilder $qb
      */
     private function applyFilters(array $filters, QueryBuilder $qb)
     {
@@ -143,18 +127,18 @@ final class OrderStatesQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if (in_array($filterName, ['send_email', 'delivery', 'invoice', 'id_order_state'])) {
+            if (\in_array($filterName, ['send_email', 'delivery', 'invoice', 'id_order_state'], true)) {
                 $qb->andWhere('os.`' . $filterName . '` = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if (in_array($filterName, ['name', 'template'])) {
+            if (\in_array($filterName, ['name', 'template'], true)) {
                 $qb->andWhere('osl.`' . $filterName . '` LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
@@ -165,9 +149,6 @@ final class OrderStatesQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply sorting so search query builder for order_states.
-     *
-     * @param QueryBuilder $searchQueryBuilder
-     * @param SearchCriteriaInterface $searchCriteria
      */
     private function applySorting(QueryBuilder $searchQueryBuilder, SearchCriteriaInterface $searchCriteria)
     {

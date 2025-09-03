@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,12 +53,9 @@ class OrderProductCustomizationsForViewing
         }
     }
 
-    /**
-     * @param OrderProductCustomizationForViewing $customization
-     */
     private function addCustomization(OrderProductCustomizationForViewing $customization): void
     {
-        if (Product::CUSTOMIZE_FILE === $customization->getType()) {
+        if ($customization->getType() === Product::CUSTOMIZE_FILE) {
             $this->fileCustomizations[] = $customization;
         } else {
             $this->textCustomizations[] = $customization;

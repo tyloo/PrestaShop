@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,16 +51,12 @@ class ShopCollection extends ShopConstraint
     }
 
     /**
-     * @param int|null $shopId
-     * @param int|null $shopGroupId
-     * @param bool $strict
-     *
      * @throws ShopException
      */
     protected function __construct(?int $shopId, ?int $shopGroupId, bool $strict = false, ?array $shopIds = null)
     {
         parent::__construct($shopId, $shopGroupId, $strict);
-        $this->shopIds = null !== $shopIds ? array_map(fn (int $shopId) => new ShopId($shopId), $shopIds) : null;
+        $this->shopIds = $shopIds !== null ? array_map(fn (int $shopId) => new ShopId($shopId), $shopIds) : null;
     }
 
     /**
@@ -72,21 +69,16 @@ class ShopCollection extends ShopConstraint
 
     public function hasShopIds(): bool
     {
-        return null !== $this->shopIds;
+        return $this->shopIds !== null;
     }
 
-    /**
-     * @return bool
-     */
     public function forAllShops(): bool
     {
-        return null === $this->shopId && null === $this->shopGroupId && null === $this->shopIds;
+        return $this->shopId === null && $this->shopGroupId === null && $this->shopIds === null;
     }
 
     /**
      * Clone the constraint, you can specify a force $strict value, but it will always remain false.
-     *
-     * @param bool|null $strict
      *
      * @return static
      *
@@ -99,11 +91,11 @@ class ShopCollection extends ShopConstraint
 
     public function isEqual(ShopConstraint $constraint): bool
     {
-        if (parent::isEqual($constraint) || !($constraint instanceof ShopCollection)) {
+        if (parent::isEqual($constraint) || ! ($constraint instanceof self)) {
             return true;
         }
 
-        if ($this->getShopIds() !== null && $constraint->getShopIds() !== null && count($this->getShopIds()) === count($constraint->getShopIds())) {
+        if ($this->getShopIds() !== null && $constraint->getShopIds() !== null && \count($this->getShopIds()) === \count($constraint->getShopIds())) {
             return empty(array_diff(
                 array_map(fn (ShopId $shopId) => $shopId->getValue(), $this->getShopIds()),
                 array_map(fn (ShopId $shopId) => $shopId->getValue(), $constraint->getShopIds()),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,8 +46,8 @@ class TaxId
      */
     public function __construct($taxId)
     {
-        if (!is_int($taxId) || $taxId <= 0) {
-            throw new TaxConstraintException(sprintf('Invalid Tax id: %s', var_export($taxId, true)), TaxConstraintException::INVALID_ID);
+        if (! \is_int($taxId) || $taxId <= 0) {
+            throw new TaxConstraintException(\sprintf('Invalid Tax id: %s', var_export($taxId, true)), TaxConstraintException::INVALID_ID);
         }
 
         $this->taxId = $taxId;

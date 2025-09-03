@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class BulkDeleteOrderReturnStateException extends OrderReturnStateException
 
     /**
      * @param int[] $orderReturnStatesId
-     * @param string $message
-     * @param int $code
-     * @param Exception|null $previous
      */
     public function __construct(array $orderReturnStatesId, string $message = '', int $code = 0, ?Exception $previous = null)
     {

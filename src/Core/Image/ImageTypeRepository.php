@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ class ImageTypeRepository
 
     public function setTypes(array $types, ?string $theme_name = null)
     {
-        if (null !== $theme_name) {
+        if ($theme_name !== null) {
             $this->remoteAllTypesByTheme($theme_name);
         } else {
             $this->removeAllTypes();
@@ -76,7 +77,7 @@ class ImageTypeRepository
         ];
 
         foreach ($this->getScopeList() as $scope_item) {
-            if (in_array($scope_item, $scope)) {
+            if (\in_array($scope_item, $scope, true)) {
                 $data[$scope_item] = 1;
             } else {
                 $data[$scope_item] = 0;

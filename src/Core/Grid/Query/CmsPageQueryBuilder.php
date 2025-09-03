@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,18 +51,15 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextIdLang;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param array $contextShopIds
-     * @param int $contextIdLang
+     * @param int    $contextIdLang
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         array $contextShopIds,
-        $contextIdLang
+        $contextIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -70,9 +68,6 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextIdLang = $contextIdLang;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -91,9 +86,6 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -105,8 +97,6 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql for cms page listing.
-     *
-     * @param array $filters
      *
      * @return \Doctrine\DBAL\Query\QueryBuilder
      */
@@ -147,25 +137,25 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
         $qb->setParameter('contextShopIds', $this->contextShopIds, Connection::PARAM_INT_ARRAY);
 
         foreach ($filters as $filterName => $value) {
-            if (!in_array($filterName, $availableFilters, true)) {
+            if (! \in_array($filterName, $availableFilters, true)) {
                 continue;
             }
 
-            if ('id_cms_category_parent' === $filterName) {
+            if ($filterName === 'id_cms_category_parent') {
                 $qb->andWhere('c.`id_cms_category` = :id_cms_category_parent');
                 $qb->setParameter('id_cms_category_parent', $value);
 
                 continue;
             }
 
-            if (in_array($filterName, ['id_cms', 'active'], true)) {
+            if (\in_array($filterName, ['id_cms', 'active'], true)) {
                 $qb->andWhere('c.`' . $filterName . '` = :' . $filterName);
                 $qb->setParameter($filterName, $value);
 
                 continue;
             }
 
-            if ('position' === $filterName) {
+            if ($filterName === 'position') {
                 $modifiedPositionFilter = $this->getModifiedPositionFilter($value);
                 $qb->andWhere('c.`' . $filterName . '` = :' . $filterName);
                 $qb->setParameter($filterName, $modifiedPositionFilter);
@@ -189,11 +179,11 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private function getModifiedPositionFilter($positionFilterValue)
     {
-        if (!is_numeric($positionFilterValue)) {
+        if (! is_numeric($positionFilterValue)) {
             return null;
         }
         $reducedByOneFilterValue = $positionFilterValue - 1;
-        if (0 > $reducedByOneFilterValue) {
+        if ($reducedByOneFilterValue < 0) {
             return null;
         }
 

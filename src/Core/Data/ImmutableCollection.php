@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,9 @@ use Traversable;
  */
 abstract class ImmutableCollection implements IteratorAggregate, Countable
 {
-    /** @var T[] */
+    /**
+     * @var T[]
+     */
     protected $values;
 
     /**
@@ -66,7 +69,7 @@ abstract class ImmutableCollection implements IteratorAggregate, Countable
 
     public function count(): int
     {
-        return count($this->values);
+        return \count($this->values);
     }
 
     /**

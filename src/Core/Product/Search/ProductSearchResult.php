@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,8 +55,6 @@ class ProductSearchResult
     private $currentSortOrder;
 
     /**
-     * @param array $products
-     *
      * @return $this
      */
     public function setProducts(array $products)
@@ -94,8 +93,6 @@ class ProductSearchResult
     }
 
     /**
-     * @param FacetCollection $facetCollection
-     *
      * @return $this
      */
     public function setFacetCollection(FacetCollection $facetCollection)
@@ -134,8 +131,6 @@ class ProductSearchResult
     }
 
     /**
-     * @param SortOrder $sortOrder
-     *
      * @return $this
      */
     public function addAvailableSortOrder(SortOrder $sortOrder)
@@ -154,8 +149,6 @@ class ProductSearchResult
     }
 
     /**
-     * @param array $sortOrders
-     *
      * @return $this
      */
     public function setAvailableSortOrders(array $sortOrders)
@@ -170,8 +163,6 @@ class ProductSearchResult
     }
 
     /**
-     * @param SortOrder $currentSortOrder
-     *
      * @return $this
      */
     public function setCurrentSortOrder(SortOrder $currentSortOrder)
@@ -181,9 +172,6 @@ class ProductSearchResult
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCurrentSortOrder()
     {
         return $this->currentSortOrder;

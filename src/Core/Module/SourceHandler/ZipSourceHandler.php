@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,10 +45,14 @@ class ZipSourceHandler implements SourceHandlerInterface
 
     private const MODULE_REGEX = '/^(.*)\/\1\.php$/i'; // module_name/module_name.php
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $modulePath;
 
-    /** @var TranslatorInterface */
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     public function __construct(string $modulePath, TranslatorInterface $translator)
@@ -58,7 +63,7 @@ class ZipSourceHandler implements SourceHandlerInterface
 
     public function canHandle($source): bool
     {
-        return is_file($source) && in_array(mime_content_type($source), self::AUTHORIZED_MIME);
+        return is_file($source) && \in_array(mime_content_type($source), self::AUTHORIZED_MIME, true);
     }
 
     public function getModuleName($source): string
@@ -75,29 +80,14 @@ class ZipSourceHandler implements SourceHandlerInterface
             $zip->close();
         }
 
-        throw new ModuleErrorException(
-            $this->translator->trans(
-                'This file does not seem to be a valid module zip',
-                [],
-                'Admin.Modules.Notification'
-            )
-        );
+        throw new ModuleErrorException($this->translator->trans('This file does not seem to be a valid module zip', [], 'Admin.Modules.Notification'));
     }
 
     public function handle(string $source): void
     {
         $zip = new ZipArchive();
-        if ($zip->open($source) !== true || !$zip->extractTo($this->modulePath) || !$zip->close()) {
-            throw new ModuleErrorException(
-                $this->translator->trans(
-                    'Cannot extract module in %path%. %error%',
-                    [
-                        '%path%' => $this->modulePath,
-                        '%error%' => @$zip->getStatusString() ?: '', // Since php 8.0 getStatusString cannot return false nor a warning
-                    ],
-                    'Admin.Modules.Notification'
-                )
-            );
+        if ($zip->open($source) !== true || ! $zip->extractTo($this->modulePath) || ! $zip->close()) {
+            throw new ModuleErrorException($this->translator->trans('Cannot extract module in %path%. %error%', ['%path%' => $this->modulePath, '%error%' => @$zip->getStatusString() ?: ''/* Since php 8.0 getStatusString cannot return false nor a warning */], 'Admin.Modules.Notification'));
         }
     }
 }

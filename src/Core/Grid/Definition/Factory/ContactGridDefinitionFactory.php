@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,25 +51,16 @@ final class ContactGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'contact';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Contacts', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -133,9 +125,6 @@ final class ContactGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -181,9 +170,6 @@ final class ContactGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -192,9 +178,6 @@ final class ContactGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

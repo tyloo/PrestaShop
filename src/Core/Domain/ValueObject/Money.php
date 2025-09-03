@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,19 +49,15 @@ class Money
     private $taxIncluded;
 
     /**
-     * @param DecimalNumber $amount
-     * @param CurrencyId $currencyId
-     * @param bool $taxIncluded
-     *
      * @throws DomainConstraintException
      */
     public function __construct(
         DecimalNumber $amount,
         CurrencyId $currencyId,
-        bool $taxIncluded
+        bool $taxIncluded,
     ) {
-        if (!$amount->isGreaterOrEqualThanZero()) {
-            throw new DomainConstraintException(sprintf('Money amount cannot be lower than zero, %f given', (string) $amount), DomainConstraintException::INVALID_MONEY_AMOUNT);
+        if (! $amount->isGreaterOrEqualThanZero()) {
+            throw new DomainConstraintException(\sprintf('Money amount cannot be lower than zero, %f given', (string) $amount), DomainConstraintException::INVALID_MONEY_AMOUNT);
         }
 
         $this->amount = $amount;
@@ -68,25 +65,16 @@ class Money
         $this->taxIncluded = $taxIncluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getAmount(): DecimalNumber
     {
         return $this->amount;
     }
 
-    /**
-     * @return CurrencyId
-     */
     public function getCurrencyId(): CurrencyId
     {
         return $this->currencyId;
     }
 
-    /**
-     * @return bool
-     */
     public function isTaxIncluded(): bool
     {
         return $this->taxIncluded;

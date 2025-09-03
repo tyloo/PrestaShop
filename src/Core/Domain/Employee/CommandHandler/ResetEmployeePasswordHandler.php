@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class ResetEmployeePasswordHandler implements ResetEmployeePasswordHandlerInterf
 
     public function handle(ResetEmployeePasswordCommand $command): void
     {
-        if (!($employee = $this->employeePasswordResetter->getEmployeeByValidResetPasswordToken($command->getResetToken()))) {
+        if (! ($employee = $this->employeePasswordResetter->getEmployeeByValidResetPasswordToken($command->getResetToken()))) {
             throw new InvalidResetPasswordTokenException();
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,17 +53,14 @@ final class CurrencyQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextLangId;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param array $contextShopIds
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         array $contextShopIds,
-        $contextLangId
+        $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -71,9 +69,6 @@ final class CurrencyQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextLangId = $contextLangId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -91,9 +86,6 @@ final class CurrencyQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -105,8 +97,6 @@ final class CurrencyQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql used for displaying webservice list and applying filter actions.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -144,18 +134,18 @@ final class CurrencyQueryBuilder extends AbstractDoctrineQueryBuilder
         $qb->setParameter('lang', $this->contextLangId, PDO::PARAM_INT);
 
         foreach ($filters as $filterName => $value) {
-            if (!in_array($filterName, $allowedFilters, true)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('active' === $filterName) {
+            if ($filterName === 'active') {
                 $qb->andWhere('c.`active` = :active');
                 $qb->setParameter('active', $value);
 
                 continue;
             }
 
-            if ('name' === $filterName || 'symbol' === $filterName) {
+            if ($filterName === 'name' || $filterName === 'symbol') {
                 $qb->andWhere('cl.`' . $filterName . '` LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $value . '%');
 

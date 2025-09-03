@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,9 +50,6 @@ class ConfigReader implements ConfigReaderInterface
         $this->themesDirectoryPath = $themesDirectoryPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(string $name): ?ArrayFinder
     {
         $configFile = $this->findConfigFile($name);
@@ -73,14 +71,12 @@ class ConfigReader implements ConfigReaderInterface
      * Find config file depending on the iso code.
      *
      * @param string $name The module name
-     *
-     * @return string|null
      */
     protected function findConfigFile(string $name): ?string
     {
         $configFile = $this->themesDirectoryPath . $name . '/config/theme.yml';
 
-        if (!file_exists($configFile)) {
+        if (! file_exists($configFile)) {
             return null;
         }
 

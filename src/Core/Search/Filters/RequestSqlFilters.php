@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,12 +32,11 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
 
 class RequestSqlFilters extends Filters
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $filterId = RequestSqlGridDefinitionFactory::GRID_ID;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,27 +54,18 @@ class RowPosition
     public function __construct(
         int $rowId,
         int $oldPosition,
-        int $newPosition
+        int $newPosition,
     ) {
-        if (0 >= $rowId) {
-            throw new PositionConstraintException(
-                sprintf('Row id %s is invalid. Row id must be number that is greater than zero.', var_export($rowId, true)),
-                PositionConstraintException::INVALID_ROW_ID
-            );
+        if ($rowId <= 0) {
+            throw new PositionConstraintException(\sprintf('Row id %s is invalid. Row id must be number that is greater than zero.', var_export($rowId, true)), PositionConstraintException::INVALID_ROW_ID);
         }
 
-        if (0 > $oldPosition) {
-            throw new PositionConstraintException(
-                sprintf('Old position %s is invalid. Old position must be number that is greater than zero.', var_export($rowId, true)),
-                PositionConstraintException::INVALID_OLD_POSITION
-            );
+        if ($oldPosition < 0) {
+            throw new PositionConstraintException(\sprintf('Old position %s is invalid. Old position must be number that is greater than zero.', var_export($rowId, true)), PositionConstraintException::INVALID_OLD_POSITION);
         }
 
-        if (0 > $newPosition) {
-            throw new PositionConstraintException(
-                sprintf('New position %s is invalid. New position must be number that is greater than zero.', var_export($rowId, true)),
-                PositionConstraintException::INVALID_NEW_POSITION
-            );
+        if ($newPosition < 0) {
+            throw new PositionConstraintException(\sprintf('New position %s is invalid. New position must be number that is greater than zero.', var_export($rowId, true)), PositionConstraintException::INVALID_NEW_POSITION);
         }
 
         $this->rowId = $rowId;
@@ -81,25 +73,16 @@ class RowPosition
         $this->newPosition = $newPosition;
     }
 
-    /**
-     * @return int
-     */
     public function getRowId(): int
     {
         return $this->rowId;
     }
 
-    /**
-     * @return int
-     */
     public function getOldPosition(): int
     {
         return $this->oldPosition;
     }
 
-    /**
-     * @return int
-     */
     public function getNewPosition(): int
     {
         return $this->newPosition;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,8 +32,6 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\Command\SendEmployeePasswordReset
 interface SendEmployeePasswordResetEmailHandlerInterface
 {
     /**
-     * @param SendEmployeePasswordResetEmailCommand $command
-     *
      * @return string The url to reset the password
      */
     public function handle(SendEmployeePasswordResetEmailCommand $command): string;

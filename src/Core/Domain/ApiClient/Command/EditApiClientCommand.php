@@ -113,7 +113,7 @@ class EditApiClientCommand
 
     public function setScopes(?array $scopes): self
     {
-        if (count($scopes) !== count(array_filter($scopes, 'is_string'))) {
+        if (\count($scopes) !== \count(array_filter($scopes, 'is_string'))) {
             throw new ApiClientConstraintException('Expected list of non empty string for scopes', ApiClientConstraintException::INVALID_SCOPES);
         }
         $this->scopes = $scopes;
@@ -121,7 +121,9 @@ class EditApiClientCommand
         return $this;
     }
 
-    /** Returns the lifetime in milliseconds. Default is 3600. */
+    /**
+     * Returns the lifetime in milliseconds. Default is 3600.
+     */
     public function getLifetime(): ?int
     {
         return $this->lifetime;

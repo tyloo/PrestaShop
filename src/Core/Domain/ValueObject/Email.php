@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,11 +69,9 @@ class Email
     /**
      * Check if given email is the same as current
      *
-     * @param Email $email
-     *
      * @return bool
      */
-    public function isEqualTo(Email $email)
+    public function isEqualTo(self $email)
     {
         return strtolower($email->getValue()) === strtolower($this->getValue());
     }
@@ -86,7 +85,7 @@ class Email
      */
     public function assertEmailIsNotEmpty($email)
     {
-        if (0 === strlen($email)) {
+        if (\strlen($email) === 0) {
             throw new DomainConstraintException('Email must not be empty', DomainConstraintException::INVALID_EMAIL);
         }
     }
@@ -100,10 +99,10 @@ class Email
      */
     private function assertEmailDoesNotExceedAllowedLength($email)
     {
-        $email = html_entity_decode($email, ENT_COMPAT, 'UTF-8');
+        $email = html_entity_decode($email, \ENT_COMPAT, 'UTF-8');
 
-        if (self::MAX_LENGTH < mb_strlen($email, 'UTF-8')) {
-            throw new DomainConstraintException(sprintf('Email is too long. Max allowed length is %s', self::MAX_LENGTH), DomainConstraintException::INVALID_EMAIL);
+        if (mb_strlen($email, 'UTF-8') > self::MAX_LENGTH) {
+            throw new DomainConstraintException(\sprintf('Email is too long. Max allowed length is %s', self::MAX_LENGTH), DomainConstraintException::INVALID_EMAIL);
         }
     }
 
@@ -116,7 +115,7 @@ class Email
      */
     private function assertEmailIsString($email)
     {
-        if (!is_string($email)) {
+        if (! \is_string($email)) {
             throw new DomainConstraintException('Email must be of type string', DomainConstraintException::INVALID_EMAIL);
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,17 +42,11 @@ final class GetCustomerServiceSignatureHandler implements GetCustomerServiceSign
      */
     private $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCustomerServiceSignature $query)
     {
         $signature = $this->configuration->get('PS_CUSTOMER_SERVICE_SIGNATURE');

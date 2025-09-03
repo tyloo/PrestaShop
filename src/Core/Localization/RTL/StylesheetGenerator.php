@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,7 +70,7 @@ class StylesheetGenerator
     private $rtlSuffix;
 
     /**
-     * @param string $fileType [default='css'] File type (CSS or SCSS)
+     * @param string $fileType  [default='css'] File type (CSS or SCSS)
      * @param string $rtlSuffix [default='_rtl'] Suffix to add to transformed RTL files
      */
     public function __construct($fileType = self::DEFAULT_FILE_TYPE, $rtlSuffix = self::DEFAULT_RTL_SUFFIX)
@@ -81,8 +82,8 @@ class StylesheetGenerator
     /**
      * Creates an RTL version of all the files in the selected path recursively.
      *
-     * @param string $directory Path to process. All CSS files in this directory will be processed.
-     * @param bool $regenerate [default=false] Indicates if RTL files should be re-generated even if they exist
+     * @param string $directory  Path to process. All CSS files in this directory will be processed.
+     * @param bool   $regenerate [default=false] Indicates if RTL files should be re-generated even if they exist
      *
      * @throws GenerationException
      */
@@ -100,21 +101,21 @@ class StylesheetGenerator
     /**
      * Indicates if a file should be processed or not.
      *
-     * @param string $file File path
-     * @param bool $regenerate Indicates if RTL files should be re-generated even if they exist
+     * @param string $file       File path
+     * @param bool   $regenerate Indicates if RTL files should be re-generated even if they exist
      *
      * @return bool
      */
     private function shouldProcessFile($file, $regenerate)
     {
         return
-            !str_contains($file, '/node_modules/')
+            ! str_contains($file, '/node_modules/')
             // rtl.css contains RTL override rules
-            && !str_contains($file, 'rtl.css')
+            && ! str_contains($file, 'rtl.css')
             // does not end with .rtlfix
             && substr(rtrim($file, '.' . $this->fileType), -4) !== $this->rtlSuffix
             // RTL file does not exist or we are regenerating them
-            && ($regenerate || !file_exists($this->getRtlFileName($file)));
+            && ($regenerate || ! file_exists($this->getRtlFileName($file)));
     }
 
     /**
@@ -129,13 +130,13 @@ class StylesheetGenerator
         $content = file_get_contents($filePath);
 
         if ($content === false) {
-            throw new GenerationException(sprintf('Unable to read from CSS file: %s', $filePath));
+            throw new GenerationException(\sprintf('Unable to read from CSS file: %s', $filePath));
         }
 
         $rendered = CSSJanus::transform($content);
 
-        if (strlen($rendered) === 0 && strlen($content) !== 0) {
-            throw new GenerationException(sprintf('Failed to generate RTL CSS from file: %s', $filePath));
+        if (\strlen($rendered) === 0 && \strlen($content) !== 0) {
+            throw new GenerationException(\sprintf('Failed to generate RTL CSS from file: %s', $filePath));
         }
 
         $content = $this->appendRtlFixIfNecessary(
@@ -187,7 +188,7 @@ class StylesheetGenerator
     /**
      * Appends the content of an .rtlfix file to $content.
      *
-     * @param string $content Base content
+     * @param string $content  Base content
      * @param string $baseFile Path to the processed file
      *
      * @return string Content with RTL fix applied
@@ -204,10 +205,10 @@ class StylesheetGenerator
             $rtlFixContent = file_get_contents($rtlFixFilePath);
 
             if ($rtlFixContent === false) {
-                throw new GenerationException(sprintf('Failed to read from file: %s', $rtlFixFilePath));
+                throw new GenerationException(\sprintf('Failed to read from file: %s', $rtlFixFilePath));
             }
 
-            return $content . PHP_EOL . $rtlFixContent;
+            return $content . \PHP_EOL . $rtlFixContent;
         }
 
         return $content;
@@ -216,7 +217,7 @@ class StylesheetGenerator
     /**
      * Saves $content the appropriate file based on the name of the original file.
      *
-     * @param string $content Content to save
+     * @param string $content  Content to save
      * @param string $baseFile Name of the original file
      *
      * @throws GenerationException If unable to write to file
@@ -225,8 +226,8 @@ class StylesheetGenerator
     {
         $rtlFilePath = $this->getRtlFileName($baseFile);
 
-        if (false === file_put_contents($rtlFilePath, $content)) {
-            throw new GenerationException(sprintf('Unable to write file to: %s', $rtlFilePath));
+        if (file_put_contents($rtlFilePath, $content) === false) {
+            throw new GenerationException(\sprintf('Unable to write file to: %s', $rtlFilePath));
         }
 
         @chmod($rtlFilePath, FileSystem::DEFAULT_MODE_FILE);

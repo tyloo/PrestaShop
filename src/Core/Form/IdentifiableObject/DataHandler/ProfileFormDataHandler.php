@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,21 +49,14 @@ final class ProfileFormDataHandler implements FormDataHandlerInterface
      */
     private $imageUploader;
 
-    /**
-     * @param CommandBusInterface $bus
-     * @param ImageUploaderInterface $imageUploader
-     */
     public function __construct(
         CommandBusInterface $bus,
-        ImageUploaderInterface $imageUploader
+        ImageUploaderInterface $imageUploader,
     ) {
         $this->bus = $bus;
         $this->imageUploader = $imageUploader;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         /** @var ProfileId $profileId */
@@ -77,9 +71,6 @@ final class ProfileFormDataHandler implements FormDataHandlerInterface
         return $profileId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($profileId, array $data)
     {
         /** @var UploadedFile $uploadedAvatar */
@@ -88,7 +79,7 @@ final class ProfileFormDataHandler implements FormDataHandlerInterface
             $this->imageUploader->upload($profileId, $uploadedAvatar);
         }
 
-        /* @var ProfileId $profileId */
+        /** @var ProfileId $profileId */
         $this->bus->handle(new EditProfileCommand($profileId, $data['name']));
     }
 }

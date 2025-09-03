@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,13 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 class PositiveOrZeroValidator extends ConstraintValidator
 {
-    /**
-     * {@inheritDoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof PositiveOrZero) {
+        if (! $constraint instanceof PositiveOrZero) {
             throw new UnexpectedTypeException($constraint, PositiveOrZero::class);
         }
 
-        if (!is_numeric($value) || !(new DecimalNumber((string) $value))->isGreaterOrEqualThanZero()) {
+        if (! is_numeric($value) || ! (new DecimalNumber((string) $value))->isGreaterOrEqualThanZero()) {
             $this->context->buildViolation($constraint->message)
                 ->setTranslationDomain('Admin.Notifications.Error')
                 ->addViolation()

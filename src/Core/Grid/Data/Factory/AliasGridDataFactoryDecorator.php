@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,10 @@ final class AliasGridDataFactoryDecorator implements GridDataFactoryInterface
 {
     public function __construct(
         private GridDataFactoryInterface $aliasGridDataFactory,
-        private AliasRepository $aliasRepository
+        private AliasRepository $aliasRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $aliasData = $this->aliasGridDataFactory->getData($searchCriteria);

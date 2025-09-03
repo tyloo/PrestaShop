@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,22 +60,13 @@ class SearchProductsForAssociation
      */
     private $limit;
 
-    /**
-     * @param string $phrase
-     * @param int $languageId
-     * @param int $shopId
-     * @param int|null $limit
-     */
     public function __construct(string $phrase, int $languageId, int $shopId, ?int $limit = null)
     {
-        if (null !== $limit && $limit <= 0) {
+        if ($limit !== null && $limit <= 0) {
             throw new ProductConstraintException('Search limit must be a positive integer or null', ProductConstraintException::INVALID_SEARCH_LIMIT);
         }
         if (mb_strlen($phrase) < static::SEARCH_PHRASE_MIN_LENGTH) {
-            throw new ProductConstraintException(sprintf(
-                'Search phase must have a minimum length of %d characters.',
-                static::SEARCH_PHRASE_MIN_LENGTH
-            ), ProductConstraintException::INVALID_SEARCH_PHRASE_LENGTH);
+            throw new ProductConstraintException(\sprintf('Search phase must have a minimum length of %d characters.', static::SEARCH_PHRASE_MIN_LENGTH), ProductConstraintException::INVALID_SEARCH_PHRASE_LENGTH);
         }
 
         $this->phrase = $phrase;
@@ -83,33 +75,21 @@ class SearchProductsForAssociation
         $this->languageId = new LanguageId($languageId);
     }
 
-    /**
-     * @return string
-     */
     public function getPhrase(): string
     {
         return $this->phrase;
     }
 
-    /**
-     * @return ShopId
-     */
     public function getShopId(): ShopId
     {
         return $this->shopId;
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLimit(): ?int
     {
         return $this->limit;

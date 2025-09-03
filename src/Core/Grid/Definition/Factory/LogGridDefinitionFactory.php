@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,31 +58,22 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        string $contextDateFormat
+        string $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
         $this->contextDateFormat = $contextDateFormat;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Logs', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -165,9 +157,6 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
         return (new FilterCollection())
@@ -237,9 +226,6 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

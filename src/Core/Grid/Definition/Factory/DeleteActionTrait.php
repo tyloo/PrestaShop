@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,7 @@ trait DeleteActionTrait
         string $method = 'POST',
         array $extraRouteParams = [],
         array $options = [],
-        ?string $actionLabel = null
+        ?string $actionLabel = null,
     ): RowActionInterface {
         $options = array_merge(
             [

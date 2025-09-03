@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,17 +60,11 @@ final class DeliveryTimeNoteTypesProvider implements FormChoiceProviderInterface
      */
     private $langId;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param RouterInterface $router
-     * @param ConfigurationInterface $configuration
-     * @param int $langId
-     */
     public function __construct(
         TranslatorInterface $translator,
         RouterInterface $router,
         ConfigurationInterface $configuration,
-        int $langId
+        int $langId,
     ) {
         $this->translator = $translator;
         $this->router = $router;
@@ -77,12 +72,9 @@ final class DeliveryTimeNoteTypesProvider implements FormChoiceProviderInterface
         $this->langId = $langId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices()
     {
-        $linkOpeningTag = sprintf(
+        $linkOpeningTag = \sprintf(
             '&nbsp;<a target="_blank" href="%s"><i class="material-icons">open_in_new</i>',
             $this->router->generate('admin_product_preferences') . '#stock_delivery_time'
         );
@@ -108,7 +100,7 @@ final class DeliveryTimeNoteTypesProvider implements FormChoiceProviderInterface
     private function getConfigurationLabel(string $configurationName): string
     {
         $config = $this->configuration->get($configurationName);
-        if (!empty($config[$this->langId])) {
+        if (! empty($config[$this->langId])) {
             return $config[$this->langId];
         }
 

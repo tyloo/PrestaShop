@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,22 +37,14 @@ class UploadedImageSizeException extends ImageUploadException
      */
     private $allowedSizeBytes;
 
-    /**
-     * @param int $allowedSizeBytes
-     * @param string|null $message
-     * @param int $code
-     * @param Throwable|null $previous
-     *
-     * @return self
-     */
     public static function build(
         int $allowedSizeBytes,
         ?string $message = null,
         int $code = 0,
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ): self {
-        if (null === $message) {
-            $message = sprintf(
+        if ($message === null) {
+            $message = \sprintf(
                 'Max file size allowed is "%s" bytes.',
                 $allowedSizeBytes
             );
@@ -65,25 +58,16 @@ class UploadedImageSizeException extends ImageUploadException
         );
     }
 
-    /**
-     * @return int
-     */
     public function getAllowedSizeBytes(): int
     {
         return $this->allowedSizeBytes;
     }
 
-    /**
-     * @param int $allowedSizeBytes
-     * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
-     */
     private function __construct(
         int $allowedSizeBytes,
         string $message = '',
         int $code = 0,
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         $this->allowedSizeBytes = $allowedSizeBytes;
         parent::__construct($message, $code, $previous);

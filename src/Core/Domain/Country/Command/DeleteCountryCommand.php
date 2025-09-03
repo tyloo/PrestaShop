@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class DeleteCountryCommand
      */
     private $countryId;
 
-    /**
-     * @param int $countryId
-     */
     public function __construct(int $countryId)
     {
         $this->countryId = new CountryId($countryId);
     }
 
-    /**
-     * @return CountryId
-     */
     public function getCountryId(): CountryId
     {
         return $this->countryId;

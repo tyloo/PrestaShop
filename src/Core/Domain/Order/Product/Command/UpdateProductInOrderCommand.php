@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,21 +68,13 @@ class UpdateProductInOrderCommand
      */
     private $orderInvoiceId;
 
-    /**
-     * @param int $orderId
-     * @param int $orderDetailId
-     * @param string $priceTaxIncluded
-     * @param string $priceTaxExcluded
-     * @param int $quantity
-     * @param int|null $orderInvoiceId
-     */
     public function __construct(
         int $orderId,
         int $orderDetailId,
         string $priceTaxIncluded,
         string $priceTaxExcluded,
         int $quantity,
-        ?int $orderInvoiceId = null
+        ?int $orderInvoiceId = null,
     ) {
         $this->orderId = new OrderId($orderId);
         $this->orderDetailId = $orderDetailId;
@@ -144,8 +137,6 @@ class UpdateProductInOrderCommand
     }
 
     /**
-     * @param int $quantity
-     *
      * @throws InvalidProductQuantityException
      */
     private function setQuantity(int $quantity): void

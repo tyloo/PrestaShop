@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ class UpdateSearchTermAliasesCommand
     private SearchTerm $newSearchTerm;
 
     /**
-     * @param string $oldSearchTerm
-     * @param string|null $newSearchTerm
      * @param array{
      *   array{
      *     alias: string,
@@ -58,7 +57,7 @@ class UpdateSearchTermAliasesCommand
         $this->assertStringNotEmpty($oldSearchTerm);
 
         $this->oldSearchTerm = new SearchTerm($oldSearchTerm);
-        $this->newSearchTerm = new SearchTerm((null === $newSearchTerm) ? $oldSearchTerm : $newSearchTerm);
+        $this->newSearchTerm = new SearchTerm(($newSearchTerm === null) ? $oldSearchTerm : $newSearchTerm);
     }
 
     public function getOldSearchTerm(): SearchTerm
@@ -91,30 +90,22 @@ class UpdateSearchTermAliasesCommand
      */
     private function assertAliasesNotEmpty(array $aliases): void
     {
-        if (!empty($aliases)) {
+        if (! empty($aliases)) {
             return;
         }
 
-        throw new AliasConstraintException(
-            'Alias parameter aliases must not be empty',
-            AliasConstraintException::INVALID_ALIAS
-        );
+        throw new AliasConstraintException('Alias parameter aliases must not be empty', AliasConstraintException::INVALID_ALIAS);
     }
 
     /**
-     * @param string $string
-     *
      * @throws AliasConstraintException
      */
     private function assertStringNotEmpty(string $string): void
     {
-        if (!empty($string)) {
+        if (! empty($string)) {
             return;
         }
 
-        throw new AliasConstraintException(
-            'Alias parameter search term must not be empty',
-            AliasConstraintException::INVALID_SEARCH
-        );
+        throw new AliasConstraintException('Alias parameter search term must not be empty', AliasConstraintException::INVALID_SEARCH);
     }
 }

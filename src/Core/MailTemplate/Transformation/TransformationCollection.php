@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
 
 class TransformationCollection extends AbstractTypedCollection implements TransformationCollectionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getType()
     {
         return TransformationInterface::class;

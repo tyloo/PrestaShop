@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,7 +52,7 @@ class LanguageContextBuilder implements LegacyContextBuilderInterface
         private readonly LanguageRepositoryInterface $languageRepository,
         private readonly RepositoryInterface $localeRepository,
         private readonly ContextStateManager $contextStateManager,
-        private readonly ObjectModelLanguageRepository $objectModelLanguageRepository
+        private readonly ObjectModelLanguageRepository $objectModelLanguageRepository,
     ) {
     }
 
@@ -87,21 +88,15 @@ class LanguageContextBuilder implements LegacyContextBuilderInterface
 
     private function assertArguments(): void
     {
-        if (null === $this->languageId) {
-            throw new InvalidArgumentException(sprintf(
-                'Cannot build Language context as no languageId has been defined you need to call %s::setLanguageId to define it before building the Language context',
-                self::class
-            ));
+        if ($this->languageId === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot build Language context as no languageId has been defined you need to call %s::setLanguageId to define it before building the Language context', self::class));
         }
     }
 
     private function assertDefaultArguments(): void
     {
-        if (null === $this->defaultLanguageId) {
-            throw new InvalidArgumentException(sprintf(
-                'Cannot build Language context as no defaultLanguageId has been defined you need to call %s::setDefaultLanguageId to define it before building the Language context',
-                self::class
-            ));
+        if ($this->defaultLanguageId === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot build Language context as no defaultLanguageId has been defined you need to call %s::setDefaultLanguageId to define it before building the Language context', self::class));
         }
     }
 

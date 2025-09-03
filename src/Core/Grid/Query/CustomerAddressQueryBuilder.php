@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,19 +53,12 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $contextShopIds;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextLangId
-     * @param array $contextShopIds
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         int $contextLangId,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
@@ -72,9 +66,6 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextShopIds = $contextShopIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -106,9 +97,6 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->getQueryBuilder($searchCriteria->getFilters())
@@ -117,10 +105,6 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql used for displaying addresses list and applying filter actions.
-     *
-     * @param array $filters
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters): QueryBuilder
     {
@@ -162,9 +146,6 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply filters to address query builder.
-     *
-     * @param array $filters
-     * @param QueryBuilder $qb
      */
     private function applyFilters(QueryBuilder $qb, array $filters)
     {
@@ -173,11 +154,11 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersMap) || empty($value)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap) || empty($value)) {
                 continue;
             }
 
-            if ('id_customer' === $filterName) {
+            if ($filterName === 'id_customer') {
                 $qb->andWhere('a.`id_customer` = :' . $filterName);
                 $qb->setParameter($filterName, $value);
             }

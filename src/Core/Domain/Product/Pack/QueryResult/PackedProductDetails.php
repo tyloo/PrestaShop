@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,21 +64,13 @@ class PackedProductDetails
      */
     protected $imageUrl;
 
-    /**
-     * @param int $productId
-     * @param int $quantity
-     * @param int $combinationId
-     * @param string $productName
-     * @param string $reference
-     * @param string $imageUrl
-     */
     public function __construct(
         int $productId,
         int $quantity,
         int $combinationId,
         string $productName,
         string $reference,
-        string $imageUrl
+        string $imageUrl,
     ) {
         $this->productId = $productId;
         $this->quantity = $quantity;
@@ -87,49 +80,31 @@ class PackedProductDetails
         $this->imageUrl = $imageUrl;
     }
 
-    /**
-     * @return int
-     */
     public function getProductId(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return int
-     */
     public function getCombinationId(): int
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return string
-     */
     public function getProductName(): string
     {
         return $this->productName;
     }
 
-    /**
-     * @return string
-     */
     public function getReference(): string
     {
         return $this->reference;
     }
 
-    /**
-     * @return string
-     */
     public function getImageUrl(): string
     {
         return $this->imageUrl;

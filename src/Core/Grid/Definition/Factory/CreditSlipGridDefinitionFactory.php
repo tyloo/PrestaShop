@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,7 +54,6 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
     private $dateFormat;
 
     /**
-     * @param HookDispatcherInterface $hookDispatcher
      * @param string $dateFormat The format in which date column values should be shown
      */
     public function __construct(HookDispatcherInterface $hookDispatcher, $dateFormat)
@@ -62,25 +62,16 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
         $this->dateFormat = $dateFormat;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Credit slips', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -120,9 +111,6 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
             ->add(new ActionColumn('actions'));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -163,9 +151,6 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,25 +59,16 @@ final class CurrencyGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'currency';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Currencies', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -169,9 +161,6 @@ final class CurrencyGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -230,9 +219,6 @@ final class CurrencyGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -253,9 +239,6 @@ final class CurrencyGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

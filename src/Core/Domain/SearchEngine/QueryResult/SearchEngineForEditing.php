@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,11 +51,6 @@ class SearchEngineForEditing
      */
     private $queryKey;
 
-    /**
-     * @param SearchEngineId $searchEngineId
-     * @param string $server
-     * @param string $queryKey
-     */
     public function __construct(SearchEngineId $searchEngineId, string $server, string $queryKey)
     {
         $this->searchEngineId = $searchEngineId;
@@ -62,25 +58,16 @@ class SearchEngineForEditing
         $this->queryKey = $queryKey;
     }
 
-    /**
-     * @return SearchEngineId
-     */
     public function getSearchEngineId(): SearchEngineId
     {
         return $this->searchEngineId;
     }
 
-    /**
-     * @return string
-     */
     public function getServer(): string
     {
         return $this->server;
     }
 
-    /**
-     * @return string
-     */
     public function getQueryKey(): string
     {
         return $this->queryKey;

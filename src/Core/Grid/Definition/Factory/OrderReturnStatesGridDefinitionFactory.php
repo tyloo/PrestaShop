@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,32 +64,23 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        AccessibilityCheckerInterface $deleteOrderReturnStatesAccessibilityChecker
+        AccessibilityCheckerInterface $deleteOrderReturnStatesAccessibilityChecker,
     ) {
         parent::__construct($hookDispatcher);
 
         $this->deleteOrderReturnStatesAccessibilityChecker = $deleteOrderReturnStatesAccessibilityChecker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Return statuses', [], 'Admin.Shopparameters.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -146,9 +138,6 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -185,9 +174,6 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -208,9 +194,6 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         return (new BulkActionCollection())

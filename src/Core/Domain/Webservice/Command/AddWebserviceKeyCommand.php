@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,16 +62,15 @@ class AddWebserviceKeyCommand
     /**
      * @param string $key
      * @param string $description
-     * @param bool $status
-     * @param array $permissions
-     * @param int[] $associatedShops
+     * @param bool   $status
+     * @param int[]  $associatedShops
      */
     public function __construct(
         $key,
         $description,
         $status,
         array $permissions,
-        array $associatedShops
+        array $associatedShops,
     ) {
         $this->key = new Key($key);
         $this->description = $description;
@@ -87,9 +87,6 @@ class AddWebserviceKeyCommand
         return $this->key;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDescription()
     {
         return $this->description;

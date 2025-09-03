@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class TabId implements TabIdInterface
      */
     private $tabId;
 
-    /**
-     * @param int $tabId
-     */
     public function __construct(int $tabId)
     {
         $this->assertTabIdIsGreaterThanZero($tabId);
@@ -47,25 +45,18 @@ class TabId implements TabIdInterface
         $this->tabId = $tabId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->tabId;
     }
 
     /**
-     * @param int $tabId
-     *
      * @throws InvalidTabValueIdException
      */
     private function assertTabIdIsGreaterThanZero(int $tabId): void
     {
-        if (0 >= $tabId) {
-            throw new InvalidTabValueIdException(
-                sprintf('Invalid tab id "%d" provided', $tabId)
-            );
+        if ($tabId <= 0) {
+            throw new InvalidTabValueIdException(\sprintf('Invalid tab id "%d" provided', $tabId));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class EmailLister
      */
     public function getAvailableMails($dir)
     {
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             return null;
         }
 
@@ -62,12 +63,12 @@ class EmailLister
                 $tmp = explode('.', $mail->getFilename());
 
                 // Check for filename existence (left part) and if extension is html (right part)
-                if (!isset($tmp[0]) || (isset($tmp[1]) && $tmp[1] !== 'html')) {
+                if (! isset($tmp[0]) || (isset($tmp[1]) && $tmp[1] !== 'html')) {
                     continue;
                 }
 
                 $mail_name_no_ext = $tmp[0];
-                if (!in_array($mail_name_no_ext, $mail_list)) {
+                if (! \in_array($mail_name_no_ext, $mail_list, true)) {
                     $mail_list[] = $mail_name_no_ext;
                 }
             }
@@ -86,7 +87,7 @@ class EmailLister
         if (str_contains($mail_name, '.')) {
             $tmp = explode('.', $mail_name);
 
-            if (!isset($tmp[0])) {
+            if (! isset($tmp[0])) {
                 return $mail_name;
             }
 

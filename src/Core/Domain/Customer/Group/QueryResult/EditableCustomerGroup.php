@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,12 +63,8 @@ class EditableCustomerGroup
     private $shopIds;
 
     /**
-     * @param int $id
      * @param array<int, string> $localizedNames array of names indexed by language id
-     * @param DecimalNumber $reduction
-     * @param bool $displayPriceTaxExcluded
-     * @param bool $showPrice
-     * @param array<int> $shopIds
+     * @param array<int>         $shopIds
      */
     public function __construct(
         int $id,
@@ -75,7 +72,7 @@ class EditableCustomerGroup
         DecimalNumber $reduction,
         bool $displayPriceTaxExcluded,
         bool $showPrice,
-        array $shopIds
+        array $shopIds,
     ) {
         $this->id = $id;
         $this->localizedNames = $localizedNames;
@@ -85,9 +82,6 @@ class EditableCustomerGroup
         $this->shopIds = $shopIds;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
@@ -101,25 +95,16 @@ class EditableCustomerGroup
         return $this->localizedNames;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getReduction(): DecimalNumber
     {
         return $this->reduction;
     }
 
-    /**
-     * @return bool
-     */
     public function displayPriceTaxExcluded(): bool
     {
         return $this->displayPriceTaxExcluded;
     }
 
-    /**
-     * @return bool
-     */
     public function showPrice(): bool
     {
         return $this->showPrice;

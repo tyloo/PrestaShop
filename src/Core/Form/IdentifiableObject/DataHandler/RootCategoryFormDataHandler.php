@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,18 +46,12 @@ final class RootCategoryFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(
-        CommandBusInterface $commandBus
+        CommandBusInterface $commandBus,
     ) {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         $command = $this->createAddRootCategoryCommand($data);
@@ -67,9 +62,6 @@ final class RootCategoryFormDataHandler implements FormDataHandlerInterface
         return $categoryId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($categoryId, array $data)
     {
         $command = $this->createEditRootCategoryCommand((int) $categoryId, $data);
@@ -79,10 +71,6 @@ final class RootCategoryFormDataHandler implements FormDataHandlerInterface
 
     /**
      * Creates command with form data for adding new root category
-     *
-     * @param array $data
-     *
-     * @return AddRootCategoryCommand
      *
      * @throws CategoryConstraintException
      */
@@ -116,11 +104,6 @@ final class RootCategoryFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * @param int $rootCategoryId
-     * @param array $data
-     *
-     * @return EditRootCategoryCommand
-     *
      * @throws CategoryConstraintException
      */
     private function createEditRootCategoryCommand(int $rootCategoryId, array $data): EditRootCategoryCommand

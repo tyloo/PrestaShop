@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,25 +49,16 @@ final class ApiClientGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'api_client';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Api Clients', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -117,9 +109,6 @@ final class ApiClientGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getRowActions(): RowActionCollection
     {
         $rowActions = new RowActionCollection();
@@ -144,9 +133,6 @@ final class ApiClientGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $rowActions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

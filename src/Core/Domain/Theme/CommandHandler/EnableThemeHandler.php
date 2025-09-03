@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\Command\EnableThemeCommand;
 use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\CannotEnableThemeException;
 use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\ThemeConstraintException;
 
-/**
- * Class EnableThemeHandler
- */
 #[AsCommandHandler]
 final class EnableThemeHandler implements EnableThemeHandlerInterface
 {
@@ -55,14 +53,12 @@ final class EnableThemeHandler implements EnableThemeHandlerInterface
     private $isSingleShopContext;
 
     /**
-     * @param ThemeManager $themeManager
-     * @param CacheClearerInterface $smartyCacheClearer
      * @param bool $isSingleShopContext
      */
     public function __construct(
         ThemeManager $themeManager,
         CacheClearerInterface $smartyCacheClearer,
-        $isSingleShopContext
+        $isSingleShopContext,
     ) {
         $this->themeManager = $themeManager;
         $this->smartyCacheClearer = $smartyCacheClearer;
@@ -70,23 +66,21 @@ final class EnableThemeHandler implements EnableThemeHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotEnableThemeException
      * @throws ThemeConstraintException
      */
     public function handle(EnableThemeCommand $command)
     {
-        if (!$this->isSingleShopContext) {
+        if (! $this->isSingleShopContext) {
             throw new ThemeConstraintException('Themes can be changed only in single shop context', ThemeConstraintException::RESTRICTED_ONLY_FOR_SINGLE_SHOP);
         }
 
         $plainThemeName = $command->getThemeName()->getValue();
 
-        if (!$this->themeManager->enable($plainThemeName)) {
+        if (! $this->themeManager->enable($plainThemeName)) {
             $errors = $this->themeManager->getErrors($plainThemeName);
 
-            if (is_array($errors)) {
+            if (\is_array($errors)) {
                 $error = reset($errors);
             } elseif ($errors) {
                 $error = $errors;

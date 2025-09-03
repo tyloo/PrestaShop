@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,9 +89,6 @@ class EditableCategory
      */
     private $shopAssociationIds;
 
-    /**
-     * @var mixed
-     */
     private $thumbnailImage;
 
     /**
@@ -114,22 +112,16 @@ class EditableCategory
     private $additionalDescription;
 
     /**
-     * @param CategoryId $id
      * @param string[] $name
-     * @param bool $isActive
+     * @param bool     $isActive
      * @param string[] $description
-     * @param int $parentId
+     * @param int      $parentId
      * @param string[] $metaTitle
      * @param string[] $metaDescription
-     * @param string $redirectType
-     * @param ?RedirectTargetInformation $categoryRedirectTarget
      * @param string[] $linkRewrite
-     * @param int[] $groupAssociationIds
-     * @param int[] $shopAssociationIds
-     * @param bool $isRootCategory
-     * @param mixed $coverImage
-     * @param mixed $thumbnailImage
-     * @param array $subCategories
+     * @param int[]    $groupAssociationIds
+     * @param int[]    $shopAssociationIds
+     * @param bool     $isRootCategory
      * @param string[] $additionalDescription
      */
     public function __construct(
@@ -149,7 +141,7 @@ class EditableCategory
         $coverImage = null,
         $thumbnailImage = null,
         array $subCategories = [],
-        array $additionalDescription = []
+        array $additionalDescription = [],
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -278,17 +270,11 @@ class EditableCategory
         return $this->shopAssociationIds;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCoverImage()
     {
         return $this->coverImage;
     }
 
-    /**
-     * @return mixed
-     */
     public function getThumbnailImage()
     {
         return $this->thumbnailImage;

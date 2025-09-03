@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class HookRepository
     public function __construct(
         HookInformationProvider $hookInfo,
         Shop $shop,
-        Db $db
+        Db $db,
     ) {
         $this->hookInfo = $hookInfo;
         $this->shop = $shop;
@@ -63,10 +64,10 @@ class HookRepository
     /**
      * Creates a new hook if not already existing and returns the hook id.
      *
-     * @param string $hook_name The name of the hook
-     * @param string $title The title for the hook
+     * @param string $hook_name   The name of the hook
+     * @param string $title       The title for the hook
      * @param string $description The description for the hook
-     * @param int $position if the modules in the hook can be positioned
+     * @param int    $position    if the modules in the hook can be positioned
      *
      * @return int Hook ID
      */
@@ -137,18 +138,18 @@ class HookRepository
     {
         foreach ($hooks as $hook_name => $module_names) {
             $id_hook = $this->getIdByName($hook_name);
-            if (!$id_hook) {
+            if (! $id_hook) {
                 $id_hook = $this->createHook($hook_name);
             }
-            if (!$id_hook) {
-                throw new Exception(sprintf('Could not create hook `%1$s`.', $hook_name));
+            if (! $id_hook) {
+                throw new Exception(\sprintf('Could not create hook `%1$s`.', $hook_name));
             }
 
             $this->unHookModulesFromHook($hook_name);
 
             $position = 0;
             foreach ($module_names as $module) {
-                if (is_array($module)) {
+                if (\is_array($module)) {
                     $module_name = key($module);
                     $extra_data = current($module);
                 } else {
@@ -158,7 +159,7 @@ class HookRepository
 
                 ++$position;
                 $id_module = $this->getIdModule($module_name);
-                if (!$id_module) {
+                if (! $id_module) {
                     continue;
                 }
 
@@ -171,7 +172,7 @@ class HookRepository
 
                 $this->db->insert('hook_module', $row);
 
-                if (!empty($extra_data['except_pages'])) {
+                if (! empty($extra_data['except_pages'])) {
                     $this->setModuleHookExceptions(
                         $id_module,
                         $id_hook,

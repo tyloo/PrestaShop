@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,7 +61,7 @@ class BulkUpdateProductStatusCommand
     public function __construct(
         array $productIds,
         bool $newStatus,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         foreach ($productIds as $productId) {
             $this->productIds[] = new ProductId($productId);
@@ -77,17 +78,11 @@ class BulkUpdateProductStatusCommand
         return $this->productIds;
     }
 
-    /**
-     * @return bool
-     */
     public function getNewStatus(): bool
     {
         return $this->newStatus;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

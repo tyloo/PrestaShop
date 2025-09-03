@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -79,8 +80,8 @@ class CategoryDeleteMode
      */
     private function setMode($mode)
     {
-        if (!in_array($mode, self::AVAILABLE_MODES)) {
-            throw new CategoryConstraintException(sprintf('Invalid Category delete mode %s supplied. Available delete modes are: "%s"', var_export($mode, true), implode(',', self::AVAILABLE_MODES)), CategoryConstraintException::INVALID_DELETE_MODE);
+        if (! \in_array($mode, self::AVAILABLE_MODES, true)) {
+            throw new CategoryConstraintException(\sprintf('Invalid Category delete mode %s supplied. Available delete modes are: "%s"', var_export($mode, true), implode(',', self::AVAILABLE_MODES)), CategoryConstraintException::INVALID_DELETE_MODE);
         }
 
         $this->mode = $mode;
@@ -93,7 +94,7 @@ class CategoryDeleteMode
      */
     public function shouldRemoveProducts()
     {
-        return self::REMOVE_ASSOCIATED_PRODUCTS === $this->mode;
+        return $this->mode === self::REMOVE_ASSOCIATED_PRODUCTS;
     }
 
     /**
@@ -103,6 +104,6 @@ class CategoryDeleteMode
      */
     public function shouldDisableProducts()
     {
-        return self::ASSOCIATE_PRODUCTS_WITH_PARENT_AND_DISABLE === $this->mode;
+        return $this->mode === self::ASSOCIATE_PRODUCTS_WITH_PARENT_AND_DISABLE;
     }
 }

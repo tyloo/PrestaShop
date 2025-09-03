@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Contact\ValueObject;
 
 use PrestaShop\PrestaShop\Core\Domain\Contact\Exception\ContactException;
 
-/**
- * Class ContactId
- */
 class ContactId
 {
     /**
@@ -57,8 +55,8 @@ class ContactId
      */
     private function assertIsIntegerOrMoreThanZero($contactId)
     {
-        if (!is_int($contactId) || 0 >= $contactId) {
-            throw new ContactException(sprintf('Invalid Contact id: %s', var_export($contactId, true)));
+        if (! \is_int($contactId) || $contactId <= 0) {
+            throw new ContactException(\sprintf('Invalid Contact id: %s', var_export($contactId, true)));
         }
     }
 

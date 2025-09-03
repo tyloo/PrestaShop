@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,7 +57,7 @@ class CartRuleMinimumForEditing
         DecimalNumber $amount,
         bool $amountTax,
         int $currencyId,
-        bool $shipping
+        bool $shipping,
     ) {
         $this->amount = $amount;
         $this->amountTax = $amountTax;
@@ -64,33 +65,21 @@ class CartRuleMinimumForEditing
         $this->shipping = $shipping;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getAmount(): DecimalNumber
     {
         return $this->amount;
     }
 
-    /**
-     * @return bool
-     */
     public function isAmountTax(): bool
     {
         return $this->amountTax;
     }
 
-    /**
-     * @return int
-     */
     public function getCurrencyId(): int
     {
         return $this->currencyId;
     }
 
-    /**
-     * @return bool
-     */
     public function isShipping(): bool
     {
         return $this->shipping;

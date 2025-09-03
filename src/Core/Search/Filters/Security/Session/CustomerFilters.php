@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,14 +37,8 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
  */
 class CustomerFilters extends Filters
 {
-    /**
-     * {@inheritdoc}
-     */
     protected $filterId = CustomerGridDefinitionFactory::GRID_ID;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults(): array
     {
         return [

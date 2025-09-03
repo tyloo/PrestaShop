@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,16 +89,16 @@ final class ImportConfig implements ImportConfigInterface
 
     /**
      * @param string $fileName
-     * @param int $entityType
+     * @param int    $entityType
      * @param string $languageIso
      * @param string $separator
      * @param string $multipleValueSeparator
-     * @param bool $truncate
-     * @param bool $skipThumbnailRegeneration
-     * @param bool $matchReferences
-     * @param bool $forceIds
-     * @param bool $sendEmail
-     * @param int $skipRows
+     * @param bool   $truncate
+     * @param bool   $skipThumbnailRegeneration
+     * @param bool   $matchReferences
+     * @param bool   $forceIds
+     * @param bool   $sendEmail
+     * @param int    $skipRows
      */
     public function __construct(
         $fileName,
@@ -110,7 +111,7 @@ final class ImportConfig implements ImportConfigInterface
         $matchReferences,
         $forceIds,
         $sendEmail,
-        $skipRows = 0
+        $skipRows = 0,
     ) {
         $this->fileName = $fileName;
         $this->entityType = $entityType;
@@ -125,89 +126,56 @@ final class ImportConfig implements ImportConfigInterface
         $this->skipRows = $skipRows;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFileName()
     {
         return $this->fileName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEntityType()
     {
         return $this->entityType;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLanguageIso()
     {
         return $this->languageIso;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSeparator()
     {
         return $this->separator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMultipleValueSeparator()
     {
         return $this->multipleValueSeparator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function truncate()
     {
         return $this->truncate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function skipThumbnailRegeneration()
     {
         return $this->skipThumbnailRegeneration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function matchReferences()
     {
         return $this->matchReferences;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function forceIds()
     {
         return $this->forceIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendEmail()
     {
         return $this->sendEmail;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNumberOfRowsToSkip()
     {
         return $this->skipRows;

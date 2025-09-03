@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class GridDefinitionFactoryProvider
 {
     public function __construct(
         #[AutowireLocator('core.grid_definition_factory')]
-        protected ServiceProviderInterface $factories
+        protected ServiceProviderInterface $factories,
     ) {
     }
 

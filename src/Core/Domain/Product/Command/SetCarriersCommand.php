@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,33 +55,25 @@ class SetCarriersCommand
     private $carrierReferenceIds;
 
     /**
-     * @param int $productId
      * @param int[] $carrierReferenceIds List of carrier reference IDs (instead of usual primary id as most entities)
-     * @param ShopConstraint $shopConstraint
      *
      * @throws ProductConstraintException
      */
     public function __construct(
         int $productId,
         array $carrierReferenceIds,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
         $this->shopConstraint = $shopConstraint;
         $this->setCarrierReferenceIds($carrierReferenceIds);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

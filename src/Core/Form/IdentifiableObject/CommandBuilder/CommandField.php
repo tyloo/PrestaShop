@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,17 +51,11 @@ class CommandField
     protected function __construct(string $commandSetter, array $dataFields, bool $isMultiShopField)
     {
         if (empty($dataFields)) {
-            throw new InvalidArgumentException(
-                sprintf('No data field provided to command setter "%s"', $commandSetter)
-            );
+            throw new InvalidArgumentException(\sprintf('No data field provided to command setter "%s"', $commandSetter));
         }
         foreach ($dataFields as $dataField) {
-            if (!$dataField instanceof DataField) {
-                throw new InvalidArgumentException(sprintf(
-                    'Invalid data field type "%s", expected "%s"',
-                    get_debug_type($dataField),
-                    DataField::class
-                ));
+            if (! $dataField instanceof DataField) {
+                throw new InvalidArgumentException(\sprintf('Invalid data field type "%s", expected "%s"', get_debug_type($dataField), DataField::class));
             }
         }
         $this->commandSetter = $commandSetter;
@@ -71,7 +66,6 @@ class CommandField
     /**
      * Returns a new command field for single shop
      *
-     * @param string $commandSetter
      * @param array<int, DataField> $dataFields
      *
      * @return static
@@ -84,7 +78,6 @@ class CommandField
     /**
      * Returns a new command field for multiple shops
      *
-     * @param string $commandSetter
      * @param array<int, DataField> $dataFields
      *
      * @return static
@@ -94,9 +87,6 @@ class CommandField
         return new static($commandSetter, $dataFields, true);
     }
 
-    /**
-     * @return string
-     */
     public function getCommandSetter(): string
     {
         return $this->commandSetter;
@@ -110,9 +100,6 @@ class CommandField
         return $this->dataFields;
     }
 
-    /**
-     * @return bool
-     */
     public function isMultiShopField(): bool
     {
         return $this->isMultiShopField;

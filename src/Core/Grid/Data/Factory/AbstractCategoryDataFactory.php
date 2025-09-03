@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,17 +45,11 @@ abstract class AbstractCategoryDataFactory implements GridDataFactoryInterface
      */
     protected $doctrineCategoryDataFactory;
 
-    /**
-     * @param GridDataFactoryInterface $doctrineCategoryDataFactory
-     */
     public function __construct(GridDataFactoryInterface $doctrineCategoryDataFactory)
     {
         $this->doctrineCategoryDataFactory = $doctrineCategoryDataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $data = $this->doctrineCategoryDataFactory->getData($searchCriteria);

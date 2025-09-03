@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,28 +39,17 @@ class ModalOptions
      */
     private $options;
 
-    /**
-     * @param array $options
-     */
     public function __construct(array $options = [])
     {
         $this->setOptions($options);
     }
 
-    /**
-     * @return array
-     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * @param array $options
-     *
-     * @return ModalOptions
-     */
-    public function setOptions(array $options): ModalOptions
+    public function setOptions(array $options): self
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
@@ -69,9 +59,6 @@ class ModalOptions
         return $this;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
         $resolver

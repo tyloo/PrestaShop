@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,9 +54,6 @@ class CartGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $cartData = $this->cartDataFactory->getData($searchCriteria);
@@ -70,10 +68,6 @@ class CartGridDataFactory implements GridDataFactoryInterface
 
     /**
      * Modify all records in grid data.
-     *
-     * @param RecordCollectionInterface $records
-     *
-     * @return RecordCollectionInterface
      */
     private function applyModifications(RecordCollectionInterface $records): RecordCollectionInterface
     {
@@ -114,10 +108,6 @@ class CartGridDataFactory implements GridDataFactoryInterface
 
     /**
      * Compute id_order column label.
-     *
-     * @param array $record
-     *
-     * @return string
      */
     private function getOrderLabel(array $record): string
     {

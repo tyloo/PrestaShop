@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,19 +66,12 @@ final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
      */
     private $catalogueExtractExcludedDirectories;
 
-    /**
-     * @param PhpExtractor $phpExtractor
-     * @param SmartyExtractor $smartyExtractor
-     * @param TwigExtractor $twigExtractor
-     * @param string $modulesDirectory
-     * @param array $catalogueExtractExcludedDirectories
-     */
     public function __construct(
         PhpExtractor $phpExtractor,
         SmartyExtractor $smartyExtractor,
         TwigExtractor $twigExtractor,
         string $modulesDirectory,
-        array $catalogueExtractExcludedDirectories
+        array $catalogueExtractExcludedDirectories,
     ) {
         $this->phpExtractor = $phpExtractor;
         $this->smartyExtractor = $smartyExtractor;
@@ -114,17 +108,12 @@ final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
      * Modules usually don't use domain names when calling the l() function in PHP files.
      * Therefore, the PHP extractor will stores those calls in the default domain named "messages".
      * This process moves all wordings in the "messages" domain to the inferred module domain.
-     *
-     * @param MessageCatalogue $extractedCatalogue
-     * @param string $moduleName
-     *
-     * @return MessageCatalogue
      */
     private function postprocessPhpCatalogue(MessageCatalogue $extractedCatalogue, string $moduleName): MessageCatalogue
     {
         $defaultDomain = 'messages';
 
-        if (!in_array($defaultDomain, $extractedCatalogue->getDomains())) {
+        if (! \in_array($defaultDomain, $extractedCatalogue->getDomains(), true)) {
             return $extractedCatalogue;
         }
 
@@ -133,7 +122,7 @@ final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
         $allWordings = $extractedCatalogue->all();
 
         // move default domain into the new domain (avoiding to overwrite existing translations)
-        $allWordings[$newDomain] = (isset($allWordings[$newDomain]) && is_array($allWordings[$newDomain]))
+        $allWordings[$newDomain] = (isset($allWordings[$newDomain]) && \is_array($allWordings[$newDomain]))
             ? array_merge($allWordings[$newDomain], $allWordings[$defaultDomain])
             : $allWordings[$defaultDomain];
 

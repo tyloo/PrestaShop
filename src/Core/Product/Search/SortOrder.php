@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,10 +53,8 @@ class SortOrder
     private $label;
 
     /**
-     * SortOrder constructor.
-     *
-     * @param string $entity the SortOrder entity
-     * @param string $field the SortOrder field
+     * @param string $entity    the SortOrder entity
+     * @param string $field     the SortOrder field
      * @param string $direction the SortOrder direction
      *
      * @throws InvalidSortOrderDirectionException
@@ -123,7 +122,7 @@ class SortOrder
     {
         $sortParams = explode('.', $sortOrderConfiguration);
 
-        if (count($sortParams) < 3) {
+        if (\count($sortParams) < 3) {
             throw new CoreException('Invalid argument');
         }
 
@@ -202,7 +201,7 @@ class SortOrder
     public function setDirection($direction)
     {
         $formattedDirection = strtolower($direction);
-        if (!in_array($formattedDirection, ['asc', 'desc', 'random'])) {
+        if (! \in_array($formattedDirection, ['asc', 'desc', 'random'], true)) {
             throw new InvalidSortOrderDirectionException($direction);
         }
 
@@ -227,9 +226,11 @@ class SortOrder
         if ($this->entity === 'product') {
             if ($this->field === 'name') {
                 return 'pl.';
-            } elseif ($this->field === 'position') {
+            }
+            if ($this->field === 'position') {
                 return 'cp.';
-            } elseif ($this->field === 'manufacturer_name') {
+            }
+            if ($this->field === 'manufacturer_name') {
                 $this->setField('name');
 
                 return 'm.';
@@ -253,11 +254,12 @@ class SortOrder
     {
         if ($prefix) {
             return $this->getLegacyPrefix() . $this->field;
-        } elseif ($this->entity === 'manufacturer' && $this->field === 'name') {
-            return 'manufacturer_name';
-        } else {
-            return $this->field;
         }
+        if ($this->entity === 'manufacturer' && $this->field === 'name') {
+            return 'manufacturer_name';
+        }
+
+        return $this->field;
     }
 
     /**

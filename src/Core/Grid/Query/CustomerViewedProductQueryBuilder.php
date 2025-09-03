@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,26 +48,17 @@ final class CustomerViewedProductQueryBuilder extends AbstractDoctrineQueryBuild
      */
     private $contextLanguageId;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextLanguageId
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $contextLanguageId
+        int $contextLanguageId,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
         $this->contextLanguageId = $contextLanguageId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -85,9 +77,6 @@ final class CustomerViewedProductQueryBuilder extends AbstractDoctrineQueryBuild
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->getQueryBuilder($searchCriteria->getFilters())
@@ -96,10 +85,6 @@ final class CustomerViewedProductQueryBuilder extends AbstractDoctrineQueryBuild
 
     /**
      * Gets query builder with the common sql used for displaying viewed products list and applying filter actions.
-     *
-     * @param array $filters
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters): QueryBuilder
     {
@@ -130,9 +115,6 @@ final class CustomerViewedProductQueryBuilder extends AbstractDoctrineQueryBuild
 
     /**
      * Apply filters to viewed products query builder.
-     *
-     * @param array $filters
-     * @param QueryBuilder $qb
      */
     private function applyFilters(QueryBuilder $qb, array $filters)
     {
@@ -141,11 +123,11 @@ final class CustomerViewedProductQueryBuilder extends AbstractDoctrineQueryBuild
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersMap) || empty($value)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap) || empty($value)) {
                 continue;
             }
 
-            if ('id_customer' === $filterName) {
+            if ($filterName === 'id_customer') {
                 $qb->andWhere('c.`id_customer` = :' . $filterName);
                 $qb->setParameter($filterName, $value);
             }

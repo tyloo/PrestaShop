@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,35 +39,24 @@ class FeatureId
      */
     private $featureId;
 
-    /**
-     * @param int $featureId
-     */
     public function __construct(int $featureId)
     {
         $this->assertIsGreaterThanZero($featureId);
         $this->featureId = $featureId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->featureId;
     }
 
     /**
-     * @param int $featureId
-     *
      * @throws FeatureConstraintException
      */
     private function assertIsGreaterThanZero(int $featureId): void
     {
-        if (0 >= $featureId) {
-            throw new FeatureConstraintException(
-                sprintf('Invalid feature id %d. It must be greater than zero.', $featureId),
-                FeatureConstraintException::INVALID_ID
-            );
+        if ($featureId <= 0) {
+            throw new FeatureConstraintException(\sprintf('Invalid feature id %d. It must be greater than zero.', $featureId), FeatureConstraintException::INVALID_ID);
         }
     }
 }

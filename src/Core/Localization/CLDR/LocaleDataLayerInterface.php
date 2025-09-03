@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,9 @@ interface LocaleDataLayerInterface
     /**
      * Write a locale's CLDR data object into the data source.
      *
-     * @param string $localeCode The locale code (simplified IETF tag syntax)
-     *                           Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
-     *                           eg: fr-FR, en-US
+     * @param string     $localeCode The locale code (simplified IETF tag syntax)
+     *                               Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
+     *                               eg: fr-FR, en-US
      * @param LocaleData $localeData The locale's CLDR data to write
      *
      * @return LocaleData
@@ -66,5 +67,5 @@ interface LocaleDataLayerInterface
      *
      * @return self
      */
-    public function setLowerLayer(LocaleDataLayerInterface $lowerLayer);
+    public function setLowerLayer(self $lowerLayer);
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,10 +46,6 @@ class RedirectOption
      */
     private $redirectTarget;
 
-    /**
-     * @param string $redirectType
-     * @param int $redirectTarget
-     */
     public function __construct(string $redirectType, int $redirectTarget)
     {
         $this->redirectType = new RedirectType($redirectType);
@@ -56,25 +53,17 @@ class RedirectOption
         $this->assertTypeAndTargetIntegrity();
     }
 
-    /**
-     * @return RedirectType
-     */
     public function getRedirectType(): RedirectType
     {
         return $this->redirectType;
     }
 
-    /**
-     * @return RedirectTarget
-     */
     public function getRedirectTarget(): RedirectTarget
     {
         return $this->redirectTarget;
     }
 
     /**
-     * @param int $value
-     *
      * @throws ProductConstraintException
      */
     private function setRedirectTarget(int $value): void
@@ -92,14 +81,7 @@ class RedirectOption
     private function assertTypeAndTargetIntegrity(): void
     {
         if ($this->redirectType->isProductType() && $this->redirectTarget->isNoTarget()) {
-            throw new ProductConstraintException(
-                sprintf(
-                    'Invalid redirect target "%s". It must be a valid product id when type is "%s',
-                    $this->redirectTarget->getValue(),
-                    $this->redirectType->getValue()
-                ),
-                ProductConstraintException::INVALID_REDIRECT_TARGET
-            );
+            throw new ProductConstraintException(\sprintf('Invalid redirect target "%s". It must be a valid product id when type is "%s', $this->redirectTarget->getValue(), $this->redirectType->getValue()), ProductConstraintException::INVALID_REDIRECT_TARGET);
         }
     }
 }

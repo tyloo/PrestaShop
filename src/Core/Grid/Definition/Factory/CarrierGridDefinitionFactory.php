@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,13 +77,10 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
      */
     protected $showExternalModuleColumn;
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         $dbPrefix,
-        Connection $connection
+        Connection $connection,
     ) {
         parent::__construct($hookDispatcher);
         $this->connection = $connection;
@@ -91,25 +89,16 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
         $this->showExternalModuleColumn = $this->hasActiveExternalModuleCarriers();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Carriers', [], 'Admin.Shipping.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = new ColumnCollection();
@@ -206,9 +195,6 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = new FilterCollection();

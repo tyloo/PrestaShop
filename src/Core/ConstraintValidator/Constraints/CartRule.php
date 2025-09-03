@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,9 +57,6 @@ class CartRule extends Constraint
      */
     public $missingActionsMessage = 'Cart rule must have at least one action';
 
-    /**
-     * {@inheritDoc}
-     */
     public function validatedBy(): string
     {
         return CartRuleValidator::class;

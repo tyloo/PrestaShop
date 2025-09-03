@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,24 +53,16 @@ final class CategoryFilterFormFactory implements GridFilterFormFactoryInterface
      */
     private $requestStack;
 
-    /**
-     * @param GridFilterFormFactoryInterface $formFactory
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param RequestStack $requestStack
-     */
     public function __construct(
         GridFilterFormFactoryInterface $formFactory,
         UrlGeneratorInterface $urlGenerator,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         $this->formFactory = $formFactory;
         $this->urlGenerator = $urlGenerator;
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(GridDefinitionInterface $definition)
     {
         $categoryFilterForm = $this->formFactory->create($definition);
@@ -91,7 +84,7 @@ final class CategoryFilterFormFactory implements GridFilterFormFactoryInterface
         $queryParams = [];
         $request = $this->requestStack->getCurrentRequest();
 
-        if ((null !== $request) && $request->attributes->has('categoryId')) {
+        if (($request !== null) && $request->attributes->has('categoryId')) {
             $queryParams['categoryId'] = $request->attributes->get('categoryId');
         }
 

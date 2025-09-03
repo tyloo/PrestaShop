@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,13 +35,10 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureValueId;
 class FeatureValueFormDataHandler implements FormDataHandlerInterface
 {
     public function __construct(
-        protected readonly CommandBusInterface $commandBus
+        protected readonly CommandBusInterface $commandBus,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data): int
     {
         /** @var FeatureValueId $featureValueId */
@@ -52,9 +50,6 @@ class FeatureValueFormDataHandler implements FormDataHandlerInterface
         return $featureValueId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data): void
     {
         $command = (new EditFeatureValueCommand($id))

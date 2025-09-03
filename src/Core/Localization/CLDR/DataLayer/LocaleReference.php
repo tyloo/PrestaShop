@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,9 +54,6 @@ class LocaleReference extends AbstractDataLayer implements CldrLocaleDataLayerIn
         $this->reader = $reader;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLowerLayer(CldrLocaleDataLayerInterface $lowerLayer)
     {
         $this->lowerDataLayer = $lowerLayer;
@@ -82,10 +80,10 @@ class LocaleReference extends AbstractDataLayer implements CldrLocaleDataLayerIn
     /**
      * CLDR files are read only. Nothing can be written there.
      *
-     * @param string $localeCode
-     *                           The CLDR LocaleData object identifier
+     * @param string     $localeCode
+     *                               The CLDR LocaleData object identifier
      * @param LocaleData $data
-     *                         The CLDR LocaleData object to be written
+     *                               The CLDR LocaleData object to be written
      */
     protected function doWrite($localeCode, $data)
     {

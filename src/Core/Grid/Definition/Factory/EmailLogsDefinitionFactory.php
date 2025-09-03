@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,37 +60,24 @@ final class EmailLogsDefinitionFactory extends AbstractGridDefinitionFactory
      */
     private $languageChoiceProvider;
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param ConfigurableFormChoiceProviderInterface $languageChoiceProvider
-     */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        ConfigurableFormChoiceProviderInterface $languageChoiceProvider
+        ConfigurableFormChoiceProviderInterface $languageChoiceProvider,
     ) {
         parent::__construct($hookDispatcher);
         $this->languageChoiceProvider = $languageChoiceProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Email', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -157,9 +145,6 @@ final class EmailLogsDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -220,9 +205,6 @@ final class EmailLogsDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -252,9 +234,6 @@ final class EmailLogsDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ class EntityManager
 
     public function __construct(
         DatabaseInterface $db,
-        \PrestaShop\PrestaShop\Core\ConfigurationInterface $configuration
+        \PrestaShop\PrestaShop\Core\ConfigurationInterface $configuration,
     ) {
         $this->db = $db;
         $this->configuration = $configuration;
@@ -57,17 +58,15 @@ class EntityManager
      * Return current repository used.
      *
      * @param string $className
-     *
-     * @return mixed
      */
     public function getRepository($className)
     {
         $repositoryClass = null;
-        if (is_callable([$className, 'getRepositoryClassName'])) {
-            $repositoryClass = call_user_func([$className, 'getRepositoryClassName']);
+        if (\is_callable([$className, 'getRepositoryClassName'])) {
+            $repositoryClass = \call_user_func([$className, 'getRepositoryClassName']);
         }
 
-        if (!$repositoryClass) {
+        if (! $repositoryClass) {
             $repositoryClass = '\\PrestaShop\\PrestaShop\\Core\\Foundation\\Database\\EntityRepository';
         }
 
@@ -85,13 +84,11 @@ class EntityManager
      *
      * @param string $className
      *
-     * @return mixed
-     *
      * @throws \PrestaShop\PrestaShop\Adapter\CoreException
      */
     public function getEntityMetaData($className)
     {
-        if (!array_key_exists($className, $this->entityMetaData)) {
+        if (! \array_key_exists($className, $this->entityMetaData)) {
             $metaDataRetriever = new EntityMetaDataRetriever();
             $this->entityMetaData[$className] = $metaDataRetriever->getEntityMetaData($className);
         }
@@ -101,8 +98,6 @@ class EntityManager
 
     /**
      * Flush entity to DB.
-     *
-     * @param EntityInterface $entity
      *
      * @return $this
      */
@@ -115,8 +110,6 @@ class EntityManager
 
     /**
      * DElete entity from DB.
-     *
-     * @param EntityInterface $entity
      *
      * @return $this
      */

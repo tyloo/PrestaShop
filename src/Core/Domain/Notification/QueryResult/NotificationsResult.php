@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,10 +51,6 @@ class NotificationsResult
     private $notifications = [];
 
     /**
-     * NotificationsResult constructor.
-     *
-     * @param string $type
-     * @param int $total
      * @param NotificationResult[] $notifications
      *
      * @throws NotificationException
@@ -70,9 +67,6 @@ class NotificationsResult
         return $this->type;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;

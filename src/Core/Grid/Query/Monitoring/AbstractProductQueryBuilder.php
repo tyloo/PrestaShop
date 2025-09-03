@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,12 +60,9 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
     protected $multistoreContextChecker;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
-     * @param int $contextLangId
-     * @param int $contextShopId
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
+     * @param int    $contextLangId
+     * @param int    $contextShopId
      */
     public function __construct(
         Connection $connection,
@@ -72,7 +70,7 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
         $contextLangId,
         $contextShopId,
         DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
-        MultistoreContextCheckerInterface $multistoreContextChecker
+        MultistoreContextCheckerInterface $multistoreContextChecker,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->contextLangId = $contextLangId;
@@ -83,8 +81,6 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Provides commonly reusable query for monitoring products lists
-     *
-     * @param SearchCriteriaInterface $searchCriteria
      *
      * @return QueryBuilder
      */
@@ -126,41 +122,37 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param array $filters
-     */
     private function applyFilters(QueryBuilder $qb, array $filters)
     {
         $allowedFilters = ['id_product', 'reference', 'name', 'active'];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters, true)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('id_product' === $filterName) {
+            if ($filterName === 'id_product') {
                 $qb->andWhere("p.id_product = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('reference' === $filterName) {
+            if ($filterName === 'reference') {
                 $qb->andWhere("p.reference LIKE :$filterName");
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('name' === $filterName) {
+            if ($filterName === 'name') {
                 $qb->andWhere("pl.name LIKE :$filterName");
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('active' === $filterName) {
+            if ($filterName === 'active') {
                 $qb->andWhere("p.active = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
             }

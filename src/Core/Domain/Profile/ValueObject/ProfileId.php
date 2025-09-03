@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,10 +61,8 @@ class ProfileId
      */
     private function assertProfileIdIsGreaterThanZero(int $profileId)
     {
-        if (0 >= $profileId) {
-            throw new ProfileConstraintException(
-                sprintf('Invalid profile id %s provided', var_export($profileId, true))
-            );
+        if ($profileId <= 0) {
+            throw new ProfileConstraintException(\sprintf('Invalid profile id %s provided', var_export($profileId, true)));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,9 +77,7 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     private $shopAssociation;
 
     /**
-     * @param array $localisedName
-     * @param array $localisedFriendlyUrl
-     * @param int $parentId
+     * @param int  $parentId
      * @param bool $isDisplayed
      *
      * @throws CmsPageCategoryException
@@ -87,7 +86,7 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         array $localisedName,
         array $localisedFriendlyUrl,
         $parentId,
-        $isDisplayed
+        $isDisplayed,
     ) {
         $this->assertCategoryName($localisedName);
 

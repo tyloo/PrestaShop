@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,12 +73,6 @@ class EditableState
     private $associatedShops;
 
     /**
-     * @param StateId $stateId
-     * @param CountryId $countryId
-     * @param ZoneId $zoneId
-     * @param string $name
-     * @param string $isoCode
-     * @param bool $enabled
      * @param array<int, int> $associatedShops
      */
     public function __construct(
@@ -87,7 +82,7 @@ class EditableState
         string $name,
         string $isoCode,
         bool $enabled,
-        array $associatedShops
+        array $associatedShops,
     ) {
         $this->stateId = $stateId;
         $this->countryId = $countryId;
@@ -98,49 +93,31 @@ class EditableState
         $this->associatedShops = $associatedShops;
     }
 
-    /**
-     * @return StateId
-     */
     public function getStateId(): StateId
     {
         return $this->stateId;
     }
 
-    /**
-     * @return CountryId
-     */
     public function getCountryId(): CountryId
     {
         return $this->countryId;
     }
 
-    /**
-     * @return ZoneId
-     */
     public function getZoneId(): ZoneId
     {
         return $this->zoneId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getIsoCode(): string
     {
         return $this->isoCode;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,23 +44,18 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
+        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
 
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $queryBuilder = $this->getQueryBuilder()
@@ -76,9 +72,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
         return $queryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $queryBuilder = $this->getQueryBuilder()
@@ -99,8 +92,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get generic query builder.
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(): QueryBuilder
     {
@@ -109,8 +100,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Append "Shop" column to logs query builder.
-     *
-     * @param QueryBuilder $queryBuilder
      */
     private function appendShopQuery(QueryBuilder $queryBuilder): void
     {
@@ -125,8 +114,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Append "Shop group" column to logs query builder.
-     *
-     * @param QueryBuilder $queryBuilder
      */
     private function appendShopGroupQuery(QueryBuilder $queryBuilder): void
     {
@@ -141,8 +128,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Append "Lang" column to logs query builder.
-     *
-     * @param QueryBuilder $queryBuilder
      */
     private function appendLangQuery(QueryBuilder $queryBuilder): void
     {
@@ -157,8 +142,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Append "Employee" column to logs query builder.
-     *
-     * @param QueryBuilder $queryBuilder
      */
     private function appendEmployeeQuery(QueryBuilder $queryBuilder): void
     {
@@ -170,11 +153,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply filters to log query builder.
-     *
-     * @param array $filters
-     * @param QueryBuilder $qb
-     *
-     * @return QueryBuilder
      */
     private function applyFilters(array $filters, QueryBuilder $qb): QueryBuilder
     {
@@ -190,25 +168,25 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('date_add' === $filterName) {
+            if ($filterName === 'date_add') {
                 if (isset($filterValue['from'])) {
                     $qb->andWhere('lg.date_add >= :date_from');
-                    $qb->setParameter('date_from', sprintf('%s 0:0:0', $filterValue['from']));
+                    $qb->setParameter('date_from', \sprintf('%s 0:0:0', $filterValue['from']));
                 }
 
                 if (isset($filterValue['to'])) {
                     $qb->andWhere('lg.date_add <= :date_to');
-                    $qb->setParameter('date_to', sprintf('%s 23:59:59', $filterValue['to']));
+                    $qb->setParameter('date_to', \sprintf('%s 23:59:59', $filterValue['to']));
                 }
 
                 continue;
             }
 
-            if ('employee' === $filterName) {
+            if ($filterName === 'employee') {
                 $alias = $this->getEmployeeField(true);
 
                 $qb->andWhere("$alias LIKE :$filterName");
@@ -224,9 +202,6 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @return string
-     */
     private function getEmployeeField(bool $includeFullFirstname = true): string
     {
         if ($includeFullFirstname) {

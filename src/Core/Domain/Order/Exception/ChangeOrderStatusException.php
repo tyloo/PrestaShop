@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,11 +51,11 @@ class ChangeOrderStatusException extends OrderException
     private $ordersWithAssignedStatus;
 
     /**
-     * @param OrderId[] $ordersWithFailedToUpdateStatus
-     * @param OrderId[] $ordersWithFailedToSendEmail
-     * @param OrderId[] $ordersWithAssignedStatus
-     * @param string $message
-     * @param int $code
+     * @param OrderId[]      $ordersWithFailedToUpdateStatus
+     * @param OrderId[]      $ordersWithFailedToSendEmail
+     * @param OrderId[]      $ordersWithAssignedStatus
+     * @param string         $message
+     * @param int            $code
      * @param Exception|null $previous
      */
     public function __construct(
@@ -63,7 +64,7 @@ class ChangeOrderStatusException extends OrderException
         array $ordersWithAssignedStatus,
         $message = '',
         $code = 0,
-        $previous = null
+        $previous = null,
     ) {
         $this->ordersWithFailedToUpdateStatus = $ordersWithFailedToUpdateStatus;
         $this->ordersWithFailedToSendEmail = $ordersWithFailedToSendEmail;

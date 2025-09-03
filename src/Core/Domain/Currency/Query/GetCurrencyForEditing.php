@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,9 +30,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Currency\Query;
 use PrestaShop\PrestaShop\Core\Domain\Currency\Exception\CurrencyException;
 use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId;
 
-/**
- * Class GetCurrencyForEditing
- */
 class GetCurrencyForEditing
 {
     /**

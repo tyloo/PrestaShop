@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,12 +54,11 @@ class RestrictionRule
     private readonly array $entityIds;
 
     /**
-     * @param string $type
      * @param int[] $entityIds
      */
     public function __construct(
         string $type,
-        array $entityIds
+        array $entityIds,
     ) {
         $this->assertType($type);
         $this->assertIds($entityIds);
@@ -67,9 +67,6 @@ class RestrictionRule
         $this->entityIds = $entityIds;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
@@ -86,37 +83,26 @@ class RestrictionRule
     /**
      * @param int[] $ids
      *
-     * @return void
-     *
      * @throws CartRuleConstraintException
      */
     private function assertIds(array $ids): void
     {
         if (empty($ids)) {
-            throw new CartRuleConstraintException(
-                sprintf('%s item ids cannot be empty', self::class),
-                CartRuleConstraintException::EMPTY_RESTRICTION_RULE_IDS
-            );
+            throw new CartRuleConstraintException(\sprintf('%s item ids cannot be empty', self::class), CartRuleConstraintException::EMPTY_RESTRICTION_RULE_IDS);
         }
         foreach ($ids as $id) {
-            if (!is_int($id) || $id <= 0) {
-                throw new CartRuleConstraintException(
-                    sprintf('%s item id must be positive integer', self::class),
-                    CartRuleConstraintException::INVALID_RESTRICTION_RULE_ID
-                );
+            if (! \is_int($id) || $id <= 0) {
+                throw new CartRuleConstraintException(\sprintf('%s item id must be positive integer', self::class), CartRuleConstraintException::INVALID_RESTRICTION_RULE_ID);
             }
         }
     }
 
     private function assertType(string $type): void
     {
-        if (in_array($type, self::VALID_TYPES, true)) {
+        if (\in_array($type, self::VALID_TYPES, true)) {
             return;
         }
 
-        throw new CartRuleConstraintException(
-            sprintf('Invalid type provided to %s', self::class),
-            CartRuleConstraintException::INVALID_RESTRICTION_RULE_TYPE
-        );
+        throw new CartRuleConstraintException(\sprintf('Invalid type provided to %s', self::class), CartRuleConstraintException::INVALID_RESTRICTION_RULE_TYPE);
     }
 }

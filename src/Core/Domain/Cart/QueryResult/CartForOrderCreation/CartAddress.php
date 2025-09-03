@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,19 +57,12 @@ class CartAddress
      */
     private $invoice;
 
-    /**
-     * @param int $addressId
-     * @param string $alias
-     * @param string $formattedAddress
-     * @param bool $delivery
-     * @param bool $invoice
-     */
     public function __construct(
         int $addressId,
         string $alias,
         string $formattedAddress,
         bool $delivery,
-        bool $invoice
+        bool $invoice,
     ) {
         $this->addressId = $addressId;
         $this->alias = $alias;
@@ -77,41 +71,26 @@ class CartAddress
         $this->invoice = $invoice;
     }
 
-    /**
-     * @return int
-     */
     public function getAddressId(): int
     {
         return $this->addressId;
     }
 
-    /**
-     * @return string
-     */
     public function getAlias(): string
     {
         return $this->alias;
     }
 
-    /**
-     * @return string
-     */
     public function getFormattedAddress(): string
     {
         return $this->formattedAddress;
     }
 
-    /**
-     * @return bool
-     */
     public function isDelivery(): bool
     {
         return $this->delivery;
     }
 
-    /**
-     * @return bool
-     */
     public function isInvoice(): bool
     {
         return $this->invoice;

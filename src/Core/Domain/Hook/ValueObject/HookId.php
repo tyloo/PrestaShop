@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,8 +64,8 @@ class HookId
      */
     private function assertIntegerIsGreaterThanZero($hookId)
     {
-        if (!is_int($hookId) || 0 > $hookId) {
-            throw new HookConstraintException(sprintf('Hook id %d is invalid. Hook id must be number that is greater than zero.', var_export($hookId, true)));
+        if (! \is_int($hookId) || $hookId < 0) {
+            throw new HookConstraintException(\sprintf('Hook id %d is invalid. Hook id must be number that is greater than zero.', var_export($hookId, true)));
         }
     }
 }

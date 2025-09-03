@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,16 +53,11 @@ class ThemeExtractor
     }
 
     /**
-     * @param Theme $theme
-     * @param string|null $locale
-     *
-     * @return MessageCatalogue
-     *
      * @throws Exception
      */
     public function extract(Theme $theme, ?string $locale = null): MessageCatalogue
     {
-        if (null === $locale) {
+        if ($locale === null) {
             $locale = CatalogueLayersProviderInterface::DEFAULT_LOCALE;
         }
 
@@ -77,10 +73,6 @@ class ThemeExtractor
 
     /**
      * Normalizes domains in a catalogue by removing dots
-     *
-     * @param MessageCatalogue $catalogue
-     *
-     * @return MessageCatalogue
      */
     private function normalize(MessageCatalogue $catalogue): MessageCatalogue
     {
@@ -101,11 +93,6 @@ class ThemeExtractor
         return $newCatalogue;
     }
 
-    /**
-     * @param string $domain
-     *
-     * @return string
-     */
     private function normalizeDomain(string $domain): string
     {
         return strtr($domain, ['.' => '']);

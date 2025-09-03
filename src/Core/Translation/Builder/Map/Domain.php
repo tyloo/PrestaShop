@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,15 +60,12 @@ class Domain
         return $this->domainName;
     }
 
-    /**
-     * @param Message $message
-     */
     public function addMessage(Message $message): self
     {
         // if called twice with the same key, the second call will be ignored
-        if (!array_key_exists($message->getKey(), $this->messages)) {
+        if (! \array_key_exists($message->getKey(), $this->messages)) {
             // The missing translations are placed on top
-            if (!$message->isTranslated()) {
+            if (! $message->isTranslated()) {
                 $this->messages = [$message->getKey() => $message] + $this->messages;
             } else {
                 $this->messages[$message->getKey()] = $message;
@@ -87,16 +85,16 @@ class Domain
 
     public function getTranslationsCount(): int
     {
-        return count($this->messages);
+        return \count($this->messages);
     }
 
     public function getMissingTranslationsCount(): int
     {
         $missingTranslations = array_filter($this->messages, function (Message $message) {
-            return !$message->isTranslated();
+            return ! $message->isTranslated();
         });
 
-        return count($missingTranslations);
+        return \count($missingTranslations);
     }
 
     /**
@@ -154,10 +152,6 @@ class Domain
      *     ],
      * ];
      * ```
-     *
-     * @param array $tree
-     *
-     * @return array
      */
     public function mergeTree(array &$tree): array
     {
@@ -180,10 +174,10 @@ class Domain
             $currentSubdomainName .= $subdomainPartName;
 
             // create domain part branch if it doesn't exist
-            if (!array_key_exists($subdomainPartName, $subtree)) {
+            if (! \array_key_exists($subdomainPartName, $subtree)) {
                 // only initialize tree leaves subtree with catalogue metadata
                 // branches are initialized with empty metadata (which will be updated later)
-                $isLastDomainPart = $partNumber === (count($parts) - 1);
+                $isLastDomainPart = $partNumber === (\count($parts) - 1);
                 $subtree[$subdomainPartName][Catalogue::METADATA_KEY_NAME] = ($isLastDomainPart && isset($content[Catalogue::METADATA_KEY_NAME]))
                     ? $content[Catalogue::METADATA_KEY_NAME]
                     : Catalogue::EMPTY_META;
@@ -201,8 +195,6 @@ class Domain
      * First, we split the camelcased name and add underscore between each part. For example DomainNameNumberOne will be Domain_Name_Number_One
      * Then, we explode the name in 3 parts based on _ separator. So Domain_Name_Number_One will be ['Domain', 'Name', 'Number_One']
      *
-     * @param string $domain
-     *
      * @return string[]
      */
     public static function splitDomain(string $domain): array
@@ -211,24 +203,19 @@ class Domain
         return explode('_', Inflector::getInflector()->tableize($domain), 3);
     }
 
-    /**
-     * @param bool $withMetadata
-     *
-     * @return array
-     */
     public function toArray(bool $withMetadata = true): array
     {
         $data = [];
         foreach ($this->messages as $messageTranslation) {
             $messageData = $messageTranslation->toArray();
-            $messageData['tree_domain'] = preg_split('/(?=[A-Z])/', $this->domainName, -1, PREG_SPLIT_NO_EMPTY);
+            $messageData['tree_domain'] = preg_split('/(?=[A-Z])/', $this->domainName, -1, \PREG_SPLIT_NO_EMPTY);
 
             $data[$messageTranslation->getKey()] = $messageData;
         }
 
         if ($withMetadata) {
             $data[Catalogue::METADATA_KEY_NAME] = [
-                'count' => count($this->messages),
+                'count' => \count($this->messages),
                 'missing_translations' => $this->getMissingTranslationsCount(),
             ];
         }

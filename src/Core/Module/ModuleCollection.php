@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,9 @@ use Traversable;
  */
 class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
 {
-    /** @var ModuleInterface[] */
+    /**
+     * @var ModuleInterface[]
+     */
     private $modules = [];
 
     private $errors = [];
@@ -50,10 +53,8 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
     public function __construct(array $modules = [])
     {
         foreach ($modules as $module) {
-            if (!$module instanceof ModuleInterface) {
-                throw new PrestaShopException(
-                    sprintf('%s only accept %s elements.', self::class, ModuleInterface::class)
-                );
+            if (! $module instanceof ModuleInterface) {
+                throw new PrestaShopException(\sprintf('%s only accept %s elements.', self::class, ModuleInterface::class));
             }
             $this->modules[] = $module;
         }
@@ -61,10 +62,8 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * @param ModuleInterface[] $modules
-     *
-     * @return ModuleCollection
      */
-    public static function createFrom(array $modules): ModuleCollection
+    public static function createFrom(array $modules): self
     {
         return new static($modules);
     }
@@ -76,17 +75,15 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
 
     public function count(): int
     {
-        return count($this->modules);
+        return \count($this->modules);
     }
 
     public function offsetExists($offset): bool
     {
-        return array_key_exists($offset, $this->modules);
+        return \array_key_exists($offset, $this->modules);
     }
 
     /**
-     * @param mixed $offset
-     *
      * @return ModuleInterface|null
      */
     #[ReturnTypeWillChange]
@@ -97,10 +94,8 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
 
     public function offsetSet($offset, $value): void
     {
-        if (!$value instanceof ModuleInterface) {
-            throw new PrestaShopException(
-                sprintf('%s only accept %s elements.', self::class, ModuleInterface::class)
-            );
+        if (! $value instanceof ModuleInterface) {
+            throw new PrestaShopException(\sprintf('%s only accept %s elements.', self::class, ModuleInterface::class));
         }
         $this->modules[$offset] = $value;
     }
@@ -112,7 +107,7 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
         }
     }
 
-    public function filter(callable $callable): ModuleCollection
+    public function filter(callable $callable): self
     {
         return static::createFrom(array_filter($this->modules, $callable));
     }

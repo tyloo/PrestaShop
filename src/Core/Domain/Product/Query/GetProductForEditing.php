@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,40 +52,26 @@ class GetProductForEditing
      */
     private $displayLanguageId;
 
-    /**
-     * @param int $productId
-     * @param ShopConstraint $shopConstraint
-     * @param int $displayLanguageId
-     */
     public function __construct(
         int $productId,
         ShopConstraint $shopConstraint,
-        int $displayLanguageId
+        int $displayLanguageId,
     ) {
         $this->productId = new ProductId($productId);
         $this->shopConstraint = $shopConstraint;
         $this->displayLanguageId = new LanguageId($displayLanguageId);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getDisplayLanguageId(): LanguageId
     {
         return $this->displayLanguageId;

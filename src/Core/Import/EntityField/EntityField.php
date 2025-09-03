@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,7 +56,7 @@ final class EntityField implements EntityFieldInterface
      * @param string $name
      * @param string $label
      * @param string $description
-     * @param bool $required
+     * @param bool   $required
      */
     public function __construct($name, $label, $description = '', $required = false)
     {
@@ -65,9 +66,6 @@ final class EntityField implements EntityFieldInterface
         $this->required = $required;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
@@ -93,9 +91,6 @@ final class EntityField implements EntityFieldInterface
         return $this->description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRequired()
     {
         return $this->required;

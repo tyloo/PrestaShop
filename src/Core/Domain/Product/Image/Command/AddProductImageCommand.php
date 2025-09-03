@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,40 +52,26 @@ class AddProductImageCommand
      */
     private $shopConstraint;
 
-    /**
-     * @param int $productId
-     * @param string $pathName
-     * @param ShopConstraint $shopConstraint
-     */
     public function __construct(
         int $productId,
         string $pathName,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
         $this->filePath = $pathName;
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return string
-     */
     public function getFilePath(): string
     {
         return $this->filePath;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

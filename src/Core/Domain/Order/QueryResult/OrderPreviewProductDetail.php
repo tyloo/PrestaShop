@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,16 +72,6 @@ class OrderPreviewProductDetail
      */
     private $id;
 
-    /**
-     * @param string $name
-     * @param string $reference
-     * @param string $location
-     * @param int $quantity
-     * @param string $unitPrice
-     * @param string $totalPrice
-     * @param string $totalTax
-     * @param int $id
-     */
     public function __construct(
         string $name,
         string $reference,
@@ -89,7 +80,7 @@ class OrderPreviewProductDetail
         string $unitPrice,
         string $totalPrice,
         string $totalTax,
-        int $id
+        int $id,
     ) {
         $this->name = $name;
         $this->quantity = $quantity;
@@ -101,65 +92,41 @@ class OrderPreviewProductDetail
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getReference(): string
     {
         return $this->reference;
     }
 
-    /**
-     * @return string
-     */
     public function getUnitPrice(): string
     {
         return $this->unitPrice;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalPrice(): string
     {
         return $this->totalPrice;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalTax(): string
     {
         return $this->totalTax;
     }
 
-    /**
-     * @return string
-     */
     public function getLocation(): string
     {
         return $this->location;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;

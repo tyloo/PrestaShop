@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -107,8 +108,6 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     }
 
     /**
-     * @param array $localisedName
-     *
      * @return self
      *
      * @throws CmsPageCategoryConstraintException
@@ -130,8 +129,6 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     }
 
     /**
-     * @param array $localisedFriendlyUrl
-     *
      * @return self
      */
     public function setLocalisedFriendlyUrl(array $localisedFriendlyUrl)

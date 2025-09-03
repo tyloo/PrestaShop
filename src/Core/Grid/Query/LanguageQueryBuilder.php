@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,23 +42,18 @@ final class LanguageQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
+        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
 
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $builder = $this->getLanguageQueryBuilder($searchCriteria)
@@ -70,17 +66,12 @@ final class LanguageQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this->getLanguageQueryBuilder($searchCriteria)->select('COUNT(id_lang)');
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
      * @return QueryBuilder
      */
     private function getLanguageQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -93,10 +84,6 @@ final class LanguageQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param SearchCriteriaInterface $searchCriteria
-     */
     private function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $searchCriteria)
     {
         $allowedFilters = [
@@ -111,11 +98,11 @@ final class LanguageQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($searchCriteria->getFilters() as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if (in_array($filterName, ['id_lang', 'active'])) {
+            if (\in_array($filterName, ['id_lang', 'active'], true)) {
                 $builder->andWhere($filterName . ' = :' . $filterName);
                 $builder->setParameter($filterName, $filterValue);
 

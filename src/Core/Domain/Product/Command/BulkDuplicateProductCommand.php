@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ class BulkDuplicateProductCommand
      */
     public function __construct(
         array $productIds,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         foreach ($productIds as $productId) {
             $this->productIds[] = new ProductId($productId);
@@ -70,9 +71,6 @@ class BulkDuplicateProductCommand
         return $this->productIds;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

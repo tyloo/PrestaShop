@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,25 +54,16 @@ final class TaxGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'tax';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Taxes', [], 'Admin.Global');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -139,9 +131,6 @@ final class TaxGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
         return (new FilterCollection())
@@ -192,9 +181,6 @@ final class TaxGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -215,9 +201,6 @@ final class TaxGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,26 +40,20 @@ class UninstallModuleCommand
 
     /**
      * @param string $technicalName Array of technical names for modules
-     * @param bool $deleteFiles Boolean for delete module files
+     * @param bool   $deleteFiles   Boolean for delete module files
      */
     public function __construct(
         string $technicalName,
-        private readonly bool $deleteFiles = false
+        private readonly bool $deleteFiles = false,
     ) {
         $this->technicalName = new ModuleTechnicalName($technicalName);
     }
 
-    /**
-     * @return ModuleTechnicalName
-     */
     public function getTechnicalName(): ModuleTechnicalName
     {
         return $this->technicalName;
     }
 
-    /**
-     * @return bool
-     */
     public function deleteFiles(): bool
     {
         return $this->deleteFiles;

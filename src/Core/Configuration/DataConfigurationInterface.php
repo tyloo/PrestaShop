@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,16 +38,12 @@ interface DataConfigurationInterface
     public function getConfiguration();
 
     /**
-     * @param array $configuration
-     *
      * @return array if not empty, populated by validation errors
      */
     public function updateConfiguration(array $configuration);
 
     /**
      * Ensure the parameters passed are valid.
-     *
-     * @param array $configuration
      *
      * @return bool Returns true if no exception are thrown
      */

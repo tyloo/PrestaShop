@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,6 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\ValueObject\ProductSuppli
 interface SetSuppliersHandlerInterface
 {
     /**
-     * @param SetSuppliersCommand $command
-     *
      * @return ProductSupplierAssociation[]
      */
     public function handle(SetSuppliersCommand $command): array;

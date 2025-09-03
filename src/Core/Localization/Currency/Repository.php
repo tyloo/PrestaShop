@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,12 +56,9 @@ class Repository implements CurrencyRepositoryInterface
         $this->dataSource = $dataSource;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrency($currencyCode, $localeCode)
     {
-        if (!isset($this->currencies[$currencyCode])) {
+        if (! isset($this->currencies[$currencyCode])) {
             $data = $this->dataSource->getLocalizedCurrencyData(
                 new LocalizedCurrencyId($currencyCode, $localeCode)
             );
@@ -71,25 +69,17 @@ class Repository implements CurrencyRepositoryInterface
         return $this->currencies[$currencyCode];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAvailableCurrencies($localeCode)
     {
         return $this->createCurrenciesFromData($this->dataSource->getAvailableCurrenciesData($localeCode));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAllInstalledCurrencies($localeCode)
     {
         return $this->createCurrenciesFromData($this->dataSource->getAllInstalledCurrenciesData($localeCode));
     }
 
     /**
-     * @param array $currenciesData
-     *
      * @return CurrencyCollection
      */
     private function createCurrenciesFromData(array $currenciesData)
@@ -104,8 +94,6 @@ class Repository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param CurrencyData $currencyData
-     *
      * @return Currency
      */
     private function createCurrencyFromData(CurrencyData $currencyData)

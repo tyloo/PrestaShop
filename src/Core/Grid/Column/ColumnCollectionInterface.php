@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ interface ColumnCollectionInterface extends Iterator, Countable
     /**
      * Add column to collection.
      *
-     * @param ColumnInterface $column
-     *
      * @return static
      */
     public function add(ColumnInterface $column);
@@ -47,7 +46,6 @@ interface ColumnCollectionInterface extends Iterator, Countable
      * Add column after given column.
      *
      * @param string $id Column id
-     * @param ColumnInterface $column
      *
      * @return static
      */
@@ -55,7 +53,6 @@ interface ColumnCollectionInterface extends Iterator, Countable
 
     /**
      * @param string $id Column id
-     * @param ColumnInterface $column
      *
      * @return static
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,13 @@ class Sorter
 
     /**
      * @param array<array<string, mixed>> $array
-     * @param string $order
-     * @param string ...$criterias
-     *
-     * @return array
      */
     public function natural(array $array, string $order, string ...$criterias): array
     {
         usort($array, function ($a, $b) use ($order, $criterias) {
             $cmp = 0;
             foreach ($criterias as $criteria) {
-                if (!isset($a[$criteria]) || !isset($b[$criteria])) {
+                if (! isset($a[$criteria]) || ! isset($b[$criteria])) {
                     return 0;
                 }
                 $cmp = strnatcmp($a[$criteria], $b[$criteria]);

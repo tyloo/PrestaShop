@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,10 +51,6 @@ final class AddressFormDataHandler implements FormDataHandlerInterface
      */
     private $customerDataProvider;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param CustomerDataProvider $customerDataProvider
-     */
     public function __construct(CommandBusInterface $commandBus, CustomerDataProvider $customerDataProvider)
     {
         $this->commandBus = $commandBus;
@@ -61,14 +58,12 @@ final class AddressFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CountryConstraintException
      * @throws StateConstraintException
      */
     public function create(array $data)
     {
-        if (!empty($data['id_customer'])) {
+        if (! empty($data['id_customer'])) {
             $customerId = $data['id_customer'];
         } else {
             $customerId = $this->customerDataProvider->getIdByEmail($data['customer_email']);
@@ -100,8 +95,6 @@ final class AddressFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws AddressConstraintException
      * @throws CountryConstraintException
      * @throws StateConstraintException

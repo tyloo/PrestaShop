@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -99,16 +100,14 @@ class ShowcaseCard
     private $name;
 
     /**
-     * ShowcaseCardName constructor.
-     *
      * @param string $name Showcase card name
      *
      * @throws InvalidShowcaseCardNameException
      */
     public function __construct($name)
     {
-        if (!$this->isSupported($name)) {
-            throw new InvalidShowcaseCardNameException(sprintf('Unsupported showcase card name: %s', print_r($name, true)));
+        if (! $this->isSupported($name)) {
+            throw new InvalidShowcaseCardNameException(\sprintf('Unsupported showcase card name: %s', print_r($name, true)));
         }
 
         $this->name = $name;
@@ -131,6 +130,6 @@ class ShowcaseCard
      */
     private function isSupported($name)
     {
-        return array_key_exists($name, self::SUPPORTED_NAMES);
+        return \array_key_exists($name, self::SUPPORTED_NAMES);
     }
 }

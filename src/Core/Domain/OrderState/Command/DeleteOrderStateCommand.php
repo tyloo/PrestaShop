@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class DeleteOrderStateCommand
     private $orderStateId;
 
     /**
-     * @param int $orderStateId
-     *
      * @throws OrderStateException
      */
     public function __construct(int $orderStateId)
@@ -51,9 +50,6 @@ class DeleteOrderStateCommand
         $this->orderStateId = new OrderStateId($orderStateId);
     }
 
-    /**
-     * @return OrderStateId
-     */
     public function getOrderStateId(): OrderStateId
     {
         return $this->orderStateId;

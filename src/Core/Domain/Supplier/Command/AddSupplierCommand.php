@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -107,21 +108,9 @@ class AddSupplierCommand
     private $dni;
 
     /**
-     * @param string $name
-     * @param string $address
-     * @param string $city
-     * @param int $countryId
-     * @param bool $enabled
      * @param string[] $localizedDescriptions
      * @param string[] $localizedMetaTitles
      * @param string[] $localizedMetaDescriptions
-     * @param array $shopAssociation
-     * @param string|null $address2
-     * @param string|null $postCode
-     * @param int|null $stateId
-     * @param string|null $phone
-     * @param string|null $mobilePhone
-     * @param string $dni
      */
     public function __construct(
         string $name,
@@ -138,7 +127,7 @@ class AddSupplierCommand
         ?int $stateId = null,
         ?string $phone = null,
         ?string $mobilePhone = null,
-        ?string $dni = null
+        ?string $dni = null,
     ) {
         $this->name = $name;
         $this->address = $address;
@@ -157,73 +146,46 @@ class AddSupplierCommand
         $this->dni = $dni;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getAddress(): string
     {
         return $this->address;
     }
 
-    /**
-     * @return string
-     */
     public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAddress2(): ?string
     {
         return $this->address2;
     }
 
-    /**
-     * @return int
-     */
     public function getCountryId(): ?int
     {
         return $this->countryId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPostCode(): ?string
     {
         return $this->postCode;
     }
 
-    /**
-     * @return int|null
-     */
     public function getStateId(): ?int
     {
         return $this->stateId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMobilePhone(): ?string
     {
         return $this->mobilePhone;
@@ -253,9 +215,6 @@ class AddSupplierCommand
         return $this->localizedMetaDescriptions;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
@@ -269,9 +228,6 @@ class AddSupplierCommand
         return $this->shopAssociation;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDni(): ?string
     {
         return $this->dni;

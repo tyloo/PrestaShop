@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,18 +62,15 @@ class EditableAttributeGroup
     private $type;
 
     /**
-     * @param int $attributeGroupId
      * @param string[] $name
-     * @param array $publicName
-     * @param string $type
-     * @param int[] $associatedShopIds
+     * @param int[]    $associatedShopIds
      */
     public function __construct(
         int $attributeGroupId,
         array $name,
         array $publicName,
         string $type,
-        array $associatedShopIds
+        array $associatedShopIds,
     ) {
         $this->attributeGroupId = new AttributeGroupId($attributeGroupId);
         $this->name = $name;
@@ -81,9 +79,6 @@ class EditableAttributeGroup
         $this->type = $type;
     }
 
-    /**
-     * @return AttributeGroupId
-     */
     public function getAttributeGroupId(): AttributeGroupId
     {
         return $this->attributeGroupId;
@@ -105,17 +100,11 @@ class EditableAttributeGroup
         return $this->associatedShopIds;
     }
 
-    /**
-     * @return array
-     */
     public function getPublicName(): array
     {
         return $this->publicName;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;

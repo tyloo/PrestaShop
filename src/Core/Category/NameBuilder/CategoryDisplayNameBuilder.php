@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,13 +49,9 @@ class CategoryDisplayNameBuilder
      */
     private $breadcrumbSeparator;
 
-    /**
-     * @param CategoryRepository $categoryRepository
-     * @param string $breadcrumbSeparator
-     */
     public function __construct(
         CategoryRepository $categoryRepository,
-        string $breadcrumbSeparator
+        string $breadcrumbSeparator,
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->breadcrumbSeparator = $breadcrumbSeparator;
@@ -65,21 +62,13 @@ class CategoryDisplayNameBuilder
      * so we build a display name which may include some (or all) parent category names.
      *
      * @see buildBreadcrumb for more details
-     *
-     * @param string $categoryName
-     * @param ShopId $shopId
-     * @param LanguageId $languageId
-     * @param CategoryId $categoryId
-     * @param bool $useCache
-     *
-     * @return string
      */
     public function build(
         string $categoryName,
         ShopId $shopId,
         LanguageId $languageId,
         CategoryId $categoryId,
-        bool $useCache = true
+        bool $useCache = true,
     ): string {
         $duplicateNameIds = $this->getDuplicateNameIds($shopId, $languageId, $useCache);
         $isDuplicate = false;
@@ -90,7 +79,7 @@ class CategoryDisplayNameBuilder
             }
         }
 
-        if (!$isDuplicate) {
+        if (! $isDuplicate) {
             return $categoryName;
         }
 
@@ -98,15 +87,11 @@ class CategoryDisplayNameBuilder
     }
 
     /**
-     * @param ShopId $shopId
-     * @param LanguageId $languageId
-     * @param bool $useCache
-     *
      * @return CategoryId[]
      */
     private function getDuplicateNameIds(ShopId $shopId, LanguageId $languageId, bool $useCache): array
     {
-        if (!$useCache) {
+        if (! $useCache) {
             return $this->categoryRepository->getDuplicateNameIds($shopId, $languageId);
         }
 
@@ -125,15 +110,12 @@ class CategoryDisplayNameBuilder
 
     /**
      * @param CategoryId[] $categoryIds
-     * @param ShopId $shopId
-     * @param LanguageId $languageId
-     * @param bool $useCache
      *
      * @return array<int, string[]>
      */
     private function getDuplicateCategoriesBreadcrumbs(array $categoryIds, ShopId $shopId, LanguageId $languageId, bool $useCache): array
     {
-        if (!$useCache) {
+        if (! $useCache) {
             return $this->fetchBreadcrumbs($categoryIds, $languageId);
         }
         $cacheKey = $this->buildCacheKeyForBreadcrumbs($shopId, $languageId);
@@ -151,7 +133,6 @@ class CategoryDisplayNameBuilder
 
     /**
      * @param CategoryId[] $categoryIds
-     * @param LanguageId $languageId
      *
      * @return array<int, string[]>
      */
@@ -179,17 +160,14 @@ class CategoryDisplayNameBuilder
      *      For: Home > Clothes, Home > Clothes > Clothes:
      *          breadcrumbs would be: Home > Clothes, Clothes > Clothes
      *
-     * @param CategoryId $categoryId
      * @param array<int, string[]> $duplicateCategoriesBreadcrumbs
-     *
-     * @return string
      */
     private function buildBreadcrumb(CategoryId $categoryId, array $duplicateCategoriesBreadcrumbs): string
     {
         $breadcrumbParts = $duplicateCategoriesBreadcrumbs[$categoryId->getValue()];
         unset($duplicateCategoriesBreadcrumbs[$categoryId->getValue()]);
 
-        $maxSteps = count($breadcrumbParts);
+        $maxSteps = \count($breadcrumbParts);
         $breadcrumb = $breadcrumbParts[0];
         $duplicatedFound = true;
 
@@ -207,7 +185,7 @@ class CategoryDisplayNameBuilder
                     }
                 }
 
-                if (!$duplicatedFound) {
+                if (! $duplicatedFound) {
                     break;
                 }
             }
@@ -215,7 +193,7 @@ class CategoryDisplayNameBuilder
 
         if ($duplicatedFound) {
             // if breadcrumbs are still duplicated append category id
-            $breadcrumb = sprintf('%s (#%d)', $breadcrumb, $categoryId->getValue());
+            $breadcrumb = \sprintf('%s (#%d)', $breadcrumb, $categoryId->getValue());
         }
 
         return $breadcrumb;
@@ -223,39 +201,24 @@ class CategoryDisplayNameBuilder
 
     /**
      * @param string[] $parts
-     * @param int $step
-     *
-     * @return string
      */
     private function extractBreadcrumbFromParts(array $parts, int $step): string
     {
-        return implode($this->breadcrumbSeparator, array_slice($parts, -$step, $step));
+        return implode($this->breadcrumbSeparator, \array_slice($parts, -$step, $step));
     }
 
-    /**
-     * @param ShopId $shopId
-     * @param LanguageId $langId
-     *
-     * @return string
-     */
     private function buildCacheKeyForNameIds(ShopId $shopId, LanguageId $langId): string
     {
-        return sprintf(
+        return \sprintf(
             'Category::duplicateCategoryNameIds_shop_%s_lang_%s',
             $shopId->getValue(),
             $langId->getValue()
         );
     }
 
-    /**
-     * @param ShopId $shopId
-     * @param LanguageId $langId
-     *
-     * @return string
-     */
     private function buildCacheKeyForBreadcrumbs(ShopId $shopId, LanguageId $langId): string
     {
-        return sprintf(
+        return \sprintf(
             'Category::duplicateCategoryBreadcrumbs_shop_%s_lang_%s',
             $shopId->getValue(),
             $langId->getValue()

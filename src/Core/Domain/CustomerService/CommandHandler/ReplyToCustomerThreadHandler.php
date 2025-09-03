@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,18 +59,12 @@ class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterf
      */
     private $translator;
 
-    /**
-     * @param Context $context
-     */
     public function __construct(Context $context)
     {
         $this->context = $context;
         $this->translator = $context->getTranslator();
     }
 
-    /**
-     * @param ReplyToCustomerThreadCommand $command
-     */
     public function handle(ReplyToCustomerThreadCommand $command)
     {
         $customerThread = new CustomerThread(
@@ -92,7 +87,6 @@ class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterf
     }
 
     /**
-     * @param CustomerThread $customerThread
      * @param string $replyMessage
      *
      * @return CustomerMessage
@@ -105,11 +99,11 @@ class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterf
         $customerMessage->ip_address = (string) (int) ip2long(Tools::getRemoteAddr());
         $customerMessage->message = $replyMessage;
 
-        if (false === $customerMessage->validateField('message', $customerMessage->message)) {
+        if ($customerMessage->validateField('message', $customerMessage->message) === false) {
             throw new CustomerServiceException('Invalid reply message', CustomerServiceException::FAILED_TO_ADD_CUSTOMER_MESSAGE);
         }
 
-        if (false === $customerMessage->add()) {
+        if ($customerMessage->add() === false) {
             throw new CustomerServiceException('Failed to add customer message.', CustomerServiceException::FAILED_TO_ADD_CUSTOMER_MESSAGE);
         }
 
@@ -117,9 +111,6 @@ class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterf
     }
 
     /**
-     * @param CustomerThread $customerThread
-     * @param CustomerMessage $customerMessage
-     *
      * @return bool
      */
     private function sendReplyEmail(CustomerThread $customerThread, CustomerMessage $customerMessage)
@@ -139,7 +130,7 @@ class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterf
         $contact = new Contact((int) $customerThread->id_contact, (int) $customerThread->id_lang);
 
         if (Validate::isLoadedObject($contact)) {
-            $fromName = is_array($contact->name) ? $contact->name[array_key_first($contact->name)] : $contact->name;
+            $fromName = \is_array($contact->name) ? $contact->name[array_key_first($contact->name)] : $contact->name;
             $fromEmail = $contact->email;
         } else {
             $fromName = null;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,30 +35,26 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 final class InvalidArgumentException extends CoreException
 {
     /**
-     * @param mixed $kpi
-     *
      * @return InvalidArgumentException
      */
     public static function invalidKpi($kpi)
     {
-        $exceptionMessage = sprintf(
+        $exceptionMessage = \sprintf(
             'Kpi must be an instance of KpiInterface, got `%s`.',
-            gettype($kpi)
+            \gettype($kpi)
         );
 
         return new self($exceptionMessage);
     }
 
     /**
-     * @param mixed $identifier
-     *
      * @return InvalidArgumentException
      */
     public static function invalidIdentifier($identifier)
     {
-        $exceptionMessage = sprintf(
+        $exceptionMessage = \sprintf(
             'Identifier must be a string, got `%s`.',
-            gettype($identifier)
+            \gettype($identifier)
         );
 
         return new self($exceptionMessage);

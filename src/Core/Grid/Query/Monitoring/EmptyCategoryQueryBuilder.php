@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,13 +65,10 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
     private $rootCategoryId;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
-     * @param int $contextLangId
-     * @param int $contextShopId
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
-     * @param int $rootCategoryId
+     * @param int    $contextLangId
+     * @param int    $contextShopId
+     * @param int    $rootCategoryId
      */
     public function __construct(
         Connection $connection,
@@ -79,7 +77,7 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         $contextShopId,
         DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
         MultistoreContextCheckerInterface $multistoreContextChecker,
-        $rootCategoryId
+        $rootCategoryId,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->contextLangId = $contextLangId;
@@ -89,9 +87,6 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->rootCategoryId = $rootCategoryId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -104,9 +99,6 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -117,8 +109,6 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get generic query builder.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -179,11 +169,11 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!array_key_exists($filterName, $allowedFiltersAliasMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersAliasMap)) {
                 continue;
             }
 
-            if ('active' === $filterName || 'id_category' === $filterName) {
+            if ($filterName === 'active' || $filterName === 'id_category') {
                 $qb->andWhere($allowedFiltersAliasMap[$filterName] . " = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
 

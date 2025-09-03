@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,16 +77,13 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
     private $isMultiStoreFeatureUsed;
 
     /**
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param RequestStack $requestStack
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
      * @param bool $isMultiStoreFeatureUsed
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         RequestStack $requestStack,
         MultistoreContextCheckerInterface $multistoreContextChecker,
-        $isMultiStoreFeatureUsed
+        $isMultiStoreFeatureUsed,
     ) {
         parent::__construct($hookDispatcher);
         $this->setCmsPageCategoryParentId($requestStack);
@@ -94,25 +92,16 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
         $this->isMultiStoreFeatureUsed = $isMultiStoreFeatureUsed;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Categories', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columnCollection = (new ColumnCollection())
@@ -207,9 +196,6 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
         return $columnCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $actionsTypeOptions = [
@@ -276,9 +262,6 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
         return $filterCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -300,9 +283,6 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -323,14 +303,12 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
 
     /**
      * Sets cms page category parent id directly from request attribute. On not found case, it assigns the default one.
-     *
-     * @param RequestStack $requestStack
      */
     private function setCmsPageCategoryParentId(RequestStack $requestStack)
     {
         $request = $requestStack->getCurrentRequest();
 
-        if (null !== $request && $request->query->getInt('id_cms_category')) {
+        if ($request !== null && $request->query->getInt('id_cms_category')) {
             $this->cmsCategoryParentId = $request->query->getInt('id_cms_category');
         }
     }
@@ -344,6 +322,6 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
      */
     private function isAllShopContextOrShopFeatureIsNotUsed()
     {
-        return $this->multistoreContextChecker->isAllShopContext() || !$this->isMultiStoreFeatureUsed;
+        return $this->multistoreContextChecker->isAllShopContext() || ! $this->isMultiStoreFeatureUsed;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ final class CustomerName extends Constraint
 {
     public $message = 'The %s field is invalid.';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return CustomerNameValidator::class;

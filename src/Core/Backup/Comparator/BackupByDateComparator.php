@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use PrestaShop\PrestaShop\Core\Backup\BackupInterface;
  */
 final class BackupByDateComparator implements BackupComparatorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function compare(BackupInterface $backup1, BackupInterface $backup2)
     {
         return $backup2->getDate()->getTimestamp() - $backup1->getDate()->getTimestamp();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,25 +55,16 @@ class CountryGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'country';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Countries', [], 'Admin.Global');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -134,9 +126,6 @@ class CountryGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters(): FilterCollectionInterface
     {
         return (new FilterCollection())
@@ -211,9 +200,6 @@ class CountryGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * @return RowActionCollection
-     */
     protected function getRowActions(): RowActionCollection
     {
         $rowActionCollection = new RowActionCollection();
@@ -240,9 +226,6 @@ class CountryGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $rowActionCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions(): GridActionCollectionInterface
     {
         return (new GridActionCollection())
@@ -263,9 +246,6 @@ class CountryGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         // todo: need to implement bulk actions

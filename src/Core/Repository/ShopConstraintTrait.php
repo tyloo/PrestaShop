@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,9 @@ trait ShopConstraintTrait
 {
     protected function applyShopConstraint(
         QueryBuilder $queryBuilder,
-        ?ShopConstraint $shopConstraint = null
+        ?ShopConstraint $shopConstraint = null,
     ): QueryBuilder {
-        if (null === $shopConstraint) {
+        if ($shopConstraint === null) {
             return $queryBuilder;
         }
 

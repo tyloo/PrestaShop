@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,6 @@ class BulkToggleCartRuleStatusCommand
 
     /**
      * @param int[] $cartRuleIds
-     * @param bool $expectedStatus
      *
      * @throws CartRuleConstraintException
      */
@@ -58,9 +58,6 @@ class BulkToggleCartRuleStatusCommand
         $this->setCartRuleIds($cartRuleIds);
     }
 
-    /**
-     * @return bool
-     */
     public function getExpectedStatus(): bool
     {
         return $this->expectedStatus;

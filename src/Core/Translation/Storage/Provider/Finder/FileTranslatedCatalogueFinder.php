@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,18 +52,15 @@ class FileTranslatedCatalogueFinder extends AbstractCatalogueFinder
     private $filenameFilters;
 
     /**
-     * @param string $translatedCatalogueDirectory
-     * @param array $filenameFilters
-     *
      * @throws TranslationFilesNotFoundException
      */
     public function __construct(string $translatedCatalogueDirectory, array $filenameFilters)
     {
-        if (!is_dir($translatedCatalogueDirectory) || !is_readable($translatedCatalogueDirectory)) {
-            throw new TranslationFilesNotFoundException(sprintf('Directory %s does not exist', $translatedCatalogueDirectory));
+        if (! is_dir($translatedCatalogueDirectory) || ! is_readable($translatedCatalogueDirectory)) {
+            throw new TranslationFilesNotFoundException(\sprintf('Directory %s does not exist', $translatedCatalogueDirectory));
         }
 
-        if (!$this->assertIsArrayOfString($filenameFilters)) {
+        if (! $this->assertIsArrayOfString($filenameFilters)) {
             throw new InvalidArgumentException('Given filename filters are invalid. An array of strings was expected.');
         }
 
@@ -73,17 +71,13 @@ class FileTranslatedCatalogueFinder extends AbstractCatalogueFinder
     /**
      * Returns the translation catalogue for the provided locale
      *
-     * @param string $locale
-     *
-     * @return MessageCatalogue
-     *
      * @throws TranslationFilesNotFoundException
      */
     public function getCatalogue(string $locale): MessageCatalogue
     {
         $catalogue = new MessageCatalogue($locale);
         $translationFinder = new TranslationFinder();
-        $localeResourceDirectory = rtrim($this->translatedCatalogueDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $locale;
+        $localeResourceDirectory = rtrim($this->translatedCatalogueDirectory, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR . $locale;
 
         foreach ($this->filenameFilters as $filter) {
             $filteredCatalogue = $translationFinder->getCatalogueFromPaths(

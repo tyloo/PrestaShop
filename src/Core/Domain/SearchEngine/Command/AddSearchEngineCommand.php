@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,27 +44,17 @@ class AddSearchEngineCommand
      */
     private $queryKey;
 
-    /**
-     * @param string $server
-     * @param string $queryKey
-     */
     public function __construct(string $server, string $queryKey)
     {
         $this->server = $server;
         $this->queryKey = $queryKey;
     }
 
-    /**
-     * @return string
-     */
     public function getServer(): string
     {
         return $this->server;
     }
 
-    /**
-     * @return string
-     */
     public function getQueryKey(): string
     {
         return $this->queryKey;

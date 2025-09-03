@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,18 +53,15 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextIdLang;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param array $contextShopIds
-     * @param int $contextIdLang
+     * @param int    $contextIdLang
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         array $contextShopIds,
-        $contextIdLang
+        $contextIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -72,9 +70,6 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextIdLang = $contextIdLang;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -99,9 +94,6 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -112,8 +104,6 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql for catalog price rule listing.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -154,10 +144,6 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param array $filters
-     */
     private function applyFilters(QueryBuilder $qb, array $filters)
     {
         $allowedFiltersAliasMap = [
@@ -177,18 +163,18 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
         $exactMatchFilters = ['id_specific_price_rule', 'from_quantity', 'reduction_type'];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersAliasMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersAliasMap)) {
                 return;
             }
 
-            if (in_array($filterName, $exactMatchFilters, true)) {
+            if (\in_array($filterName, $exactMatchFilters, true)) {
                 $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' = :' . $filterName);
                 $qb->setParameter($filterName, $value);
 
                 continue;
             }
 
-            if ('date_from' === $filterName || 'date_to' === $filterName) {
+            if ($filterName === 'date_from' || $filterName === 'date_to') {
                 if (isset($value['from'])) {
                     $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' >= :' . $filterName . '_from');
                     $qb->setParameter($filterName . '_from', $value['from']);
@@ -220,12 +206,10 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * @param string $value
-     *
-     * @return int
      */
     private function findNumberOfDecimals($value): int
     {
-        if (!is_string($value)) {
+        if (! \is_string($value)) {
             throw new InvalidArgumentException('Expected string');
         }
 
@@ -233,7 +217,7 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
         $explodedValue = explode('.', $value);
 
         if (isset($explodedValue[1])) {
-            $numberOfDecimals = strlen($explodedValue[1]);
+            $numberOfDecimals = \strlen($explodedValue[1]);
         }
 
         return $numberOfDecimals;

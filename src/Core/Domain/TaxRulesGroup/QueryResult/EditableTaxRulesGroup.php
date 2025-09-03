@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,16 +55,13 @@ class EditableTaxRulesGroup
     protected $shopAssociationIds;
 
     /**
-     * @param TaxRulesGroupId $taxRulesGroupId
-     * @param string $name
-     * @param bool $active
      * @param array<int> $shopAssociationIds
      */
     public function __construct(
         TaxRulesGroupId $taxRulesGroupId,
         string $name,
         bool $active,
-        array $shopAssociationIds
+        array $shopAssociationIds,
     ) {
         $this->taxRulesGroupId = $taxRulesGroupId;
         $this->name = $name;
@@ -71,25 +69,16 @@ class EditableTaxRulesGroup
         $this->shopAssociationIds = $shopAssociationIds;
     }
 
-    /**
-     * @return TaxRulesGroupId
-     */
     public function getTaxRulesGroupId(): TaxRulesGroupId
     {
         return $this->taxRulesGroupId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->active;

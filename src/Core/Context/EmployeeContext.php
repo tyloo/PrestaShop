@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,25 +51,25 @@ class EmployeeContext
 
     public function hasAuthorizationOnShopGroup(int $shopGroupId): bool
     {
-        if (!$this->getEmployee()) {
+        if (! $this->getEmployee()) {
             return false;
         }
 
-        return $this->isSuperAdmin() || in_array($shopGroupId, $this->getEmployee()->getAssociatedShopGroupIds());
+        return $this->isSuperAdmin() || \in_array($shopGroupId, $this->getEmployee()->getAssociatedShopGroupIds(), true);
     }
 
     public function hasAuthorizationOnShop(int $shopId): bool
     {
-        if (!$this->getEmployee()) {
+        if (! $this->getEmployee()) {
             return false;
         }
 
-        return $this->isSuperAdmin() || in_array($shopId, $this->getEmployee()->getAssociatedShopIds());
+        return $this->isSuperAdmin() || \in_array($shopId, $this->getEmployee()->getAssociatedShopIds(), true);
     }
 
     public function hasAuthorizationForAllShops(): bool
     {
-        if (!$this->getEmployee()) {
+        if (! $this->getEmployee()) {
             return false;
         }
 
@@ -77,7 +78,7 @@ class EmployeeContext
         }
 
         foreach ($this->allShopsIds as $shopId) {
-            if (!$this->hasAuthorizationOnShop($shopId)) {
+            if (! $this->hasAuthorizationOnShop($shopId)) {
                 return false;
             }
         }
@@ -87,7 +88,7 @@ class EmployeeContext
 
     public function getDefaultShopId(): int
     {
-        if (!$this->getEmployee()) {
+        if (! $this->getEmployee()) {
             return 0;
         }
 

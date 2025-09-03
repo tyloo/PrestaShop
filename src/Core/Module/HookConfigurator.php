@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,7 +62,7 @@ class HookConfigurator
 
         foreach ($currentHooks as $hookName => $moduleList) {
             foreach ($moduleList as $key => $value) {
-                if (in_array($value, $uniqueModuleList)) {
+                if (\in_array($value, $uniqueModuleList, true)) {
                     unset($currentHooks[$hookName][$key]);
                 }
             }
@@ -79,7 +80,7 @@ class HookConfigurator
                     foreach ($existing as $m) {
                         $currentHooks[$hookName][] = $m;
                     }
-                } elseif (is_array($module)) {
+                } elseif (\is_array($module)) {
                     $currentHooks[$hookName][$key] = $module;
                 } elseif ($module !== null) {
                     $currentHooks[$hookName][] = $module;

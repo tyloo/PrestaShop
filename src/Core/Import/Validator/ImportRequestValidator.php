@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,12 +35,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class ImportRequestValidator implements ImportRequestValidatorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(Request $request)
     {
-        if (!$request->request->has('csv')) {
+        if (! $request->request->has('csv')) {
             throw new UnavailableImportFileException();
         }
     }

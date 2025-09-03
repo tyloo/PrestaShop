@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,8 +44,6 @@ class LocaleDataSource
     /**
      * LocaleDataSource constructor needs a CldrLocaleDataLayerInterface layer object.
      * This top layer might be chained with lower layers and will be the entry point of this middleware stack.
-     *
-     * @param CldrLocaleDataLayerInterface $topLayer
      */
     public function __construct(CldrLocaleDataLayerInterface $topLayer)
     {

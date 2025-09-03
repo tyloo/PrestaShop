@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class BulkToggleManufacturerStatusCommand
 
     /**
      * @param int[] $manufacturerIds
-     * @param bool $expectedStatus
+     * @param bool  $expectedStatus
      *
      * @throws ManufacturerConstraintException
      * @throws ManufacturerConstraintException
@@ -89,14 +90,12 @@ class BulkToggleManufacturerStatusCommand
     /**
      * Validates that value is of type boolean
      *
-     * @param mixed $value
-     *
      * @throws ManufacturerConstraintException
      */
     private function assertIsBool($value)
     {
-        if (!is_bool($value)) {
-            throw new ManufacturerConstraintException(sprintf('Status must be of type bool, but given %s', var_export($value, true)), ManufacturerConstraintException::INVALID_STATUS);
+        if (! \is_bool($value)) {
+            throw new ManufacturerConstraintException(\sprintf('Status must be of type bool, but given %s', var_export($value, true)), ManufacturerConstraintException::INVALID_STATUS);
         }
     }
 }

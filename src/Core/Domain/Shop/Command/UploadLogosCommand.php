@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,8 +68,6 @@ class UploadLogosCommand
     }
 
     /**
-     * @param UploadedFile $uploadedHeaderLogo
-     *
      * @throws NotSupportedLogoImageExtensionException
      * @throws FileUploadException
      */
@@ -89,8 +88,6 @@ class UploadLogosCommand
     }
 
     /**
-     * @param UploadedFile $uploadedInvoiceLogo
-     *
      * @throws NotSupportedMailAndInvoiceImageExtensionException
      * @throws FileUploadException
      */
@@ -111,8 +108,6 @@ class UploadLogosCommand
     }
 
     /**
-     * @param UploadedFile $uploadedMailLogo
-     *
      * @throws NotSupportedMailAndInvoiceImageExtensionException
      * @throws FileUploadException
      */
@@ -133,15 +128,13 @@ class UploadLogosCommand
     }
 
     /**
-     * @param UploadedFile $uploadedFavicon
-     *
      * @throws NotSupportedFaviconExtensionException
      * @throws FileUploadException
      */
     public function setUploadedFavicon(UploadedFile $uploadedFavicon)
     {
-        if (ShopLogoSettings::AVAILABLE_ICON_IMAGE_EXTENSION !== $uploadedFavicon->getClientOriginalExtension()) {
-            throw new NotSupportedFaviconExtensionException(sprintf('Not supported "%s" favicon extension. Supported extension is "ico".', $uploadedFavicon->getClientOriginalExtension()));
+        if ($uploadedFavicon->getClientOriginalExtension() !== ShopLogoSettings::AVAILABLE_ICON_IMAGE_EXTENSION) {
+            throw new NotSupportedFaviconExtensionException(\sprintf('Not supported "%s" favicon extension. Supported extension is "ico".', $uploadedFavicon->getClientOriginalExtension()));
         }
 
         $this->assertNativeFileValidationDoesNotFail($uploadedFavicon);
@@ -150,43 +143,29 @@ class UploadLogosCommand
     }
 
     /**
-     * @param UploadedFile $uploadedFile
-     *
      * @throws NotSupportedLogoImageExtensionException
      */
     private function assertIsValidLogoImageExtension(UploadedFile $uploadedFile): void
     {
         $extension = $uploadedFile->getClientOriginalExtension();
-        if (!in_array($extension, ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS, true)) {
-            throw new NotSupportedLogoImageExtensionException(sprintf(
-                'Not supported "%s" image logo extension. Supported extensions are "%s"',
-                $extension,
-                implode(',', ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS
-                )));
+        if (! \in_array($extension, ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS, true)) {
+            throw new NotSupportedLogoImageExtensionException(\sprintf('Not supported "%s" image logo extension. Supported extensions are "%s"', $extension, implode(',', ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS)));
         }
     }
 
     /**
-     * @param UploadedFile $uploadedFile
-     *
      * @throws NotSupportedMailAndInvoiceImageExtensionException
      */
     private function assertIsValidMailAndInvoiceImageExtension(UploadedFile $uploadedFile): void
     {
         $extension = $uploadedFile->getClientOriginalExtension();
-        if (!in_array($extension, ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS, true)) {
-            throw new NotSupportedMailAndInvoiceImageExtensionException(sprintf(
-                'Not supported "%s" image logo extension. Supported extensions are "%s"',
-                $extension,
-                implode(',', ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS
-                )));
+        if (! \in_array($extension, ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS, true)) {
+            throw new NotSupportedMailAndInvoiceImageExtensionException(\sprintf('Not supported "%s" image logo extension. Supported extensions are "%s"', $extension, implode(',', ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS)));
         }
     }
 
     /**
      * Checks if native file validation does not fail.
-     *
-     * @param UploadedFile $uploadedFile
      *
      * @throws FileUploadException
      */
@@ -194,7 +173,7 @@ class UploadLogosCommand
     {
         $errorCode = $uploadedFile->getError();
 
-        if ($errorCode !== UPLOAD_ERR_OK) {
+        if ($errorCode !== \UPLOAD_ERR_OK) {
             throw new FileUploadException($uploadedFile->getErrorMessage(), $errorCode);
         }
     }

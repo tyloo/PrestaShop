@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ interface RepositoryInterface
      *                             Wanted currency's ISO code
      *                             Must be an alphabetic ISO 4217 currency code
      * @param string $localeCode
-     *                           Currency data will be translated in this language
+     *                             Currency data will be translated in this language
      *
      * @return Currency
      *                  The wanted Currency instance

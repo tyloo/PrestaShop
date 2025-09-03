@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,11 +29,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult;
 
 class CarrierRangesCollection
 {
-    /** @var CarrierRangeZone[] */
+    /**
+     * @var CarrierRangeZone[]
+     */
     private array $zones;
 
     public function __construct(
-        /* @var array{
+        /** @var array{
          *     id_zone: int,
          *     range_from: float,
          *     range_to: float,
@@ -55,7 +58,7 @@ class CarrierRangesCollection
         foreach ($carrierRanges as $carrierRange) {
             $zoneId = (int) $carrierRange['id_zone'];
 
-            if (!isset($rangesByZones[$zoneId])) {
+            if (! isset($rangesByZones[$zoneId])) {
                 $rangesByZones[$zoneId] = [];
             }
 

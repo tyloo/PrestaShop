@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,17 +60,11 @@ class ProductFormDataHandler implements FormDataHandlerInterface
      */
     private $contextShopId;
 
-    /**
-     * @param CommandBusInterface $bus
-     * @param ProductCommandsBuilderInterface $commandsBuilder
-     * @param int $defaultShopId
-     * @param int|null $contextShopId
-     */
     public function __construct(
         CommandBusInterface $bus,
         ProductCommandsBuilderInterface $commandsBuilder,
         int $defaultShopId,
-        ?int $contextShopId
+        ?int $contextShopId,
     ) {
         $this->bus = $bus;
         $this->commandsBuilder = $commandsBuilder;
@@ -77,9 +72,6 @@ class ProductFormDataHandler implements FormDataHandlerInterface
         $this->contextShopId = $contextShopId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data): int
     {
         // If a shop is selected in the context the product is added to it, if not use the default shop as a fallback
@@ -94,12 +86,9 @@ class ProductFormDataHandler implements FormDataHandlerInterface
         return $productId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data)
     {
-        $shopConstraint = null !== $this->contextShopId ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
+        $shopConstraint = $this->contextShopId !== null ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
         $commands = $this->commandsBuilder->buildCommands(
             new ProductId($id),
             $data,

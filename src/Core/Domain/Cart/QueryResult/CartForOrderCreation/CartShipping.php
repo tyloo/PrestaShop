@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,14 +73,7 @@ class CartShipping
     private $isVirtual;
 
     /**
-     * @param string $shippingPrice
-     * @param bool $freeShipping
      * @param CartDeliveryOption[] $deliveryOptions
-     * @param int|null $selectedCarrierId
-     * @param bool $isGift
-     * @param bool $isRecycledPackaging
-     * @param string $giftMessage
-     * @param bool $isVirtual
      */
     public function __construct(
         string $shippingPrice,
@@ -89,7 +83,7 @@ class CartShipping
         bool $isGift,
         bool $isRecycledPackaging,
         string $giftMessage,
-        bool $isVirtual
+        bool $isVirtual,
     ) {
         $this->shippingPrice = $shippingPrice;
         $this->freeShipping = $freeShipping;
@@ -101,17 +95,11 @@ class CartShipping
         $this->isVirtual = $isVirtual;
     }
 
-    /**
-     * @return string
-     */
     public function getShippingPrice(): string
     {
         return $this->shippingPrice;
     }
 
-    /**
-     * @return bool
-     */
     public function isFreeShipping(): bool
     {
         return $this->freeShipping;
@@ -125,41 +113,26 @@ class CartShipping
         return $this->deliveryOptions;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSelectedCarrierId()
     {
         return $this->selectedCarrierId;
     }
 
-    /**
-     * @return bool
-     */
     public function isRecycledPackaging(): bool
     {
         return $this->isRecycledPackaging;
     }
 
-    /**
-     * @return bool
-     */
     public function isGift(): bool
     {
         return $this->isGift;
     }
 
-    /**
-     * @return string
-     */
     public function getGiftMessage(): string
     {
         return $this->giftMessage;
     }
 
-    /**
-     * @return bool
-     */
     public function isVirtual(): bool
     {
         return $this->isVirtual;

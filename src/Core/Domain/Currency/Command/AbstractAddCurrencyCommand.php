@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,7 +68,7 @@ abstract class AbstractAddCurrencyCommand
     public function __construct(
         string $isoCode,
         float $exchangeRate,
-        bool $isEnabled
+        bool $isEnabled,
     ) {
         $this->isoCode = new AlphaIsoCode($isoCode);
         $this->exchangeRate = new ExchangeRate($exchangeRate);

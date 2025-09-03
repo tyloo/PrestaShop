@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,9 +33,6 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\CannotAdaptThemeToRTLLangu
 use PrestaShop\PrestaShop\Core\Localization\RTL\Exception\GenerationException;
 use PrestaShop\PrestaShop\Core\Localization\RTL\StyleSheetProcessorFactoryInterface;
 
-/**
- * Class AdaptThemeToRTLLanguagesHandler
- */
 #[AsCommandHandler]
 final class AdaptThemeToRTLLanguagesHandler implements AdaptThemeToRTLLanguagesHandlerInterface
 {
@@ -43,17 +41,11 @@ final class AdaptThemeToRTLLanguagesHandler implements AdaptThemeToRTLLanguagesH
      */
     private $stylesheetProcessorFactory;
 
-    /**
-     * @param StyleSheetProcessorFactoryInterface $stylesheetProcessorFactory
-     */
     public function __construct(StyleSheetProcessorFactoryInterface $stylesheetProcessorFactory)
     {
         $this->stylesheetProcessorFactory = $stylesheetProcessorFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AdaptThemeToRTLLanguagesCommand $command)
     {
         $plainThemeName = $command->getThemeName()->getValue();
@@ -65,7 +57,7 @@ final class AdaptThemeToRTLLanguagesHandler implements AdaptThemeToRTLLanguagesH
                 ->process()
             ;
         } catch (GenerationException $e) {
-            throw new CannotAdaptThemeToRTLLanguagesException(sprintf('Cannot adapt "%s" theme to RTL languages.', $plainThemeName), 0, $e);
+            throw new CannotAdaptThemeToRTLLanguagesException(\sprintf('Cannot adapt "%s" theme to RTL languages.', $plainThemeName), 0, $e);
         }
     }
 }

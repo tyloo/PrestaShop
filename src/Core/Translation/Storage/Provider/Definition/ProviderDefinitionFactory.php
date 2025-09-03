@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,7 +34,7 @@ class ProviderDefinitionFactory
 {
     public function build(
         string $type,
-        ?string $selectedValue = null
+        ?string $selectedValue = null,
     ): ProviderDefinitionInterface {
         switch ($type) {
             case ProviderDefinitionInterface::TYPE_MODULES:
@@ -53,7 +54,7 @@ class ProviderDefinitionFactory
             case ProviderDefinitionInterface::TYPE_OTHERS:
                 return new OthersProviderDefinition();
             default:
-                throw new RuntimeException(sprintf('Unrecognized type: %s', $type));
+                throw new RuntimeException(\sprintf('Unrecognized type: %s', $type));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ final class ContactFilters extends Filters
      */
     protected $filterId = ContactGridDefinitionFactory::GRID_ID;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -132,11 +133,8 @@ class UpdateDiscountCommand
      */
     public function setPriority(int $priority): self
     {
-        if (0 >= $priority) {
-            throw new DiscountConstraintException(
-                sprintf('Invalid discount priority "%s". Must be a positive integer.', $priority),
-                DiscountConstraintException::INVALID_PRIORITY
-            );
+        if ($priority <= 0) {
+            throw new DiscountConstraintException(\sprintf('Invalid discount priority "%s". Must be a positive integer.', $priority), DiscountConstraintException::INVALID_PRIORITY);
         }
 
         $this->priority = $priority;
@@ -164,8 +162,8 @@ class UpdateDiscountCommand
      */
     public function setTotalQuantity(int $quantity): self
     {
-        if (0 > $quantity) {
-            throw new DiscountConstraintException(sprintf('Quantity cannot be lower than zero, %d given', $quantity), DiscountConstraintException::INVALID_QUANTITY);
+        if ($quantity < 0) {
+            throw new DiscountConstraintException(\sprintf('Quantity cannot be lower than zero, %d given', $quantity), DiscountConstraintException::INVALID_QUANTITY);
         }
 
         $this->totalQuantity = $quantity;
@@ -183,8 +181,8 @@ class UpdateDiscountCommand
      */
     public function setQuantityPerUser(int $quantityPerUser): self
     {
-        if (0 > $quantityPerUser) {
-            throw new DiscountConstraintException(sprintf('Quantity per user cannot be lower than zero, %d given', $quantityPerUser), DiscountConstraintException::INVALID_QUANTITY_PER_USER);
+        if ($quantityPerUser < 0) {
+            throw new DiscountConstraintException(\sprintf('Quantity per user cannot be lower than zero, %d given', $quantityPerUser), DiscountConstraintException::INVALID_QUANTITY_PER_USER);
         }
 
         $this->quantityPerUser = $quantityPerUser;
@@ -264,7 +262,7 @@ class UpdateDiscountCommand
     public function setAmountDiscount(DecimalNumber $amountDiscount, int $currencyId, bool $taxIncluded): self
     {
         if ($amountDiscount->isLowerThanZero()) {
-            throw new DiscountConstraintException(sprintf('Money amount cannot be lower than zero, %s given', $amountDiscount), DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
+            throw new DiscountConstraintException(\sprintf('Money amount cannot be lower than zero, %s given', $amountDiscount), DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
         }
 
         $this->amountDiscount = new Money($amountDiscount, new CurrencyId($currencyId), $taxIncluded);
@@ -297,7 +295,7 @@ class UpdateDiscountCommand
      */
     public function setCombinationId(int $combinationId): self
     {
-        if (NoCombinationId::NO_COMBINATION_ID === $combinationId) {
+        if ($combinationId === NoCombinationId::NO_COMBINATION_ID) {
             $this->combinationId = new NoCombinationId();
         } else {
             $this->combinationId = new CombinationId($combinationId);
@@ -312,8 +310,6 @@ class UpdateDiscountCommand
     }
 
     /**
-     * @param int $reductionProduct
-     *
      * @return $this
      *
      * This can have several values

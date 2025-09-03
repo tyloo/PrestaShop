@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -107,7 +108,7 @@ class EditCountryCommand
     private $shopAssociation;
 
     public function __construct(
-        int $countryId
+        int $countryId,
     ) {
         $this->countryId = new CountryId($countryId);
     }
@@ -127,10 +128,8 @@ class EditCountryCommand
 
     /**
      * @param string[] $localizedNames
-     *
-     * @return EditCountryCommand
      */
-    public function setLocalizedNames(array $localizedNames): EditCountryCommand
+    public function setLocalizedNames(array $localizedNames): self
     {
         $this->localizedNames = $localizedNames;
 
@@ -154,7 +153,7 @@ class EditCountryCommand
         return $this->callPrefix;
     }
 
-    public function setCallPrefix(int $callPrefix): EditCountryCommand
+    public function setCallPrefix(int $callPrefix): self
     {
         $this->callPrefix = $callPrefix;
 
@@ -166,7 +165,7 @@ class EditCountryCommand
         return $this->defaultCurrency;
     }
 
-    public function setDefaultCurrency(int $defaultCurrency): EditCountryCommand
+    public function setDefaultCurrency(int $defaultCurrency): self
     {
         $this->defaultCurrency = $defaultCurrency;
 
@@ -178,7 +177,7 @@ class EditCountryCommand
         return $this->zoneId;
     }
 
-    public function setZoneId(?int $zoneId): EditCountryCommand
+    public function setZoneId(?int $zoneId): self
     {
         $this->zoneId = $zoneId;
 
@@ -190,7 +189,7 @@ class EditCountryCommand
         return $this->needZipCode;
     }
 
-    public function setNeedZipCode(bool $needZipCode): EditCountryCommand
+    public function setNeedZipCode(bool $needZipCode): self
     {
         $this->needZipCode = $needZipCode;
 
@@ -202,7 +201,7 @@ class EditCountryCommand
         return $this->zipCodeFormat;
     }
 
-    public function setZipCodeFormat(?string $zipCodeFormat): EditCountryCommand
+    public function setZipCodeFormat(?string $zipCodeFormat): self
     {
         $this->zipCodeFormat = $zipCodeFormat ? new CountryZipCodeFormat($zipCodeFormat) : null;
 
@@ -214,7 +213,7 @@ class EditCountryCommand
         return $this->addressFormat;
     }
 
-    public function setAddressFormat(string $addressFormat): EditCountryCommand
+    public function setAddressFormat(string $addressFormat): self
     {
         $this->addressFormat = $addressFormat;
 
@@ -226,7 +225,7 @@ class EditCountryCommand
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): EditCountryCommand
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
 
@@ -238,7 +237,7 @@ class EditCountryCommand
         return $this->containsStates;
     }
 
-    public function setContainsStates(bool $containsStates): EditCountryCommand
+    public function setContainsStates(bool $containsStates): self
     {
         $this->containsStates = $containsStates;
 
@@ -250,7 +249,7 @@ class EditCountryCommand
         return $this->needIdNumber;
     }
 
-    public function setNeedIdNumber(bool $needIdNumber): EditCountryCommand
+    public function setNeedIdNumber(bool $needIdNumber): self
     {
         $this->needIdNumber = $needIdNumber;
 
@@ -262,12 +261,7 @@ class EditCountryCommand
         return $this->displayTaxLabel;
     }
 
-    /**
-     * @param bool $displayTaxLabel
-     *
-     * @return EditCountryCommand
-     */
-    public function setDisplayTaxLabel(bool $displayTaxLabel): EditCountryCommand
+    public function setDisplayTaxLabel(bool $displayTaxLabel): self
     {
         $this->displayTaxLabel = $displayTaxLabel;
 
@@ -284,10 +278,8 @@ class EditCountryCommand
 
     /**
      * @param int[] $shopAssociation
-     *
-     * @return EditCountryCommand
      */
-    public function setShopAssociation(array $shopAssociation): EditCountryCommand
+    public function setShopAssociation(array $shopAssociation): self
     {
         $this->shopAssociation = $shopAssociation;
 

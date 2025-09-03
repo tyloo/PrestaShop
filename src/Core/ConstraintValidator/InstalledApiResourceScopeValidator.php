@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,21 +38,20 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class InstalledApiResourceScopeValidator extends ConstraintValidator
 {
     public function __construct(
-        private readonly ApiResourceScopesExtractorInterface $apiResourceScopesExtractor
+        private readonly ApiResourceScopesExtractorInterface $apiResourceScopesExtractor,
     ) {
     }
 
     /**
      * @param string[] $value
-     * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof InstalledApiResourceScope) {
+        if (! $constraint instanceof InstalledApiResourceScope) {
             throw new UnexpectedTypeException($constraint, InstalledApiResourceScope::class);
         }
 
-        if (!is_array($value) || (count($value) !== count(array_filter($value, 'is_string')))) {
+        if (! \is_array($value) || (\count($value) !== \count(array_filter($value, 'is_string')))) {
             throw new UnexpectedTypeException($value, 'string[]');
         }
 
@@ -68,7 +68,7 @@ class InstalledApiResourceScopeValidator extends ConstraintValidator
             $invalidScopes[] = $scopeToValidate;
         }
 
-        if (!empty($invalidScopes)) {
+        if (! empty($invalidScopes)) {
             $this->context->buildViolation($constraint->message)
                 ->setTranslationDomain('Admin.Notifications.Error')
                 ->setParameter(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,11 @@ class GetImageTypeForEditing
 {
     private ImageTypeId $imageTypeId;
 
-    /**
-     * @param int $imageTypeId
-     */
     public function __construct(int $imageTypeId)
     {
         $this->imageTypeId = new ImageTypeId($imageTypeId);
     }
 
-    /**
-     * @return ImageTypeId
-     */
     public function getImageTypeId(): ImageTypeId
     {
         return $this->imageTypeId;

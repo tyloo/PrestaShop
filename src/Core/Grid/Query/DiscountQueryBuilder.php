@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ class DiscountQueryBuilder extends AbstractDoctrineQueryBuilder
         parent::__construct($connection, $dbPrefix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -68,9 +66,6 @@ class DiscountQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -82,10 +77,6 @@ class DiscountQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql for catalog price rule listing.
-     *
-     * @param array $filters
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters): QueryBuilder
     {
@@ -109,10 +100,6 @@ class DiscountQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param array $filters
-     */
     private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersAliasMap = [
@@ -126,11 +113,11 @@ class DiscountQueryBuilder extends AbstractDoctrineQueryBuilder
         $exactMatchFilters = ['id_discount', 'type', 'active'];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersAliasMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersAliasMap)) {
                 return;
             }
 
-            if (in_array($filterName, $exactMatchFilters, true)) {
+            if (\in_array($filterName, $exactMatchFilters, true)) {
                 $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' = :' . $filterName);
                 $qb->setParameter($filterName, $value);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,9 +57,6 @@ class SetProductFeatureValuesCommand
      *      ['feature_id' => 2, 'feature_value_id' => 5, 'custom_values' => [1 => 'Custom']], // Updates existing custom value
      * ];
      *
-     * @param int $productId
-     * @param array $featureValues
-     *
      * @throws InvalidProductFeatureValuesFormatException
      * @throws ProductConstraintException
      */
@@ -68,9 +66,6 @@ class SetProductFeatureValuesCommand
         $this->setProductFeatures($featureValues);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -85,17 +80,12 @@ class SetProductFeatureValuesCommand
     }
 
     /**
-     * @param array $featureValues
-     *
      * @throws InvalidProductFeatureValuesFormatException
      */
     private function setProductFeatures(array $featureValues): void
     {
         if (empty($featureValues)) {
-            throw new InvalidProductFeatureValuesFormatException(sprintf(
-                'Cannot use empty feature values to remove all use %s instead',
-                RemoveAllFeatureValuesFromProductCommand::class
-            ));
+            throw new InvalidProductFeatureValuesFormatException(\sprintf('Cannot use empty feature values to remove all use %s instead', RemoveAllFeatureValuesFromProductCommand::class));
         }
 
         $this->featureValues = [];
@@ -103,15 +93,13 @@ class SetProductFeatureValuesCommand
             $this->assertFeatureValueFormat($featureValue);
             $this->featureValues[] = new ProductFeatureValue(
                 $featureValue['feature_id'],
-                !empty($featureValue['feature_value_id']) ? (int) $featureValue['feature_value_id'] : null,
-                !empty($featureValue['custom_values']) ? $featureValue['custom_values'] : null
+                ! empty($featureValue['feature_value_id']) ? (int) $featureValue['feature_value_id'] : null,
+                ! empty($featureValue['custom_values']) ? $featureValue['custom_values'] : null
             );
         }
     }
 
     /**
-     * @param array $featureValue
-     *
      * @throws InvalidProductFeatureValuesFormatException
      */
     private function assertFeatureValueFormat(array $featureValue): void

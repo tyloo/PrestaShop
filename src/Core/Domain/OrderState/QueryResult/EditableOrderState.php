@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -111,7 +112,7 @@ class EditableOrderState
         bool $paid,
         bool $delivery,
         array $localizedTemplates,
-        bool $isDeleted
+        bool $isDeleted,
     ) {
         $this->orderStateId = $orderStateId;
         $this->localizedNames = $name;
@@ -154,9 +155,6 @@ class EditableOrderState
         return $this->color;
     }
 
-    /**
-     * @return bool
-     */
     public function isDeleted(): bool
     {
         return $this->isDeleted;
@@ -242,9 +240,6 @@ class EditableOrderState
         return $this->localizedTemplates;
     }
 
-    /**
-     * @return SplFileInfo|null
-     */
     public function getIcon(): ?SplFileInfo
     {
         return $this->icon;

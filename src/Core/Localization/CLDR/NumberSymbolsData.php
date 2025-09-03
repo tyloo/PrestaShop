@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -161,61 +162,61 @@ class NumberSymbolsData
      *
      * @return $this Fluent interface
      */
-    public function overrideWith(NumberSymbolsData $symbolsData)
+    public function overrideWith(self $symbolsData)
     {
-        if (null !== $symbolsData->getDecimal()) {
+        if ($symbolsData->getDecimal() !== null) {
             $this->setDecimal($symbolsData->getDecimal());
         }
 
-        if (null !== $symbolsData->getGroup()) {
+        if ($symbolsData->getGroup() !== null) {
             $this->setGroup($symbolsData->getGroup());
         }
 
-        if (null !== $symbolsData->getList()) {
+        if ($symbolsData->getList() !== null) {
             $this->setList($symbolsData->getList());
         }
 
-        if (null !== $symbolsData->getPercentSign()) {
+        if ($symbolsData->getPercentSign() !== null) {
             $this->setPercentSign($symbolsData->getPercentSign());
         }
 
-        if (null !== $symbolsData->getMinusSign()) {
+        if ($symbolsData->getMinusSign() !== null) {
             $this->setMinusSign($symbolsData->getMinusSign());
         }
 
-        if (null !== $symbolsData->getPlusSign()) {
+        if ($symbolsData->getPlusSign() !== null) {
             $this->setPlusSign($symbolsData->getPlusSign());
         }
 
-        if (null !== $symbolsData->getExponential()) {
+        if ($symbolsData->getExponential() !== null) {
             $this->setExponential($symbolsData->getExponential());
         }
 
-        if (null !== $symbolsData->getSuperscriptingExponent()) {
+        if ($symbolsData->getSuperscriptingExponent() !== null) {
             $this->setSuperscriptingExponent($symbolsData->getSuperscriptingExponent());
         }
 
-        if (null !== $symbolsData->getPerMille()) {
+        if ($symbolsData->getPerMille() !== null) {
             $this->setPerMille($symbolsData->getPerMille());
         }
 
-        if (null !== $symbolsData->getInfinity()) {
+        if ($symbolsData->getInfinity() !== null) {
             $this->setInfinity($symbolsData->getInfinity());
         }
 
-        if (null !== $symbolsData->getNan()) {
+        if ($symbolsData->getNan() !== null) {
             $this->setNan($symbolsData->getNan());
         }
 
-        if (null !== $symbolsData->getTimeSeparator()) {
+        if ($symbolsData->getTimeSeparator() !== null) {
             $this->setTimeSeparator($symbolsData->getTimeSeparator());
         }
 
-        if (null !== $symbolsData->getCurrencyDecimal()) {
+        if ($symbolsData->getCurrencyDecimal() !== null) {
             $this->setCurrencyDecimal($symbolsData->getCurrencyDecimal());
         }
 
-        if (null !== $symbolsData->getCurrencyGroup()) {
+        if ($symbolsData->getCurrencyGroup() !== null) {
             $this->setCurrencyGroup($symbolsData->getCurrencyGroup());
         }
 

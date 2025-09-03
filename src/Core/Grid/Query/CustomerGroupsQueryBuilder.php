@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,10 +46,7 @@ class CustomerGroupsQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $languageId
      */
     public function __construct(Connection $connection, $dbPrefix, DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator, int $languageId)
     {
@@ -58,11 +56,6 @@ class CustomerGroupsQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->languageId = $languageId;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $builder = $this->getCustomerGroupsQueryBuilder($searchCriteria);
@@ -80,21 +73,11 @@ class CustomerGroupsQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->getCustomerGroupsQueryBuilder($searchCriteria)->select('COUNT(g.id_group)');
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     private function getCustomerGroupsQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $builder = $this->connection->createQueryBuilder()
@@ -109,10 +92,6 @@ class CustomerGroupsQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param SearchCriteriaInterface $searchCriteria
-     */
     private function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $searchCriteria): void
     {
         $allowedFiltersMap = [
@@ -123,7 +102,7 @@ class CustomerGroupsQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($searchCriteria->getFilters() as $filterName => $filterValue) {
-            if (!array_key_exists($filterName, $allowedFiltersMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap)) {
                 continue;
             }
 

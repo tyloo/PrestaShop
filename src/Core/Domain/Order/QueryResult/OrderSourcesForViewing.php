@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,7 +31,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 
 class OrderSourcesForViewing
 {
-    /** @var OrderSourceForViewing[] */
+    /**
+     * @var OrderSourceForViewing[]
+     */
     private $sources = [];
 
     /**
@@ -51,9 +54,6 @@ class OrderSourcesForViewing
         return $this->sources;
     }
 
-    /**
-     * @param OrderSourceForViewing $source
-     */
     private function addSource(OrderSourceForViewing $source): void
     {
         $this->sources[] = $source;

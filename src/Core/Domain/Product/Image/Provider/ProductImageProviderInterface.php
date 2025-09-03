@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,21 +35,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 interface ProductImageProviderInterface
 {
     /**
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
-     * @return string
-     *
      * @throws ShopAssociationNotFound
      */
     public function getProductCoverUrl(ProductId $productId, ShopId $shopId): string;
 
     /**
-     * @param CombinationId $combinationId
-     * @param ShopId $shopId
-     *
-     * @return string
-     *
      * @throws ShopAssociationNotFound
      */
     public function getCombinationCoverUrl(CombinationId $combinationId, ShopId $shopId): string;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,25 +54,16 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
 
     public const GRID_ID = 'manufacturer_address';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Addresses', [], 'Admin.Catalog.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -149,9 +141,6 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -229,9 +218,6 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -241,9 +227,6 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

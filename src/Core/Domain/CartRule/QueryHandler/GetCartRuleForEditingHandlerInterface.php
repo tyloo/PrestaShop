@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,10 +37,5 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\QueryResult\CartRuleForEditing;
  */
 interface GetCartRuleForEditingHandlerInterface
 {
-    /**
-     * @param GetCartRuleForEditing $query
-     *
-     * @return CartRuleForEditing
-     */
     public function handle(GetCartRuleForEditing $query): CartRuleForEditing;
 }

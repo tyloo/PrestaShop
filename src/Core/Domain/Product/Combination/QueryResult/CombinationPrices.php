@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -97,7 +98,7 @@ class CombinationPrices
         DecimalNumber $wholesalePrice,
         DecimalNumber $productTaxRate,
         DecimalNumber $productPrice,
-        DecimalNumber $productEcotax
+        DecimalNumber $productEcotax,
     ) {
         $this->impactOnPrice = $impactOnPrice;
         $this->impactOnPriceTaxIncluded = $impactOnPriceTaxIncluded;
@@ -111,81 +112,51 @@ class CombinationPrices
         $this->productEcotax = $productEcotax;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getImpactOnPrice(): DecimalNumber
     {
         return $this->impactOnPrice;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getImpactOnPriceTaxIncluded(): DecimalNumber
     {
         return $this->impactOnPriceTaxIncluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getImpactOnUnitPrice(): DecimalNumber
     {
         return $this->impactOnUnitPrice;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getImpactOnUnitPriceTaxIncluded(): DecimalNumber
     {
         return $this->impactOnUnitPriceTaxIncluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getEcotax(): DecimalNumber
     {
         return $this->ecotax;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getEcotaxTaxIncluded(): DecimalNumber
     {
         return $this->ecotaxTaxIncluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getWholesalePrice(): DecimalNumber
     {
         return $this->wholesalePrice;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getProductTaxRate(): DecimalNumber
     {
         return $this->productTaxRate;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getProductPrice(): DecimalNumber
     {
         return $this->productPrice;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getProductEcotax(): DecimalNumber
     {
         return $this->productEcotax;

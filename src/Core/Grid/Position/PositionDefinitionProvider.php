@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class PositionDefinitionProvider
 {
     public function __construct(
         #[AutowireLocator('core.grid_position_definition')]
-        protected ServiceProviderInterface $positionDefinitions
+        protected ServiceProviderInterface $positionDefinitions,
     ) {
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,14 +78,14 @@ class CustomerThreadMessage
     private $productName;
 
     /**
-     * @param string $type
-     * @param string $message
-     * @param string $date
+     * @param string      $type
+     * @param string      $message
+     * @param string      $date
      * @param string|null $employeeImage
      * @param string|null $employeeName
      * @param string|null $customerName
      * @param string|null $attachmentFile
-     * @param int|null $productId
+     * @param int|null    $productId
      * @param string|null $productName
      */
     public function __construct(
@@ -96,7 +97,7 @@ class CustomerThreadMessage
         $customerName,
         $attachmentFile,
         $productId,
-        $productName
+        $productName,
     ) {
         $this->type = $type;
         $this->message = $message;

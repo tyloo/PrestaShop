@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,7 +75,6 @@ class DiscountApplicationType
     private $productId;
 
     /**
-     * @param string $type
      * @param int|null $productId product id is required when application type is "specific_product"
      *
      * @throws CartRuleConstraintException
@@ -82,16 +82,13 @@ class DiscountApplicationType
      */
     public function __construct(string $type, ?int $productId = null)
     {
-        if (!in_array($type, self::AVAILABLE_TYPES)) {
-            throw new CartRuleConstraintException(sprintf('Invalid cart rule discount application type %s. Available types are: %s', var_export($type, true), implode(', ', self::AVAILABLE_TYPES)), CartRuleConstraintException::INVALID_DISCOUNT_APPLICATION_TYPE);
+        if (! \in_array($type, self::AVAILABLE_TYPES, true)) {
+            throw new CartRuleConstraintException(\sprintf('Invalid cart rule discount application type %s. Available types are: %s', var_export($type, true), implode(', ', self::AVAILABLE_TYPES)), CartRuleConstraintException::INVALID_DISCOUNT_APPLICATION_TYPE);
         }
 
         if ($type === self::SPECIFIC_PRODUCT) {
-            if (!$productId) {
-                throw new CartRuleConstraintException(
-                    'Provided Cart rule discount application type requires specific product',
-                    CartRuleConstraintException::MISSING_DISCOUNT_APPLICATION_PRODUCT
-                );
+            if (! $productId) {
+                throw new CartRuleConstraintException('Provided Cart rule discount application type requires specific product', CartRuleConstraintException::MISSING_DISCOUNT_APPLICATION_PRODUCT);
             }
 
             $this->productId = new ProductId($productId);
@@ -100,17 +97,11 @@ class DiscountApplicationType
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return ProductId|null
-     */
     public function getProductId(): ?ProductId
     {
         return $this->productId;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -110,7 +111,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         ShopConstraintContextInterface $shopConstraintContext,
         FormFactoryInterface $formFactory,
         AccessibilityCheckerInterface $singleShopChecker,
-        AccessibilityCheckerInterface $multipleShopsChecker
+        AccessibilityCheckerInterface $multipleShopsChecker,
     ) {
         parent::__construct($hookDispatcher);
         $this->configuration = $configuration;
@@ -121,25 +122,16 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         $this->multipleShopsChecker = $multipleShopsChecker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Products', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $editAttributes = $this->getMultiShopEditionAttributes();
@@ -228,7 +220,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
             )
         ;
 
-        if (!empty($shopId)) {
+        if (! empty($shopId)) {
             $columns
                 ->add(
                     (new ToggleColumn('active'))
@@ -316,9 +308,6 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getRowActions(): RowActionCollection
     {
         if ($this->shopConstraintContext->getShopConstraint()->forAllShops() || $this->shopConstraintContext->getShopConstraint()->getShopGroupId()) {
@@ -522,9 +511,6 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $rowActions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = (new FilterCollection())
@@ -616,9 +602,6 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -658,9 +641,6 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         if ($this->shopConstraintContext->getShopConstraint()->getShopId()) {
@@ -769,7 +749,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         string $progressTitle,
         string $progressMessage,
         string $icon = '',
-        array $routeParams = []
+        array $routeParams = [],
     ): AjaxBulkAction {
         $ajaxBulkAction = new AjaxBulkAction($actionId);
         $ajaxBulkAction

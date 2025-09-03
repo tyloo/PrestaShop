@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,9 +63,6 @@ class AddAttributeCommand
     private $pathName;
 
     /**
-     * @param int $attributeGroupId
-     * @param array $localizedValue
-     * @param string $color
      * @param int[] $associatedShopIds
      *
      * @throws AttributeConstraintException
@@ -78,25 +76,16 @@ class AddAttributeCommand
         $this->associatedShopIds = $associatedShopIds;
     }
 
-    /**
-     * @return AttributeGroupId
-     */
     public function getAttributeGroupId(): AttributeGroupId
     {
         return $this->attributeGroupId;
     }
 
-    /**
-     * @return array
-     */
     public function getLocalizedNames(): array
     {
         return $this->localizedNames;
     }
 
-    /**
-     * @return string
-     */
     public function getColor(): string
     {
         return $this->color;
@@ -110,9 +99,6 @@ class AddAttributeCommand
         return $this->associatedShopIds;
     }
 
-    /**
-     * @param string $pathName
-     */
     public function setTextureFilePath(
         string $pathName,
     ): void {

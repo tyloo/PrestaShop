@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ToggleColumn extends AbstractColumn
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'toggle';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -74,16 +69,16 @@ final class ToggleColumn extends AbstractColumn
         ;
 
         $resolver->setNormalizer('route_param_name', static function (Options $options, $value) {
-            if (!empty($value)) {
+            if (! empty($value)) {
                 return $value;
             }
 
             // Fallback on route_param_id if it's specified
-            if (!empty($options['route_param_id'])) {
+            if (! empty($options['route_param_id'])) {
                 return $options['route_param_id'];
             }
 
-            throw new MissingOptionsException(sprintf('Option "%s" is missing for "%s" column options.', 'route_param_name', self::class));
+            throw new MissingOptionsException(\sprintf('Option "%s" is missing for "%s" column options.', 'route_param_name', self::class));
         });
     }
 }

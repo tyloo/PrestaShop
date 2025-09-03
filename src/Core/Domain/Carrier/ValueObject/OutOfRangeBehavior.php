@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,8 +60,6 @@ class OutOfRangeBehavior
     private $value;
 
     /**
-     * @param int $value
-     *
      * @throws CarrierConstraintException
      */
     public function __construct(int $value)
@@ -69,30 +68,18 @@ class OutOfRangeBehavior
         $this->value = $value;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->value;
     }
 
     /**
-     * @param int $value
-     *
      * @throws CarrierConstraintException
      */
     private function assertValue(int $value): void
     {
-        if (!in_array($value, self::AVAILABLE_VALUES, true)) {
-            throw new CarrierConstraintException(
-                sprintf(
-                    'Invalid range behaviour %s. Valid types are: [%s]',
-                    $value,
-                    implode(',', self::AVAILABLE_VALUES)
-                ),
-                CarrierConstraintException::INVALID_RANGE_BEHAVIOR
-            );
+        if (! \in_array($value, self::AVAILABLE_VALUES, true)) {
+            throw new CarrierConstraintException(\sprintf('Invalid range behaviour %s. Valid types are: [%s]', $value, implode(',', self::AVAILABLE_VALUES)), CarrierConstraintException::INVALID_RANGE_BEHAVIOR);
         }
     }
 }

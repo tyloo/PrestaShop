@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,11 +42,11 @@ class QueryBuilder
     {
         $escaped = $this->db->escape($value);
 
-        if (is_string($value)) {
+        if (\is_string($value)) {
             return "'" . $escaped . "'";
-        } else {
-            return $escaped;
         }
+
+        return $escaped;
     }
 
     public function buildWhereConditions($andOrOr, array $conditions)
@@ -53,13 +54,13 @@ class QueryBuilder
         $operator = strtoupper($andOrOr);
 
         if ($operator !== 'AND' && $operator !== 'OR') {
-            throw new Exception(sprintf('Invalid operator %s - must be "and" or "or".', $andOrOr));
+            throw new Exception(\sprintf('Invalid operator %s - must be "and" or "or".', $andOrOr));
         }
 
         $parts = [];
 
         foreach ($conditions as $key => $value) {
-            if (is_scalar($value)) {
+            if (\is_scalar($value)) {
                 $parts[] = $key . ' = ' . $this->quote($value);
             } else {
                 $list = [];

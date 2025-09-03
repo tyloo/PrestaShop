@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,6 @@ interface EmailLogEraserInterface
      * Erase given email logs.
      *
      * @param int[] $mailLogIds
-     *
-     * @return array
      */
     public function erase(array $mailLogIds): array;
 

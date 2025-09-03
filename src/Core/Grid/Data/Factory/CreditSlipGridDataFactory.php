@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,21 +47,14 @@ final class CreditSlipGridDataFactory implements GridDataFactoryInterface
      */
     private $translator;
 
-    /**
-     * @param GridDataFactoryInterface $creditSlipDataFactory
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         GridDataFactoryInterface $creditSlipDataFactory,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->creditSlipDataFactory = $creditSlipDataFactory;
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $creditSlipData = $this->creditSlipDataFactory->getData($searchCriteria);
@@ -77,8 +71,6 @@ final class CreditSlipGridDataFactory implements GridDataFactoryInterface
     }
 
     /**
-     * @param array $creditSlips
-     *
      * @return array
      */
     private function applyModification(array $creditSlips)

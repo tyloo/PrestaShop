@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,10 +41,6 @@ class BulkCombinationException extends CombinationException
      */
     protected $bulkExceptions = [];
 
-    /**
-     * @param CombinationId $combinationId
-     * @param CombinationException $exception
-     */
     public function addException(CombinationId $combinationId, CombinationException $exception): void
     {
         $this->bulkExceptions[$combinationId->getValue()] = $exception;
@@ -57,9 +54,6 @@ class BulkCombinationException extends CombinationException
         return $this->bulkExceptions;
     }
 
-    /**
-     * @return bool
-     */
     public function isEmpty(): bool
     {
         return empty($this->bulkExceptions);

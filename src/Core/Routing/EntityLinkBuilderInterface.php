@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,7 +36,6 @@ interface EntityLinkBuilderInterface
 {
     /**
      * @param string $entity
-     * @param array $parameters
      *
      * @return string
      */
@@ -43,7 +43,6 @@ interface EntityLinkBuilderInterface
 
     /**
      * @param string $entity
-     * @param array $parameters
      *
      * @return string
      */

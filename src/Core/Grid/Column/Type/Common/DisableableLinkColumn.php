@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,17 +45,11 @@ class DisableableLinkColumn extends AbstractColumn
         $this->linkColumn = new LinkColumn($id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'disableable_link';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -63,9 +58,6 @@ class DisableableLinkColumn extends AbstractColumn
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOptions(array $options)
     {
         $disabledOptions = [];
@@ -81,9 +73,6 @@ class DisableableLinkColumn extends AbstractColumn
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions()
     {
         return array_merge($this->linkColumn->getOptions(), parent::getOptions());

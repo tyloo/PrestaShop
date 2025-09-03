@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class CartRuleAction
     public function __construct(
         bool $freeShipping,
         ?GiftProduct $giftProduct = null,
-        ?Discount $discount = null
+        ?Discount $discount = null,
     ) {
         if ($freeShipping || $giftProduct || $discount) {
             $this->freeShipping = $freeShipping;
@@ -60,10 +61,7 @@ class CartRuleAction
             return;
         }
 
-        throw new CartRuleConstraintException(
-            'Cart rule must have at least one action',
-            CartRuleConstraintException::MISSING_ACTION
-        );
+        throw new CartRuleConstraintException('Cart rule must have at least one action', CartRuleConstraintException::MISSING_ACTION);
     }
 
     public function isFreeShipping(): bool

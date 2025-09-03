@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,17 +58,12 @@ class CountryZipCodeFormat
     }
 
     /**
-     * @param string $zipCodeFormat
-     *
      * @throws CountryConstraintException
      */
     protected function assertIsValidZipCodeFormat(string $zipCodeFormat): void
     {
-        if (!preg_match(self::ZIP_CODE_PATTERN, $zipCodeFormat)) {
-            throw new CountryConstraintException(
-                sprintf('Invalid country zip code format: %s', $zipCodeFormat),
-                CountryConstraintException::INVALID_ZIP_CODE
-            );
+        if (! preg_match(self::ZIP_CODE_PATTERN, $zipCodeFormat)) {
+            throw new CountryConstraintException(\sprintf('Invalid country zip code format: %s', $zipCodeFormat), CountryConstraintException::INVALID_ZIP_CODE);
         }
     }
 }

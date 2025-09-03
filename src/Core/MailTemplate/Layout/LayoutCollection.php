@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,17 +31,11 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
 
 class LayoutCollection extends AbstractTypedCollection implements LayoutCollectionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getType()
     {
         return LayoutInterface::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function merge(LayoutCollectionInterface $collection)
     {
         /** @var LayoutInterface $newLayout */
@@ -53,12 +48,9 @@ class LayoutCollection extends AbstractTypedCollection implements LayoutCollecti
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function replace(LayoutInterface $oldLayout, LayoutInterface $newLayout)
     {
-        if (!$this->contains($oldLayout)) {
+        if (! $this->contains($oldLayout)) {
             return false;
         }
 
@@ -68,9 +60,6 @@ class LayoutCollection extends AbstractTypedCollection implements LayoutCollecti
         return $this->contains($newLayout);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLayout($layoutName, $moduleName)
     {
         /** @var LayoutInterface $layout */

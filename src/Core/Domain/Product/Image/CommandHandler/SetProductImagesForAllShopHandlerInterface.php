@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,8 +33,5 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\Command\SetProductImagesForA
 
 interface SetProductImagesForAllShopHandlerInterface
 {
-    /**
-     * @param SetProductImagesForAllShopCommand $command
-     */
     public function handle(SetProductImagesForAllShopCommand $command): void;
 }

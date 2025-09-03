@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,10 +56,6 @@ class CategoryForTree
     private $children;
 
     /**
-     * @param int $categoryId
-     * @param bool $active
-     * @param string $name,
-     * @param string $displayName
      * @param CategoryForTree[] $children
      */
     public function __construct(
@@ -66,7 +63,7 @@ class CategoryForTree
         bool $active,
         string $name,
         string $displayName,
-        array $children
+        array $children,
     ) {
         $this->categoryId = $categoryId;
         $this->active = $active;
@@ -75,33 +72,21 @@ class CategoryForTree
         $this->children = $children;
     }
 
-    /**
-     * @return int
-     */
     public function getCategoryId(): int
     {
         return $this->categoryId;
     }
 
-    /**
-     * @return bool
-     */
     public function getActive(): bool
     {
         return $this->active;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayName(): string
     {
         return $this->displayName;

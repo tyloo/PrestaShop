@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class RowActionCollection extends AbstractCollection implements RowActionCollectionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function add(RowActionInterface $action)
     {
         $this->items[$action->getId()] = $action;

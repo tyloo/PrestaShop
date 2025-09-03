@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,6 @@ class SetAssociatedProductAttachmentsCommand
     private $attachmentIds;
 
     /**
-     * @param int $productId
      * @param int[] $attachmentIds
      */
     public function __construct(int $productId, array $attachmentIds)
@@ -57,9 +57,6 @@ class SetAssociatedProductAttachmentsCommand
         $this->setAttachmentIds($attachmentIds);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -79,11 +76,7 @@ class SetAssociatedProductAttachmentsCommand
     private function setAttachmentIds(array $attachmentIds): void
     {
         if (empty($attachmentIds)) {
-            throw new RuntimeException(sprintf(
-                'Empty array of product attachments provided in %s. To remove all product attachments use %s.',
-                self::class,
-                RemoveAllAssociatedProductAttachmentsCommand::class
-            ));
+            throw new RuntimeException(\sprintf('Empty array of product attachments provided in %s. To remove all product attachments use %s.', self::class, RemoveAllAssociatedProductAttachmentsCommand::class));
         }
 
         foreach ($attachmentIds as $attachmentId) {

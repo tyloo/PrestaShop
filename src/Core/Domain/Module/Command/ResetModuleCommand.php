@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,7 @@ class ResetModuleCommand
 
     public function __construct(
         string $technicalName,
-        protected bool $keepData = true
+        protected bool $keepData = true,
     ) {
         $this->technicalName = new ModuleTechnicalName($technicalName);
     }

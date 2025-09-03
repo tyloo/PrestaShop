@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,10 +33,5 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\GroupId;
 
 interface AddCustomerGroupHandlerInterface
 {
-    /**
-     * @param AddCustomerGroupCommand $command
-     *
-     * @return GroupId
-     */
     public function handle(AddCustomerGroupCommand $command): GroupId;
 }

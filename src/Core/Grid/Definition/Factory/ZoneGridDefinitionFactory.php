@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,25 +57,16 @@ final class ZoneGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'zone';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Zones', [], 'Admin.International.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -118,9 +110,6 @@ final class ZoneGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters(): FilterCollectionInterface
     {
         return (new FilterCollection())
@@ -165,9 +154,6 @@ final class ZoneGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * @return RowActionCollection
-     */
     private function getRowActions(): RowActionCollection
     {
         $rowActionCollection = new RowActionCollection();
@@ -194,9 +180,6 @@ final class ZoneGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $rowActionCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions(): GridActionCollectionInterface
     {
         return (new GridActionCollection())
@@ -217,9 +200,6 @@ final class ZoneGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         return (new BulkActionCollection())

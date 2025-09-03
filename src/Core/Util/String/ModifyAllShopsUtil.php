@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,6 @@ class ModifyAllShopsUtil
      *
      * E.g. if you provide $fieldPath = '[stock][delta_quantity][delta]' and $prefix = 'modify_all_shops_'
      * then the result will be '[stock][delta_quantity][modify_all_shops_delta]'
-     *
-     * @param string $fieldPath
-     * @param string $allShopsPrefix
-     *
-     * @return string
      */
     public static function prefixFieldPathWithAllShops(string $fieldPath, string $allShopsPrefix): string
     {
@@ -63,17 +59,17 @@ class ModifyAllShopsUtil
         }
 
         $prefixedFieldName = '';
-        $lastIndex = count($matches[1]) - 1;
+        $lastIndex = \count($matches[1]) - 1;
         foreach ($matches[1] as $index => $subFieldName) {
             if ($index !== $lastIndex) {
                 // It is not the last field, then just rebuild the field name as it was and continue searching for the last one
-                $prefixedFieldName .= sprintf('[%s]', $subFieldName);
+                $prefixedFieldName .= \sprintf('[%s]', $subFieldName);
 
                 continue;
             }
 
             // it is the last field, so we prefix it with provided $prefix inside the angle brackets
-            $prefixedFieldName .= sprintf('[%s%s]', $allShopsPrefix, $subFieldName);
+            $prefixedFieldName .= \sprintf('[%s%s]', $allShopsPrefix, $subFieldName);
         }
 
         return $prefixedFieldName;

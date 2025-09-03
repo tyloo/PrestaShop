@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,17 +35,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class DeleteCustomersBulkAction extends AbstractBulkAction
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'delete_customers';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

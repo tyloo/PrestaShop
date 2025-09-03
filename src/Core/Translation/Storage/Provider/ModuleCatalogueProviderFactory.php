@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,7 +65,7 @@ class ModuleCatalogueProviderFactory
         LegacyModuleExtractorInterface $legacyModuleExtractor,
         LoaderInterface $legacyFileLoader,
         string $modulesDirectory,
-        string $translationsDirectory
+        string $translationsDirectory,
     ) {
         $this->databaseTranslationLoader = $databaseTranslationLoader;
         $this->legacyModuleExtractor = $legacyModuleExtractor;

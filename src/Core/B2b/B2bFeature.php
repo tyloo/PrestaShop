@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,49 +40,31 @@ final class B2bFeature implements FeatureInterface
      */
     private $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isUsed()
     {
         return $this->isActive();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isActive()
     {
         return (bool) $this->configuration->get('PS_B2B_ENABLE');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enable()
     {
         $this->configuration->set('PS_B2B_ENABLE', 1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function disable()
     {
         $this->configuration->set('PS_B2B_ENABLE', 0);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($status)
     {
         $status ? $this->enable() : $this->disable();

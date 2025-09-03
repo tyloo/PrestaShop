@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -108,23 +109,6 @@ class SpecificPriceForListing
      */
     private $dateTimeTo;
 
-    /**
-     * @param int $specificPriceId
-     * @param string $reductionType
-     * @param DecimalNumber $reductionValue
-     * @param bool $includesTax
-     * @param FixedPriceInterface $fixedPrice
-     * @param int $fromQuantity
-     * @param DateTimeInterface $dateTimeFrom
-     * @param DateTimeInterface $dateTimeTo
-     * @param string|null $combinationName
-     * @param string|null $shop
-     * @param string|null $currencyName
-     * @param string|null $currencyISOCode
-     * @param string|null $country
-     * @param string|null $group
-     * @param string|null $customer
-     */
     public function __construct(
         int $specificPriceId,
         string $reductionType,
@@ -140,7 +124,7 @@ class SpecificPriceForListing
         ?string $currencyISOCode,
         ?string $country,
         ?string $group,
-        ?string $customer
+        ?string $customer,
     ) {
         $this->specificPriceId = $specificPriceId;
         $this->reductionType = $reductionType;
@@ -159,121 +143,76 @@ class SpecificPriceForListing
         $this->customerName = $customer;
     }
 
-    /**
-     * @return int
-     */
     public function getSpecificPriceId(): int
     {
         return $this->specificPriceId;
     }
 
-    /**
-     * @return string
-     */
     public function getReductionType(): string
     {
         return $this->reductionType;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getReductionValue(): DecimalNumber
     {
         return $this->reductionValue;
     }
 
-    /**
-     * @return bool
-     */
     public function includesTax(): bool
     {
         return $this->includesTax;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCombinationName(): ?string
     {
         return $this->combinationName;
     }
 
-    /**
-     * @return FixedPriceInterface
-     */
     public function getFixedPrice(): FixedPriceInterface
     {
         return $this->fixedPrice;
     }
 
-    /**
-     * @return int
-     */
     public function getFromQuantity(): int
     {
         return $this->fromQuantity;
     }
 
-    /**
-     * @return string|null
-     */
     public function getShopName(): ?string
     {
         return $this->shopName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCurrencyName(): ?string
     {
         return $this->currencyName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCurrencyISOCode(): ?string
     {
         return $this->currencyISOCode;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCountryName(): ?string
     {
         return $this->countryName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getGroupName(): ?string
     {
         return $this->groupName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCustomerName(): ?string
     {
         return $this->customerName;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDateTimeFrom(): DateTimeInterface
     {
         return $this->dateTimeFrom;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDateTimeTo(): DateTimeInterface
     {
         return $this->dateTimeTo;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -275,8 +276,6 @@ class EditCmsPageCommand
     }
 
     /**
-     * @param array|null $shopAssociation
-     *
      * @return self
      */
     public function setShopAssociation(?array $shopAssociation = null)

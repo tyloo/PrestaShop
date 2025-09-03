@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,17 +42,11 @@ final class OrderMessageFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(CommandBusInterface $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         /** @var OrderMessageId $orderMessageId */
@@ -60,9 +55,6 @@ final class OrderMessageFormDataHandler implements FormDataHandlerInterface
         return $orderMessageId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($orderMessageId, array $data)
     {
         $this->commandBus->handle(new EditOrderMessageCommand($orderMessageId, $data['name'], $data['message']));

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class ProductExtraContentFinder extends HookFinder
     public function find()
     {
         // Check first that we have a product to send as params
-        if (!array_key_exists('product', $this->params) || !$this->params['product'] instanceof Product) {
+        if (! \array_key_exists('product', $this->params) || ! $this->params['product'] instanceof Product) {
             throw new Exception('Required product param not found.');
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -118,7 +119,7 @@ class CarrierFormDataHandler implements FormDataHandlerInterface
         $carrierId = $this->commandBus->handle($command);
 
         // Then, we need to update the shipping ranges of the carrier only if shipping is paid
-        if (!$data['shipping_settings']['is_free']) {
+        if (! $data['shipping_settings']['is_free']) {
             $carrierId = $this->setCarrierRange($carrierId, $data);
         }
 

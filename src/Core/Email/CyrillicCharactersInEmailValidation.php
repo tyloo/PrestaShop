@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class CyrillicCharactersInEmailValidation implements EmailValidation
      */
     private $error;
 
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(string $email, EmailLexer $emailLexer): bool
     {
         $parts = explode('@', $email);
@@ -50,20 +48,14 @@ class CyrillicCharactersInEmailValidation implements EmailValidation
             $this->error = new InvalidEmail(new ExceptionFound(new NonASCIIInLocalPartException()), '');
         }
 
-        return null === $this->error;
+        return $this->error === null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getError(): ?InvalidEmail
     {
         return $this->error;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getWarnings(): array
     {
         return [];

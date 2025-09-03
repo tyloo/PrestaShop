@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,16 +60,13 @@ final class FormHandler implements FormHandlerInterface
     private $isDemoModeEnabled;
 
     /**
-     * @param FormDataHandlerInterface $dataHandler
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param TranslatorInterface $translator
      * @param bool $isDemoModeEnabled
      */
     public function __construct(
         FormDataHandlerInterface $dataHandler,
         HookDispatcherInterface $hookDispatcher,
         TranslatorInterface $translator,
-        $isDemoModeEnabled
+        $isDemoModeEnabled,
     ) {
         $this->dataHandler = $dataHandler;
         $this->hookDispatcher = $hookDispatcher;
@@ -76,31 +74,24 @@ final class FormHandler implements FormHandlerInterface
         $this->isDemoModeEnabled = $isDemoModeEnabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(FormInterface $form)
     {
         return $this->handleForm($form);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleFor($id, FormInterface $form)
     {
         return $this->handleForm($form, $id);
     }
 
     /**
-     * @param FormInterface $form
      * @param int|null $id
      *
      * @return FormHandlerResultInterface
      */
     private function handleForm(FormInterface $form, $id = null)
     {
-        if (!$form->isSubmitted()) {
+        if (! $form->isSubmitted()) {
             return FormHandlerResult::createNotSubmitted();
         }
 
@@ -114,11 +105,11 @@ final class FormHandler implements FormHandlerInterface
             return FormHandlerResult::createSubmittedButNotValid();
         }
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return FormHandlerResult::createSubmittedButNotValid();
         }
 
-        if (null !== $id) {
+        if ($id !== null) {
             return $this->handleFormUpdate($form, $id);
         }
 
@@ -126,7 +117,6 @@ final class FormHandler implements FormHandlerInterface
     }
 
     /**
-     * @param FormInterface $form
      * @param int $id
      *
      * @return FormHandlerResultInterface
@@ -151,8 +141,6 @@ final class FormHandler implements FormHandlerInterface
     }
 
     /**
-     * @param FormInterface $form
-     *
      * @return FormHandlerResult
      */
     private function handleFormCreate(FormInterface $form)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,17 +44,11 @@ class OrderReturnFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(CommandBusInterface $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($orderReturnId, array $data): void
     {
         $orderReturnStateId = (int) $data['order_return_state'];
@@ -63,8 +58,6 @@ class OrderReturnFormDataHandler implements FormDataHandlerInterface
 
     /**
      * Order Return doesn't have a create option
-     *
-     * @param array $data
      *
      * @throws NotImplementedException
      */

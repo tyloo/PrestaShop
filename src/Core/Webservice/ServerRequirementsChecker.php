@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,17 +63,11 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
      */
     private $phpExtensionChecker;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param Configuration $configuration
-     * @param HostingInformation $hostingInformation
-     * @param PhpExtensionCheckerInterface $phpExtensionChecker
-     */
     public function __construct(
         TranslatorInterface $translator,
         Configuration $configuration,
         HostingInformation $hostingInformation,
-        PhpExtensionCheckerInterface $phpExtensionChecker
+        PhpExtensionCheckerInterface $phpExtensionChecker,
     ) {
         $this->translator = $translator;
         $this->configuration = $configuration;
@@ -98,8 +93,8 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
         $selectedWarningMessages = [];
 
         foreach ($issues as $issue) {
-            if (false === array_key_exists($issue, $allWarningMessages)) {
-                throw new RuntimeException(sprintf('Unexpected configuration issue "%s"', $issue));
+            if (\array_key_exists($issue, $allWarningMessages) === false) {
+                throw new RuntimeException(\sprintf('Unexpected configuration issue "%s"', $issue));
             }
 
             $selectedWarningMessages[] = $allWarningMessages[$issue];
@@ -115,26 +110,26 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
     {
         $issues = [];
 
-        if (!$this->phpExtensionChecker->loaded('SimpleXML')) {
+        if (! $this->phpExtensionChecker->loaded('SimpleXML')) {
             $issues[] = self::ISSUE_EXT_SIMPLEXML_NOT_AVAILABLE;
         }
 
-        if (false === $this->configuration->getBoolean('PS_SSL_ENABLED')) {
+        if ($this->configuration->getBoolean('PS_SSL_ENABLED') === false) {
             $issues[] = self::ISSUE_HTTPS_NOT_AVAILABLE;
         }
 
-        if (!str_contains($this->hostingInformation->getServerInformation()['version'], 'Apache')) {
+        if (! str_contains($this->hostingInformation->getServerInformation()['version'], 'Apache')) {
             return $issues;
         }
 
-        if (function_exists('apache_get_modules')) {
+        if (\function_exists('apache_get_modules')) {
             $apache_modules = apache_get_modules();
 
-            if (false === in_array('mod_auth_basic', $apache_modules)) {
+            if (\in_array('mod_auth_basic', $apache_modules, true) === false) {
                 $issues[] = self::ISSUE_APACHE_MOD_AUTH_BASIC_NOT_AVAILABLE;
             }
 
-            if (false === in_array('mod_rewrite', $apache_modules)) {
+            if (\in_array('mod_rewrite', $apache_modules, true) === false) {
                 $issues[] = self::ISSUE_APACHE_MOD_AUTH_REWRITE_NOT_AVAILABLE;
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -328,11 +329,11 @@ class PaymentOption implements HookContentClassInterface
      */
     public static function convertLegacyOption(array $legacyOption)
     {
-        if (!$legacyOption) {
+        if (! $legacyOption) {
             return;
         }
 
-        if (array_key_exists('cta_text', $legacyOption)) {
+        if (\array_key_exists('cta_text', $legacyOption)) {
             $legacyOption = [$legacyOption];
         }
 

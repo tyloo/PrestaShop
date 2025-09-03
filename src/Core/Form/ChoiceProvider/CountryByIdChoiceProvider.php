@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,13 +64,12 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
 
     /**
      * @param int $langId
-     * @param CountryDataProvider $countryDataProvider
      */
     public function __construct(
         $langId,
         CountryDataProvider $countryDataProvider,
         private string $psImageDir,
-        private string $psImageBaseUrl
+        private string $psImageBaseUrl,
     ) {
         $this->langId = $langId;
         $this->countryDataProvider = $countryDataProvider;
@@ -100,10 +100,10 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
         $choicesAttributes = [];
 
         foreach ($countries as $country) {
-            if (in_array($country['id_country'], $dniCountriesId)) {
+            if (\in_array($country['id_country'], $dniCountriesId, true)) {
                 $choicesAttributes[$country['name']]['need_dni'] = 1;
             }
-            if (in_array($country['id_country'], $postcodeCountriesId)) {
+            if (\in_array($country['id_country'], $postcodeCountriesId, true)) {
                 $choicesAttributes[$country['name']]['need_postcode'] = 1;
             }
 
@@ -122,7 +122,7 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
      */
     private function getCountries()
     {
-        if (null === $this->countries) {
+        if ($this->countries === null) {
             $this->countries = $this->countryDataProvider->getCountries($this->langId);
         }
 
@@ -134,7 +134,7 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
      */
     private function getDniCountriesId()
     {
-        if (null === $this->dniCountriesId) {
+        if ($this->dniCountriesId === null) {
             $this->dniCountriesId = $this->countryDataProvider->getCountriesIdWhichNeedDni();
         }
 
@@ -143,7 +143,7 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
 
     private function getPostcodeCountriesId()
     {
-        if (null === $this->postcodeCountriesId) {
+        if ($this->postcodeCountriesId === null) {
             $this->postcodeCountriesId = $this->countryDataProvider->getCountriesIdWhichNeedPostcode();
         }
 

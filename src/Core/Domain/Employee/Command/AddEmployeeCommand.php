@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,15 +92,10 @@ class AddEmployeeCommand
      * @param string $lastName
      * @param string $email
      * @param string $plainPassword
-     * @param int $defaultPageId
-     * @param int $languageId
-     * @param bool $active
-     * @param int $profileId
-     * @param array $shopAssociation
-     * @param bool $hasEnabledGravatar
-     * @param int $minLength
-     * @param int $maxLength
-     * @param int $minScore
+     * @param int    $defaultPageId
+     * @param int    $languageId
+     * @param bool   $active
+     * @param int    $profileId
      */
     public function __construct(
         $firstName,
@@ -114,7 +110,7 @@ class AddEmployeeCommand
         bool $hasEnabledGravatar,
         int $minLength,
         int $maxLength,
-        int $minScore
+        int $minScore,
     ) {
         $this->firstName = new FirstName($firstName);
         $this->lastName = new LastName($lastName);

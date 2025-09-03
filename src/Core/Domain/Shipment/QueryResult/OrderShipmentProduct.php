@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,41 +38,26 @@ class OrderShipmentProduct
     ) {
     }
 
-    /**
-     * @return int
-     */
     public function getOrderDetailId(): int
     {
         return $this->orderDetailId;
     }
 
-    /**
-     * @return string
-     */
     public function getProductName(): string
     {
         return $this->productName;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return string
-     */
     public function getProductReference(): string
     {
         return $this->productReference;
     }
 
-    /**
-     * @return string
-     */
     public function getProductImagePath(): string
     {
         return $this->productImagePath;

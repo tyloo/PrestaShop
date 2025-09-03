@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,23 +40,17 @@ final class ThemePageLayoutsChoiceProvider implements FormChoiceProviderInterfac
      */
     private $theme;
 
-    /**
-     * @param Theme $theme
-     */
     public function __construct(Theme $theme)
     {
         $this->theme = $theme;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $choices = [];
 
         foreach ($this->theme->getAvailableLayouts() as $layoutId => $availableLayout) {
-            $choices[sprintf('%s - %s', $availableLayout['name'], $availableLayout['description'])] = $layoutId;
+            $choices[\sprintf('%s - %s', $availableLayout['name'], $availableLayout['description'])] = $layoutId;
         }
 
         return $choices;

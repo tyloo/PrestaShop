@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,11 +35,6 @@ interface ModuleInterface
 
     public function hasValidInstance(): bool;
 
-    /**
-     * @param string $name
-     *
-     * @return mixed
-     */
     public function get(string $name);
 
     public function onInstall(): bool;
@@ -64,9 +60,6 @@ interface ModuleInterface
      */
     public function onDisable(): bool;
 
-    /**
-     * @return bool
-     */
     public function onReset(): bool;
 
     /**

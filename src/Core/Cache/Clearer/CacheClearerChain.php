@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,24 +37,18 @@ final class CacheClearerChain implements CacheClearerInterface
      */
     private $cacheClearers;
 
-    /**
-     * @param CacheClearerInterface ...$cacheClearers
-     */
     public function __construct(CacheClearerInterface ...$cacheClearers)
     {
         $this->cacheClearers = $cacheClearers;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clear()
     {
         foreach ($this->cacheClearers as $cacheClearer) {
             $cacheClearer->clear();
         }
 
-        if (function_exists('opcache_reset')) {
+        if (\function_exists('opcache_reset')) {
             @opcache_reset();
         }
     }

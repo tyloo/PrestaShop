@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ final class SearchEngineFilters extends Filters
      */
     protected $filterId = SearchEngineGridDefinitionFactory::GRID_ID;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults(): array
     {
         return [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,18 +72,15 @@ class NumberExtractor
      * ->extract($simpleArray, '[someKey]')
      *
      * @param array|object $resource
-     * @param string $propertyPath
-     *
-     * @return DecimalNumber
      *
      * @throws NumberExtractorException
      */
     public function extract($resource, string $propertyPath): DecimalNumber
     {
-        if (is_object($resource)) {
+        if (\is_object($resource)) {
             $numberFromPublicProperty = $this->extractPublicPropertyFirst($resource, $propertyPath);
 
-            if (null !== $numberFromPublicProperty) {
+            if ($numberFromPublicProperty !== null) {
                 return $numberFromPublicProperty;
             }
         }
@@ -90,26 +88,11 @@ class NumberExtractor
         try {
             $plainValue = $this->propertyAccessor->getValue($resource, $propertyPath);
         } catch (InvalidArgumentException $e) {
-            throw new NumberExtractorException(
-                sprintf('Invalid property path "%s" provided', $propertyPath),
-                NumberExtractorException::INVALID_PROPERTY_PATH,
-                $e
-            );
+            throw new NumberExtractorException(\sprintf('Invalid property path "%s" provided', $propertyPath), NumberExtractorException::INVALID_PROPERTY_PATH, $e);
         } catch (AccessException $e) {
-            throw new NumberExtractorException(
-                sprintf(
-                    'Cannot access property "%s". It doesn\'t exist or is not public',
-                    $propertyPath
-                ),
-                NumberExtractorException::NOT_ACCESSIBLE,
-                $e
-            );
+            throw new NumberExtractorException(\sprintf('Cannot access property "%s". It doesn\'t exist or is not public', $propertyPath), NumberExtractorException::NOT_ACCESSIBLE, $e);
         } catch (UnexpectedTypeException $e) {
-            throw new NumberExtractorException(
-                'Invalid type of resource within a path given. Expected array or object',
-                NumberExtractorException::INVALID_RESOURCE_TYPE,
-                $e
-            );
+            throw new NumberExtractorException('Invalid type of resource within a path given. Expected array or object', NumberExtractorException::INVALID_RESOURCE_TYPE, $e);
         }
 
         return $this->toDecimalNumber($plainValue);
@@ -119,21 +102,18 @@ class NumberExtractor
      * Check if object contains provided public property and extract it as a DecimalNumber, else return null
      *
      * @param string|object $resource
-     * @param string $property
-     *
-     * @return DecimalNumber|null
      *
      * @throws ReflectionException
      */
     private function extractPublicPropertyFirst($resource, string $property): ?DecimalNumber
     {
-        if (!property_exists($resource, $property)) {
+        if (! property_exists($resource, $property)) {
             return null;
         }
 
         $reflectedObj = new ReflectionClass($resource);
 
-        if (!$reflectedObj->getProperty($property)->isPublic()) {
+        if (! $reflectedObj->getProperty($property)->isPublic()) {
             return null;
         }
 
@@ -141,22 +121,12 @@ class NumberExtractor
     }
 
     /**
-     * @param mixed $value
-     *
-     * @return DecimalNumber
-     *
      * @throws NumberExtractorException
      */
     private function toDecimalNumber($value): DecimalNumber
     {
-        if (!is_numeric($value)) {
-            throw new NumberExtractorException(
-                sprintf(
-                    'Only numeric values can be converted to DecimalNumber. Got "%s"',
-                    $value
-                ),
-                NumberExtractorException::NON_NUMERIC_PROPERTY
-            );
+        if (! is_numeric($value)) {
+            throw new NumberExtractorException(\sprintf('Only numeric values can be converted to DecimalNumber. Got "%s"', $value), NumberExtractorException::NON_NUMERIC_PROPERTY);
         }
 
         return new DecimalNumber((string) $value);

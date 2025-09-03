@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class DefaultGroup
     private $name;
 
     /**
-     * @param int $groupId
+     * @param int    $groupId
      * @param string $name
      */
     public function __construct($groupId, $name)

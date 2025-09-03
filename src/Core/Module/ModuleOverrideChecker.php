@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,7 +58,7 @@ class ModuleOverrideChecker
     public function hasOverrideConflict(string $moduleOverridePath): bool
     {
         // if module doesn't have an override folder, there is no conflict
-        if (!is_dir($moduleOverridePath)) {
+        if (! is_dir($moduleOverridePath)) {
             return false;
         }
 
@@ -65,7 +66,7 @@ class ModuleOverrideChecker
         $finder->files()->in($moduleOverridePath)->name('*.php');
 
         // The module's override folder doesn't contain any override, return false
-        if (!$finder->hasResults()) {
+        if (! $finder->hasResults()) {
             return false;
         }
 
@@ -76,7 +77,7 @@ class ModuleOverrideChecker
 
         // module has overrides, let's check override files one by one
         foreach ($fileList as $file) {
-            $moduleOverrideFile = $moduleOverridePath . DIRECTORY_SEPARATOR . $file;
+            $moduleOverrideFile = $moduleOverridePath . \DIRECTORY_SEPARATOR . $file;
             $existingOverrideFile = $this->psOverrideDir . $file;
 
             if (file_exists($existingOverrideFile) && file_exists($moduleOverrideFile)) {
@@ -96,7 +97,7 @@ class ModuleOverrideChecker
             }
         }
 
-        return !empty($this->errors);
+        return ! empty($this->errors);
     }
 
     public function getErrors(): array
@@ -110,7 +111,7 @@ class ModuleOverrideChecker
         $existingOverrideProperties = $this->getClassPropertiesFromContent($existingOverrideContent);
 
         foreach ($moduleOverrideProperties as $property) {
-            if (in_array($property, $existingOverrideProperties)) {
+            if (\in_array($property, $existingOverrideProperties, true)) {
                 return true;
             }
         }
@@ -124,7 +125,7 @@ class ModuleOverrideChecker
         $existingOverrideConstants = $this->getClassConstantsFromContent($existingOverrideContent);
 
         foreach ($moduleOverrideConstants as $constants) {
-            if (in_array($constants, $existingOverrideConstants)) {
+            if (\in_array($constants, $existingOverrideConstants, true)) {
                 return true;
             }
         }
@@ -141,7 +142,7 @@ class ModuleOverrideChecker
         $existingOverrideMethods = $this->getClassMethodsFromContent($existingOverrideContent);
 
         foreach ($moduleMethods as $method) {
-            if (in_array($method, $existingOverrideMethods)) {
+            if (\in_array($method, $existingOverrideMethods, true)) {
                 return true;
             }
         }

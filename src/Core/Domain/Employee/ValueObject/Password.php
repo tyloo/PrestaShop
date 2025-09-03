@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,12 +60,6 @@ class Password
      */
     private $maxLength;
 
-    /**
-     * @param string $password
-     * @param int $minLength
-     * @param int $maxLength
-     * @param int $minScore
-     */
     public function __construct(string $password, int $minLength, int $maxLength, int $minScore)
     {
         $this->password = $password;
@@ -85,8 +80,6 @@ class Password
     }
 
     /**
-     * @param string $password
-     *
      * @throws EmployeeConstraintException
      */
     private function assertPasswordIsWithinAllowedLength(string $password): void
@@ -94,20 +87,11 @@ class Password
         $length = mb_strlen($password, 'UTF-8');
 
         if ($this->minLength > $length || $length > $this->maxLength) {
-            throw new EmployeeConstraintException(
-                sprintf(
-                    'Employee password length must be between %d and %d',
-                    $this->minLength,
-                    $this->maxLength
-                ),
-                EmployeeConstraintException::INVALID_PASSWORD
-            );
+            throw new EmployeeConstraintException(\sprintf('Employee password length must be between %d and %d', $this->minLength, $this->maxLength), EmployeeConstraintException::INVALID_PASSWORD);
         }
     }
 
     /**
-     * @param string $password
-     *
      * @throws EmployeeConstraintException
      */
     private function assertPasswordScoreIsAllowed(string $password): void

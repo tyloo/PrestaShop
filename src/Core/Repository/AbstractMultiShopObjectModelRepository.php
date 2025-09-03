@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,14 +51,6 @@ use Shop;
 class AbstractMultiShopObjectModelRepository extends AbstractObjectModelRepository
 {
     /**
-     * @param int $id
-     * @param string $objectModelClass
-     * @param string $exceptionClass
-     * @param ShopId $shopId
-     * @param string $shopAssociationClass
-     *
-     * @return ObjectModel
-     *
      * @throws CoreException
      * @throws ShopAssociationNotFound
      */
@@ -75,12 +68,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
     }
 
     /**
-     * @param ObjectModel $objectModel
      * @param ShopId[] $shopIds
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
-     * @return int
      */
     protected function addObjectModelToShops(ObjectModel $objectModel, array $shopIds, string $exceptionClass, int $errorCode = 0): int
     {
@@ -92,10 +80,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
     }
 
     /**
-     * @param ObjectModel $objectModel
      * @param ShopId[] $shopIds
-     * @param string $exceptionClass
-     * @param int $errorCode
      *
      * @throws CoreException
      */
@@ -103,7 +88,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
         ObjectModel $objectModel,
         array $shopIds,
         string $exceptionClass,
-        int $errorCode = 0
+        int $errorCode = 0,
     ): void {
         // Force internal shop list which is used as an override of the one from Context when generating the SQL queries
         // this way we can control exactly which shop is updated
@@ -115,11 +100,8 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
     }
 
     /**
-     * @param ObjectModel $objectModel
      * @param array<int|string, string|int[]> $propertiesToUpdate
-     * @param ShopId[] $shopIds
-     * @param string $exceptionClass
-     * @param int $errorCode
+     * @param ShopId[]                        $shopIds
      *
      * @throws CoreException
      */
@@ -128,19 +110,12 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
         array $propertiesToUpdate,
         array $shopIds,
         string $exceptionClass,
-        int $errorCode = 0
+        int $errorCode = 0,
     ): void {
         $objectModel->setFieldsToUpdate($this->formatPropertiesToUpdate($propertiesToUpdate));
         $this->updateObjectModelForShops($objectModel, $shopIds, $exceptionClass, $errorCode);
     }
 
-    /**
-     * @param int $id
-     * @param string $objectModelClassName
-     * @param ShopId $shopId
-     *
-     * @return bool
-     */
     protected function hasShopAssociation(int $id, string $objectModelClassName, ShopId $shopId): bool
     {
         $modelDefinition = $objectModelClassName::$definition;
@@ -150,23 +125,20 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
         $query = new DbQuery();
         if (Shop::isTableAssociated($objectTable)) {
             $query
-                ->select('e.`' . \bqSQL($primaryColumn) . '` as id')
-                ->from(\bqSQL($objectTable) . '_shop', 'e')
-                ->where('e.`' . \bqSQL($primaryColumn) . '` = ' . $id)
+                ->select('e.`' . bqSQL($primaryColumn) . '` as id')
+                ->from(bqSQL($objectTable) . '_shop', 'e')
+                ->where('e.`' . bqSQL($primaryColumn) . '` = ' . $id)
                 ->where('e.`id_shop` = ' . $shopId->getValue())
             ;
-        } elseif (!empty($modelDefinition['multilang_shop'])) {
+        } elseif (! empty($modelDefinition['multilang_shop'])) {
             $query
-                ->select('e.`' . \bqSQL($primaryColumn) . '` as id')
-                ->from(\bqSQL($objectTable) . '_lang', 'e')
-                ->where('e.`' . \bqSQL($primaryColumn) . '` = ' . $id)
+                ->select('e.`' . bqSQL($primaryColumn) . '` as id')
+                ->from(bqSQL($objectTable) . '_lang', 'e')
+                ->where('e.`' . bqSQL($primaryColumn) . '` = ' . $id)
                 ->where('e.`id_shop` = ' . $shopId->getValue())
             ;
         } else {
-            throw new ShopDefinitionNotFound(sprintf(
-                'Entity %s has no multishop feature',
-                $objectModelClassName
-            ));
+            throw new ShopDefinitionNotFound(\sprintf('Entity %s has no multishop feature', $objectModelClassName));
         }
 
         try {
@@ -175,38 +147,25 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
             $row = false;
         }
 
-        return !empty($row['id']);
+        return ! empty($row['id']);
     }
 
     /**
-     * @param int $id
-     * @param string $objectModelClassName
-     * @param ShopId $shopId
-     * @param string $shopAssociationExceptionClass
-     *
      * @throws ShopAssociationNotFound
      */
     protected function checkShopAssociation(
         int $id,
         string $objectModelClassName,
         ShopId $shopId,
-        string $shopAssociationExceptionClass = ShopAssociationNotFound::class
+        string $shopAssociationExceptionClass = ShopAssociationNotFound::class,
     ): void {
-        if (!$this->hasShopAssociation($id, $objectModelClassName, $shopId)) {
-            throw new $shopAssociationExceptionClass(sprintf(
-                'Could not find association between %s %d and Shop %d',
-                $objectModelClassName,
-                $id,
-                $shopId->getValue()
-            ));
+        if (! $this->hasShopAssociation($id, $objectModelClassName, $shopId)) {
+            throw new $shopAssociationExceptionClass(\sprintf('Could not find association between %s %d and Shop %d', $objectModelClassName, $id, $shopId->getValue()));
         }
     }
 
     /**
-     * @param ObjectModel $objectModel
      * @param ShopId[] $shopIds
-     * @param string $exceptionClass
-     * @param int $errorCode
      *
      * @throws CoreException
      */
@@ -222,30 +181,15 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
                 return $shopId->getValue();
             }, $shopIds);
 
-            if (!$objectModel->delete()) {
-                throw new $exceptionClass(
-                    sprintf('Failed to delete %s #%d', $objectModel::class, $objectModel->id),
-                    $errorCode
-                );
+            if (! $objectModel->delete()) {
+                throw new $exceptionClass(\sprintf('Failed to delete %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
         } catch (PrestaShopException $e) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to delete %s #%d [%s]',
-                    $objectModel::class,
-                    $objectModel->id,
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to delete %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
         }
     }
 
     /**
-     * @param int $id
-     * @param string $objectModelClassName
-     *
      * @return int[]
      *
      * @throws ShopDefinitionNotFound
@@ -257,27 +201,24 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
         $primaryColumn = $modelDefinition['primary'];
 
         $query = new DbQuery();
-        $primaryColumn = 'e.`' . \bqSQL($primaryColumn) . '`';
+        $primaryColumn = 'e.`' . bqSQL($primaryColumn) . '`';
         $shopColumn = 'e.`id_shop`';
         if (Shop::isTableAssociated($objectTable)) {
             $query
                 ->select($shopColumn . ' AS id_shop')
                 ->where($primaryColumn . ' = ' . $id)
-                ->from(\bqSQL($objectTable) . '_shop', 'e')
+                ->from(bqSQL($objectTable) . '_shop', 'e')
                 ->groupBy($shopColumn)
             ;
-        } elseif (!empty($modelDefinition['multilang_shop'])) {
+        } elseif (! empty($modelDefinition['multilang_shop'])) {
             $query
                 ->select($shopColumn . ' AS id_shop')
                 ->where($primaryColumn . ' = ' . $id)
-                ->from(\bqSQL($objectTable) . '_lang', 'e')
+                ->from(bqSQL($objectTable) . '_lang', 'e')
                 ->groupBy($shopColumn)
             ;
         } else {
-            throw new ShopDefinitionNotFound(sprintf(
-                'Entity %s has no multishop feature',
-                $objectModelClassName
-            ));
+            throw new ShopDefinitionNotFound(\sprintf('Entity %s has no multishop feature', $objectModelClassName));
         }
 
         try {
@@ -298,7 +239,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
     protected function updateObjectModelShopAssociations(
         int $id,
         string $objectModelClassName,
-        array $updatedShopIds
+        array $updatedShopIds,
     ): void {
         if (empty($updatedShopIds)) {
             return;
@@ -312,25 +253,25 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
 
         $shopIdsToAdd = [];
         foreach ($updatedShopIds as $shopId) {
-            if (!in_array($shopId, $associatedShopIds)) {
+            if (! \in_array($shopId, $associatedShopIds, true)) {
                 $shopIdsToAdd[] = $shopId;
             }
         }
         $shopIdsToRemove = [];
         foreach ($associatedShopIds as $shopId) {
-            if (!in_array($shopId, $updatedShopIds)) {
+            if (! \in_array($shopId, $updatedShopIds, true)) {
                 $shopIdsToRemove[] = $shopId;
             }
         }
 
-        if (!empty($shopIdsToRemove)) {
+        if (! empty($shopIdsToRemove)) {
             Db::getInstance()->delete(
                 $tableName . '_shop',
                 '`' . $primaryKeyName . '` = ' . $id . ' AND `id_shop` IN (' . implode(',', $shopIdsToRemove) . ')'
             );
         }
 
-        if (!empty($shopIdsToAdd)) {
+        if (! empty($shopIdsToAdd)) {
             $insert = [];
             foreach ($shopIdsToAdd as $shopId) {
                 $insert[] = [

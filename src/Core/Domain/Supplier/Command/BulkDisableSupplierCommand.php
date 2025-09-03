@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class BulkDisableSupplierCommand extends AbstractBulkSupplierCommand
     public function __construct(array $supplierIds)
     {
         if ($this->assertIsEmptyOrContainsNonIntegerValues($supplierIds)) {
-            throw new SupplierConstraintException(sprintf('Missing supplier data or array %s contains non integer values for bulk disable', var_export($supplierIds, true)), SupplierConstraintException::INVALID_BULK_DATA);
+            throw new SupplierConstraintException(\sprintf('Missing supplier data or array %s contains non integer values for bulk disable', var_export($supplierIds, true)), SupplierConstraintException::INVALID_BULK_DATA);
         }
 
         $this->setSupplierIds($supplierIds);
@@ -64,8 +65,6 @@ class BulkDisableSupplierCommand extends AbstractBulkSupplierCommand
     }
 
     /**
-     * @param array $supplierIds
-     *
      * @throws SupplierException
      */
     private function setSupplierIds(array $supplierIds)

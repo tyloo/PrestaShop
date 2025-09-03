@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,7 +62,7 @@ class CartInformation
         $cartId,
         $cartCreationDate,
         $cartTotal,
-        $carrierName
+        $carrierName,
     ) {
         $this->cartId = $cartId;
         $this->cartCreationDate = $cartCreationDate;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,9 +60,7 @@ class AddAttributeGroupCommand
 
     /**
      * @param string[] $localizedNames
-     * @param array $localizedPublicNames
-     * @param string $type
-     * @param int[] $associatedShopIds
+     * @param int[]    $associatedShopIds
      *
      * @throws AttributeGroupConstraintException
      * @throws InvalidAttributeGroupTypeException
@@ -105,9 +104,6 @@ class AddAttributeGroupCommand
         return $this->localizedPublicNames;
     }
 
-    /**
-     * @return AttributeGroupType
-     */
     public function getType(): AttributeGroupType
     {
         return $this->type;

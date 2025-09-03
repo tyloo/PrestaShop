@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,11 +55,8 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
      */
     protected $isWritable = false;
 
-    /**
-     * @param CurrencyDataProvider $dataProvider
-     */
     public function __construct(
-        CurrencyDataProvider $dataProvider
+        CurrencyDataProvider $dataProvider,
     ) {
         $this->dataProvider = $dataProvider;
     }
@@ -92,7 +90,7 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
      */
     protected function doRead($currencyDataId)
     {
-        if (!$currencyDataId instanceof LocalizedCurrencyId) {
+        if (! $currencyDataId instanceof LocalizedCurrencyId) {
             throw new LocalizationException('First parameter must be an instance of ' . LocalizedCurrencyId::class);
         }
 
@@ -100,7 +98,7 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
         $currencyCode = $currencyDataId->getCurrencyCode();
         $currencyEntity = $this->dataProvider->getCurrencyByIsoCodeAndLocale($currencyCode, $localeCode);
 
-        if (null === $currencyEntity) {
+        if ($currencyEntity === null) {
             return null;
         }
 
@@ -113,7 +111,7 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
 
         $idLang = Language::getIdByLocale($localeCode, true);
         $currencyPattern = $currencyEntity->getPattern($idLang);
-        if (!empty($currencyPattern)) {
+        if (! empty($currencyPattern)) {
             $currencyData->setPatterns([$localeCode => $currencyEntity->getPattern($idLang)]);
         }
 
@@ -125,9 +123,9 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
      * Here, this is a DB insert/update...
      *
      * @param LocalizedCurrencyId $currencyDataId The CurrencyData object identifier (currency code + locale code)
-     * @param CurrencyData $currencyData The data object to be written
+     * @param CurrencyData        $currencyData   The data object to be written
      *
-     * @throws DataLayerException If something goes wrong when trying to write into DB
+     * @throws DataLayerException    If something goes wrong when trying to write into DB
      * @throws LocalizationException When $currencyDataId is invalid
      */
     protected function doWrite($currencyDataId, $currencyData)

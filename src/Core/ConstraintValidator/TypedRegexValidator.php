@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,38 +60,32 @@ class TypedRegexValidator extends ConstraintValidator
      */
     private $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(
-        ConfigurationInterface $configuration
+        ConfigurationInterface $configuration,
     ) {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof TypedRegex) {
+        if (! $constraint instanceof TypedRegex) {
             throw new UnexpectedTypeException($constraint, TypedRegex::class);
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
-        if (!is_string($value)) {
+        if (! \is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
         $value = $this->sanitize($value, $constraint->type);
 
-        if (in_array($constraint->type, [TypedRegex::CLEAN_HTML_ALLOW_IFRAME, TypedRegex::CLEAN_HTML_NO_IFRAME], true)) {
-            $isValid = $this->validateCleanHTML($value, TypedRegex::CLEAN_HTML_ALLOW_IFRAME === $constraint->type);
+        if (\in_array($constraint->type, [TypedRegex::CLEAN_HTML_ALLOW_IFRAME, TypedRegex::CLEAN_HTML_NO_IFRAME], true)) {
+            $isValid = $this->validateCleanHTML($value, $constraint->type === TypedRegex::CLEAN_HTML_ALLOW_IFRAME);
 
-            if (!$isValid) {
+            if (! $isValid) {
                 $this->buildViolation($constraint, $value);
             }
 
@@ -99,7 +94,7 @@ class TypedRegexValidator extends ConstraintValidator
 
         $pattern = $this->getPattern($constraint->type);
 
-        if (!$this->match($pattern, $constraint->type, $value)) {
+        if (! $this->match($pattern, $constraint->type, $value)) {
             $this->buildViolation($constraint, $value);
         }
     }
@@ -172,7 +167,7 @@ class TypedRegexValidator extends ConstraintValidator
                 return '/^[a-zA-Z0-9_-]+$/';
             default:
                 $definedTypes = implode(', ', array_values((new ReflectionClass(TypedRegex::class))->getConstants()));
-                throw new InvalidArgumentException(sprintf('Type "%s" is not defined. Defined types are: %s', $type, $definedTypes));
+                throw new InvalidArgumentException(\sprintf('Type "%s" is not defined. Defined types are: %s', $type, $definedTypes));
         }
     }
 
@@ -210,8 +205,8 @@ class TypedRegexValidator extends ConstraintValidator
         $match = preg_match($pattern, $value);
 
         $typesToInverseMatching = [TypedRegex::TYPE_MESSAGE];
-        if (in_array($type, $typesToInverseMatching, true)) {
-            return !$match;
+        if (\in_array($type, $typesToInverseMatching, true)) {
+            return ! $match;
         }
 
         return $match;
@@ -228,11 +223,6 @@ class TypedRegexValidator extends ConstraintValidator
 
     /**
      * Custom method for HTML validation as it is a bit more complicated
-     *
-     * @param string $value
-     * @param bool $allowIframe
-     *
-     * @return bool
      */
     private function validateCleanHTML(string $value, bool $allowIframe): bool
     {
@@ -248,7 +238,7 @@ class TypedRegexValidator extends ConstraintValidator
             return false;
         }
 
-        if (!$allowIframe && preg_match('/<[\s]*(i?frame|form|input|embed|object)/ims', $value)) {
+        if (! $allowIframe && preg_match('/<[\s]*(i?frame|form|input|embed|object)/ims', $value)) {
             return false;
         }
 

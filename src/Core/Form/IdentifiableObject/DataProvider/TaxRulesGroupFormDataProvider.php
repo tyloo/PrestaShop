@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,11 @@ class TaxRulesGroupFormDataProvider implements FormDataProviderInterface
      */
     protected $queryBus;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     */
     public function __construct(CommandBusInterface $queryBus)
     {
         $this->queryBus = $queryBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id): array
     {
         /** @var EditableTaxRulesGroup $editableTaxRulesGroup */
@@ -65,9 +60,6 @@ class TaxRulesGroupFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         return [];

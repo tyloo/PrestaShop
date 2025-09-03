@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 final class CustomizationFieldsCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['details']['customizations'])) {
+        if (! isset($formData['details']['customizations'])) {
             return [];
         }
 
@@ -62,8 +60,6 @@ final class CustomizationFieldsCommandsBuilder implements ProductCommandsBuilder
     }
 
     /**
-     * @param array $customizationsFormData
-     *
      * @return array<int, array<string, mixed>>
      */
     private function buildCustomizationFields(array $customizationsFormData): array

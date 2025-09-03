@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,10 +53,6 @@ class TranslationsTreeBuilder
      */
     private $translationCatalogueBuilder;
 
-    /**
-     * @param Router $router
-     * @param TranslationCatalogueBuilder $translationCatalogueBuilder
-     */
     public function __construct(Router $router, TranslationCatalogueBuilder $translationCatalogueBuilder)
     {
         $this->router = $router;
@@ -63,19 +60,13 @@ class TranslationsTreeBuilder
     }
 
     /**
-     * @param ProviderDefinitionInterface $providerDefinition
-     * @param string $locale
-     * @param array $search
-     *
-     * @return array
-     *
      * @throws TranslationFilesNotFoundException
      * @throws UnexpectedTranslationTypeException
      */
     public function getTree(
         ProviderDefinitionInterface $providerDefinition,
         string $locale,
-        array $search
+        array $search,
     ): array {
         $tree = $this->translationCatalogueBuilder->getRawCatalogue(
             $providerDefinition,
@@ -88,7 +79,7 @@ class TranslationsTreeBuilder
             'theme' => $providerDefinition instanceof ThemeProviderDefinition ? $providerDefinition->getThemeName() : null,
             'module' => $providerDefinition instanceof ModuleProviderDefinition ? $providerDefinition->getModuleName() : null,
         ];
-        if (!empty($search)) {
+        if (! empty($search)) {
             $routeParams['search'] = $search;
         }
 
@@ -98,9 +89,8 @@ class TranslationsTreeBuilder
     /**
      * Builds the API tree recursively by transforming the metadata subtree
      *
-     * @param array $routeParams
-     * @param array $metadataSubtree A branch from the metadata tree
-     * @param string|null $subtreeName Subtree name (eg. "Bar")
+     * @param array       $metadataSubtree A branch from the metadata tree
+     * @param string|null $subtreeName     Subtree name (eg. "Bar")
      * @param string|null $fullSubtreeName Full subtree name  (eg. "AdminFooBar")
      *
      * @return array API subtree
@@ -109,7 +99,7 @@ class TranslationsTreeBuilder
         array $routeParams,
         array $metadataSubtree,
         ?string $subtreeName = null,
-        ?string $fullSubtreeName = null
+        ?string $fullSubtreeName = null,
     ): array {
         $current = [];
         if ($subtreeName !== null) {
@@ -126,7 +116,7 @@ class TranslationsTreeBuilder
                 $current['total_missing_translations'] = $value['missing_translations'];
                 continue;
             }
-            if (!isset($current['children'])) {
+            if (! isset($current['children'])) {
                 $current['children'] = [];
             }
 
@@ -146,7 +136,6 @@ class TranslationsTreeBuilder
      * Returns the URL path to the translations from the given domain in the current context
      *
      * @param string $fullName Domain name
-     * @param array $routeParams
      *
      * @return string URL path
      */

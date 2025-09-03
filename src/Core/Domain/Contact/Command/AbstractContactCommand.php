@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,17 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Contact\Command;
 abstract class AbstractContactCommand
 {
     /**
-     * @param array $values
-     *
      * @return bool
      */
     protected function assertIsNotEmptyAndContainsAllNonEmptyStringValues(array $values)
     {
         $filterNonEmptyStrings = function ($value) {
-            return is_string($value) && $value;
+            return \is_string($value) && $value;
         };
 
-        return !empty($values) && count($values) === count(array_filter($values, $filterNonEmptyStrings));
+        return ! empty($values) && \count($values) === \count(array_filter($values, $filterNonEmptyStrings));
     }
 
     /**
@@ -56,16 +55,14 @@ abstract class AbstractContactCommand
     }
 
     /**
-     * @param array $values
-     *
      * @return bool
      */
     protected function assertArrayContainsAllIntegerValues(array $values)
     {
         $filterAllIntegers = function ($value) {
-            return is_int($value);
+            return \is_int($value);
         };
 
-        return !empty($values) && count($values) === count(array_filter($values, $filterAllIntegers));
+        return ! empty($values) && \count($values) === \count(array_filter($values, $filterAllIntegers));
     }
 }

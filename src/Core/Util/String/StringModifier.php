@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ final class StringModifier implements StringModifierInterface
      */
     private $transliterator;
 
-    /**
-     * {@inheritdoc}
-     */
     public function splitByCamelCase($string)
     {
         $regex = '/(?)(?<=[a-z])(?=[A-Z]) | (?<=[A-Z])(?=[A-Z][a-z])/x';
@@ -50,12 +48,9 @@ final class StringModifier implements StringModifierInterface
         return implode(' ', $splitString);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function cutEnd(string $string, int $expectedLength): string
     {
-        $length = strlen($string);
+        $length = \strlen($string);
 
         if ($length > $expectedLength) {
             // cut symbols difference from the end of the string
@@ -68,10 +63,6 @@ final class StringModifier implements StringModifierInterface
     /**
      * Return a friendly url made from the provided string
      * If the mbstring library is available, the output is the same as the js function of the same name.
-     *
-     * @param string $string
-     *
-     * @return string
      */
     public function str2url(string $string, bool $allow_accented_chars): string
     {
@@ -92,14 +83,10 @@ final class StringModifier implements StringModifierInterface
 
     /**
      * Replace all accented chars by their equivalent non-accented chars.
-     *
-     * @param string $string
-     *
-     * @return string
      */
     public function replaceAccentedChars(string $string): string
     {
-        if (null === $this->transliterator) {
+        if ($this->transliterator === null) {
             $this->transliterator = Transliterator::create('Any-Latin; Latin-ASCII');
         }
 

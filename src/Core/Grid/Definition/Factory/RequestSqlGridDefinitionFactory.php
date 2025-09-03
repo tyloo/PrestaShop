@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,25 +52,16 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
 
     public const GRID_ID = 'sql_request';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('SQL queries', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -148,9 +140,6 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
         return (new FilterCollection())
@@ -188,9 +177,6 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -199,9 +185,6 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

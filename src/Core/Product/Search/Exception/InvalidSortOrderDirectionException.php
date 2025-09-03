@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class InvalidSortOrderDirectionException extends CoreException
      */
     public function __construct($direction)
     {
-        $message = sprintf(
+        $message = \sprintf(
             'Invalid SortOrder direction `%s`. Expecting one of: `ASC`, `DESC`, or `RANDOM`.',
             $direction
         );

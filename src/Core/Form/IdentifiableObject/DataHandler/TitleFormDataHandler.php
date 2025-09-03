@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,17 +45,11 @@ class TitleFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(CommandBusInterface $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data): int
     {
         /** @var UploadedFile|null $uploadedImage */
@@ -72,9 +67,6 @@ class TitleFormDataHandler implements FormDataHandlerInterface
         return $titleId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data): void
     {
         $command = new EditTitleCommand((int) $id);

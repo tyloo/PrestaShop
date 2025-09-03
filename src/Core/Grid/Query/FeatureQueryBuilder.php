@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,16 +53,14 @@ class FeatureQueryBuilder extends AbstractDoctrineQueryBuilder
     private $featureRepository;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         int $contextLangId,
-        FeatureRepository $featureRepository
+        FeatureRepository $featureRepository,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -70,9 +69,6 @@ class FeatureQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->featureRepository = $featureRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria);
@@ -96,9 +92,6 @@ class FeatureQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this->getQueryBuilder($searchCriteria)
@@ -107,15 +100,11 @@ class FeatureQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     *
      * @throws InvalidArgumentException
      */
     private function getQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof ShopSearchCriteriaInterface) {
+        if (! $searchCriteria instanceof ShopSearchCriteriaInterface) {
             throw new InvalidArgumentException('Invalid search criteria type');
         }
 
@@ -146,17 +135,17 @@ class FeatureQueryBuilder extends AbstractDoctrineQueryBuilder
         ;
 
         foreach ($filters as $filterName => $value) {
-            if (!in_array($filterName, $allowedFilters, true)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('name' === $filterName) {
+            if ($filterName === 'name') {
                 $qb->andWhere('fl.name LIKE :' . $filterName)
                     ->setParameter($filterName, '%' . $value . '%');
                 continue;
             }
 
-            if ('position' === $filterName) {
+            if ($filterName === 'position') {
                 $qb->andWhere('f.position LIKE :' . $filterName)
                     // position value starts from 0 in database, but in list view they are incremented by +1,
                     // so if it is a position filter, then we decrement the value to return expected results

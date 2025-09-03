@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ interface AddMetaHandlerInterface
 {
     /**
      * Used to handle the logic required for adding meta data.
-     *
-     * @param AddMetaCommand $command
      *
      * @return MetaId
      */

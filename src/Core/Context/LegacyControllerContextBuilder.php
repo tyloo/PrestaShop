@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -126,10 +127,6 @@ class LegacyControllerContextBuilder
 
     /**
      * This function is designed to locate the object model corresponding to the current Legacy Controller.
-     *
-     * @param string $controllerName
-     *
-     * @return string|null
      */
     private function getClassName(string $controllerName): ?string
     {
@@ -150,9 +147,9 @@ class LegacyControllerContextBuilder
                 // Here, we use the controller's name to retrieve the object model's name, passing it in singular form.
                 if (preg_match('/Admin([a-zA-Z]+)/', $controllerName, $matches)) {
                     return Inflector::getInflector()->singularize($matches[1]);
-                } else {
-                    return null;
                 }
+
+                return null;
         }
     }
 
@@ -165,7 +162,7 @@ class LegacyControllerContextBuilder
         }
 
         $objectClassName = $this->getClassName($controllerName);
-        if (empty($objectClassName) || !class_exists($objectClassName) || !property_exists($objectClassName, 'definition')) {
+        if (empty($objectClassName) || ! class_exists($objectClassName) || ! property_exists($objectClassName, 'definition')) {
             return 'configuration';
         }
 
@@ -185,23 +182,23 @@ class LegacyControllerContextBuilder
 
     private function getMultiShopContext(string $controllerName): int
     {
-        if (in_array($controllerName, $this->controllersLockedToAllShopContext)) {
+        if (\in_array($controllerName, $this->controllersLockedToAllShopContext, true)) {
             return ShopConstraint::ALL_SHOPS;
-        } else {
-            return ShopConstraint::ALL_SHOPS | ShopConstraint::SHOP_GROUP | ShopConstraint::SHOP;
         }
+
+        return ShopConstraint::ALL_SHOPS | ShopConstraint::SHOP_GROUP | ShopConstraint::SHOP;
     }
 
     private function getCurrentIndex(): string
     {
         $parameters = [];
-        if (!empty($this->controllerName)) {
+        if (! empty($this->controllerName)) {
             $parameters[] = 'controller=' . $this->controllerName;
         }
-        if (!empty($this->redirectionUrl)) {
+        if (! empty($this->redirectionUrl)) {
             $parameters[] = 'back=' . urlencode($this->redirectionUrl);
         }
 
-        return 'index.php' . (!empty($parameters) ? '?' . implode('&', $parameters) : '');
+        return 'index.php' . (! empty($parameters) ? '?' . implode('&', $parameters) : '');
     }
 }

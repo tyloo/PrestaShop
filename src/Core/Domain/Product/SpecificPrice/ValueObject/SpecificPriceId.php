@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ class SpecificPriceId
     private $specificPriceId;
 
     /**
-     * @param int $specificPriceId
-     *
      * @throws SpecificPriceConstraintException
      */
     public function __construct(int $specificPriceId)
@@ -47,9 +46,6 @@ class SpecificPriceId
         $this->specificPriceId = $specificPriceId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->specificPriceId;
@@ -58,14 +54,12 @@ class SpecificPriceId
     /**
      * Validates that the value is greater than zero
      *
-     * @param int $value
-     *
      * @throws SpecificPriceConstraintException
      */
     private function assertIsGreaterThanZero(int $value): void
     {
-        if (0 >= $value) {
-            throw new SpecificPriceConstraintException(sprintf('Invalid specific price id "%s".', $value), SpecificPriceConstraintException::INVALID_ID);
+        if ($value <= 0) {
+            throw new SpecificPriceConstraintException(\sprintf('Invalid specific price id "%s".', $value), SpecificPriceConstraintException::INVALID_ID);
         }
     }
 }

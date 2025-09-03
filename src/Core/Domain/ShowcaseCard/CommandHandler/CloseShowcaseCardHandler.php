@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,12 @@ final class CloseShowcaseCardHandler implements CloseShowcaseCardHandlerInterfac
      */
     private $configurationMap;
 
-    /**
-     * CloseShowcaseCardHandler constructor.
-     *
-     * @param ConfigurationInterface $configuration
-     * @param ConfigurationMap $configurationMap
-     */
     public function __construct(ConfigurationInterface $configuration, ConfigurationMap $configurationMap)
     {
         $this->configuration = $configuration;
         $this->configurationMap = $configurationMap;
     }
 
-    /**
-     * @param CloseShowcaseCardCommand $command
-     */
     public function handle(CloseShowcaseCardCommand $command)
     {
         $configurationName = $this->configurationMap->getConfigurationNameForClosedStatus($command->getShowcaseCard());

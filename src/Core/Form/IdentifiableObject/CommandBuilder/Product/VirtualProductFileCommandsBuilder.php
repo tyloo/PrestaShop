@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,12 +39,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class VirtualProductFileCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['stock']['virtual_product_file'])) {
+        if (! isset($formData['stock']['virtual_product_file'])) {
             return [];
         }
 
@@ -65,14 +63,11 @@ final class VirtualProductFileCommandsBuilder implements ProductCommandsBuilderI
     }
 
     /**
-     * @param ProductId $productId
      * @param array<string, mixed> $virtualProductFileData
-     *
-     * @return AddVirtualProductFileCommand|null
      */
     public function buildAddCommand(ProductId $productId, array $virtualProductFileData): ?AddVirtualProductFileCommand
     {
-        if (empty($virtualProductFileData['has_file']) || !empty($virtualProductFileData['virtual_product_file_id'])) {
+        if (empty($virtualProductFileData['has_file']) || ! empty($virtualProductFileData['virtual_product_file_id'])) {
             return null;
         }
 
@@ -95,8 +90,6 @@ final class VirtualProductFileCommandsBuilder implements ProductCommandsBuilderI
 
     /**
      * @param array<string, mixed> $virtualProductFileData
-     *
-     * @return UpdateVirtualProductFileCommand|null
      */
     private function buildUpdateCommand(array $virtualProductFileData): ?UpdateVirtualProductFileCommand
     {
@@ -136,12 +129,10 @@ final class VirtualProductFileCommandsBuilder implements ProductCommandsBuilderI
 
     /**
      * @param array<string, mixed> $virtualProductFileData
-     *
-     * @return DeleteVirtualProductFileCommand|null
      */
     private function buildDeleteCommand(array $virtualProductFileData): ?DeleteVirtualProductFileCommand
     {
-        if (!empty($virtualProductFileData['has_file']) || empty($virtualProductFileData['virtual_product_file_id'])) {
+        if (! empty($virtualProductFileData['has_file']) || empty($virtualProductFileData['virtual_product_file_id'])) {
             return null;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,10 @@ use PrestaShop\PrestaShop\Core\Grid\Search\ShopSearchCriteriaInterface;
  */
 class ProductShopsQueryBuilder extends ProductQueryBuilder
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof ShopSearchCriteriaInterface) {
-            throw new InvalidArgumentException(sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
+        if (! $searchCriteria instanceof ShopSearchCriteriaInterface) {
+            throw new InvalidArgumentException(\sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
         }
 
         $qb = parent::getSearchQueryBuilder($searchCriteria);
@@ -70,13 +68,6 @@ class ProductShopsQueryBuilder extends ProductQueryBuilder
 
     /**
      * We perform no filtering on the shops since the purpose is to get all the details.
-     *
-     * @param string $sql
-     * @param string $tableAlias
-     * @param int|null $shopId
-     * @param int|null $filteredShopGroupId
-     *
-     * @return string
      */
     protected function addShopCondition(string $sql, string $tableAlias, ?int $shopId, ?int $filteredShopGroupId): string
     {
@@ -85,12 +76,6 @@ class ProductShopsQueryBuilder extends ProductQueryBuilder
 
     /**
      * We perform no filtering on the stock, but we need to handle the stock shared by group.
-     *
-     * @param int|null $sharedStockGroupId
-     * @param int|null $shopId
-     * @param int|null $filteredShopGroupId
-     *
-     * @return string
      */
     protected function getStockOnCondition(?int $sharedStockGroupId, ?int $shopId, ?int $filteredShopGroupId): string
     {

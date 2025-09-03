@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,19 +44,15 @@ final class DocumentationLinkProvider implements DocumentationLinkProviderInterf
 
     /**
      * @param string $contextLangIsoCode
-     * @param array $documentationLinks
      */
     public function __construct(
         $contextLangIsoCode,
-        array $documentationLinks
+        array $documentationLinks,
     ) {
         $this->contextLangIsoCode = $contextLangIsoCode;
         $this->documentationLinks = $documentationLinks;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLink($cardType)
     {
         if (isset($this->documentationLinks[$cardType])) {
@@ -70,6 +67,6 @@ final class DocumentationLinkProvider implements DocumentationLinkProviderInterf
             }
         }
 
-        throw new HelperCardDocumentationDoesNotExistException(sprintf('Documentation for helper card "%s" does not exist', $cardType));
+        throw new HelperCardDocumentationDoesNotExistException(\sprintf('Documentation for helper card "%s" does not exist', $cardType));
     }
 }

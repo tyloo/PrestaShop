@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
 use PrestaShop\PrestaShop\Core\Domain\Order\Command\IssueStandardRefundCommand;
 use PrestaShop\PrestaShop\Core\Domain\Order\VoucherRefundType;
 
-/**
- * Class StandardRefundFormDataHandler
- */
 final class StandardRefundFormDataHandler implements FormDataHandlerInterface
 {
     /**
@@ -40,31 +38,22 @@ final class StandardRefundFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(CommandBusInterface $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data)
     {
         $refunds = [];
         foreach ($data['products'] as $product) {
             $orderDetailId = $product->getOrderDetailId();
-            if (!isset($data['selected_' . $orderDetailId]) || !(bool) $data['selected_' . $orderDetailId]) {
+            if (! isset($data['selected_' . $orderDetailId]) || ! (bool) $data['selected_' . $orderDetailId]) {
                 continue;
             }
             $refunds[$orderDetailId]['quantity'] = $data['quantity_' . $orderDetailId] ?? 0;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -75,7 +76,7 @@ class CartRuleConditionsForEditing
         int $quantity,
         int $quantityPerUser,
         ?CartRuleMinimumForEditing $minimum,
-        CartRuleRestrictionsForEditing $restrictions
+        CartRuleRestrictionsForEditing $restrictions,
     ) {
         $this->customerId = $customerId;
         $this->dateFrom = $dateFrom;
@@ -86,57 +87,36 @@ class CartRuleConditionsForEditing
         $this->restrictions = $restrictions;
     }
 
-    /**
-     * @return CustomerIdInterface
-     */
     public function getCustomerId(): CustomerIdInterface
     {
         return $this->customerId;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getDateFrom(): ?DateTime
     {
         return $this->dateFrom;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getDateTo(): ?DateTime
     {
         return $this->dateTo;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantityPerUser(): int
     {
         return $this->quantityPerUser;
     }
 
-    /**
-     * @return CartRuleMinimumForEditing|null
-     */
     public function getMinimum(): ?CartRuleMinimumForEditing
     {
         return $this->minimum;
     }
 
-    /**
-     * @return CartRuleRestrictionsForEditing
-     */
     public function getRestrictions(): CartRuleRestrictionsForEditing
     {
         return $this->restrictions;

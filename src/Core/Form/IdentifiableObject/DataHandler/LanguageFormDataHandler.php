@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,20 +43,14 @@ final class LanguageFormDataHandler implements FormDataHandlerInterface
      */
     private $bus;
 
-    /**
-     * @param CommandBusInterface $bus
-     */
     public function __construct(CommandBusInterface $bus)
     {
         $this->bus = $bus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
-        if (!isset($data['shop_association']) || !$data['shop_association']) {
+        if (! isset($data['shop_association']) || ! $data['shop_association']) {
             $data['shop_association'] = [];
         }
 
@@ -81,9 +76,6 @@ final class LanguageFormDataHandler implements FormDataHandlerInterface
         return $languageId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($languageId, array $data)
     {
         $command = (new EditLanguageCommand($languageId))

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,13 +58,12 @@ class SetProductCustomizationFieldsCommand
     private $shopConstraint;
 
     /**
-     * @param int $productId
      * @param array{'type': int, "localized_names": array<int, string>, "is_required": bool, "added_by_module": bool, "id"?: int|null}[] $customizationFields
      */
     public function __construct(
         int $productId,
         array $customizationFields,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
         $this->setCustomizationFields($customizationFields);
@@ -71,9 +71,6 @@ class SetProductCustomizationFieldsCommand
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -87,9 +84,6 @@ class SetProductCustomizationFieldsCommand
         return $this->customizationFields;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
@@ -101,11 +95,7 @@ class SetProductCustomizationFieldsCommand
     private function setCustomizationFields(array $customizationFields): void
     {
         if (empty($customizationFields)) {
-            throw new RuntimeException(sprintf(
-                'Empty customization fields array provided in %s. To remove customization fields use %s',
-                self::class,
-                RemoveAllCustomizationFieldsFromProductCommand::class
-            ));
+            throw new RuntimeException(\sprintf('Empty customization fields array provided in %s. To remove customization fields use %s', self::class, RemoveAllCustomizationFieldsFromProductCommand::class));
         }
 
         foreach ($customizationFields as $customizationField) {

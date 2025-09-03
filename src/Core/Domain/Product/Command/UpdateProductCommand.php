@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -273,27 +274,17 @@ class UpdateProductCommand
      */
     private $active;
 
-    /**
-     * @param int $productId
-     * @param ShopConstraint $shopConstraint
-     */
     public function __construct(int $productId, ShopConstraint $shopConstraint)
     {
         $this->productId = new ProductId($productId);
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
@@ -309,8 +300,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedMetaTitles key => value pairs where each key represents language id
-     *
-     * @return self
      */
     public function setLocalizedMetaTitles(array $localizedMetaTitles): self
     {
@@ -329,8 +318,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedMetaDescriptions key => value pairs where each key represents language id
-     *
-     * @return self
      */
     public function setLocalizedMetaDescriptions(array $localizedMetaDescriptions): self
     {
@@ -349,8 +336,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedLinkRewrites key => value pairs where each key represents language id
-     *
-     * @return self
      */
     public function setLocalizedLinkRewrites(array $localizedLinkRewrites): self
     {
@@ -359,20 +344,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return RedirectOption|null
-     */
     public function getRedirectOption(): ?RedirectOption
     {
         return $this->redirectOption;
     }
 
-    /**
-     * @param string $redirectType
-     * @param int $redirectTarget
-     *
-     * @return self
-     */
     public function setRedirectOption(string $redirectType, int $redirectTarget): self
     {
         $this->redirectOption = new RedirectOption($redirectType, $redirectTarget);
@@ -380,19 +356,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getPrice(): ?DecimalNumber
     {
         return $this->price;
     }
 
-    /**
-     * @param string $price
-     *
-     * @return self
-     */
     public function setPrice(string $price): self
     {
         $this->price = new DecimalNumber($price);
@@ -400,19 +368,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getEcotax(): ?DecimalNumber
     {
         return $this->ecotax;
     }
 
-    /**
-     * @param string $ecotax
-     *
-     * @return self
-     */
     public function setEcotax(string $ecotax): self
     {
         $this->ecotax = new DecimalNumber($ecotax);
@@ -420,19 +380,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getTaxRulesGroupId(): ?int
     {
         return $this->taxRulesGroupId;
     }
 
-    /**
-     * @param int $taxRulesGroupId
-     *
-     * @return self
-     */
     public function setTaxRulesGroupId(int $taxRulesGroupId): self
     {
         $this->taxRulesGroupId = $taxRulesGroupId;
@@ -440,19 +392,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isOnSale(): ?bool
     {
         return $this->onSale;
     }
 
-    /**
-     * @param bool $onSale
-     *
-     * @return self
-     */
     public function setOnSale(bool $onSale): self
     {
         $this->onSale = $onSale;
@@ -460,19 +404,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getWholesalePrice(): ?DecimalNumber
     {
         return $this->wholesalePrice;
     }
 
-    /**
-     * @param string $wholesalePrice
-     *
-     * @return self
-     */
     public function setWholesalePrice(string $wholesalePrice): self
     {
         $this->wholesalePrice = new DecimalNumber($wholesalePrice);
@@ -480,19 +416,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getUnitPrice(): ?DecimalNumber
     {
         return $this->unitPrice;
     }
 
-    /**
-     * @param string $unitPrice
-     *
-     * @return self
-     */
     public function setUnitPrice(string $unitPrice): self
     {
         $this->unitPrice = new DecimalNumber($unitPrice);
@@ -500,19 +428,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getUnity(): ?string
     {
         return $this->unity;
     }
 
-    /**
-     * @param string $unity
-     *
-     * @return self
-     */
     public function setUnity(string $unity): self
     {
         $this->unity = $unity;
@@ -530,8 +450,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedNames
-     *
-     * @return self
      */
     public function setLocalizedNames(array $localizedNames): self
     {
@@ -550,8 +468,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedDescriptions
-     *
-     * @return self
      */
     public function setLocalizedDescriptions(array $localizedDescriptions): self
     {
@@ -570,8 +486,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedShortDescriptions
-     *
-     * @return self
      */
     public function setLocalizedShortDescriptions(array $localizedShortDescriptions): self
     {
@@ -580,27 +494,16 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return ProductVisibility|null
-     */
     public function getVisibility(): ?ProductVisibility
     {
         return $this->visibility;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isAvailableForOrder(): ?bool
     {
         return $this->availableForOrder;
     }
 
-    /**
-     * @param string $visibility
-     *
-     * @return self
-     */
     public function setVisibility(string $visibility): self
     {
         $this->visibility = new ProductVisibility($visibility);
@@ -608,11 +511,6 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @param bool $availableForOrder
-     *
-     * @return self
-     */
     public function setAvailableForOrder(bool $availableForOrder): self
     {
         $this->availableForOrder = $availableForOrder;
@@ -620,19 +518,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isOnlineOnly(): ?bool
     {
         return $this->onlineOnly;
     }
 
-    /**
-     * @param bool $onlineOnly
-     *
-     * @return self
-     */
     public function setOnlineOnly(bool $onlineOnly): self
     {
         $this->onlineOnly = $onlineOnly;
@@ -640,19 +530,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function showPrice(): ?bool
     {
         return $this->showPrice;
     }
 
-    /**
-     * @param bool $showPrice
-     *
-     * @return self
-     */
     public function setShowPrice(bool $showPrice): self
     {
         $this->showPrice = $showPrice;
@@ -660,19 +542,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return ProductCondition|null
-     */
     public function getCondition(): ?ProductCondition
     {
         return $this->condition;
     }
 
-    /**
-     * @param string $condition
-     *
-     * @return self
-     */
     public function setCondition(string $condition): self
     {
         $this->condition = new ProductCondition($condition);
@@ -680,11 +554,6 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @param bool $showCondition
-     *
-     * @return self
-     */
     public function setShowCondition(bool $showCondition): self
     {
         $this->showCondition = $showCondition;
@@ -692,32 +561,22 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function showCondition(): ?bool
     {
         return $this->showCondition;
     }
 
-    /**
-     * @return ManufacturerIdInterface|null
-     */
     public function getManufacturerId(): ?ManufacturerIdInterface
     {
         return $this->manufacturerId;
     }
 
     /**
-     * @param int $manufacturerId
-     *
-     * @return self
-     *
      * @throws ManufacturerConstraintException
      */
     public function setManufacturerId(int $manufacturerId): self
     {
-        $this->manufacturerId = NoManufacturerId::NO_MANUFACTURER_ID === $manufacturerId ?
+        $this->manufacturerId = $manufacturerId === NoManufacturerId::NO_MANUFACTURER_ID ?
             new NoManufacturerId() :
             new ManufacturerId($manufacturerId)
         ;
@@ -725,19 +584,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return Isbn|null
-     */
     public function getIsbn(): ?Isbn
     {
         return $this->isbn;
     }
 
-    /**
-     * @param string $isbn
-     *
-     * @return self
-     */
     public function setIsbn(string $isbn): self
     {
         $this->isbn = new Isbn($isbn);
@@ -745,19 +596,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return Upc|null
-     */
     public function getUpc(): ?Upc
     {
         return $this->upc;
     }
 
-    /**
-     * @param string $upc
-     *
-     * @return self
-     */
     public function setUpc(string $upc): self
     {
         $this->upc = new Upc($upc);
@@ -767,8 +610,6 @@ class UpdateProductCommand
 
     /**
      * @deprecated since 9.0 will be removed in 10.0
-     *
-     * @return Gtin|null
      */
     public function getEan13(): ?Gtin
     {
@@ -777,10 +618,6 @@ class UpdateProductCommand
 
     /**
      * @deprecated since 9.0 will be removed in 10.0
-     *
-     * @param string $gtin
-     *
-     * @return self
      */
     public function setEan13(string $gtin): self
     {
@@ -799,19 +636,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMpn(): ?string
     {
         return $this->mpn;
     }
 
-    /**
-     * @param string $mpn
-     *
-     * @return self
-     */
     public function setMpn(string $mpn): self
     {
         $this->mpn = $mpn;
@@ -819,19 +648,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return Reference|null
-     */
     public function getReference(): ?Reference
     {
         return $this->reference;
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return self
-     */
     public function setReference(string $reference): self
     {
         $this->reference = new Reference($reference);
@@ -839,19 +660,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return Dimension|null
-     */
     public function getWidth(): ?Dimension
     {
         return $this->width;
     }
 
-    /**
-     * @param string $width
-     *
-     * @return self
-     */
     public function setWidth(string $width): self
     {
         $this->setDimension($width, 'width');
@@ -859,19 +672,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return Dimension|null
-     */
     public function getHeight(): ?Dimension
     {
         return $this->height;
     }
 
-    /**
-     * @param string $height
-     *
-     * @return self
-     */
     public function setHeight(string $height): self
     {
         $this->setDimension($height, 'height');
@@ -879,19 +684,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return Dimension|null
-     */
     public function getDepth(): ?Dimension
     {
         return $this->depth;
     }
 
-    /**
-     * @param string $depth
-     *
-     * @return self
-     */
     public function setDepth(string $depth): self
     {
         $this->setDimension($depth, 'depth');
@@ -899,19 +696,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return Dimension|null
-     */
     public function getWeight(): ?Dimension
     {
         return $this->weight;
     }
 
-    /**
-     * @param string $weight
-     *
-     * @return self
-     */
     public function setWeight(string $weight): self
     {
         $this->setDimension($weight, 'weight');
@@ -919,19 +708,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getAdditionalShippingCost(): ?DecimalNumber
     {
         return $this->additionalShippingCost;
     }
 
-    /**
-     * @param string $additionalShippingCost
-     *
-     * @return self
-     */
     public function setAdditionalShippingCost(string $additionalShippingCost): self
     {
         $this->additionalShippingCost = new DecimalNumber($additionalShippingCost);
@@ -939,19 +720,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return DeliveryTimeNoteType|null
-     */
     public function getDeliveryTimeNoteType(): ?DeliveryTimeNoteType
     {
         return $this->deliveryTimeNoteType;
     }
 
-    /**
-     * @param int $type
-     *
-     * @return self
-     */
     public function setDeliveryTimeNoteType(int $type): self
     {
         $this->deliveryTimeNoteType = new DeliveryTimeNoteType($type);
@@ -969,8 +742,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedDeliveryTimeInStockNotes
-     *
-     * @return self
      */
     public function setLocalizedDeliveryTimeInStockNotes(array $localizedDeliveryTimeInStockNotes): self
     {
@@ -989,8 +760,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedDeliveryTimeOutOfStockNotes
-     *
-     * @return self
      */
     public function setLocalizedDeliveryTimeOutOfStockNotes(array $localizedDeliveryTimeOutOfStockNotes): self
     {
@@ -999,19 +768,12 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return PackStockType|null
-     */
     public function getPackStockType(): ?PackStockType
     {
         return $this->packStockType;
     }
 
     /**
-     * @param int $packStockType
-     *
-     * @return self
-     *
      * @throws ProductPackConstraintException
      */
     public function setPackStockType(int $packStockType): self
@@ -1021,19 +783,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMinimalQuantity(): ?int
     {
         return $this->minimalQuantity;
     }
 
-    /**
-     * @param int $minimalQuantity
-     *
-     * @return self
-     */
     public function setMinimalQuantity(int $minimalQuantity): self
     {
         $this->minimalQuantity = $minimalQuantity;
@@ -1041,19 +795,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return LowStockThreshold|null
-     */
     public function getLowStockThreshold(): ?LowStockThreshold
     {
         return $this->lowStockThreshold;
     }
 
-    /**
-     * @param int $lowStockThreshold
-     *
-     * @return self
-     */
     public function setLowStockThreshold(int $lowStockThreshold): self
     {
         $this->lowStockThreshold = new LowStockThreshold($lowStockThreshold);
@@ -1071,8 +817,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedAvailableNowLabels
-     *
-     * @return self
      */
     public function setLocalizedAvailableNowLabels(array $localizedAvailableNowLabels): self
     {
@@ -1091,8 +835,6 @@ class UpdateProductCommand
 
     /**
      * @param string[] $localizedAvailableLaterLabels
-     *
-     * @return self
      */
     public function setLocalizedAvailableLaterLabels(array $localizedAvailableLaterLabels): self
     {
@@ -1101,19 +843,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getAvailableDate(): ?DateTimeInterface
     {
         return $this->availableDate;
     }
 
-    /**
-     * @param DateTimeInterface $availableDate
-     *
-     * @return self
-     */
     public function setAvailableDate(DateTimeInterface $availableDate): self
     {
         $this->availableDate = $availableDate;
@@ -1121,19 +855,11 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isActive(): ?bool
     {
         return $this->active;
     }
 
-    /**
-     * @param bool $active
-     *
-     * @return self
-     */
     public function setActive(bool $active): self
     {
         $this->active = $active;
@@ -1141,10 +867,6 @@ class UpdateProductCommand
         return $this;
     }
 
-    /**
-     * @param string $value
-     * @param string $propertyName
-     */
     private function setDimension(string $value, string $propertyName): void
     {
         $codeByDimension = [
@@ -1157,11 +879,7 @@ class UpdateProductCommand
         try {
             $this->{$propertyName} = new Dimension($value);
         } catch (DomainConstraintException $e) {
-            throw new ProductConstraintException(
-                sprintf('Invalid product %s.', $propertyName),
-                $codeByDimension[$propertyName],
-                $e
-            );
+            throw new ProductConstraintException(\sprintf('Invalid product %s.', $propertyName), $codeByDimension[$propertyName], $e);
         }
     }
 }

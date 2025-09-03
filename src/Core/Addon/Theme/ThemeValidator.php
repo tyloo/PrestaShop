@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class ThemeValidator
 
     public function getErrors($themeName)
     {
-        return array_key_exists($themeName, $this->errors) ? $this->errors[$themeName] : false;
+        return \array_key_exists($themeName, $this->errors) ? $this->errors[$themeName] : false;
     }
 
     public function isValid(Theme $theme)
@@ -63,8 +64,8 @@ class ThemeValidator
         $themeName = $theme->getName();
 
         foreach ($this->getRequiredProperties() as $prop) {
-            if (!$theme->has($prop)) {
-                if (!array_key_exists($themeName, $this->errors)) {
+            if (! $theme->has($prop)) {
+                if (! \array_key_exists($themeName, $this->errors)) {
                     $this->errors[$themeName] = [];
                 }
 
@@ -76,7 +77,7 @@ class ThemeValidator
             }
         }
 
-        return !array_key_exists($themeName, $this->errors);
+        return ! \array_key_exists($themeName, $this->errors);
     }
 
     public function getRequiredProperties()
@@ -110,8 +111,8 @@ class ThemeValidator
                 $parentFile = $parentDir . $file;
             }
 
-            if (!file_exists($childFile) && !file_exists($parentFile)) {
-                if (!array_key_exists($themeName, $this->errors)) {
+            if (! file_exists($childFile) && ! file_exists($parentFile)) {
+                if (! \array_key_exists($themeName, $this->errors)) {
                     $this->errors[$themeName] = [];
                 }
 
@@ -119,7 +120,7 @@ class ThemeValidator
             }
         }
 
-        return !array_key_exists($themeName, $this->errors);
+        return ! \array_key_exists($themeName, $this->errors);
     }
 
     public function getRequiredFiles()

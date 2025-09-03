@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -162,11 +163,6 @@ class ProductSearchContext
         return $this->idShopGroup;
     }
 
-    /**
-     * @param int $idShopGroup
-     *
-     * @return self
-     */
     public function setIdShopGroup(int $idShopGroup): self
     {
         $this->idShopGroup = $idShopGroup;
@@ -182,11 +178,6 @@ class ProductSearchContext
         return $this->stockSharingBetweenShopGroupEnabled;
     }
 
-    /**
-     * @param bool $stockSharingBetweenShopGroupEnabled
-     *
-     * @return self
-     */
     public function setStockSharingBetweenShopGroupEnabled(bool $stockSharingBetweenShopGroupEnabled): self
     {
         $this->stockSharingBetweenShopGroupEnabled = $stockSharingBetweenShopGroupEnabled;

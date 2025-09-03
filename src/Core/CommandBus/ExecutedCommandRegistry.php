@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,9 +51,6 @@ final class ExecutedCommandRegistry
      */
     private $commandTypeParser;
 
-    /**
-     * @param CommandTypeParser $commandTypeParser
-     */
     public function __construct(CommandTypeParser $commandTypeParser)
     {
         $this->commandTypeParser = $commandTypeParser;
@@ -89,17 +87,11 @@ final class ExecutedCommandRegistry
         }
     }
 
-    /**
-     * @return array
-     */
     public function getExecutedCommands(): array
     {
         return $this->registry['commands'];
     }
 
-    /**
-     * @return array
-     */
     public function getExecutedQueries(): array
     {
         return $this->registry['queries'];
@@ -107,12 +99,10 @@ final class ExecutedCommandRegistry
 
     /**
      * Returns the file and line that invoked the handle method
-     *
-     * @return array
      */
     private function getTrace(): array
     {
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, self::BACKTRACE_LIMIT);
+        $trace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, self::BACKTRACE_LIMIT);
 
         foreach ($trace as $step) {
             if ($step['function'] === 'handle'

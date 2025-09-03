@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,15 +91,15 @@ class TokenAuthenticator extends AbstractAuthenticator
         $authorizationServer = $this->getAuthorizationServer($request);
 
         // No authorization server found, return a hint in the exception to help debug a little
-        if (null === $authorizationServer) {
+        if ($authorizationServer === null) {
             // These two hints are probably not adapted for all the possible authorization servers, but probably most
             // of them, and at the very least they are true for the internal PrestashopAuthorizationServer
             $authorization = $request->headers->get('Authorization') ?? null;
-            if (null === $authorization) {
+            if ($authorization === null) {
                 $this->logger->error('TokenAuthenticator: No Authorization header provided');
                 throw new CustomUserMessageAuthenticationException(json_encode('No Authorization header provided'));
             }
-            if (!str_starts_with($authorization, 'Bearer ')) {
+            if (! str_starts_with($authorization, 'Bearer ')) {
                 $this->logger->error('TokenAuthenticator: Bearer token missing');
                 throw new CustomUserMessageAuthenticationException(json_encode('Bearer token missing'));
             }
@@ -109,13 +110,13 @@ class TokenAuthenticator extends AbstractAuthenticator
         }
 
         $jwtTokenUser = $authorizationServer->getJwtTokenUser($request);
-        if (null === $jwtTokenUser) {
+        if ($jwtTokenUser === null) {
             $this->logger->error('TokenAuthenticator: Invalid credentials');
             throw new CustomUserMessageAuthenticationException(json_encode('Invalid credentials'));
         }
 
         // Specific check for external authorization server (PrestashopAuthorisationServer is the only internal implementation)
-        if (!$authorizationServer instanceof PrestashopAuthorisationServer) {
+        if (! $authorizationServer instanceof PrestashopAuthorisationServer) {
             if (empty($jwtTokenUser->getExternalIssuer())) {
                 $this->logger->error('TokenAuthenticator: No external issuer specified');
                 throw new CustomUserMessageAuthenticationException(json_encode('No external issuer specified'));
@@ -132,8 +133,6 @@ class TokenAuthenticator extends AbstractAuthenticator
      * All clients are saved in DB, this allows keeping track of connections and it is used by the
      * ApiClientContext to initialize correctly, thus we can use this Context service even for clients
      * from external authorization servers.
-     *
-     * @param JwtTokenUser $jwtTokenUser
      */
     private function autoSaveApiClient(JwtTokenUser $jwtTokenUser): void
     {
@@ -156,7 +155,7 @@ class TokenAuthenticator extends AbstractAuthenticator
     {
         foreach ($this->authorizationServers as $authorizationServer) {
             $isTokenValid = $authorizationServer->isTokenValid($request);
-            $this->logger->debug('TokenAuthenticator check token via ' . get_class($authorizationServer) . ' => ' . ($isTokenValid ? 'valid token' : 'invalid token'));
+            $this->logger->debug('TokenAuthenticator check token via ' . \get_class($authorizationServer) . ' => ' . ($isTokenValid ? 'valid token' : 'invalid token'));
             if ($isTokenValid) {
                 return $authorizationServer;
             }

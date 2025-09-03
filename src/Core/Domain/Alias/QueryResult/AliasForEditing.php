@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class AliasForEditing
 
     public function __construct(
         array $aliases,
-        string $searchTerm
+        string $searchTerm,
     ) {
         $this->aliases = $aliases;
         $this->searchTerm = $searchTerm;
@@ -59,9 +60,6 @@ class AliasForEditing
         return $this->aliases;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchTerm(): string
     {
         return $this->searchTerm;

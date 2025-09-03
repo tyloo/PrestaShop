@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,21 +61,13 @@ class OrderReturnForViewing
      */
     private $idOrderReturn;
 
-    /**
-     * @param int $idOrderReturn
-     * @param int $orderInvoiceId
-     * @param DateTimeImmutable $date
-     * @param string $type
-     * @param string $stateName
-     * @param string $orderReturnNumber
-     */
     public function __construct(
         int $idOrderReturn,
         int $orderInvoiceId,
         DateTimeImmutable $date,
         string $type,
         string $stateName,
-        string $orderReturnNumber
+        string $orderReturnNumber,
     ) {
         $this->orderInvoiceId = $orderInvoiceId;
         $this->date = $date;
@@ -84,49 +77,31 @@ class OrderReturnForViewing
         $this->orderReturnNumber = $orderReturnNumber;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderInvoiceId(): int
     {
         return $this->orderInvoiceId;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getDate(): DateTimeImmutable
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getStateName(): string
     {
         return $this->stateName;
     }
 
-    /**
-     * @return string
-     */
     public function getOrderReturnNumber(): string
     {
         return $this->orderReturnNumber;
     }
 
-    /**
-     * @return int
-     */
     public function getIdOrderReturn(): int
     {
         return $this->idOrderReturn;

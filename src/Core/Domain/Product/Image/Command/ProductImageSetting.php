@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,6 @@ class ProductImageSetting
     private $shopIds;
 
     /**
-     * @param int $productImageId
      * @param int[] $shopIds
      */
     public function __construct(int $productImageId, array $shopIds)
@@ -58,9 +58,6 @@ class ProductImageSetting
         );
     }
 
-    /**
-     * @return ImageId
-     */
     public function getImageId(): ImageId
     {
         return $this->productImageId;

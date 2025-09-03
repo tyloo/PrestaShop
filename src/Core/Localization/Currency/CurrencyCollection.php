@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,7 +58,7 @@ class CurrencyCollection implements IteratorAggregate, Countable
      */
     public function count(): int
     {
-        return count($this->currencies);
+        return \count($this->currencies);
     }
 
     /**
@@ -127,7 +128,7 @@ class CurrencyCollection implements IteratorAggregate, Countable
      *
      * @return CurrencyCollection Fluent interface
      */
-    public function addCollection(CurrencyCollection $collection)
+    public function addCollection(self $collection)
     {
         // we need to remove all currencies with the same codes first because just replacing them
         // would not place the new currency at the end of the merged array

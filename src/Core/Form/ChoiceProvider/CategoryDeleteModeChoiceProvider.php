@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ final class CategoryDeleteModeChoiceProvider implements FormChoiceProviderInterf
      */
     private $translator;
 
-    /**
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $associateOnlyLabel = $this->translator->trans(
@@ -59,7 +54,7 @@ final class CategoryDeleteModeChoiceProvider implements FormChoiceProviderInterf
             'Admin.Catalog.Notification'
         );
 
-        $associateAndDisableLabel = sprintf(
+        $associateAndDisableLabel = \sprintf(
             '%s %s',
             $this->translator->trans(
                 'If they have no other category, I want to associate them with the parent category and turn them offline.',

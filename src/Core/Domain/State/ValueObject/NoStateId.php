@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class NoStateId implements StateIdInterface
      */
     public const NO_STATE_ID_VALUE = 0;
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return self::NO_STATE_ID_VALUE;

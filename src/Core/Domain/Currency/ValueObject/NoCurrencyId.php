@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class NoCurrencyId implements CurrencyIdInterface
      */
     public const NO_CURRENCY_ID = 0;
 
-    /**
-     * {@inheritDoc}
-     */
     public function getValue(): int
     {
         return self::NO_CURRENCY_ID;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,25 +51,16 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
 
     public const GRID_ID = 'order_message';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Order messages', [], 'Admin.Orderscustomers.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -122,9 +114,6 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -167,9 +156,6 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -178,9 +164,6 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

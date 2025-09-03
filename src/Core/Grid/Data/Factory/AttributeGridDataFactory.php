@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,18 +37,12 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class AttributeGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @param GridDataFactoryInterface $attributeDataFactory
-     */
     public function __construct(
         private readonly GridDataFactoryInterface $attributeDataFactory,
-        private readonly ImageFolderProvider $imageFolderProvider
+        private readonly ImageFolderProvider $imageFolderProvider,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $records = $this->attributeDataFactory->getData($searchCriteria);
@@ -60,11 +55,6 @@ final class AttributeGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @param array $records
-     *
-     * @return array
-     */
     private function modifyRecords(array $records): array
     {
         foreach ($records as &$record) {

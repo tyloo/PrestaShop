@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,16 +62,14 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
     private $defaultGroupsProvider;
 
     /**
-     * @param CommandBusInterface $bus
-     * @param int $contextShopId
+     * @param int  $contextShopId
      * @param bool $isB2bFeatureEnabled
-     * @param DefaultGroupsProviderInterface $defaultGroupsProvider
      */
     public function __construct(
         CommandBusInterface $bus,
         $contextShopId,
         $isB2bFeatureEnabled,
-        DefaultGroupsProviderInterface $defaultGroupsProvider
+        DefaultGroupsProviderInterface $defaultGroupsProvider,
     ) {
         $this->bus = $bus;
         $this->contextShopId = $contextShopId;
@@ -78,9 +77,6 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
         $this->defaultGroupsProvider = $defaultGroupsProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         $command = $this->buildCustomerAddCommandFromFormData($data);
@@ -91,9 +87,6 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
         return $customerId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($customerId, array $data)
     {
         $command = $this->buildCustomerEditCommand($customerId, $data);
@@ -102,8 +95,6 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * @param array $data
-     *
      * @return AddCustomerCommand
      */
     private function buildCustomerAddCommandFromFormData(array $data)
@@ -166,7 +157,6 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
 
     /**
      * @param int $customerId
-     * @param array $data
      *
      * @return EditCustomerCommand
      */
@@ -188,7 +178,7 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
             ->setBirthday($data['birthday'] ?: Birthday::EMPTY_BIRTHDAY)
         ;
 
-        if (null !== $data['password']) {
+        if ($data['password'] !== null) {
             $command->setPassword($data['password']);
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,12 +46,6 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
      */
     private $productEcotaxResetter;
 
-    /**
-     * @param Configuration $configuration
-     * @param Context $shopContext
-     * @param FeatureInterface $multistoreFeature
-     * @param ProductEcotaxResetterInterface $productEcotaxResetter
-     */
     public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, ProductEcotaxResetterInterface $productEcotaxResetter)
     {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
@@ -58,9 +53,6 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
         $this->productEcotaxResetter = $productEcotaxResetter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -74,9 +66,6 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -91,7 +80,7 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
                 $this->updateConfigurationValue('PS_ECOTAX_TAX_RULES_GROUP_ID', 'eco_tax_rule_group', $configuration, $shopConstraint);
             }
 
-            if (false === $configuration['enable_tax']) {
+            if ($configuration['enable_tax'] === false) {
                 $configuration['multistore_display_tax_in_cart'] = false;
                 $configuration['display_tax_in_cart'] = false;
                 $this->updateConfigurationValue('PS_TAX_DISPLAY', 'display_tax_in_cart', $configuration, $shopConstraint);
@@ -101,9 +90,6 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
         return (new OptionsResolver())
@@ -118,7 +104,7 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
     /**
      * Responsible for ecotax update
      *
-     * @param bool $isEnabled
+     * @param bool  $isEnabled
      * @param array $configuration
      */
     private function updateEcotax($isEnabled, $configuration)
@@ -127,7 +113,7 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
 
         $wasEnabled = (bool) $this->configuration->get('PS_USE_ECOTAX', false, $shopConstraint);
 
-        if (!$isEnabled && $wasEnabled !== $isEnabled && !$this->shopContext->isAllShopContext()) {
+        if (! $isEnabled && $wasEnabled !== $isEnabled && ! $this->shopContext->isAllShopContext()) {
             $this->productEcotaxResetter->reset();
         }
 

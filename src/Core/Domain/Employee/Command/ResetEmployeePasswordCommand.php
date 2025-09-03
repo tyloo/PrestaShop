@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,7 +31,7 @@ class ResetEmployeePasswordCommand
 {
     public function __construct(
         private readonly string $resetToken,
-        private readonly string $password
+        private readonly string $password,
     ) {
     }
 

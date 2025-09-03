@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,16 +57,13 @@ class CartView
     /**
      * @param int $cartId
      * @param int $currencyId
-     * @param array $customerInformation
-     * @param array $orderInformation
-     * @param array $cartSummary
      */
     public function __construct(
         $cartId,
         $currencyId,
         array $customerInformation,
         array $orderInformation,
-        array $cartSummary
+        array $cartSummary,
     ) {
         $this->customerInformation = $customerInformation;
         $this->orderInformation = $orderInformation;

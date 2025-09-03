@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,34 +34,44 @@ namespace PrestaShop\PrestaShop\Core\Domain\MailTemplate\Command;
  */
 class GenerateThemeMailTemplatesCommand
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $themeName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $language;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $overwriteTemplates;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $coreMailsFolder = '';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $modulesMailFolder = '';
 
     /**
      * @param string $themeName
-     * @param string $language locale, for example: 'en'
-     * @param bool $overwriteTemplates
-     * @param string $coreMailsFolder Output folder for core emails (if left empty the default mails folder will be used)
-     * @param string $modulesMailFolder Output folder for modules emails (if left empty the module mails folder will be used)
+     * @param string $language           locale, for example: 'en'
+     * @param bool   $overwriteTemplates
+     * @param string $coreMailsFolder    Output folder for core emails (if left empty the default mails folder will be used)
+     * @param string $modulesMailFolder  Output folder for modules emails (if left empty the module mails folder will be used)
      */
     public function __construct(
         $themeName,
         $language,
         $overwriteTemplates = false,
         $coreMailsFolder = '',
-        $modulesMailFolder = ''
+        $modulesMailFolder = '',
     ) {
         $this->themeName = $themeName;
         $this->language = $language;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,17 +47,11 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
      */
     private $modifyAllNamePrefix;
 
-    /**
-     * @param string $modifyAllNamePrefix
-     */
     public function __construct(string $modifyAllNamePrefix)
     {
         $this->modifyAllNamePrefix = $modifyAllNamePrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
         $config = new CommandBuilderConfig($this->modifyAllNamePrefix);
@@ -81,11 +76,6 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
         return $commandBuilder->buildCommands($formData, $shopCommand, $allShopsCommand);
     }
 
-    /**
-     * @param CommandBuilderConfig $config
-     *
-     * @return self
-     */
     private function configureBasicInformation(CommandBuilderConfig $config): self
     {
         $config
@@ -97,11 +87,6 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
         return $this;
     }
 
-    /**
-     * @param CommandBuilderConfig $config
-     *
-     * @return self
-     */
     private function configureOptions(CommandBuilderConfig $config, array $formData): self
     {
         $config
@@ -115,18 +100,13 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
 
         // based on show_condition value, the condition field can be disabled, in that case "condition" won't exist in request
         // and will end up being "" in command if added into config without this if, which causes constraint error
-        if (!empty($formData['details']['condition'])) {
+        if (! empty($formData['details']['condition'])) {
             $config->addMultiShopField('[details][condition]', 'setCondition', DataField::TYPE_STRING);
         }
 
         return $this;
     }
 
-    /**
-     * @param CommandBuilderConfig $config
-     *
-     * @return self
-     */
     private function configurePrices(CommandBuilderConfig $config): self
     {
         $config
@@ -142,11 +122,6 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
         return $this;
     }
 
-    /**
-     * @param CommandBuilderConfig $config
-     *
-     * @return self
-     */
     private function configureSeo(CommandBuilderConfig $config): self
     {
         $config
@@ -165,11 +140,6 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
         return $this;
     }
 
-    /**
-     * @param CommandBuilderConfig $config
-     *
-     * @return self
-     */
     private function configureDetails(CommandBuilderConfig $config): self
     {
         $config
@@ -183,11 +153,6 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
         return $this;
     }
 
-    /**
-     * @param CommandBuilderConfig $config
-     *
-     * @return self
-     */
     private function configureShipping(CommandBuilderConfig $config): self
     {
         $config
@@ -212,15 +177,15 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
             ->addMultiShopField('[stock][availability][available_date]', 'setAvailableDate', DataField::TYPE_DATETIME)
         ;
 
-        $lowStockThresholdSwitchKey = sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX);
+        $lowStockThresholdSwitchKey = \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX);
 
         if (
             // if low stock threshold switch is falsy, then we must set lowStockThreshold to its disabled value
             // which will end up being 0 after falsy bool to int conversion
             isset($formData['stock']['options'][$lowStockThresholdSwitchKey])
-            && !$formData['stock']['options'][$lowStockThresholdSwitchKey]
+            && ! $formData['stock']['options'][$lowStockThresholdSwitchKey]
         ) {
-            $config->addMultiShopField(sprintf('[stock][options][%s]', $lowStockThresholdSwitchKey), 'setLowStockThreshold', DataField::TYPE_INT);
+            $config->addMultiShopField(\sprintf('[stock][options][%s]', $lowStockThresholdSwitchKey), 'setLowStockThreshold', DataField::TYPE_INT);
         } else {
             // else we simply set the low stock threshold value from the form
             $config->addMultiShopField('[stock][options][low_stock_threshold]', 'setLowStockThreshold', DataField::TYPE_INT);
@@ -255,14 +220,11 @@ class UpdateProductCommandsBuilder implements ProductCommandsBuilderInterface
      * but at least it won't throw the error.
      *
      * @param array<string, mixed> $formData
-     * @param UpdateProductCommand $singleShopCommand
-     *
-     * @return void
      */
     private function setNameDependingOnStatus(array $formData, UpdateProductCommand $singleShopCommand): void
     {
         if (
-            !empty($formData['header']['active'])
+            ! empty($formData['header']['active'])
             && empty($formData['header'][$this->modifyAllNamePrefix . 'active'])
             && isset($formData['header']['name'])
         ) {

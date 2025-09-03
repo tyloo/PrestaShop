@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,8 @@ class CannotBulkDeleteCustomizationFieldException extends ProductException
     private $customizationFieldIds;
 
     /**
-     * @param array $customizationFieldIds
      * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
+     * @param int    $code
      */
     public function __construct(array $customizationFieldIds, $message = '', $code = 0, ?Throwable $previous = null)
     {

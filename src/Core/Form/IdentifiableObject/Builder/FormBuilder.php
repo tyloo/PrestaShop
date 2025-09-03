@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,21 +70,13 @@ final class FormBuilder implements FormBuilderInterface
      */
     private $registry;
 
-    /**
-     * @param FormFactoryInterface $formFactory
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param FormDataProviderInterface $dataProvider
-     * @param string $formType
-     * @param FormRegistryInterface $registry
-     * @param FormOptionsProviderInterface|null $optionsProvider
-     */
     public function __construct(
         FormFactoryInterface $formFactory,
         HookDispatcherInterface $hookDispatcher,
         FormDataProviderInterface $dataProvider,
         string $formType,
         FormRegistryInterface $registry,
-        ?FormOptionsProviderInterface $optionsProvider = null
+        ?FormOptionsProviderInterface $optionsProvider = null,
     ) {
         $this->formFactory = $formFactory;
         $this->hookDispatcher = $hookDispatcher;
@@ -93,19 +86,16 @@ final class FormBuilder implements FormBuilderInterface
         $this->optionsProvider = $optionsProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getForm(array $data = [], array $options = [])
     {
         // Fetch default data
         $defaultData = $this->dataProvider->getDefaultData();
         // Merge initial data in default data
-        if (is_array($defaultData)) {
+        if (\is_array($defaultData)) {
             $data = array_merge($defaultData, $data);
         }
 
-        if (null !== $this->optionsProvider) {
+        if ($this->optionsProvider !== null) {
             $options = array_merge($this->optionsProvider->getDefaultOptions($data), $options);
         }
 
@@ -125,14 +115,11 @@ final class FormBuilder implements FormBuilderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormFor($id, array $data = [], array $options = [])
     {
         $data = array_merge($this->dataProvider->getData($id), $data);
 
-        if (null !== $this->optionsProvider) {
+        if ($this->optionsProvider !== null) {
             $options = array_merge($this->optionsProvider->getOptions($id, $data), $options);
         }
 
@@ -155,9 +142,8 @@ final class FormBuilder implements FormBuilderInterface
     }
 
     /**
-     * @param string $formType
-     * @param array $data
-     * @param array $options
+     * @param string   $formType
+     * @param array    $data
      * @param int|null $id
      *
      * @return FormInterface
@@ -176,11 +162,6 @@ final class FormBuilder implements FormBuilderInterface
         return $formBuilder->getForm();
     }
 
-    /**
-     * @param string $hookName
-     *
-     * @return string
-     */
     private function camelize(string $hookName): string
     {
         return Container::camelize($hookName);

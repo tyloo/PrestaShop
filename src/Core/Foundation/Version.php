@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -86,13 +87,13 @@ class Version
     /**
      * Initialize version data.
      *
-     * @param string $version Version
+     * @param string $version            Version
      * @param string $majorVersionString Legacy major version in string format (eg. "1.7")
-     * @param int $majorVersion Major version
-     * @param int $minorVersion [default=0] Minor version
-     * @param int $patchVersion [default=0] Patch version
-     * @param string $preReleaseVersion [default=''] Pre release version (eg. "dev", "beta"...)
-     * @param string $buildMetadata [default=''] Build metadata (eg. build number)
+     * @param int    $majorVersion       Major version
+     * @param int    $minorVersion       [default=0] Minor version
+     * @param int    $patchVersion       [default=0] Patch version
+     * @param string $preReleaseVersion  [default=''] Pre release version (eg. "dev", "beta"...)
+     * @param string $buildMetadata      [default=''] Build metadata (eg. build number)
      */
     public function __construct(
         $version,
@@ -101,7 +102,7 @@ class Version
         $minorVersion = 0,
         $patchVersion = 0,
         $preReleaseVersion = '',
-        $buildMetadata = ''
+        $buildMetadata = '',
     ) {
         $this->version = $this->removeLegacyPrefix($version, $majorVersionString);
         $this->majorVersionString = $majorVersionString;
@@ -126,11 +127,11 @@ class Version
         $matches = [];
         $regex = '/^([\d]+)(?:\.([\d]+))?(?:\.([\d]+))?(?:\.(?<legacy>[\d]+))?(?:-(?<prerelease>[0-9A-Za-z-.]+))?(?:\+(?<build>[0-9A-Za-z-.]+))?$/';
 
-        if (!preg_match($regex, $version, $matches)) {
+        if (! preg_match($regex, $version, $matches)) {
             throw new InvalidVersionException($version);
         }
 
-        if (isset($matches['legacy']) && '' !== $matches['legacy']) {
+        if (isset($matches['legacy']) && $matches['legacy'] !== '') {
             // legacy version like "1.7.5.0"
             $major = (int) $matches[2];
             $minor = (int) $matches[3];
@@ -164,7 +165,7 @@ class Version
     {
         $version = '1.' . $this->version;
 
-        if (!$full) {
+        if (! $full) {
             // remove extra parts
             return preg_replace('/[-\+].*/', '', $version);
         }
@@ -338,7 +339,7 @@ class Version
      * Compares the current version with the provided version depending on the provided operator.
      * It sanitized both version to have a.
      *
-     * @param string $version Must be a valid version string, for example "1.7.4.0"
+     * @param string $version  Must be a valid version string, for example "1.7.4.0"
      * @param string $operator Operator for version_compare(),
      *                         allowed values are: <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
      *

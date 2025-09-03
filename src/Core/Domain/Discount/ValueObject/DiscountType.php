@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,8 +35,9 @@ class DiscountType
     public const FREE_SHIPPING = 'free_shipping';
     public const ORDER_LEVEL = 'order_level';
 
-    public function __construct(private readonly string $value)
-    {
+    public function __construct(
+        private readonly string $value,
+    ) {
     }
 
     public function getValue(): string

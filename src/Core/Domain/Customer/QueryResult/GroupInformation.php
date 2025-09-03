@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,40 +49,26 @@ class GroupInformation
      */
     private $isDefault;
 
-    /**
-     * @param int $groupId
-     * @param string $name
-     * @param bool $isDefault
-     */
     public function __construct(
         int $groupId,
         string $name,
-        bool $isDefault = false
+        bool $isDefault = false,
     ) {
         $this->groupId = $groupId;
         $this->name = $name;
         $this->isDefault = $isDefault;
     }
 
-    /**
-     * @return int
-     */
     public function getGroupId(): int
     {
         return $this->groupId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
     public function isDefault(): bool
     {
         return $this->isDefault;

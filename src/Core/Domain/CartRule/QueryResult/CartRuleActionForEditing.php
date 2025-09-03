@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,7 +61,7 @@ class CartRuleActionForEditing
         CartRuleReductionForEditing $reduction,
         string $discountApplicationType,
         ?int $giftProductId,
-        ?int $giftCombinationId
+        ?int $giftCombinationId,
     ) {
         $this->freeShipping = $freeShipping;
         $this->reduction = $reduction;
@@ -69,41 +70,26 @@ class CartRuleActionForEditing
         $this->giftCombinationId = $giftCombinationId;
     }
 
-    /**
-     * @return bool
-     */
     public function isFreeShipping(): bool
     {
         return $this->freeShipping;
     }
 
-    /**
-     * @return CartRuleReductionForEditing
-     */
     public function getReduction(): CartRuleReductionForEditing
     {
         return $this->reduction;
     }
 
-    /**
-     * @return int|null
-     */
     public function getGiftProductId(): ?int
     {
         return $this->giftProductId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getGiftCombinationId(): ?int
     {
         return $this->giftCombinationId;
     }
 
-    /**
-     * @return string
-     */
     public function getDiscountApplicationType(): string
     {
         return $this->discountApplicationType;

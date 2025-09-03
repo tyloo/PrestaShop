@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class PositionModificationCollection extends AbstractCollection implements PositionModificationCollectionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function add(PositionModificationInterface $positionModification)
     {
         $this->items[$positionModification->getId()] = $positionModification;
@@ -45,9 +43,6 @@ final class PositionModificationCollection extends AbstractCollection implements
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function remove(PositionModificationInterface $positionModification)
     {
         if (isset($this->items[$positionModification->getId()])) {
@@ -57,9 +52,6 @@ final class PositionModificationCollection extends AbstractCollection implements
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
         $positionModifications = [];

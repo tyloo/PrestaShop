@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -78,13 +79,6 @@ class GetEditableCombinationsList
     private $orderWay;
 
     /**
-     * @param int $productId
-     * @param int $languageId
-     * @param ShopConstraint $shopConstraint
-     * @param int|null $limit
-     * @param int|null $offset
-     * @param string|null $orderBy
-     * @param string|null $orderWay
      * @param array<string, mixed> $filters
      */
     public function __construct(
@@ -95,7 +89,7 @@ class GetEditableCombinationsList
         ?int $offset = null,
         ?string $orderBy = null,
         ?string $orderWay = null,
-        array $filters = []
+        array $filters = [],
     ) {
         $this->productId = new ProductId($productId);
         $this->languageId = new LanguageId($languageId);
@@ -107,57 +101,36 @@ class GetEditableCombinationsList
         $this->orderWay = $orderWay;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderBy(): ?string
     {
         return $this->orderBy;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrderWay(): ?string
     {
         return $this->orderWay;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLimit(): ?int
     {
         return $this->limit;
     }
 
-    /**
-     * @return int|null
-     */
     public function getOffset(): ?int
     {
         return $this->offset;

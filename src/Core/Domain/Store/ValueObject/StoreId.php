@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,20 +41,14 @@ class StoreId
      */
     private $storeId;
 
-    /**
-     * @param int $storeId
-     */
     public function __construct(int $storeId)
     {
-        if (0 >= $storeId) {
-            throw new StoreConstraintException(sprintf('Invalid store id "%d"', $storeId), StoreConstraintException::INVALID_ID);
+        if ($storeId <= 0) {
+            throw new StoreConstraintException(\sprintf('Invalid store id "%d"', $storeId), StoreConstraintException::INVALID_ID);
         }
         $this->storeId = $storeId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->storeId;

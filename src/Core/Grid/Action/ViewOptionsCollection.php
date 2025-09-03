@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class ViewOptionsCollection extends AbstractCollection implements ViewOptionsCollectionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function add(string $action, $value)
     {
         $this->items[$action] = $value;
@@ -46,9 +44,6 @@ final class ViewOptionsCollection extends AbstractCollection implements ViewOpti
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function all()
     {
         return $this->items;

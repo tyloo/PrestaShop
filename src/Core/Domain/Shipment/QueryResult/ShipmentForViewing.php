@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class ShipmentForViewing
         int $id,
         ?string $trackingNumber,
         CarrierSummary $carrierSummary,
-        ShippingAdressSummary $shippingAdressSummary
+        ShippingAdressSummary $shippingAdressSummary,
     ) {
         $this->id = $id;
         $this->trackingNumber = $trackingNumber;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ final class InvoiceModelFinder implements FileFinderInterface
      */
     private $invoiceModelDirectories;
 
-    /**
-     * @param array $invoiceModelDirectories
-     */
     public function __construct(array $invoiceModelDirectories)
     {
         $this->invoiceModelDirectories = $invoiceModelDirectories;
@@ -58,7 +56,7 @@ final class InvoiceModelFinder implements FileFinderInterface
         $filesystem = new Filesystem();
 
         foreach ($directories as $key => $directory) {
-            if (!$filesystem->exists($directory)) {
+            if (! $filesystem->exists($directory)) {
                 unset($directories[$key]);
             }
         }

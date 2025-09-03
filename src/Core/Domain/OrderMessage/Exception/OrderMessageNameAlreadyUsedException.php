@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,10 +48,6 @@ class OrderMessageNameAlreadyUsedException extends OrderMessageException
 
     /**
      * @param string $name the email that's being used
-     * @param int $langId
-     * @param string $message
-     * @param int $code
-     * @param Exception|null $previous
      */
     public function __construct(string $name, int $langId, string $message = '', int $code = 0, ?Exception $previous = null)
     {
@@ -60,17 +57,11 @@ class OrderMessageNameAlreadyUsedException extends OrderMessageException
         $this->langId = $langId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
     public function getLangId(): int
     {
         return $this->langId;

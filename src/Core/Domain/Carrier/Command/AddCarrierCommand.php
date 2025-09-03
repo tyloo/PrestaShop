@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,7 +54,9 @@ class AddCarrierCommand
      */
     public function __construct(
         private string $name,
-        /** @var string[] $localizedDelay */
+        /**
+         * @var string[]
+         */
         private array $localizedDelay,
         private int $grade,
         private string $trackingUrl,
@@ -63,14 +66,16 @@ class AddCarrierCommand
         private bool $isFree,
         int $shippingMethod,
         int $rangeBehavior,
-        /** @var int[] $zones */
+        /**
+         * @var int[]
+         */
         private array $zones,
         array $associatedShopIds,
         private int $max_width = 0,
         private int $max_height = 0,
         private int $max_depth = 0,
         private float $max_weight = 0,
-        private ?string $logoPathName = null
+        private ?string $logoPathName = null,
     ) {
         $this->assertCarrierHasAtLeastOneZone($zones);
         $this->shippingMethod = new ShippingMethod($shippingMethod);
@@ -83,11 +88,8 @@ class AddCarrierCommand
      */
     private function assertCarrierHasAtLeastOneZone(array $zones): void
     {
-        if (count($zones) === 0) {
-            throw new CarrierConstraintException(
-                'Carrier need to have at least one zone',
-                CarrierConstraintException::INVALID_ZONE_MISSING
-            );
+        if (\count($zones) === 0) {
+            throw new CarrierConstraintException('Carrier need to have at least one zone', CarrierConstraintException::INVALID_ZONE_MISSING);
         }
     }
 
@@ -96,7 +98,9 @@ class AddCarrierCommand
         return $this->name;
     }
 
-    /** @return string[] */
+    /**
+     * @return string[]
+     */
     public function getLocalizedDelay(): array
     {
         return $this->localizedDelay;

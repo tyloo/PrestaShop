@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,14 +74,7 @@ class ConfigurablePermissions
     private $hasEmployeeEditPermission;
 
     /**
-     * @param array $profilePermissionsForTabs
-     * @param array $profilePermissionsForModules
-     * @param array $profiles
-     * @param array $tabs
-     * @param array $bulkConfiguration
      * @param string[] $permissions
-     * @param int $employeeProfileId
-     * @param bool $hasEmployeeEditPermission
      */
     public function __construct(
         array $profilePermissionsForTabs,
@@ -90,7 +84,7 @@ class ConfigurablePermissions
         array $bulkConfiguration,
         array $permissions,
         int $employeeProfileId,
-        bool $hasEmployeeEditPermission
+        bool $hasEmployeeEditPermission,
     ) {
         $this->profilePermissionsForTabs = $profilePermissionsForTabs;
         $this->profiles = $profiles;
@@ -102,107 +96,61 @@ class ConfigurablePermissions
         $this->hasEmployeeEditPermission = $hasEmployeeEditPermission;
     }
 
-    /**
-     * @return array
-     */
     public function getProfilePermissionsForTabs(): array
     {
         return $this->profilePermissionsForTabs;
     }
 
-    /**
-     * @return array
-     */
     public function getProfiles(): array
     {
         return $this->profiles;
     }
 
-    /**
-     * @return array
-     */
     public function getTabs(): array
     {
         return $this->tabs;
     }
 
-    /**
-     * @param int $profileId
-     *
-     * @return bool
-     */
     public function isBulkViewConfigurationEnabled(int $profileId): bool
     {
         return $this->bulkConfiguration[$profileId][ControllerPermission::VIEW];
     }
 
-    /**
-     * @param int $profileId
-     *
-     * @return bool
-     */
     public function isBulkAddConfigurationEnabled(int $profileId): bool
     {
         return $this->bulkConfiguration[$profileId][ControllerPermission::ADD];
     }
 
-    /**
-     * @param int $profileId
-     *
-     * @return bool
-     */
     public function isBulkEditConfigurationEnabled(int $profileId): bool
     {
         return $this->bulkConfiguration[$profileId][ControllerPermission::EDIT];
     }
 
-    /**
-     * @param int $profileId
-     *
-     * @return bool
-     */
     public function isBulkDeleteConfigurationEnabled(int $profileId): bool
     {
         return $this->bulkConfiguration[$profileId][ControllerPermission::DELETE];
     }
 
-    /**
-     * @param int $profileId
-     *
-     * @return bool
-     */
     public function isBulkAllConfigurationEnabled(int $profileId): bool
     {
         return $this->bulkConfiguration[$profileId][ControllerPermission::ALL];
     }
 
-    /**
-     * @return array
-     */
     public function getProfilePermissionsForModules(): array
     {
         return $this->profilePermissionsForModules;
     }
 
-    /**
-     * @return array
-     */
     public function getPermissions(): array
     {
         return $this->permissions;
     }
 
-    /**
-     * @return int
-     */
     public function getEmployeeProfileId(): int
     {
         return $this->employeeProfileId;
     }
 
-    /**
-     * @return bool
-     */
     public function hasEmployeeEditPermission(): bool
     {
         return $this->hasEmployeeEditPermission;

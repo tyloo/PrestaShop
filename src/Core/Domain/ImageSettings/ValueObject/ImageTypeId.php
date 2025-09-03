@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,8 +39,6 @@ class ImageTypeId
     private int $imageTypeId;
 
     /**
-     * @param int $imageTypeId
-     *
      * @throws ImageTypeException
      */
     public function __construct(int $imageTypeId)
@@ -48,23 +47,18 @@ class ImageTypeId
         $this->imageTypeId = $imageTypeId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->imageTypeId;
     }
 
     /**
-     * @param int $imageTypeId
-     *
      * @throws ImageTypeException
      */
     private function assertIntegerIsGreaterThanZero(int $imageTypeId): void
     {
-        if (0 >= $imageTypeId) {
-            throw new ImageTypeException(sprintf('Image type id %d is invalid. Image type id have to be number bigger than zero.', $imageTypeId));
+        if ($imageTypeId <= 0) {
+            throw new ImageTypeException(\sprintf('Image type id %d is invalid. Image type id have to be number bigger than zero.', $imageTypeId));
         }
     }
 }

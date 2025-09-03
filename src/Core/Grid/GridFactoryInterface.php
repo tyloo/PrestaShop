@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ interface GridFactoryInterface
 {
     /**
      * Create grid with filtered data.
-     *
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return GridInterface
      */
     public function getGrid(SearchCriteriaInterface $searchCriteria): GridInterface;
 }

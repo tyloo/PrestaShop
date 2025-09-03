@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,6 @@ class UpdateProductSuppliersCommand
     private $productSuppliers;
 
     /**
-     * @param int $productId
      * @param array<int, array<string, mixed>> $productSuppliers
      *
      * @see UpdateProductSuppliersCommand::setProductSuppliers() for $productSuppliers structure
@@ -61,9 +61,6 @@ class UpdateProductSuppliersCommand
         $this->productId = new ProductId($productId);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -79,16 +76,11 @@ class UpdateProductSuppliersCommand
 
     /**
      * @param array<int, array<string, mixed>> $productSuppliers
-     * @param int $productId
      */
     private function setProductSuppliers(array $productSuppliers, int $productId): void
     {
         if (empty($productSuppliers)) {
-            throw new InvalidArgumentException(sprintf(
-                'Empty array of product suppliers provided in %s. To remove all product suppliers use %s.',
-                self::class,
-                RemoveAllAssociatedProductSuppliersCommand::class
-            ));
+            throw new InvalidArgumentException(\sprintf('Empty array of product suppliers provided in %s. To remove all product suppliers use %s.', self::class, RemoveAllAssociatedProductSuppliersCommand::class));
         }
 
         foreach ($productSuppliers as $productSupplier) {
@@ -97,7 +89,7 @@ class UpdateProductSuppliersCommand
                     $productId,
                     NoCombinationId::NO_COMBINATION_ID,
                     $productSupplier['supplier_id'],
-                    !empty($productSupplier['product_supplier_id']) ? $productSupplier['product_supplier_id'] : null
+                    ! empty($productSupplier['product_supplier_id']) ? $productSupplier['product_supplier_id'] : null
                 ),
                 $productSupplier['currency_id'],
                 $productSupplier['reference'],

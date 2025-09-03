@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,26 +39,17 @@ class ProductShopsFormDataHandler implements FormDataHandlerInterface
      */
     private $bus;
 
-    /**
-     * @param CommandBusInterface $bus
-     */
     public function __construct(
-        CommandBusInterface $bus
+        CommandBusInterface $bus,
     ) {
         $this->bus = $bus;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function create(array $data)
     {
         // The form is only used for update not creation
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function update($id, array $data)
     {
         $this->bus->handle(new SetProductShopsCommand(

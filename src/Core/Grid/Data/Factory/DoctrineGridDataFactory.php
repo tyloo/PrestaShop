@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,23 +43,14 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class DoctrineGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @param DoctrineQueryBuilderInterface $gridQueryBuilder
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param QueryParserInterface $queryParser
-     * @param string $gridId
-     */
     public function __construct(
         protected DoctrineQueryBuilderInterface $gridQueryBuilder,
         protected HookDispatcherInterface $hookDispatcher,
         protected QueryParserInterface $queryParser,
-        protected string $gridId
+        protected string $gridId,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $searchQueryBuilder = $this->gridQueryBuilder->getSearchQueryBuilder($searchCriteria);
@@ -82,11 +74,6 @@ class DoctrineGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     *
-     * @return string
-     */
     private function getRawQuery(QueryBuilder $queryBuilder): string
     {
         $query = $queryBuilder->getSQL();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ final class AttachmentFormDataProvider implements FormDataProviderInterface
      */
     private $queryBus;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     */
     public function __construct(CommandBusInterface $queryBus)
     {
         $this->queryBus = $queryBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($attachmentId)
     {
         /** @var EditableAttachment $editableAttachment */
@@ -66,9 +61,6 @@ final class AttachmentFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         return [];

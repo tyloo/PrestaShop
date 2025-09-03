@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ namespace PrestaShop\PrestaShop\Core\Grid\Action\Row\AccessibilityChecker;
  */
 final class PrintInvoiceAccessibilityChecker implements AccessibilityCheckerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isGranted(array $record)
     {
         return $record['is_invoice_available'] ?? null;

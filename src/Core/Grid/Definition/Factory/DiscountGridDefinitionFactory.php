@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,33 +55,21 @@ final class DiscountGridDefinitionFactory extends AbstractGridDefinitionFactory 
 
     public const GRID_ID = 'discount';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilterId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Discounts', [], 'Admin.Catalog.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -156,9 +145,6 @@ final class DiscountGridDefinitionFactory extends AbstractGridDefinitionFactory 
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters(): FilterCollectionInterface
     {
         return (new FilterCollection())

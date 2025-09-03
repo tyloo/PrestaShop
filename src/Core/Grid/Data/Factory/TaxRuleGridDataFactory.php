@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,21 +50,14 @@ class TaxRuleGridDataFactory implements GridDataFactoryInterface
      */
     private $translator;
 
-    /**
-     * @param GridDataFactoryInterface $doctrineTaxRuleDataFactory
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         GridDataFactoryInterface $doctrineTaxRuleDataFactory,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->doctrineTaxRuleDataFactory = $doctrineTaxRuleDataFactory;
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $taxRuleData = $this->doctrineTaxRuleDataFactory->getData($searchCriteria);
@@ -79,11 +73,6 @@ class TaxRuleGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @param array $records
-     *
-     * @return array
-     */
     private function applyModification(array $records): array
     {
         foreach ($records as $i => $record) {
@@ -99,7 +88,7 @@ class TaxRuleGridDataFactory implements GridDataFactoryInterface
                     break;
             }
 
-            $records[$i]['rate'] = sprintf('%.3f%%', $record['rate']);
+            $records[$i]['rate'] = \sprintf('%.3f%%', $record['rate']);
         }
 
         return $records;

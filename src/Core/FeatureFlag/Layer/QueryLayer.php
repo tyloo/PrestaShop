@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,11 @@ class QueryLayer implements TypeLayerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getTypeName(): string
     {
         return FeatureFlagSettings::TYPE_QUERY;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isReadonly(): bool
     {
         // It's always NOT editable via Query layer!
@@ -67,23 +62,17 @@ class QueryLayer implements TypeLayerInterface
         return FeatureFlagSettings::PREFIX . strtoupper($featureFlagName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed(string $featureFlagName): bool
     {
         // Only for debug environment.
-        if (!$this->environment->isDebug()) {
+        if (! $this->environment->isDebug()) {
             return false;
         }
 
         // Check if PS_FF_{featureFlag's name} is on query variable.
-        return null !== $this->requestStack->getMainRequest()?->query->get($this->getVarName($featureFlagName));
+        return $this->requestStack->getMainRequest()?->query->get($this->getVarName($featureFlagName)) !== null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(string $featureFlagName): bool
     {
         return $this->canBeUsed($featureFlagName)
@@ -93,19 +82,13 @@ class QueryLayer implements TypeLayerInterface
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enable(string $featureFlagName): void
     {
-        throw new InvalidArgumentException(sprintf('We cannot change status of the query feature flag %s.', $featureFlagName));
+        throw new InvalidArgumentException(\sprintf('We cannot change status of the query feature flag %s.', $featureFlagName));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function disable(string $featureFlagName): void
     {
-        throw new InvalidArgumentException(sprintf('We cannot change status of the query feature flag %s.', $featureFlagName));
+        throw new InvalidArgumentException(\sprintf('We cannot change status of the query feature flag %s.', $featureFlagName));
     }
 }

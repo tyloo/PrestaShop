@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ interface QuickAccessRepositoryInterface
 {
     /**
      * Returns the complete list of quick accesses.
-     *
-     * @param LanguageId $languageId
-     *
-     * @return array
      */
     public function fetchAll(LanguageId $languageId): array;
 }

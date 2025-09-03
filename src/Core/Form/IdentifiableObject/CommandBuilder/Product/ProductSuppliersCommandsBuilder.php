@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,14 +38,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 final class ProductSuppliersCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['options']['suppliers']['supplier_ids'])
-            && !isset($formData['options']['suppliers']['default_supplier_id'])
-            && !isset($formData['options']['product_suppliers'])) {
+        if (! isset($formData['options']['suppliers']['supplier_ids'])
+            && ! isset($formData['options']['suppliers']['default_supplier_id'])
+            && ! isset($formData['options']['product_suppliers'])) {
             return [];
         }
 
@@ -59,7 +57,7 @@ final class ProductSuppliersCommandsBuilder implements ProductCommandsBuilderInt
         );
 
         $defaultSupplierId = $formData['options']['suppliers']['default_supplier_id'] ?? null;
-        if (!empty($defaultSupplierId)) {
+        if (! empty($defaultSupplierId)) {
             $commands[] = new SetProductDefaultSupplierCommand(
                 $productId->getValue(),
                 (int) $defaultSupplierId
@@ -67,7 +65,7 @@ final class ProductSuppliersCommandsBuilder implements ProductCommandsBuilderInt
         }
 
         $productSuppliersUpdates = $formData['options']['product_suppliers'] ?? [];
-        if (!empty($productSuppliersUpdates)) {
+        if (! empty($productSuppliersUpdates)) {
             $productSuppliers = [];
             foreach ($productSuppliersUpdates as $productSupplierUpdate) {
                 $supplierId = (int) $productSupplierUpdate['supplier_id'];
@@ -88,9 +86,6 @@ final class ProductSuppliersCommandsBuilder implements ProductCommandsBuilderInt
     }
 
     /**
-     * @param int $supplierId
-     * @param array $productSupplierData
-     *
      * @return array<string, mixed>
      */
     private function formatProductSupplier(int $supplierId, array $productSupplierData): array

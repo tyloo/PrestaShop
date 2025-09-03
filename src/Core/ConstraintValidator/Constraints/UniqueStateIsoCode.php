@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,19 +49,13 @@ class UniqueStateIsoCode extends Constraint
      *
      * @var int|null
      */
-    public $excludeStateId = null;
+    public $excludeStateId;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequiredOptions()
     {
         return ['excludeStateId'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return UniqueStateIsoCodeValidator::class;

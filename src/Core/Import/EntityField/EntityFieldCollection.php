@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
      */
     private $entityFields = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function addEntityField(EntityFieldInterface $entityField)
     {
         $this->entityFields[] = $entityField;
@@ -50,9 +48,6 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequiredFields()
     {
         $requiredFields = [];
@@ -67,9 +62,6 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
         return $requiredFields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
         $array = [];
@@ -86,9 +78,6 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
         return $array;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function createFromArray(array $entityFields)
     {
         $collection = new self();
@@ -100,52 +89,34 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
         return $collection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetExists($offset): bool
     {
-        return array_key_exists($offset, $this->entityFields);
+        return \array_key_exists($offset, $this->entityFields);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->entityFields[$offset];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetSet($offset, $value): void
     {
         $this->entityFields[$offset] = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetUnset($offset): void
     {
         unset($this->entityFields[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->entityFields);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
-        return count($this->entityFields);
+        return \count($this->entityFields);
     }
 }

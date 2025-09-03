@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPage\Exception\CmsPageException;
 use PrestaShop\PrestaShop\Core\Domain\CmsPage\ValueObject\CmsPageId;
 use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\Exception\CmsPageCategoryException;
 
-/**
- * {@inheritdoc}
- */
 final class CmsPageFormDataHandler implements FormDataHandlerInterface
 {
     /**
@@ -43,9 +41,6 @@ final class CmsPageFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(CommandBusInterface $commandBus)
     {
         $this->commandBus = $commandBus;
@@ -54,17 +49,13 @@ final class CmsPageFormDataHandler implements FormDataHandlerInterface
     /**
      * Create object from form data.
      *
-     * @param array $data
-     *
      * @return int
      *
      * @throws CmsPageCategoryException
      */
     public function create(array $data)
     {
-        /**
-         * @var CmsPageId
-         */
+        /** @var CmsPageId $cmsPageId */
         $cmsPageId = $this->commandBus->handle(new AddCmsPageCommand(
             (int) $data['page_category_id'],
             $data['title'],
@@ -74,15 +65,13 @@ final class CmsPageFormDataHandler implements FormDataHandlerInterface
             $data['content'],
             $data['is_indexed_for_search'],
             $data['is_displayed'],
-            is_array($data['shop_association']) ? $data['shop_association'] : []
+            \is_array($data['shop_association']) ? $data['shop_association'] : []
         ));
 
         return $cmsPageId->getValue();
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageException
      * @throws CmsPageCategoryException
      */
@@ -95,9 +84,6 @@ final class CmsPageFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * @param EditCmsPageCommand $command
-     * @param array $data
-     *
      * @throws CmsPageCategoryException
      */
     private function fillCommandWithData(EditCmsPageCommand $command, array $data)

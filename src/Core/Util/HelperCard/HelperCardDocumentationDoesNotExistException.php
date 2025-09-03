@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Util\HelperCard;
 
 use PrestaShop\PrestaShop\Core\Exception\CoreException;
 
-/**
- * Class HelperCardDocumentationDoesNotExistException
- */
 class HelperCardDocumentationDoesNotExistException extends CoreException
 {
 }

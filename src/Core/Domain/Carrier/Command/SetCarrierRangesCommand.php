@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class SetCarrierRangesCommand
 
     public function __construct(
         int $carrierId,
-        /* @var array{
+        /** @var array{
          *     id_zone: int,
          *     range_from: float,
          *     range_to: float,
@@ -50,7 +51,7 @@ class SetCarrierRangesCommand
          * }[] $ranges,
          */
         array $ranges,
-        private readonly ShopConstraint $shopConstraint
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->carrierId = new CarrierId($carrierId);
         $this->ranges = new CarrierRangesCollection($ranges);

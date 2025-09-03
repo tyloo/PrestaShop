@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,25 +40,19 @@ final class CarriersCommandsBuilder implements ProductCommandsBuilderInterface
      */
     private $modifyAllNamePrefix;
 
-    /**
-     * @param string $modifyAllNamePrefix
-     */
     public function __construct(
-        string $modifyAllNamePrefix
+        string $modifyAllNamePrefix,
     ) {
         $this->modifyAllNamePrefix = $modifyAllNamePrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['shipping']['carriers'])) {
+        if (! isset($formData['shipping']['carriers'])) {
             return [];
         }
 
-        if (!empty($formData['shipping'][$this->modifyAllNamePrefix . 'carriers'])) {
+        if (! empty($formData['shipping'][$this->modifyAllNamePrefix . 'carriers'])) {
             $shopConstraint = ShopConstraint::allShops();
         } else {
             $shopConstraint = $singleShopConstraint;

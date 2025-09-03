@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -100,10 +101,6 @@ class CarrierFormDataProvider implements FormDataProviderInterface
 
     /**
      * Function to format ranges data.
-     *
-     * @param CarrierRangesCollection $carrierRangesCollection
-     *
-     * @return array
      */
     private function formatRangesData(CarrierRangesCollection $carrierRangesCollection): array
     {
@@ -120,19 +117,15 @@ class CarrierFormDataProvider implements FormDataProviderInterface
         }
 
         // Then, we remove duplicates and sort ranges by from value.
-        $ranges = array_unique($ranges, SORT_REGULAR);
+        $ranges = array_unique($ranges, \SORT_REGULAR);
         $from_values = array_column($ranges, 'from');
-        array_multisort($from_values, SORT_ASC, $ranges);
+        array_multisort($from_values, \SORT_ASC, $ranges);
 
         return ['data' => json_encode($ranges)];
     }
 
     /**
      * Function to format ranges costs data.
-     *
-     * @param CarrierRangesCollection $carrierRangesCollection
-     *
-     * @return array
      */
     private function formatRangesCostsData(EditableCarrier $carrier, CarrierRangesCollection $carrierRangesCollection): array
     {

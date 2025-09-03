@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,16 +46,12 @@ class Locale implements LocaleInterface
      * The locale code (simplified IETF tag syntax)
      * Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
      * eg: fr-FR, en-US.
-     *
-     * @var string
      */
     protected string $code;
 
     /**
      * Number formatter.
      * Used to format raw numbers in this locale context.
-     *
-     * @var NumberFormatter
      */
     protected NumberFormatter $numberFormatter;
 
@@ -71,24 +68,22 @@ class Locale implements LocaleInterface
     protected $priceSpecifications;
 
     /**
-     * Locale constructor.
-     *
-     * @param string $localeCode
-     *                           The locale code (simplified IETF tag syntax)
-     *                           Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
-     *                           eg: fr-FR, en-US
-     * @param NumberInterface $numberSpecification
-     *                                             Number specification used when formatting a number
+     * @param string           $localeCode
+     *                                              The locale code (simplified IETF tag syntax)
+     *                                              Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
+     *                                              eg: fr-FR, en-US
+     * @param NumberInterface  $numberSpecification
+     *                                              Number specification used when formatting a number
      * @param NumberCollection $priceSpecifications
      *                                              Collection of Price specifications (one per installed currency)
-     * @param NumberFormatter $formatter
-     *                                   This number formatter will use stored number / price specs
+     * @param NumberFormatter  $formatter
+     *                                              This number formatter will use stored number / price specs
      */
     public function __construct(
         string $localeCode,
         NumberInterface $numberSpecification,
         NumberCollection $priceSpecifications,
-        NumberFormatter $formatter
+        NumberFormatter $formatter,
     ) {
         $this->code = $localeCode;
         $this->numberSpecification = $numberSpecification;
@@ -100,8 +95,6 @@ class Locale implements LocaleInterface
      * Get this locale's code (simplified IETF tag syntax)
      * Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
      * eg: fr-FR, en-US.
-     *
-     * @return string
      */
     public function getCode(): string
     {
@@ -131,9 +124,9 @@ class Locale implements LocaleInterface
      * Format a number as a price.
      *
      * @param int|float|string $number
-     *                                 Number to be formatted as a price
-     * @param string $currencyCode
-     *                             Currency of the price
+     *                                       Number to be formatted as a price
+     * @param string           $currencyCode
+     *                                       Currency of the price
      *
      * @return string The formatted price
      *
@@ -148,28 +141,19 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * Get price specification
-     *
      * @param string $currencyCode Currency of the price
-     *
-     * @return NumberInterface
      */
     public function getPriceSpecification(string $currencyCode): NumberInterface
     {
         $currencyCode = (string) $currencyCode;
         $priceSpec = $this->priceSpecifications->get($currencyCode);
-        if (null === $priceSpec) {
+        if ($priceSpec === null) {
             throw new LocalizationException('Price specification not found for currency: "' . $currencyCode . '"');
         }
 
         return $priceSpec;
     }
 
-    /**
-     * Get number specification
-     *
-     * @return NumberInterface
-     */
     public function getNumberSpecification(): NumberInterface
     {
         return $this->numberSpecification;

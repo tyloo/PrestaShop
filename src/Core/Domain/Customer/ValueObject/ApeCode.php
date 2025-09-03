@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class ApeCode
      */
     public const PATTERN = '/^[0-9]{1,2}?\.?[0-9]{1,2}[a-zA-Z]{1}$/s';
 
-    /**
-     * @param mixed $code
-     */
     public function __construct($code)
     {
         $this->assertIsApeCode($code);
@@ -64,10 +62,10 @@ class ApeCode
 
     private function assertIsApeCode($code)
     {
-        if (!is_string($code)
-            || (!empty($code) && !((bool) preg_match(self::PATTERN, $code)))
+        if (! \is_string($code)
+            || (! empty($code) && ! ((bool) preg_match(self::PATTERN, $code)))
         ) {
-            throw new CustomerConstraintException(sprintf('Invalid ape code %s provided', var_export($code, true)), CustomerConstraintException::INVALID_APE_CODE);
+            throw new CustomerConstraintException(\sprintf('Invalid ape code %s provided', var_export($code, true)), CustomerConstraintException::INVALID_APE_CODE);
         }
     }
 }

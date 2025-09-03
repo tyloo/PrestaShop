@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,17 +49,11 @@ final class KpiRow implements KpiRowInterface
      */
     private $options;
 
-    /**
-     * @param array $options
-     */
     public function __construct(array $options = [])
     {
         $this->options = $options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addKpi(KpiInterface $kpi)
     {
         // setOptions() is optional & not part of interface to avoid BC break

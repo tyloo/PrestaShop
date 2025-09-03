@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,8 +47,6 @@ interface FormHandlerResultInterface
     public function isSubmitted();
 
     /**
-     * Get identifiable object id
-     *
      * @return int|mixed|null ID of identifiable object or null if it does not exist
      */
     public function getIdentifiableObjectId(): mixed;

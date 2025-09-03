@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,30 +40,21 @@ class GroupId implements GroupIdInterface
      */
     private $value;
 
-    /**
-     * @param int $groupId
-     */
     public function __construct(int $groupId)
     {
         $this->assertValueIsPositive($groupId);
         $this->value = $groupId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getValue(): int
     {
         return $this->value;
     }
 
-    /**
-     * @param int $value
-     */
     private function assertValueIsPositive(int $value): void
     {
-        if (0 >= $value) {
-            throw new GroupConstraintException(sprintf('Group id must be positive integer. "%s" given', $value), GroupConstraintException::INVALID_ID);
+        if ($value <= 0) {
+            throw new GroupConstraintException(\sprintf('Group id must be positive integer. "%s" given', $value), GroupConstraintException::INVALID_ID);
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -149,8 +150,6 @@ class EditWebserviceKeyCommand
     }
 
     /**
-     * @param array $permissions
-     *
      * @return self
      */
     public function setPermissions(array $permissions)

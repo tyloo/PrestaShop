@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,55 +36,37 @@ use PrestaShopBundle\Entity\Repository\FeatureFlagRepository;
 class DbLayer implements TypeLayerInterface
 {
     public function __construct(
-        protected readonly FeatureFlagRepository $featureFlagRepository
+        protected readonly FeatureFlagRepository $featureFlagRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isReadonly(): bool
     {
         // It's always editable via DB layer!
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getTypeName(): string
     {
         return FeatureFlagSettings::TYPE_DB;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed(string $featureFlagName): bool
     {
         // It's always possible via DB!
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(string $featureFlagName): bool
     {
         return $this->featureFlagRepository->isEnabled($featureFlagName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enable(string $featureFlagName): void
     {
         $this->featureFlagRepository->enable($featureFlagName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function disable(string $featureFlagName): void
     {
         $this->featureFlagRepository->disable($featureFlagName);

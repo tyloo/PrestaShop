@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,33 +42,20 @@ class ImageTypeQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     private DoctrineSearchCriteriaApplicator $searchCriteriaApplicator;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
+        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
 
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof ImageTypeFilters) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Expected %s, but got %s',
-                    ImageTypeFilters::class, get_class($searchCriteria)
-                )
-            );
+        if (! $searchCriteria instanceof ImageTypeFilters) {
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ImageTypeFilters::class, \get_class($searchCriteria)));
         }
 
         $queryBuilder = $this->getQueryBuilder($searchCriteria)
@@ -81,18 +69,10 @@ class ImageTypeQueryBuilder extends AbstractDoctrineQueryBuilder
         return $queryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof ImageTypeFilters) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Expected %s, but got %s',
-                    ImageTypeFilters::class, get_class($searchCriteria)
-                )
-            );
+        if (! $searchCriteria instanceof ImageTypeFilters) {
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ImageTypeFilters::class, \get_class($searchCriteria)));
         }
 
         return $this->getQueryBuilder($searchCriteria)
@@ -102,8 +82,6 @@ class ImageTypeQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get generic query builder.
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
@@ -113,10 +91,6 @@ class ImageTypeQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param SearchCriteriaInterface $criteria
-     */
     private function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $criteria): void
     {
         $allowedFilters = [
@@ -133,7 +107,7 @@ class ImageTypeQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($criteria->getFilters() as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 

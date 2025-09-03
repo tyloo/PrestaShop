@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,15 +69,6 @@ class ProductOptions
      */
     private $manufacturerId;
 
-    /**
-     * @param string $visibility
-     * @param bool $availableForOrder
-     * @param bool $onlineOnly
-     * @param bool $showPrice
-     * @param string $condition
-     * @param bool $showCondition
-     * @param int $manufacturerId
-     */
     public function __construct(
         string $visibility,
         bool $availableForOrder,
@@ -84,7 +76,7 @@ class ProductOptions
         bool $showPrice,
         string $condition,
         bool $showCondition,
-        int $manufacturerId
+        int $manufacturerId,
     ) {
         $this->visibility = $visibility;
         $this->availableForOrder = $availableForOrder;
@@ -95,57 +87,36 @@ class ProductOptions
         $this->manufacturerId = $manufacturerId;
     }
 
-    /**
-     * @return string
-     */
     public function getVisibility(): string
     {
         return $this->visibility;
     }
 
-    /**
-     * @return bool
-     */
     public function isAvailableForOrder(): bool
     {
         return $this->availableForOrder;
     }
 
-    /**
-     * @return bool
-     */
     public function isOnlineOnly(): bool
     {
         return $this->onlineOnly;
     }
 
-    /**
-     * @return bool
-     */
     public function showPrice(): bool
     {
         return $this->showPrice;
     }
 
-    /**
-     * @return string
-     */
     public function getCondition(): string
     {
         return $this->condition;
     }
 
-    /**
-     * @return bool
-     */
     public function showCondition(): bool
     {
         return $this->showCondition;
     }
 
-    /**
-     * @return int
-     */
     public function getManufacturerId(): int
     {
         return $this->manufacturerId;

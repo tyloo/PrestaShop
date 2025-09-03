@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,25 +53,16 @@ final class EmptyCategoryGridDefinitionFactory extends AbstractGridDefinitionFac
 {
     public const GRID_ID = 'empty_category';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('List of empty categories', [], 'Admin.Catalog.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -114,9 +106,6 @@ final class EmptyCategoryGridDefinitionFactory extends AbstractGridDefinitionFac
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -168,9 +157,6 @@ final class EmptyCategoryGridDefinitionFactory extends AbstractGridDefinitionFac
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

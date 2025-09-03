@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,5 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\Command\SwitchShipmentCarrierComm
  */
 interface SwitchShipmentCarrierHandlerInterface
 {
-    /**
-     * @param SwitchShipmentCarrierCommand $command
-     */
     public function handle(SwitchShipmentCarrierCommand $command): void;
 }

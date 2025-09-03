@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,25 +43,32 @@ use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
 #[AsCommandHandler]
 class GenerateThemeMailTemplatesHandler implements GenerateThemeMailTemplatesHandlerInterface
 {
-    /** @var LanguageRepositoryInterface */
+    /**
+     * @var LanguageRepositoryInterface
+     */
     private $languageRepository;
 
-    /** @var ThemeCatalogInterface */
+    /**
+     * @var ThemeCatalogInterface
+     */
     private $themeCatalog;
 
-    /** @var MailTemplateGenerator */
+    /**
+     * @var MailTemplateGenerator
+     */
     private $generator;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $defaultCoreMailsFolder;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $defaultModulesMailFolder;
 
     /**
-     * @param LanguageRepositoryInterface $languageRepository
-     * @param ThemeCatalogInterface $themeCatalog
-     * @param MailTemplateGenerator $generator
      * @param string $defaultCoreMailsFolder
      * @param string $defaultModulesMailFolder
      */
@@ -69,7 +77,7 @@ class GenerateThemeMailTemplatesHandler implements GenerateThemeMailTemplatesHan
         ThemeCatalogInterface $themeCatalog,
         MailTemplateGenerator $generator,
         $defaultCoreMailsFolder,
-        $defaultModulesMailFolder
+        $defaultModulesMailFolder,
     ) {
         $this->languageRepository = $languageRepository;
         $this->themeCatalog = $themeCatalog;
@@ -78,14 +86,11 @@ class GenerateThemeMailTemplatesHandler implements GenerateThemeMailTemplatesHan
         $this->defaultModulesMailFolder = $defaultModulesMailFolder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GenerateThemeMailTemplatesCommand $command)
     {
         $language = $this->languageRepository->getOneByLocaleOrIsoCode($command->getLanguage());
-        if (null === $language) {
-            throw new InvalidArgumentException(sprintf('Could not find Language for locale: %s', $command->getLanguage()));
+        if ($language === null) {
+            throw new InvalidArgumentException(\sprintf('Could not find Language for locale: %s', $command->getLanguage()));
         }
 
         /** @var ThemeInterface $theme */

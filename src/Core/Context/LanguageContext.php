@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class LanguageContext implements LanguageInterface, LocaleInterface
         protected readonly bool $isRTL,
         protected readonly string $dateFormat,
         protected readonly string $dateTimeFormat,
-        protected readonly LocaleInterface $localizationLocale
+        protected readonly LocaleInterface $localizationLocale,
     ) {
     }
 

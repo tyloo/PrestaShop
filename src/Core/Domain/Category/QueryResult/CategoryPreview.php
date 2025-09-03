@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,17 +54,11 @@ class CategoryPreview
      */
     private $image;
 
-    /**
-     * @param int $categoryId
-     * @param string $name
-     * @param string $breadcrumb
-     * @param string $imageUrl
-     */
     public function __construct(
         int $categoryId,
         string $name,
         string $breadcrumb,
-        string $imageUrl
+        string $imageUrl,
     ) {
         $this->categoryId = $categoryId;
         $this->name = $name;
@@ -71,33 +66,21 @@ class CategoryPreview
         $this->image = $imageUrl;
     }
 
-    /**
-     * @return int
-     */
     public function getCategoryId(): int
     {
         return $this->categoryId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getBreadcrumb(): string
     {
         return $this->breadcrumb;
     }
 
-    /**
-     * @return string
-     */
     public function getImage(): string
     {
         return $this->image;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,9 +61,8 @@ class InvalidOrderStateException extends OrderException
     public const INVALID_ID = 5;
 
     /**
-     * @param int $code
+     * @param int    $code
      * @param string $message
-     * @param Throwable|null $previous
      */
     public function __construct($code = 0, $message = '', ?Throwable $previous = null)
     {

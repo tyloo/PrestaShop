@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,23 +34,15 @@ use Doctrine\DBAL\Connection;
  */
 abstract class AbstractDoctrineQueryBuilder implements DoctrineQueryBuilderInterface
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     */
     public function __construct(
         protected readonly Connection $connection,
-        protected readonly string $dbPrefix
+        protected readonly string $dbPrefix,
     ) {
     }
 
     /**
      * Escape percent in query for LIKE query
      *      '20%' => '20\%'
-     *
-     * @param string $value
-     *
-     * @return string
      */
     protected function escapePercent(string $value): string
     {

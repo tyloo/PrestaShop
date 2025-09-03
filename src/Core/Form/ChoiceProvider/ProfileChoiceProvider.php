@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,17 +40,11 @@ final class ProfileChoiceProvider implements FormChoiceProviderInterface
      */
     private $profiles;
 
-    /**
-     * @param array $profiles
-     */
     public function __construct(array $profiles)
     {
         $this->profiles = $profiles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return FormChoiceFormatter::formatFormChoices(

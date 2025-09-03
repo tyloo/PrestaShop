@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ class RedirectTarget
     private int $value;
 
     /**
-     * @param int $value
-     *
      * @throws CategoryConstraintException
      */
     public function __construct(int $value)
@@ -70,10 +69,7 @@ class RedirectTarget
         }
 
         if ($value <= 0) {
-            throw new CategoryConstraintException(
-                sprintf('Invalid redirect target "%d". It cannot be less than or equal to 0', $value),
-                CategoryConstraintException::INVALID_REDIRECT_TARGET
-            );
+            throw new CategoryConstraintException(\sprintf('Invalid redirect target "%d". It cannot be less than or equal to 0', $value), CategoryConstraintException::INVALID_REDIRECT_TARGET);
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,9 +58,6 @@ class CurrencyReference extends AbstractDataLayer implements CurrencyDataLayerIn
         $this->isWritable = false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer)
     {
         $this->lowerDataLayer = $lowerLayer;
@@ -84,7 +82,7 @@ class CurrencyReference extends AbstractDataLayer implements CurrencyDataLayerIn
      */
     protected function doRead($currencyDataId)
     {
-        if (!$currencyDataId instanceof LocalizedCurrencyId) {
+        if (! $currencyDataId instanceof LocalizedCurrencyId) {
             throw new LocalizationException('$currencyDataId must be a CurrencyDataIdentifier object');
         }
 
@@ -116,8 +114,8 @@ class CurrencyReference extends AbstractDataLayer implements CurrencyDataLayerIn
      *
      * @param LocalizedCurrencyId $currencyDataId
      *                                            The LocaleData object identifier
-     * @param CurrencyData $currencyData
-     *                                   The CurrencyData object to be written
+     * @param CurrencyData        $currencyData
+     *                                            The CurrencyData object to be written
      */
     protected function doWrite($currencyDataId, $currencyData)
     {

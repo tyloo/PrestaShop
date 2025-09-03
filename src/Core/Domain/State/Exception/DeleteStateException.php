@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,30 +49,24 @@ class DeleteStateException extends StateException
     public const FAILED_BULK_DELETE = 2;
 
     /**
-     * @param StateIdInterface $stateId
-     * @param Throwable|null $previous
-     *
      * @return static
      */
     public static function createDeleteFailure(StateIdInterface $stateId, ?Throwable $previous = null): self
     {
         return new static(
-            sprintf('Cannot delete state with id "%d"', $stateId->getValue()),
+            \sprintf('Cannot delete state with id "%d"', $stateId->getValue()),
             static::FAILED_DELETE,
             $previous
         );
     }
 
     /**
-     * @param StateId $stateId
-     * @param Throwable|null $previous
-     *
      * @return static
      */
     public static function createBulkDeleteFailure(StateId $stateId, ?Throwable $previous = null): self
     {
         return new static(
-            sprintf('An error occurred when deleting state with id "%d"', $stateId->getValue()),
+            \sprintf('An error occurred when deleting state with id "%d"', $stateId->getValue()),
             static::FAILED_BULK_DELETE,
             $previous
         );

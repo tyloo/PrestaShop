@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,7 @@ use PrestaShopBundle\Entity\Repository\ImageTypeRepository;
 class ImageTypeChoiceProvider implements FormChoiceProviderInterface
 {
     public function __construct(
-        private readonly ImageTypeRepository $imageTypeRepository
+        private readonly ImageTypeRepository $imageTypeRepository,
     ) {
     }
 

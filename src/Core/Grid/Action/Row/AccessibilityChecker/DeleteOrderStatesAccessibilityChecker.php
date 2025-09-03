@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,18 +29,12 @@ declare(strict_types=1);
 
 namespace PrestaShop\PrestaShop\Core\Grid\Action\Row\AccessibilityChecker;
 
-/**
- * Class DeleteOrderStatesAccessibilityChecker
- */
 class DeleteOrderStatesAccessibilityChecker implements AccessibilityCheckerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isGranted(array $record)
     {
         if (isset($record['unremovable'])) {
-            return !$record['unremovable'];
+            return ! $record['unremovable'];
         }
 
         return false;

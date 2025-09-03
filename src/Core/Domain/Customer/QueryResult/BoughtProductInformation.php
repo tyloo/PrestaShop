@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,16 +53,16 @@ class BoughtProductInformation
     private $boughtQuantity;
 
     /**
-     * @param int $orderId
+     * @param int    $orderId
      * @param string $boughtDate
      * @param string $productName
-     * @param int $boughtQuantity
+     * @param int    $boughtQuantity
      */
     public function __construct(
         $orderId,
         $boughtDate,
         $productName,
-        $boughtQuantity
+        $boughtQuantity,
     ) {
         $this->orderId = $orderId;
         $this->boughtDate = $boughtDate;

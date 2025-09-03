@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,26 +52,23 @@ class FileUploader implements FileUploaderInterface
 
     /**
      * @param string $downloadDirectory Server path where the file will be uploaded
-     * @param int $maximumSize Maximum accepted file size
+     * @param int    $maximumSize       Maximum accepted file size
      */
     public function __construct(
         string $downloadDirectory,
-        int $maximumSize
+        int $maximumSize,
     ) {
         $this->downloadDirectory = $downloadDirectory;
         $this->maximumSize = $maximumSize;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function upload($file): array
     {
-        if (is_array($file)) {
+        if (\is_array($file)) {
             return $this->uploadFromHttpPost($file);
         }
 
-        if (is_string($file)) {
+        if (\is_string($file)) {
             return $this->uploadFromBinaryFile($file);
         }
 
@@ -80,14 +78,12 @@ class FileUploader implements FileUploaderInterface
     /**
      * Validate file size
      *
-     * @param array $file
-     *
      * @throws InvalidFileException
      * @throws MaximumSizeExceededException
      */
     protected function validateSize(array $file): void
     {
-        if (!isset($file['size'])) {
+        if (! isset($file['size'])) {
             throw new InvalidFileException();
         }
 
@@ -99,29 +95,25 @@ class FileUploader implements FileUploaderInterface
     /**
      * Validate if file is an uploaded file
      *
-     * @param array $file
-     *
      * @throws InvalidFileException
      * @throws FileUploadException
      */
     protected function validateIsUploadedFile(array $file): void
     {
-        if (!isset($file['tmp_name'])
-            || !isset($file['type'])
-            || !isset($file['name'])
+        if (! isset($file['tmp_name'])
+            || ! isset($file['type'])
+            || ! isset($file['name'])
         ) {
             throw new InvalidFileException();
         }
 
-        if (!is_uploaded_file($file['tmp_name'])) {
+        if (! is_uploaded_file($file['tmp_name'])) {
             throw new FileUploadException();
         }
     }
 
     /**
      * Generate file name from uniqid
-     *
-     * @return string
      */
     protected function generateFileName(): string
     {
@@ -147,7 +139,7 @@ class FileUploader implements FileUploaderInterface
         $this->validateIsUploadedFile($file);
 
         $fileName = $this->generateFileName();
-        if (!move_uploaded_file($file['tmp_name'], $this->downloadDirectory . $fileName)) {
+        if (! move_uploaded_file($file['tmp_name'], $this->downloadDirectory . $fileName)) {
             throw new FileUploadException();
         }
 
@@ -171,7 +163,7 @@ class FileUploader implements FileUploaderInterface
     {
         $file = [
             // It returns the number of bytes rather than the number of characters
-            'size' => strlen($content),
+            'size' => \strlen($content),
         ];
         $this->validateSize($file);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ interface FormBuilderInterface
     /**
      * Create new form.
      *
-     * @param array $data
-     * @param array $options
-     *
      * @return FormInterface
      */
     public function getForm(array $data = [], array $options = []);
@@ -47,8 +45,6 @@ interface FormBuilderInterface
      * Create new form for given object.
      *
      * @param int|string $id
-     * @param array $data
-     * @param array $options
      *
      * @return FormInterface
      */

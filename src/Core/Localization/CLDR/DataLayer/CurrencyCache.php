@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,9 +57,6 @@ final class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayer
         $this->cache = $cache;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer)
     {
         $this->lowerDataLayer = $lowerLayer;
@@ -86,12 +84,9 @@ final class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayer
             : null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function write($id, $data)
     {
-        if (!($data instanceof CurrencyData)) {
+        if (! ($data instanceof CurrencyData)) {
             throw new LocalizationException('$data must be an instance of ' . CurrencyData::class);
         }
 
@@ -105,8 +100,8 @@ final class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayer
      *
      * @param LocalizedCurrencyId $currencyDataId
      *                                            The data object identifier
-     * @param CurrencyData $data
-     *                           The data object to be written
+     * @param CurrencyData        $data
+     *                                            The data object to be written
      *
      * @throws DataLayerException
      *                            When write fails
@@ -118,7 +113,7 @@ final class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayer
 
         $saved = $this->cache->save($cacheItem);
 
-        if (!$saved) {
+        if (! $saved) {
             throw new DataLayerException('Unable to persist data in cache data layer');
         }
     }

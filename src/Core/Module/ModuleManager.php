@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,9 @@ use Validate as LegacyValidate;
  */
 class ModuleManager implements ModuleManagerInterface
 {
-    /** @var Filesystem */
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
 
     public function __construct(
@@ -74,12 +77,8 @@ class ModuleManager implements ModuleManagerInterface
 
     public function upload(string $source): string
     {
-        if (!$this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__)) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to upload modules.',
-                [],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__)) {
+            throw new Exception($this->translator->trans('You are not allowed to upload modules.', [], 'Admin.Modules.Notification'));
         }
 
         $handler = $this->sourceFactory->getHandler($source);
@@ -93,12 +92,8 @@ class ModuleManager implements ModuleManagerInterface
 
     public function install(string $name, $source = null): bool
     {
-        if (!$this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__)) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to install modules.',
-                [],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__)) {
+            throw new Exception($this->translator->trans('You are not allowed to install modules.', [], 'Admin.Modules.Notification'));
         }
 
         if ($this->isInstalled($name)) {
@@ -127,11 +122,11 @@ class ModuleManager implements ModuleManagerInterface
 
     public function postInstall(string $name): bool
     {
-        if (!$this->isInstalled($name)) {
+        if (! $this->isInstalled($name)) {
             return false;
         }
 
-        if (!$this->moduleDataProvider->isOnDisk($name)) {
+        if (! $this->moduleDataProvider->isOnDisk($name)) {
             return false;
         }
 
@@ -147,12 +142,8 @@ class ModuleManager implements ModuleManagerInterface
 
     public function uninstall(string $name, bool $deleteFiles = false): bool
     {
-        if (!$this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to uninstall the module %module%.',
-                ['%module%' => $name],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
+            throw new Exception($this->translator->trans('You are not allowed to uninstall the module %module%.', ['%module%' => $name], 'Admin.Modules.Notification'));
         }
 
         $this->assertIsInstalled($name);
@@ -174,12 +165,8 @@ class ModuleManager implements ModuleManagerInterface
 
     public function delete(string $name): bool
     {
-        if (!$this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to delete the module %module%.',
-                ['%module%' => $name],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
+            throw new Exception($this->translator->trans('You are not allowed to delete the module %module%.', ['%module%' => $name], 'Admin.Modules.Notification'));
         }
 
         $module = $this->moduleRepository->getModule($name);
@@ -194,12 +181,8 @@ class ModuleManager implements ModuleManagerInterface
 
     public function upgrade(string $name, $source = null): bool
     {
-        if (!$this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to update the module %module%.',
-                ['%module%' => $name],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
+            throw new Exception($this->translator->trans('You are not allowed to update the module %module%.', ['%module%' => $name], 'Admin.Modules.Notification'));
         }
 
         $this->assertIsInstalled($name);
@@ -223,12 +206,8 @@ class ModuleManager implements ModuleManagerInterface
 
     public function enable(string $name): bool
     {
-        if (!$this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to enable the module %module%.',
-                ['%module%' => $name],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
+            throw new Exception($this->translator->trans('You are not allowed to enable the module %module%.', ['%module%' => $name], 'Admin.Modules.Notification'));
         }
 
         $this->assertIsInstalled($name);
@@ -244,12 +223,8 @@ class ModuleManager implements ModuleManagerInterface
 
     public function disable(string $name): bool
     {
-        if (!$this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to disable the module %module%.',
-                ['%module%' => $name],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->adminModuleDataProvider->isAllowedAccess(__FUNCTION__, $name)) {
+            throw new Exception($this->translator->trans('You are not allowed to disable the module %module%.', ['%module%' => $name], 'Admin.Modules.Notification'));
         }
 
         $this->assertIsInstalled($name);
@@ -266,14 +241,10 @@ class ModuleManager implements ModuleManagerInterface
     public function reset(string $name, bool $keepData = false): bool
     {
         if (
-            !$this->adminModuleDataProvider->isAllowedAccess('install')
-            || !$this->adminModuleDataProvider->isAllowedAccess('uninstall', $name)
+            ! $this->adminModuleDataProvider->isAllowedAccess('install')
+            || ! $this->adminModuleDataProvider->isAllowedAccess('uninstall', $name)
         ) {
-            throw new Exception($this->translator->trans(
-                'You are not allowed to reset the module %module%.',
-                ['%module%' => $name],
-                'Admin.Modules.Notification'
-            ));
+            throw new Exception($this->translator->trans('You are not allowed to reset the module %module%.', ['%module%' => $name], 'Admin.Modules.Notification'));
         }
 
         $this->assertIsInstalled($name);
@@ -329,7 +300,7 @@ class ModuleManager implements ModuleManagerInterface
             );
 
             $validityErrors = [];
-            if (!LegacyValidate::isModuleName($name)) {
+            if (! LegacyValidate::isModuleName($name)) {
                 $validityErrors[] = $name . ' module name is invalid';
             } else {
                 try {
@@ -339,7 +310,7 @@ class ModuleManager implements ModuleManagerInterface
                 }
             }
 
-            if (!empty($validityErrors)) {
+            if (! empty($validityErrors)) {
                 $error .= ' Errors details: ' . implode(', ', $validityErrors);
             }
         }
@@ -350,27 +321,23 @@ class ModuleManager implements ModuleManagerInterface
     /**
      * Load the module catalog in the translator (initial load only includes modules present at the beginning of the process,
      * so we manually add it in case the module has just been uploaded)
-     *
-     * @param string $moduleName
-     *
-     * @return void
      */
     protected function updateTranslatorCatalogues(string $moduleName): void
     {
         if ($this->translator instanceof TranslatorBagInterface) {
-            $translationFolder = $this->modulesDir . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'translations';
+            $translationFolder = $this->modulesDir . \DIRECTORY_SEPARATOR . $moduleName . \DIRECTORY_SEPARATOR . 'translations';
             if (is_dir($translationFolder)) {
                 foreach ($this->getInstalledLocales() as $locale) {
                     $catalogue = $this->translator->getCatalogue($locale);
-                    $languageFolder = $translationFolder . DIRECTORY_SEPARATOR . $locale;
-                    if (!is_dir($languageFolder)) {
+                    $languageFolder = $translationFolder . \DIRECTORY_SEPARATOR . $locale;
+                    if (! is_dir($languageFolder)) {
                         continue;
                     }
 
                     $finder = new Finder();
                     foreach ($finder->files()->in($languageFolder) as $xlfFile) {
                         $fileParts = explode('.', $xlfFile->getFilename());
-                        if (count($fileParts) === 3 && $fileParts[count($fileParts) - 1] === 'xlf') {
+                        if (\count($fileParts) === 3 && $fileParts[\count($fileParts) - 1] === 'xlf') {
                             $catalogueDomain = $fileParts[0];
                             $catalogue->addCatalogue($this->xliffFileLoader->load($xlfFile->getRealPath(), $locale, $catalogueDomain));
                         }
@@ -398,7 +365,7 @@ class ModuleManager implements ModuleManagerInterface
         $module_list = LegacyModule::getModulesOnDisk();
 
         foreach ($module_list as $module) {
-            if ($module->name != $name) {
+            if ($module->name !== $name) {
                 continue;
             }
 
@@ -408,7 +375,7 @@ class ModuleManager implements ModuleManagerInterface
 
                 LegacyModule::upgradeModuleVersion($name, $module->version);
 
-                return !count($legacy_instance->getErrors());
+                return ! \count($legacy_instance->getErrors());
             }
 
             return true;
@@ -419,12 +386,8 @@ class ModuleManager implements ModuleManagerInterface
 
     private function assertIsInstalled(string $name): void
     {
-        if (!$this->isInstalled($name)) {
-            throw new Exception($this->translator->trans(
-                'The module %module% must be installed first',
-                ['%module%' => $name],
-                'Admin.Modules.Notification'
-            ));
+        if (! $this->isInstalled($name)) {
+            throw new Exception($this->translator->trans('The module %module% must be installed first', ['%module%' => $name], 'Admin.Modules.Notification'));
         }
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,13 +56,6 @@ class GetCatalogPriceRuleListForProduct
     private $offset;
 
     /**
-     * GetCatalogPriceRuleListForProduct constructor.
-     *
-     * @param int $productId
-     * @param int $langId
-     * @param int|null $limit
-     * @param int|null $offset
-     *
      * @throws ProductConstraintException
      */
     public function __construct(int $productId, int $langId, ?int $limit = null, ?int $offset = null)
@@ -72,33 +66,21 @@ class GetCatalogPriceRuleListForProduct
         $this->offset = $offset;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLangId(): LanguageId
     {
         return $this->langId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLimit(): ?int
     {
         return $this->limit;
     }
 
-    /**
-     * @return int|null
-     */
     public function getOffset(): ?int
     {
         return $this->offset;

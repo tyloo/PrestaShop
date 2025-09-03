@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class GetSearchEngineForEditing
     private $searchEngineId;
 
     /**
-     * @param int $searchEngineId
-     *
      * @throws SearchEngineException
      */
     public function __construct(int $searchEngineId)
@@ -51,9 +50,6 @@ class GetSearchEngineForEditing
         $this->searchEngineId = new SearchEngineId($searchEngineId);
     }
 
-    /**
-     * @return SearchEngineId
-     */
     public function getSearchEngineId(): SearchEngineId
     {
         return $this->searchEngineId;

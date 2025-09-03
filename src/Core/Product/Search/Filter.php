@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -126,8 +127,8 @@ class Filter
     }
 
     /**
-     * @param string $name the filter property name
-     * @param mixed $value the filter property value
+     * @param string $name  the filter property name
+     * @param mixed  $value the filter property value
      *
      * @return $this
      */
@@ -145,7 +146,7 @@ class Filter
      */
     public function getProperty($name)
     {
-        if (!array_key_exists($name, $this->properties)) {
+        if (! \array_key_exists($name, $this->properties)) {
             return null;
         }
 
@@ -153,8 +154,6 @@ class Filter
     }
 
     /**
-     * @param mixed $value
-     *
      * @return $this
      */
     public function setValue($value)
@@ -164,9 +163,6 @@ class Filter
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getValue()
     {
         return $this->value;

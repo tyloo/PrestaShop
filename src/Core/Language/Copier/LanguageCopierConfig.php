@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,33 +66,21 @@ final class LanguageCopierConfig implements LanguageCopierConfigInterface
         $this->languageTo = $languageTo;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getThemeFrom()
     {
         return $this->themeFrom;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLanguageFrom()
     {
         return $this->languageFrom;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getThemeTo()
     {
         return $this->themeTo;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLanguageTo()
     {
         return $this->languageTo;

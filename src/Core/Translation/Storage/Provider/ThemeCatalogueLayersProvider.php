@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -103,16 +104,6 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
      */
     private $moduleCatalogueProviderFactory;
 
-    /**
-     * @param ModuleCatalogueProviderFactory $moduleCatalogueProviderFactory
-     * @param CatalogueLayersProviderInterface $coreFrontProvider
-     * @param DatabaseTranslationLoader $databaseTranslationLoader
-     * @param ThemeExtractor $themeExtractor
-     * @param ThemeRepository $themeRepository
-     * @param Filesystem $filesystem
-     * @param string $themeResourcesDir
-     * @param string $themeName
-     */
     public function __construct(
         ModuleCatalogueProviderFactory $moduleCatalogueProviderFactory,
         CatalogueLayersProviderInterface $coreFrontProvider,
@@ -121,7 +112,7 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
         ThemeRepository $themeRepository,
         Filesystem $filesystem,
         string $themeResourcesDir,
-        string $themeName
+        string $themeName,
     ) {
         $this->databaseTranslationLoader = $databaseTranslationLoader;
         $this->moduleCatalogueProviderFactory = $moduleCatalogueProviderFactory;
@@ -135,12 +126,9 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
         $this->assertThemeIsValid();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultCatalogue(
         string $locale,
-        bool $refreshCache = false
+        bool $refreshCache = false,
     ): MessageCatalogue {
         // Extracts wordings from the theme's templates
         if ($this->defaultCatalogue === null) {
@@ -151,8 +139,6 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
     }
 
     /**
-     * @param string $locale
-     *
      * @return MessageCatalogue
      *
      * The **file** translated catalogue for a theme other than classic corresponds
@@ -181,11 +167,6 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
         return $coreCatalogue;
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return MessageCatalogue
-     */
     public function getUserTranslatedCatalogue(string $locale): MessageCatalogue
     {
         return (new UserTranslatedCatalogueFinder(
@@ -203,22 +184,19 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
     {
         try {
             $theme = $this->themeRepository->getInstanceByName($this->themeName);
-            if (!$theme instanceof Theme) {
+            if (! $theme instanceof Theme) {
                 throw new InvalidThemeException();
             }
             $this->theme = $theme;
         } catch (Exception $e) {
-            throw new RuntimeException(sprintf('The theme "%s" doesn\'t exist', $this->themeName), 0, $e);
+            throw new RuntimeException(\sprintf('The theme "%s" doesn\'t exist', $this->themeName), 0, $e);
         }
     }
 
-    /**
-     * @return string
-     */
     private function getResourceDirectory(): string
     {
-        $resourceDirectory = implode(DIRECTORY_SEPARATOR, [
-            rtrim($this->themeResourcesDir, DIRECTORY_SEPARATOR),
+        $resourceDirectory = implode(\DIRECTORY_SEPARATOR, [
+            rtrim($this->themeResourcesDir, \DIRECTORY_SEPARATOR),
             $this->themeName,
             'translations',
         ]);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,7 +77,7 @@ class TermsAndConditions
      */
     public function setText($rawText)
     {
-        $links = func_get_args();
+        $links = \func_get_args();
         array_shift($links);
 
         $this->links = $links;
@@ -103,7 +104,7 @@ class TermsAndConditions
                 return $textToReplace;
             }
 
-            $replacement = sprintf(
+            $replacement = \sprintf(
                 '<a href="%s" id="%s">%s</a>',
                 $this->links[$index],
                 $this->createLinkId($index),

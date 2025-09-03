@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ namespace PrestaShop\PrestaShop\Core\Form\IdentifiableObject\OptionProvider;
 
 class CombinationFormOptionsProvider implements FormOptionsProviderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getOptions(int $id, array $data): array
     {
         return [
@@ -40,9 +38,6 @@ class CombinationFormOptionsProvider implements FormOptionsProviderInterface
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultOptions(array $data): array
     {
         return [];

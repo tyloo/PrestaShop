@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,13 +45,10 @@ use PrestaShopBundle\Entity\Repository\ImageTypeRepository;
 class BulkDeleteImageTypeHandler extends AbstractBulkCommandHandler implements BulkDeleteImageTypeHandlerInterface
 {
     public function __construct(
-        private readonly ImageTypeRepository $imageTypeRepository
+        private readonly ImageTypeRepository $imageTypeRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteImageTypeCommand $command): void
     {
         $this->handleBulkAction($command->getImageTypeIds(), ImageTypeException::class);
@@ -66,9 +64,6 @@ class BulkDeleteImageTypeHandler extends AbstractBulkCommandHandler implements B
 
     /**
      * @param ImageTypeId $id
-     * @param mixed $command
-     *
-     * @return void
      *
      * @throws ImageTypeNotFoundException
      */
@@ -76,8 +71,8 @@ class BulkDeleteImageTypeHandler extends AbstractBulkCommandHandler implements B
     {
         $imageType = $this->imageTypeRepository->find($id->getValue());
 
-        if (null === $imageType) {
-            throw new ImageTypeNotFoundException(sprintf('Unable to find image type with id "%d" for deletion', $id->getValue()));
+        if ($imageType === null) {
+            throw new ImageTypeNotFoundException(\sprintf('Unable to find image type with id "%d" for deletion', $id->getValue()));
         }
 
         $this->imageTypeRepository->delete($imageType);

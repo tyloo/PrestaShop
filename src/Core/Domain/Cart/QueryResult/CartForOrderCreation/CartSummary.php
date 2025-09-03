@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,17 +32,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
  */
 class CartSummary
 {
-    /**
-     * @param string $totalProductsPrice
-     * @param string $totalDiscount
-     * @param string $totalShippingPrice
-     * @param string $totalShippingWithoutTaxes
-     * @param string $totalTaxes
-     * @param string $totalPriceWithTaxes
-     * @param string $totalPriceWithoutTaxes
-     * @param string $orderMessage
-     * @param string $processOrderLink
-     */
     public function __construct(
         private string $totalProductsPrice,
         private string $totalDiscount,
@@ -55,9 +45,6 @@ class CartSummary
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getTotalProductsPrice(): string
     {
         return $this->totalProductsPrice;

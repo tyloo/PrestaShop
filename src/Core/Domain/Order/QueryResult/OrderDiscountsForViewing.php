@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,7 +31,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 
 class OrderDiscountsForViewing
 {
-    /** @var OrderDiscountForViewing[] */
+    /**
+     * @var OrderDiscountForViewing[]
+     */
     private $discounts = [];
 
     /**
@@ -51,9 +54,6 @@ class OrderDiscountsForViewing
         return $this->discounts;
     }
 
-    /**
-     * @param OrderDiscountForViewing $discount
-     */
     private function addDiscount(OrderDiscountForViewing $discount): void
     {
         $this->discounts[] = $discount;

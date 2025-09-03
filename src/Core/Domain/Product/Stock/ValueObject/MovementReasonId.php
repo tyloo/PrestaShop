@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,8 +50,6 @@ class MovementReasonId
     private $value;
 
     /**
-     * @param int $movementReasonId
-     *
      * @throws MovementReasonConstraintException
      */
     public function __construct(int $movementReasonId)
@@ -60,24 +59,15 @@ class MovementReasonId
         $this->value = $movementReasonId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->value;
     }
 
-    /**
-     * @param int $value
-     */
     private function assertIsGreaterThanZero(int $value): void
     {
-        if (0 >= $value) {
-            throw new MovementReasonConstraintException(
-                sprintf('Stock MovementReasonId %s is invalid.', $value),
-                MovementReasonConstraintException::INVALID_ID
-            );
+        if ($value <= 0) {
+            throw new MovementReasonConstraintException(\sprintf('Stock MovementReasonId %s is invalid.', $value), MovementReasonConstraintException::INVALID_ID);
         }
     }
 }

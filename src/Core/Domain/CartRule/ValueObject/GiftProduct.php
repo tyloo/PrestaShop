@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,10 +45,6 @@ class GiftProduct
      */
     private $combinationId;
 
-    /**
-     * @param int $productId
-     * @param int|null $combinationId
-     */
     public function __construct(int $productId, ?int $combinationId = null)
     {
         $this->productId = new ProductId($productId);
@@ -56,17 +53,11 @@ class GiftProduct
         }
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return CombinationId|null
-     */
     public function getCombinationId(): ?CombinationId
     {
         return $this->combinationId;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -136,13 +137,10 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
         $this->legacyContextCookie = $legacyContextCookie;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         // Super admins have access to all shops and that cannot be changed by the user.
-        if ($data['profile'] == $this->superAdminProfileId) {
+        if ($data['profile'] === $this->superAdminProfileId) {
             $data['shop_association'] = $this->defaultShopAssociation;
         }
 
@@ -165,16 +163,13 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
 
         /** @var UploadedFile|null $uploadedAvatar */
         $uploadedAvatar = $data['avatarUrl'] ?? null;
-        if (!empty($uploadedAvatar) && $uploadedAvatar instanceof UploadedFile) {
+        if (! empty($uploadedAvatar) && $uploadedAvatar instanceof UploadedFile) {
             $this->imageUploader->upload($employeeId->getValue(), $uploadedAvatar);
         }
 
         return $employeeId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data)
     {
         $command = (new EditEmployeeCommand($id))
@@ -218,7 +213,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
             // Update the token user so that it is serialized and its data match the updated DB employee
             $token = $this->tokenStorage->getToken();
             $tokenUser = $token->getUser();
-            if ($tokenUser instanceof EquatableInterface && !$tokenUser->isEqualTo($freshEmployee)) {
+            if ($tokenUser instanceof EquatableInterface && ! $tokenUser->isEqualTo($freshEmployee)) {
                 $token->setUser($freshEmployee);
                 $this->tokenStorage->setToken($token);
 
@@ -262,7 +257,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
      * Asserts if given password is the same as employee's password.
      *
      * @param string $plainPassword
-     * @param int $employeeId
+     * @param int    $employeeId
      *
      * @throws EmployeeConstraintException
      */
@@ -270,7 +265,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
     {
         $oldPassword = $this->employeeDataProvider->getEmployeeHashedPassword($employeeId);
 
-        if (!$this->hashing->checkHash($plainPassword, $oldPassword)) {
+        if (! $this->hashing->checkHash($plainPassword, $oldPassword)) {
             throw new EmployeeConstraintException('Old and new passwords do not match.', EmployeeConstraintException::INCORRECT_PASSWORD);
         }
     }
@@ -278,19 +273,17 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
     /**
      * Checks if all required fields are present in form data for changing the password.
      *
-     * @param array $formData
-     *
      * @return bool
      */
     private function shouldChangePassword(array $formData)
     {
-        if (!isset($formData['change_password'])) {
+        if (! isset($formData['change_password'])) {
             return false;
         }
 
         return
-            null !== $formData['change_password']['old_password']
-            && null !== $formData['change_password']['new_password']
+            $formData['change_password']['old_password'] !== null
+            && $formData['change_password']['new_password'] !== null
         ;
     }
 }

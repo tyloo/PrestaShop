@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ class StockId
     private $stockId;
 
     /**
-     * @param int $stockId
-     *
      * @throws ProductStockConstraintException
      */
     public function __construct(int $stockId)
@@ -52,24 +51,15 @@ class StockId
         $this->stockId = $stockId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->stockId;
     }
 
-    /**
-     * @param int $stockId
-     */
     private function assertIsGreaterThanZero(int $stockId): void
     {
-        if (0 > $stockId) {
-            throw new ProductStockConstraintException(
-                sprintf('Stock id %s is invalid. Stock id must be number that is greater than zero.', var_export($stockId, true)),
-                ProductStockConstraintException::INVALID_ID
-            );
+        if ($stockId < 0) {
+            throw new ProductStockConstraintException(\sprintf('Stock id %s is invalid. Stock id must be number that is greater than zero.', var_export($stockId, true)), ProductStockConstraintException::INVALID_ID);
         }
     }
 }

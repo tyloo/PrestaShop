@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class EditableOrderReturnState
     public function __construct(
         OrderReturnStateId $orderStateId,
         array $name,
-        string $color
+        string $color,
     ) {
         $this->orderReturnStateId = $orderStateId;
         $this->localizedNames = $name;

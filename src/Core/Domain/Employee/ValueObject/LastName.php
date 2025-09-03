@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,8 +72,8 @@ class LastName
     {
         $matchesLastNamePattern = preg_match('/^[^0-9!<>,;?=+()@#"°{}_$%:¤|]*$/u', stripslashes($lastName));
 
-        if (!$matchesLastNamePattern) {
-            throw new EmployeeConstraintException(sprintf('Employee last name %s is invalid', var_export($lastName, true)), EmployeeConstraintException::INVALID_LAST_NAME);
+        if (! $matchesLastNamePattern) {
+            throw new EmployeeConstraintException(\sprintf('Employee last name %s is invalid', var_export($lastName, true)), EmployeeConstraintException::INVALID_LAST_NAME);
         }
     }
 
@@ -83,10 +84,10 @@ class LastName
      */
     private function assertLastNameDoesNotExceedAllowedLength($lastName)
     {
-        $lastName = html_entity_decode($lastName, ENT_COMPAT, 'UTF-8');
+        $lastName = html_entity_decode($lastName, \ENT_COMPAT, 'UTF-8');
 
-        if (self::MAX_LENGTH < mb_strlen($lastName, 'UTF-8')) {
-            throw new EmployeeConstraintException(sprintf('Employee last name is too long. Max allowed length is %s', self::MAX_LENGTH), EmployeeConstraintException::INVALID_LAST_NAME);
+        if (mb_strlen($lastName, 'UTF-8') > self::MAX_LENGTH) {
+            throw new EmployeeConstraintException(\sprintf('Employee last name is too long. Max allowed length is %s', self::MAX_LENGTH), EmployeeConstraintException::INVALID_LAST_NAME);
         }
     }
 }

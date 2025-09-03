@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -78,7 +79,7 @@ class TranslationCatalogueExporter
         XliffFileDumper $dumper,
         Filesystem $filesystem,
         ZipManager $zipManager,
-        string $exportDir
+        string $exportDir,
     ) {
         $this->translationCatalogueBuilder = $translationCatalogueBuilder;
         $this->providerDefinitionFactory = $providerDefinitionFactory;
@@ -102,9 +103,6 @@ class TranslationCatalogueExporter
      *   ...
      * ]
      *
-     * @param array $selections
-     * @param string $locale
-     *
      * @return string The zip file with catalogues exported
      *
      * @throws TranslationFilesNotFoundException
@@ -117,7 +115,7 @@ class TranslationCatalogueExporter
 
         // Create directory, where we will do our exports, if it doesn't exist
         // This is var/cache/<env>/export
-        if (!$this->filesystem->exists($this->exportDir)) {
+        if (! $this->filesystem->exists($this->exportDir)) {
             $this->filesystem->mkdir($this->exportDir);
         }
 
@@ -126,12 +124,12 @@ class TranslationCatalogueExporter
 
         // Create our working folder, this is a temporary folder inside var/cache/<env>/export
         $workingFolder = $this->exportDir . '/' . $exportIdentifier;
-        if (!$this->filesystem->exists($workingFolder)) {
+        if (! $this->filesystem->exists($workingFolder)) {
             $this->filesystem->mkdir($workingFolder);
         }
 
         // Prepare the name of the final zip file we will return
-        $zipFilename = sprintf('%s/translations_export_%s.zip', $this->exportDir, $locale);
+        $zipFilename = \sprintf('%s/translations_export_%s.zip', $this->exportDir, $locale);
 
         // Dump all XLF files into var/cache/<env>/export/<exportIdentifier>/<locale>
         foreach ($selections as $selection) {
@@ -149,7 +147,7 @@ class TranslationCatalogueExporter
                 [
                     'path' => $workingFolder,
                     'default_locale' => $locale,
-                    'root_dir' => _PS_ROOT_DIR_ . DIRECTORY_SEPARATOR,
+                    'root_dir' => _PS_ROOT_DIR_ . \DIRECTORY_SEPARATOR,
                     'split_files' => false,
                 ]
             );
@@ -174,18 +172,18 @@ class TranslationCatalogueExporter
      * @throws Exception
      */
     private function validateParameters(
-        array $selections
+        array $selections,
     ): void {
         foreach ($selections as $selection) {
-            if (!in_array($selection['type'], ProviderDefinitionInterface::ALLOWED_EXPORT_TYPES, true)) {
+            if (! \in_array($selection['type'], ProviderDefinitionInterface::ALLOWED_EXPORT_TYPES, true)) {
                 throw new UnexpectedTranslationTypeException('This \'type\' param is not valid.');
             }
 
             if (
-                null === $selection['selected']
-                && in_array($selection['type'], [ProviderDefinitionInterface::TYPE_MODULES, ProviderDefinitionInterface::TYPE_THEMES], true)
+                $selection['selected'] === null
+                && \in_array($selection['type'], [ProviderDefinitionInterface::TYPE_MODULES, ProviderDefinitionInterface::TYPE_THEMES], true)
             ) {
-                throw new Exception(sprintf('Selected value cannot be null for type %s.', $selection['type']));
+                throw new Exception(\sprintf('Selected value cannot be null for type %s.', $selection['type']));
             }
         }
     }
@@ -210,12 +208,12 @@ class TranslationCatalogueExporter
      * FullDomainName.ab-AB.xlf
      *
      * @param string $locale Locale to append to filenames
-     * @param string $path Folder to work in
+     * @param string $path   Folder to work in
      */
     protected function renameCatalogues(string $locale, string $path): void
     {
         $finder = Finder::create();
-        foreach ($finder->in($path . DIRECTORY_SEPARATOR . $locale)->files() as $file) {
+        foreach ($finder->in($path . \DIRECTORY_SEPARATOR . $locale)->files() as $file) {
             $currentName = $file->getPathname();
             $newName = rtrim($currentName, '.xlf') . '.' . $locale . '.xlf';
             $this->filesystem->rename($currentName, $newName);

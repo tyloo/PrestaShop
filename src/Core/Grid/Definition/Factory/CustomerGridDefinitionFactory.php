@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -81,18 +82,15 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
     private $contextDateFormat;
 
     /**
-     * @param HookDispatcherInterface $hookDispatcher
      * @param bool $isB2bFeatureEnabled
      * @param bool $isMultistoreFeatureEnabled
-     * @param string $contextDateFormat
-     * @param bool $isGroupsFeatureEnabled
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         $isB2bFeatureEnabled,
         $isMultistoreFeatureEnabled,
         string $contextDateFormat,
-        bool $isGroupsFeatureEnabled = true
+        bool $isGroupsFeatureEnabled = true,
     ) {
         parent::__construct($hookDispatcher);
         $this->isB2bFeatureEnabled = $isB2bFeatureEnabled;
@@ -101,25 +99,16 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
         $this->isGroupsFeatureEnabled = $isGroupsFeatureEnabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Customers', [], 'Admin.Orderscustomers.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -292,9 +281,6 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = (new FilterCollection())
@@ -402,9 +388,6 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -444,9 +427,6 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

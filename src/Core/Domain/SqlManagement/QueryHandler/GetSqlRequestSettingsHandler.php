@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ final class GetSqlRequestSettingsHandler implements GetSqlRequestSettingsHandler
 {
     private ConfigurationInterface $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetSqlRequestSettings $query): SqlRequestSettings
     {
         $fileEncodingIntValue = $this->configuration->get(SqlRequestSettings::FILE_ENCODING);
@@ -64,10 +59,6 @@ final class GetSqlRequestSettingsHandler implements GetSqlRequestSettingsHandler
 
     /**
      * File encodings are saved as integer values in databases.
-     *
-     * @param int|null $rawValue
-     *
-     * @return string
      */
     private function getFileEncoding(?int $rawValue): string
     {

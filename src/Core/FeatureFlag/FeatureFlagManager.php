@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ class FeatureFlagManager implements FeatureFlagStateCheckerInterface, ResetInter
     private function getLayer(string $featureFlagName): TypeLayerInterface
     {
         $featureFlag = $this->featureFlagRepository->getByName($featureFlagName);
-        if (null !== $featureFlag) {
+        if ($featureFlag !== null) {
             foreach ($featureFlag->getOrderedTypes() as $type) {
                 if ($this->locator->has($type)) {
                     $handler = $this->locator->get($type);
@@ -63,9 +64,9 @@ class FeatureFlagManager implements FeatureFlagStateCheckerInterface, ResetInter
                     }
                 }
             }
-            throw new RuntimeException(sprintf('No handler can be used for feature flag %s.', $featureFlagName));
+            throw new RuntimeException(\sprintf('No handler can be used for feature flag %s.', $featureFlagName));
         }
-        throw new RuntimeException(sprintf('The feature flag %s doesn\'t exist.', $featureFlagName));
+        throw new RuntimeException(\sprintf('The feature flag %s doesn\'t exist.', $featureFlagName));
     }
 
     /**
@@ -97,7 +98,7 @@ class FeatureFlagManager implements FeatureFlagStateCheckerInterface, ResetInter
      */
     public function isDisabled(string $featureFlagName): bool
     {
-        return !$this->isEnabled($featureFlagName);
+        return ! $this->isEnabled($featureFlagName);
     }
 
     /**
@@ -124,14 +125,10 @@ class FeatureFlagManager implements FeatureFlagStateCheckerInterface, ResetInter
     /**
      * Cache each feature flag state to avoid useless multiple queries per request, maybe one day it would be worth
      * adding an actual cache layer over this, which would cache values in filesystem cache.
-     *
-     * @param string $featureFlagName
-     *
-     * @return bool
      */
     private function getFeatureFlagState(string $featureFlagName): bool
     {
-        if (!isset($this->featureFlagStates[$featureFlagName])) {
+        if (! isset($this->featureFlagStates[$featureFlagName])) {
             $this->featureFlagStates[$featureFlagName] = $this->getLayer($featureFlagName)->isEnabled($featureFlagName);
         }
 

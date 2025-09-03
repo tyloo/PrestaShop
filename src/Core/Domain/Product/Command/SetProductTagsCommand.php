@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,19 +49,12 @@ class SetProductTagsCommand
      */
     private $localizedTagsList;
 
-    /**
-     * @param int $productId
-     * @param array $localizedTags
-     */
     public function __construct(int $productId, array $localizedTags)
     {
         $this->productId = new ProductId($productId);
         $this->setLocalizedTagsList($localizedTags);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -82,11 +76,7 @@ class SetProductTagsCommand
     private function setLocalizedTagsList(array $localizedTags): void
     {
         if (empty($localizedTags)) {
-            throw new InvalidArgumentException(sprintf(
-                'Empty array of product tags provided in %s. To remove all product tags use %s.',
-                self::class,
-                RemoveAllProductTagsCommand::class
-            ));
+            throw new InvalidArgumentException(\sprintf('Empty array of product tags provided in %s. To remove all product tags use %s.', self::class, RemoveAllProductTagsCommand::class));
         }
 
         foreach ($localizedTags as $langId => $tags) {

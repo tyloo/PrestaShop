@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ final class ProductWithoutPriceGridDefinitionFactory extends AbstractProductGrid
 {
     public const GRID_ID = 'product_without_price';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('List of products without price', [], 'Admin.Catalog.Feature');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,9 +68,7 @@ class NullDateTime extends DateTimeImmutable
             return $supportedFormats[$format];
         }
 
-        throw new RuntimeException(
-            sprintf('Format "%s" is not supported by %s', $format, static::class)
-        );
+        throw new RuntimeException(\sprintf('Format "%s" is not supported by %s', $format, static::class));
     }
 
     /**
@@ -84,77 +83,50 @@ class NullDateTime extends DateTimeImmutable
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public static function createFromFormat($format, $datetime, $timezone = null)
     {
         throw self::buildUnusableMethodException('createFromFormat');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public static function createFromMutable($object): DateTimeImmutable
     {
         throw self::buildUnusableMethodException('createFromMutable');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public static function getLastErrors()
     {
         throw self::buildUnusableMethodException('getLastErrors');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public function modify($modifier)
     {
         throw $this::buildUnusableMethodException('modify');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setDate($year, $month, $day): DateTimeImmutable
     {
         throw $this::buildUnusableMethodException('setDate');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setISODate($year, $week, $dayOfWeek = 1): DateTimeImmutable
     {
         throw $this::buildUnusableMethodException('setISODate');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTime($hour, $minute, $second = 0, $microsecond = 0): DateTimeImmutable
     {
         throw $this::buildUnusableMethodException('setTime');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTimestamp($timestamp): DateTimeImmutable
     {
         throw $this::buildUnusableMethodException('setTimestamp');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTimezone($timezone): DateTimeImmutable
     {
         return $this;
@@ -172,55 +144,35 @@ class NullDateTime extends DateTimeImmutable
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function diff($targetObject, $absolute = false): DateInterval
     {
         throw $this::buildUnusableMethodException('diff');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOffset(): int
     {
         throw $this::buildUnusableMethodException('getOffset');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTimestamp(): int
     {
         throw $this::buildUnusableMethodException('getTimestamp');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public function getTimezone()
     {
         throw $this::buildUnusableMethodException('getTimezone');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function createFromInterface(DateTimeInterface $object): DateTimeImmutable
     {
         throw self::buildUnusableMethodException('createFromInterface');
     }
 
-    /**
-     * @param string $method
-     *
-     * @return RuntimeException
-     */
     private static function buildUnusableMethodException(string $method): RuntimeException
     {
-        return new RuntimeException(sprintf(
+        return new RuntimeException(\sprintf(
             '%s::%s should not be used, it might produce unexpected results',
             static::class,
             $method

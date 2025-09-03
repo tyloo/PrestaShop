@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,7 +33,9 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
 
 class FeatureValueFilters extends Filters
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $filterId = FeatureValueGridDefinitionFactory::GRID_ID;
 
     /**
@@ -47,12 +50,12 @@ class FeatureValueFilters extends Filters
 
     public function __construct(array $filters = [])
     {
-        if (!isset($filters['filters']['feature_id'])) {
-            throw new InvalidArgumentException(sprintf('%s filters expect a feature_id filter', static::class));
+        if (! isset($filters['filters']['feature_id'])) {
+            throw new InvalidArgumentException(\sprintf('%s filters expect a feature_id filter', static::class));
         }
 
-        if (!isset($filters['filters']['language_id'])) {
-            throw new InvalidArgumentException(sprintf('%s filters expect a language_id filter', static::class));
+        if (! isset($filters['filters']['language_id'])) {
+            throw new InvalidArgumentException(\sprintf('%s filters expect a language_id filter', static::class));
         }
 
         $this->featureId = (int) $filters['filters']['feature_id'];
@@ -71,9 +74,6 @@ class FeatureValueFilters extends Filters
         return $this->languageId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults(): array
     {
         return [

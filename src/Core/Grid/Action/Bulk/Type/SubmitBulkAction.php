@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class SubmitBulkAction extends AbstractBulkAction
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'submit';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
         $resolver

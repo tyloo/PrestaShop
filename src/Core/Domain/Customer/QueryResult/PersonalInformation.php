@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,17 +106,16 @@ class PersonalInformation
      * @param string $firstName
      * @param string $lastName
      * @param string $email
-     * @param bool $isGuest
+     * @param bool   $isGuest
      * @param string $socialTitle
      * @param string $birthday
      * @param string $registrationDate
      * @param string $lastUpdateDate
      * @param string $lastVisitDate
-     * @param int $rankBySales
+     * @param int    $rankBySales
      * @param string $shopName
      * @param string $languageName
-     * @param Subscriptions $subscriptions
-     * @param bool $isActive
+     * @param bool   $isActive
      */
     public function __construct(
         $firstName,
@@ -131,7 +131,7 @@ class PersonalInformation
         $shopName,
         $languageName,
         Subscriptions $subscriptions,
-        $isActive
+        $isActive,
     ) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;

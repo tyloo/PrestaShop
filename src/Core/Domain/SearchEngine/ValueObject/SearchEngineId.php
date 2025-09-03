@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ class SearchEngineId
     private $searchEngineId;
 
     /**
-     * @param int $searchEngineId
-     *
      * @throws SearchEngineException
      */
     public function __construct(int $searchEngineId)
@@ -51,23 +50,18 @@ class SearchEngineId
         $this->searchEngineId = $searchEngineId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->searchEngineId;
     }
 
     /**
-     * @param int $searchEngineId
-     *
      * @throws SearchEngineException
      */
     private function assertIntegerIsGreaterThanZero(int $searchEngineId): void
     {
-        if (0 >= $searchEngineId) {
-            throw new SearchEngineException(sprintf('Search engine id %d is invalid. Search engine id have to be number bigger than zero.', $searchEngineId));
+        if ($searchEngineId <= 0) {
+            throw new SearchEngineException(\sprintf('Search engine id %d is invalid. Search engine id have to be number bigger than zero.', $searchEngineId));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,17 +57,11 @@ final class Grid implements GridInterface
      */
     private $filtersForm;
 
-    /**
-     * @param GridDefinitionInterface $definition
-     * @param GridDataInterface $data
-     * @param SearchCriteriaInterface $searchCriteria
-     * @param FormInterface $filtersForm
-     */
     public function __construct(
         GridDefinitionInterface $definition,
         GridDataInterface $data,
         SearchCriteriaInterface $searchCriteria,
-        FormInterface $filtersForm
+        FormInterface $filtersForm,
     ) {
         $this->definition = $definition;
         $this->data = $data;
@@ -74,33 +69,21 @@ final class Grid implements GridInterface
         $this->filtersForm = $filtersForm;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition()
     {
         return $this->definition;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchCriteria()
     {
         return $this->searchCriteria;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilterForm()
     {
         return $this->filtersForm;

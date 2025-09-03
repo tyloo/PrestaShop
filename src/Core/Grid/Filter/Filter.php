@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,17 +62,11 @@ final class Filter implements FilterInterface
         $this->name = $name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTypeOptions(array $filterTypeOptions)
     {
         $this->typeOptions = $filterTypeOptions;
@@ -79,25 +74,16 @@ final class Filter implements FilterInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTypeOptions()
     {
         return $this->typeOptions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAssociatedColumn($columnId)
     {
         $this->column = $columnId;
@@ -105,9 +91,6 @@ final class Filter implements FilterInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAssociatedColumn()
     {
         return $this->column;

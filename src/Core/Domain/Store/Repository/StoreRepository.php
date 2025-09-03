@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,17 +58,13 @@ class StoreRepository extends AbstractObjectModelRepository
 
     public function __construct(
         Connection $connection,
-        string $dbPrefix
+        string $dbPrefix,
     ) {
         $this->connection = $connection;
         $this->dbPrefix = $dbPrefix;
     }
 
     /**
-     * @param StoreId $storeId
-     *
-     * @return Store
-     *
      * @throws CoreException
      * @throws StoreNotFoundException
      */
@@ -83,11 +80,6 @@ class StoreRepository extends AbstractObjectModelRepository
         return $store;
     }
 
-    /**
-     * @param Store $store
-     * @param array $propertiesToUpdate
-     * @param int $errorCode
-     */
     public function partialUpdate(Store $store, array $propertiesToUpdate, int $errorCode): void
     {
         $this->partiallyUpdateObjectModel(
@@ -98,9 +90,6 @@ class StoreRepository extends AbstractObjectModelRepository
         );
     }
 
-    /**
-     * @param StoreId $storeId
-     */
     public function delete(StoreId $storeId): void
     {
         $this->deleteObjectModel(
@@ -111,8 +100,6 @@ class StoreRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ShopConstraint $shopConstraint
-     *
      * @return ShopId[]
      */
     public function getShopIdsByConstraint(ShopConstraint $shopConstraint): array
@@ -136,8 +123,6 @@ class StoreRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ShopGroupId $shopGroupId
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIdsFromGroup(ShopGroupId $shopGroupId): array

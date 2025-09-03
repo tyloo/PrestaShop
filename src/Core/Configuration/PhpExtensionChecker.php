@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,11 +32,8 @@ namespace PrestaShop\PrestaShop\Core\Configuration;
  */
 final class PhpExtensionChecker implements PhpExtensionCheckerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function loaded($extension)
     {
-        return extension_loaded($extension);
+        return \extension_loaded($extension);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -84,9 +85,6 @@ class ProductSearchQuery
      */
     private $sortOrder;
 
-    /**
-     * ProductSearchQuery constructor.
-     */
     public function __construct()
     {
         $this->setSortOrder(new SortOrder('product', 'name', 'ASC'));
@@ -213,8 +211,6 @@ class ProductSearchQuery
     }
 
     /**
-     * @param SortOrder $sortOrder
-     *
      * @return $this
      */
     public function setSortOrder(SortOrder $sortOrder)

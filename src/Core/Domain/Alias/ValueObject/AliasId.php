@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class AliasId
     private $aliasId;
 
     /**
-     * @param int $aliasId
-     *
      * @throws AliasConstraintException
      */
     public function __construct(int $aliasId)
@@ -50,26 +49,18 @@ class AliasId
         $this->aliasId = $aliasId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->aliasId;
     }
 
     /**
-     * @param int $aliasId
-     *
      * @throws AliasConstraintException
      */
     private function assertIntegerIsGreaterThanZero(int $aliasId)
     {
-        if (0 >= $aliasId) {
-            throw new AliasConstraintException(
-                sprintf('Invalid alias id %d supplied. Alias id must be a positive integer.', $aliasId),
-                AliasConstraintException::INVALID_ID
-            );
+        if ($aliasId <= 0) {
+            throw new AliasConstraintException(\sprintf('Invalid alias id %d supplied. Alias id must be a positive integer.', $aliasId), AliasConstraintException::INVALID_ID);
         }
     }
 }

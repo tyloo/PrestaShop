@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ final class CurrencyByIdChoiceProvider implements FormChoiceProviderInterface, F
      */
     private $currencyDataProvider;
 
-    /**
-     * @param CurrencyDataProviderInterface $currencyDataProvider
-     */
     public function __construct(CurrencyDataProviderInterface $currencyDataProvider)
     {
         $this->currencyDataProvider = $currencyDataProvider;
@@ -50,8 +48,6 @@ final class CurrencyByIdChoiceProvider implements FormChoiceProviderInterface, F
 
     /**
      * Get currency choices.
-     *
-     * @return array
      */
     public function getChoices(): array
     {
@@ -59,7 +55,7 @@ final class CurrencyByIdChoiceProvider implements FormChoiceProviderInterface, F
         $choices = [];
 
         foreach ($currencies as $currency) {
-            $currencyLabel = sprintf('%s (%s)', $currency['name'], $currency['iso_code']);
+            $currencyLabel = \sprintf('%s (%s)', $currency['name'], $currency['iso_code']);
             $choices[$currencyLabel] = $currency['id_currency'];
         }
 
@@ -72,7 +68,7 @@ final class CurrencyByIdChoiceProvider implements FormChoiceProviderInterface, F
         $choicesAttributes = [];
 
         foreach ($currencies as $currency) {
-            $currencyLabel = sprintf('%s (%s)', $currency['name'], $currency['iso_code']);
+            $currencyLabel = \sprintf('%s (%s)', $currency['name'], $currency['iso_code']);
             $choicesAttributes[$currencyLabel]['symbol'] = $currency['symbol'];
         }
 

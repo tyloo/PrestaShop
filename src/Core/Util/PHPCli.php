@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,6 +31,6 @@ class PHPCli
 {
     public static function isPHPCli(): bool
     {
-        return defined('STDIN') || (strtolower(PHP_SAPI) == 'cli' && empty($_SERVER['REMOTE_ADDR']));
+        return \defined('STDIN') || (strtolower(\PHP_SAPI) === 'cli' && empty($_SERVER['REMOTE_ADDR']));
     }
 }

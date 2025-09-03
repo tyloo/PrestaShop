@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,15 +44,12 @@ class InvalidLegacyTranslationKeyException extends CoreException
 
     public function __construct(string $missingElement, string $key, $code = 0, ?Throwable $previous = null)
     {
-        $message = sprintf('Invalid key in legacy translation file: "%s" (missing %s)', $key, $missingElement);
+        $message = \sprintf('Invalid key in legacy translation file: "%s" (missing %s)', $key, $missingElement);
         $this->key = $key;
 
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;

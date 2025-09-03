@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ class ModulePermission implements PermissionInterface
      */
     private $permission;
 
-    /**
-     * @param string $permission
-     */
     public function __construct(string $permission)
     {
         $this->assertPermissionIsSupported($permission);
@@ -57,9 +55,6 @@ class ModulePermission implements PermissionInterface
         $this->permission = $permission;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->permission;
@@ -67,10 +62,8 @@ class ModulePermission implements PermissionInterface
 
     protected function assertPermissionIsSupported(string $permission): void
     {
-        if (!in_array($permission, static::SUPPORTED_PERMISSIONS)) {
-            throw new InvalidPermissionValueException(
-                sprintf('Invalid permission "%s" provided', $permission)
-            );
+        if (! \in_array($permission, static::SUPPORTED_PERMISSIONS, true)) {
+            throw new InvalidPermissionValueException(\sprintf('Invalid permission "%s" provided', $permission));
         }
     }
 }

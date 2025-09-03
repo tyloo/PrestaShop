@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,24 +51,15 @@ class CarrierReferenceId
         $this->carrierReferenceId = $carrierReferenceId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->carrierReferenceId;
     }
 
-    /**
-     * @param int $carrierReferenceId
-     */
     private function assertIntegerIsGreaterThanZero(int $carrierReferenceId)
     {
-        if (0 >= $carrierReferenceId) {
-            throw new CarrierConstraintException(
-                sprintf('CarrierReferenceId "%s" is invalid. It must greater than 0.', $carrierReferenceId),
-                CarrierConstraintException::INVALID_REFERENCE_ID
-            );
+        if ($carrierReferenceId <= 0) {
+            throw new CarrierConstraintException(\sprintf('CarrierReferenceId "%s" is invalid. It must greater than 0.', $carrierReferenceId), CarrierConstraintException::INVALID_REFERENCE_ID);
         }
     }
 }

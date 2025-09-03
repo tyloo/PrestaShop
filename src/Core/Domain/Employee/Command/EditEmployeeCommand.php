@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -290,9 +291,6 @@ class EditEmployeeCommand
 
     /**
      * @param string $plainPassword
-     * @param int $minLength
-     * @param int $maxLength
-     * @param int $minScore
      *
      * @return EditEmployeeCommand
      */
@@ -312,8 +310,6 @@ class EditEmployeeCommand
     }
 
     /**
-     * @param bool $hasEnabledGravatar
-     *
      * @return EditEmployeeCommand
      */
     public function setHasEnabledGravatar(bool $hasEnabledGravatar)

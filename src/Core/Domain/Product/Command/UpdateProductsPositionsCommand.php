@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,12 +66,6 @@ class UpdateProductsPositionsCommand
      */
     private $categoryId;
 
-    /**
-     * UpdateProductPositionCommand constructor.
-     *
-     * @param array $positions
-     * @param int $categoryId
-     */
     public function __construct(array $positions, int $categoryId)
     {
         $this->categoryId = new CategoryId($categoryId);
@@ -85,9 +80,6 @@ class UpdateProductsPositionsCommand
         return $this->positions;
     }
 
-    /**
-     * @return CategoryId
-     */
     public function getCategoryId(): CategoryId
     {
         return $this->categoryId;

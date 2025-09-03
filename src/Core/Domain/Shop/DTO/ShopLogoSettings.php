@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,7 +65,7 @@ class ShopLogoSettings
     public function getLogoImageExtensionsWithDot(string $fieldName = '')
     {
         $mimeTypes = [];
-        $availableExtensions = (in_array($fieldName, ['PS_LOGO_MAIL', 'PS_LOGO_INVOICE'])) ? ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS : ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS;
+        $availableExtensions = (\in_array($fieldName, ['PS_LOGO_MAIL', 'PS_LOGO_INVOICE'], true)) ? self::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS : self::AVAILABLE_LOGO_IMAGE_EXTENSIONS;
 
         foreach ($availableExtensions as $imageExtension) {
             $mimeTypes[] = '.' . $imageExtension;

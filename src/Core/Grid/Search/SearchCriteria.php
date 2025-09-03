@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,11 +58,10 @@ final class SearchCriteria implements SearchCriteriaInterface
     private $limit;
 
     /**
-     * @param array $filters
      * @param string|null $orderBy
      * @param string|null $orderWay
-     * @param int|null $offset
-     * @param int|null $limit
+     * @param int|null    $offset
+     * @param int|null    $limit
      */
     public function __construct(array $filters = [], $orderBy = null, $orderWay = null, $offset = null, $limit = null)
     {
@@ -72,41 +72,26 @@ final class SearchCriteria implements SearchCriteriaInterface
         $this->limit = $limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOrderBy()
     {
         return $this->orderBy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOrderWay()
     {
         return $this->orderWay;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOffset()
     {
         return $this->offset;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLimit()
     {
         return $this->limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
         return $this->filters;

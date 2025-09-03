@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,26 +37,24 @@ use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
  */
 class MailThemeChoiceProvider implements FormChoiceProviderInterface
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $choices;
 
-    /** @var ThemeCatalogInterface */
+    /**
+     * @var ThemeCatalogInterface
+     */
     private $themeCatalog;
 
-    /**
-     * @param ThemeCatalogInterface $themeCatalog
-     */
     public function __construct(ThemeCatalogInterface $themeCatalog)
     {
         $this->themeCatalog = $themeCatalog;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
-        if (null === $this->choices) {
+        if ($this->choices === null) {
             $this->choices = [];
 
             /** @var ThemeCollectionInterface $collection */

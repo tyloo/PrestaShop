@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,19 +48,16 @@ class ProductCombinationFilters extends ShopFilters
      */
     private $productId;
 
-    /**
-     * {@inheritDoc}
-     */
     public function __construct(ShopConstraint $shopConstraint, array $filters = [])
     {
-        if (!isset($filters['filters']['product_id'])) {
-            throw new InvalidArgumentException(sprintf('%s filters expect a product_id filter', static::class));
+        if (! isset($filters['filters']['product_id'])) {
+            throw new InvalidArgumentException(\sprintf('%s filters expect a product_id filter', static::class));
         }
 
         $this->productId = (int) $filters['filters']['product_id'];
 
-        if (!$shopConstraint->getShopId()) {
-            throw new InvalidArgumentException(sprintf('%s filters supports only single shopConstraint', static::class));
+        if (! $shopConstraint->getShopId()) {
+            throw new InvalidArgumentException(\sprintf('%s filters supports only single shopConstraint', static::class));
         }
 
         parent::__construct(
@@ -74,25 +72,16 @@ class ProductCombinationFilters extends ShopFilters
         $this->needsToBePersisted = false;
     }
 
-    /**
-     * @return int
-     */
     public function getProductId(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @return int
-     */
     public function getShopId(): int
     {
         return $this->getShopConstraint()->getShopId()->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [
@@ -104,11 +93,6 @@ class ProductCombinationFilters extends ShopFilters
         ];
     }
 
-    /**
-     * @param int $productId
-     *
-     * @return string
-     */
     public static function generateFilterId(int $productId): string
     {
         return self::FILTER_PREFIX . $productId;

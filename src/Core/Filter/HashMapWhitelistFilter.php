@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -117,8 +118,8 @@ class HashMapWhitelistFilter implements FilterInterface
      */
     public function removeFromWhitelist($key)
     {
-        if (!is_scalar($key)) {
-            throw new FilterException(sprintf('Invalid parameter %s', print_r($key, true)));
+        if (! \is_scalar($key)) {
+            throw new FilterException(\sprintf('Invalid parameter %s', print_r($key, true)));
         }
 
         unset(
@@ -176,7 +177,7 @@ class HashMapWhitelistFilter implements FilterInterface
             $subject = array_intersect_key($subject, $this->whitelistItems);
             // run nested filters
             foreach ($this->filters as $key => $filter) {
-                if (array_key_exists($key, $subject)) {
+                if (\array_key_exists($key, $subject)) {
                     $subject[$key] = $filter->filter($subject[$key]);
                 }
             }
@@ -188,7 +189,7 @@ class HashMapWhitelistFilter implements FilterInterface
     /**
      * Adds an element to the whitelist.
      *
-     * @param int|string $paramKey
+     * @param int|string             $paramKey
      * @param string|FilterInterface $paramValue
      *
      * @return $this

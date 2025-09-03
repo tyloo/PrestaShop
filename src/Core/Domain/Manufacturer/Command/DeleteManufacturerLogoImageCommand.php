@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class DeleteManufacturerLogoImageCommand
     private $manufacturerId;
 
     /**
-     * @param int $manufacturerId
-     *
      * @throws ManufacturerConstraintException
      */
     public function __construct(int $manufacturerId)
@@ -51,9 +50,6 @@ class DeleteManufacturerLogoImageCommand
         $this->manufacturerId = new ManufacturerId($manufacturerId);
     }
 
-    /**
-     * @return ManufacturerId
-     */
     public function getManufacturerId(): ManufacturerId
     {
         return $this->manufacturerId;

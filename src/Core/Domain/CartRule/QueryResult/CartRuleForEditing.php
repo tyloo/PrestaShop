@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,7 +73,7 @@ class CartRuleForEditing
         CartRuleConditionsForEditing $conditions,
         CartRuleActionForEditing $actions,
         ?DateTime $dateAdd,
-        ?DateTime $dateUpd
+        ?DateTime $dateUpd,
     ) {
         $this->cartRuleId = $cartRuleId;
         $this->information = $information;
@@ -82,49 +83,31 @@ class CartRuleForEditing
         $this->dateUpd = $dateUpd;
     }
 
-    /**
-     * @return CartRuleId
-     */
     public function getCartRuleId(): CartRuleId
     {
         return $this->cartRuleId;
     }
 
-    /**
-     * @return CartRuleInformationForEditing
-     */
     public function getInformation(): CartRuleInformationForEditing
     {
         return $this->information;
     }
 
-    /**
-     * @return CartRuleConditionsForEditing
-     */
     public function getConditions(): CartRuleConditionsForEditing
     {
         return $this->conditions;
     }
 
-    /**
-     * @return CartRuleActionForEditing
-     */
     public function getActions(): CartRuleActionForEditing
     {
         return $this->actions;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getDateAdd(): ?DateTime
     {
         return $this->dateAdd;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getDateUpd(): ?DateTime
     {
         return $this->dateUpd;

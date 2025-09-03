@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,9 +50,6 @@ class ManufacturerId implements ManufacturerIdInterface
         $this->id = $id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValue()
     {
         return $this->id;
@@ -66,11 +64,8 @@ class ManufacturerId implements ManufacturerIdInterface
      */
     private function assertIsIntegerGreaterThanZero($value)
     {
-        if (!is_int($value) || 0 >= $value) {
-            throw new ManufacturerConstraintException(
-                sprintf('Invalid manufacturer id "%s".', var_export($value, true)),
-                ManufacturerConstraintException::INVALID_ID
-            );
+        if (! \is_int($value) || $value <= 0) {
+            throw new ManufacturerConstraintException(\sprintf('Invalid manufacturer id "%s".', var_export($value, true)), ManufacturerConstraintException::INVALID_ID);
         }
     }
 }

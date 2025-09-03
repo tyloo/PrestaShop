@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class AttributeGroupId
      */
     private $attributeGroupId;
 
-    /**
-     * @param int $attributeGroupId
-     */
     public function __construct(int $attributeGroupId)
     {
         $this->assertIntegerIsGreaterThanZero($attributeGroupId);
@@ -50,26 +48,18 @@ class AttributeGroupId
         $this->attributeGroupId = $attributeGroupId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->attributeGroupId;
     }
 
     /**
-     * @param int $attributeGroupId
-     *
      * @throws AttributeGroupConstraintException
      */
     private function assertIntegerIsGreaterThanZero(int $attributeGroupId): void
     {
-        if (0 >= $attributeGroupId) {
-            throw new AttributeGroupConstraintException(
-                sprintf('Invalid attributeGroup id %s supplied. Attribute group ID must be a positive integer.', $attributeGroupId),
-                AttributeGroupConstraintException::INVALID_ID
-            );
+        if ($attributeGroupId <= 0) {
+            throw new AttributeGroupConstraintException(\sprintf('Invalid attributeGroup id %s supplied. Attribute group ID must be a positive integer.', $attributeGroupId), AttributeGroupConstraintException::INVALID_ID);
         }
     }
 }

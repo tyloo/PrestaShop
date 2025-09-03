@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ final class BackupCollection implements BackupCollectionInterface
      */
     private $backups = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function add(BackupInterface $backup)
     {
         $this->backups[] = $backup;
@@ -43,9 +41,6 @@ final class BackupCollection implements BackupCollectionInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function all()
     {
         return $this->backups;

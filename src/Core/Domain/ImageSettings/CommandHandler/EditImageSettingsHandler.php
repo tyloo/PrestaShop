@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\ImageSettings\Exception\ImageTypeException
 final class EditImageSettingsHandler extends AbstractObjectModelHandler implements EditImageSettingsHandlerInterface
 {
     public function __construct(
-        private readonly ImageConfiguration $imageConfiguration
+        private readonly ImageConfiguration $imageConfiguration,
     ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ImageTypeException
      */
     public function handle(EditImageSettingsCommand $command): void

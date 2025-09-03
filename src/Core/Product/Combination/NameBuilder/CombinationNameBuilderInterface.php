@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,18 +36,13 @@ interface CombinationNameBuilderInterface
      * Build combination name from related attributes and attribute group names
      *
      * @param CombinationAttributeInformation[] $attributesInfo
-     *
-     * @return string
      */
     public function buildName(array $attributesInfo): string;
 
     /**
      * Build combination full name from related product and attributes and attribute group names
      *
-     * @param string $productName
      * @param CombinationAttributeInformation[] $attributesInfo
-     *
-     * @return string
      */
     public function buildFullName(string $productName, array $attributesInfo): string;
 }

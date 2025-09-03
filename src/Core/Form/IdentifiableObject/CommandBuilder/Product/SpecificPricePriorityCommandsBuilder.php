@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class SpecificPricePriorityCommandsBuilder implements ProductCommandsBuilderInte
 {
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['pricing']['priority_management'])) {
+        if (! isset($formData['pricing']['priority_management'])) {
             return [];
         }
 
@@ -46,7 +47,7 @@ class SpecificPricePriorityCommandsBuilder implements ProductCommandsBuilderInte
             return [new RemoveSpecificPricePriorityForProductCommand($productId->getValue())];
         }
 
-        if (!empty($prioritiesData['priorities'])) {
+        if (! empty($prioritiesData['priorities'])) {
             return [
                 new SetSpecificPricePriorityForProductCommand(
                     $productId->getValue(),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,10 +77,6 @@ class CommandBuilderConfig
     }
 
     /**
-     * @param string $propertyPath
-     * @param string $commandSetter
-     * @param string $propertyType
-     *
      * @return static
      *
      * @throws DataFieldException
@@ -97,10 +94,6 @@ class CommandBuilderConfig
     }
 
     /**
-     * @param string $propertyPath
-     * @param string $commandSetter
-     * @param string $propertyType
-     *
      * @return static
      *
      * @throws DataFieldException
@@ -118,7 +111,6 @@ class CommandBuilderConfig
     }
 
     /**
-     * @param string $commandSetter
      * @param array<string, string|array<string, mixed>> $dataFieldDescriptions
      *
      * @return static
@@ -136,7 +128,6 @@ class CommandBuilderConfig
     }
 
     /**
-     * @param string $commandSetter
      * @param array<string, string|array<string, mixed>> $dataFieldDescriptions
      *
      * @return static
@@ -153,9 +144,6 @@ class CommandBuilderConfig
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getModifyAllNamePrefix(): string
     {
         return $this->modifyAllNamePrefix;
@@ -188,33 +176,24 @@ class CommandBuilderConfig
     }
 
     /**
-     * @param string $path
      * @param string|array<string, mixed> $dataFieldDescription
-     *
-     * @return DataField
      *
      * @throws DataFieldException
      */
     protected function createDataField(string $path, $dataFieldDescription): DataField
     {
-        if (is_string($dataFieldDescription)) {
+        if (\is_string($dataFieldDescription)) {
             $dataFieldDescription = [
                 static::FIELD_TYPE_OPTION => $dataFieldDescription,
             ];
-        } elseif (!is_array($dataFieldDescription)) {
-            throw new DataFieldException(
-                sprintf(
-                    'Type "%s" is not supported as configuration of data field "%s", expected array or string',
-                    $path,
-                    gettype($dataFieldDescription)
-                )
-            );
+        } elseif (! \is_array($dataFieldDescription)) {
+            throw new DataFieldException(\sprintf('Type "%s" is not supported as configuration of data field "%s", expected array or string', $path, \gettype($dataFieldDescription)));
         }
         $dataFieldArguments = [
             $path,
             $dataFieldDescription[static::FIELD_TYPE_OPTION],
         ];
-        if (array_key_exists(self::FIELD_DEFAULT_VALUE_OPTION, $dataFieldDescription)) {
+        if (\array_key_exists(self::FIELD_DEFAULT_VALUE_OPTION, $dataFieldDescription)) {
             $dataFieldArguments[] = $dataFieldDescription[static::FIELD_DEFAULT_VALUE_OPTION];
         }
 

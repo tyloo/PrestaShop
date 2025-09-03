@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,16 +38,12 @@ interface PositionModificationCollectionInterface extends Iterator, Countable
     /**
      * Add rowModification to collection.
      *
-     * @param PositionModificationInterface $positionModification
-     *
      * @return self
      */
     public function add(PositionModificationInterface $positionModification);
 
     /**
      * Remove positionModification from collection.
-     *
-     * @param PositionModificationInterface $positionModification
      *
      * @return self
      */

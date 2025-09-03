@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,21 +61,13 @@ class AttachmentInformation
      */
     private $fileSize;
 
-    /**
-     * @param int $attachmentId
-     * @param array $localizedNames
-     * @param array $localizedDescriptions
-     * @param string $fileName
-     * @param string $mimeType
-     * @param int $fileSize
-     */
     public function __construct(
         int $attachmentId,
         array $localizedNames,
         array $localizedDescriptions,
         string $fileName,
         string $mimeType,
-        int $fileSize
+        int $fileSize,
     ) {
         $this->attachmentId = $attachmentId;
         $this->localizedNames = $localizedNames;
@@ -84,9 +77,6 @@ class AttachmentInformation
         $this->fileSize = $fileSize;
     }
 
-    /**
-     * @return int
-     */
     public function getAttachmentId(): int
     {
         return $this->attachmentId;
@@ -108,25 +98,16 @@ class AttachmentInformation
         return $this->localizedDescriptions;
     }
 
-    /**
-     * @return string
-     */
     public function getFileName(): string
     {
         return $this->fileName;
     }
 
-    /**
-     * @return string
-     */
     public function getMimeType(): string
     {
         return $this->mimeType;
     }
 
-    /**
-     * @return int
-     */
     public function getFileSize(): int
     {
         return $this->fileSize;

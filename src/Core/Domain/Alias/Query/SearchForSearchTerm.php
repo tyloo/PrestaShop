@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,24 +47,18 @@ class SearchForSearchTerm
      */
     public function __construct(string $searchTerm, ?int $limit = null)
     {
-        if (null !== $limit && $limit <= 0) {
+        if ($limit !== null && $limit <= 0) {
             throw new InvalidArgumentException('Search limit must be a positive integer or null');
         }
         $this->searchTerm = $searchTerm;
         $this->limit = $limit;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchTerm(): string
     {
         return $this->searchTerm;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLimit(): ?int
     {
         return $this->limit;

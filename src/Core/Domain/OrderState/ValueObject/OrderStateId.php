@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,8 +63,8 @@ class OrderStateId
      */
     private function assertIntegerIsGreaterThanZero($orderStateId)
     {
-        if (!is_int($orderStateId) || 0 > $orderStateId) {
-            throw new OrderStateException(sprintf('OrderState id %s is invalid. OrderState id must be number that is greater than zero.', var_export($orderStateId, true)));
+        if (! \is_int($orderStateId) || $orderStateId < 0) {
+            throw new OrderStateException(\sprintf('OrderState id %s is invalid. OrderState id must be number that is greater than zero.', var_export($orderStateId, true)));
         }
     }
 }

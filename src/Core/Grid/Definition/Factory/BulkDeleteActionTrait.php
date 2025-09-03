@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use PrestaShop\PrestaShop\Core\Grid\Action\ModalOptions;
 trait BulkDeleteActionTrait
 {
     /**
-     * @param string $bulkDeleteRouteName
-     * @param array $options
-     *
      * @return BulkActionInterface
      */
     protected function buildBulkDeleteAction(string $bulkDeleteRouteName, array $options = [])
@@ -71,7 +69,6 @@ trait BulkDeleteActionTrait
      * Shortcut method to translate text.
      *
      * @param string $id
-     * @param array $options
      * @param string $domain
      *
      * @return string

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,40 +49,26 @@ class ProductPreview
      */
     private $image;
 
-    /**
-     * @param int $productId
-     * @param string $name
-     * @param string $imageUrl
-     */
     public function __construct(
         int $productId,
         string $name,
-        string $imageUrl
+        string $imageUrl,
     ) {
         $this->productId = $productId;
         $this->name = $name;
         $this->image = $imageUrl;
     }
 
-    /**
-     * @return int
-     */
     public function getProductId(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getImage(): string
     {
         return $this->image;

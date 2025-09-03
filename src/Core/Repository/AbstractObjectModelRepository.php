@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,40 +43,20 @@ use PrestaShopException;
 abstract class AbstractObjectModelRepository
 {
     /**
-     * @param int $id
-     * @param string $objectTableName
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     protected function assertObjectModelExists(int $id, string $objectTableName, string $exceptionClass, int $errorCode = 0): void
     {
         try {
-            if (!ObjectModel::existsInDatabase($id, $objectTableName)) {
-                throw new $exceptionClass(sprintf('%s #%d does not exist', $objectTableName, $id), $errorCode);
+            if (! ObjectModel::existsInDatabase($id, $objectTableName)) {
+                throw new $exceptionClass(\sprintf('%s #%d does not exist', $objectTableName, $id), $errorCode);
             }
         } catch (PrestaShopException $e) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to check if %s #%d exists [%s]',
-                    $objectTableName,
-                    $id,
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to check if %s #%d exists [%s]', $objectTableName, $id, $e->getMessage()), 0, $e);
         }
     }
 
     /**
-     * @param int $id
-     * @param string $objectModelClass
-     * @param string $exceptionClass
-     *
-     * @return ObjectModel
-     *
      * @throws CoreException
      */
     protected function getObjectModel(int $id, string $objectModelClass, string $exceptionClass): ObjectModel
@@ -83,148 +64,77 @@ abstract class AbstractObjectModelRepository
         return $this->fetchObjectModel($id, $objectModelClass, $exceptionClass, null);
     }
 
-    /**
-     * @param ObjectModel $objectModel
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
-     * @return int
-     */
     protected function addObjectModel(ObjectModel $objectModel, string $exceptionClass, int $errorCode = 0): int
     {
         try {
-            if (!$objectModel->add()) {
-                throw new $exceptionClass(
-                    sprintf('Failed to add %s', $objectModel::class),
-                    $errorCode
-                );
+            if (! $objectModel->add()) {
+                throw new $exceptionClass(\sprintf('Failed to add %s', $objectModel::class), $errorCode);
             }
 
             return (int) $objectModel->id;
         } catch (PrestaShopException $e) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to add %s [%s]',
-                    $objectModel::class,
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to add %s [%s]', $objectModel::class, $e->getMessage()), 0, $e);
         }
     }
 
     /**
-     * @param ObjectModel $objectModel
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     protected function updateObjectModel(ObjectModel $objectModel, string $exceptionClass, int $errorCode = 0): void
     {
-        if (!$objectModel->id) {
+        if (! $objectModel->id) {
             throw new CoreException('Cannot update object model without id');
         }
 
         try {
-            if (!$objectModel->update()) {
-                throw new $exceptionClass(
-                    sprintf('Failed to update %s #%d', $objectModel::class, $objectModel->id),
-                    $errorCode
-                );
+            if (! $objectModel->update()) {
+                throw new $exceptionClass(\sprintf('Failed to update %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
         } catch (PrestaShopException $e) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to update %s #%d [%s]',
-                    $objectModel::class,
-                    $objectModel->id,
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to update %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
         } finally {
             $objectModel->setFieldsToUpdate(null);
         }
     }
 
     /**
-     * @param ObjectModel $objectModel
-     * @param array $propertiesToUpdate
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     protected function partiallyUpdateObjectModel(
         ObjectModel $objectModel,
         array $propertiesToUpdate,
         string $exceptionClass,
-        int $errorCode = 0
+        int $errorCode = 0,
     ): void {
         $objectModel->setFieldsToUpdate($this->formatPropertiesToUpdate($propertiesToUpdate));
         $this->updateObjectModel($objectModel, $exceptionClass, $errorCode);
     }
 
     /**
-     * @param ObjectModel $objectModel
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     protected function deleteObjectModel(ObjectModel $objectModel, string $exceptionClass, int $errorCode = 0): void
     {
         try {
-            if (!$objectModel->delete()) {
-                throw new $exceptionClass(
-                    sprintf('Failed to delete %s #%d', $objectModel::class, $objectModel->id),
-                    $errorCode
-                );
+            if (! $objectModel->delete()) {
+                throw new $exceptionClass(\sprintf('Failed to delete %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
         } catch (PrestaShopException $e) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to delete %s #%d [%s]',
-                    $objectModel::class,
-                    $objectModel->id,
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to delete %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
         }
     }
 
     /**
-     * @param ObjectModel $objectModel
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     protected function softDeleteObjectModel(ObjectModel $objectModel, string $exceptionClass, int $errorCode = 0): void
     {
         try {
-            if (!$objectModel->softDelete()) {
-                throw new $exceptionClass(
-                    sprintf('Failed to soft delete %s #%d', $objectModel::class, $objectModel->id),
-                    $errorCode
-                );
+            if (! $objectModel->softDelete()) {
+                throw new $exceptionClass(\sprintf('Failed to soft delete %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
         } catch (PrestaShopException $e) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to soft delete %s #%d [%s]',
-                    $objectModel::class,
-                    $objectModel->id,
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to soft delete %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
         }
     }
 
@@ -238,20 +148,18 @@ abstract class AbstractObjectModelRepository
      *     ],
      * ];
      *
-     * @param array $propertiesToUpdate
-     *
      * @return array<string, mixed>
      */
     protected function formatPropertiesToUpdate(array $propertiesToUpdate): array
     {
         $formattedPropertiesToUpdate = [];
         foreach ($propertiesToUpdate as $propertyName => $property) {
-            if (!is_array($property) && !is_string($property)) {
+            if (! \is_array($property) && ! \is_string($property)) {
                 throw new InvalidArgumentException('Invalid format for properties to update, expected an array indexed by string matching field name');
             }
 
             // For common properties the value is the field name
-            if (!is_array($property)) {
+            if (! \is_array($property)) {
                 $formattedPropertiesToUpdate[$property] = true;
 
                 continue;
@@ -267,13 +175,6 @@ abstract class AbstractObjectModelRepository
     }
 
     /**
-     * @param int $id
-     * @param string $objectModelClass
-     * @param string $exceptionClass
-     * @param int|null $shopId
-     *
-     * @return ObjectModel
-     *
      * @throws CoreException
      */
     protected function fetchObjectModel(int $id, string $objectModelClass, string $exceptionClass, ?int $shopId): ObjectModel
@@ -281,19 +182,10 @@ abstract class AbstractObjectModelRepository
         try {
             $objectModel = $this->constructObjectModel($id, $objectModelClass, $shopId);
             if ((int) $objectModel->id !== $id) {
-                throw ExceptionBuilder::buildException($exceptionClass, sprintf('%s #%d was not found', $objectModelClass, $id), 0, null, $id);
+                throw ExceptionBuilder::buildException($exceptionClass, \sprintf('%s #%d was not found', $objectModelClass, $id), 0, null, $id);
             }
         } catch (PrestaShopException $e) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to get %s #%d [%s]',
-                    $objectModelClass,
-                    $id,
-                    $e->getMessage()
-                ),
-                0,
-                $e
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to get %s #%d [%s]', $objectModelClass, $id, $e->getMessage()), 0, $e);
         }
 
         return $objectModel;
@@ -301,12 +193,6 @@ abstract class AbstractObjectModelRepository
 
     /**
      * This method can be overridden in case your ObjectModel has a special constructor
-     *
-     * @param int $id
-     * @param string $objectModelClass
-     * @param int|null $shopId
-     *
-     * @return ObjectModel
      */
     protected function constructObjectModel(int $id, string $objectModelClass, ?int $shopId): ObjectModel
     {

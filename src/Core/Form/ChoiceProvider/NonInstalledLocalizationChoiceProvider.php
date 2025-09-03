@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,24 +51,16 @@ final class NonInstalledLocalizationChoiceProvider implements FormChoiceProvider
      */
     private $languagePackList;
 
-    /**
-     * @param array $languagePackList
-     * @param LanguageValidatorInterface $languageValidator
-     * @param LanguageDataProvider $languageProvider
-     */
     public function __construct(
         array $languagePackList,
         LanguageValidatorInterface $languageValidator,
-        LanguageDataProvider $languageProvider
+        LanguageDataProvider $languageProvider,
     ) {
         $this->languageValidator = $languageValidator;
         $this->languageProvider = $languageProvider;
         $this->languagePackList = $languagePackList;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $choices = [];

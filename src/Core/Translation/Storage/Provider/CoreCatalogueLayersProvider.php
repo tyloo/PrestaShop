@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -87,8 +88,6 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
     private $translationDomains;
 
     /**
-     * @param DatabaseTranslationLoader $databaseTranslationLoader
-     * @param string $resourceDirectory
      * @param array<int, string> $filenameFilters
      * @param array<int, string> $translationDomains
      */
@@ -96,7 +95,7 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
         DatabaseTranslationLoader $databaseTranslationLoader,
         string $resourceDirectory,
         array $filenameFilters,
-        array $translationDomains
+        array $translationDomains,
     ) {
         $this->databaseTranslationLoader = $databaseTranslationLoader;
         $this->resourceDirectory = $resourceDirectory;
@@ -105,8 +104,6 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws TranslationFilesNotFoundException
      */
     public function getDefaultCatalogue(string $locale): MessageCatalogue
@@ -114,32 +111,24 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
         return $this->getDefaultCatalogueFinder()->getCatalogue($locale);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFileTranslatedCatalogue(string $locale): MessageCatalogue
     {
         return $this->getFileTranslatedCatalogueFinder()->getCatalogue($locale);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUserTranslatedCatalogue(string $locale): MessageCatalogue
     {
         return $this->getUserTranslatedCatalogueFinder()->getCatalogue($locale);
     }
 
     /**
-     * @return DefaultCatalogueFinder
-     *
      * @throws TranslationFilesNotFoundException
      */
     private function getDefaultCatalogueFinder(): DefaultCatalogueFinder
     {
-        if (null === $this->defaultCatalogueFinder) {
+        if ($this->defaultCatalogueFinder === null) {
             $this->defaultCatalogueFinder = new DefaultCatalogueFinder(
-                $this->resourceDirectory . DIRECTORY_SEPARATOR . 'default',
+                $this->resourceDirectory . \DIRECTORY_SEPARATOR . 'default',
                 $this->filenameFilters
             );
         }
@@ -148,13 +137,11 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
     }
 
     /**
-     * @return FileTranslatedCatalogueFinder
-     *
      * @throws TranslationFilesNotFoundException
      */
     private function getFileTranslatedCatalogueFinder(): FileTranslatedCatalogueFinder
     {
-        if (null === $this->fileTranslatedCatalogueFinder) {
+        if ($this->fileTranslatedCatalogueFinder === null) {
             $this->fileTranslatedCatalogueFinder = new FileTranslatedCatalogueFinder(
                 $this->resourceDirectory,
                 $this->filenameFilters
@@ -164,12 +151,9 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
         return $this->fileTranslatedCatalogueFinder;
     }
 
-    /**
-     * @return UserTranslatedCatalogueFinder
-     */
     private function getUserTranslatedCatalogueFinder(): UserTranslatedCatalogueFinder
     {
-        if (null === $this->userTranslatedCatalogueFinder) {
+        if ($this->userTranslatedCatalogueFinder === null) {
             $this->userTranslatedCatalogueFinder = new UserTranslatedCatalogueFinder(
                 $this->databaseTranslationLoader,
                 $this->translationDomains

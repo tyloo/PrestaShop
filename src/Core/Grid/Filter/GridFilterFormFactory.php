@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,21 +49,14 @@ final class GridFilterFormFactory implements GridFilterFormFactoryInterface
      */
     private $hookDispatcher;
 
-    /**
-     * @param FormFactoryInterface $formFactory
-     * @param HookDispatcherInterface $hookDispatcher
-     */
     public function __construct(
         FormFactoryInterface $formFactory,
-        HookDispatcherInterface $hookDispatcher
+        HookDispatcherInterface $hookDispatcher,
     ) {
         $this->formFactory = $formFactory;
         $this->hookDispatcher = $hookDispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(GridDefinitionInterface $definition)
     {
         $formBuilder = $this->formFactory->createNamedBuilder(
@@ -99,7 +93,7 @@ final class GridFilterFormFactory implements GridFilterFormFactoryInterface
         try {
             if ($filter->getAssociatedColumn()) {
                 $column = $definition->getColumnById($filter->getAssociatedColumn());
-                $filterLabel = !empty($column->getName()) ? $column->getName() : $filterLabel;
+                $filterLabel = ! empty($column->getName()) ? $column->getName() : $filterLabel;
             }
         } catch (ColumnNotFoundException) {
         }

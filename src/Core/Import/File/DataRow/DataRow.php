@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ final class DataRow implements DataRowInterface
      */
     private $cells = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function addCell(DataCellInterface $cell)
     {
         $this->cells[] = $cell;
@@ -51,9 +49,6 @@ final class DataRow implements DataRowInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function createFromArray(array $data)
     {
         $row = new self();
@@ -65,66 +60,45 @@ final class DataRow implements DataRowInterface
         return $row;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetExists($offset): bool
     {
-        return array_key_exists($offset, $this->cells);
+        return \array_key_exists($offset, $this->cells);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetGet($offset)
     {
         return $this->cells[$offset];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetSet($offset, $value): void
     {
         $this->cells[$offset] = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetUnset($offset): void
     {
         unset($this->cells[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->cells);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
-        return count($this->cells);
+        return \count($this->cells);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEmpty()
     {
-        if (0 === count($this->cells)) {
+        if (\count($this->cells) === 0) {
             return true;
         }
 
         foreach ($this->cells as $cell) {
             // If at least one cell is not empty - the row is not empty.
-            if ('' !== $cell->getValue()) {
+            if ($cell->getValue() !== '') {
                 return false;
             }
         }

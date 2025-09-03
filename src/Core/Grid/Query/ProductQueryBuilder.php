@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,7 +78,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         int $contextLanguageId,
         DoctrineFilterApplicatorInterface $filterApplicator,
         Configuration $configuration,
-        ShopGroupRepository $shopGroupRepository
+        ShopGroupRepository $shopGroupRepository,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
@@ -87,9 +88,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->shopGroupRepository = $shopGroupRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria);
@@ -121,7 +119,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         // Any sorting that is not based on position can be applied
         if ($searchCriteria->getOrderBy() !== 'position') {
             $this->searchCriteriaApplicator->applySorting($searchCriteria, $qb);
-        } elseif (array_key_exists('id_category', $searchCriteria->getFilters())) {
+        } elseif (\array_key_exists('id_category', $searchCriteria->getFilters())) {
             // Sort by position only works when we filter by category, so we need to be cautious and apply it only when the filter is present
             $this->searchCriteriaApplicator->applySorting($searchCriteria, $qb);
         }
@@ -129,9 +127,6 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria);
@@ -142,15 +137,11 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder.
-     *
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof ShopSearchCriteriaInterface) {
-            throw new InvalidArgumentException(sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
+        if (! $searchCriteria instanceof ShopSearchCriteriaInterface) {
+            throw new InvalidArgumentException(\sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
         }
 
         $shopId = null;
@@ -212,7 +203,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         ;
 
         $filteredCategoryId = $this->getFilteredCategoryId($filterValues);
-        if (null !== $filteredCategoryId) {
+        if ($filteredCategoryId !== null) {
             $qb
                 ->rightJoin(
                     'p',
@@ -288,28 +279,28 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         }
 
         foreach ($filterValues as $filterName => $filter) {
-            if ('active' === $filterName) {
+            if ($filterName === 'active') {
                 $qb->andWhere('ps.`active` = :active');
                 $qb->setParameter('active', $filter);
             }
 
-            if ('name' === $filterName) {
+            if ($filterName === 'name') {
                 $qb->andWhere('pl.`name` LIKE :name');
                 $qb->setParameter('name', '%' . $filter . '%');
             }
 
-            if ('reference' === $filterName) {
+            if ($filterName === 'reference') {
                 $qb->andWhere('p.`reference` LIKE :reference');
                 $qb->setParameter('reference', '%' . $filter . '%');
             }
 
-            if ('category' === $filterName) {
+            if ($filterName === 'category') {
                 $qb->andWhere('cl.`name` LIKE :category');
                 $qb->setParameter('category', '%' . $filter . '%');
             }
 
             // Filter by position is only relevant when a category has been selected
-            if (array_key_exists('id_category', $filterValues) && 'position' === $filterName) {
+            if (\array_key_exists('id_category', $filterValues) && $filterName === 'position') {
                 $qb->andWhere('pc.`position` = :position');
                 $qb->setParameter('position', $filter);
             }
@@ -323,7 +314,8 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         if ($shopId) {
             // Single shop context simple left join on a single shopId
             return $sql . ' AND ' . $tableAlias . '.`id_shop` = :shopId';
-        } elseif ($filteredShopGroupId) {
+        }
+        if ($filteredShopGroupId) {
             // Group shop context, we add a condition on the left join that the id_shop must be part of the group shop AND be associated with the product
             // And we only select the MIN because we only need the first id_shop which will be used as the default display thus we don't need to use a group by on id_product
             $groupSubQuery = '
@@ -360,7 +352,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
     private function getFilteredCategoryId(array $filterValues): ?int
     {
         foreach ($filterValues as $filterName => $filter) {
-            if ('id_category' === $filterName) {
+            if ($filterName === 'id_category') {
                 return (int) $filter;
             }
         }

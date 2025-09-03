@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,40 +47,26 @@ class CartSummary
      */
     private $totalPrice;
 
-    /**
-     * @param int $cartId
-     * @param string $creationDate
-     * @param string $totalPrice
-     */
     public function __construct(
         int $cartId,
         string $creationDate,
-        string $totalPrice
+        string $totalPrice,
     ) {
         $this->cartId = $cartId;
         $this->creationDate = $creationDate;
         $this->totalPrice = $totalPrice;
     }
 
-    /**
-     * @return int
-     */
     public function getCartId(): int
     {
         return $this->cartId;
     }
 
-    /**
-     * @return string
-     */
     public function getCreationDate(): string
     {
         return $this->creationDate;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalPrice(): string
     {
         return $this->totalPrice;

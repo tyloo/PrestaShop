@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class CustomerDiscountGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $customerFilters = $searchCriteria->getFilters();
@@ -48,7 +46,7 @@ final class CustomerDiscountGridDataFactory implements GridDataFactoryInterface
             $customerFilters['id_customer']
         );
 
-        $discountsToDisplay = array_slice(
+        $discountsToDisplay = \array_slice(
             $allDiscounts,
             (int) $searchCriteria->getOffset(),
             (int) $searchCriteria->getLimit()
@@ -58,7 +56,7 @@ final class CustomerDiscountGridDataFactory implements GridDataFactoryInterface
 
         return new GridData(
             $records,
-            count($allDiscounts)
+            \count($allDiscounts)
         );
     }
 }

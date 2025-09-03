@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,9 +30,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\QueryResult;
 use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\Exception\CmsPageCategoryException;
 use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategoryId;
 
-/**
- * Class EditableCmsPageCategory
- */
 class EditableCmsPageCategory
 {
     /**
@@ -73,14 +71,8 @@ class EditableCmsPageCategory
     private $shopIds;
 
     /**
-     * @param array $localisedName
      * @param bool $isDisplayed
-     * @param int $parentId
-     * @param array $localisedDescription
-     * @param array $localisedMetaDescription
-     * @param array $metaTitle
-     * @param array $localisedFriendlyUrl
-     * @param array $shopIds
+     * @param int  $parentId
      *
      * @throws CmsPageCategoryException
      */
@@ -92,7 +84,7 @@ class EditableCmsPageCategory
         array $localisedMetaDescription,
         array $metaTitle,
         array $localisedFriendlyUrl,
-        array $shopIds
+        array $shopIds,
     ) {
         $this->localisedName = $localisedName;
         $this->isDisplayed = $isDisplayed;

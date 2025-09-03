@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -122,7 +123,7 @@ class EditCartRuleCommand
     private $cartRuleAction;
 
     public function __construct(
-        int $cartRuleId
+        int $cartRuleId,
     ) {
         $this->cartRuleId = new CartRuleId($cartRuleId);
     }
@@ -134,10 +135,8 @@ class EditCartRuleCommand
 
     /**
      * @param array<int, string> $localizedNames names index by language id
-     *
-     * @return EditCartRuleCommand
      */
-    public function setLocalizedNames(array $localizedNames): EditCartRuleCommand
+    public function setLocalizedNames(array $localizedNames): self
     {
         $this->localizedNames = $localizedNames;
 
@@ -152,7 +151,7 @@ class EditCartRuleCommand
         return $this->localizedNames;
     }
 
-    public function setDescription(string $description): EditCartRuleCommand
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -169,7 +168,7 @@ class EditCartRuleCommand
         return $this->highlightInCart;
     }
 
-    public function setHighlightInCart(bool $highlightInCart): EditCartRuleCommand
+    public function setHighlightInCart(bool $highlightInCart): self
     {
         $this->highlightInCart = $highlightInCart;
 
@@ -181,7 +180,7 @@ class EditCartRuleCommand
         return $this->allowPartialUse;
     }
 
-    public function setAllowPartialUse(?bool $allowPartialUse): EditCartRuleCommand
+    public function setAllowPartialUse(?bool $allowPartialUse): self
     {
         $this->allowPartialUse = $allowPartialUse;
 
@@ -193,7 +192,7 @@ class EditCartRuleCommand
         return $this->active;
     }
 
-    public function setActive(bool $active): EditCartRuleCommand
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 
@@ -205,7 +204,7 @@ class EditCartRuleCommand
         return $this->code;
     }
 
-    public function setCode(string $code): EditCartRuleCommand
+    public function setCode(string $code): self
     {
         $this->code = $code;
 
@@ -217,7 +216,7 @@ class EditCartRuleCommand
         return $this->customerId;
     }
 
-    public function setCustomerId(int $customerId): EditCartRuleCommand
+    public function setCustomerId(int $customerId): self
     {
         if ($customerId) {
             $this->customerId = new CustomerId($customerId);
@@ -233,13 +232,10 @@ class EditCartRuleCommand
         return $this->priority;
     }
 
-    public function setPriority(int $priority): EditCartRuleCommand
+    public function setPriority(int $priority): self
     {
-        if (0 >= $priority) {
-            throw new CartRuleConstraintException(
-                sprintf('Invalid cart rule priority "%s". Must be a positive integer.', $priority),
-                CartRuleConstraintException::INVALID_PRIORITY
-            );
+        if ($priority <= 0) {
+            throw new CartRuleConstraintException(\sprintf('Invalid cart rule priority "%s". Must be a positive integer.', $priority), CartRuleConstraintException::INVALID_PRIORITY);
         }
 
         $this->priority = $priority;
@@ -247,7 +243,7 @@ class EditCartRuleCommand
         return $this;
     }
 
-    public function setValidityDateRange(DateTimeImmutable $validFrom, DateTimeImmutable $validTo): EditCartRuleCommand
+    public function setValidityDateRange(DateTimeImmutable $validFrom, DateTimeImmutable $validTo): self
     {
         $this->assertDateRangeIsValid($validFrom, $validTo);
         $this->validFrom = $validFrom;
@@ -271,10 +267,10 @@ class EditCartRuleCommand
         return $this->totalQuantity;
     }
 
-    public function setTotalQuantity(int $quantity): EditCartRuleCommand
+    public function setTotalQuantity(int $quantity): self
     {
-        if (0 > $quantity) {
-            throw new CartRuleConstraintException(sprintf('Quantity cannot be lower than zero, %d given', $quantity), CartRuleConstraintException::INVALID_QUANTITY);
+        if ($quantity < 0) {
+            throw new CartRuleConstraintException(\sprintf('Quantity cannot be lower than zero, %d given', $quantity), CartRuleConstraintException::INVALID_QUANTITY);
         }
 
         $this->totalQuantity = $quantity;
@@ -287,10 +283,10 @@ class EditCartRuleCommand
         return $this->quantityPerUser;
     }
 
-    public function setQuantityPerUser(int $quantity): EditCartRuleCommand
+    public function setQuantityPerUser(int $quantity): self
     {
-        if (0 > $quantity) {
-            throw new CartRuleConstraintException(sprintf('Quantity per user cannot be lower than zero, %d given', $quantity), CartRuleConstraintException::INVALID_QUANTITY_PER_USER);
+        if ($quantity < 0) {
+            throw new CartRuleConstraintException(\sprintf('Quantity per user cannot be lower than zero, %d given', $quantity), CartRuleConstraintException::INVALID_QUANTITY_PER_USER);
         }
 
         $this->quantityPerUser = $quantity;
@@ -307,8 +303,8 @@ class EditCartRuleCommand
         string $minimumAmount,
         int $currencyId,
         bool $taxIncluded,
-        bool $shippingIncluded
-    ): EditCartRuleCommand {
+        bool $shippingIncluded,
+    ): self {
         $this->minimumAmount = new Money(
             new DecimalNumber($minimumAmount),
             new CurrencyId($currencyId),
@@ -329,7 +325,7 @@ class EditCartRuleCommand
         return $this->minimumAmountShippingIncluded;
     }
 
-    public function setCartRuleAction(CartRuleAction $cartRuleAction): EditCartRuleCommand
+    public function setCartRuleAction(CartRuleAction $cartRuleAction): self
     {
         $this->cartRuleAction = $cartRuleAction;
 

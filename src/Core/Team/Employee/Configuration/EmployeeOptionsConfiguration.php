@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,18 +45,12 @@ final class EmployeeOptionsConfiguration implements DataConfigurationInterface
      */
     private $optionsChecker;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration, OptionsCheckerInterface $optionsChecker)
     {
         $this->configuration = $configuration;
         $this->optionsChecker = $optionsChecker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -64,14 +59,11 @@ final class EmployeeOptionsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
 
-        if (!$this->optionsChecker->canBeChanged()) {
+        if (! $this->optionsChecker->canBeChanged()) {
             $errors[] = [
                 'key' => 'You cannot change the value of this configuration field in the context of this shop.',
                 'parameters' => [],
@@ -92,9 +84,6 @@ final class EmployeeOptionsConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         return isset(

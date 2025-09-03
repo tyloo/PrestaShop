@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,19 +44,16 @@ use PrestaShopBundle\Entity\Repository\ImageTypeRepository;
 final class GetImageTypeForEditingHandler implements GetImageTypeForEditingHandlerInterface
 {
     public function __construct(
-        private readonly ImageTypeRepository $imageTypeRepository
+        private readonly ImageTypeRepository $imageTypeRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetImageTypeForEditing $query): EditableImageType
     {
         $imageType = $this->imageTypeRepository->find($query->getImageTypeId()->getValue());
 
-        if (null === $imageType) {
-            throw new ImageTypeNotFoundException(sprintf('Image type with id "%d" not found', $query->getImageTypeId()->getValue()));
+        if ($imageType === null) {
+            throw new ImageTypeNotFoundException(\sprintf('Image type with id "%d" not found', $query->getImageTypeId()->getValue()));
         }
 
         return new EditableImageType(

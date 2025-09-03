@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ interface FormHandlerInterface
      *
      * @param array $data data retrieved from form that need to be persisted in database
      *
-     * @return array $errors if data can't persisted an array of errors messages
+     * @return array if data can't persisted an array of errors messages
      *
      * @throws Exception if the data can't be handled
      */

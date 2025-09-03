@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,9 +67,8 @@ class InvalidProductTypeException extends ProductException
     public const EXPECTED_NO_EXISTING_PACK_ASSOCIATIONS = 60;
 
     /**
-     * @param int $code
+     * @param int    $code
      * @param string $message
-     * @param Throwable|null $previous
      */
     public function __construct($code, $message = '', ?Throwable $previous = null)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,39 +49,27 @@ class ModuleProviderDefinition extends AbstractCoreProviderDefinition
         $this->moduleName = $moduleName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): string
     {
         return ProviderDefinitionInterface::TYPE_MODULES;
     }
 
-    /**
-     * @return string
-     */
     public function getModuleName(): string
     {
         return $this->moduleName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilenameFilters(): array
     {
         return array_map(function (string $filenameFilter) {
-            return sprintf($filenameFilter, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)));
+            return \sprintf($filenameFilter, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)));
         }, self::FILENAME_FILTERS_REGEX);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return array_map(function (string $translationDomain) {
-            return sprintf($translationDomain, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)));
+            return \sprintf($translationDomain, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)));
         }, self::TRANSLATION_DOMAINS_REGEX);
     }
 }

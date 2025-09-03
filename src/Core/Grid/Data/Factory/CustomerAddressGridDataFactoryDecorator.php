@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,18 +42,12 @@ final class CustomerAddressGridDataFactoryDecorator implements GridDataFactoryIn
      */
     private $customerAddressDoctrineGridDataFactory;
 
-    /**
-     * @param GridDataFactoryInterface $customerAddressDoctrineGridDataFactory
-     */
     public function __construct(
-        GridDataFactoryInterface $customerAddressDoctrineGridDataFactory
+        GridDataFactoryInterface $customerAddressDoctrineGridDataFactory,
     ) {
         $this->customerAddressDoctrineGridDataFactory = $customerAddressDoctrineGridDataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $customerData = $this->customerAddressDoctrineGridDataFactory->getData($searchCriteria);

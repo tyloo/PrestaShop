@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,10 +64,6 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
      */
     private $configuration;
 
-    /**
-     * @param Context $context
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(Context $context, ConfigurationInterface $configuration)
     {
         $this->context = $context;
@@ -74,9 +71,6 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ForwardCustomerThreadCommand $command)
     {
         if ($command->forwardToEmployee()) {
@@ -88,8 +82,6 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
 
     /**
      * Forward customer thread to another employee
-     *
-     * @param ForwardCustomerThreadCommand $command
      */
     private function forwardToEmployee(ForwardCustomerThreadCommand $command)
     {
@@ -133,12 +125,12 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
 
         if ($forwardEmailSent) {
             $customerMessage->private = true;
-            $customerMessage->message = sprintf(
+            $customerMessage->message = \sprintf(
                 '%s %s %s %s %s %s',
                 $this->translator->trans('Message forwarded to', [], 'Admin.Catalog.Feature'),
                 $employee->firstname,
                 $employee->lastname,
-                PHP_EOL,
+                \PHP_EOL,
                 $this->translator->trans('Comment:', [], 'Admin.Catalog.Feature'),
                 $command->getComment()
             );
@@ -149,8 +141,6 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
 
     /**
      * Forward customer thread to someone else
-     *
-     * @param ForwardCustomerThreadCommand $command
      */
     private function forwardToSomeoneElse(ForwardCustomerThreadCommand $command)
     {
@@ -189,11 +179,11 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
         );
 
         if ($forwardEmailSent) {
-            $customerMessage->message = sprintf(
+            $customerMessage->message = \sprintf(
                 '%s %s %s %s %s',
                 $this->translator->trans('Message forwarded to', [], 'Admin.Catalog.Feature'),
                 $command->getEmail()->getValue(),
-                PHP_EOL,
+                \PHP_EOL,
                 $this->translator->trans('Comment:', [], 'Admin.Catalog.Feature'),
                 $command->getComment()
             );
@@ -203,7 +193,6 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
     }
 
     /**
-     * @param array $message
      * @param int|null $id_employee
      *
      * @return string
@@ -211,7 +200,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
     protected function renderMessage(array $message, $id_employee = null)
     {
         $tpl = $this->context->smarty->createTemplate(
-            'controllers' . DIRECTORY_SEPARATOR . 'customer_threads/message.tpl',
+            'controllers' . \DIRECTORY_SEPARATOR . 'customer_threads/message.tpl',
             $this->context->smarty
         );
 
@@ -227,7 +216,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
 
         $contacts = $contact_array;
 
-        if (!empty($message['id_product'])
+        if (! empty($message['id_product'])
             && empty($message['employee_name'])
         ) {
             $id_order_product = Order::getIdOrderProduct(
@@ -243,7 +232,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
         $isValidOrderId = true;
         $order = new Order((int) $message['id_order']);
 
-        if (!Validate::isLoadedObject($order)) {
+        if (! Validate::isLoadedObject($order)) {
             $isValidOrderId = false;
         }
 
@@ -274,8 +263,6 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
     }
 
     /**
-     * @param CustomerThreadId $customerThreadId
-     *
      * @return array
      */
     private function getCustomerThreadMessage(CustomerThreadId $customerThreadId)
@@ -298,8 +285,6 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
     }
 
     /**
-     * @param ForwardCustomerThreadCommand $command
-     *
      * @return CustomerMessage
      */
     private function createCustomerMessage(ForwardCustomerThreadCommand $command)
@@ -309,11 +294,8 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
         $customerMessage->id_customer_thread = (int) $command->getCustomerThreadId()->getValue();
         $customerMessage->ip_address = (string) (int) ip2long(Tools::getRemoteAddr());
 
-        if (false === $customerMessage->validateField('message', $command->getComment())) {
-            throw new CustomerServiceException(
-                sprintf('Comment "%s" is not valid.', $command->getComment()),
-                CustomerServiceException::INVALID_COMMENT
-            );
+        if ($customerMessage->validateField('message', $command->getComment()) === false) {
+            throw new CustomerServiceException(\sprintf('Comment "%s" is not valid.', $command->getComment()), CustomerServiceException::INVALID_COMMENT);
         }
 
         return $customerMessage;
@@ -333,7 +315,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
             '<a href="\1">\1</a>\2',
             html_entity_decode(
                 $text,
-                ENT_QUOTES,
+                \ENT_QUOTES,
                 'UTF-8'
             )
         );

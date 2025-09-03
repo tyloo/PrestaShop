@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class InstalledApiResourceScope extends Constraint
 {
     public $message = 'The scopes %scope_names% are not associated to any installed API.';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return InstalledApiResourceScopeValidator::class;

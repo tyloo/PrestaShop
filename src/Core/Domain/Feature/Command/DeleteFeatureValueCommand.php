@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,14 +35,11 @@ class DeleteFeatureValueCommand
     private readonly FeatureValueId $featureValueId;
 
     public function __construct(
-        int $featureValueId
+        int $featureValueId,
     ) {
         $this->featureValueId = new FeatureValueId($featureValueId);
     }
 
-    /**
-     * @return FeatureValueId
-     */
     public function getFeatureValueId(): FeatureValueId
     {
         return $this->featureValueId;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,7 +60,7 @@ class ExceptionBuilder
             }
 
             // One of the parameter is an object ID (it contains id in its name)
-            if (null !== $objectModelId && preg_match('/.*id$/i', $parameterName)) {
+            if ($objectModelId !== null && preg_match('/.*id$/i', $parameterName)) {
                 if ($constructorParameter->getType() instanceof ReflectionNamedType) {
                     $parameterTypeName = $constructorParameter->getType()->getName();
                     // It can be an integer
@@ -96,7 +97,7 @@ class ExceptionBuilder
                 continue;
             }
 
-            throw new InvalidArgumentException(sprintf('Can not prepare parameter %s for class %s', $parameterName, $exceptionClass));
+            throw new InvalidArgumentException(\sprintf('Can not prepare parameter %s for class %s', $parameterName, $exceptionClass));
         }
 
         return $reflectionClass->newInstanceArgs($parameters);

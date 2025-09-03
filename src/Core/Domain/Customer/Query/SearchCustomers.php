@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class SearchCustomers
      */
     public function __construct(
         array $phrases,
-        ?ShopConstraint $shopConstraint = null
+        ?ShopConstraint $shopConstraint = null,
     ) {
         $this->assertPhrasesAreNotEmpty($phrases);
         $this->assertShopConstraintIsSupported($shopConstraint);
@@ -66,9 +67,6 @@ class SearchCustomers
         return $this->phrases;
     }
 
-    /**
-     * @return ShopConstraint|null
-     */
     public function getShopConstraint(): ?ShopConstraint
     {
         return $this->shopConstraint;

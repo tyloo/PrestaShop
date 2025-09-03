@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,59 +33,26 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult\CarrierSummary;
 
 class OrderShipment
 {
-    /**
-     * @var int
-     */
     private int $id;
 
-    /**
-     * @var int
-     */
     private int $orderId;
 
-    /**
-     * @var CarrierSummary
-     */
     private CarrierSummary $carrierSummary;
 
-    /**
-     * @var int
-     */
     private int $addressId;
 
-    /**
-     * @var DecimalNumber
-     */
     private DecimalNumber $shippingCostTaxExcluded;
 
-    /**
-     * @var DecimalNumber
-     */
     private DecimalNumber $shippingCostTaxIncluded;
 
-    /**
-     * @var string
-     */
     private ?string $trackingNumber;
 
-    /**
-     * @var DateTime
-     */
     private ?DateTime $shippedAt;
 
-    /**
-     * @var DateTime
-     */
     private ?DateTime $deliveredAt;
 
-    /**
-     * @var DateTime
-     */
     private ?DateTime $cancelledAt;
 
-    /**
-     * @var int
-     */
     private int $productsCount;
 
     public function __construct(
@@ -98,7 +66,7 @@ class OrderShipment
         ?string $trackingNumber,
         ?DateTime $shippedAt,
         ?DateTime $deliveredAt,
-        ?DateTime $cancelledAt
+        ?DateTime $cancelledAt,
     ) {
         $this->id = $id;
         $this->orderId = $orderId;
@@ -113,89 +81,56 @@ class OrderShipment
         $this->cancelledAt = $cancelledAt;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderId(): int
     {
         return $this->orderId;
     }
 
-    /**
-     * @return CarrierSummary
-     */
     public function getCarrierSummary(): CarrierSummary
     {
         return $this->carrierSummary;
     }
 
-    /**
-     * @return int
-     */
     public function getAddressId(): int
     {
         return $this->addressId;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getShippingCostTaxExcluded(): DecimalNumber
     {
         return $this->shippingCostTaxExcluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getShippingCostTaxIncluded(): DecimalNumber
     {
         return $this->shippingCostTaxIncluded;
     }
 
-    /**
-     * @return string
-     */
     public function getTrackingNumber(): ?string
     {
         return $this->trackingNumber;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getShippedAt(): ?DateTime
     {
         return $this->shippedAt;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getDeliveredAt(): ?DateTime
     {
         return $this->deliveredAt;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getCancelledAt(): ?DateTime
     {
         return $this->cancelledAt;
     }
 
-    /**
-     * @return int
-     */
     public function getProductsCount(): int
     {
         return $this->productsCount;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 trait CustomizationShopConstraintTrait
 {
     /**
-     * @param ShopConstraint $shopConstraint
-     *
      * @throws InvalidShopConstraintException
      */
     protected function checkShopConstraint(ShopConstraint $shopConstraint): void
     {
         if ($shopConstraint->forAllShops() || $shopConstraint->getShopGroupId()) {
-            throw new InvalidShopConstraintException(sprintf(
-                '%s only handles single shop constraint.',
-                self::class
-            ));
+            throw new InvalidShopConstraintException(\sprintf('%s only handles single shop constraint.', self::class));
         }
     }
 }

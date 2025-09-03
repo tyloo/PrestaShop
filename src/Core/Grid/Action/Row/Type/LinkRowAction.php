@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,17 +33,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class LinkRowAction extends AbstractRowAction
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'link';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -75,9 +70,6 @@ final class LinkRowAction extends AbstractRowAction
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isApplicable(array $record)
     {
         $accessibilityChecker = $this->getOptions()['accessibility_checker'];
@@ -86,8 +78,8 @@ final class LinkRowAction extends AbstractRowAction
             return $accessibilityChecker->isGranted($record);
         }
 
-        if (is_callable($accessibilityChecker)) {
-            return call_user_func($accessibilityChecker, $record);
+        if (\is_callable($accessibilityChecker)) {
+            return \call_user_func($accessibilityChecker, $record);
         }
 
         return parent::isApplicable($record);

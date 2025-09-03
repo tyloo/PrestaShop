@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class StoreGridDataFactory implements GridDataFactoryInterface
     private $storeDataFactory;
 
     public function __construct(
-        GridDataFactoryInterface $storeDataFactory
+        GridDataFactoryInterface $storeDataFactory,
     ) {
         $this->storeDataFactory = $storeDataFactory;
     }
@@ -71,12 +72,12 @@ class StoreGridDataFactory implements GridDataFactoryInterface
 
         foreach ($stores as $i => $store) {
             foreach ($store as $key => $value) {
-                if (!in_array($key, $optionalFields, true)) {
+                if (! \in_array($key, $optionalFields, true)) {
                     continue;
                 }
 
                 // adds placeholder "--" to every field which contains empty value
-                if (!$value) {
+                if (! $value) {
                     $stores[$i][$key] = '--';
                 }
             }

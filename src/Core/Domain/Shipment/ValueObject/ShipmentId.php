@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject;
 
 use PrestaShop\PrestaShop\Core\Domain\Shipment\Exception\ShipmentException;
 
-/**
- * Class ShipmentId
- */
 class ShipmentId
 {
     /**
@@ -41,22 +39,17 @@ class ShipmentId
     private $shipmentId;
 
     /**
-     * @param int $shipmentId
-     *
      * @throws ShipmentException
      */
     public function __construct(int $shipmentId)
     {
-        if (0 >= $shipmentId) {
+        if ($shipmentId <= 0) {
             throw new ShipmentException('ShipmentException id must be greater than zero.');
         }
 
         $this->shipmentId = $shipmentId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->shipmentId;

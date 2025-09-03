@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,14 @@ final class ProfileQueryBuilder extends AbstractDoctrineQueryBuilder
     private $languageId;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextLanguageId
+     * @param int    $contextLanguageId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $contextLanguageId
+        $contextLanguageId,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -63,9 +62,6 @@ final class ProfileQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->languageId = $contextLanguageId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -79,9 +75,6 @@ final class ProfileQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -93,8 +86,6 @@ final class ProfileQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get generic query builder.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -114,11 +105,11 @@ final class ProfileQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $name => $value) {
-            if (!in_array($name, $allowedFilters, true)) {
+            if (! \in_array($name, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('id_profile' === $name) {
+            if ($name === 'id_profile') {
                 $qb->andWhere("p.id_profile = :$name");
                 $qb->setParameter($name, $value);
 

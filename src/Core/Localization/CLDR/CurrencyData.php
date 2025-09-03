@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -98,29 +99,29 @@ class CurrencyData
      * @return $this
      *               Fluent interface
      */
-    public function overrideWith(CurrencyData $currencyData)
+    public function overrideWith(self $currencyData)
     {
-        if (null !== $currencyData->getIsoCode()) {
+        if ($currencyData->getIsoCode() !== null) {
             $this->setIsoCode($currencyData->getIsoCode());
         }
 
-        if (null !== $currencyData->getNumericIsoCode()) {
+        if ($currencyData->getNumericIsoCode() !== null) {
             $this->setNumericIsoCode($currencyData->getNumericIsoCode());
         }
 
-        if (null !== $currencyData->isActive()) {
+        if ($currencyData->isActive() !== null) {
             $this->setActive($currencyData->isActive());
         }
 
-        if (null !== $currencyData->getDecimalDigits()) {
+        if ($currencyData->getDecimalDigits() !== null) {
             $this->setDecimalDigits($currencyData->getDecimalDigits());
         }
 
-        if (null !== $currencyData->getDisplayNames()) {
+        if ($currencyData->getDisplayNames() !== null) {
             $this->displayNames = array_merge($this->displayNames ?? [], $currencyData->getDisplayNames());
         }
 
-        if (null !== $currencyData->getSymbols()) {
+        if ($currencyData->getSymbols() !== null) {
             $this->symbols = array_merge($this->symbols ?? [], $currencyData->getSymbols());
         }
 

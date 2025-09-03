@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,14 @@ final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextLangId;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextLangId
+     * @param int    $contextLangId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $contextLangId
+        $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -63,9 +62,6 @@ final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextLangId = $contextLangId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilderByFilters($searchCriteria->getFilters());
@@ -79,9 +75,6 @@ final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilderByFilters($searchCriteria->getFilters());
@@ -92,8 +85,6 @@ final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with common sql needed for manufacturer addresses grid.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -124,10 +115,6 @@ final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param array $filters
-     */
     private function applyFilters(QueryBuilder $qb, array $filters)
     {
         $allowedFiltersMap = [
@@ -142,11 +129,11 @@ final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
         $exactMatchingFilters = ['id_address', 'country'];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap)) {
                 continue;
             }
 
-            if (in_array($filterName, $exactMatchingFilters, true)) {
+            if (\in_array($filterName, $exactMatchingFilters, true)) {
                 if (empty($value)) {
                     continue;
                 }

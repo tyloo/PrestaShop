@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,20 +106,8 @@ class CountryForEditing
     private $shopAssociation;
 
     /**
-     * @param CountryId $countryId
      * @param string[] $localisedNames
-     * @param string $isoCode
-     * @param int $callPrefix
-     * @param int $defaultCurrency
-     * @param int $zone
-     * @param bool $needZipCode
-     * @param ?string $zipCodeFormat
-     * @param string $addressFormat
-     * @param bool $enabled
-     * @param bool $containsStates
-     * @param bool $needIdNumber
-     * @param bool $displayTaxLabel
-     * @param int[] $shopAssociation
+     * @param int[]    $shopAssociation
      */
     public function __construct(
         CountryId $countryId,
@@ -134,7 +123,7 @@ class CountryForEditing
         bool $containsStates,
         bool $needIdNumber,
         bool $displayTaxLabel,
-        array $shopAssociation
+        array $shopAssociation,
     ) {
         $this->countryId = $countryId;
         $this->localizedNames = $localisedNames;
@@ -152,9 +141,6 @@ class CountryForEditing
         $this->shopAssociation = $shopAssociation;
     }
 
-    /**
-     * @return CountryId
-     */
     public function getCountryId(): CountryId
     {
         return $this->countryId;
@@ -168,89 +154,56 @@ class CountryForEditing
         return $this->localizedNames;
     }
 
-    /**
-     * @return string
-     */
     public function getIsoCode(): string
     {
         return $this->isoCode;
     }
 
-    /**
-     * @return int
-     */
     public function getCallPrefix(): int
     {
         return $this->callPrefix;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultCurrency(): int
     {
         return $this->defaultCurrency;
     }
 
-    /**
-     * @return int
-     */
     public function getZone(): int
     {
         return $this->zone;
     }
 
-    /**
-     * @return bool
-     */
     public function isNeedZipCode(): bool
     {
         return $this->needZipCode;
     }
 
-    /**
-     * @return ?CountryZipCodeFormat
-     */
     public function getZipCodeFormat(): ?CountryZipCodeFormat
     {
         return $this->zipCodeFormat;
     }
 
-    /**
-     * @return string
-     */
     public function getAddressFormat(): string
     {
         return $this->addressFormat;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @return bool
-     */
     public function isContainsStates(): bool
     {
         return $this->containsStates;
     }
 
-    /**
-     * @return bool
-     */
     public function isNeedIdNumber(): bool
     {
         return $this->needIdNumber;
     }
 
-    /**
-     * @return bool
-     */
     public function isDisplayTaxLabel(): bool
     {
         return $this->displayTaxLabel;

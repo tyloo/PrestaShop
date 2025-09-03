@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,11 +47,8 @@ final class DeleteProfileAccessibilityChecker implements AccessibilityCheckerInt
         $this->superAdminProfileId = $superAdminProfileId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isGranted(array $profile)
     {
-        return $profile['id_profile'] != $this->superAdminProfileId;
+        return $profile['id_profile'] !== $this->superAdminProfileId;
     }
 }

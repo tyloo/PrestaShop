@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,27 +39,20 @@ class Dimension
     private $decimalValue;
 
     /**
-     * @param string $value
-     *
      * @throws DomainConstraintException
      */
     public function __construct(
-        string $value
+        string $value,
     ) {
         $this->setDecimalValue($value);
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getDecimalValue(): DecimalNumber
     {
         return $this->decimalValue;
     }
 
     /**
-     * @param string $rawValue
-     *
      * @throws DomainConstraintException
      */
     private function setDecimalValue(string $rawValue): void

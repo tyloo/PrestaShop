@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -82,14 +83,12 @@ class Message
      */
     public function isTranslated(): bool
     {
-        return null !== $this->fileTranslation || null !== $this->userTranslation;
+        return $this->fileTranslation !== null || $this->userTranslation !== null;
     }
 
     /**
      * Returns the translated string
      * UserTranslation OR FileTranslation OR Default key
-     *
-     * @return string
      */
     public function getTranslation(): string
     {
@@ -98,10 +97,6 @@ class Message
 
     /**
      * Check if data contains search word.
-     *
-     * @param array $search
-     *
-     * @return bool
      */
     public function contains(array $search): bool
     {
@@ -110,7 +105,7 @@ class Message
         }
 
         foreach ($search as $s) {
-            if (!$this->containsWord($s)) {
+            if (! $this->containsWord($s)) {
                 return false;
             }
         }
@@ -118,9 +113,6 @@ class Message
         return true;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         return [
@@ -136,8 +128,8 @@ class Message
 
         return
             str_contains(strtolower($this->defaultTranslation), $s)
-            || (null !== $this->fileTranslation && str_contains(strtolower($this->fileTranslation), $s))
-            || (null !== $this->userTranslation && str_contains(strtolower($this->userTranslation), $s))
+            || ($this->fileTranslation !== null && str_contains(strtolower($this->fileTranslation), $s))
+            || ($this->userTranslation !== null && str_contains(strtolower($this->userTranslation), $s))
         ;
     }
 }

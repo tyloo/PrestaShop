@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,14 +35,13 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
  */
 final class AttributeFilters extends Filters
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $filterId = AttributeGridDefinitionFactory::GRID_ID;
 
     protected $needsToBePersisted = false;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [

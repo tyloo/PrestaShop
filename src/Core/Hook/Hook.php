@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,6 @@ final class Hook implements HookInterface
 
     /**
      * @param string $name
-     * @param array $parameters
      */
     public function __construct($name, array $parameters = [])
     {
@@ -51,17 +51,11 @@ final class Hook implements HookInterface
         $this->parameters = $parameters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParameters()
     {
         return $this->parameters;

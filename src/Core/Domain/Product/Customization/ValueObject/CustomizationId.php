@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,18 +39,12 @@ class CustomizationId
      */
     private $customizationId;
 
-    /**
-     * @param int $customizationId
-     */
     public function __construct(int $customizationId)
     {
         $this->assertValueIsPositive($customizationId);
         $this->customizationId = $customizationId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->customizationId;
@@ -57,11 +52,8 @@ class CustomizationId
 
     private function assertValueIsPositive(int $value): void
     {
-        if (0 >= $value) {
-            throw new CustomizationConstraintException(
-                sprintf('Customization id must be positive integer. "%s" given', $value),
-                CustomizationConstraintException::INVALID_ID
-            );
+        if ($value <= 0) {
+            throw new CustomizationConstraintException(\sprintf('Customization id must be positive integer. "%s" given', $value), CustomizationConstraintException::INVALID_ID);
         }
     }
 }

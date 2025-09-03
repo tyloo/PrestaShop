@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,14 +50,12 @@ class EditableProfile
     private $avatarUrl;
 
     /**
-     * @param ProfileId $profileId
      * @param string[] $localizedNames
-     * @param string|null $avatarUrl
      */
     public function __construct(
         ProfileId $profileId,
         array $localizedNames,
-        ?string $avatarUrl = null
+        ?string $avatarUrl = null,
     ) {
         $this->profileId = $profileId;
         $this->localizedNames = $localizedNames;
@@ -81,8 +80,6 @@ class EditableProfile
 
     /**
      * @deprecated Since PrestaShop 8.1, this method only returns string (and not null values)
-     *
-     * @return string|null
      */
     public function getAvatarUrl(): ?string
     {

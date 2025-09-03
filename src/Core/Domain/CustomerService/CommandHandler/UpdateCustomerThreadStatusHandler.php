@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,6 @@ class UpdateCustomerThreadStatusHandler implements UpdateCustomerThreadStatusHan
     private $dbPrefix;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
      */
     public function __construct(Connection $connection, $dbPrefix)
@@ -57,9 +57,6 @@ class UpdateCustomerThreadStatusHandler implements UpdateCustomerThreadStatusHan
         $this->dbPrefix = $dbPrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCustomerThreadStatusCommand $command)
     {
         $statement = $this->connection->prepare('
@@ -72,7 +69,7 @@ class UpdateCustomerThreadStatusHandler implements UpdateCustomerThreadStatusHan
         $statement->bindValue(':status', $command->getCustomerThreadStatus()->getValue());
         $statement->bindValue(':id_customer_thread', $command->getCustomerThreadId()->getValue());
 
-        if (0 === $statement->executeStatement()) {
+        if ($statement->executeStatement() === 0) {
             throw new CustomerServiceException('Failed to update customer thread status.', CustomerServiceException::FAILED_TO_UPDATE_STATUS);
         }
     }

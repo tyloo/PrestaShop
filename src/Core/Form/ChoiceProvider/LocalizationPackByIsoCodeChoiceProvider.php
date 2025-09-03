@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,17 +58,11 @@ final class LocalizationPackByIsoCodeChoiceProvider implements FormChoiceProvide
      */
     private $translator;
 
-    /**
-     * @param LocalizationPackLoaderInterface $remoteLocalizationPackLoader
-     * @param LocalizationPackLoaderInterface $localLocalizationPackLoader
-     * @param ConfigurationInterface $configuration
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         LocalizationPackLoaderInterface $remoteLocalizationPackLoader,
         LocalizationPackLoaderInterface $localLocalizationPackLoader,
         ConfigurationInterface $configuration,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->remoteLocalizationPackLoader = $remoteLocalizationPackLoader;
         $this->localLocalizationPackLoader = $localLocalizationPackLoader;
@@ -83,7 +78,7 @@ final class LocalizationPackByIsoCodeChoiceProvider implements FormChoiceProvide
     public function getChoices()
     {
         $localizationPacks = $this->remoteLocalizationPackLoader->getLocalizationPackList();
-        if (null === $localizationPacks) {
+        if ($localizationPacks === null) {
             $localizationPacks = $this->localLocalizationPackLoader->getLocalizationPackList();
         }
 
@@ -108,7 +103,7 @@ final class LocalizationPackByIsoCodeChoiceProvider implements FormChoiceProvide
 
             // if localization pack was not loaded yet and it exists locally
             // then add it to choices list
-            if (!in_array($iso, $choices)) {
+            if (! \in_array($iso, $choices, true)) {
                 $pack = $this->localLocalizationPackLoader->getLocalizationPack($iso);
                 $packName = $this->translator->trans(
                     '%s (local)',

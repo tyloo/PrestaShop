@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class DraggableColumn extends AbstractColumn
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'draggable';
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
     }

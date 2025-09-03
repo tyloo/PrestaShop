@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,8 @@ use Symfony\Component\Finder\Finder;
 
 final class HookExtractor
 {
-    protected array $hooks = [];
-    protected array $excludedDirectories = [
+    private array $hooks = [];
+    private array $excludedDirectories = [
         'var/cache',
         'vendor',
         'app',
@@ -56,7 +57,7 @@ final class HookExtractor
         'node_modules',
         'tests',
     ];
-    protected array $regexList = [
+    private array $regexList = [
         'smarty' => [
             '/(?P<fullImplementation>\{hook\s+h\s*=\s*(["\'])(?P<hookName>.*?)\2(.*?)\})/i',
             '/(?P<fullImplementation>\{hook\s+h\s*=\s*(?P<hookName>\$[\w]+)(.*?)\})/i', // For variable hook names
@@ -68,11 +69,11 @@ final class HookExtractor
         ],
     ];
 
-    protected string $hookAliasesReferenceXml = 'https://raw.githubusercontent.com/PrestaShop/PrestaShop/develop/install-dev/data/xml/hook_alias.xml';
-    protected array $hookAliases = [];
+    private string $hookAliasesReferenceXml = 'https://raw.githubusercontent.com/PrestaShop/PrestaShop/develop/install-dev/data/xml/hook_alias.xml';
+    private array $hookAliases = [];
 
-    protected string $hookInfosReferenceXml = 'https://raw.githubusercontent.com/PrestaShop/PrestaShop/develop/install-dev/data/xml/hook.xml';
-    protected array $hookInfos = [];
+    private string $hookInfosReferenceXml = 'https://raw.githubusercontent.com/PrestaShop/PrestaShop/develop/install-dev/data/xml/hook.xml';
+    private array $hookInfos = [];
 
     public function findHooks(): array
     {
@@ -83,7 +84,7 @@ final class HookExtractor
         return $this->hooks;
     }
 
-    protected function extractHookAliases(): void
+    private function extractHookAliases(): void
     {
         $xmlContent = @simplexml_load_file($this->hookAliasesReferenceXml);
         if ($xmlContent === false) {
@@ -96,14 +97,14 @@ final class HookExtractor
         }
     }
 
-    protected function getAliasesForHook($hookName): array
+    private function getAliasesForHook($hookName): array
     {
         $hookNameLower = strtolower($hookName);
 
         return $this->hookAliases[$hookNameLower] ?? [];
     }
 
-    protected function extractHookInfos(): void
+    private function extractHookInfos(): void
     {
         $xmlContent = @simplexml_load_file($this->hookInfosReferenceXml);
         if ($xmlContent === false) {
@@ -118,21 +119,21 @@ final class HookExtractor
         }
     }
 
-    protected function getHookInfo($hookName): array
+    private function getHookInfo($hookName): array
     {
         $hookNameLower = strtolower($hookName);
 
         return $this->hookInfos[$hookNameLower] ?? [];
     }
 
-    protected function makeRelativePath($path): string
+    private function makeRelativePath($path): string
     {
         $sourcePathWithSlash = rtrim(_PS_ROOT_DIR_, '/') . '/';
 
         return str_replace($sourcePathWithSlash, '', $path);
     }
 
-    protected function scanDirectory(): void
+    private function scanDirectory(): void
     {
         $finder = new Finder();
 
@@ -191,7 +192,7 @@ final class HookExtractor
             $infosToAdd['locations'] = $this->guessLocations($hookName, [$fileRelativePath]);
             $infosToAdd['title'] = $infos['title'] ?? '';
             $infosToAdd['description'] = $infos['description'] ?? '';
-            if (!empty($aliases)) {
+            if (! empty($aliases)) {
                 $infosToAdd['aliases'] = $aliases;
             }
 
@@ -204,7 +205,7 @@ final class HookExtractor
     private function scanFileForRegexHooks($filePath): void
     {
         $fileContent = file_get_contents($filePath);
-        $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+        $fileExtension = pathinfo($filePath, \PATHINFO_EXTENSION);
 
         switch ($fileExtension) {
             case 'tpl':
@@ -222,7 +223,7 @@ final class HookExtractor
     private function matchRegex($patterns, $content, $filePath): void
     {
         foreach ($patterns as $pattern) {
-            if (preg_match_all($pattern, $content, $allMatches, PREG_SET_ORDER)) {
+            if (preg_match_all($pattern, $content, $allMatches, \PREG_SET_ORDER)) {
                 foreach ($allMatches as $matches) {
                     $fullImplementation = $matches['fullImplementation'] ?? '';
                     $hookName = $matches['hookName'] ?? '';
@@ -245,7 +246,7 @@ final class HookExtractor
                         }
                     }
 
-                    if ($hookName == '<HookName>') {
+                    if ($hookName === '<HookName>') {
                         continue;
                     }
 
@@ -276,11 +277,11 @@ final class HookExtractor
     {
         $types = [];
 
-        if (false !== stripos($hookName, 'Admin')) {
+        if (stripos($hookName, 'Admin') !== false) {
             $types[] = 'back office';
         }
 
-        if (false !== stripos($hookName, 'actionObject')) {
+        if (stripos($hookName, 'actionObject') !== false) {
             $types[] = 'back office';
             $types[] = 'front office';
 
@@ -288,7 +289,7 @@ final class HookExtractor
         }
 
         foreach ($locatedIn as $file) {
-            if (false !== stripos($file, 'admin')) {
+            if (stripos($file, 'admin') !== false) {
                 $types[] = 'back office';
             }
         }

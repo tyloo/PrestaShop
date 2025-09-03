@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -120,7 +121,7 @@ class AddOrderStateCommand
         bool $shipped,
         bool $paid,
         bool $delivery,
-        array $localizedTemplates
+        array $localizedTemplates,
     ) {
         $this->setLocalizedNames($localizedNames);
         $this->color = $color;
@@ -250,17 +251,11 @@ class AddOrderStateCommand
         return $this->localizedTemplates;
     }
 
-    /**
-     * @param string $pathName
-     * @param int $fileSize
-     * @param string $mimeType
-     * @param string $originalName
-     */
     public function setFileInformation(
         string $pathName,
         int $fileSize,
         string $mimeType,
-        string $originalName
+        string $originalName,
     ): void {
         $this->pathName = $pathName;
         $this->fileSize = $fileSize;
@@ -268,33 +263,21 @@ class AddOrderStateCommand
         $this->originalName = $originalName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFilePathName(): ?string
     {
         return $this->pathName;
     }
 
-    /**
-     * @return int|null
-     */
     public function getFileSize(): ?int
     {
         return $this->fileSize;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMimeType(): ?string
     {
         return $this->mimeType;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOriginalName(): ?string
     {
         return $this->originalName;

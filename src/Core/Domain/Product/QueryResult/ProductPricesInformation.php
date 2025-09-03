@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -96,20 +97,6 @@ class ProductPricesInformation
      */
     private $specificPricePriorities;
 
-    /**
-     * @param DecimalNumber $price
-     * @param DecimalNumber $priceTaxIncluded
-     * @param DecimalNumber $ecotax
-     * @param DecimalNumber $ecotaxTaxIncluded
-     * @param int $taxRulesGroupId
-     * @param bool $onSale
-     * @param DecimalNumber $wholesalePrice
-     * @param DecimalNumber $unitPrice
-     * @param DecimalNumber $unitPriceTaxIncluded
-     * @param string $unity
-     * @param DecimalNumber $unitPriceRatio
-     * @param PriorityList|null $specificPricePriorities
-     */
     public function __construct(
         DecimalNumber $price,
         DecimalNumber $priceTaxIncluded,
@@ -122,7 +109,7 @@ class ProductPricesInformation
         DecimalNumber $unitPriceTaxIncluded,
         string $unity,
         DecimalNumber $unitPriceRatio,
-        ?PriorityList $specificPricePriorities
+        ?PriorityList $specificPricePriorities,
     ) {
         $this->price = $price;
         $this->priceTaxIncluded = $priceTaxIncluded;
@@ -138,97 +125,61 @@ class ProductPricesInformation
         $this->specificPricePriorities = $specificPricePriorities;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getPrice(): DecimalNumber
     {
         return $this->price;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getPriceTaxIncluded(): DecimalNumber
     {
         return $this->priceTaxIncluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getEcotax(): DecimalNumber
     {
         return $this->ecotax;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getEcotaxTaxIncluded(): DecimalNumber
     {
         return $this->ecotaxTaxIncluded;
     }
 
-    /**
-     * @return int
-     */
     public function getTaxRulesGroupId(): int
     {
         return $this->taxRulesGroupId;
     }
 
-    /**
-     * @return bool
-     */
     public function isOnSale(): bool
     {
         return $this->onSale;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getWholesalePrice(): DecimalNumber
     {
         return $this->wholesalePrice;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getUnitPrice(): DecimalNumber
     {
         return $this->unitPrice;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getUnitPriceTaxIncluded(): DecimalNumber
     {
         return $this->unitPriceTaxIncluded;
     }
 
-    /**
-     * @return string
-     */
     public function getUnity(): string
     {
         return $this->unity;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getUnitPriceRatio(): DecimalNumber
     {
         return $this->unitPriceRatio;
     }
 
-    /**
-     * @return PriorityList|null
-     */
     public function getSpecificPricePriorities(): ?PriorityList
     {
         return $this->specificPricePriorities;

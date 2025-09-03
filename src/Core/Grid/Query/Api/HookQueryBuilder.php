@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,11 +38,6 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class HookQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
@@ -50,9 +46,6 @@ final class HookQueryBuilder extends AbstractDoctrineQueryBuilder
         parent::__construct($connection, $dbPrefix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -65,9 +58,6 @@ final class HookQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -79,8 +69,6 @@ final class HookQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Get generic query builder.
      *
-     * @param array $filters
-     *
      * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters)
@@ -90,42 +78,42 @@ final class HookQueryBuilder extends AbstractDoctrineQueryBuilder
             ->from($this->dbPrefix . 'hook', 'h');
 
         foreach ($filters as $filterName => $filterValue) {
-            if ('id_hook' === $filterName) {
+            if ($filterName === 'id_hook') {
                 $qb->andWhere("h.id_hook = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('title' === $filterName) {
+            if ($filterName === 'title') {
                 $qb->andWhere("h.title LIKE :$filterName");
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('name' === $filterName) {
+            if ($filterName === 'name') {
                 $qb->andWhere("h.name LIKE :$filterName");
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('description' === $filterName) {
+            if ($filterName === 'description') {
                 $qb->andWhere("h.description LIKE :$filterName");
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('position' === $filterName) {
+            if ($filterName === 'position') {
                 $qb->andWhere("h.position = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('active' === $filterName) {
+            if ($filterName === 'active') {
                 $qb->andWhere("h.active = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
 

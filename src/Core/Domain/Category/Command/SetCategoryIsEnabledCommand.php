@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,7 @@ class SetCategoryIsEnabledCommand
     private $isEnabled;
 
     /**
-     * @param int $categoryId
+     * @param int  $categoryId
      * @param bool $isEnabled
      */
     public function __construct($categoryId, $isEnabled)

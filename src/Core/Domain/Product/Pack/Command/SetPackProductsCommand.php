@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,6 @@ class SetPackProductsCommand
     private $products;
 
     /**
-     * @param int $packId
      * @param array $products array of elements where each element contains product information
      *                        which allows building @var QuantifiedProduct
      */
@@ -59,9 +59,6 @@ class SetPackProductsCommand
         $this->setProducts($products);
     }
 
-    /**
-     * @return PackId
-     */
     public function getPackId(): PackId
     {
         return $this->packId;
@@ -75,17 +72,10 @@ class SetPackProductsCommand
         return $this->products;
     }
 
-    /**
-     * @param array $products
-     */
     private function setProducts(array $products): void
     {
         if (empty($products)) {
-            throw new RuntimeException(sprintf(
-                'Empty products array provided in %s. Use %s to remove all pack products',
-                static::class,
-                RemoveAllProductsFromPackCommand::class
-            ));
+            throw new RuntimeException(\sprintf('Empty products array provided in %s. Use %s to remove all pack products', static::class, RemoveAllProductsFromPackCommand::class));
         }
 
         foreach ($products as $product) {
@@ -99,17 +89,12 @@ class SetPackProductsCommand
     }
 
     /**
-     * @param int $quantity
-     *
      * @throws ProductPackConstraintException
      */
     private function assertQuantity(int $quantity): void
     {
         if ($quantity < 0) {
-            throw new ProductPackConstraintException(
-                sprintf('Pack product quantity cannot be negative. Got "%s"', $quantity),
-                ProductPackConstraintException::INVALID_QUANTITY
-            );
+            throw new ProductPackConstraintException(\sprintf('Pack product quantity cannot be negative. Got "%s"', $quantity), ProductPackConstraintException::INVALID_QUANTITY);
         }
     }
 }

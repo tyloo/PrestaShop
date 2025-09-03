@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,20 +54,14 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
     private $doctrineFilterApplicator;
 
     /**
-     * WebserviceKeyQueryBuilder constructor.
-     *
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param array $contextShopIds
-     * @param DoctrineFilterApplicatorInterface $doctrineFilterApplicator
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         array $contextShopIds,
-        DoctrineFilterApplicatorInterface $doctrineFilterApplicator
+        DoctrineFilterApplicatorInterface $doctrineFilterApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
@@ -74,16 +69,13 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->doctrineFilterApplicator = $doctrineFilterApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
         $qb->select('wa.`id_webservice_account`, wa.`key`, wa.`description`, wa.`active`');
 
         $orderBy = $searchCriteria->getOrderBy();
-        if (!empty($orderBy)) {
+        if (! empty($orderBy)) {
             $qb->orderBy(
                 $this->getModifiedOrderBy($orderBy),
                 $searchCriteria->getOrderWay()
@@ -97,9 +89,6 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -110,8 +99,6 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql used for displaying webservice list and applying filter actions.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */

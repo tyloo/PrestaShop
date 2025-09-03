@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,24 +48,17 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
      */
     private $imageUploader;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param ImageUploaderInterface $imageUploader
-     */
     public function __construct(
         CommandBusInterface $commandBus,
-        ImageUploaderInterface $imageUploader
+        ImageUploaderInterface $imageUploader,
     ) {
         $this->commandBus = $commandBus;
         $this->imageUploader = $imageUploader;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
-        if (!isset($data['shop_association']) || !$data['shop_association']) {
+        if (! isset($data['shop_association']) || ! $data['shop_association']) {
             $data['shop_association'] = [];
         }
 
@@ -97,9 +91,6 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
         return $supplierId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($supplierId, array $data)
     {
         /** @var UploadedFile $uploadedLogo */
@@ -118,49 +109,46 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
 
     /**
      * Fills command with provided data
-     *
-     * @param EditSupplierCommand $command
-     * @param array $data
      */
     private function fillCommandWithData(EditSupplierCommand $command, array $data)
     {
-        if (null !== $data['name']) {
+        if ($data['name'] !== null) {
             $command->setName($data['name']);
         }
-        if (null !== $data['description']) {
+        if ($data['description'] !== null) {
             $command->setLocalizedDescriptions($data['description']);
         }
-        if (null !== $data['phone']) {
+        if ($data['phone'] !== null) {
             $command->setPhone($data['phone']);
         }
-        if (null !== $data['mobile_phone']) {
+        if ($data['mobile_phone'] !== null) {
             $command->setMobilePhone($data['mobile_phone']);
         }
-        if (null !== $data['address']) {
+        if ($data['address'] !== null) {
             $command->setAddress($data['address']);
         }
-        if (null !== $data['address2']) {
+        if ($data['address2'] !== null) {
             $command->setAddress2($data['address2']);
         }
-        if (null !== $data['post_code']) {
+        if ($data['post_code'] !== null) {
             $command->setPostCode($data['post_code']);
         }
-        if (null !== $data['city']) {
+        if ($data['city'] !== null) {
             $command->setCity($data['city']);
         }
-        if (null !== $data['id_country']) {
+        if ($data['id_country'] !== null) {
             $command->setCountryId((int) $data['id_country']);
         }
-        if (null !== $data['meta_title']) {
+        if ($data['meta_title'] !== null) {
             $command->setLocalizedMetaTitles($data['meta_title']);
         }
-        if (null !== $data['meta_description']) {
+        if ($data['meta_description'] !== null) {
             $command->setLocalizedMetaDescriptions($data['meta_description']);
         }
-        if (null !== $data['is_enabled']) {
+        if ($data['is_enabled'] !== null) {
             $command->setEnabled((bool) $data['is_enabled']);
         }
-        if (null !== $data['dni']) {
+        if ($data['dni'] !== null) {
             $command->setDni($data['dni']);
         }
 

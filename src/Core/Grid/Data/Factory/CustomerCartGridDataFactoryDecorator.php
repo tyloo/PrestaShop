@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,16 +63,13 @@ final class CustomerCartGridDataFactoryDecorator implements GridDataFactoryInter
     private $queryBus;
 
     /**
-     * @param GridDataFactoryInterface $customerCartDoctrineGridDataFactory
-     * @param LocaleInterface $locale
      * @param string $contextCurrencyIsoCode
-     * @param CommandBusInterface $queryBus
      */
     public function __construct(
         GridDataFactoryInterface $customerCartDoctrineGridDataFactory,
         LocaleInterface $locale,
         $contextCurrencyIsoCode,
-        CommandBusInterface $queryBus
+        CommandBusInterface $queryBus,
     ) {
         $this->customerCartDoctrineGridDataFactory = $customerCartDoctrineGridDataFactory;
         $this->locale = $locale;
@@ -79,9 +77,6 @@ final class CustomerCartGridDataFactoryDecorator implements GridDataFactoryInter
         $this->queryBus = $queryBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $customerData = $this->customerCartDoctrineGridDataFactory->getData($searchCriteria);
@@ -96,8 +91,6 @@ final class CustomerCartGridDataFactoryDecorator implements GridDataFactoryInter
     }
 
     /**
-     * @param RecordCollectionInterface $records
-     *
      * @return RecordCollection
      */
     private function applyModifications(RecordCollectionInterface $records)

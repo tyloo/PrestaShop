@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,13 +42,13 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueDiscountCodeValidator extends ConstraintValidator
 {
     public function __construct(
-        protected readonly DiscountRepository $discountRepository
+        protected readonly DiscountRepository $discountRepository,
     ) {
     }
 
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof UniqueDiscountCode) {
+        if (! $constraint instanceof UniqueDiscountCode) {
             throw new UnexpectedTypeException($constraint, UniqueDiscountCode::class);
         }
 
@@ -65,7 +66,7 @@ class UniqueDiscountCodeValidator extends ConstraintValidator
 
         // If we don't have discount with this code, or if the existing discount
         // is the same as the one being edited => no violation
-        if (null === $existingDiscountId || isset($formData['id']) && $existingDiscountId === $formData['id']) {
+        if ($existingDiscountId === null || isset($formData['id']) && $existingDiscountId === $formData['id']) {
             return;
         }
 

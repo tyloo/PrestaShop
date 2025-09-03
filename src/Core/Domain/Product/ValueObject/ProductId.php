@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class ProductId
     private $productId;
 
     /**
-     * @param int $productId
-     *
      * @throws ProductConstraintException
      */
     public function __construct(int $productId)
@@ -49,26 +48,17 @@ class ProductId
         $this->productId = $productId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @param int $productId
-     */
     private function assertIntegerIsGreaterThanZero(int $productId): void
     {
         if ($productId > 0) {
             return;
         }
 
-        throw new ProductConstraintException(
-            sprintf('Product id %s is invalid. Product id must be an integer greater than zero.', $productId),
-            ProductConstraintException::INVALID_ID
-        );
+        throw new ProductConstraintException(\sprintf('Product id %s is invalid. Product id must be an integer greater than zero.', $productId), ProductConstraintException::INVALID_ID);
     }
 }

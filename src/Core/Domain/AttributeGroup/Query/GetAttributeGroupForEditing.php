@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class GetAttributeGroupForEditing
      */
     private $attributeGroupId;
 
-    /**
-     * @param int $attributeGroupId
-     */
     public function __construct(int $attributeGroupId)
     {
         $this->attributeGroupId = new AttributeGroupId($attributeGroupId);
     }
 
-    /**
-     * @return AttributeGroupId
-     */
     public function getAttributeGroupId(): AttributeGroupId
     {
         return $this->attributeGroupId;

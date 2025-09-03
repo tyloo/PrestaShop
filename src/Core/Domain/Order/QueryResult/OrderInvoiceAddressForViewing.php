@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,13 +28,13 @@
 namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 
 @trigger_error(
-    sprintf(
+    \sprintf(
         '%s is deprecated since version 1.7.7.5 and will be removed in the next major version. Use %s::%s instead.',
         OrderInvoiceAddressForViewing::class,
         OrderForViewing::class,
         'getInvoiceAddressFormatted()'
     ),
-    E_USER_DEPRECATED
+    \E_USER_DEPRECATED
 );
 
 /**
@@ -112,19 +113,6 @@ class OrderInvoiceAddressForViewing
     private $dni;
 
     /**
-     * @param int $addressId
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $companyName
-     * @param string $address1
-     * @param string $address2
-     * @param string $stateName
-     * @param string $cityName
-     * @param string $countryName
-     * @param string $postCode
-     * @param string $phone
-     * @param string $phoneMobile
-     * @param string|null $vatNumber
      * @param string|null $dni If null the DNI is not required for the country, else string
      */
     public function __construct(
@@ -141,7 +129,7 @@ class OrderInvoiceAddressForViewing
         string $phone,
         string $phoneMobile,
         ?string $vatNumber = null,
-        ?string $dni = null
+        ?string $dni = null,
     ) {
         $this->addressId = $addressId;
         $this->firstName = $firstName;
@@ -159,73 +147,46 @@ class OrderInvoiceAddressForViewing
         $this->dni = $dni;
     }
 
-    /**
-     * @return int
-     */
     public function getAddressId(): int
     {
         return $this->addressId;
     }
 
-    /**
-     * @return string
-     */
     public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @return string
-     */
     public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
     public function getFullName(): string
     {
-        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+        return \sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 
-    /**
-     * @return string
-     */
     public function getCompanyName(): string
     {
         return $this->companyName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getVatNumber(): ?string
     {
         return $this->vatNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getAddress1(): string
     {
         return $this->address1;
     }
 
-    /**
-     * @return string
-     */
     public function getAddress2(): string
     {
         return $this->address2;
     }
 
-    /**
-     * @return string
-     */
     public function getCityName(): string
     {
         return $this->cityName;
@@ -233,49 +194,32 @@ class OrderInvoiceAddressForViewing
 
     /**
      * If null the DNI is not required for the country, else string
-     *
-     * @return string|null
      */
     public function getDni(): ?string
     {
         return $this->dni;
     }
 
-    /**
-     * @return string
-     */
     public function getStateName(): string
     {
         return $this->stateName;
     }
 
-    /**
-     * @return string
-     */
     public function getCountryName(): string
     {
         return $this->countryName;
     }
 
-    /**
-     * @return string
-     */
     public function getPostCode(): string
     {
         return $this->postCode;
     }
 
-    /**
-     * @return string
-     */
     public function getPhoneNumber(): string
     {
         return $this->phoneNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getMobilePhoneNumber(): string
     {
         return $this->mobilePhoneNumber;

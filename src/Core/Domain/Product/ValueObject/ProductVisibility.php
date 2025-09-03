@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,39 +53,24 @@ class ProductVisibility
      */
     private $value;
 
-    /**
-     * @param string $value
-     */
     public function __construct(string $value)
     {
         $this->assertIsValidVisibilityValue($value);
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
-     *
      * @throws ProductConstraintException
      */
     private function assertIsValidVisibilityValue(string $value): void
     {
-        if (!in_array($value, self::AVAILABLE_VISIBILITY_VALUES, true)) {
-            throw new ProductConstraintException(
-                sprintf(
-                    'Invalid product visibility "%s". Allowed values are: "%s"',
-                    $value,
-                    implode(',', self::AVAILABLE_VISIBILITY_VALUES)
-                ),
-                ProductConstraintException::INVALID_VISIBILITY
-            );
+        if (! \in_array($value, self::AVAILABLE_VISIBILITY_VALUES, true)) {
+            throw new ProductConstraintException(\sprintf('Invalid product visibility "%s". Allowed values are: "%s"', $value, implode(',', self::AVAILABLE_VISIBILITY_VALUES)), ProductConstraintException::INVALID_VISIBILITY);
         }
     }
 }

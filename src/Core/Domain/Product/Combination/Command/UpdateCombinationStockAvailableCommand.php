@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,88 +60,61 @@ class UpdateCombinationStockAvailableCommand
      */
     private $shopConstraint;
 
-    /**
-     * @param int $combinationId
-     */
     public function __construct(
         int $combinationId,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->combinationId = new CombinationId($combinationId);
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return CombinationId
-     */
     public function getCombinationId(): CombinationId
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getDeltaQuantity(): ?int
     {
         return $this->deltaQuantity;
     }
 
     /**
-     * @param int $deltaQuantity
-     *
      * @return $this
      */
     public function setDeltaQuantity(int $deltaQuantity): self
     {
-        if (null !== $this->fixedQuantity) {
-            throw new ProductStockConstraintException(
-                'Cannot set $deltaQuantity, because $fixedQuantity is already set',
-                ProductStockConstraintException::FIXED_AND_DELTA_QUANTITY_PROVIDED
-            );
+        if ($this->fixedQuantity !== null) {
+            throw new ProductStockConstraintException('Cannot set $deltaQuantity, because $fixedQuantity is already set', ProductStockConstraintException::FIXED_AND_DELTA_QUANTITY_PROVIDED);
         }
         $this->deltaQuantity = $deltaQuantity;
 
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getFixedQuantity(): ?int
     {
         return $this->fixedQuantity;
     }
 
     /**
-     * @param int $fixedQuantity
-     *
      * @return $this
      */
     public function setFixedQuantity(int $fixedQuantity): self
     {
         if ($this->deltaQuantity) {
-            throw new ProductStockConstraintException(
-                'Cannot set $fixedQuantity, because $deltaQuantity is already set',
-                ProductStockConstraintException::FIXED_AND_DELTA_QUANTITY_PROVIDED
-            );
+            throw new ProductStockConstraintException('Cannot set $fixedQuantity, because $deltaQuantity is already set', ProductStockConstraintException::FIXED_AND_DELTA_QUANTITY_PROVIDED);
         }
         $this->fixedQuantity = $fixedQuantity;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLocation(): ?string
     {
         return $this->location;
     }
 
     /**
-     * @param string $location
-     *
      * @return $this
      */
     public function setLocation(string $location): self
@@ -150,9 +124,6 @@ class UpdateCombinationStockAvailableCommand
         return $this;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

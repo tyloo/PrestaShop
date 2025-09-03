@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -100,8 +101,8 @@ class AddCategoryCommand
     /**
      * @param string[] $localizedNames
      * @param string[] $localizedLinkRewrites
-     * @param bool $isActive
-     * @param int $parentCategoryId
+     * @param bool     $isActive
+     * @param int      $parentCategoryId
      *
      * @throws CategoryConstraintException
      */
@@ -131,8 +132,8 @@ class AddCategoryCommand
      */
     public function setParentCategoryId($parentCategoryId)
     {
-        if (!is_int($parentCategoryId) || 0 >= $parentCategoryId) {
-            throw new CategoryConstraintException(sprintf('Invalid Category parent id %s supplied', var_export($parentCategoryId, true)), CategoryConstraintException::INVALID_PARENT_ID);
+        if (! \is_int($parentCategoryId) || $parentCategoryId <= 0) {
+            throw new CategoryConstraintException(\sprintf('Invalid Category parent id %s supplied', var_export($parentCategoryId, true)), CategoryConstraintException::INVALID_PARENT_ID);
         }
 
         $this->parentCategoryId = $parentCategoryId;
@@ -249,7 +250,7 @@ class AddCategoryCommand
      */
     public function setIsActive($isActive)
     {
-        if (!is_bool($isActive)) {
+        if (! \is_bool($isActive)) {
             throw new CategoryConstraintException('Invalid Category status supplied', CategoryConstraintException::INVALID_STATUS);
         }
 
@@ -338,33 +339,21 @@ class AddCategoryCommand
         return $this;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
     public function getCoverImage(): ?UploadedFile
     {
         return $this->coverImage;
     }
 
-    /**
-     * @param UploadedFile|null $coverImage
-     */
     public function setCoverImage(?UploadedFile $coverImage): void
     {
         $this->coverImage = $coverImage;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
     public function getThumbnailImage(): ?UploadedFile
     {
         return $this->thumbnailImage;
     }
 
-    /**
-     * @param UploadedFile|null $thumbnailImage
-     */
     public function setThumbnailImage(?UploadedFile $thumbnailImage): void
     {
         $this->thumbnailImage = $thumbnailImage;

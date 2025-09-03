@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,30 +44,24 @@ class ProductImageFormDataHandler implements FormDataHandlerInterface
      */
     private $bus;
 
-    /**
-     * @param CommandBusInterface $bus
-     */
     public function __construct(
-        CommandBusInterface $bus
+        CommandBusInterface $bus,
     ) {
         $this->bus = $bus;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function create(array $data)
     {
         $uploadedFile = $data['file'] ?? null;
 
-        if (!($uploadedFile instanceof UploadedFile)) {
-            throw new FileUploadException('No file was uploaded', UPLOAD_ERR_NO_FILE);
+        if (! ($uploadedFile instanceof UploadedFile)) {
+            throw new FileUploadException('No file was uploaded', \UPLOAD_ERR_NO_FILE);
         }
 
         $command = new AddProductImageCommand(
             (int) ($data['product_id'] ?? 0),
             $uploadedFile->getPathname(),
-            !empty($data['shop_id']) ? ShopConstraint::shop((int) $data['shop_id']) : ShopConstraint::allShops()
+            ! empty($data['shop_id']) ? ShopConstraint::shop((int) $data['shop_id']) : ShopConstraint::allShops()
         );
 
         /** @var ImageId $imageId */
@@ -75,12 +70,9 @@ class ProductImageFormDataHandler implements FormDataHandlerInterface
         return $imageId->getValue();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function update($id, array $data)
     {
-        if (!empty($data['shop_id'])) {
+        if (! empty($data['shop_id'])) {
             $shopConstraint = ShopConstraint::shop((int) $data['shop_id']);
         } else {
             $shopConstraint = ShopConstraint::allShops();

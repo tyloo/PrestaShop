@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,23 +42,17 @@ class BulkFeatureException extends FeatureException implements BulkCommandExcept
 
     /**
      * @param Throwable[] $exceptions
-     * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
      */
     public function __construct(
         array $exceptions,
         string $message = 'Errors occurred during Feature bulk action',
         int $code = 0,
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         $this->exceptions = $exceptions;
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getExceptions(): array
     {
         return $this->exceptions;

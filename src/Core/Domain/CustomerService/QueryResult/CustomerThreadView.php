@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,13 +71,8 @@ class CustomerThreadView
     private $timeline;
 
     /**
-     * @param CustomerThreadId $customerThreadId
-     * @param LanguageId $languageId
-     * @param array $actions
-     * @param CustomerInformation $customerInformation
-     * @param string $contactName
+     * @param string                  $contactName
      * @param CustomerThreadMessage[] $messages
-     * @param CustomerThreadTimeline $timeline
      */
     public function __construct(
         CustomerThreadId $customerThreadId,
@@ -85,7 +81,7 @@ class CustomerThreadView
         CustomerInformation $customerInformation,
         $contactName,
         array $messages,
-        CustomerThreadTimeline $timeline
+        CustomerThreadTimeline $timeline,
     ) {
         $this->customerThreadId = $customerThreadId;
         $this->actions = $actions;

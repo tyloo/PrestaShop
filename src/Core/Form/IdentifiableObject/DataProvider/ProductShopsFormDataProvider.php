@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,21 +49,14 @@ class ProductShopsFormDataProvider implements FormDataProviderInterface
      */
     private $contextShopId;
 
-    /**
-     * @param ProductRepository $productRepository
-     * @param int|null $contextShopId
-     */
     public function __construct(
         ProductRepository $productRepository,
-        ?int $contextShopId
+        ?int $contextShopId,
     ) {
         $this->productRepository = $productRepository;
         $this->contextShopId = $contextShopId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getData($id)
     {
         $associatedShopIds = $this->productRepository->getAssociatedShopIds(new ProductId($id));
@@ -77,9 +71,6 @@ class ProductShopsFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultData()
     {
         // This form is not used for creation only update anyway

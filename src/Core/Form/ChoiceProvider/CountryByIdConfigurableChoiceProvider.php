@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,13 +49,9 @@ final class CountryByIdConfigurableChoiceProvider implements ConfigurableFormCho
      */
     private $langId;
 
-    /**
-     * @param int $langId
-     * @param CountryDataProvider $countryDataProvider
-     */
     public function __construct(
         int $langId,
-        CountryDataProvider $countryDataProvider
+        CountryDataProvider $countryDataProvider,
     ) {
         $this->langId = $langId;
         $this->countryDataProvider = $countryDataProvider;

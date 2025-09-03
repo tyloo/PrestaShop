@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,47 +68,32 @@ final class OutstandingGridDefinitionFactory extends AbstractGridDefinitionFacto
      */
     private $contextDateFormat;
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param ConfigurationInterface $configuration
-     * @param int $languageId
-     * @param string $contextDateFormat
-     */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         ConfigurationInterface $configuration,
         int $languageId,
-        string $contextDateFormat
+        string $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
 
         $this->configuration = $configuration;
         $this->contextDateFormat = $contextDateFormat;
         foreach (Risk::getRisks($languageId) as $risk) {
-            /* @var $risk Risk */
+            /** @var Risk $risk */
             $this->risks[$risk->name] = $risk->id;
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Outstanding', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())

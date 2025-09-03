@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,25 +58,16 @@ final class CustomerAddressGridDefinitionFactory extends AbstractGridDefinitionF
         $this->backUrl = $currentRequest ? $currentRequest->getUri() : '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Addresses', [], 'Admin.Global');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -154,9 +146,6 @@ final class CustomerAddressGridDefinitionFactory extends AbstractGridDefinitionF
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getViewOptions()
     {
         return (new ViewOptionsCollection())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Theme\ValueObject;
 
 use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\InvalidThemeNameException;
 
-/**
- * Class ThemeName
- */
 class ThemeName
 {
     /**
@@ -64,7 +62,7 @@ class ThemeName
      */
     private function assertThemeNameIsNotEmptyString($themeName)
     {
-        if (!is_string($themeName) || empty($themeName)) {
+        if (! \is_string($themeName) || empty($themeName)) {
             throw new InvalidThemeNameException('Theme name cannot be empty.');
         }
     }
@@ -76,8 +74,8 @@ class ThemeName
      */
     private function assertThemeNameMatchesPattern($themeName)
     {
-        if (!preg_match('/^[a-zA-Z0-9_.-]+$/', $themeName)) {
-            throw new InvalidThemeNameException(sprintf('Invalid theme name %s provided.', var_export($themeName, true)));
+        if (! preg_match('/^[a-zA-Z0-9_.-]+$/', $themeName)) {
+            throw new InvalidThemeNameException(\sprintf('Invalid theme name %s provided.', var_export($themeName, true)));
         }
     }
 }

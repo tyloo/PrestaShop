@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,14 +45,12 @@ class DiscountId
     }
 
     /**
-     * @param int $value
-     *
      * @throws DiscountConstraintException
      */
     private function assertIsPositiveInt(int $value): void
     {
-        if (0 >= $value) {
-            throw new DiscountConstraintException(sprintf('Invalid discount id "%s".', $value), DiscountConstraintException::INVALID_ID);
+        if ($value <= 0) {
+            throw new DiscountConstraintException(\sprintf('Invalid discount id "%s".', $value), DiscountConstraintException::INVALID_ID);
         }
     }
 }

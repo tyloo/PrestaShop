@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class DeleteSupplierLogoImageCommand
     private $supplierId;
 
     /**
-     * @param int $supplierId
-     *
      * @throws SupplierException
      */
     public function __construct(int $supplierId)
@@ -51,9 +50,6 @@ class DeleteSupplierLogoImageCommand
         $this->supplierId = new SupplierId($supplierId);
     }
 
-    /**
-     * @return SupplierId
-     */
     public function getSupplierId(): SupplierId
     {
         return $this->supplierId;

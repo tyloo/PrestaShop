@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,13 @@ class TaxRulesGroupQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param array $contextShopIds
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -63,9 +61,6 @@ class TaxRulesGroupQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -82,9 +77,6 @@ class TaxRulesGroupQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this
@@ -94,10 +86,6 @@ class TaxRulesGroupQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql used for displaying tax rule groups list and applying filter actions.
-     *
-     * @param array $filters
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters): QueryBuilder
     {
@@ -122,9 +110,6 @@ class TaxRulesGroupQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Tax rule groups list filtering
-     *
-     * @param QueryBuilder $qb
-     * @param array $filters
      */
     private function applyFilters(QueryBuilder $qb, array $filters): void
     {
@@ -135,11 +120,11 @@ class TaxRulesGroupQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap)) {
                 continue;
             }
 
-            if (in_array($filterName, ['name', 'id_tax_rules_group'])) {
+            if (\in_array($filterName, ['name', 'id_tax_rules_group'], true)) {
                 $qb
                     ->andWhere($allowedFiltersMap[$filterName] . ' LIKE :' . $filterName)
                     ->setParameter($filterName, '%' . $this->escapePercent($value) . '%');

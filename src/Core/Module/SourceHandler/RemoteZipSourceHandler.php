@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,15 +58,12 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
      */
     private $moduleName;
 
-    /**
-     * @var mixed
-     */
     private $handledSource;
 
     public function __construct(
         ZipSourceHandler $zipSourceHandler,
         HttpClientInterface $httpClient,
-        string $downloadDir
+        string $downloadDir,
     ) {
         $this->zipSourceHandler = $zipSourceHandler;
         $this->httpClient = $httpClient;
@@ -74,7 +72,7 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
 
     public function canHandle($source): bool
     {
-        if (!is_string($source)) {
+        if (! \is_string($source)) {
             return false;
         }
 
@@ -100,7 +98,7 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
 
         $contentType = isset($headers['content-type']) ? reset($headers['content-type']) : null;
 
-        if (!empty($this->moduleName)
+        if (! empty($this->moduleName)
             && $response->getStatusCode() === 200
             && (
                 $contentType === 'application/zip' || $contentType === 'application/octet-stream'
@@ -127,14 +125,14 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
 
         $filesystem = new Filesystem();
         $path = $this->getDownloadDir($this->getModuleName($source));
-        $filesystem->mkdir(dirname($path));
+        $filesystem->mkdir(\dirname($path));
         $filesystem->dumpFile($path, $this->httpClient->request('GET', $source)->getContent());
         $this->zipSourceHandler->handle($path);
     }
 
     private function getDownloadDir(string $moduleName): string
     {
-        return implode(DIRECTORY_SEPARATOR, [$this->downloadDir, $moduleName . '.zip']);
+        return implode(\DIRECTORY_SEPARATOR, [$this->downloadDir, $moduleName . '.zip']);
     }
 
     private function assertSourceHasBeenChecked($source): void

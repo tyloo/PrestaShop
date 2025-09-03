@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,17 +46,11 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $employeeIdLang;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param string $employeeIdLang
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        string $employeeIdLang
+        string $employeeIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -63,9 +58,6 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->employeeIdLang = $employeeIdLang;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -83,9 +75,6 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -97,10 +86,6 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql used for displaying webservice list and applying filter actions.
-     *
-     * @param array $filters
-     *
-     * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters): QueryBuilder
     {
@@ -134,9 +119,6 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply filters to attachments query builder.
-     *
-     * @param array $filters
-     * @param QueryBuilder $qb
      */
     private function applyFilters(QueryBuilder $qb, array $filters)
     {
@@ -148,18 +130,18 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap)) {
                 continue;
             }
 
-            if ('id_attachment' === $filterName) {
+            if ($filterName === 'id_attachment') {
                 $qb->andWhere($allowedFiltersMap[$filterName] . ' = :' . $filterName);
                 $qb->setParameter($filterName, $value);
 
                 continue;
             }
 
-            if ('products' === $filterName && $value === '0') {
+            if ($filterName === 'products' && $value === '0') {
                 $qb->andWhere($allowedFiltersMap[$filterName] . ' IS NULL');
 
                 $qb->setParameter($filterName, $value);

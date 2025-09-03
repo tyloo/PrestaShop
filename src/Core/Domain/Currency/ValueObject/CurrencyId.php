@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,25 +43,17 @@ class CurrencyId implements CurrencyIdInterface
     private $currencyId;
 
     /**
-     * @param int $currencyId
-     *
      * @throws CurrencyException
      */
     public function __construct(int $currencyId)
     {
         if ($currencyId <= 0) {
-            throw new CurrencyConstraintException(
-                sprintf('Invalid Currency id: %d', $currencyId),
-                CurrencyConstraintException::INVALID_ID
-            );
+            throw new CurrencyConstraintException(\sprintf('Invalid Currency id: %d', $currencyId), CurrencyConstraintException::INVALID_ID);
         }
 
         $this->currencyId = $currencyId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->currencyId;

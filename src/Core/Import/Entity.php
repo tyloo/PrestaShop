@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,11 +65,11 @@ final class Entity
      */
     public static function getFromName($importType)
     {
-        if (array_key_exists($importType, self::AVAILABLE_TYPES)) {
+        if (\array_key_exists($importType, self::AVAILABLE_TYPES)) {
             return self::AVAILABLE_TYPES[$importType];
         }
 
-        throw new NotSupportedImportTypeException(sprintf('Import type with name "%s" is not supported.', $importType));
+        throw new NotSupportedImportTypeException(\sprintf('Import type with name "%s" is not supported.', $importType));
     }
 
     /**

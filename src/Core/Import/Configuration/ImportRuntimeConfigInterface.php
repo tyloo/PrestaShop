@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,7 +68,6 @@ interface ImportRuntimeConfigInterface
      * Add a shared data item.
      *
      * @param string $key
-     * @param mixed $value
      */
     public function addSharedDataItem($key, $value);
 
@@ -123,8 +123,6 @@ interface ImportRuntimeConfigInterface
     /**
      * Set notices that occurred during the import process.
      *
-     * @param array $notices
-     *
      * @return array
      */
     public function setNotices(array $notices);
@@ -132,16 +130,12 @@ interface ImportRuntimeConfigInterface
     /**
      * Set warnings that occurred during the import process.
      *
-     * @param array $warnings
-     *
      * @return array
      */
     public function setWarnings(array $warnings);
 
     /**
      * Set errors that occurred during the import process.
-     *
-     * @param array $errors
      *
      * @return array
      */

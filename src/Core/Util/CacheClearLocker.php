@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class CacheClearLocker
      * Until then any other process will have to wait until the file is unlocked.
      *
      * @param string $environment Kernel environment (prod, dev, test)
-     * @param string $appId Kernel application ID (admin, admin-api, front)
+     * @param string $appId       Kernel application ID (admin, admin-api, front)
      *
      * @return bool returns boolean indicating if the lock file was successfully locked
      */
@@ -57,14 +58,14 @@ class CacheClearLocker
     {
         $lockPath = self::getClearCacheLockPath($environment, $appId);
         $lockStream = fopen($lockPath, 'w');
-        if (false === $lockStream) {
+        if ($lockStream === false) {
             // Could not open writable lock for some reason
             return false;
         }
 
         // Non-blocking flock, if false is returned it means the file is already locked (meaning the cache is being cleared by another process)
-        $fileLocked = flock($lockStream, LOCK_EX | LOCK_NB);
-        if (false === $fileLocked) {
+        $fileLocked = flock($lockStream, \LOCK_EX | \LOCK_NB);
+        if ($fileLocked === false) {
             // Clear cache is already locked by another process, so we simply return
             fclose($lockStream);
 
@@ -82,14 +83,12 @@ class CacheClearLocker
      * Release the lock on the file, this will unblock processes that were waiting for it.
      *
      * @param string $environment Kernel environment (prod, dev, test)
-     * @param string $appId Kernel application ID (admin, admin-api, front)
-     *
-     * @return void
+     * @param string $appId       Kernel application ID (admin, admin-api, front)
      */
     public static function unlock(string $environment, string $appId): void
     {
         $lockPath = self::getClearCacheLockPath($environment, $appId);
-        if (!isset(self::$lockStream[$lockPath])) {
+        if (! isset(self::$lockStream[$lockPath])) {
             return;
         }
 
@@ -103,9 +102,7 @@ class CacheClearLocker
      * executes instantaneously.
      *
      * @param string $environment Kernel environment (prod, dev, test)
-     * @param string $appId Kernel application ID (admin, admin-api, front)
-     *
-     * @return void
+     * @param string $appId       Kernel application ID (admin, admin-api, front)
      */
     public static function waitUntilUnlocked(string $environment, string $appId): void
     {
@@ -124,19 +121,19 @@ class CacheClearLocker
         }
 
         // No lock file no need to wait for its unlock
-        if (!file_exists($lockPath)) {
+        if (! file_exists($lockPath)) {
             return;
         }
 
         $lockStream = fopen($lockPath, 'w');
-        if (false === $lockStream) {
+        if ($lockStream === false) {
             // Could not open writable lock for some reason
             return;
         }
 
         // Check if the lock file is currently locked (see locksCacheClear responsible for locking this file), this
         // function call is blocking until the lock has been released.
-        flock($lockStream, LOCK_SH);
+        flock($lockStream, \LOCK_SH);
 
         // Now that the file is unlocked it means the cache has been cleared we can safely continue the process as the container
         // has been rebuilt and is good to go.
@@ -148,7 +145,7 @@ class CacheClearLocker
      */
     protected static function unlockCacheStream($lockStream, string $lockPath): void
     {
-        flock($lockStream, LOCK_UN);
+        flock($lockStream, \LOCK_UN);
         fclose($lockStream);
 
         // Also remove the lock file so that the lock check is ignored right away
@@ -163,15 +160,13 @@ class CacheClearLocker
      * to be removed when that happens, or the lock file to prevent the removal either.
      *
      * @param string $environment Kernel environment (prod, dev, test)
-     * @param string $appId Kernel application ID (admin, admin-api, front)
-     *
-     * @return string
+     * @param string $appId       Kernel application ID (admin, admin-api, front)
      */
     protected static function getClearCacheLockPath(string $environment, string $appId): string
     {
         $cacheDir = self::getCacheDir();
 
-        return sprintf('%s/%s_%s_cache_clear.lock', $cacheDir, $appId, $environment);
+        return \sprintf('%s/%s_%s_cache_clear.lock', $cacheDir, $appId, $environment);
     }
 
     protected static function getCacheDir(): string

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,37 +56,23 @@ class CombinationSupplierAssociation implements SupplierAssociationInterface
      */
     private $productSupplierId;
 
-    /**
-     * @param int $combinationId
-     * @param int $supplierId
-     * @param int|null $productSupplierId
-     */
     public function __construct(int $combinationId, int $supplierId, ?int $productSupplierId = null)
     {
         $this->combinationId = new CombinationId($combinationId);
         $this->supplierId = new SupplierId($supplierId);
-        $this->productSupplierId = null !== $productSupplierId ? new ProductSupplierId($productSupplierId) : null;
+        $this->productSupplierId = $productSupplierId !== null ? new ProductSupplierId($productSupplierId) : null;
     }
 
-    /**
-     * @return CombinationIdInterface
-     */
     public function getCombinationId(): CombinationIdInterface
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return SupplierId
-     */
     public function getSupplierId(): SupplierId
     {
         return $this->supplierId;
     }
 
-    /**
-     * @return ProductSupplierId|null
-     */
     public function getProductSupplierId(): ?ProductSupplierId
     {
         return $this->productSupplierId;
@@ -94,8 +81,6 @@ class CombinationSupplierAssociation implements SupplierAssociationInterface
     /**
      * No need for product ID to identify a supplier association for a designated combination, we can match it by
      * combination ID only.
-     *
-     * @return ProductId|null
      */
     public function getProductId(): ?ProductId
     {
@@ -104,7 +89,7 @@ class CombinationSupplierAssociation implements SupplierAssociationInterface
 
     public function __toString()
     {
-        return sprintf(
+        return \sprintf(
             '[productId: null, combinationId: %d, supplierId: %d]',
             $this->getCombinationId()->getValue(),
             $this->getSupplierId()->getValue()

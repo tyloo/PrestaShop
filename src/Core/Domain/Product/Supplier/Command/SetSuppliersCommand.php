@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,19 +54,12 @@ class SetSuppliersCommand
      */
     private $supplierIds;
 
-    /**
-     * @param int $productId
-     * @param array $supplierIds
-     */
     public function __construct(int $productId, array $supplierIds)
     {
         $this->productId = new ProductId($productId);
         $this->setSupplierIds($supplierIds);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -82,11 +76,7 @@ class SetSuppliersCommand
     private function setSupplierIds(array $supplierIds): void
     {
         if (empty($supplierIds)) {
-            throw new InvalidArgumentException(sprintf(
-                'Empty array of suppliers provided in %s. To remove all product suppliers use %s.',
-                self::class,
-                RemoveAllAssociatedProductSuppliersCommand::class
-            ));
+            throw new InvalidArgumentException(\sprintf('Empty array of suppliers provided in %s. To remove all product suppliers use %s.', self::class, RemoveAllAssociatedProductSuppliersCommand::class));
         }
 
         $this->supplierIds = [];

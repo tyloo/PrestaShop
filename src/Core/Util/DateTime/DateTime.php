@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,13 +72,11 @@ final class DateTime
      */
     public function __construct()
     {
-        throw new RuntimeException(sprintf('This class purpose is to define constants only. You might have mistaken it with "%s"', NativeDateTime::class));
+        throw new RuntimeException(\sprintf('This class purpose is to define constants only. You might have mistaken it with "%s"', NativeDateTime::class));
     }
 
     /**
      * @param DateTimeInterface|string|null $value
-     *
-     * @return bool
      */
     public static function isNull($value): bool
     {
@@ -86,8 +85,6 @@ final class DateTime
 
     /**
      * Returns NullDateTime if input value is nullable (including 0000-00-00 value), return a DateTimeImmutable object otherwise.
-     *
-     * @param string|null $value
      *
      * @return DateTimeImmutable|NullDateTime
      */
@@ -98,8 +95,6 @@ final class DateTime
 
     /**
      * Returns null if input value is nullable (including 0000-00-00 value), return a DateTimeImmutable object otherwise.
-     *
-     * @param string|null $value
      *
      * @return DateTimeImmutable|NullDateTime|null
      */

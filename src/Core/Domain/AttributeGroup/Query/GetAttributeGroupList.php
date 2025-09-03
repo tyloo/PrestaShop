@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class GetAttributeGroupList
      */
     private $shopConstraint;
 
-    /**
-     * @param ShopConstraint $shopConstraint
-     */
     public function __construct(ShopConstraint $shopConstraint)
     {
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,14 +48,9 @@ class Catalogue
      */
     private $domains = [];
 
-    /**
-     * @param Domain $domain
-     *
-     * @return Catalogue
-     */
     public function addDomain(Domain $domain): self
     {
-        if (!array_key_exists($domain->getDomainName(), $this->domains)) {
+        if (! \array_key_exists($domain->getDomainName(), $this->domains)) {
             $this->domains[$domain->getDomainName()] = $domain;
         }
 
@@ -63,13 +59,10 @@ class Catalogue
 
     /** Returns a single Domain DTO.
      *
-     * @param string $domainName
-     *
-     * @return Domain|null
      */
     public function getDomain(string $domainName): ?Domain
     {
-        if (array_key_exists($domainName, $this->domains)) {
+        if (\array_key_exists($domainName, $this->domains)) {
             return $this->domains[$domainName];
         }
 
@@ -98,11 +91,6 @@ class Catalogue
         }, 0);
     }
 
-    /**
-     * @param bool $withMetadata
-     *
-     * @return array
-     */
     public function toArray(bool $withMetadata = true): array
     {
         $data = [];
@@ -112,7 +100,7 @@ class Catalogue
 
         if ($withMetadata) {
             $data[self::METADATA_KEY_NAME] = [
-                'count' => count($this->domains),
+                'count' => \count($this->domains),
                 'missing_translations' => $this->getMissingTranslationsCount(),
             ];
         }
@@ -139,8 +127,6 @@ class Catalogue
 
     /**
      * Updates counters of this subtree by adding the sum of children's counters
-     *
-     * @param array $subtree
      *
      * @return array Array of [sum of count, sum of missing_translations]
      */

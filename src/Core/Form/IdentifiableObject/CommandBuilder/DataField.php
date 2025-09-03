@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,9 +69,6 @@ class DataField
      */
     private $hasDefaultValue = false;
 
-    /**
-     * @var mixed
-     */
     private $defaultValue;
 
     /**
@@ -81,14 +79,10 @@ class DataField
      */
     public function __construct(string $path, string $type, $defaultValue = null)
     {
-        if (!in_array($type, static::ACCEPTED_TYPES)) {
-            throw new DataFieldException(sprintf(
-                'Invalid type "%s" used, only accepted values are: %s',
-                $type,
-                implode(',', static::ACCEPTED_TYPES)
-            ));
+        if (! \in_array($type, static::ACCEPTED_TYPES, true)) {
+            throw new DataFieldException(\sprintf('Invalid type "%s" used, only accepted values are: %s', $type, implode(',', static::ACCEPTED_TYPES)));
         }
-        if (2 < func_num_args()) {
+        if (\func_num_args() > 2) {
             $this->setDefaultValue($defaultValue);
         }
         $this->propertyPath = new PropertyPath($path);
@@ -111,8 +105,6 @@ class DataField
     }
 
     /**
-     * @return mixed
-     *
      * @throws DataFieldException
      */
     public function getDefaultValue()
@@ -123,9 +115,6 @@ class DataField
         throw new DataFieldException('Cannot return undefined default value');
     }
 
-    /**
-     * @param mixed $defaultValue
-     */
     protected function setDefaultValue($defaultValue): self
     {
         $this->defaultValue = $defaultValue;

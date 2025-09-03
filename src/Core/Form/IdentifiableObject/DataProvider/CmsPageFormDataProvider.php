@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,9 +33,6 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPage\Query\GetCmsPageForEditing;
 use PrestaShop\PrestaShop\Core\Domain\CmsPage\QueryResult\EditableCmsPage;
 use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategoryId;
 
-/**
- * {@inheritdoc}
- */
 class CmsPageFormDataProvider implements FormDataProviderInterface
 {
     /**
@@ -47,10 +45,6 @@ class CmsPageFormDataProvider implements FormDataProviderInterface
      */
     private $contextShopIds;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param array $contextShopIds
-     */
     public function __construct(CommandBusInterface $queryBus, array $contextShopIds)
     {
         $this->queryBus = $queryBus;
@@ -58,8 +52,6 @@ class CmsPageFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageException
      */
     public function getData($cmsPageId)
@@ -82,8 +74,6 @@ class CmsPageFormDataProvider implements FormDataProviderInterface
 
     /**
      * Get default form data.
-     *
-     * @return mixed
      */
     public function getDefaultData()
     {

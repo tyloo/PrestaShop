@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,8 +46,8 @@ class OrderDetailQuantity
     public function __construct(array $items)
     {
         foreach ($items as $item) {
-            if (!isset($item['id_order_detail']) || !isset($item['quantity'])) {
-                throw new ShipmentException(sprintf('Invalid order detail quantity item: %s', json_encode($item)));
+            if (! isset($item['id_order_detail']) || ! isset($item['quantity'])) {
+                throw new ShipmentException(\sprintf('Invalid order detail quantity item: %s', json_encode($item)));
             }
         }
 

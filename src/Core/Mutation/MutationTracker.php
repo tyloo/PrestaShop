@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,7 +106,7 @@ class MutationTracker
         MutationAction $action,
         MutatorType $mutatorType,
         string $mutatorIdentifier,
-        string $mutationDetails
+        string $mutationDetails,
     ): void {
         $mutation = new Mutation();
         $mutation

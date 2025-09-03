@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,20 +38,23 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
 {
     public const LIST_LIMIT = 10;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $filterId = '';
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $needsToBePersisted = true;
 
     /**
-     * @param array $filters
      * @param string $filterId
      */
     public function __construct(array $filters = [], $filterId = '')
     {
         parent::__construct($filters);
-        $this->filterId = !empty($filterId) ? $filterId : $this->filterId;
+        $this->filterId = ! empty($filterId) ? $filterId : $this->filterId;
     }
 
     /**
@@ -61,9 +65,6 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         return new static(static::getDefaults());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [
@@ -75,60 +76,42 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOrderBy()
     {
         $orderBy = $this->get('orderBy');
-        if (!Validate::isOrderBy($orderBy)) {
+        if (! Validate::isOrderBy($orderBy)) {
             return null;
         }
 
         return $orderBy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOrderWay()
     {
         $orderWay = $this->get('sortOrder');
-        if (!Validate::isOrderWay($orderWay)) {
+        if (! Validate::isOrderWay($orderWay)) {
             return null;
         }
 
         return $orderWay;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOffset()
     {
         return $this->getInt('offset') ?: null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLimit()
     {
         return $this->getInt('limit') ?: null;
     }
 
-    /**
-     * @param array $parameters
-     */
     public function addFilter(array $parameters = [])
     {
         $filters = array_replace($this->getFilters(), $parameters);
         $this->set('filters', $filters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
         return $this->get('filters');
@@ -154,17 +137,12 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function needsToBePersisted(): bool
     {
         return $this->needsToBePersisted;
     }
 
     /**
-     * @param bool $needsToBePersisted
-     *
      * @return static
      */
     public function setNeedsToBePersisted(bool $needsToBePersisted): self

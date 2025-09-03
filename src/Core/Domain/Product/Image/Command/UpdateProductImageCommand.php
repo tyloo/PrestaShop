@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -108,8 +109,6 @@ class UpdateProductImageCommand
 
     /**
      * @param array<int, string>|null $localizedLegends
-     *
-     * @return self
      */
     public function setLocalizedLegends(?array $localizedLegends): self
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,16 +51,16 @@ class SetProductShopsCommand
     private $shopIds;
 
     /**
-     * @param int $productId the product for which the new shop association is being set
-     * @param int $sourceShopId the source shop used as a reference for copy when a new shop association is being created
-     * @param int[] $shopIds ids of all the associated shops for this product,
-     *                       any shop which is not present in this list - will be unassociated,
-     *                       any shop not yet associated - will induce a new shop association creation
+     * @param int   $productId    the product for which the new shop association is being set
+     * @param int   $sourceShopId the source shop used as a reference for copy when a new shop association is being created
+     * @param int[] $shopIds      ids of all the associated shops for this product,
+     *                            any shop which is not present in this list - will be unassociated,
+     *                            any shop not yet associated - will induce a new shop association creation
      */
     public function __construct(
         int $productId,
         int $sourceShopId,
-        array $shopIds
+        array $shopIds,
     ) {
         $this->assertShopsNotEmpty($shopIds);
         $this->assertSourceShopExistsInShops($sourceShopId, $shopIds);
@@ -71,17 +72,11 @@ class SetProductShopsCommand
         }, $shopIds);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return ShopId
-     */
     public function getSourceShopId(): ShopId
     {
         return $this->sourceShopId;
@@ -96,19 +91,15 @@ class SetProductShopsCommand
     }
 
     /**
-     * @param int $sourceShopId
      * @param int[] $shopIds
      */
     private function assertSourceShopExistsInShops(int $sourceShopId, array $shopIds): void
     {
-        if (in_array($sourceShopId, $shopIds, true)) {
+        if (\in_array($sourceShopId, $shopIds, true)) {
             return;
         }
 
-        throw new InvalidProductShopAssociationException(
-            'Source shop must be one of associated shops',
-            InvalidProductShopAssociationException::SOURCE_SHOP_MISSING_IN_SHOP_ASSOCIATION
-        );
+        throw new InvalidProductShopAssociationException('Source shop must be one of associated shops', InvalidProductShopAssociationException::SOURCE_SHOP_MISSING_IN_SHOP_ASSOCIATION);
     }
 
     /**
@@ -117,13 +108,7 @@ class SetProductShopsCommand
     private function assertShopsNotEmpty(array $shopIds): void
     {
         if (empty($shopIds)) {
-            throw new InvalidProductShopAssociationException(
-                sprintf(
-                    'Empty shop association provided. Use %s command to delete product instead',
-                    DeleteProductCommand::class
-                ),
-                InvalidProductShopAssociationException::EMPTY_SHOPS_ASSOCIATION
-            );
+            throw new InvalidProductShopAssociationException(\sprintf('Empty shop association provided. Use %s command to delete product instead', DeleteProductCommand::class), InvalidProductShopAssociationException::EMPTY_SHOPS_ASSOCIATION);
         }
     }
 }

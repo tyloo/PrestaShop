@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,26 +45,19 @@ final class PackStockTypeChoiceProvider implements FormChoiceProviderInterface
      */
     private $shopConfiguration;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param ShopConfigurationInterface $shopConfiguration
-     */
     public function __construct(
         TranslatorInterface $translator,
-        ShopConfigurationInterface $shopConfiguration
+        ShopConfigurationInterface $shopConfiguration,
     ) {
         $this->translator = $translator;
         $this->shopConfiguration = $shopConfiguration;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices(): array
     {
         $choices = $this->getLabelValuePairs();
 
-        $defaultLabel = sprintf(
+        $defaultLabel = \sprintf(
             '%s (%s)',
             $this->translator->trans('Default', [], 'Admin.Global'),
             array_search((int) $this->shopConfiguration->get('PS_PACK_STOCK_TYPE'), $choices, true)

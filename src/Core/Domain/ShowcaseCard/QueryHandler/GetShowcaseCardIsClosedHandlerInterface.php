@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,6 @@ interface GetShowcaseCardIsClosedHandlerInterface
 {
     /**
      * Returns the "closed state" of a showcase command
-     *
-     * @param GetShowcaseCardIsClosed $query
      *
      * @return bool True if the showcase card is closed, False otherwise
      */

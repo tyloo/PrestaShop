@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -98,23 +99,6 @@ class CatalogPriceRuleForListing
      */
     private $isTaxIncluded;
 
-    /**
-     * CatalogPriceRuleForListing constructor.
-     *
-     * @param int $catalogPriceRuleId
-     * @param string $catalogPriceRuleName
-     * @param int $fromQuantity
-     * @param string $reductionType
-     * @param DecimalNumber $reduction
-     * @param bool $isTaxIncluded
-     * @param DateTimeInterface $dateStart
-     * @param DateTimeInterface $dateEnd
-     * @param string|null $shopName
-     * @param string|null $currencyName
-     * @param string|null $countryName
-     * @param string|null $groupName
-     * @param string|null $currencyIso
-     */
     public function __construct(
         int $catalogPriceRuleId,
         string $catalogPriceRuleName,
@@ -128,7 +112,7 @@ class CatalogPriceRuleForListing
         ?string $currencyName,
         ?string $countryName,
         ?string $groupName,
-        ?string $currencyIso
+        ?string $currencyIso,
     ) {
         $this->catalogPriceRuleId = $catalogPriceRuleId;
         $this->catalogPriceRuleName = $catalogPriceRuleName;
@@ -145,105 +129,66 @@ class CatalogPriceRuleForListing
         $this->currencyIso = $currencyIso;
     }
 
-    /**
-     * @return int
-     */
     public function getCatalogPriceRuleId(): int
     {
         return $this->catalogPriceRuleId;
     }
 
-    /**
-     * @return string
-     */
     public function getCatalogPriceRuleName(): string
     {
         return $this->catalogPriceRuleName;
     }
 
-    /**
-     * @return int
-     */
     public function getFromQuantity(): int
     {
         return $this->fromQuantity;
     }
 
-    /**
-     * @return string
-     */
     public function getReductionType(): string
     {
         return $this->reductionType;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getReduction(): DecimalNumber
     {
         return $this->reduction;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDateStart(): DateTimeInterface
     {
         return $this->dateStart;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDateEnd(): DateTimeInterface
     {
         return $this->dateEnd;
     }
 
-    /**
-     * @return string|null
-     */
     public function getShopName(): ?string
     {
         return $this->shopName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCurrencyName(): ?string
     {
         return $this->currencyName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCountryName(): ?string
     {
         return $this->countryName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getGroupName(): ?string
     {
         return $this->groupName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCurrencyIso(): ?string
     {
         return $this->currencyIso;
     }
 
-    /**
-     * @return bool
-     */
     public function isTaxIncluded(): bool
     {
         return $this->isTaxIncluded;

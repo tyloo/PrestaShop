@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,15 +106,7 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
     private $printDeliverySlipAccessibilityChecker;
 
     /**
-     * @param HookDispatcherInterface $dispatcher
-     * @param ConfigurationInterface $configuration
-     * @param FormChoiceProviderInterface $orderCountriesChoiceProvider
-     * @param FormChoiceProviderInterface $orderStatusesChoiceProvider
      * @param string $contextDateFormat
-     * @param FeatureInterface $multistoreFeature
-     * @param AccessibilityCheckerInterface $printInvoiceAccessibilityChecker
-     * @param AccessibilityCheckerInterface $printDeliverySlipAccessibilityChecker
-     * @param FormChoiceProviderInterface $orderStatesChoiceProvider
      */
     public function __construct(
         HookDispatcherInterface $dispatcher,
@@ -124,7 +117,7 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
         FeatureInterface $multistoreFeature,
         AccessibilityCheckerInterface $printInvoiceAccessibilityChecker,
         AccessibilityCheckerInterface $printDeliverySlipAccessibilityChecker,
-        FormChoiceProviderInterface $orderStatesChoiceProvider
+        FormChoiceProviderInterface $orderStatesChoiceProvider,
     ) {
         parent::__construct($dispatcher);
 
@@ -138,25 +131,16 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
         $this->orderStatesChoiceProvider = $orderStatesChoiceProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Orders', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $previewColumn = (new PreviewColumn('preview'))
@@ -284,9 +268,6 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = new FilterCollection();
@@ -369,7 +350,7 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
 
         $orderCountriesChoices = $this->orderCountriesChoiceProvider->getChoices();
 
-        if (!empty($orderCountriesChoices)) {
+        if (! empty($orderCountriesChoices)) {
             $filters->add((new Filter('country_name', ChoiceType::class))
                 ->setTypeOptions([
                     'required' => false,
@@ -394,9 +375,6 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -425,9 +403,6 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -456,9 +431,6 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
         ;
     }
 
-    /**
-     * @return RowActionCollection
-     */
     private function getRowActions(): RowActionCollection
     {
         $rowActionCollection = new RowActionCollection();

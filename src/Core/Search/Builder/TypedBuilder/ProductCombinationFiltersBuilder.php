@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,12 +43,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductCombinationFiltersBuilder extends AbstractFiltersBuilder implements TypedFiltersBuilderInterface
 {
-    /** @var Request */
+    /**
+     * @var Request
+     */
     private $request;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config)
     {
         $this->request = $config['request'] ?? null;
@@ -55,13 +55,10 @@ class ProductCombinationFiltersBuilder extends AbstractFiltersBuilder implements
         return parent::setConfig($config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildFilters(?Filters $filters = null)
     {
         $filterParameters = ProductCombinationFilters::getDefaults();
-        if (null !== $filters) {
+        if ($filters !== null) {
             $filterParameters = array_replace($filterParameters, $filters->all());
         }
 
@@ -74,8 +71,6 @@ class ProductCombinationFiltersBuilder extends AbstractFiltersBuilder implements
     /**
      * Fetch the product ID from request attributes (based on routing attribute since the product ID is in the URL)
      * This method might need to evolve if the ID were to passed differently (GET or POST for example).
-     *
-     * @return int
      */
     private function getProductId(): int
     {
@@ -84,21 +79,16 @@ class ProductCombinationFiltersBuilder extends AbstractFiltersBuilder implements
 
     /**
      * Build ShopConstraint from request. These filters only supports single shop constraint.
-     *
-     * @return ShopConstraint
      */
     private function buildShopConstraint(): ShopConstraint
     {
-        if (!$this->request->query->has('shopId')) {
+        if (! $this->request->query->has('shopId')) {
             throw new InvalidArgumentException('Missing "shopId" in request for combinations list filters');
         }
 
         return ShopConstraint::shop($this->request->query->getInt('shopId'));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function supports(string $filterClassName): bool
     {
         return $filterClassName === ProductCombinationFilters::class;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -86,7 +87,7 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         CommandBusInterface $queryBus,
         RequestStack $requestStack,
         MultistoreContextCheckerInterface $multistoreContextChecker,
-        $isMultiStoreFeatureUsed
+        $isMultiStoreFeatureUsed,
     ) {
         parent::__construct($hookDispatcher);
 
@@ -97,17 +98,11 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         $this->isMultiStoreFeatureUsed = $isMultiStoreFeatureUsed;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         $cmsCategoryName = $this->queryBus->handle(new GetCmsPageCategoryNameForListing());
@@ -119,9 +114,6 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columnCollection = (new ColumnCollection())
@@ -221,9 +213,6 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         return $columnCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $actionsTypeOptions = [
@@ -299,9 +288,6 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         return $filterCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -320,9 +306,6 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -346,14 +329,12 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
 
     /**
      * Sets cms page category parent id directly from request attribute. On not found case, it assigns the default one.
-     *
-     * @param RequestStack $requestStack
      */
     private function setCmsPageCategoryParentId(RequestStack $requestStack)
     {
         $request = $requestStack->getCurrentRequest();
 
-        if (null !== $request && $request->query->getInt('id_cms_category')) {
+        if ($request !== null && $request->query->getInt('id_cms_category')) {
             $this->cmsCategoryParentId = $request->query->getInt('id_cms_category');
         }
     }
@@ -367,6 +348,6 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
      */
     private function isAllShopContextOrShopFeatureIsNotUsed()
     {
-        return $this->multistoreContextChecker->isAllShopContext() || !$this->isMultiStoreFeatureUsed;
+        return $this->multistoreContextChecker->isAllShopContext() || ! $this->isMultiStoreFeatureUsed;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,17 +58,11 @@ class ProductSupplierUpdate
      */
     private $priceTaxExcluded;
 
-    /**
-     * @param SupplierAssociationInterface $association
-     * @param int $currencyId
-     * @param string $reference
-     * @param string $priceTaxExcluded
-     */
     public function __construct(
         SupplierAssociationInterface $association,
         int $currencyId,
         string $reference,
-        string $priceTaxExcluded
+        string $priceTaxExcluded,
     ) {
         $this->association = $association;
         $this->currencyId = new CurrencyId($currencyId);
@@ -75,33 +70,21 @@ class ProductSupplierUpdate
         $this->priceTaxExcluded = $priceTaxExcluded;
     }
 
-    /**
-     * @return SupplierAssociationInterface
-     */
     public function getAssociation(): SupplierAssociationInterface
     {
         return $this->association;
     }
 
-    /**
-     * @return CurrencyId
-     */
     public function getCurrencyId(): CurrencyId
     {
         return $this->currencyId;
     }
 
-    /**
-     * @return string
-     */
     public function getReference(): string
     {
         return $this->reference;
     }
 
-    /**
-     * @return string
-     */
     public function getPriceTaxExcluded(): string
     {
         return $this->priceTaxExcluded;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,8 +46,8 @@ class CartId
      */
     public function __construct($cartId)
     {
-        if (!is_int($cartId) || 0 >= $cartId) {
-            throw new CartConstraintException(sprintf('Cart id must be integer greater than zero, but %s given.', var_export($cartId, true)));
+        if (! \is_int($cartId) || $cartId <= 0) {
+            throw new CartConstraintException(\sprintf('Cart id must be integer greater than zero, but %s given.', var_export($cartId, true)));
         }
 
         $this->cartId = $cartId;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
     private const CASE_ONLY_MIN_FIELD_EXISTS = 2;
     private const CASE_ONLY_MAX_FIELD_EXISTS = 3;
 
-    /**
-     * {@inheritdoc}
-     */
     public function apply(QueryBuilder $qb, SqlFilters $filters, array $filterValues)
     {
         if (empty($filterValues)) {
@@ -48,7 +46,7 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
             $sqlField = $filter['sql_field'];
             $filterName = $filter['filter_name'];
 
-            if (!isset($filterValues[$filterName])) {
+            if (! isset($filterValues[$filterName])) {
                 continue;
             }
 
@@ -72,37 +70,37 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
                     break;
                 case SqlFilters::WHERE_DATE:
                     if (isset($value['from'])) {
-                        $name = sprintf('%s_from', $filterName);
+                        $name = \sprintf('%s_from', $filterName);
 
                         $qb->andWhere("$sqlField >= :$name");
-                        $qb->setParameter($name, sprintf('%s %s', $value['from'], '0:0:0'));
+                        $qb->setParameter($name, \sprintf('%s %s', $value['from'], '0:0:0'));
                     }
 
                     if (isset($value['to'])) {
-                        $name = sprintf('%s_to', $filterName);
+                        $name = \sprintf('%s_to', $filterName);
 
                         $qb->andWhere("$sqlField <= :$name");
-                        $qb->setParameter($name, sprintf('%s %s', $value['to'], '23:59:59'));
+                        $qb->setParameter($name, \sprintf('%s %s', $value['to'], '23:59:59'));
                     }
 
                     break;
                 case SqlFilters::MIN_MAX:
-                    $minFieldSqlCondition = sprintf('%s >= :%s_min', $sqlField, $filterName);
-                    $maxFieldSqlCondition = sprintf('%s <= :%s_max', $sqlField, $filterName);
+                    $minFieldSqlCondition = \sprintf('%s >= :%s_min', $sqlField, $filterName);
+                    $maxFieldSqlCondition = \sprintf('%s <= :%s_max', $sqlField, $filterName);
 
                     switch ($this->computeMinMaxCase($value)) {
                         case self::CASE_BOTH_FIELDS_EXIST:
-                            $qb->andWhere(sprintf('%s AND %s', $minFieldSqlCondition, $maxFieldSqlCondition));
-                            $qb->setParameter(sprintf('%s_min', $filterName), $value['min_field']);
-                            $qb->setParameter(sprintf('%s_max', $filterName), $value['max_field']);
+                            $qb->andWhere(\sprintf('%s AND %s', $minFieldSqlCondition, $maxFieldSqlCondition));
+                            $qb->setParameter(\sprintf('%s_min', $filterName), $value['min_field']);
+                            $qb->setParameter(\sprintf('%s_max', $filterName), $value['max_field']);
                             break;
                         case self::CASE_ONLY_MIN_FIELD_EXISTS:
                             $qb->andWhere($minFieldSqlCondition);
-                            $qb->setParameter(sprintf('%s_min', $filterName), $value['min_field']);
+                            $qb->setParameter(\sprintf('%s_min', $filterName), $value['min_field']);
                             break;
                         case self::CASE_ONLY_MAX_FIELD_EXISTS:
                             $qb->andWhere($maxFieldSqlCondition);
-                            $qb->setParameter(sprintf('%s_max', $filterName), $value['max_field']);
+                            $qb->setParameter(\sprintf('%s_max', $filterName), $value['max_field']);
                             break;
                     }
                     break;
@@ -112,8 +110,6 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
 
     /**
      * @param array<string, int> $value
-     *
-     * @return int
      */
     private function computeMinMaxCase(array $value): int
     {

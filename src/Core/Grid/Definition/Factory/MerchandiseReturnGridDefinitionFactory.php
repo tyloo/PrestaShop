@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,25 +47,16 @@ final class MerchandiseReturnGridDefinitionFactory extends AbstractFilterableGri
 {
     public const GRID_ID = 'merchandise_return';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Merchandise returns', [], 'Admin.Orderscustomers.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -119,9 +111,6 @@ final class MerchandiseReturnGridDefinitionFactory extends AbstractFilterableGri
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,11 +33,13 @@ use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 
 class LocaleNumberTransformer
 {
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private const FORCED_LOCALES_TO_EN_NUMBERS = ['ar', 'bn', 'fa'];
 
     public function __construct(
-        private LocaleInterface $locale
+        private LocaleInterface $locale,
     ) {
     }
 
@@ -50,6 +53,6 @@ class LocaleNumberTransformer
     {
         $locale = substr($this->locale->getCode(), 0, 2);
 
-        return in_array($locale, self::FORCED_LOCALES_TO_EN_NUMBERS) ? 'en' : $locale;
+        return \in_array($locale, self::FORCED_LOCALES_TO_EN_NUMBERS, true) ? 'en' : $locale;
     }
 }

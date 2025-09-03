@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,32 +39,24 @@ class CartRuleId
      */
     private $cartRuleId;
 
-    /**
-     * @param int $cartRuleId
-     */
     public function __construct(int $cartRuleId)
     {
         $this->assertIsPositiveInt($cartRuleId);
         $this->cartRuleId = $cartRuleId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->cartRuleId;
     }
 
     /**
-     * @param int $value
-     *
      * @throws CartRuleConstraintException
      */
     private function assertIsPositiveInt(int $value): void
     {
-        if (0 > $value) {
-            throw new CartRuleConstraintException(sprintf('Invalid cart rule id "%s".', $value), CartRuleConstraintException::INVALID_ID);
+        if ($value < 0) {
+            throw new CartRuleConstraintException(\sprintf('Invalid cart rule id "%s".', $value), CartRuleConstraintException::INVALID_ID);
         }
     }
 }

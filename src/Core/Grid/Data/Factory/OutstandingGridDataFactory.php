@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,24 +53,16 @@ final class OutstandingGridDataFactory implements GridDataFactoryInterface
      */
     private $contextLocale;
 
-    /**
-     * @param GridDataFactoryInterface $outstandingDataFactory
-     * @param RepositoryInterface $repositoryLocale
-     * @param string $contextLocale
-     */
     public function __construct(
         GridDataFactoryInterface $outstandingDataFactory,
         RepositoryInterface $repositoryLocale,
-        string $contextLocale
+        string $contextLocale,
     ) {
         $this->outstandingDataFactory = $outstandingDataFactory;
         $this->repositoryLocale = $repositoryLocale;
         $this->contextLocale = $contextLocale;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $data = $this->outstandingDataFactory->getData($searchCriteria);
@@ -88,7 +81,7 @@ final class OutstandingGridDataFactory implements GridDataFactoryInterface
                 $record['outstanding_allow_amount'] = $locale->formatPrice($record['outstanding_allow_amount'], $record['iso_code']);
             }
 
-            if (!$record['company']) {
+            if (! $record['company']) {
                 $record['company'] = '--';
             }
         }

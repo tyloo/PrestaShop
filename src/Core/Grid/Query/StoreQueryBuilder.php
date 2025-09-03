@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,18 +53,12 @@ class StoreQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $storeRepository;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $languageId
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         int $languageId,
-        StoreRepository $storeRepository
+        StoreRepository $storeRepository,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->languageId = $languageId;
@@ -95,15 +90,10 @@ class StoreQueryBuilder extends AbstractDoctrineQueryBuilder
             ->select('COUNT(DISTINCT s.id_store)');
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     protected function getCommonQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof ShopSearchCriteriaInterface) {
-            throw new InvalidArgumentException(sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
+        if (! $searchCriteria instanceof ShopSearchCriteriaInterface) {
+            throw new InvalidArgumentException(\sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
         }
 
         $shopIds = array_map(static function (ShopId $shopId): int {
@@ -146,7 +136,6 @@ class StoreQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param QueryBuilder $qb
      * @param array<string, int|string|bool> $filters
      */
     protected function applyFilters(QueryBuilder $qb, array $filters): void
@@ -166,14 +155,14 @@ class StoreQueryBuilder extends AbstractDoctrineQueryBuilder
 
         foreach ($filters as $filterName => $value) {
             // make sure filters are known, to avoid sql injection
-            if (!array_key_exists($filterName, $filtersMap)) {
+            if (! \array_key_exists($filterName, $filtersMap)) {
                 continue;
             }
 
             $dbColumn = $filtersMap[$filterName];
 
             // apply strict filtering only for certain fields
-            if ('id_store' === $filterName || 'active' === $filterName) {
+            if ($filterName === 'id_store' || $filterName === 'active') {
                 $qb->andWhere($dbColumn . ' = :' . $filterName)
                     ->setParameter($filterName, $value);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class NoManufacturerId implements ManufacturerIdInterface
 {
     public const NO_MANUFACTURER_ID = 0;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValue()
     {
         return static::NO_MANUFACTURER_ID;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,19 +40,11 @@ final class StatusChoiceProvider implements FormChoiceProviderInterface
      */
     private $translator;
 
-    /**
-     * StatusChoiceProvider constructor.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return [

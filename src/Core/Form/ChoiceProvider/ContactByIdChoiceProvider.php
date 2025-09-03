@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,20 +47,16 @@ final class ContactByIdChoiceProvider implements FormChoiceProviderInterface
     private $langId;
 
     /**
-     * @param ContactRepositoryInterface $contactRepository
      * @param int $langId
      */
     public function __construct(
         ContactRepositoryInterface $contactRepository,
-        $langId
+        $langId,
     ) {
         $this->contactRepository = $contactRepository;
         $this->langId = $langId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return FormChoiceFormatter::formatFormChoices(

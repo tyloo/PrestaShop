@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,21 +66,13 @@ class VirtualProductFileForEditing
      */
     private $expirationDate;
 
-    /**
-     * @param int $id
-     * @param string $fileName
-     * @param string $displayName
-     * @param int $accessDays
-     * @param int $downloadTimesLimit
-     * @param DateTimeInterface|null $expirationDate
-     */
     public function __construct(
         int $id,
         string $fileName,
         string $displayName,
         int $accessDays,
         int $downloadTimesLimit,
-        ?DateTimeInterface $expirationDate
+        ?DateTimeInterface $expirationDate,
     ) {
         $this->id = $id;
         $this->fileName = $fileName;
@@ -89,49 +82,31 @@ class VirtualProductFileForEditing
         $this->expirationDate = $expirationDate;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getFileName(): string
     {
         return $this->fileName;
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayName(): string
     {
         return $this->displayName;
     }
 
-    /**
-     * @return int
-     */
     public function getAccessDays(): int
     {
         return $this->accessDays;
     }
 
-    /**
-     * @return int
-     */
     public function getDownloadTimesLimit(): int
     {
         return $this->downloadTimesLimit;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getExpirationDate(): ?DateTimeInterface
     {
         return $this->expirationDate;

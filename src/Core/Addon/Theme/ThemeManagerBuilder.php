@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,7 +52,7 @@ class ThemeManagerBuilder
         private readonly Db $db,
         private ?ThemeValidator $themeValidator = null,
         ?LoggerInterface $logger = null,
-        ?ApiClientContext $apiClientContext = null
+        ?ApiClientContext $apiClientContext = null,
     ) {
         $this->logger = $logger ?? new NullLogger();
         $this->apiClientContext = $apiClientContext ?: new ApiClientContext(null);
@@ -61,10 +62,10 @@ class ThemeManagerBuilder
     {
         $configuration = new Configuration();
         $configuration->restrictUpdatesTo($this->context->shop);
-        if (null === $this->themeValidator) {
+        if ($this->themeValidator === null) {
             $this->themeValidator = new ThemeValidator($this->context->getTranslator(), new Configuration());
         }
-        if (null === $this->context->employee) {
+        if ($this->context->employee === null) {
             $this->context->employee = new Employee();
         }
 
@@ -92,7 +93,7 @@ class ThemeManagerBuilder
 
     public function buildRepository(?Shop $shop = null)
     {
-        if (!$shop instanceof Shop) {
+        if (! $shop instanceof Shop) {
             $shop = $this->context->shop;
         }
 

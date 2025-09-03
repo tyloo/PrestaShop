@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,17 +53,11 @@ abstract class AbstractGridDefinitionFactory implements GridDefinitionFactoryInt
      */
     protected $hookDispatcher;
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     */
     public function __construct(HookDispatcherInterface $hookDispatcher)
     {
         $this->hookDispatcher = $hookDispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition()
     {
         $definition = new GridDefinition(

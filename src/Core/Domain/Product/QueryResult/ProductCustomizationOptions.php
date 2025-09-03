@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,24 +52,15 @@ class ProductCustomizationOptions
      */
     private $availableFileCustomizationsCount;
 
-    /**
-     * @return ProductCustomizationOptions
-     */
-    public static function createNotCustomizable(): ProductCustomizationOptions
+    public static function createNotCustomizable(): self
     {
         return new self(ProductCustomizabilitySettings::NOT_CUSTOMIZABLE, 0, 0);
     }
 
-    /**
-     * @param int $availableTextCustomizationsCount
-     * @param int $availableFileCustomizationsCount
-     *
-     * @return ProductCustomizationOptions
-     */
     public static function createAllowsCustomization(
         int $availableTextCustomizationsCount,
-        int $availableFileCustomizationsCount
-    ): ProductCustomizationOptions {
+        int $availableFileCustomizationsCount,
+    ): self {
         return new self(
             ProductCustomizabilitySettings::ALLOWS_CUSTOMIZATION,
             $availableTextCustomizationsCount,
@@ -76,16 +68,10 @@ class ProductCustomizationOptions
         );
     }
 
-    /**
-     * @param int $availableTextCustomizationsCount
-     * @param int $availableFileCustomizationsCount
-     *
-     * @return ProductCustomizationOptions
-     */
     public static function createRequiresCustomization(
         int $availableTextCustomizationsCount,
-        int $availableFileCustomizationsCount
-    ): ProductCustomizationOptions {
+        int $availableFileCustomizationsCount,
+    ): self {
         return new self(
             ProductCustomizabilitySettings::REQUIRES_CUSTOMIZATION,
             $availableTextCustomizationsCount,
@@ -93,25 +79,16 @@ class ProductCustomizationOptions
         );
     }
 
-    /**
-     * @return int
-     */
     public function getCustomizabilityValue(): int
     {
         return $this->customizabilityValue;
     }
 
-    /**
-     * @return int
-     */
     public function getAvailableTextCustomizationsCount(): int
     {
         return $this->availableTextCustomizationsCount;
     }
 
-    /**
-     * @return int
-     */
     public function getAvailableFileCustomizationsCount(): int
     {
         return $this->availableFileCustomizationsCount;
@@ -143,10 +120,6 @@ class ProductCustomizationOptions
 
     /**
      * Use static factories to instantiate this class
-     *
-     * @param int $value
-     * @param int $availableTextCustomizations
-     * @param int $availableFileCustomizations
      */
     private function __construct(int $value, int $availableTextCustomizations, int $availableFileCustomizations)
     {

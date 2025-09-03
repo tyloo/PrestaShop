@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,13 +35,15 @@ use Throwable;
  */
 class InvalidUnofficialCurrencyException extends CurrencyException
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $isoCode;
 
     /**
-     * @param string $message the Exception message to throw
-     * @param string $isoCode Invalid currency ISO code
-     * @param int $code [optional] The Exception code
+     * @param string    $message  the Exception message to throw
+     * @param string    $isoCode  Invalid currency ISO code
+     * @param int       $code     [optional] The Exception code
      * @param Throwable $previous [optional] The previous throwable used for the exception chaining
      */
     public function __construct($message, $isoCode, $code = 0, ?Throwable $previous = null)
@@ -49,9 +52,6 @@ class InvalidUnofficialCurrencyException extends CurrencyException
         $this->isoCode = $isoCode;
     }
 
-    /**
-     * @return string
-     */
     public function getIsoCode(): string
     {
         return $this->isoCode;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,6 +48,8 @@ class VirtualProductFileConstraintException extends VirtualProductFileException
     public const INVALID_ACTIVE = 80;
     public const INVALID_SHAREABLE = 90;
 
-    /** Is thrown when file already exists for given product */
+    /**
+     * Is thrown when file already exists for given product
+     */
     public const ALREADY_HAS_A_FILE = 100;
 }

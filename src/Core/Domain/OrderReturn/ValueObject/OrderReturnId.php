@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ class OrderReturnId
     private $id;
 
     /**
-     * @param int $id
-     *
      * @throws OrderReturnConstraintException
      */
     public function __construct(int $id)
@@ -51,9 +50,6 @@ class OrderReturnId
         $this->id = $id;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->id;
@@ -62,14 +58,12 @@ class OrderReturnId
     /**
      * Validates that the value is integer and is greater than zero
      *
-     * @param int $value
-     *
      * @throws OrderReturnConstraintException
      */
     private function assertIsIntegerGreaterThanZero(int $value): void
     {
-        if (0 >= $value) {
-            throw new OrderReturnConstraintException(sprintf('Invalid order return id "%s".', $value), OrderReturnConstraintException::INVALID_ID);
+        if ($value <= 0) {
+            throw new OrderReturnConstraintException(\sprintf('Invalid order return id "%s".', $value), OrderReturnConstraintException::INVALID_ID);
         }
     }
 }

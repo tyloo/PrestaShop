@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,36 +51,26 @@ final class CustomerBoughtProductGridDefinitionFactory extends AbstractGridDefin
     private $contextDateFormat;
 
     /**
-     * @param HookDispatcherInterface $hookDispatcher
      * @param string $contextDateFormat
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        $contextDateFormat
+        $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
         $this->contextDateFormat = $contextDateFormat;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Purchased products', [], 'Admin.Orderscustomers.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -119,9 +110,6 @@ final class CustomerBoughtProductGridDefinitionFactory extends AbstractGridDefin
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getViewOptions()
     {
         return (new ViewOptionsCollection())

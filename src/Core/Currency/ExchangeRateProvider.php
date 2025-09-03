@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,35 +57,45 @@ class ExchangeRateProvider
 
     public const CACHE_KEY_XML = 'currency_feed.xml';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $currencyFeedUrl;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $defaultCurrencyIsoCode;
 
-    /** @var CircuitBreakerInterface */
+    /**
+     * @var CircuitBreakerInterface
+     */
     private $remoteServiceProvider;
 
-    /** @var CacheInterface */
+    /**
+     * @var CacheInterface
+     */
     private $cache;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $sourceIsoCode;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $currencies = [];
 
     /**
      * @param string $currencyFeedUrl
      * @param string $defaultCurrencyIsoCode
-     * @param CircuitBreakerInterface $remoteServiceProvider
-     * @param CacheInterface $cache
      */
     public function __construct(
         $currencyFeedUrl,
         $defaultCurrencyIsoCode,
         CircuitBreakerInterface $remoteServiceProvider,
-        CacheInterface $cache
+        CacheInterface $cache,
     ) {
         $this->currencyFeedUrl = $currencyFeedUrl;
         $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
@@ -104,7 +115,7 @@ class ExchangeRateProvider
         $this->fetchCurrencyFeed();
 
         // Default feed currency (usually EUR)
-        if ($this->defaultCurrencyIsoCode == $currencyIsoCode) {
+        if ($this->defaultCurrencyIsoCode === $currencyIsoCode) {
             return ExchangeRate::getDefaultExchangeRate();
         }
 
@@ -124,20 +135,18 @@ class ExchangeRateProvider
     }
 
     /**
-     * @param string $currencyIsoCode
-     *
      * @return DecimalNumber
      *
      * @throws CurrencyFeedException
      */
     private function getExchangeRateFromFeed(string $currencyIsoCode)
     {
-        if ($this->sourceIsoCode == $currencyIsoCode) {
+        if ($this->sourceIsoCode === $currencyIsoCode) {
             return new DecimalNumber('1.0');
         }
 
-        if (!isset($this->currencies[$currencyIsoCode])) {
-            throw new CurrencyFeedException(sprintf('Exchange rate for currency with ISO code %s was not found', $currencyIsoCode));
+        if (! isset($this->currencies[$currencyIsoCode])) {
+            throw new CurrencyFeedException(\sprintf('Exchange rate for currency with ISO code %s was not found', $currencyIsoCode));
         }
 
         return $this->currencies[$currencyIsoCode];
@@ -152,7 +161,7 @@ class ExchangeRateProvider
      */
     private function fetchCurrencyFeed()
     {
-        if (!empty($this->currencies)) {
+        if (! empty($this->currencies)) {
             return;
         }
 
@@ -163,11 +172,11 @@ class ExchangeRateProvider
         }
 
         $xmlFeed = $this->parseAndSaveXMLFeed($remoteFeedData);
-        if (null === $xmlFeed) {
+        if ($xmlFeed === null) {
             $xmlFeed = $this->parseAndSaveXMLFeed($cachedFeedData);
         }
 
-        if (null === $xmlFeed) {
+        if ($xmlFeed === null) {
             throw new CurrencyFeedException('Invalid currency XML feed');
         }
 
@@ -182,7 +191,7 @@ class ExchangeRateProvider
     private function parseAndSaveXMLFeed($feedContent)
     {
         $xmlFeed = @simplexml_load_string($feedContent);
-        if (!$xmlFeed || !$this->isValidXMLFeed($xmlFeed)) {
+        if (! $xmlFeed || ! $this->isValidXMLFeed($xmlFeed)) {
             return null;
         }
 
@@ -213,22 +222,17 @@ class ExchangeRateProvider
     private function getCachedCurrencyFeed()
     {
         $cacheItem = $this->cache->getItem(self::CACHE_KEY_XML);
-        if (!$cacheItem->isHit()) {
+        if (! $cacheItem->isHit()) {
             return '';
         }
 
         $feedContent = $cacheItem->get();
 
-        return !empty($feedContent) ? $feedContent : '';
+        return ! empty($feedContent) ? $feedContent : '';
     }
 
-    /**
-     * @param SimpleXMLElement $xmlFeed
-     *
-     * @return bool
-     */
     private function isValidXMLFeed(SimpleXMLElement $xmlFeed): bool
     {
-        return (bool) count($xmlFeed->list->currency);
+        return (bool) \count($xmlFeed->list->currency);
     }
 }

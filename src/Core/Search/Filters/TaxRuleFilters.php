@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class TaxRuleFilters extends Filters
      */
     protected $filterId = TaxRuleGridDefinitionFactory::GRID_ID;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [

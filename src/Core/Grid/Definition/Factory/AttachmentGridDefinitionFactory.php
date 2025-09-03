@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,33 +53,21 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
 
     public const GRID_ID = 'attachment';
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     */
     public function __construct(HookDispatcherInterface $hookDispatcher)
     {
         parent::__construct($hookDispatcher);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Files', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -160,9 +149,6 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = (new FilterCollection())
@@ -221,9 +207,6 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -244,9 +227,6 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

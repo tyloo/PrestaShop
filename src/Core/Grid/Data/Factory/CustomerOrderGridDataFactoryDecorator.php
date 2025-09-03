@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,23 +56,18 @@ final class CustomerOrderGridDataFactoryDecorator implements GridDataFactoryInte
     private $contextCurrencyIsoCode;
 
     /**
-     * @param GridDataFactoryInterface $customerOrderDoctrineGridDataFactory
-     * @param LocaleInterface $locale
      * @param string $contextCurrencyIsoCode
      */
     public function __construct(
         GridDataFactoryInterface $customerOrderDoctrineGridDataFactory,
         LocaleInterface $locale,
-        $contextCurrencyIsoCode
+        $contextCurrencyIsoCode,
     ) {
         $this->customerOrderDoctrineGridDataFactory = $customerOrderDoctrineGridDataFactory;
         $this->locale = $locale;
         $this->contextCurrencyIsoCode = $contextCurrencyIsoCode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $customerData = $this->customerOrderDoctrineGridDataFactory->getData($searchCriteria);
@@ -86,24 +82,22 @@ final class CustomerOrderGridDataFactoryDecorator implements GridDataFactoryInte
     }
 
     /**
-     * @param RecordCollectionInterface $records
-     *
      * @return RecordCollection
      */
     private function applyModifications(RecordCollectionInterface $records)
     {
         $modifiedRecords = [];
         foreach ($records as $r) {
-            if (!empty($r['total_paid_tax_incl'])) {
+            if (! empty($r['total_paid_tax_incl'])) {
                 $r['total_paid_tax_incl'] = $this->locale->formatPrice(
                     $r['total_paid_tax_incl'],
                     $this->contextCurrencyIsoCode
                 );
             }
 
-            if (!empty($r['status'])) {
+            if (! empty($r['status'])) {
                 $r['status'] = '<span class="badge badge-' .
-                ($r['valid'] == 1 ? 'success' : 'danger') .
+                ($r['valid'] === 1 ? 'success' : 'danger') .
                 ' rounded">' . $r['status'] . '</span>';
             }
 

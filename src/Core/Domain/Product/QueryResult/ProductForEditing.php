@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,89 +57,56 @@ class ProductForEditing
     ) {
     }
 
-    /**
-     * @return int
-     */
     public function getProductId(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->isActive;
     }
 
-    /**
-     * @return ProductCustomizationOptions
-     */
     public function getCustomizationOptions(): ProductCustomizationOptions
     {
         return $this->customizationOptions;
     }
 
-    /**
-     * @return ProductBasicInformation
-     */
     public function getBasicInformation(): ProductBasicInformation
     {
         return $this->basicInformation;
     }
 
-    /**
-     * @return CategoriesInformation
-     */
     public function getCategoriesInformation(): CategoriesInformation
     {
         return $this->categoriesInformation;
     }
 
-    /**
-     * @return ProductPricesInformation
-     */
     public function getPricesInformation(): ProductPricesInformation
     {
         return $this->pricesInformation;
     }
 
-    /**
-     * @return ProductOptions
-     */
     public function getOptions(): ProductOptions
     {
         return $this->options;
     }
 
-    /**
-     * @return ProductDetails
-     */
     public function getDetails(): ProductDetails
     {
         return $this->details;
     }
 
-    /**
-     * @return ProductShippingInformation
-     */
     public function getShippingInformation(): ProductShippingInformation
     {
         return $this->shippingInformation;
     }
 
-    /**
-     * @return ProductSeoOptions
-     */
     public function getProductSeoOptions(): ProductSeoOptions
     {
         return $this->productSeoOptions;
@@ -152,25 +120,16 @@ class ProductForEditing
         return $this->associatedAttachments;
     }
 
-    /**
-     * @return ProductStockInformation
-     */
     public function getStockInformation(): ProductStockInformation
     {
         return $this->stockInformation;
     }
 
-    /**
-     * @return VirtualProductFileForEditing|null
-     */
     public function getVirtualProductFile(): ?VirtualProductFileForEditing
     {
         return $this->virtualProductFile;
     }
 
-    /**
-     * @return string
-     */
     public function getCoverThumbnailUrl(): string
     {
         return $this->coverThumbnailUrl;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,8 +67,8 @@ class AddressId
      */
     private function assertIsIntegerGreaterThanZero($value)
     {
-        if (!is_int($value) || 0 >= $value) {
-            throw new AddressConstraintException(sprintf('Invalid address id "%s".', var_export($value, true)), AddressConstraintException::INVALID_ID);
+        if (! \is_int($value) || $value <= 0) {
+            throw new AddressConstraintException(\sprintf('Invalid address id "%s".', var_export($value, true)), AddressConstraintException::INVALID_ID);
         }
     }
 }

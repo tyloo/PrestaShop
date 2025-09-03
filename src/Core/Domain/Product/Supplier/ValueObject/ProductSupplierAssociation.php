@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,47 +64,29 @@ class ProductSupplierAssociation implements SupplierAssociationInterface
      */
     private $productSupplierId;
 
-    /**
-     * @param int $productId
-     * @param int $combinationId
-     * @param int $supplierId
-     * @param int|null $productSupplierId
-     */
     public function __construct(int $productId, int $combinationId, int $supplierId, ?int $productSupplierId = null)
     {
         $this->productId = new ProductId($productId);
         $this->combinationId = $combinationId ? new CombinationId($combinationId) : new NoCombinationId();
         $this->supplierId = new SupplierId($supplierId);
-        $this->productSupplierId = null !== $productSupplierId ? new ProductSupplierId($productSupplierId) : null;
+        $this->productSupplierId = $productSupplierId !== null ? new ProductSupplierId($productSupplierId) : null;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return CombinationIdInterface
-     */
     public function getCombinationId(): CombinationIdInterface
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return SupplierId
-     */
     public function getSupplierId(): SupplierId
     {
         return $this->supplierId;
     }
 
-    /**
-     * @return ProductSupplierId|null
-     */
     public function getProductSupplierId(): ?ProductSupplierId
     {
         return $this->productSupplierId;
@@ -111,7 +94,7 @@ class ProductSupplierAssociation implements SupplierAssociationInterface
 
     public function __toString()
     {
-        return sprintf(
+        return \sprintf(
             '[productId: %d, combinationId: %d, supplierId: %d]',
             $this->getProductId()->getValue(),
             $this->getCombinationId()->getValue(),

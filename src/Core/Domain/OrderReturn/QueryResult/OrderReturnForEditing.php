@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,18 +73,6 @@ class OrderReturnForEditing
      */
     private $question;
 
-    /**
-     * OrderReturnForEditing constructor.
-     *
-     * @param int $orderReturnId
-     * @param int $customerId
-     * @param string $customerFirstName
-     * @param string $customerLastName
-     * @param int $orderId
-     * @param DateTimeImmutable $orderDate
-     * @param int $orderReturnStateId
-     * @param string $question
-     */
     public function __construct(
         int $orderReturnId,
         int $customerId,
@@ -92,7 +81,7 @@ class OrderReturnForEditing
         int $orderId,
         DateTimeImmutable $orderDate,
         int $orderReturnStateId,
-        string $question
+        string $question,
     ) {
         $this->orderReturnId = $orderReturnId;
         $this->customerId = $customerId;
@@ -104,73 +93,46 @@ class OrderReturnForEditing
         $this->question = $question;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderReturnId(): int
     {
         return $this->orderReturnId;
     }
 
-    /**
-     * @return int
-     */
     public function getCustomerId(): int
     {
         return $this->customerId;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderId(): int
     {
         return $this->orderId;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderReturnStateId(): int
     {
         return $this->orderReturnStateId;
     }
 
-    /**
-     * @return string
-     */
     public function getQuestion(): string
     {
         return $this->question;
     }
 
-    /**
-     * @return string
-     */
     public function getCustomerFullName(): string
     {
-        return sprintf('%s %s', $this->customerFirstName, $this->customerLastName);
+        return \sprintf('%s %s', $this->customerFirstName, $this->customerLastName);
     }
 
-    /**
-     * @return string
-     */
     public function getCustomerFirstName(): string
     {
         return $this->customerFirstName;
     }
 
-    /**
-     * @return string
-     */
     public function getCustomerLastName(): string
     {
         return $this->customerLastName;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getOrderDate(): DateTimeImmutable
     {
         return $this->orderDate;

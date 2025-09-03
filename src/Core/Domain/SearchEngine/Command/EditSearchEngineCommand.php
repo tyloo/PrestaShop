@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,8 +53,6 @@ class EditSearchEngineCommand
     private $queryKey;
 
     /**
-     * @param int $searchEngineId
-     *
      * @throws SearchEngineException
      */
     public function __construct(int $searchEngineId)
@@ -61,27 +60,16 @@ class EditSearchEngineCommand
         $this->searchEngineId = new SearchEngineId($searchEngineId);
     }
 
-    /**
-     * @return SearchEngineId
-     */
     public function getSearchEngineId(): SearchEngineId
     {
         return $this->searchEngineId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getServer(): ?string
     {
         return $this->server;
     }
 
-    /**
-     * @param string|null $server
-     *
-     * @return self
-     */
     public function setServer(?string $server): self
     {
         $this->server = $server;
@@ -89,19 +77,11 @@ class EditSearchEngineCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getQueryKey(): ?string
     {
         return $this->queryKey;
     }
 
-    /**
-     * @param string|null $queryKey
-     *
-     * @return self
-     */
     public function setQueryKey(?string $queryKey): self
     {
         $this->queryKey = $queryKey;

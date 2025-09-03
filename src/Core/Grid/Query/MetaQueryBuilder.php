@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,20 +51,16 @@ final class MetaQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * MetaQueryBuilder constructor.
-     *
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextIdLang
-     * @param int $contextIdShop
+     * @param int    $contextIdLang
+     * @param int    $contextIdShop
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         $contextIdLang,
-        $contextIdShop
+        $contextIdShop,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->contextIdLang = $contextIdLang;
@@ -71,9 +68,6 @@ final class MetaQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -86,9 +80,6 @@ final class MetaQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -99,8 +90,6 @@ final class MetaQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with common sql for meta table.
-     *
-     * @param array $filters
      *
      * @return \Doctrine\DBAL\Query\QueryBuilder
      */
@@ -134,18 +123,18 @@ final class MetaQueryBuilder extends AbstractDoctrineQueryBuilder
         $qb->andWhere('m.`configurable`=1');
 
         foreach ($filters as $name => $value) {
-            if (!in_array($name, $availableFilters, true)) {
+            if (! \in_array($name, $availableFilters, true)) {
                 continue;
             }
 
-            if ('id_meta' === $name) {
+            if ($name === 'id_meta') {
                 $qb->andWhere('m.`id_meta` = :' . $name);
                 $qb->setParameter($name, $value);
 
                 continue;
             }
 
-            if ('page' === $name) {
+            if ($name === 'page') {
                 $qb->andWhere('m.`page` LIKE :' . $name);
                 $qb->setParameter($name, '%' . $value . '%');
 

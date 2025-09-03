@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,30 +55,21 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
     public const GRID_ID = 'catalog_price_rule';
 
     public function __construct(
-        HookDispatcherInterface $hookDispatcher
+        HookDispatcherInterface $hookDispatcher,
     ) {
         parent::__construct($hookDispatcher);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Catalog price rules', [], 'Admin.Catalog.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -187,9 +179,6 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -309,9 +298,6 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -330,9 +316,6 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

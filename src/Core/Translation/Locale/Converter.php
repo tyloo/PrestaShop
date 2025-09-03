@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ final class Converter
      */
     private $translationsMappingFile;
 
-    /**
-     * @param string $translationsMappingFile
-     */
     public function __construct(string $translationsMappingFile)
     {
         $this->translationsMappingFile = $translationsMappingFile;
@@ -57,7 +55,7 @@ final class Converter
      */
     public function toLegacyLocale(string $locale)
     {
-        return array_search($locale, $this->getLangToLocalesMapping());
+        return array_search($locale, $this->getLangToLocalesMapping(), true);
     }
 
     /**
@@ -77,8 +75,6 @@ final class Converter
     /**
      * Get the PrestaShop locale from real locale (like "fr-FR")
      *
-     * @param string $locale
-     *
      * @return string The PrestaShop locale (like "fr_FR")
      */
     public static function toPrestaShopLocale(string $locale): string
@@ -89,8 +85,6 @@ final class Converter
     /**
      * Extracted from TranslationService class
      *
-     * @return mixed
-     *
      * @throws Exception
      */
     private function getLangToLocalesMapping()
@@ -99,7 +93,7 @@ final class Converter
         $legacyToStandardLocales = json_decode($legacyToStandardLocalesJson, true);
 
         $jsonLastErrorCode = json_last_error();
-        if (JSON_ERROR_NONE !== $jsonLastErrorCode) {
+        if ($jsonLastErrorCode !== \JSON_ERROR_NONE) {
             throw new Exception('The legacy to standard locales JSON could not be decoded', $jsonLastErrorCode);
         }
 

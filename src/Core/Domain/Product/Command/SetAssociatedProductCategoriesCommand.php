@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,15 +60,13 @@ class SetAssociatedProductCategoriesCommand
     private $shopConstraint;
 
     /**
-     * @param int $productId
-     * @param int $defaultCategoryId
      * @param int[] $categoryIds
      */
     public function __construct(
         int $productId,
         int $defaultCategoryId,
         array $categoryIds,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->setCategoryIds($categoryIds);
         $this->defaultCategoryId = new CategoryId($defaultCategoryId);
@@ -75,17 +74,11 @@ class SetAssociatedProductCategoriesCommand
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return CategoryId
-     */
     public function getDefaultCategoryId(): CategoryId
     {
         return $this->defaultCategoryId;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -99,9 +92,6 @@ class SetAssociatedProductCategoriesCommand
         return $this->categoryIds;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
@@ -127,11 +117,7 @@ class SetAssociatedProductCategoriesCommand
     private function assertCategoryIdsAreNotEmpty(array $categoryIds): void
     {
         if (empty($categoryIds)) {
-            throw new RuntimeException(sprintf(
-                'Empty categoryIds provided in %s. To remove categories use %s.',
-                self::class,
-                RemoveAllAssociatedProductCategoriesCommand::class
-            ));
+            throw new RuntimeException(\sprintf('Empty categoryIds provided in %s. To remove categories use %s.', self::class, RemoveAllAssociatedProductCategoriesCommand::class));
         }
     }
 }

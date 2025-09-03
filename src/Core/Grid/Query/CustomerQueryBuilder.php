@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,18 +52,16 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
     private $criteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator
-     * @param int $contextLangId
-     * @param int[] $contextShopIds
+     * @param int    $contextLangId
+     * @param int[]  $contextShopIds
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
         $contextLangId,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -71,9 +70,6 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->criteriaApplicator = $criteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $searchQueryBuilder = $this->getCustomerQueryBuilder($searchCriteria)
@@ -92,9 +88,6 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
         return $searchQueryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $countQueryBuilder = $this->getCustomerQueryBuilder($searchCriteria)
@@ -104,8 +97,6 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
      * @return QueryBuilder
      */
     private function getCustomerQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -140,9 +131,6 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
         return $queryBuilder;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     */
     private function appendTotalSpentQuery(QueryBuilder $queryBuilder)
     {
         $totalSpentQueryBuilder = $this->connection->createQueryBuilder()
@@ -158,8 +146,6 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Append "last visit" column to customers query builder.
-     *
-     * @param QueryBuilder $queryBuilder
      */
     private function appendLastVisitQuery(QueryBuilder $queryBuilder)
     {
@@ -176,9 +162,6 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply filters to customers query builder.
-     *
-     * @param array $filters
-     * @param QueryBuilder $qb
      */
     private function applyFilters(array $filters, QueryBuilder $qb)
     {
@@ -197,40 +180,40 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if (in_array($filterName, ['active', 'newsletter', 'optin', 'id_customer'])) {
+            if (\in_array($filterName, ['active', 'newsletter', 'optin', 'id_customer'], true)) {
                 $qb->andWhere('c.`' . $filterName . '` = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('social_title' === $filterName) {
+            if ($filterName === 'social_title') {
                 $qb->andWhere('gl.id_gender = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('default_group' === $filterName) {
+            if ($filterName === 'default_group') {
                 $qb->andWhere('grl.id_group = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('date_add' === $filterName) {
+            if ($filterName === 'date_add') {
                 if (isset($filterValue['from'])) {
                     $qb->andWhere('c.date_add >= :date_from');
-                    $qb->setParameter('date_from', sprintf('%s 0:0:0', $filterValue['from']));
+                    $qb->setParameter('date_from', \sprintf('%s 0:0:0', $filterValue['from']));
                 }
 
                 if (isset($filterValue['to'])) {
                     $qb->andWhere('c.date_add <= :date_to');
-                    $qb->setParameter('date_to', sprintf('%s 23:59:59', $filterValue['to']));
+                    $qb->setParameter('date_to', \sprintf('%s 23:59:59', $filterValue['to']));
                 }
 
                 continue;
@@ -243,9 +226,6 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply sorting so search query builder for customers.
-     *
-     * @param QueryBuilder $searchQueryBuilder
-     * @param SearchCriteriaInterface $searchCriteria
      */
     private function applySorting(QueryBuilder $searchQueryBuilder, SearchCriteriaInterface $searchCriteria)
     {

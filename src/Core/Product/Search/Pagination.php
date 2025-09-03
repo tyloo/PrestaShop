@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class Pagination
     private $page;
 
     /**
-     * @param int $pagesCount
-     *
      * @return $this
      */
     public function setPagesCount(int $pagesCount): self
@@ -59,8 +58,6 @@ class Pagination
     }
 
     /**
-     * @param int $page
-     *
      * @return $this
      */
     public function setPage(int $page): self
@@ -79,7 +76,7 @@ class Pagination
     }
 
     /**
-     * @param int $page
+     * @param int    $page
      * @param string $type
      *
      * @return array
@@ -91,7 +88,7 @@ class Pagination
         return [
             'type' => $type,
             'page' => $page,
-            'clickable' => !$current,
+            'clickable' => ! $current,
             'current' => $type === 'page' ? $current : false,
         ];
     }
@@ -123,7 +120,7 @@ class Pagination
                 return;
             }
 
-            if (null !== $lastPage && $page > $lastPage + 1) {
+            if ($lastPage !== null && $page > $lastPage + 1) {
                 $links[] = $this->buildSpacer();
             }
 

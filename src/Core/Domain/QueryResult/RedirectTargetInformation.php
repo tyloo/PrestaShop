@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,17 +57,11 @@ class RedirectTargetInformation
      */
     private $image;
 
-    /**
-     * @param int $id
-     * @param string $type
-     * @param string $name
-     * @param string $image
-     */
     public function __construct(
         int $id,
         string $type,
         string $name,
-        string $image
+        string $image,
     ) {
         $this->id = $id;
         $this->type = $type;
@@ -74,33 +69,21 @@ class RedirectTargetInformation
         $this->image = $image;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getImage(): string
     {
         return $this->image;

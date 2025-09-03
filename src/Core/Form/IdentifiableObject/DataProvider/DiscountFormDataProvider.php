@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,16 +106,16 @@ class DiscountFormDataProvider implements FormDataProviderInterface
         } elseif ($discountForEditing->getMinimumAmount()) {
             $selectedCondition = DiscountConditionsType::CART_CONDITIONS;
             $selectedCartCondition = 'minimum_amount';
-        } elseif (!empty($specificProducts)) {
+        } elseif (! empty($specificProducts)) {
             $selectedCondition = DiscountConditionsType::CART_CONDITIONS;
             $selectedCartCondition = 'specific_products';
-        } elseif (!empty($productSegment['manufacturer']) || !(empty($productSegment['supplier']) || !empty($productSegment['category']))) {
+        } elseif (! empty($productSegment['manufacturer']) || ! (empty($productSegment['supplier']) || ! empty($productSegment['category']))) {
             $selectedCondition = DiscountConditionsType::CART_CONDITIONS;
             $selectedCartCondition = 'product_segment';
-        } elseif (!empty($discountForEditing->getCarrierIds())) {
+        } elseif (! empty($discountForEditing->getCarrierIds())) {
             $selectedCondition = DiscountConditionsType::DELIVERY_CONDITIONS;
             $selectedDeliveryCondition = DeliveryConditionsType::CARRIERS;
-        } elseif (!empty($discountForEditing->getCountryIds())) {
+        } elseif (! empty($discountForEditing->getCountryIds())) {
             $selectedCondition = DiscountConditionsType::DELIVERY_CONDITIONS;
             $selectedDeliveryCondition = DeliveryConditionsType::COUNTRY;
         }
@@ -176,11 +177,11 @@ class DiscountFormDataProvider implements FormDataProviderInterface
         $specificProducts = [];
         foreach ($discountForEditing->getProductConditions() as $conditions) {
             foreach ($conditions->getRules() as $rule) {
-                if ($rule->getType() == ProductRuleType::PRODUCTS) {
+                if ($rule->getType() === ProductRuleType::PRODUCTS) {
                     // The data is not formatted as expected and would break the page (it may happen with data from old page),
                     // to be resilient against this kind of data so we ignore it. But it means some data is going be lost so
                     // we warn the user
-                    if (count($rule->getItemIds()) === 0) {
+                    if (\count($rule->getItemIds()) === 0) {
                         $this->displayWarning('Invalid specific product has been removed from form data, it will be erased if you submit this form.');
                         continue;
                     }
@@ -190,11 +191,11 @@ class DiscountFormDataProvider implements FormDataProviderInterface
                     $product = $this->productRepository->get($productId, $productDefaultShopId);
                     $combinationIdValue = NoCombinationId::NO_COMBINATION_ID;
                     $imageUrl = $this->productImageProvider->getProductCoverUrl($productId, $productDefaultShopId);
-                } elseif ($rule->getType() == ProductRuleType::COMBINATIONS) {
+                } elseif ($rule->getType() === ProductRuleType::COMBINATIONS) {
                     // The data is not formatted as expected and would break the page (it may happen with data from old page),
                     // to be resilient against this kind of data so we ignore it. But it means some data is going be lost so
                     // we warn the user
-                    if (count($rule->getItemIds()) === 0) {
+                    if (\count($rule->getItemIds()) === 0) {
                         $this->displayWarning('Invalid specific combination has been removed from form data, it will be erased if you submit this form.');
                         continue;
                     }
@@ -210,8 +211,8 @@ class DiscountFormDataProvider implements FormDataProviderInterface
                 }
 
                 $productName = $product->name[$this->languageContext->getId()];
-                if (!empty($product->reference)) {
-                    $productName .= sprintf(' (ref: %s)', $product->reference);
+                if (! empty($product->reference)) {
+                    $productName .= \sprintf(' (ref: %s)', $product->reference);
                 }
 
                 $specificProducts[] = [
@@ -239,11 +240,11 @@ class DiscountFormDataProvider implements FormDataProviderInterface
     {
         $name = '';
         $imageUrl = '';
-        if (!empty($discountForEditing->getGiftProductId())) {
+        if (! empty($discountForEditing->getGiftProductId())) {
             $product = $this->productRepository->getProductByDefaultShop(new ProductId($discountForEditing->getGiftProductId()));
             $name = $product->name[$this->languageContext->getId()];
 
-            if (!empty($discountForEditing->getGiftCombinationId())) {
+            if (! empty($discountForEditing->getGiftCombinationId())) {
                 $attributesInformations = $this->attributeRepository->getAttributesInfoByCombinationIds(
                     [new CombinationId($discountForEditing->getGiftCombinationId())],
                     new LanguageId($this->languageContext->getId())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,9 +49,6 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($categoryId)
     {
         /** @var EditableCategory $editableCategory */
@@ -105,9 +103,6 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         $allGroupIds = $this->groupDataProvider->getAllGroupIds();
@@ -126,7 +121,7 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
         // It is important to return null when nothing is selected this way the transformer and therefore
         // the form field have no value to try and display
         $redirectTarget = null;
-        if (null !== $editableCategory->getRedirectTarget()) {
+        if ($editableCategory->getRedirectTarget() !== null) {
             $redirectTarget = [
                 'id' => $editableCategory->getRedirectTarget()->getId(),
                 'name' => $editableCategory->getRedirectTarget()->getName(),

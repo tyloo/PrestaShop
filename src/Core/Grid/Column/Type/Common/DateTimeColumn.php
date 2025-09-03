@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,17 +49,11 @@ final class DateTimeColumn extends AbstractColumn
         '-' => '‑', // convert hyphens into non-breaking hyphens
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'date_time';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,13 +91,6 @@ class AddPaymentCommand
     protected $employeeId;
 
     /**
-     * @param int $orderId
-     * @param string $paymentDate
-     * @param string $paymentMethod
-     * @param string $paymentAmount
-     * @param int $paymentCurrencyId
-     * @param int $employeeId
-     * @param int|null $orderInvoiceId
      * @param string|null $transactionId transaction ID, usually payment ID from payment gateway
      */
     public function __construct(
@@ -107,7 +101,7 @@ class AddPaymentCommand
         int $paymentCurrencyId,
         int $employeeId,
         ?int $orderInvoiceId = null,
-        ?string $transactionId = null
+        ?string $transactionId = null,
     ) {
         $amount = new DecimalNumber($paymentAmount);
         $this->assertAmountIsPositive($amount);
@@ -171,9 +165,6 @@ class AddPaymentCommand
         return $this->orderInvoiceId;
     }
 
-    /**
-     * @return EmployeeId
-     */
     public function getEmployeeId(): EmployeeId
     {
         return $this->employeeId;
@@ -188,27 +179,16 @@ class AddPaymentCommand
     }
 
     /**
-     * @param string $paymentMethod
-     *
-     * @return void
-     *
      * @throws OrderConstraintException
      */
     private function assertPaymentMethodIsGenericName(string $paymentMethod): void
     {
-        if (empty($paymentMethod) || !preg_match(self::PATTERN_PAYMENT_METHOD_NAME, $paymentMethod)) {
-            throw new OrderConstraintException(
-                'The selected payment method is invalid.',
-                OrderConstraintException::INVALID_PAYMENT_METHOD
-            );
+        if (empty($paymentMethod) || ! preg_match(self::PATTERN_PAYMENT_METHOD_NAME, $paymentMethod)) {
+            throw new OrderConstraintException('The selected payment method is invalid.', OrderConstraintException::INVALID_PAYMENT_METHOD);
         }
     }
 
     /**
-     * @param DecimalNumber $amount
-     *
-     * @return void
-     *
      * @throws NegativePaymentAmountException
      */
     private function assertAmountIsPositive(DecimalNumber $amount): void

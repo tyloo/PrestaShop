@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class Inflector
 
     public static function getInflector(): DoctrineInflector
     {
-        if (null === self::$inflector) {
+        if (self::$inflector === null) {
             self::$inflector = InflectorFactory::create()->build();
         }
 

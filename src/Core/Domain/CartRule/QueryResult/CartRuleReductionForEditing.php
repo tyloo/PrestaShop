@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,7 +69,7 @@ class CartRuleReductionForEditing
         bool $tax,
         ?int $currencyId,
         ?int $productId,
-        bool $applyToDiscountedProducts
+        bool $applyToDiscountedProducts,
     ) {
         $this->percent = $percent;
         $this->amount = $amount;
@@ -78,49 +79,31 @@ class CartRuleReductionForEditing
         $this->applyToDiscountedProducts = $applyToDiscountedProducts;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getPercent(): DecimalNumber
     {
         return $this->percent;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getAmount(): DecimalNumber
     {
         return $this->amount;
     }
 
-    /**
-     * @return bool
-     */
     public function isTax(): bool
     {
         return $this->tax;
     }
 
-    /**
-     * @return int|null
-     */
     public function getCurrencyId(): ?int
     {
         return $this->currencyId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getProductId(): ?int
     {
         return $this->productId;
     }
 
-    /**
-     * @return bool
-     */
     public function applyToDiscountedProducts(): bool
     {
         return $this->applyToDiscountedProducts;

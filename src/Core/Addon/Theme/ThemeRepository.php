@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -95,7 +96,7 @@ class ThemeRepository implements AddonRepositoryInterface
 
     public function getList()
     {
-        if (!isset($this->themes)) {
+        if (! isset($this->themes)) {
             $this->themes = $this->getFilteredList(new AddonListFilter());
         }
 
@@ -142,11 +143,11 @@ class ThemeRepository implements AddonRepositoryInterface
     private function getThemesOnDisk()
     {
         $suffix = 'config/theme.yml';
-        $themeDirectories = glob($this->appConfiguration->get('_PS_ALL_THEMES_DIR_') . '*/' . $suffix, GLOB_NOSORT);
+        $themeDirectories = glob($this->appConfiguration->get('_PS_ALL_THEMES_DIR_') . '*/' . $suffix, \GLOB_NOSORT);
 
         $themes = [];
         foreach ($themeDirectories as $directory) {
-            $name = basename(substr($directory, 0, -strlen($suffix)));
+            $name = basename(substr($directory, 0, -\strlen($suffix)));
             $themes[$name] = $this->getInstanceByName($name);
         }
 
@@ -155,15 +156,16 @@ class ThemeRepository implements AddonRepositoryInterface
 
     private function getConfigFromFile($file)
     {
-        if (!$this->filesystem->exists($file)) {
-            throw new PrestaShopException(sprintf('[ThemeRepository] Theme configuration file not found for theme at `%s`.', $file));
+        if (! $this->filesystem->exists($file)) {
+            throw new PrestaShopException(\sprintf('[ThemeRepository] Theme configuration file not found for theme at `%s`.', $file));
         }
 
         $content = file_get_contents($file);
 
         if (preg_match('/.\.(yml|yaml)$/', $file)) {
             return (new Parser())->parse($content);
-        } elseif (preg_match('/.\.json$/', $file)) {
+        }
+        if (preg_match('/.\.json$/', $file)) {
             return json_decode($content, true);
         }
     }

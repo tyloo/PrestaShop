@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,8 +31,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order;
 
 /**
  * There are different cancellation action types, they are listed in this class
- *
- * Class CancellationActionType
  */
 class CancellationActionType
 {

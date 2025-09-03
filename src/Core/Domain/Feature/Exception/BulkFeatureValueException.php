@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,22 +37,16 @@ class BulkFeatureValueException extends FeatureValueException implements BulkCom
 
     /**
      * @param Throwable[] $exceptions
-     * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
      */
     public function __construct(
         private readonly array $exceptions,
         string $message = 'Errors occurred during Feature value bulk action',
         int $code = 0,
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getExceptions(): array
     {
         return $this->exceptions;

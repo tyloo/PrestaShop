@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,11 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Module\SourceHandler;
 
 interface SourceHandlerInterface
 {
-    /**
-     * @param mixed $source
-     *
-     * @return bool
-     */
     public function canHandle($source): bool;
 
     public function getModuleName($source): ?string;

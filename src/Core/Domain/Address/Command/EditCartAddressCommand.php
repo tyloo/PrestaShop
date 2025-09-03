@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,49 +55,34 @@ class EditCartAddressCommand extends AbstractEditAddressCommand
     private $addressType;
 
     /**
-     * @param int $cartId
-     * @param string $addressType
-     *
      * @throws InvalidAddressTypeException
      * @throws CartConstraintException
      */
     public function __construct(
         int $cartId,
-        string $addressType
+        string $addressType,
     ) {
         $this->cartId = new CartId($cartId);
         $this->setAddressType($addressType);
     }
 
-    /**
-     * @return CartId
-     */
     public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return string
-     */
     public function getAddressType(): string
     {
         return $this->addressType;
     }
 
     /**
-     * @param string $addressType
-     *
      * @throws InvalidAddressTypeException
      */
     private function setAddressType(string $addressType): void
     {
-        if (!in_array($addressType, self::ALLOWED_ADDRESS_TYPES)) {
-            throw new InvalidAddressTypeException(sprintf(
-                'Invalid address type %s, allowed values are: %s',
-                $addressType,
-                implode(',', self::ALLOWED_ADDRESS_TYPES)
-            ));
+        if (! \in_array($addressType, self::ALLOWED_ADDRESS_TYPES, true)) {
+            throw new InvalidAddressTypeException(\sprintf('Invalid address type %s, allowed values are: %s', $addressType, implode(',', self::ALLOWED_ADDRESS_TYPES)));
         }
 
         $this->addressType = $addressType;

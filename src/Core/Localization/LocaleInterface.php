@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,8 +47,6 @@ interface LocaleInterface
      * Get this locale's code (simplified IETF tag syntax)
      * Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
      * eg: fr-FR, en-US.
-     *
-     * @return string
      */
     public function getCode(): string;
 
@@ -63,8 +62,8 @@ interface LocaleInterface
     /**
      * Format a number as a price.
      *
-     * @param int|float|string $number Number to be formatted as a price
-     * @param string $currencyCode Currency of the price
+     * @param int|float|string $number       Number to be formatted as a price
+     * @param string           $currencyCode Currency of the price
      *
      * @return string The formatted price
      */
@@ -74,15 +73,8 @@ interface LocaleInterface
      * Get price specification by currency code.
      *
      * @param string $currencyCode Currency of the price
-     *
-     * @return NumberInterface
      */
     public function getPriceSpecification(string $currencyCode): NumberInterface;
 
-    /**
-     * Get number specification
-     *
-     * @return NumberInterface
-     */
     public function getNumberSpecification(): NumberInterface;
 }

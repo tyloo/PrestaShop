@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,39 +49,28 @@ final class PositionUpdate implements PositionUpdateInterface
     private $parentId;
 
     /**
-     * @param PositionModificationCollectionInterface $positionModificationCollection
-     * @param PositionDefinitionInterface $positionDefinition
      * @param string|null $parentId
      */
     public function __construct(
         PositionModificationCollectionInterface $positionModificationCollection,
         PositionDefinitionInterface $positionDefinition,
-        $parentId = null
+        $parentId = null,
     ) {
         $this->positionDefinition = $positionDefinition;
         $this->positionModificationCollection = $positionModificationCollection;
         $this->parentId = $parentId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPositionDefinition()
     {
         return $this->positionDefinition;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPositionModificationCollection()
     {
         return $this->positionModificationCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParentId()
     {
         return $this->parentId;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,24 +43,18 @@ final class ExistingCustomerEmailValidator extends ConstraintValidator
      */
     private $customerDataSource;
 
-    /**
-     * @param CustomerDataSourceInterface $customerDataSource
-     */
     public function __construct(CustomerDataSourceInterface $customerDataSource)
     {
         $this->customerDataSource = $customerDataSource;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof ExistingCustomerEmail) {
+        if (! $constraint instanceof ExistingCustomerEmail) {
             throw new UnexpectedTypeException($constraint, ExistingCustomerEmail::class);
         }
 
-        if (!$this->customerDataSource->hasCustomerWithEmail($value)) {
+        if (! $this->customerDataSource->hasCustomerWithEmail($value)) {
             $this->context->buildViolation($constraint->message)
                 ->setTranslationDomain('Admin.Orderscustomers.Notification')
                 ->addViolation()

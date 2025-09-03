@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,21 +47,14 @@ final class SupplierGridDataFactory implements GridDataFactoryInterface
      */
     private $supplierLogoImageProvider;
 
-    /**
-     * @param GridDataFactoryInterface $supplierDataFactory
-     * @param ImageProviderInterface $supplierLogoImageProvider
-     */
     public function __construct(
         GridDataFactoryInterface $supplierDataFactory,
-        ImageProviderInterface $supplierLogoImageProvider
+        ImageProviderInterface $supplierLogoImageProvider,
     ) {
         $this->supplierDataFactory = $supplierDataFactory;
         $this->supplierLogoImageProvider = $supplierLogoImageProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $supplierData = $this->supplierDataFactory->getData($searchCriteria);
@@ -77,8 +71,6 @@ final class SupplierGridDataFactory implements GridDataFactoryInterface
     }
 
     /**
-     * @param array $suppliers
-     *
      * @return array
      */
     private function applyModification(array $suppliers)

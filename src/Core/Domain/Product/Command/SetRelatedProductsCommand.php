@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,20 +48,16 @@ class SetRelatedProductsCommand
     private $relatedProductIds;
 
     /**
-     * @param int $productId
      * @param int[] $relatedProductIds
      */
     public function __construct(
         int $productId,
-        array $relatedProductIds
+        array $relatedProductIds,
     ) {
         $this->productId = new ProductId($productId);
         $this->setRelatedProductIds($relatedProductIds);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -80,11 +77,7 @@ class SetRelatedProductsCommand
     private function setRelatedProductIds(array $ids): void
     {
         if (empty($ids)) {
-            throw new RuntimeException(sprintf(
-                'Empty array of related products provided in %s. To remove all related products use %s.',
-                self::class,
-                RemoveAllRelatedProductsCommand::class
-            ));
+            throw new RuntimeException(\sprintf('Empty array of related products provided in %s. To remove all related products use %s.', self::class, RemoveAllRelatedProductsCommand::class));
         }
 
         foreach ($ids as $id) {

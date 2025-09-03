@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,7 +63,7 @@ class SessionHandler implements SessionHandlerInterface
         int $lifetime,
         bool $isSecure,
         string $sameSite,
-        string $shopUri
+        string $shopUri,
     ) {
         $this->lifetime = $lifetime;
         $this->isSecure = $isSecure;
@@ -70,7 +71,7 @@ class SessionHandler implements SessionHandlerInterface
 
         // Same behaviour as Cookie class
         $this->path = trim($shopUri, '/\\') . '/';
-        if ($this->path[0] != '/') {
+        if ($this->path[0] !== '/') {
             $this->path = '/' . $this->path;
         }
 
@@ -78,17 +79,11 @@ class SessionHandler implements SessionHandlerInterface
         $this->path = str_replace(['%2F', '%7E', '%2B', '%26'], ['/', '~', '+', '&'], $this->path);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSession(): ?SessionInterface
     {
         return $this->session;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function init(): void
     {
         if ($this->isSessionDisabled() || $this->isSessionStarted()) {
@@ -107,31 +102,16 @@ class SessionHandler implements SessionHandlerInterface
         $this->session->start();
     }
 
-    /**
-     * Is session disabled
-     *
-     * @return bool
-     */
     protected function isSessionDisabled(): bool
     {
-        return $this->getSessionStatus() === PHP_SESSION_DISABLED;
+        return $this->getSessionStatus() === \PHP_SESSION_DISABLED;
     }
 
-    /**
-     * Is session started
-     *
-     * @return bool
-     */
     protected function isSessionStarted(): bool
     {
-        return $this->getSessionStatus() === PHP_SESSION_ACTIVE;
+        return $this->getSessionStatus() === \PHP_SESSION_ACTIVE;
     }
 
-    /**
-     * Get Session status
-     *
-     * @return int
-     */
     protected function getSessionStatus(): int
     {
         return session_status();

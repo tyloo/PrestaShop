@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,39 +32,27 @@ namespace PrestaShop\PrestaShop\Core\Util\String;
  */
 final class StringValidator implements StringValidatorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function startsWith($string, $prefix)
     {
         return str_starts_with($string, $prefix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function endsWith($string, $suffix)
     {
-        $length = strlen($suffix);
+        $length = \strlen($suffix);
 
-        if (0 === $length) {
+        if ($length === 0) {
             return false;
         }
 
         return substr($string, -$length) === $suffix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function startsWithAndEndsWith($string, $prefix, $suffix)
     {
         return $this->startsWith($string, $prefix) && $this->endsWith($string, $suffix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function doesContainsWhiteSpaces($string)
     {
         return preg_match('/\s/', $string);

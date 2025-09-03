@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -102,17 +103,6 @@ class CatalogueProviderFactory
      */
     private $moduleCatalogueProviderFactory;
 
-    /**
-     * @param DatabaseTranslationLoader $databaseTranslationLoader
-     * @param LegacyModuleExtractorInterface $legacyModuleExtractor
-     * @param LoaderInterface $legacyFileLoader
-     * @param ThemeExtractor $themeExtractor
-     * @param ThemeRepository $themeRepository
-     * @param Filesystem $filesystem
-     * @param string $themesDirectory
-     * @param string $modulesDirectory
-     * @param string $translationsDirectory
-     */
     public function __construct(
         DatabaseTranslationLoader $databaseTranslationLoader,
         LegacyModuleExtractorInterface $legacyModuleExtractor,
@@ -122,7 +112,7 @@ class CatalogueProviderFactory
         Filesystem $filesystem,
         string $themesDirectory,
         string $modulesDirectory,
-        string $translationsDirectory
+        string $translationsDirectory,
     ) {
         $this->databaseTranslationLoader = $databaseTranslationLoader;
         $this->legacyModuleExtractor = $legacyModuleExtractor;
@@ -143,39 +133,32 @@ class CatalogueProviderFactory
     }
 
     /**
-     * @param ProviderDefinitionInterface $providerDefinition
-     *
-     * @return CatalogueLayersProviderInterface
-     *
      * @throws UnexpectedTranslationTypeException
      */
     public function getProvider(ProviderDefinitionInterface $providerDefinition): CatalogueLayersProviderInterface
     {
         $type = $providerDefinition->getType();
-        if (!in_array($type, ProviderDefinitionInterface::ALLOWED_TYPES)) {
-            throw new UnexpectedTranslationTypeException(sprintf('Unexpected type %s', $type));
+        if (! \in_array($type, ProviderDefinitionInterface::ALLOWED_TYPES, true)) {
+            throw new UnexpectedTranslationTypeException(\sprintf('Unexpected type %s', $type));
         }
 
         if ($providerDefinition instanceof ModuleProviderDefinition) {
             return $this->moduleCatalogueProviderFactory->getModuleCatalogueProvider($providerDefinition);
-        } elseif ($providerDefinition instanceof AbstractCoreProviderDefinition) {
+        }
+        if ($providerDefinition instanceof AbstractCoreProviderDefinition) {
             return $this->getCoreCatalogueProvider($providerDefinition);
-        } elseif ($providerDefinition instanceof ThemeProviderDefinition) {
+        }
+        if ($providerDefinition instanceof ThemeProviderDefinition) {
             return $this->getThemeCatalogueProvider($providerDefinition);
         }
 
         // This should never be thrown if every Type has his Provider defined in constructor
-        throw new UnexpectedTranslationTypeException(sprintf('Could not fetch provider for given definition type "%s"', $type));
+        throw new UnexpectedTranslationTypeException(\sprintf('Could not fetch provider for given definition type "%s"', $type));
     }
 
-    /**
-     * @param ProviderDefinitionInterface $providerDefinition
-     *
-     * @return CatalogueLayersProviderInterface
-     */
     private function getCoreCatalogueProvider(ProviderDefinitionInterface $providerDefinition): CatalogueLayersProviderInterface
     {
-        if (!isset($this->providers[$providerDefinition->getType()])) {
+        if (! isset($this->providers[$providerDefinition->getType()])) {
             $this->providers[$providerDefinition->getType()] = new CoreCatalogueLayersProvider(
                 $this->databaseTranslationLoader,
                 $this->translationsDirectory,
@@ -187,14 +170,9 @@ class CatalogueProviderFactory
         return $this->providers[$providerDefinition->getType()];
     }
 
-    /**
-     * @param ThemeProviderDefinition $providerDefinition
-     *
-     * @return CatalogueLayersProviderInterface
-     */
     private function getThemeCatalogueProvider(ThemeProviderDefinition $providerDefinition): CatalogueLayersProviderInterface
     {
-        if (!isset($this->providers[$providerDefinition->getType()])) {
+        if (! isset($this->providers[$providerDefinition->getType()])) {
             $coreFrontProviderDefinition = new FrontofficeProviderDefinition();
             $modulesProviderDefinition = new ModulesProviderDefinition();
             $coreFrontProvider = new CoreCatalogueLayersProvider(

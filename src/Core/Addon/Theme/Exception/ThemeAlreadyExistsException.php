@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Addon\Theme\Exception;
 
 use PrestaShop\PrestaShop\Core\Exception\CoreException;
 
-/**
- * Class ThemeAlreadyExistsException
- */
 class ThemeAlreadyExistsException extends CoreException
 {
     /**
@@ -41,8 +39,8 @@ class ThemeAlreadyExistsException extends CoreException
     /**
      * @param string $themeName
      * @param string $message
-     * @param int $code
-     * @param null $previous
+     * @param int    $code
+     * @param null   $previous
      */
     public function __construct($themeName, $message = '', $code = 0, $previous = null)
     {

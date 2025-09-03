@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,18 +42,13 @@ class GetCombinationIdsHandler implements GetCombinationIdsHandlerInterface
      */
     private $productCombinationQueryBuilder;
 
-    /**
-     * @param ProductCombinationQueryBuilder $productCombinationQueryBuilder
-     */
     public function __construct(
-        ProductCombinationQueryBuilder $productCombinationQueryBuilder
+        ProductCombinationQueryBuilder $productCombinationQueryBuilder,
     ) {
         $this->productCombinationQueryBuilder = $productCombinationQueryBuilder;
     }
 
     /**
-     * @param GetCombinationIds $query
-     *
      * @return CombinationId[]
      */
     public function handle(GetCombinationIds $query): array
@@ -61,7 +57,7 @@ class GetCombinationIdsHandler implements GetCombinationIdsHandlerInterface
         $filters['product_id'] = $query->getProductId()->getValue();
         $orderBy = $query->getOrderBy();
 
-        if ('price' === $query->getOrderBy()) {
+        if ($query->getOrderBy() === 'price') {
             // we need to specify alias for price to avoid price being ambiguous in the query
             $orderBy = 'pas.price';
         }

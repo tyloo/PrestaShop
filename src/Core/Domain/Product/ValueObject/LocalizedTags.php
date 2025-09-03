@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,6 @@ class LocalizedTags
     private $tags;
 
     /**
-     * @param int $langId
      * @param string[] $tags
      *
      * @throws ProductConstraintException
@@ -60,17 +60,11 @@ class LocalizedTags
         $this->setTags($tags);
     }
 
-    /**
-     * @return bool
-     */
     public function isEmpty(): bool
     {
         return empty($this->tags);
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLanguageId(): LanguageId
     {
         return $this->languageId;
@@ -85,8 +79,6 @@ class LocalizedTags
     }
 
     /**
-     * @param array $tags
-     *
      * @throws ProductConstraintException
      */
     private function setTags(array $tags): void
@@ -105,21 +97,12 @@ class LocalizedTags
     }
 
     /**
-     * @param string $tag
-     *
      * @throws ProductConstraintException
      */
     private function assertTagIsValid(string $tag): void
     {
-        if (!preg_match(self::VALID_TAG_PATTERN, $tag)) {
-            throw new ProductConstraintException(
-                sprintf(
-                    'Invalid product tag "%s" in language with id "%s"',
-                    $tag,
-                    $this->languageId->getValue()
-                ),
-                ProductConstraintException::INVALID_TAG
-            );
+        if (! preg_match(self::VALID_TAG_PATTERN, $tag)) {
+            throw new ProductConstraintException(\sprintf('Invalid product tag "%s" in language with id "%s"', $tag, $this->languageId->getValue()), ProductConstraintException::INVALID_TAG);
         }
     }
 }

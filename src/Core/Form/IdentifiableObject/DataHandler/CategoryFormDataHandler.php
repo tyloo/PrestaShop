@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,18 +46,12 @@ final class CategoryFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(
-        CommandBusInterface $commandBus
+        CommandBusInterface $commandBus,
     ) {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         $command = $this->createAddCategoryCommand($data);
@@ -67,9 +62,6 @@ final class CategoryFormDataHandler implements FormDataHandlerInterface
         return $categoryId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($categoryId, array $data)
     {
         $command = $this->createEditCategoryCommand((int) $categoryId, $data);
@@ -79,10 +71,6 @@ final class CategoryFormDataHandler implements FormDataHandlerInterface
 
     /**
      * Creates add category command from form data
-     *
-     * @param array $data
-     *
-     * @return AddCategoryCommand
      *
      * @throws CategoryConstraintException
      */
@@ -118,11 +106,6 @@ final class CategoryFormDataHandler implements FormDataHandlerInterface
 
     /**
      * Creates edit category command from
-     *
-     * @param int $categoryId
-     * @param array $data
-     *
-     * @return EditCategoryCommand
      *
      * @throws CategoryConstraintException
      */

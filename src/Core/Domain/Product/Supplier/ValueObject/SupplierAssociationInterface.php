@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,23 +36,11 @@ use Stringable;
 
 interface SupplierAssociationInterface extends Stringable
 {
-    /**
-     * @return ProductId|null
-     */
     public function getProductId(): ?ProductId;
 
-    /**
-     * @return CombinationIdInterface
-     */
     public function getCombinationId(): CombinationIdInterface;
 
-    /**
-     * @return SupplierId
-     */
     public function getSupplierId(): SupplierId;
 
-    /**
-     * @return ProductSupplierId|null
-     */
     public function getProductSupplierId(): ?ProductSupplierId;
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,10 +40,14 @@ use PrestaShop\PrestaShop\Core\Language\LanguageInterface;
  */
 class LayoutVariablesBuilder implements LayoutVariablesBuilderInterface
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $defaultVariables;
 
-    /** @var HookDispatcherInterface */
+    /**
+     * @var HookDispatcherInterface
+     */
     private $hookDispatcher;
 
     /**
@@ -50,28 +55,20 @@ class LayoutVariablesBuilder implements LayoutVariablesBuilderInterface
      */
     private $languageDefaultFonts;
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param LanguageDefaultFontsCatalog $languageDefaultFonts
-     * @param array $defaultVariables
-     */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         LanguageDefaultFontsCatalog $languageDefaultFonts,
-        array $defaultVariables = []
+        array $defaultVariables = [],
     ) {
         $this->hookDispatcher = $hookDispatcher;
         $this->languageDefaultFonts = $languageDefaultFonts;
         $this->defaultVariables = $defaultVariables;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildVariables(LayoutInterface $mailLayout, LanguageInterface $language)
     {
         $languageDefaultFont = $this->languageDefaultFonts->getDefaultFontByLanguage($language);
-        if (!empty($languageDefaultFont)) {
+        if (! empty($languageDefaultFont)) {
             $languageDefaultFont .= ',';
         }
 

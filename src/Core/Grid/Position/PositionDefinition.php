@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,18 +59,17 @@ final class PositionDefinition implements PositionDefinitionInterface
     private $firstPosition;
 
     /**
-     * @param string $table
-     * @param string $idField
-     * @param string $positionField
+     * @param string      $table
+     * @param string      $idField
+     * @param string      $positionField
      * @param string|null $parentIdField
-     * @param int $firstPosition
      */
     public function __construct(
         $table,
         $idField,
         $positionField,
         $parentIdField = null,
-        int $firstPosition = 0
+        int $firstPosition = 0,
     ) {
         $this->table = $table;
         $this->idField = $idField;
@@ -78,41 +78,26 @@ final class PositionDefinition implements PositionDefinitionInterface
         $this->firstPosition = $firstPosition;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTable()
     {
         return $this->table;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdField()
     {
         return $this->idField;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPositionField()
     {
         return $this->positionField;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParentIdField()
     {
         return $this->parentIdField;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFirstPosition(): int
     {
         return $this->firstPosition;

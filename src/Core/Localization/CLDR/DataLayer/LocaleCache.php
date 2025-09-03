@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,9 +56,6 @@ class LocaleCache extends AbstractDataLayer implements CldrLocaleDataLayerInterf
         $this->cache = $cache;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLowerLayer(CldrLocaleDataLayerInterface $lowerLayer)
     {
         $this->lowerDataLayer = $lowerLayer;
@@ -85,12 +83,9 @@ class LocaleCache extends AbstractDataLayer implements CldrLocaleDataLayerInterf
             : null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function write($id, $data)
     {
-        if (!($data instanceof LocaleData)) {
+        if (! ($data instanceof LocaleData)) {
             throw new LocalizationException('$data must be an instance of ' . LocaleData::class);
         }
 
@@ -102,10 +97,10 @@ class LocaleCache extends AbstractDataLayer implements CldrLocaleDataLayerInterf
      *
      * Might be a file edit, cache update, DB insert/update...
      *
-     * @param mixed $localeCode
-     *                          The LocaleData object identifier
+     * @param mixed      $localeCode
+     *                               The LocaleData object identifier
      * @param LocaleData $data
-     *                         The CLDR LocaleData object to be written
+     *                               The CLDR LocaleData object to be written
      *
      * @throws DataLayerException
      *                            When write fails
@@ -117,7 +112,7 @@ class LocaleCache extends AbstractDataLayer implements CldrLocaleDataLayerInterf
 
         $saved = $this->cache->save($cacheItem);
 
-        if (!$saved) {
+        if (! $saved) {
             throw new DataLayerException('Unable to persist data in cache data layer');
         }
     }

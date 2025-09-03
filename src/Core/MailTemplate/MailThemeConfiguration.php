@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,27 +38,24 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
  */
 final class MailThemeConfiguration implements DataConfigurationInterface
 {
-    /** @var ConfigurationInterface */
+    /**
+     * @var ConfigurationInterface
+     */
     private $configuration;
 
-    /** @var ThemeCatalogInterface */
+    /**
+     * @var ThemeCatalogInterface
+     */
     private $themeCatalog;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param ThemeCatalogInterface $themeCatalog
-     */
     public function __construct(
         ConfigurationInterface $configuration,
-        ThemeCatalogInterface $themeCatalog
+        ThemeCatalogInterface $themeCatalog,
     ) {
         $this->configuration = $configuration;
         $this->themeCatalog = $themeCatalog;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -65,9 +63,6 @@ final class MailThemeConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
@@ -82,15 +77,12 @@ final class MailThemeConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         if (empty($configuration['defaultTheme'])) {
             throw new InvalidArgumentException('Default theme can not be empty');
         }
 
-        return null !== $this->themeCatalog->getByName($configuration['defaultTheme']);
+        return $this->themeCatalog->getByName($configuration['defaultTheme']) !== null;
     }
 }

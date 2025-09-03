@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ interface DataRowInterface extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Add a cell to this row.
      *
-     * @param DataCellInterface $cell
-     *
      * @return self
      */
     public function addCell(DataCellInterface $cell);
@@ -49,15 +48,11 @@ interface DataRowInterface extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Create a data row from given array.
      *
-     * @param array $data
-     *
      * @return self
      */
     public static function createFromArray(array $data);
 
     /**
-     * @param mixed $offset
-     *
      * @return DataCellInterface
      */
     #[ReturnTypeWillChange]

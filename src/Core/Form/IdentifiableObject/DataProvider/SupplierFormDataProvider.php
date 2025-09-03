@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,16 +59,15 @@ final class SupplierFormDataProvider implements FormDataProviderInterface
     private $contextCountryId;
 
     /**
-     * @param CommandBusInterface $queryBus
-     * @param bool $multistoreEnabled
+     * @param bool  $multistoreEnabled
      * @param int[] $defaultShopAssociation
-     * @param int $contextCountryId
+     * @param int   $contextCountryId
      */
     public function __construct(
         CommandBusInterface $queryBus,
         $multistoreEnabled,
         array $defaultShopAssociation,
-        $contextCountryId
+        $contextCountryId,
     ) {
         $this->queryBus = $queryBus;
         $this->multistoreEnabled = $multistoreEnabled;
@@ -76,8 +76,6 @@ final class SupplierFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws SupplierException
      */
     public function getData($supplierId)
@@ -109,9 +107,6 @@ final class SupplierFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         $data['is_enabled'] = false;

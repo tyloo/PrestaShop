@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,53 +41,35 @@ abstract class AbstractCollection implements Iterator, Countable
      */
     protected $items = [];
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public function current()
     {
         return current($this->items);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function next(): void
     {
         next($this->items);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public function key()
     {
         return key($this->items);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function valid(): bool
     {
-        return false !== $this->current();
+        return $this->current() !== false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rewind(): void
     {
         reset($this->items);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
-        return count($this->items);
+        return \count($this->items);
     }
 }

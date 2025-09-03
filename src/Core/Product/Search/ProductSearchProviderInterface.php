@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,13 +33,10 @@ namespace PrestaShop\PrestaShop\Core\Product\Search;
 interface ProductSearchProviderInterface
 {
     /**
-     * @param ProductSearchContext $context
-     * @param ProductSearchQuery $query
-     *
      * @return ProductSearchResult
      */
     public function runQuery(
         ProductSearchContext $context,
-        ProductSearchQuery $query
+        ProductSearchQuery $query,
     );
 }

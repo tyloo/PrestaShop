@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,8 +47,8 @@ class ApiClientSecret
 
     private function assertSecretValue(string $value)
     {
-        if (strlen($value) < self::MIN_SIZE || strlen($value) > self::MAX_SIZE) {
-            throw new ApiClientConstraintException(sprintf('Invalid api client secret "%s".', var_export($value, true)), ApiClientConstraintException::INVALID_SECRET);
+        if (\strlen($value) < self::MIN_SIZE || \strlen($value) > self::MAX_SIZE) {
+            throw new ApiClientConstraintException(\sprintf('Invalid api client secret "%s".', var_export($value, true)), ApiClientConstraintException::INVALID_SECRET);
         }
     }
 }

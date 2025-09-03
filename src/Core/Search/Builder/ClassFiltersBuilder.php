@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,11 @@ use PrestaShop\PrestaShop\Core\Search\ShopFilters;
  */
 final class ClassFiltersBuilder extends AbstractFiltersBuilder
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $filtersClass;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config)
     {
         if (isset($config['filters_class'])) {
@@ -53,19 +53,17 @@ final class ClassFiltersBuilder extends AbstractFiltersBuilder
     /**
      * Build the filters with the class defined by filtersClass
      *
-     * @param Filters|null $filters
-     *
      * @return Filters
      */
     public function buildFilters(?Filters $filters = null)
     {
-        if (null === $this->filtersClass) {
+        if ($this->filtersClass === null) {
             return $filters;
         }
 
         /** @var array $defaultParameters */
-        $defaultParameters = call_user_func([$this->filtersClass, 'getDefaults']);
-        if (null !== $filters) {
+        $defaultParameters = \call_user_func([$this->filtersClass, 'getDefaults']);
+        if ($filters !== null) {
             $typedFilters = $this->constructFilters($filters->all(), $filters->getFilterId());
             $typedFilters->add($defaultParameters);
         } else {
@@ -80,11 +78,6 @@ final class ClassFiltersBuilder extends AbstractFiltersBuilder
      * always use the same parameters in the same order:
      *  - for Filters: array $filters, string $filterId
      *  - for ShopFilters: ShopConstraint $shopConstraint, array $filters, string $filterId
-     *
-     * @param array $filters
-     * @param string $filterId
-     *
-     * @return Filters
      */
     private function constructFilters(array $filters, string $filterId): Filters
     {

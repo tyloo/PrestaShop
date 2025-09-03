@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,10 +77,8 @@ class Processor
     private $themesDir = '';
 
     /**
-     * Processor constructor.
-     *
-     * @param string $adminDir Path to PrestaShop's admin directory
-     * @param string $themesDir Path to the FO themes directory
+     * @param string   $adminDir                Path to PrestaShop's admin directory
+     * @param string   $themesDir               Path to the FO themes directory
      * @param string[] $defaultModulesToProcess Path to the default modules to process
      */
     public function __construct($adminDir, $themesDir, array $defaultModulesToProcess)
@@ -167,7 +166,7 @@ class Processor
     {
         if ($this->languageCode) {
             $lang_pack = Language::getLangDetails($this->languageCode);
-            if (!$lang_pack['is_rtl']) {
+            if (! $lang_pack['is_rtl']) {
                 return;
             }
         }
@@ -175,17 +174,17 @@ class Processor
         $generator = new StylesheetGenerator();
         // generate stylesheets for BO themes
         if ($this->processBOTheme) {
-            if (!is_dir($this->adminDir)) {
+            if (! is_dir($this->adminDir)) {
                 throw new GenerationException("Cannot generate BO themes: \"{$this->adminDir}\" is not a directory");
             }
 
-            $generator->generateInDirectory($this->adminDir . DIRECTORY_SEPARATOR . 'themes');
+            $generator->generateInDirectory($this->adminDir . \DIRECTORY_SEPARATOR . 'themes');
         }
 
         // generate stylesheets for BO themes
         if ($this->processFOThemes) {
             foreach ($this->processFOThemes as $themeName) {
-                $generator->generateInDirectory($this->themesDir . DIRECTORY_SEPARATOR . $themeName);
+                $generator->generateInDirectory($this->themesDir . \DIRECTORY_SEPARATOR . $themeName);
             }
         }
 
@@ -195,7 +194,7 @@ class Processor
         }
 
         foreach ($this->processPaths as $path) {
-            if (!empty($path) && is_dir($path)) {
+            if (! empty($path) && is_dir($path)) {
                 $generator->generateInDirectory($path);
             }
         }

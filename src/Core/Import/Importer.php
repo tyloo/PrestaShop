@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,19 +68,12 @@ final class Importer implements ImporterInterface
      */
     private $iniConfiguration;
 
-    /**
-     * @param ImportAccessCheckerInterface $accessChecker
-     * @param ImportEntityDeleterInterface $entityDeleter
-     * @param FileReaderInterface $fileReader
-     * @param ImportDirectory $importDir
-     * @param IniConfiguration $iniConfiguration
-     */
     public function __construct(
         ImportAccessCheckerInterface $accessChecker,
         ImportEntityDeleterInterface $entityDeleter,
         FileReaderInterface $fileReader,
         ImportDirectory $importDir,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ) {
         $this->entityDeleter = $entityDeleter;
         $this->accessChecker = $accessChecker;
@@ -88,13 +82,10 @@ final class Importer implements ImporterInterface
         $this->iniConfiguration = $iniConfiguration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function import(
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
-        ImportHandlerInterface $importHandler
+        ImportHandlerInterface $importHandler,
     ) {
         $this->setUp($importHandler, $importConfig, $runtimeConfig);
 
@@ -165,18 +156,15 @@ final class Importer implements ImporterInterface
      * Data should be truncated only when it's not validation step
      * and it's the first batch of the first process of the import.
      *
-     * @param ImportConfigInterface $importConfig
-     * @param ImportRuntimeConfigInterface $runtimeConfig
-     *
      * @return bool
      */
     public function shouldTruncateData(
         ImportConfigInterface $importConfig,
-        ImportRuntimeConfigInterface $runtimeConfig
+        ImportRuntimeConfigInterface $runtimeConfig,
     ) {
         return
             $importConfig->truncate()
-            && !$runtimeConfig->shouldValidateData()
+            && ! $runtimeConfig->shouldValidateData()
             && $this->isFirstIteration($runtimeConfig)
         ;
     }
@@ -184,26 +172,20 @@ final class Importer implements ImporterInterface
     /**
      * Checks if current import iteration is the first.
      *
-     * @param ImportRuntimeConfigInterface $runtimeConfig
-     *
      * @return bool
      */
     private function isFirstIteration(ImportRuntimeConfigInterface $runtimeConfig)
     {
-        return 0 === $runtimeConfig->getOffset();
+        return $runtimeConfig->getOffset() === 0;
     }
 
     /**
      * Set the import process up.
-     *
-     * @param ImportHandlerInterface $importHandler
-     * @param ImportConfigInterface $importConfig
-     * @param ImportRuntimeConfigInterface $runtimeConfig
      */
     private function setUp(
         ImportHandlerInterface $importHandler,
         ImportConfigInterface $importConfig,
-        ImportRuntimeConfigInterface $runtimeConfig
+        ImportRuntimeConfigInterface $runtimeConfig,
     ) {
         if ($this->shouldTruncateData($importConfig, $runtimeConfig) && $this->accessChecker->canTruncateData()) {
             $this->entityDeleter->deleteAll($importConfig->getEntityType());
@@ -214,15 +196,11 @@ final class Importer implements ImporterInterface
 
     /**
      * Tear the import process down.
-     *
-     * @param ImportHandlerInterface $importHandler
-     * @param ImportConfigInterface $importConfig
-     * @param ImportRuntimeConfigInterface $runtimeConfig
      */
     private function tearDown(
         ImportHandlerInterface $importHandler,
         ImportConfigInterface $importConfig,
-        ImportRuntimeConfigInterface $runtimeConfig
+        ImportRuntimeConfigInterface $runtimeConfig,
     ) {
         $importHandler->tearDown($importConfig, $runtimeConfig);
 

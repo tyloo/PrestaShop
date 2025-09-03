@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,7 +36,9 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
  */
 abstract class AbstractFiltersBuilder implements FiltersBuilderInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $filterId;
 
     /**
@@ -43,9 +46,6 @@ abstract class AbstractFiltersBuilder implements FiltersBuilderInterface
      */
     protected $shopConstraint;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config)
     {
         $this->filterId = $config['filter_id'] ?? '';
@@ -56,19 +56,14 @@ abstract class AbstractFiltersBuilder implements FiltersBuilderInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     abstract public function buildFilters(?Filters $filters = null);
 
     /**
-     * @param Filters|null $filters
-     *
      * @return string
      */
     protected function getFilterId(?Filters $filters = null)
     {
-        if (null === $filters) {
+        if ($filters === null) {
             return $this->filterId;
         }
 

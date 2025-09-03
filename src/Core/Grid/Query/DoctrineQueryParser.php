@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,14 +34,11 @@ use PrestaShop\PrestaShop\Core\Grid\Exception\UnsupportedParameterException;
  */
 final class DoctrineQueryParser implements QueryParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function parse($query, array $queryParameters)
     {
         $values = [];
         foreach ($queryParameters as $key => $value) {
-            if (!is_string($key)) {
+            if (! \is_string($key)) {
                 throw new UnsupportedParameterException('Only named parameters are supported in prepared queries.');
             }
             $values[':' . $key] = $this->parseValue($value);
@@ -58,7 +56,7 @@ final class DoctrineQueryParser implements QueryParserInterface
      */
     private function parseValue($value)
     {
-        if (is_string($value)) {
+        if (\is_string($value)) {
             return $this->parseStringParameter($value);
         }
 
@@ -66,11 +64,11 @@ final class DoctrineQueryParser implements QueryParserInterface
             return $this->parseNumericParameter($value);
         }
 
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return $this->parseArrayParameter($value);
         }
 
-        if (is_bool($value)) {
+        if (\is_bool($value)) {
             return $this->parseBooleanParameter($value);
         }
 
@@ -78,7 +76,7 @@ final class DoctrineQueryParser implements QueryParserInterface
             return 'NULL';
         }
 
-        throw new UnsupportedParameterException('Unsupported value type: ' . gettype($value));
+        throw new UnsupportedParameterException('Unsupported value type: ' . \gettype($value));
     }
 
     /**
@@ -102,8 +100,6 @@ final class DoctrineQueryParser implements QueryParserInterface
     }
 
     /**
-     * @param array $value
-     *
      * @return string
      */
     private function parseArrayParameter(array $value)

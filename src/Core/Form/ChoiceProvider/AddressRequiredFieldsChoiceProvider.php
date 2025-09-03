@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class AddressRequiredFieldsChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return array_combine(RequiredFields::ALLOWED_REQUIRED_FIELDS, RequiredFields::ALLOWED_REQUIRED_FIELDS);

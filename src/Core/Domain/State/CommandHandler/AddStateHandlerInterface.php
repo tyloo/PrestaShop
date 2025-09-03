@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,10 +32,5 @@ use PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateId;
 
 interface AddStateHandlerInterface
 {
-    /**
-     * @param AddStateCommand $command
-     *
-     * @return StateId
-     */
     public function handle(AddStateCommand $command): StateId;
 }

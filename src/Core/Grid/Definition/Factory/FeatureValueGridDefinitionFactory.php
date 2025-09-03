@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,26 +73,17 @@ class FeatureValueGridDefinitionFactory extends AbstractFilterableGridDefinition
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         // the name is overriden in FeatureValueGridFactory to be the dynamic Feature name instead
         return 'Features';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -156,18 +148,12 @@ class FeatureValueGridDefinitionFactory extends AbstractFilterableGridDefinition
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions(): GridActionCollectionInterface
     {
         // actions are filled in FeatureValueGridFactory
         return new GridActionCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters(): FilterCollectionInterface
     {
         // some filters (which depends on request filters) are added inside FeatureValueGridFactory
@@ -195,9 +181,6 @@ class FeatureValueGridDefinitionFactory extends AbstractFilterableGridDefinition
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         return new BulkActionCollection();

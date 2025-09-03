@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,11 @@ final class SearchEngineFormDataProvider implements FormDataProviderInterface
      */
     private $queryBus;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     */
     public function __construct(CommandBusInterface $queryBus)
     {
         $this->queryBus = $queryBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($searchEngineId): array
     {
         /** @var SearchEngineForEditing $editableSearchEngine */
@@ -64,9 +59,6 @@ final class SearchEngineFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         return [];

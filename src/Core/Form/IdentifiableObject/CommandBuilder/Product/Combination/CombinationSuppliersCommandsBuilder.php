@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 class CombinationSuppliersCommandsBuilder implements CombinationCommandsBuilderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildCommands(CombinationId $combinationId, array $formData, ShopConstraint $singleShopConstraint): array
     {
         if (empty($formData['product_suppliers'])) {
@@ -60,8 +58,6 @@ class CombinationSuppliersCommandsBuilder implements CombinationCommandsBuilderI
     }
 
     /**
-     * @param array $productSupplierData
-     *
      * @return array<string, mixed>
      */
     private function formatProductSupplier(array $productSupplierData): array

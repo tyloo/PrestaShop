@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,14 +41,11 @@ class LowStockThreshold
     private $value;
 
     public function __construct(
-        int $thresholdValue
+        int $thresholdValue,
     ) {
         $this->value = $thresholdValue;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->value;

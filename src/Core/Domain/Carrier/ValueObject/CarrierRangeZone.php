@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,15 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\Exception\CarrierConstraintExcepti
  */
 class CarrierRangeZone
 {
-    /** @var CarrierRangePrice[] */
+    /**
+     * @var CarrierRangePrice[]
+     */
     private array $ranges;
 
     public function __construct(
         private int $zoneId,
 
-        /* @var array{
+        /** @var array{
          *     range_from: float,
          *     range_to: float,
          *     range_price: string,
@@ -78,23 +81,16 @@ class CarrierRangeZone
     }
 
     /**
-     * @param int $zoneId
-     *
      * @throws CarrierConstraintException
      */
     private function assertZoneId(int $zoneId)
     {
-        if (0 >= $zoneId) {
-            throw new CarrierConstraintException(
-                sprintf('Invalid zone id %d supplied. Zone id must be a positive integer.', $zoneId),
-                CarrierConstraintException::INVALID_ZONE_ID
-            );
+        if ($zoneId <= 0) {
+            throw new CarrierConstraintException(\sprintf('Invalid zone id %d supplied. Zone id must be a positive integer.', $zoneId), CarrierConstraintException::INVALID_ZONE_ID);
         }
     }
 
     /**
-     * @param array $ranges
-     *
      * @throws CarrierConstraintException
      */
     private function assertRanges(array $ranges)
@@ -110,16 +106,10 @@ class CarrierRangeZone
         // Then, we can check if ranges are overlapping or not
         foreach ($ranges as $range) {
             if ($range['range_from'] < 0 || $range['range_to'] < 0) {
-                throw new CarrierConstraintException(
-                    'Carrier range cannot be less than zero.',
-                    CarrierConstraintException::INVALID_RANGE_NEGATIVE
-                );
+                throw new CarrierConstraintException('Carrier range cannot be less than zero.', CarrierConstraintException::INVALID_RANGE_NEGATIVE);
             }
             if ($min > $range['range_from']) {
-                throw new CarrierConstraintException(
-                    'Carrier ranges are overlapping',
-                    CarrierConstraintException::INVALID_RANGES_OVERLAPPING
-                );
+                throw new CarrierConstraintException('Carrier ranges are overlapping', CarrierConstraintException::INVALID_RANGES_OVERLAPPING);
             }
             $min = $range['range_to'];
         }

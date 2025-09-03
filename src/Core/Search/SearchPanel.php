@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,7 +60,7 @@ class SearchPanel implements SearchPanelInterface
         string $buttonLabel,
         string $link,
         array $queryParams,
-        ?bool $isExternalLink = true
+        ?bool $isExternalLink = true,
     ) {
         $this->title = $title;
         $this->buttonLabel = $buttonLabel;
@@ -80,7 +81,7 @@ class SearchPanel implements SearchPanelInterface
 
     public function getLink(): string
     {
-        return sprintf('%s?%s', $this->link, http_build_query($this->queryParams));
+        return \sprintf('%s?%s', $this->link, http_build_query($this->queryParams));
     }
 
     public function isExternalLink(): bool

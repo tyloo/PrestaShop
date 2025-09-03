@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,12 +39,12 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
     /**
      * @var Connection
      */
-    protected $connection;
+    private $connection;
 
     /**
      * @var string
      */
-    protected $dbPrefix;
+    private $dbPrefix;
 
     /**
      * @var int
@@ -60,19 +61,12 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
      */
     private $contextShopIds;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator
-     * @param int $contextLangId
-     * @param array $contextShopIds
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
         int $contextLangId,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         $this->connection = $connection;
         $this->dbPrefix = $dbPrefix;
@@ -81,9 +75,6 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
         $this->contextShopIds = $contextShopIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getBaseQueryBuilder($searchCriteria)
@@ -99,19 +90,11 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this->getBaseQueryBuilder($searchCriteria)->select('COUNT(oi.id_order_invoice)');
     }
 
-    /**
-     * @param SearchCriteriaInterface $criteria
-     *
-     * @return QueryBuilder
-     */
     private function getBaseQueryBuilder(SearchCriteriaInterface $criteria): QueryBuilder
     {
         $qb = $this->connection
@@ -134,9 +117,6 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
 
     /**
      * Apply filters for query builder.
-     *
-     * @param QueryBuilder $qb
-     * @param array $filters
      */
     private function applyFilters(QueryBuilder $qb, array $filters): void
     {
@@ -178,17 +158,17 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
                 $alias = $dateComparisonFilters[$filterName];
 
                 if (isset($filterValue['from'])) {
-                    $name = sprintf('%s_from', $filterName);
+                    $name = \sprintf('%s_from', $filterName);
 
                     $qb->andWhere("$alias >= :$name");
-                    $qb->setParameter($name, sprintf('%s %s', $filterValue['from'], '0:0:0'));
+                    $qb->setParameter($name, \sprintf('%s %s', $filterValue['from'], '0:0:0'));
                 }
 
                 if (isset($filterValue['to'])) {
-                    $name = sprintf('%s_to', $filterName);
+                    $name = \sprintf('%s_to', $filterName);
 
                     $qb->andWhere("$alias <= :$name");
-                    $qb->setParameter($name, sprintf('%s %s', $filterValue['to'], '23:59:59'));
+                    $qb->setParameter($name, \sprintf('%s %s', $filterValue['to'], '23:59:59'));
                 }
 
                 continue;
@@ -196,10 +176,6 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
         }
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param SearchCriteriaInterface $criteria
-     */
     private function applySorting(QueryBuilder $qb, SearchCriteriaInterface $criteria): void
     {
         $sortableFields = [

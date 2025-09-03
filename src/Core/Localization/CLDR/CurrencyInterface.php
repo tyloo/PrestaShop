@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -22,13 +23,6 @@
  * @author    PrestaShop SA and Contributors <contact@prestashop.com>
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- */
-
-/**
- * Created by PhpStorm.
- * User: thomasleviandier
- * Date: 2018-12-20
- * Time: 16:44
  */
 
 namespace PrestaShop\PrestaShop\Core\Localization\CLDR;

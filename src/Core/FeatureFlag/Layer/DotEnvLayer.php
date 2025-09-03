@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,18 +42,12 @@ class DotEnvLayer implements TypeLayerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isReadonly(): bool
     {
         // It's always editable via DotEnv layer!
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getTypeName(): string
     {
         return FeatureFlagSettings::TYPE_DOTENV;
@@ -66,35 +61,23 @@ class DotEnvLayer implements TypeLayerInterface
         return FeatureFlagSettings::PREFIX . strtoupper($featureFlagName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed(string $featureFlagName): bool
     {
         return isset($_ENV['SYMFONY_DOTENV_VARS'])
             && str_contains($_ENV['SYMFONY_DOTENV_VARS'], $this->getVarName($featureFlagName));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(string $featureFlagName): bool
     {
         return isset($_ENV[$this->getVarName($featureFlagName)])
             && filter_var($_ENV[$this->getVarName($featureFlagName)], \FILTER_VALIDATE_BOOLEAN);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enable(string $featureFlagName): void
     {
         $this->setStatus($featureFlagName, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function disable(string $featureFlagName): void
     {
         $this->setStatus($featureFlagName, false);
@@ -136,7 +119,7 @@ class DotEnvLayer implements TypeLayerInterface
             return;
         }
 
-        throw new RuntimeException(sprintf('Cannot change status of the feature flag %s', $featureFlagName));
+        throw new RuntimeException(\sprintf('Cannot change status of the feature flag %s', $featureFlagName));
     }
 
     /**

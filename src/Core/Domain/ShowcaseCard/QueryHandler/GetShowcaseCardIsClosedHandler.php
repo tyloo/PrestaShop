@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,10 +48,6 @@ final class GetShowcaseCardIsClosedHandler implements GetShowcaseCardIsClosedHan
      */
     private $configurationMap;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param ConfigurationMap $configurationMap
-     */
     public function __construct(ConfigurationInterface $configuration, ConfigurationMap $configurationMap)
     {
         $this->configuration = $configuration;
@@ -58,8 +55,6 @@ final class GetShowcaseCardIsClosedHandler implements GetShowcaseCardIsClosedHan
     }
 
     /**
-     * @param GetShowcaseCardIsClosed $query
-     *
      * @return bool
      *
      * @throws ShowcaseCardException

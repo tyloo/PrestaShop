@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,18 +32,12 @@ namespace PrestaShop\PrestaShop\Core\Util\File;
  */
 class FileSizeConverter
 {
-    /**
-     * @param int $bytes
-     * @param int $precision
-     *
-     * @return string
-     */
     public function convert(int $bytes, int $precision = 2): string
     {
         $units = ['B', 'kB', 'MB', 'GB', 'TB'];
         $bytes = max($bytes, 0);
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
+        $pow = min($pow, \count($units) - 1);
 
         if ($bytes >= 1024) {
             $bytes /= 1024 ** $pow;

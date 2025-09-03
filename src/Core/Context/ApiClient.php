@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,7 +52,7 @@ class ApiClient
 
     public function hasScope(string $scope): bool
     {
-        return in_array($scope, $this->scopes);
+        return \in_array($scope, $this->scopes, true);
     }
 
     public function getScopes(): array

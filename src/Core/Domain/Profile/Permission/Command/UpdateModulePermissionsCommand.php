@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,12 +58,6 @@ class UpdateModulePermissionsCommand
      */
     private $isActive;
 
-    /**
-     * @param int $profileId
-     * @param int $moduleId
-     * @param string $permission
-     * @param bool $isActive
-     */
     public function __construct(int $profileId, int $moduleId, string $permission, bool $isActive)
     {
         $this->profileId = new ProfileId($profileId);
@@ -71,33 +66,21 @@ class UpdateModulePermissionsCommand
         $this->isActive = $isActive;
     }
 
-    /**
-     * @return ProfileId
-     */
     public function getProfileId(): ProfileId
     {
         return $this->profileId;
     }
 
-    /**
-     * @return ModuleId
-     */
     public function getModuleId(): ModuleId
     {
         return $this->moduleId;
     }
 
-    /**
-     * @return ModulePermission
-     */
     public function getPermission(): ModulePermission
     {
         return $this->permission;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->isActive;

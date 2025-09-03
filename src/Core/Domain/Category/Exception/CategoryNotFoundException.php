@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,8 @@ class CategoryNotFoundException extends CategoryException
     private $categoryId;
 
     /**
-     * @param CategoryId $categoryId
-     * @param string $message
-     * @param int $code
+     * @param string    $message
+     * @param int       $code
      * @param Exception $previous
      */
     public function __construct(CategoryId $categoryId, $message = '', $code = 0, $previous = null)

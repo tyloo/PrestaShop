@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,7 +66,7 @@ class GetProductStockMovements
         int $productId,
         int $shopId,
         int $offset = 0,
-        int $limit = self::DEFAULT_LIMIT
+        int $limit = self::DEFAULT_LIMIT,
     ) {
         $this->shopId = new ShopId($shopId);
 

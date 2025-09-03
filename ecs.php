@@ -29,7 +29,7 @@ return ECSConfig::configure()
         // __DIR__ . '/controllers',
         // __DIR__ . '/install-dev',
         // __DIR__ . '/src/Adapter',
-        // __DIR__ . '/src/Core',
+        __DIR__ . '/src/Core',
         __DIR__ . '/src/PrestaShopBundle',
         // __DIR__ . '/tests',
         // __DIR__ . '/tools',
@@ -46,7 +46,6 @@ return ECSConfig::configure()
     )
     ->withRules([
         CombineConsecutiveUnsetsFixer::class,
-        MbStrFunctionsFixer::class,
         NativeConstantInvocationFixer::class,
         NoSuperfluousElseifFixer::class,
         PhpdocOrderFixer::class,

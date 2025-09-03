@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,33 +41,21 @@ class CustomerId implements CustomerIdInterface
      */
     private $customerId;
 
-    /**
-     * @param int $customerId
-     */
     public function __construct(int $customerId)
     {
         $this->assertIntegerIsGreaterThanZero($customerId);
         $this->customerId = $customerId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->customerId;
     }
 
-    /**
-     * @param int $customerId
-     */
     private function assertIntegerIsGreaterThanZero(int $customerId): void
     {
-        if (0 >= $customerId) {
-            throw new CustomerConstraintException(
-                sprintf('Customer id %s is invalid.', $customerId),
-                CustomerConstraintException::INVALID_ID
-            );
+        if ($customerId <= 0) {
+            throw new CustomerConstraintException(\sprintf('Customer id %s is invalid.', $customerId), CustomerConstraintException::INVALID_ID);
         }
     }
 }

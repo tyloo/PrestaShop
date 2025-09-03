@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,17 +60,11 @@ abstract class AbstractProductGridDefinitionFactory extends AbstractGridDefiniti
 
     public const GRID_ID = 'default';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return $this::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -119,9 +114,6 @@ abstract class AbstractProductGridDefinitionFactory extends AbstractGridDefiniti
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = (new FilterCollection())
@@ -175,9 +167,6 @@ abstract class AbstractProductGridDefinitionFactory extends AbstractGridDefiniti
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -214,9 +203,6 @@ abstract class AbstractProductGridDefinitionFactory extends AbstractGridDefiniti
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         return (new BulkActionCollection())

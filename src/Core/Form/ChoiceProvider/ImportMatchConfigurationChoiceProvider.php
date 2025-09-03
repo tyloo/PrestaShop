@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ final class ImportMatchConfigurationChoiceProvider implements FormChoiceProvider
      */
     private $matchConfigurations;
 
-    /**
-     * @param array $matchConfigurations
-     */
     public function __construct(array $matchConfigurations)
     {
         $this->matchConfigurations = $matchConfigurations;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return FormChoiceFormatter::formatFormChoices(

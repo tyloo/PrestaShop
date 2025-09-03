@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,22 +48,19 @@ final class CurrencyNameByIsoCodeChoiceProvider implements FormChoiceProviderInt
         $this->cldrAllCurrencies = $cldrAllCurrencies;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $result = [];
         foreach ($this->cldrAllCurrencies as $cldrCurrency) {
             // filter only on active currency
             // we dont need here currencies which were deactivated in all territories
-            if (!$cldrCurrency->isActive()) {
+            if (! $cldrCurrency->isActive()) {
                 continue;
             }
             $currencyNames = $cldrCurrency->getDisplayNames();
             $isoCode = $cldrCurrency->getIsoCode();
-            if (!empty($currencyNames['default'])) {
-                $displayName = sprintf('%s (%s)', $currencyNames['default'], $isoCode);
+            if (! empty($currencyNames['default'])) {
+                $displayName = \sprintf('%s (%s)', $currencyNames['default'], $isoCode);
             } else {
                 $displayName = $isoCode;
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,7 +74,7 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
         $rowIdField,
         $oldPositionField,
         $newPositionField,
-        $parentIdField
+        $parentIdField,
     ) {
         $this->positionsField = $positionsField;
         $this->rowIdField = $rowIdField;
@@ -82,9 +83,6 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
         $this->parentIdField = $parentIdField;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildPositionUpdate(array $data, PositionDefinition $positionDefinition)
     {
         $this->validateData($data, $positionDefinition);
@@ -110,9 +108,6 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
     }
 
     /**
-     * @param array $data
-     * @param PositionDefinition $positionDefinition
-     *
      * @throws PositionDataException
      */
     private function validateData(array $data, PositionDefinition $positionDefinition)
@@ -121,7 +116,7 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
             throw new PositionDataException('Missing ' . $this->positionsField . ' in your data.', 'Admin.Notifications.Failure');
         }
 
-        if (null !== $positionDefinition->getParentIdField() && empty($data[$this->parentIdField])) {
+        if ($positionDefinition->getParentIdField() !== null && empty($data[$this->parentIdField])) {
             throw new PositionDataException('Missing ' . $this->parentIdField . ' in your data.', 'Admin.Notifications.Failure');
         }
     }
@@ -129,20 +124,19 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
     /**
      * Validate the position format, throw a PositionDataException if is not correct.
      *
-     * @param array $position
      * @param int $index
      *
      * @throws PositionDataException
      */
     private function validatePositionData(array $position, $index)
     {
-        if (!isset($position[$this->rowIdField])) {
+        if (! isset($position[$this->rowIdField])) {
             throw new PositionDataException(self::POSITION_KEY, 'Admin.Notifications.Failure', [$index, $this->rowIdField]);
         }
-        if (!isset($position[$this->oldPositionField])) {
+        if (! isset($position[$this->oldPositionField])) {
             throw new PositionDataException(self::POSITION_KEY, 'Admin.Notifications.Failure', [$index, $this->oldPositionField]);
         }
-        if (!isset($position[$this->newPositionField])) {
+        if (! isset($position[$this->newPositionField])) {
             throw new PositionDataException(self::POSITION_KEY, 'Admin.Notifications.Failure', [$index, $this->newPositionField]);
         }
     }

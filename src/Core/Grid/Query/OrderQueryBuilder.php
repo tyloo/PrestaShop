@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,12 +40,12 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
     /**
      * @var Connection
      */
-    protected $connection;
+    private $connection;
 
     /**
      * @var string
      */
-    protected $dbPrefix;
+    private $dbPrefix;
 
     /**
      * @var int
@@ -61,18 +62,16 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
     private $contextShopIds;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator
-     * @param int $contextLangId
-     * @param int[] $contextShopIds
+     * @param int    $contextLangId
+     * @param int[]  $contextShopIds
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
         $contextLangId,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         $this->connection = $connection;
         $this->dbPrefix = $dbPrefix;
@@ -81,9 +80,6 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
         $this->contextShopIds = $contextShopIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this
@@ -110,9 +106,6 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getBaseQueryBuilder($searchCriteria->getFilters());
@@ -123,8 +116,6 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
     }
 
     /**
-     * @param array $filters
-     *
      * @return QueryBuilder
      */
     private function getBaseQueryBuilder(array $filters)
@@ -196,17 +187,17 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
                 $alias = $dateComparisonFilters[$filterName];
 
                 if (isset($filterValue['from'])) {
-                    $name = sprintf('%s_from', $filterName);
+                    $name = \sprintf('%s_from', $filterName);
 
                     $qb->andWhere("$alias >= :$name");
-                    $qb->setParameter($name, sprintf('%s %s', $filterValue['from'], '0:0:0'));
+                    $qb->setParameter($name, \sprintf('%s %s', $filterValue['from'], '0:0:0'));
                 }
 
                 if (isset($filterValue['to'])) {
-                    $name = sprintf('%s_to', $filterName);
+                    $name = \sprintf('%s_to', $filterName);
 
                     $qb->andWhere("$alias <= :$name");
-                    $qb->setParameter($name, sprintf('%s %s', $filterValue['to'], '23:59:59'));
+                    $qb->setParameter($name, \sprintf('%s %s', $filterValue['to'], '23:59:59'));
                 }
 
                 continue;
@@ -232,9 +223,6 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
         ;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     private function addNewCustomerField(QueryBuilder $qb): void
     {
         $qb->addSelect('(' . $this->getNewCustomerSubSelect() . ') AS new');
@@ -249,14 +237,11 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param array $filters
-     *
      * @return QueryBuilder
      */
     private function applyNewCustomerFilter(QueryBuilder $qb, array $filters)
     {
-        if (!isset($filters['new'])) {
+        if (! isset($filters['new'])) {
             return $qb;
         }
 
@@ -269,17 +254,13 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
             $builder->setParameter(
                 $name,
                 $previousParam,
-                is_array($previousParam) ? Connection::PARAM_INT_ARRAY : null
+                \is_array($previousParam) ? Connection::PARAM_INT_ARRAY : null
             );
         }
 
         return $builder;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param SearchCriteriaInterface $criteria
-     */
     private function applySorting(QueryBuilder $qb, SearchCriteriaInterface $criteria)
     {
         $sortableFields = [

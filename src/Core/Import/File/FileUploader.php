@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,13 +49,9 @@ final class FileUploader
      */
     private $importDirectory;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param ImportDirectory $importDirectory
-     */
     public function __construct(
         TranslatorInterface $translator,
-        ImportDirectory $importDirectory
+        ImportDirectory $importDirectory,
     ) {
         $this->translator = $translator;
         $this->importDirectory = $importDirectory;
@@ -62,8 +59,6 @@ final class FileUploader
 
     /**
      * Handle import file uploading to admin import/ directory.
-     *
-     * @param UploadedFile $uploadedFile
      *
      * @return File
      *
@@ -75,7 +70,7 @@ final class FileUploader
             throw new FileUploadException($error);
         }
 
-        $uploadedFileName = sprintf(
+        $uploadedFileName = \sprintf(
             '%s-%s',
             date('YmdHis'),
             $uploadedFile->getClientOriginalName()
@@ -98,29 +93,27 @@ final class FileUploader
     /**
      * Check if uploaded file is valid.
      *
-     * @param UploadedFile $uploadedFile
-     *
      * @return string|false Returns error string on error or FALSE otherwise
      */
-    protected function validateUploadedFile(UploadedFile $uploadedFile)
+    private function validateUploadedFile(UploadedFile $uploadedFile)
     {
         $error = false;
 
         switch ($uploadedFile->getError()) {
-            case UPLOAD_ERR_INI_SIZE:
+            case \UPLOAD_ERR_INI_SIZE:
                 $error = $this->translator->trans('The uploaded file exceeds the upload_max_filesize directive in php.ini. If your server configuration allows it, you may add a directive in your .htaccess.', [], 'Admin.Advparameters.Notification');
 
                 break;
-            case UPLOAD_ERR_FORM_SIZE:
+            case \UPLOAD_ERR_FORM_SIZE:
                 $message = $this->translator->trans('The uploaded file exceeds the post_max_size directive in php.ini. If your server configuration allows it, you may add a directive in your .htaccess, for example:', [], 'Admin.Advparameters.Notification');
-                $error = sprintf('%s %s', $message, 'php_value post_max_size 20M');
+                $error = \sprintf('%s %s', $message, 'php_value post_max_size 20M');
 
                 break;
-            case UPLOAD_ERR_PARTIAL:
+            case \UPLOAD_ERR_PARTIAL:
                 $error = $this->translator->trans('The uploaded file was only partially uploaded.', [], 'Admin.Advparameters.Notification');
 
                 break;
-            case UPLOAD_ERR_NO_FILE:
+            case \UPLOAD_ERR_NO_FILE:
                 $error = $this->translator->trans('No file was uploaded.', [], 'Admin.Advparameters.Notification');
 
                 break;
@@ -130,7 +123,7 @@ final class FileUploader
             return $error;
         }
 
-        if (!preg_match('#([^\.]*?)\.(csv|xls[xt]?|o[dt]s)$#is', $uploadedFile->getClientOriginalName())) {
+        if (! preg_match('#([^\.]*?)\.(csv|xls[xt]?|o[dt]s)$#is', $uploadedFile->getClientOriginalName())) {
             $error = $this->translator->trans('The extension of your file should be ".csv".', [], 'Admin.Advparameters.Notification');
         }
 

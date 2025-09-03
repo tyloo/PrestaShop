@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,11 @@ use PrestaShopBundle\Entity\Repository\ImageTypeRepository;
 final class EditImageTypeHandler extends AbstractObjectModelHandler implements EditImageTypeHandlerInterface
 {
     public function __construct(
-        private readonly ImageTypeRepository $imageTypeRepository
+        private readonly ImageTypeRepository $imageTypeRepository,
     ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ImageTypeException
      */
     public function handle(EditImageTypeCommand $command): void
@@ -54,39 +53,39 @@ final class EditImageTypeHandler extends AbstractObjectModelHandler implements E
         /** @var ImageType $imageType */
         $imageType = $this->imageTypeRepository->find($command->getImageTypeId()->getValue());
 
-        if (null == $imageType->getId()) {
-            throw new ImageTypeNotFoundException(sprintf('Image type with id "%d" was not found', $command->getImageTypeId()->getValue()));
+        if ($imageType->getId() === null) {
+            throw new ImageTypeNotFoundException(\sprintf('Image type with id "%d" was not found', $command->getImageTypeId()->getValue()));
         }
 
-        if (null !== $command->getName()) {
+        if ($command->getName() !== null) {
             $imageType->setName($command->getName());
         }
 
-        if (null !== $command->getWidth()) {
+        if ($command->getWidth() !== null) {
             $imageType->setWidth($command->getWidth());
         }
 
-        if (null !== $command->getHeight()) {
+        if ($command->getHeight() !== null) {
             $imageType->setHeight($command->getHeight());
         }
 
-        if (null !== $command->isProducts()) {
+        if ($command->isProducts() !== null) {
             $imageType->setProducts($command->isProducts());
         }
 
-        if (null !== $command->isCategories()) {
+        if ($command->isCategories() !== null) {
             $imageType->setCategories($command->isCategories());
         }
 
-        if (null !== $command->isManufacturers()) {
+        if ($command->isManufacturers() !== null) {
             $imageType->setManufacturers($command->isManufacturers());
         }
 
-        if (null !== $command->isSuppliers()) {
+        if ($command->isSuppliers() !== null) {
             $imageType->setSuppliers($command->isSuppliers());
         }
 
-        if (null !== $command->isStores()) {
+        if ($command->isStores() !== null) {
             $imageType->setStores($command->isStores());
         }
 

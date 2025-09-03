@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,12 +42,12 @@ class BulkUninstallModuleCommand
     private array $modules;
 
     /**
-     * @param array<string> $modules Array of technical names for modules
-     * @param bool $deleteFiles Boolean for delete modules files
+     * @param array<string> $modules     Array of technical names for modules
+     * @param bool          $deleteFiles Boolean for delete modules files
      */
     public function __construct(
         array $modules,
-        private readonly bool $deleteFiles = false
+        private readonly bool $deleteFiles = false,
     ) {
         $this->modules = array_map(fn (string $technicalName) => new ModuleTechnicalName($technicalName), $modules);
     }

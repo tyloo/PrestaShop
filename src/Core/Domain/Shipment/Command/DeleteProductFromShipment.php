@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,10 +34,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject\ShipmentId;
 
 class DeleteProductFromShipment
 {
-    /** @var ShipmentId */
+    /**
+     * @var ShipmentId
+     */
     private $shipmentId;
 
-    /** @var OrderDetailId */
+    /**
+     * @var OrderDetailId
+     */
     private $orderDetailId;
 
     public function __construct(int $shipmentId, int $orderDetailId)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,18 +54,12 @@ interface CatalogueLayersProviderInterface
      * We only keep the translation keys in the returned Catalogue.
      *
      * @param string $locale the language for which you need translations
-     *
-     * @return MessageCatalogue
      */
     public function getDefaultCatalogue(string $locale): MessageCatalogue;
 
     /**
      * Gets the file translated catalogue : it's the translations in a specific language.
      * It's stored in filesystem and given by language pack or a module developer.
-     *
-     * @param string $locale
-     *
-     * @return MessageCatalogue
      *
      * @throws TranslationFilesNotFoundException
      */
@@ -73,10 +68,6 @@ interface CatalogueLayersProviderInterface
     /**
      * Gets the User modified catalogue : It's the translations made by the user himself.
      * It's done from the Admin and stored in DB.
-     *
-     * @param string $locale
-     *
-     * @return MessageCatalogue
      */
     public function getUserTranslatedCatalogue(string $locale): MessageCatalogue;
 }

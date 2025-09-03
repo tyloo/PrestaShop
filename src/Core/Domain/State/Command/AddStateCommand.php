@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,19 +62,12 @@ class AddStateCommand
      */
     private $active;
 
-    /**
-     * @param int $countryId
-     * @param int $zoneId
-     * @param string $name
-     * @param string $isoCode
-     * @param bool $active
-     */
     public function __construct(
         int $countryId,
         int $zoneId,
         string $name,
         string $isoCode,
-        bool $active
+        bool $active,
     ) {
         $this->countryId = new CountryId($countryId);
         $this->zoneId = new ZoneId($zoneId);
@@ -82,41 +76,26 @@ class AddStateCommand
         $this->active = $active;
     }
 
-    /**
-     * @return CountryId
-     */
     public function getCountryId(): CountryId
     {
         return $this->countryId;
     }
 
-    /**
-     * @return ZoneId
-     */
     public function getZoneId(): ZoneId
     {
         return $this->zoneId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getIsoCode(): string
     {
         return $this->isoCode;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->active;

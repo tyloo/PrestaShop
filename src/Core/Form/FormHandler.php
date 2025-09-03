@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,12 +70,6 @@ class FormHandler implements FormHandlerInterface
     protected $formName;
 
     /**
-     * FormHandler constructor.
-     *
-     * @param FormBuilderInterface $formBuilder
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param FormDataProviderInterface $formDataProvider
-     * @param array $formTypes
      * @param string $hookName
      * @param string $formName
      */
@@ -84,7 +79,7 @@ class FormHandler implements FormHandlerInterface
         FormDataProviderInterface $formDataProvider,
         array $formTypes,
         $hookName,
-        $formName = 'form'
+        $formName = 'form',
     ) {
         $this->formName = $formName;
         $this->formBuilder = $formBuilder->getFormFactory()->createNamedBuilder($formName);
@@ -95,8 +90,6 @@ class FormHandler implements FormHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws Exception
      */
     public function getForm()
@@ -117,8 +110,6 @@ class FormHandler implements FormHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws Exception
      * @throws UndefinedOptionsException
      */

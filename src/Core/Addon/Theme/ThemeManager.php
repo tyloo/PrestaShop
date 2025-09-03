@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -96,7 +97,7 @@ class ThemeManager implements AddonManagerInterface
      */
     public function install($source)
     {
-        if (filter_var($source, FILTER_VALIDATE_URL)) {
+        if (filter_var($source, \FILTER_VALIDATE_URL)) {
             $source = Tools::createFileFromUrl($source);
         }
         if (preg_match('/\.zip$/', $source)) {
@@ -117,7 +118,7 @@ class ThemeManager implements AddonManagerInterface
     public function uninstall($name)
     {
         $apiClientHasPermission = $this->apiClientContext->getApiClient() !== null && $this->apiClientContext->getApiClient()->hasScope('theme_write');
-        if (!$this->employee->can('delete', 'AdminThemes') && !$apiClientHasPermission) {
+        if (! $this->employee->can('delete', 'AdminThemes') && ! $apiClientHasPermission) {
             return false;
         }
 
@@ -136,7 +137,7 @@ class ThemeManager implements AddonManagerInterface
      *
      * @param string $name
      * @param string $version the version you want to up upgrade to
-     * @param string $source if the upgrade is not coming from addons, you need to specify the path to the zipball
+     * @param string $source  if the upgrade is not coming from addons, you need to specify the path to the zipball
      *
      * @return bool true for success
      */
@@ -151,15 +152,15 @@ class ThemeManager implements AddonManagerInterface
      *    - update configuration
      *    - enable/disable modules.
      *
-     * @param string $name The theme name to enable
-     * @param bool $force bypass user privilege checks
+     * @param string $name  The theme name to enable
+     * @param bool   $force bypass user privilege checks
      *
      * @return bool True for success
      */
     public function enable($name, $force = false)
     {
         $apiClientHasPermission = $this->apiClientContext->getApiClient() !== null && $this->apiClientContext->getApiClient()->hasScope('theme_write');
-        if (!$force && !$this->employee->can('edit', 'AdminThemes') && !$apiClientHasPermission) {
+        if (! $force && ! $this->employee->can('edit', 'AdminThemes') && ! $apiClientHasPermission) {
             return false;
         }
 
@@ -168,7 +169,7 @@ class ThemeManager implements AddonManagerInterface
 
         /** @var Theme $theme */
         $theme = $this->themeRepository->getInstanceByName($name);
-        if (!$this->themeValidator->isValid($theme)) {
+        if (! $this->themeValidator->isValid($theme)) {
             return false;
         }
 
@@ -233,8 +234,6 @@ class ThemeManager implements AddonManagerInterface
      * Returns the last error, if found.
      *
      * @param string $themeName The technical theme name
-     *
-     * @return void
      */
     public function getError($themeName)
     {
@@ -252,11 +251,6 @@ class ThemeManager implements AddonManagerInterface
         return $this->themeValidator->getErrors($themeName);
     }
 
-    /**
-     * @param array $hooks
-     *
-     * @return self
-     */
     private function doCreateCustomHooks(array $hooks): self
     {
         foreach ($hooks as $hook) {
@@ -270,11 +264,6 @@ class ThemeManager implements AddonManagerInterface
         return $this;
     }
 
-    /**
-     * @param array $configuration
-     *
-     * @return self
-     */
     private function doApplyConfiguration(array $configuration): self
     {
         foreach ($configuration as $key => $value) {
@@ -285,10 +274,6 @@ class ThemeManager implements AddonManagerInterface
     }
 
     /**
-     * @param array $modules
-     *
-     * @return self
-     *
      * @throws Exception
      */
     private function doDisableModules(array $modules): self
@@ -306,10 +291,6 @@ class ThemeManager implements AddonManagerInterface
     }
 
     /**
-     * @param array $modules
-     *
-     * @return self
-     *
      * @throws FailedToEnableThemeModuleException
      */
     private function doEnableModules(array $modules): self
@@ -318,12 +299,12 @@ class ThemeManager implements AddonManagerInterface
         $moduleManager = $moduleManagerBuilder->build();
 
         foreach ($modules as $moduleName) {
-            if (!$moduleManager->isInstalled($moduleName)
-                && !$moduleManager->install($moduleName)
+            if (! $moduleManager->isInstalled($moduleName)
+                && ! $moduleManager->install($moduleName)
             ) {
                 throw new FailedToEnableThemeModuleException($moduleName, $moduleManager->getError($moduleName));
             }
-            if (!$moduleManager->isEnabled($moduleName)) {
+            if (! $moduleManager->isEnabled($moduleName)) {
                 $moduleManager->enable($moduleName);
             }
         }
@@ -335,8 +316,6 @@ class ThemeManager implements AddonManagerInterface
      * Reset the modules received in parameters if they are installed and enabled.
      *
      * @param string[] $modules
-     *
-     * @return self
      */
     private function doResetModules(array $modules): self
     {
@@ -352,11 +331,6 @@ class ThemeManager implements AddonManagerInterface
         return $this;
     }
 
-    /**
-     * @param array $hooks
-     *
-     * @return self
-     */
     private function doHookModules(array $hooks): self
     {
         $this->hookConfigurator->setHooksConfiguration($hooks);
@@ -364,11 +338,6 @@ class ThemeManager implements AddonManagerInterface
         return $this;
     }
 
-    /**
-     * @param array $types
-     *
-     * @return self
-     */
     private function doApplyImageTypes(array $types, ?string $theme_name): self
     {
         $this->imageTypeRepository->setTypes($types, $theme_name);
@@ -393,8 +362,8 @@ class ThemeManager implements AddonManagerInterface
 
         $themeConfigurationFile = $sandboxPath . '/config/theme.yml';
 
-        if (!file_exists($themeConfigurationFile)) {
-            $this->logger->error(sprintf('Configuration file not found %s', $themeConfigurationFile));
+        if (! file_exists($themeConfigurationFile)) {
+            $this->logger->error(\sprintf('Configuration file not found %s', $themeConfigurationFile));
             throw new ThemeConstraintException('Missing theme configuration file which should be in located in /config/theme.yml', ThemeConstraintException::MISSING_CONFIGURATION_FILE);
         }
 
@@ -405,17 +374,17 @@ class ThemeManager implements AddonManagerInterface
         try {
             $theme = new Theme($theme_data);
         } catch (ErrorException $exception) {
-            $errorMessage = sprintf('Theme data %s is not valid', var_export($theme_data, true));
+            $errorMessage = \sprintf('Theme data %s is not valid', var_export($theme_data, true));
             $this->logger->error($errorMessage);
             throw new ThemeConstraintException($errorMessage, ThemeConstraintException::INVALID_DATA, $exception);
         }
 
-        if (!$this->themeValidator->isValid($theme)) {
+        if (! $this->themeValidator->isValid($theme)) {
             $this->filesystem->remove($sandboxPath);
 
             $this->themeValidator->getErrors($theme->getName());
 
-            $errorMessage = sprintf('Theme configuration file is not valid - %s', var_export($this->themeValidator->getErrors($theme->getName()), true));
+            $errorMessage = \sprintf('Theme configuration file is not valid - %s', var_export($this->themeValidator->getErrors($theme->getName()), true));
             $this->logger->error($errorMessage);
             throw new ThemeConstraintException($errorMessage, ThemeConstraintException::INVALID_CONFIGURATION);
         }
@@ -429,7 +398,7 @@ class ThemeManager implements AddonManagerInterface
             /** @var SplFileInfo $dir */
             foreach (iterator_to_array($module_dirs) as $dir) {
                 $destination = $module_root_dir . basename($dir->getFileName());
-                if (!$this->filesystem->exists($destination)) {
+                if (! $this->filesystem->exists($destination)) {
                     $this->filesystem->mkdir($destination);
                 }
                 $this->filesystem->mirror($dir->getPathName(), $destination);
@@ -454,7 +423,7 @@ class ThemeManager implements AddonManagerInterface
 
     private function getSandboxPath()
     {
-        if (!isset($this->sandbox)) {
+        if (! isset($this->sandbox)) {
             $this->sandbox = $this->configuration->get('_PS_CACHE_DIR_') . 'sandbox/' . uniqid() . '/';
             $this->filesystem->mkdir($this->sandbox, PsFileSystem::DEFAULT_MODE_FOLDER);
         }
@@ -468,7 +437,7 @@ class ThemeManager implements AddonManagerInterface
     public function saveTheme($theme)
     {
         $jsonConfigFolder = $this->configuration->get('_PS_CONFIG_DIR_') . 'themes/' . $theme->getName();
-        if (!$this->filesystem->exists($jsonConfigFolder) && !is_dir($jsonConfigFolder)) {
+        if (! $this->filesystem->exists($jsonConfigFolder) && ! is_dir($jsonConfigFolder)) {
             mkdir($jsonConfigFolder, PsFileSystem::DEFAULT_MODE_FOLDER, true);
         }
 
@@ -480,14 +449,12 @@ class ThemeManager implements AddonManagerInterface
 
     /**
      * Import translation from Theme to Database.
-     *
-     * @param Theme $theme
      */
     private function importTranslationToDatabase(Theme $theme)
     {
         global $kernel; // sf kernel
 
-        if (!(null !== $kernel && $kernel instanceof \Symfony\Component\HttpKernel\KernelInterface)) {
+        if (! ($kernel !== null && $kernel instanceof \Symfony\Component\HttpKernel\KernelInterface)) {
             return;
         }
 
@@ -496,7 +463,7 @@ class ThemeManager implements AddonManagerInterface
 
         $themeName = $theme->getName();
         $themePath = $this->configuration->get('_PS_ALL_THEMES_DIR_') . $themeName;
-        $translationFolder = $themePath . DIRECTORY_SEPARATOR . 'translations' . DIRECTORY_SEPARATOR;
+        $translationFolder = $themePath . \DIRECTORY_SEPARATOR . 'translations' . \DIRECTORY_SEPARATOR;
 
         $languages = Language::getLanguages();
         foreach ($languages as $language) {
@@ -512,7 +479,7 @@ class ThemeManager implements AddonManagerInterface
             }
 
             // check if translation dir for this lang exists
-            if (!is_dir($translationFolder . $locale)) {
+            if (! is_dir($translationFolder . $locale)) {
                 continue;
             }
 
@@ -537,7 +504,7 @@ class ThemeManager implements AddonManagerInterface
     /**
      * Get all default domain from catalog.
      *
-     * @param string $locale
+     * @param string                                               $locale
      * @param \PrestaShopBundle\Translation\Provider\ThemeProvider $themeProvider
      *
      * @return array
@@ -571,19 +538,17 @@ class ThemeManager implements AddonManagerInterface
     }
 
     /**
-     * @param TranslationService $translationService
-     * @param MessageCatalogue $messageCatalog
-     * @param array $allDomains
+     * @param array                         $allDomains
      * @param \PrestaShopBundle\Entity\Lang $lang
-     * @param string $locale
-     * @param string $themeName
+     * @param string                        $locale
+     * @param string                        $themeName
      */
     private function handleImport(TranslationService $translationService, MessageCatalogue $messageCatalog, $allDomains, $lang, $locale, $themeName)
     {
         foreach ($messageCatalog->all() as $domain => $messages) {
             $domain = str_replace('.' . $locale, '', $domain);
 
-            if (in_array($domain, $allDomains)) {
+            if (\in_array($domain, $allDomains, true)) {
                 continue;
             }
 

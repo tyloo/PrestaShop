@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,8 +67,8 @@ class CmsPageId
      */
     private function assertIsIntegerGreaterThanZero($cmsPageId)
     {
-        if (!is_int($cmsPageId) || 0 >= $cmsPageId) {
-            throw new CmsPageException(sprintf('Invalid cms page id %s supplied', var_export($cmsPageId, true)));
+        if (! \is_int($cmsPageId) || $cmsPageId <= 0) {
+            throw new CmsPageException(\sprintf('Invalid cms page id %s supplied', var_export($cmsPageId, true)));
         }
     }
 }

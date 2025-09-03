@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -125,7 +126,7 @@ class Repository implements RepositoryInterface
         $numberingSystem = Locale::NUMBERING_SYSTEM_LATIN,
         $currencyDisplayType = PriceSpecification::CURRENCY_DISPLAY_SYMBOL,
         $groupingUsed = true,
-        $maxFractionDigits = self::MAX_FRACTION_DIGITS
+        $maxFractionDigits = self::MAX_FRACTION_DIGITS,
     ) {
         $this->cldrLocaleRepository = $cldrLocaleRepository;
         $this->currencyRepository = $currencyRepository;
@@ -137,12 +138,9 @@ class Repository implements RepositoryInterface
         $this->specificationFactory = new SpecificationFactory();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLocale($localeCode)
     {
-        if (!isset($this->locales[$localeCode])) {
+        if (! isset($this->locales[$localeCode])) {
             $this->locales[$localeCode] = new Locale(
                 $localeCode,
                 $this->getNumberSpecification($localeCode),
@@ -171,7 +169,7 @@ class Repository implements RepositoryInterface
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
 
-        if (null === $cldrLocale) {
+        if ($cldrLocale === null) {
             throw new LocalizationException('CLDR locale not found for locale code "' . $localeCode . '"');
         }
 
@@ -199,7 +197,7 @@ class Repository implements RepositoryInterface
     protected function getPriceSpecifications($localeCode)
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
-        if (null === $cldrLocale) {
+        if ($cldrLocale === null) {
             throw new LocalizationException('CLDR locale not found for locale code "' . $localeCode . '"');
         }
 

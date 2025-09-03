@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,12 @@ final class ExportCsvFileWriter implements FileWriterInterface
 {
     private ExportDirectory $exportDirectory;
 
-    /**
-     * @param ExportDirectory $exportDirectory
-     */
     public function __construct(ExportDirectory $exportDirectory)
     {
         $this->exportDirectory = $exportDirectory;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws FileWritingException
      */
     public function write(string $fileName, ExportableDataInterface $data, $separator = ';'): SplFileInfo|SplFileObject
@@ -60,10 +56,7 @@ final class ExportCsvFileWriter implements FileWriterInterface
         try {
             $exportFile = new SplFileObject($filePath, 'w');
         } catch (Exception) {
-            throw new FileWritingException(
-                'Cannot open export file for writing',
-                FileWritingException::CANNOT_OPEN_FILE_FOR_WRITING
-            );
+            throw new FileWritingException('Cannot open export file for writing', FileWritingException::CANNOT_OPEN_FILE_FOR_WRITING);
         }
 
         $exportFile->fputcsv($data->getTitles(), $separator, '"', '');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,10 +51,10 @@ class TranslatableCoreException extends CoreException
     private $parameters = [];
 
     /**
-     * @param string $key
-     * @param string $domain
-     * @param array $parameters
-     * @param int $code
+     * @param string                   $key
+     * @param string                   $domain
+     * @param array                    $parameters
+     * @param int                      $code
      * @param Throwable|Exception|null $previous
      */
     public function __construct(
@@ -61,7 +62,7 @@ class TranslatableCoreException extends CoreException
         $domain,
         $parameters = [],
         $code = 0,
-        $previous = null
+        $previous = null,
     ) {
         parent::__construct($key, $code, $previous);
         $this->key = $key;
@@ -119,8 +120,6 @@ class TranslatableCoreException extends CoreException
     }
 
     /**
-     * @param array $parameters
-     *
      * @return $this
      */
     public function setParameters(array $parameters)

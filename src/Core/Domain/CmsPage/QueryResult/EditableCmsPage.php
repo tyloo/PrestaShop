@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -94,17 +95,16 @@ class EditableCmsPage
     private $previewUrl;
 
     /**
-     * @param int $cmsPageId
-     * @param int $cmsPageCategoryId
+     * @param int      $cmsPageId
+     * @param int      $cmsPageCategoryId
      * @param string[] $localizedTitle
      * @param string[] $localizedMetaTitle
      * @param string[] $localizedMetaDescription
      * @param string[] $localizedFriendlyUrl
      * @param string[] $localizedContent
-     * @param bool $indexedForSearch
-     * @param bool $displayed
-     * @param array $shopAssociation
-     * @param string $previewUrl
+     * @param bool     $indexedForSearch
+     * @param bool     $displayed
+     * @param string   $previewUrl
      *
      * @throws CmsPageCategoryException
      * @throws CmsPageException
@@ -120,7 +120,7 @@ class EditableCmsPage
         $indexedForSearch,
         $displayed,
         array $shopAssociation,
-        $previewUrl
+        $previewUrl,
     ) {
         $this->cmsPageId = new CmsPageId($cmsPageId);
         $this->cmsPageCategoryId = new CmsPageCategoryId($cmsPageCategoryId);

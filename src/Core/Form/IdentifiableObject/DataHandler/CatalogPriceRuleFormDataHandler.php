@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,27 +53,19 @@ final class CatalogPriceRuleFormDataHandler implements FormDataHandlerInterface
      */
     private $contextShopId;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param bool $isMultishopEnabled
-     * @param int $contextShopId
-     */
     public function __construct(
         CommandBusInterface $commandBus,
         bool $isMultishopEnabled,
-        int $contextShopId
+        int $contextShopId,
     ) {
         $this->commandBus = $commandBus;
         $this->contextShopId = $contextShopId;
         $this->isMultishopEnabled = $isMultishopEnabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data): int
     {
-        if (!$this->isMultishopEnabled) {
+        if (! $this->isMultishopEnabled) {
             $data['id_shop'] = $this->contextShopId;
         }
 
@@ -108,8 +101,6 @@ final class CatalogPriceRuleFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CatalogPriceRuleException
      */
     public function update($catalogPriceRuleId, array $data)
@@ -121,9 +112,6 @@ final class CatalogPriceRuleFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * @param EditCatalogPriceRuleCommand $command
-     * @param array $data
-     *
      * @throws CatalogPriceRuleException
      */
     private function fillCommandWithData(EditCatalogPriceRuleCommand $command, array $data)

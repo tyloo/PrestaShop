@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,14 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\Exception\Attribu
  */
 final class AttributeId
 {
-    /**
-     * @var int
-     */
     private int $attributeId;
 
     /**
-     * @param int $attributeId
-     *
      * @throws AttributeConstraintException
      */
     public function __construct(int $attributeId)
@@ -49,9 +45,6 @@ final class AttributeId
         $this->attributeId = $attributeId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->attributeId;
@@ -66,8 +59,8 @@ final class AttributeId
      */
     private function assertIsIntegerGreaterThanZero($value)
     {
-        if (!is_int($value) || 0 >= $value) {
-            throw new AttributeConstraintException(sprintf('Invalid attribute id "%s".', var_export($value, true)), AttributeConstraintException::INVALID_ID);
+        if (! \is_int($value) || $value <= 0) {
+            throw new AttributeConstraintException(\sprintf('Invalid attribute id "%s".', var_export($value, true)), AttributeConstraintException::INVALID_ID);
         }
     }
 }

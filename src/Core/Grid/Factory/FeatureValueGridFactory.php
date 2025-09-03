@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,12 +60,6 @@ class FeatureValueGridFactory extends GridFactory
     use BulkDeleteActionTrait;
 
     /**
-     * @param GridDefinitionFactoryInterface $definitionFactory
-     * @param GridDataFactoryInterface $dataFactory
-     * @param GridFilterFormFactoryInterface $filterFormFactory
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param FeatureRepository $featureRepository
-     *
      * @todo: after following ADR https://github.com/PrestaShop/ADR/pull/33,
      *        the Addapter/FeatureRepository usage should be replaced by interface
      *        and FeatureValueGridFactory should be removed from phpstan-disallowed-calls.neon "allowIn" section
@@ -75,15 +70,15 @@ class FeatureValueGridFactory extends GridFactory
         GridFilterFormFactoryInterface $filterFormFactory,
         HookDispatcherInterface $hookDispatcher,
         protected readonly FeatureRepository $featureRepository,
-        protected readonly TranslatorInterface $translator
+        protected readonly TranslatorInterface $translator,
     ) {
         parent::__construct($definitionFactory, $dataFactory, $filterFormFactory, $hookDispatcher);
     }
 
     public function getGrid(SearchCriteriaInterface $searchCriteria): GridInterface
     {
-        if (!$searchCriteria instanceof FeatureValueFilters) {
-            throw new InvalidArgumentException(sprintf('Invalid search criteria. Expected "%s"', FeatureValueFilters::class));
+        if (! $searchCriteria instanceof FeatureValueFilters) {
+            throw new InvalidArgumentException(\sprintf('Invalid search criteria. Expected "%s"', FeatureValueFilters::class));
         }
 
         /** @var GridDefinition $definition */
@@ -113,11 +108,6 @@ class FeatureValueGridFactory extends GridFactory
 
     /**
      * Some modifications are needed in order to fill some required dynamic values coming from request (which are in filters like the $featureId)
-     *
-     * @param GridDefinition $definition
-     * @param FeatureValueFilters $featureValueFilters
-     *
-     * @return void
      */
     protected function modifyDefinition(GridDefinition $definition, FeatureValueFilters $featureValueFilters): void
     {
@@ -133,11 +123,6 @@ class FeatureValueGridFactory extends GridFactory
 
     /**
      * Add filter rows which requires dynamic values from request such as $featureId.
-     *
-     * @param GridDefinition $definition
-     * @param FeatureValueFilters $featureValueFilters
-     *
-     * @return void
      */
     protected function addFilters(GridDefinition $definition, FeatureValueFilters $featureValueFilters): void
     {
@@ -160,11 +145,6 @@ class FeatureValueGridFactory extends GridFactory
     /**
      * Most of these actions could have been added statically in definition factory, but the export action requires
      * $featureId which comes from filters, therefore to maintain actions order and avoid complication we fill all of those actions here.
-     *
-     * @param GridDefinition $definition
-     * @param FeatureValueFilters $featureValueFilters
-     *
-     * @return void
      */
     protected function addGridActions(GridDefinition $definition, FeatureValueFilters $featureValueFilters): void
     {
@@ -205,11 +185,6 @@ class FeatureValueGridFactory extends GridFactory
 
     /**
      * Adds bulk actions which requires featureId value from filters
-     *
-     * @param GridDefinition $definition
-     * @param FeatureValueFilters $featureValueFilters
-     *
-     * @return void
      */
     protected function addBulkActions(GridDefinition $definition, FeatureValueFilters $featureValueFilters): void
     {

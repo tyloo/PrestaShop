@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,6 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Initializes a new AddonsCollection.
-     *
-     * @param array $addons
      */
     public function __construct(array $addons = [])
     {
@@ -89,17 +88,11 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
         return new ArrayIterator($this->addons);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetExists($offset): bool
     {
         return $this->containsKey($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
@@ -113,7 +106,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      */
     public function offsetSet($offset, $addon): void
     {
-        if (!isset($offset)) {
+        if (! isset($offset)) {
             $this->add($addon);
 
             return;
@@ -141,7 +134,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      */
     public function containsKey($key)
     {
-        return isset($this->addons[$key]) || array_key_exists($key, $this->addons);
+        return isset($this->addons[$key]) || \array_key_exists($key, $this->addons);
     }
 
     /**
@@ -153,36 +146,24 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      */
     public function contains(AddonTheme $addon)
     {
-        return in_array($addon, $this->addons, true);
+        return \in_array($addon, $this->addons, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function indexOf(AddonTheme $addon)
     {
         return array_search($addon, $this->addons, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get($key)
     {
         return $this->addons[$key] ? $this->addons[$key] : null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getKeys()
     {
         return array_keys($this->addons);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getValues()
     {
         return array_values($this->addons);
@@ -191,7 +172,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Add an Addon with a specified key in the collection.
      *
-     * @param mixed $key the key
+     * @param mixed      $key   the key
      * @param AddonTheme $addon the specified addon
      */
     public function set($key, AddonTheme $addon)
@@ -222,7 +203,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      */
     public function removeByKey($key)
     {
-        if (!isset($this->addons[$key]) && !array_key_exists($key, $this->addons)) {
+        if (! isset($this->addons[$key]) && ! \array_key_exists($key, $this->addons)) {
             return null;
         }
 
@@ -252,9 +233,6 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEmpty()
     {
         return empty($this->addons);
@@ -262,11 +240,9 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Gets the sum of addons of the collection.
-     *
-     * @return int
      */
     public function count(): int
     {
-        return count($this->addons);
+        return \count($this->addons);
     }
 }

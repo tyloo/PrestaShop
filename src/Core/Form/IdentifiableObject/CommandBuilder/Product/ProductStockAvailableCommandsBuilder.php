@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,24 +48,17 @@ class ProductStockAvailableCommandsBuilder implements ProductCommandsBuilderInte
      */
     private $modifyAllNamePrefix;
 
-    /**
-     * @param string $modifyAllNamePrefix
-     */
     public function __construct(string $modifyAllNamePrefix)
     {
         $this->modifyAllNamePrefix = $modifyAllNamePrefix;
     }
 
     /**
-     * @param ProductId $productId
-     * @param array $formData
-     * @param ShopConstraint $singleShopConstraint
-     *
      * @return UpdateProductStockAvailableCommand[]
      */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['stock']) && !isset($formData['combinations'])) {
+        if (! isset($formData['stock']) && ! isset($formData['combinations'])) {
             return [];
         }
 
@@ -96,9 +90,7 @@ class ProductStockAvailableCommandsBuilder implements ProductCommandsBuilderInte
      * For product with combinations we only handle one field out_of_stock_type which is common to all combinations,
      * the delta stock and location are handled combination by combination in another dedicated command
      *
-     * @param ProductId $productId
      * @param array<string, mixed> $formData
-     * @param ShopConstraint $singleShopConstraint
      *
      * @return UpdateProductStockAvailableCommand[]
      */

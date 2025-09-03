@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,20 +50,16 @@ final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterf
     private $dbPrefix;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix
+        $dbPrefix,
     ) {
         $this->connection = $connection;
         $this->dbPrefix = $dbPrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentPositions(PositionDefinitionInterface $positionDefinition, $parentId = null)
     {
         $qb = $this->connection->createQueryBuilder();
@@ -71,7 +68,7 @@ final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterf
             ->select('t.' . $positionDefinition->getIdField() . ', t.' . $positionDefinition->getPositionField())
             ->addOrderBy('t.' . $positionDefinition->getPositionField(), 'ASC');
 
-        if (null !== $parentId && null !== $positionDefinition->getParentIdField()) {
+        if ($parentId !== null && $positionDefinition->getParentIdField() !== null) {
             $qb
                 ->andWhere('t.`' . $positionDefinition->getParentIdField() . '` = :parentId')
                 ->setParameter('parentId', $parentId);
@@ -87,9 +84,6 @@ final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterf
         return $currentPositions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updatePositions(PositionDefinitionInterface $positionDefinition, array $newPositions, $parentId = null)
     {
         try {
@@ -104,7 +98,7 @@ final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterf
                     ->setParameter('rowId', $rowId)
                     ->setParameter('position', $positionIndex);
 
-                if (null !== $parentId && null !== $positionDefinition->getParentIdField()) {
+                if ($parentId !== null && $positionDefinition->getParentIdField() !== null) {
                     $qb
                         ->andWhere('`' . $positionDefinition->getParentIdField() . '` = :parentId')
                         ->setParameter('parentId', $parentId);

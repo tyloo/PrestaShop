@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,24 +36,21 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 
 class TagsCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
         $commands = [];
         $seoData = $formData['seo'] ?? [];
 
         if (isset($seoData['tags'])) {
-            if (!empty($seoData['tags'])) {
-                if (!is_array($seoData['tags'])) {
+            if (! empty($seoData['tags'])) {
+                if (! \is_array($seoData['tags'])) {
                     throw new InvalidArgumentException('Expected tags to be a localized array');
                 }
 
                 $parsedTags = [];
                 $allEmpty = true;
                 foreach ($seoData['tags'] as $langId => $rawTags) {
-                    $parsedTags[$langId] = !empty($rawTags) ? explode(',', $rawTags) : [];
+                    $parsedTags[$langId] = ! empty($rawTags) ? explode(',', $rawTags) : [];
                     $allEmpty = $allEmpty && empty($rawTags);
                 }
 

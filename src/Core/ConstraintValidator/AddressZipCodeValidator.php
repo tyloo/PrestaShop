@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,26 +52,20 @@ final class AddressZipCodeValidator extends ConstraintValidator
      */
     private $requirementsProvider;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param CountryZipCodeRequirementsProviderInterface $requirementsProvider
-     */
     public function __construct(
         TranslatorInterface $translator,
-        CountryZipCodeRequirementsProviderInterface $requirementsProvider
+        CountryZipCodeRequirementsProviderInterface $requirementsProvider,
     ) {
         $this->translator = $translator;
         $this->requirementsProvider = $requirementsProvider;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CountryConstraintException
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!($constraint instanceof AddressZipCode)) {
+        if (! ($constraint instanceof AddressZipCode)) {
             return;
         }
         $countryId = (int) $constraint->id_country;
@@ -91,7 +86,7 @@ final class AddressZipCodeValidator extends ConstraintValidator
             }
         }
 
-        if (null !== $requirements->getPattern() && !(bool) preg_match($requirements->getPattern(), $value)) {
+        if ($requirements->getPattern() !== null && ! (bool) preg_match($requirements->getPattern(), $value)) {
             $message = $this->translator->trans('Your Zip/Postal code is incorrect.', [], 'Admin.Notifications.Error') .
                 ' ' .
                 $this->translator->trans('It must be entered as follows:', [], 'Admin.Notifications.Error') . ' ' .

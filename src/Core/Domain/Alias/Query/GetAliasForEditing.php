@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,6 @@ class GetAliasForEditing
         $this->aliasId = new AliasId($aliasId);
     }
 
-    /**
-     * @return AliasId
-     */
     public function getAliasId(): AliasId
     {
         return $this->aliasId;

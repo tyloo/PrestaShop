@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,11 +78,11 @@ class CustomerInformation
     }
 
     /**
-     * @param int|null $customerId
+     * @param int|null    $customerId
      * @param string|null $firstName
      * @param string|null $lastName
-     * @param string $email
-     * @param int|null $validatedOrdersCount
+     * @param string      $email
+     * @param int|null    $validatedOrdersCount
      * @param string|null $validatedOrdersAmount
      * @param string|null $customerSinceDate
      */
@@ -92,7 +93,7 @@ class CustomerInformation
         $email,
         $validatedOrdersCount,
         $validatedOrdersAmount,
-        $customerSinceDate
+        $customerSinceDate,
     ) {
         $this->customerId = $customerId;
         $this->firstName = $firstName;

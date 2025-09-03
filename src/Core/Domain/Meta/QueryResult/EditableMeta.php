@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,10 +63,8 @@ class EditableMeta
     private $localisedUrlRewrites;
 
     /**
-     * EditableMeta constructor.
-     *
-     * @param int $metaId
-     * @param string $pageName
+     * @param int      $metaId
+     * @param string   $pageName
      * @param string[] $localisedPageTitles
      * @param string[] $localisedMetaDescriptions
      * @param string[] $localisedUrlRewrites
@@ -78,7 +77,7 @@ class EditableMeta
         $pageName,
         array $localisedPageTitles,
         array $localisedMetaDescriptions,
-        array $localisedUrlRewrites
+        array $localisedUrlRewrites,
     ) {
         $this->metaId = new MetaId($metaId);
         $this->pageName = new Name($pageName);

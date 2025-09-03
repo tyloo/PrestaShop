@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class ApiClientContextBuilder
 
     public function __construct(
         private ApiClientRepository $apiClientRepository,
-        private readonly ShopConfigurationInterface $configuration
+        private readonly ShopConfigurationInterface $configuration,
     ) {
     }
 
@@ -78,7 +79,7 @@ class ApiClientContextBuilder
 
     private function getApiClient(): ?ApiClientEntity
     {
-        if (!$this->apiClient && !empty($this->clientId)) {
+        if (! $this->apiClient && ! empty($this->clientId)) {
             $this->apiClient = $this->apiClientRepository->getByClientId($this->clientId, $this->externalIssuer);
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,23 +53,18 @@ class BulkDeleteCombinationCommand
     private $shopConstraint;
 
     /**
-     * @param int $productId
      * @param int[] $combinationIds
-     * @param ShopConstraint $shopConstraint
      */
     public function __construct(
         int $productId,
         array $combinationIds,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
         $this->setCombinationIds($combinationIds);
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
@@ -82,9 +78,6 @@ class BulkDeleteCombinationCommand
         return $this->combinationIds;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

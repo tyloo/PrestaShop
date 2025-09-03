@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,29 +52,23 @@ final class ProductImagesChoiceProvider implements ConfigurableFormChoiceProvide
      */
     private $contextShopId;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     */
     public function __construct(
         CommandBusInterface $queryBus,
         int $defaultShopId,
-        ?int $contextShopId
+        ?int $contextShopId,
     ) {
         $this->queryBus = $queryBus;
         $this->defaultShopId = $defaultShopId;
         $this->contextShopId = $contextShopId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices(array $options): array
     {
         if (empty($options['product_id'])) {
             return [];
         }
 
-        $shopConstraint = null !== $this->contextShopId ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
+        $shopConstraint = $this->contextShopId !== null ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
         /** @var ProductImage[] $productImages */
         $productImages = $this->queryBus->handle(new GetProductImages((int) $options['product_id'], $shopConstraint));
 

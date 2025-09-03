@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,8 +34,6 @@ interface ImageFormatConfigurationInterface
 {
     /**
      * Get a list of configured image generation formats
-     *
-     * @return array
      */
     public function getGenerationFormats(): array;
 
@@ -42,8 +41,6 @@ interface ImageFormatConfigurationInterface
      * Add a generation format to the list
      *
      * @param string $format ex: "jpg" or "png"
-     *
-     * @return void
      */
     public function addGenerationFormat(string $format): void;
 
@@ -51,8 +48,6 @@ interface ImageFormatConfigurationInterface
      * Set several generation formats at once
      *
      * @param array $formatList ex: ['jpg', 'webp']
-     *
-     * @return void
      */
     public function setListOfGenerationFormats(array $formatList): void;
 
@@ -60,8 +55,6 @@ interface ImageFormatConfigurationInterface
      * Check if a given format is configured
      *
      * @param string $format ex: "jpg" or "png"
-     *
-     * @return bool
      */
     public function isGenerationFormatSet(string $format): bool;
 }

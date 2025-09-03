@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,47 +45,32 @@ class CoreDomainProviderDefinition extends AbstractCoreProviderDefinition
      */
     private $domainName;
 
-    /**
-     * @param string $domainName
-     */
     public function __construct(string $domainName)
     {
         $this->domainName = $domainName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): string
     {
         return ProviderDefinitionInterface::TYPE_CORE_DOMAIN;
     }
 
-    /**
-     * @return string
-     */
     public function getDomainName(): string
     {
         return $this->domainName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilenameFilters(): array
     {
         return array_map(function (string $filenameFilter) {
-            return sprintf($filenameFilter, preg_quote($this->domainName, '#'));
+            return \sprintf($filenameFilter, preg_quote($this->domainName, '#'));
         }, self::FILENAME_FILTERS_REGEX);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return array_map(function (string $translationDomain) {
-            return sprintf($translationDomain, preg_quote($this->domainName, '#'));
+            return \sprintf($translationDomain, preg_quote($this->domainName, '#'));
         }, self::TRANSLATION_DOMAINS_REGEX);
     }
 }

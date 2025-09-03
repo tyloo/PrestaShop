@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,9 +50,6 @@ class CurrencyDataSource implements DataSourceInterface
     /**
      * CurrencyDataSource constructor needs CurrencyDataLayer objects.
      * This top layer might be chained with lower layers and will be the entry point of this middleware stack.
-     *
-     * @param CurrencyDataLayerInterface $topLayer
-     * @param CurrencyInstalledDataLayer $installedDataLayer
      */
     public function __construct(CurrencyDataLayerInterface $topLayer, CurrencyInstalledDataLayer $installedDataLayer)
     {
@@ -59,9 +57,6 @@ class CurrencyDataSource implements DataSourceInterface
         $this->installedDataLayer = $installedDataLayer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLocalizedCurrencyData(LocalizedCurrencyId $localizedCurrencyId)
     {
         return $this->topLayer->read($localizedCurrencyId);
@@ -80,24 +75,17 @@ class CurrencyDataSource implements DataSourceInterface
         return $this->installedDataLayer->isAvailable($currencyCode);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAvailableCurrenciesData($localeCode)
     {
         return $this->formatCurrenciesData($this->installedDataLayer->getAvailableCurrencyCodes(), $localeCode);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAllInstalledCurrenciesData($localeCode)
     {
         return $this->formatCurrenciesData($this->installedDataLayer->getAllInstalledCurrencyIsoCodes(), $localeCode);
     }
 
     /**
-     * @param array $currencyCodes
      * @param string $localeCode
      *
      * @return array

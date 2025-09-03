@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,29 +47,19 @@ class GetRelatedProducts
      */
     private $languageId;
 
-    /**
-     * @param int $productId
-     * @param int $languageId
-     */
     public function __construct(
         int $productId,
-        int $languageId
+        int $languageId,
     ) {
         $this->productId = new ProductId($productId);
         $this->languageId = new LanguageId($languageId);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLanguageId(): LanguageId
     {
         return $this->languageId;

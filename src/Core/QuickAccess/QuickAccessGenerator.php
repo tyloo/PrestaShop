@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,10 +69,6 @@ class QuickAccessGenerator
 
     /**
      * Clean the saved quick link from base domain, index.ph and token to return its minimal form.
-     *
-     * @param string $savedUrl
-     *
-     * @return string
      */
     public function cleanQuickLink(string $savedUrl): string
     {
@@ -86,14 +83,14 @@ class QuickAccessGenerator
 
         // If __PS_BASE_URI__ = '/', it destroys urls when is 'product/new' or 'modules/manage' (vhost for example)
         $baseUri = $this->shopContext->getBaseURI();
-        if ('/' !== $baseUri) {
+        if ($baseUri !== '/') {
             $patterns[] = '#' . $baseUri . '#';
         }
 
         $url = preg_replace($patterns, '', $savedUrl);
         $url = trim($url, '?&/');
 
-        return 'index.php' . (!empty($legacyEnvironment) ? '?' : '/') . $url;
+        return 'index.php' . (! empty($legacyEnvironment) ? '?' : '/') . $url;
     }
 
     public function getTokenizedQuickAccesses(): array
@@ -113,7 +110,7 @@ class QuickAccessGenerator
             // Special case for product link because it is bound to a modal, however all other links would deserve to be checked for permission
             if ($cleanLink === self::NEW_PRODUCT_LINK || $cleanLink === self::NEW_PRODUCT_V2_LINK) {
                 $connectedUser = $this->security->getUser();
-                if (!($connectedUser instanceof Employee) || !in_array('ROLE_MOD_TAB_ADMINPRODUCTS_CREATE', $connectedUser->getRoles())) {
+                if (! ($connectedUser instanceof Employee) || ! \in_array('ROLE_MOD_TAB_ADMINPRODUCTS_CREATE', $connectedUser->getRoles(), true)) {
                     // if employee has no access, we don't show product creation link,
                     // because it causes modal-related issues in product v2
                     unset($quickAccesses[$index]);
@@ -134,15 +131,12 @@ class QuickAccessGenerator
         return $quickAccesses;
     }
 
-    /**
-     * Get tokenized url
-     */
     protected function getTokenizedUrl(string $baseUrl): string
     {
         $separator = strpos($baseUrl, '?') ? '&' : '?';
 
         $userIdentifier = $this->security->getUser()?->getUserIdentifier();
-        if (!empty($userIdentifier) && !str_contains('_token', $baseUrl)) {
+        if (! empty($userIdentifier) && ! str_contains('_token', $baseUrl)) {
             $baseUrl .= $separator . '_token=' . $this->tokenManager->getToken($userIdentifier)->getValue();
         }
 

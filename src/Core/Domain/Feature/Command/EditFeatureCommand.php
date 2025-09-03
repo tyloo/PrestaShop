@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,17 +51,11 @@ class EditFeatureCommand
      */
     private $associatedShopIds;
 
-    /**
-     * @param int $featureId
-     */
     public function __construct(int $featureId)
     {
         $this->featureId = new FeatureId($featureId);
     }
 
-    /**
-     * @return FeatureId
-     */
     public function getFeatureId(): FeatureId
     {
         return $this->featureId;
@@ -76,16 +71,11 @@ class EditFeatureCommand
 
     /**
      * @param string[] $localizedNames
-     *
-     * @return EditFeatureCommand
      */
     public function setLocalizedNames(array $localizedNames): self
     {
         if (empty($localizedNames)) {
-            throw new FeatureConstraintException(
-                'Feature name cannot be empty',
-                FeatureConstraintException::INVALID_NAME
-            );
+            throw new FeatureConstraintException('Feature name cannot be empty', FeatureConstraintException::INVALID_NAME);
         }
 
         $this->localizedNames = $localizedNames;
@@ -103,8 +93,6 @@ class EditFeatureCommand
 
     /**
      * @param int[] $associatedShopIds
-     *
-     * @return EditFeatureCommand
      */
     public function setAssociatedShopIds(array $associatedShopIds): self
     {

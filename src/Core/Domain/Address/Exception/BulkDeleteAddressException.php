@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,10 +40,9 @@ class BulkDeleteAddressException extends AddressException
     private $addressIds;
 
     /**
-     * @param int[] $addressIds
+     * @param int[]  $addressIds
      * @param string $message
-     * @param int $code
-     * @param Exception $previous
+     * @param int    $code
      */
     public function __construct(array $addressIds, $message = '', $code = 0, ?Exception $previous = null)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,17 +30,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject;
 use PrestaShop\Decimal\DecimalNumber;
 use PrestaShop\PrestaShop\Core\Domain\Currency\Exception\CurrencyConstraintException;
 
-/**
- * Class ExchangeRate
- */
 class ExchangeRate
 {
     public const DEFAULT_RATE = 1.0;
 
     /**
      * Get the default exchange rate as a DecimalNumber
-     *
-     * @return DecimalNumber
      */
     public static function getDefaultExchangeRate(): DecimalNumber
     {
@@ -71,16 +67,14 @@ class ExchangeRate
     }
 
     /**
-     * @param mixed $exchangeRate
-     *
      * @throws CurrencyConstraintException
      */
     private function assertIsNumberAndMoreThanZero($exchangeRate)
     {
-        $isIntegerOrFloat = is_int($exchangeRate) || is_float($exchangeRate);
+        $isIntegerOrFloat = \is_int($exchangeRate) || \is_float($exchangeRate);
 
-        if (!$isIntegerOrFloat || 0 >= $exchangeRate) {
-            throw new CurrencyConstraintException(sprintf('Given exchange rate %s is not valid. It must be more than 0', var_export($exchangeRate, true)), CurrencyConstraintException::INVALID_EXCHANGE_RATE);
+        if (! $isIntegerOrFloat || $exchangeRate <= 0) {
+            throw new CurrencyConstraintException(\sprintf('Given exchange rate %s is not valid. It must be more than 0', var_export($exchangeRate, true)), CurrencyConstraintException::INVALID_EXCHANGE_RATE);
         }
     }
 }

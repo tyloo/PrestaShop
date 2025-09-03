@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,11 +69,6 @@ class TranslationCatalogueBuilder
      * 'Normalization' will add extra data.
      *
      * @param ProviderDefinitionInterface $providerDefinition Translation storage provider configuration
-     * @param string $locale
-     * @param string $domain
-     * @param array $search
-     *
-     * @return array
      *
      * @throws TranslationFilesNotFoundException
      * @throws UnexpectedTranslationTypeException
@@ -81,7 +77,7 @@ class TranslationCatalogueBuilder
         ProviderDefinitionInterface $providerDefinition,
         string $locale,
         string $domain,
-        array $search
+        array $search,
     ): array {
         $this->validateParameters($providerDefinition, $domain);
 
@@ -100,7 +96,7 @@ class TranslationCatalogueBuilder
             $catalogueDomain
         )->getDomain($catalogueDomain);
 
-        if (null === $domainTranslation) {
+        if ($domainTranslation === null) {
             $domainTranslation = new Domain($catalogueDomain);
         }
 
@@ -124,10 +120,6 @@ class TranslationCatalogueBuilder
      * Each domain will have counters (number of items and missing translations) as metadata.
      *
      * @param ProviderDefinitionInterface $providerDefinition Translation storage provider configuration
-     * @param string $locale
-     * @param array $search
-     *
-     * @return array
      *
      * @throws TranslationFilesNotFoundException
      * @throws UnexpectedTranslationTypeException
@@ -135,7 +127,7 @@ class TranslationCatalogueBuilder
     public function getCatalogue(
         ProviderDefinitionInterface $providerDefinition,
         string $locale,
-        array $search
+        array $search,
     ): array {
         return $this->getRawCatalogue(
             $providerDefinition,
@@ -152,11 +144,6 @@ class TranslationCatalogueBuilder
      * Each domain will have counters (number of items and missing translations) as metadata.
      *
      * @param ProviderDefinitionInterface $providerDefinition Translation storage provider configuration
-     * @param string $locale
-     * @param array $search
-     * @param string|null $domain
-     *
-     * @return Catalogue
      *
      * @throws TranslationFilesNotFoundException
      * @throws UnexpectedTranslationTypeException
@@ -165,14 +152,14 @@ class TranslationCatalogueBuilder
         ProviderDefinitionInterface $providerDefinition,
         string $locale,
         array $search,
-        ?string $domain = null
+        ?string $domain = null,
     ): Catalogue {
         $this->validateParameters($providerDefinition);
 
         $provider = $this->catalogueProviderFactory->getProvider($providerDefinition);
 
         $defaultCatalogue = $provider->getDefaultCatalogue($locale);
-        if (null === $domain) {
+        if ($domain === null) {
             $defaultCatalogueMessages = $defaultCatalogue->all();
         } else {
             $defaultCatalogueMessages = [$domain => $defaultCatalogue->all($domain)];
@@ -214,18 +201,17 @@ class TranslationCatalogueBuilder
 
     /**
      * @param ProviderDefinitionInterface $providerDefinition Translation storage provider configuration
-     * @param string|null $domain
      *
      * @throws UnexpectedTranslationTypeException
      */
     private function validateParameters(
         ProviderDefinitionInterface $providerDefinition,
-        ?string $domain = null
+        ?string $domain = null,
     ): void {
-        if (!in_array($providerDefinition->getType(), ProviderDefinitionInterface::ALLOWED_TYPES)) {
+        if (! \in_array($providerDefinition->getType(), ProviderDefinitionInterface::ALLOWED_TYPES, true)) {
             throw new UnexpectedTranslationTypeException('This \'type\' param is not valid.');
         }
-        if (null !== $domain && empty($domain)) {
+        if ($domain !== null && empty($domain)) {
             throw new InvalidArgumentException('The given \'domain\' is not valid.');
         }
     }

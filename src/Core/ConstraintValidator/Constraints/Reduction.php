@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ final class Reduction extends Constraint
 
     public $invalidPercentageValueMessage = 'Reduction value "%value%" is invalid. Value must be more than zero and maximum %max%.';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return ReductionValidator::class;

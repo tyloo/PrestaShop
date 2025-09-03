@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,19 +61,12 @@ class BulkCombinationFormDataHandler implements FormDataHandlerInterface
      */
     private $defaultShopId;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param BulkCombinationFormDataFormatter $bulkCombinationFormDataFormatter
-     * @param CombinationCommandsBuilderInterface $commandsBuilder
-     * @param int $contextShopId
-     * @param int $defaultShopId
-     */
     public function __construct(
         CommandBusInterface $commandBus,
         BulkCombinationFormDataFormatter $bulkCombinationFormDataFormatter,
         CombinationCommandsBuilderInterface $commandsBuilder,
         int $contextShopId,
-        int $defaultShopId
+        int $defaultShopId,
     ) {
         $this->commandBus = $commandBus;
         $this->commandsBuilder = $commandsBuilder;
@@ -81,18 +75,12 @@ class BulkCombinationFormDataHandler implements FormDataHandlerInterface
         $this->defaultShopId = $defaultShopId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function create(array $data)
     {
         // not used for creation
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function update($id, array $data): void
     {
         // @todo: a hook system should be integrated in this handler for extendability

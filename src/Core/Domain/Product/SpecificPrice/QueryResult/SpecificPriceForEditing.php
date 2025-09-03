@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -109,23 +110,6 @@ class SpecificPriceForEditing
      */
     private $groupId;
 
-    /**
-     * @param int $specificPriceId
-     * @param string $reductionType
-     * @param DecimalNumber $reductionAmount
-     * @param bool $includesTax
-     * @param FixedPriceInterface $fixedPrice
-     * @param int $fromQuantity
-     * @param DateTimeInterface $dateTimeFrom
-     * @param DateTimeInterface $dateTimeTo
-     * @param int $productId
-     * @param CustomerInfo|null $customerInfo
-     * @param int|null $combinationId
-     * @param int|null $shopId
-     * @param int|null $currencyId
-     * @param int|null $countryId
-     * @param int|null $groupId
-     */
     public function __construct(
         int $specificPriceId,
         string $reductionType,
@@ -141,7 +125,7 @@ class SpecificPriceForEditing
         ?int $shopId,
         ?int $currencyId,
         ?int $countryId,
-        ?int $groupId
+        ?int $groupId,
     ) {
         $this->specificPriceId = $specificPriceId;
         $this->reductionType = $reductionType;
@@ -160,121 +144,76 @@ class SpecificPriceForEditing
         $this->groupId = $groupId;
     }
 
-    /**
-     * @return int
-     */
     public function getSpecificPriceId(): int
     {
         return $this->specificPriceId;
     }
 
-    /**
-     * @return string
-     */
     public function getReductionType(): string
     {
         return $this->reductionType;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getReductionAmount(): DecimalNumber
     {
         return $this->reductionAmount;
     }
 
-    /**
-     * @return bool
-     */
     public function includesTax(): bool
     {
         return $this->includesTax;
     }
 
-    /**
-     * @return FixedPriceInterface
-     */
     public function getFixedPrice(): FixedPriceInterface
     {
         return $this->fixedPrice;
     }
 
-    /**
-     * @return int
-     */
     public function getFromQuantity(): int
     {
         return $this->fromQuantity;
     }
 
-    /**
-     * @return int|null
-     */
     public function getShopId(): ?int
     {
         return $this->shopId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getCurrencyId(): ?int
     {
         return $this->currencyId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getCountryId(): ?int
     {
         return $this->countryId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getGroupId(): ?int
     {
         return $this->groupId;
     }
 
-    /**
-     * @return CustomerInfo|null
-     */
     public function getCustomerInfo(): ?CustomerInfo
     {
         return $this->customerInfo;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDateTimeFrom(): DateTimeInterface
     {
         return $this->dateTimeFrom;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDateTimeTo(): DateTimeInterface
     {
         return $this->dateTimeTo;
     }
 
-    /**
-     * @return int
-     */
     public function getProductId(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getCombinationId(): ?int
     {
         return $this->combinationId;

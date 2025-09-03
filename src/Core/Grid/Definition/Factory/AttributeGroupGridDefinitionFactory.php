@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,25 +55,16 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
 
     public const GRID_ID = 'attribute_group';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Attributes', [], 'Admin.Catalog.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -144,9 +136,6 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -175,9 +164,6 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -215,9 +201,6 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

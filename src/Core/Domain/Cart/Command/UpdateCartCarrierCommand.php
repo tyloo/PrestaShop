@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,17 +57,11 @@ class UpdateCartCarrierCommand
         $this->newCarrierId = $newCarrierId;
     }
 
-    /**
-     * @return CartId
-     */
     public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return int
-     */
     public function getNewCarrierId(): int
     {
         return $this->newCarrierId;

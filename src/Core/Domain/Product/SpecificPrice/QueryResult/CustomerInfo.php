@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,17 +50,11 @@ class CustomerInfo
      */
     private $email;
 
-    /**
-     * @param int $id
-     * @param string $firstname
-     * @param string $lastname
-     * @param string $email
-     */
     public function __construct(
         int $id,
         string $firstname,
         string $lastname,
-        string $email
+        string $email,
     ) {
         $this->id = $id;
         $this->firstname = $firstname;
@@ -67,33 +62,21 @@ class CustomerInfo
         $this->email = $email;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getFirstname(): string
     {
         return $this->firstname;
     }
 
-    /**
-     * @return string
-     */
     public function getLastname(): string
     {
         return $this->lastname;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;

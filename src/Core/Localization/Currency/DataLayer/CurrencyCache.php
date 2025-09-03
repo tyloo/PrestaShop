@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,9 +57,6 @@ class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayerInterf
         $this->cache = $cache;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer)
     {
         $this->lowerDataLayer = $lowerLayer;
@@ -79,7 +77,7 @@ class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayerInterf
      */
     protected function doRead($id)
     {
-        if (!$id instanceof LocalizedCurrencyId) {
+        if (! $id instanceof LocalizedCurrencyId) {
             throw new LocalizationException('$currencyDataId must be a CurrencyDataIdentifier object');
         }
 
@@ -96,14 +94,14 @@ class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayerInterf
      * Might be a file edit, cache update, DB insert/update...
      *
      * @param LocalizedCurrencyId $currencyDataId The data object identifier
-     * @param CurrencyData $currencyData The data object to be written
+     * @param CurrencyData        $currencyData   The data object to be written
      *
-     * @throws DataLayerException When write fails
+     * @throws DataLayerException    When write fails
      * @throws LocalizationException When $currencyDataId is invalid
      */
     protected function doWrite($currencyDataId, $currencyData)
     {
-        if (!$currencyDataId instanceof LocalizedCurrencyId) {
+        if (! $currencyDataId instanceof LocalizedCurrencyId) {
             throw new LocalizationException('$currencyDataId must be a CurrencyDataIdentifier object');
         }
 
@@ -112,7 +110,7 @@ class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayerInterf
 
         $saved = $this->cache->save($cacheItem);
 
-        if (!$saved) {
+        if (! $saved) {
             throw new DataLayerException('Unable to persist data in cache data layer');
         }
     }

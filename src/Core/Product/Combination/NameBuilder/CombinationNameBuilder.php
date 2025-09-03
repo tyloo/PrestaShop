@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,16 +54,13 @@ class CombinationNameBuilder implements CombinationNameBuilderInterface
     public function __construct(
         TranslatorInterface $translator,
         string $attributesSeparator,
-        string $attributesInsideSeparator
+        string $attributesInsideSeparator,
     ) {
         $this->translator = $translator;
         $this->attributesSeparator = $attributesSeparator;
         $this->attributesInsideSeparator = $attributesInsideSeparator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildName(array $attributesInfo): string
     {
         return implode(
@@ -86,9 +84,6 @@ class CombinationNameBuilder implements CombinationNameBuilderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildFullName(string $productName, array $attributesInfo): string
     {
         return $this->translator->trans(

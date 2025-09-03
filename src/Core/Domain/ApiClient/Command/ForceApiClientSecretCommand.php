@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ class ForceApiClientSecretCommand
 
     public function __construct(
         int $apiClientId,
-        string $secret
+        string $secret,
     ) {
         $this->apiClientId = new ApiClientId($apiClientId);
         $this->secret = new ApiClientSecret($secret);

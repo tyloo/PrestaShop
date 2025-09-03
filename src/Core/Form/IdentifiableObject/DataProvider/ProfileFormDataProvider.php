@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,21 +45,14 @@ final class ProfileFormDataProvider implements FormDataProviderInterface
      */
     private $queryBus;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param string $defaultAvatarUrl
-     */
     public function __construct(
         CommandBusInterface $queryBus,
-        string $defaultAvatarUrl
+        string $defaultAvatarUrl,
     ) {
         $this->queryBus = $queryBus;
         $this->defaultAvatarUrl = $defaultAvatarUrl;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($profileId)
     {
         /** @var EditableProfile $editableProfile */
@@ -70,9 +64,6 @@ final class ProfileFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         return [

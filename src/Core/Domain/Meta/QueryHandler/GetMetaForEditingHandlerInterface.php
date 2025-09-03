@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ interface GetMetaForEditingHandlerInterface
 {
     /**
      * Gets data related with meta entity.
-     *
-     * @param GetMetaForEditing $query
      *
      * @return EditableMeta
      */

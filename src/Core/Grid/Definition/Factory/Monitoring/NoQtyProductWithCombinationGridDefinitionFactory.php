@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ final class NoQtyProductWithCombinationGridDefinitionFactory extends AbstractPro
 {
     public const GRID_ID = 'no_qty_product_with_combination';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans(

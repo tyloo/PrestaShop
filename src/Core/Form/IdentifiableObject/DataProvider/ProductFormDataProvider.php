@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -89,22 +90,15 @@ class ProductFormDataProvider implements FormDataProviderInterface
     /**
      * @var array|null
      */
-    private $featureNames = null;
+    private $featureNames;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param ConfigurationInterface $configuration
-     * @param int $contextLangId
-     * @param int $defaultShopId
-     * @param int|null $contextShopId
-     */
     public function __construct(
         CommandBusInterface $queryBus,
         ConfigurationInterface $configuration,
         int $contextLangId,
         int $defaultShopId,
         ?int $contextShopId,
-        FeaturesChoiceProvider $featuresChoiceProvider
+        FeaturesChoiceProvider $featuresChoiceProvider,
     ) {
         $this->queryBus = $queryBus;
         $this->configuration = $configuration;
@@ -114,9 +108,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
         $this->featuresChoiceProvider = $featuresChoiceProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id): array
     {
         $productId = (int) $id;
@@ -151,9 +142,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
         return $productData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         return [
@@ -161,11 +149,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * @param ProductForEditing $productForEditing
-     *
-     * @return array
-     */
     private function extractCategoriesData(ProductForEditing $productForEditing): array
     {
         $categoriesInformation = $productForEditing->getCategoriesInformation();
@@ -181,7 +164,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
                 'name' => $category->getName(),
                 'display_name' => $category->getDisplayName(),
                 // do not allow removing default category or if it is the last one
-                'removable' => $defaultCategoryId !== $category->getId() && 1 !== count($categories),
+                'removable' => $defaultCategoryId !== $category->getId() && \count($categories) !== 1,
             ];
         }
 
@@ -192,8 +175,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param int $productId
-     *
      * @return array<int, array<string, int|string>>
      */
     private function extractRelatedProducts(int $productId): array
@@ -205,8 +186,8 @@ class ProductFormDataProvider implements FormDataProviderInterface
         foreach ($relatedProducts as $relatedProduct) {
             $productName = $relatedProduct->getName();
 
-            if (!empty($relatedProduct->getReference())) {
-                $productName .= sprintf(
+            if (! empty($relatedProduct->getReference())) {
+                $productName .= \sprintf(
                     ' (ref: %s)',
                     $relatedProduct->getReference()
                 );
@@ -223,9 +204,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param int $productId
-     * @param ShopConstraint $shopConstraint
-     *
      * @return array<int, array<string, int|string>>
      */
     protected function extractPackedProducts(int $productId, ShopConstraint $shopConstraint): array
@@ -255,8 +233,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, mixed>
      */
     private function extractVirtualProductFileData(ProductForEditing $productForEditing): array
@@ -266,7 +242,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
         ];
         $virtualProductFile = $productForEditing->getVirtualProductFile();
 
-        if (null !== $virtualProductFile) {
+        if ($virtualProductFile !== null) {
             $data = [
                 'has_file' => true,
                 'virtual_product_file_id' => $virtualProductFile->getId(),
@@ -283,8 +259,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, mixed>
      */
     private function extractHeaderData(ProductForEditing $productForEditing): array
@@ -299,8 +273,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, mixed>
      */
     private function extractDescriptionData(ProductForEditing $productForEditing): array
@@ -315,9 +287,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     * @param ShopConstraint $shopConstraint
-     *
      * @return array<string, mixed>
      */
     private function extractDetailsData(ProductForEditing $productForEditing, ShopConstraint $shopConstraint): array
@@ -342,8 +311,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param int $productId
-     *
      * @return array<string, array<int, array<string, int|array<int, string>>>>
      */
     private function extractFeatureValues(int $productId): array
@@ -357,7 +324,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
         $featureNames = $this->getFeatureNames();
         $productFeatureCollection = [];
         foreach ($featureValues as $featureValue) {
-            if (!isset($productFeatureCollection[$featureValue->getFeatureId()])) {
+            if (! isset($productFeatureCollection[$featureValue->getFeatureId()])) {
                 $productFeatureCollection[$featureValue->getFeatureId()] = [
                     'feature_id' => $featureValue->getFeatureId(),
                     'feature_name' => $featureNames[$featureValue->getFeatureId()],
@@ -384,9 +351,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     * @param ShopConstraint $shopConstraint
-     *
      * @return array<string, mixed>
      */
     private function extractStockData(ProductForEditing $productForEditing, ShopConstraint $shopConstraint): array
@@ -455,8 +419,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, mixed>
      */
     private function extractPricingData(ProductForEditing $productForEditing): array
@@ -481,15 +443,13 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, bool|string[]>
      */
     private function getPriorityManagement(ProductForEditing $productForEditing): array
     {
         $priorities = $productForEditing->getPricesInformation()->getSpecificPricePriorities();
 
-        if (!$priorities) {
+        if (! $priorities) {
             return [
                 'use_custom_priority' => false,
                 'priorities' => $this->getDefaultPrioritiesData(),
@@ -502,11 +462,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * @param ProductForEditing $productForEditing
-     *
-     * @return array
-     */
     private function extractSEOData(ProductForEditing $productForEditing): array
     {
         $seoOptions = $productForEditing->getProductSeoOptions();
@@ -521,8 +476,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array{type: string, target: array|null}
      */
     private function extractRedirectOptionData(ProductForEditing $productForEditing): array
@@ -532,7 +485,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
         // It is important to return null when nothing is selected this way the transformer and therefore
         // the form field have no value to try and display
         $redirectTarget = null;
-        if (null !== $seoOptions->getRedirectTarget()) {
+        if ($seoOptions->getRedirectTarget() !== null) {
             $redirectTarget = [
                 'id' => $seoOptions->getRedirectTarget()->getId(),
                 'name' => $seoOptions->getRedirectTarget()->getName(),
@@ -547,8 +500,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, mixed>
      */
     private function extractShippingData(ProductForEditing $productForEditing): array
@@ -573,8 +524,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, mixed>
      */
     private function extractOptionsData(ProductForEditing $productForEditing): array
@@ -593,8 +542,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array<string, array<int, array<string, mixed>>>
      */
     private function extractAttachmentsData(ProductForEditing $productForEditing): array
@@ -616,9 +563,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     * @param ShopConstraint $shopConstraint
-     *
      * @return array<string, array<int, mixed>>
      */
     private function extractCustomizationsData(ProductForEditing $productForEditing, ShopConstraint $shopConstraint): array
@@ -664,8 +608,6 @@ class ProductFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param ProductForEditing $productForEditing
-     *
      * @return array{suppliers: array{default_supplier_id: int, supplier_ids: int[]}, product_suppliers: array<int, array{supplier_id: int, supplier_name: string, product_supplier_id: int, price_tax_excluded: string, reference: string, currency_id: int, combination_id: int}>}
      */
     private function extractSuppliersData(ProductForEditing $productForEditing): array
@@ -711,7 +653,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
      */
     private function getDefaultPrioritiesData(): array
     {
-        if (!empty($this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'))) {
+        if (! empty($this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'))) {
             return explode(';', $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
         }
 
@@ -723,12 +665,10 @@ class ProductFormDataProvider implements FormDataProviderInterface
      * We need the opposite so we reformat this array. Also, we use the choice provider instead of the repository
      * for performance reason because it already handles an internal cache, so we don't need to perform the same
      * SQL query several times.
-     *
-     * @return array
      */
     private function getFeatureNames(): array
     {
-        if (null === $this->featureNames) {
+        if ($this->featureNames === null) {
             $this->featureNames = [];
             $featureChoices = $this->featuresChoiceProvider->getChoices();
             foreach ($featureChoices as $featureName => $featureId) {

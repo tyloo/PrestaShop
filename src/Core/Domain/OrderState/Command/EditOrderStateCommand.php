@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -360,17 +361,11 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @param string $pathName
-     * @param int $fileSize
-     * @param string $mimeType
-     * @param string $originalName
-     */
     public function setFileInformation(
         string $pathName,
         int $fileSize,
         string $mimeType,
-        string $originalName
+        string $originalName,
     ): void {
         $this->pathName = $pathName;
         $this->fileSize = $fileSize;
@@ -378,33 +373,21 @@ class EditOrderStateCommand
         $this->originalName = $originalName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFilePathName(): ?string
     {
         return $this->pathName;
     }
 
-    /**
-     * @return int|null
-     */
     public function getFileSize(): ?int
     {
         return $this->fileSize;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMimeType(): ?string
     {
         return $this->mimeType;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOriginalName(): ?string
     {
         return $this->originalName;

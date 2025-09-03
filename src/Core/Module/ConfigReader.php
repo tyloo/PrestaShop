@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class ConfigReader implements ConfigReaderInterface
         $this->modulesDirectoryPath = $modulesDirectoryPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(string $name, string $isoCode): ?ArrayFinder
     {
         $configFile = $this->findConfigFile($name, $isoCode);
@@ -57,7 +55,7 @@ class ConfigReader implements ConfigReaderInterface
         $xml = @simplexml_load_file($configFile);
         $errors = libxml_get_errors();
 
-        if ($xml === false || !empty($errors)) {
+        if ($xml === false || ! empty($errors)) {
             return null;
         }
 
@@ -73,10 +71,8 @@ class ConfigReader implements ConfigReaderInterface
     /**
      * Find config file depending on the iso code.
      *
-     * @param string $name The module name
+     * @param string $name    The module name
      * @param string $isoCode The current iso code format fr_FR
-     *
-     * @return string|null
      */
     protected function findConfigFile(string $name, string $isoCode): ?string
     {
@@ -85,10 +81,10 @@ class ConfigReader implements ConfigReaderInterface
         $configFile = $this->modulesDirectoryPath . $name . '/config_' . $iso . '.xml';
 
         // For "en" iso code, we keep the default config.xml name
-        if ($iso === 'en' || !file_exists($configFile)) {
+        if ($iso === 'en' || ! file_exists($configFile)) {
             $configFile = $this->modulesDirectoryPath . $name . '/config.xml';
 
-            if (!file_exists($configFile)) {
+            if (! file_exists($configFile)) {
                 return null;
             }
         }

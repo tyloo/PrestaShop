@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class DeleteEmployeeSessionCommand
      */
     private $sessionId;
 
-    /**
-     * @param int $sessionId
-     */
     public function __construct(int $sessionId)
     {
         $this->sessionId = new EmployeeSessionId($sessionId);
     }
 
-    /**
-     * @return EmployeeSessionId
-     */
     public function getEmployeeSessionId(): EmployeeSessionId
     {
         return $this->sessionId;

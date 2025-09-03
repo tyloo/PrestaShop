@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,15 +42,11 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
  */
 final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     private const CUSTOMER_ONLINE_TIME = 1800; // 30 min
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
@@ -59,9 +56,6 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
         parent::__construct($connection, $dbPrefix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria);
@@ -88,9 +82,6 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this->getQueryBuilder($searchCriteria)
@@ -99,8 +90,6 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Format cart status query.
-     *
-     * @return string
      */
     private function getCartStatusQuery(): string
     {
@@ -116,15 +105,11 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Gets query builder with the common sql used for displaying carts list and applying filter actions.
      *
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     *
      * @throws InvalidArgumentException
      */
     private function getQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof ShopSearchCriteriaInterface) {
+        if (! $searchCriteria instanceof ShopSearchCriteriaInterface) {
             throw new InvalidArgumentException('Invalid search criteria type');
         }
 
@@ -192,10 +177,7 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to carts query builder
      *
-     * @param QueryBuilder $qb
      * @param array<string, mixed> $filters
-     *
-     * @return void
      */
     private function applyFilters(QueryBuilder $qb, array $filters): void
     {
@@ -210,23 +192,23 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('id_cart' === $filterName) {
+            if ($filterName === 'id_cart') {
                 $qb->andWhere('c.id_cart = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
                 continue;
             }
 
-            if ('id_order' === $filterName) {
+            if ($filterName === 'id_order') {
                 $qb->andWhere('o.id_order = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
                 continue;
             }
 
-            if ('status' === $filterName) {
+            if ($filterName === 'status') {
                 $qb->andWhere($this->getCartStatusQuery() . ' = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
                 $qb->setParameter('current_date', date('Y-m-d H:i:00', time()));
@@ -234,33 +216,33 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ('customer_name' === $filterName) {
+            if ($filterName === 'customer_name') {
                 $qb->andWhere('cu.firstname LIKE :' . $filterName . ' OR cu.lastname LIKE :' . $filterName . ' OR CONCAT(LEFT(cu.firstname, 1), ". ", cu.lastname) LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
                 continue;
             }
 
-            if ('carrier_name' === $filterName) {
+            if ($filterName === 'carrier_name') {
                 $qb->andWhere('ca.name LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
                 continue;
             }
 
-            if ('date_add' === $filterName) {
+            if ($filterName === 'date_add') {
                 if (isset($filterValue['from'])) {
                     $qb->andWhere('c.date_add >= :date_from');
-                    $qb->setParameter('date_from', sprintf('%s 0:0:0', $filterValue['from']));
+                    $qb->setParameter('date_from', \sprintf('%s 0:0:0', $filterValue['from']));
                 }
 
                 if (isset($filterValue['to'])) {
                     $qb->andWhere('c.date_add <= :date_to');
-                    $qb->setParameter('date_to', sprintf('%s 23:59:59', $filterValue['to']));
+                    $qb->setParameter('date_to', \sprintf('%s 23:59:59', $filterValue['to']));
                 }
 
                 continue;
             }
 
-            if ('customer_online' === $filterName) {
+            if ($filterName === 'customer_online') {
                 if ($filterValue) {
                     $qb->andWhere('co.id_guest > 0');
                 } else {

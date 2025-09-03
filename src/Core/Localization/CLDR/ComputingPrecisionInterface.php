@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,6 @@ interface ComputingPrecisionInterface
     /**
      * Number of decimal digits to take into account when computing values
      * for a given display precision
-     *
-     * @param int $displayPrecision
      *
      * @return int
      */

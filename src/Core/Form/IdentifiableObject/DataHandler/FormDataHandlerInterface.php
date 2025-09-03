@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,8 +35,6 @@ interface FormDataHandlerInterface
     /**
      * Create object from form data.
      *
-     * @param array $data
-     *
      * @return mixed ID of identifiable object
      */
     public function create(array $data);
@@ -44,7 +43,6 @@ interface FormDataHandlerInterface
      * Update object with form data.
      *
      * @param int $id
-     * @param array $data
      *
      * @return mixed Potential new ID of identifiable object
      */

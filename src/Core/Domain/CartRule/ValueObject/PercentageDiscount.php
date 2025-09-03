@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,29 +44,19 @@ class PercentageDiscount
      */
     private $applyToDiscountedProducts;
 
-    /**
-     * @param DecimalNumber $percentage
-     * @param bool $includeDiscountedProducts
-     */
     public function __construct(
         DecimalNumber $percentage,
-        bool $includeDiscountedProducts
+        bool $includeDiscountedProducts,
     ) {
         $this->percentage = $percentage;
         $this->applyToDiscountedProducts = $includeDiscountedProducts;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getPercentage(): DecimalNumber
     {
         return $this->percentage;
     }
 
-    /**
-     * @return bool
-     */
     public function applyToDiscountedProducts(): bool
     {
         return $this->applyToDiscountedProducts;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,25 +41,16 @@ class BackofficeProviderDefinition extends AbstractCoreProviderDefinition
         '^Admin[A-Z]',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): string
     {
         return ProviderDefinitionInterface::TYPE_BACK;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilenameFilters(): array
     {
         return self::FILENAME_FILTERS_REGEX;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return self::TRANSLATION_DOMAINS_REGEX;

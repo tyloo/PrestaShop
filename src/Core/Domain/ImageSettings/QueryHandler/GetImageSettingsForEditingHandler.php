@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,10 @@ use PrestaShop\PrestaShop\Core\Domain\ImageSettings\QueryResult\EditableImageSet
 final class GetImageSettingsForEditingHandler implements GetImageSettingsForEditingHandlerInterface
 {
     public function __construct(
-        private readonly ImageConfiguration $imageConfiguration
+        private readonly ImageConfiguration $imageConfiguration,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetImageSettingsForEditing $query): EditableImageSettings
     {
         $config = $this->imageConfiguration->getConfiguration();

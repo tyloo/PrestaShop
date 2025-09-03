@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,18 +36,13 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\QueryResult\AliasForEditing;
 class AliasFormDataProvider implements FormDataProviderInterface
 {
     public function __construct(
-        protected readonly CommandBusInterface $queryBus
+        protected readonly CommandBusInterface $queryBus,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($searchTerm): array
     {
-        /**
-         * @var AliasForEditing $aliases
-         */
+        /** @var AliasForEditing $aliases */
         $aliases = $this->queryBus->handle(new GetAliasesBySearchTermForEditing((string) $searchTerm));
 
         return [
@@ -55,9 +51,6 @@ class AliasFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         return [];

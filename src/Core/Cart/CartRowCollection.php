@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,7 +72,7 @@ class CartRowCollection implements Iterator, Countable
     public function valid(): bool
     {
         return $this->getKey($this->iteratorPosition) !== null
-               && array_key_exists(
+               && \array_key_exists(
                    $this->getKey($this->iteratorPosition),
                    $this->cartRows
                );
@@ -80,16 +81,16 @@ class CartRowCollection implements Iterator, Countable
     protected function getKey($iteratorPosition)
     {
         $keys = array_keys($this->cartRows);
-        if (!isset($keys[$iteratorPosition])) {
+        if (! isset($keys[$iteratorPosition])) {
             return null;
-        } else {
-            return $keys[$iteratorPosition];
         }
+
+        return $keys[$iteratorPosition];
     }
 
     public function count(): int
     {
-        return count($this->cartRows);
+        return \count($this->cartRows);
     }
 
     /**

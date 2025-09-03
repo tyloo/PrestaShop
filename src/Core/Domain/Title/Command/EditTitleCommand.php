@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,8 +70,6 @@ class EditTitleCommand
     protected $imgHeight;
 
     /**
-     * @param int $titleId
-     *
      * @throws TitleConstraintException
      */
     public function __construct(int $titleId)
@@ -78,9 +77,6 @@ class EditTitleCommand
         $this->titleId = new TitleId($titleId);
     }
 
-    /**
-     * @return TitleId
-     */
     public function getTitleId(): TitleId
     {
         return $this->titleId;
@@ -96,8 +92,6 @@ class EditTitleCommand
 
     /**
      * @param array<string> $localizedNames
-     *
-     * @return self
      */
     public function setLocalizedNames(array $localizedNames): self
     {
@@ -106,19 +100,11 @@ class EditTitleCommand
         return $this;
     }
 
-    /**
-     * @return Gender|null
-     */
     public function getGender(): ?Gender
     {
         return $this->gender;
     }
 
-    /**
-     * @param int $gender
-     *
-     * @return self
-     */
     public function setGender(int $gender): self
     {
         $this->gender = new Gender($gender);
@@ -126,19 +112,11 @@ class EditTitleCommand
         return $this;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
     public function getImageFile(): ?UploadedFile
     {
         return $this->imgFile;
     }
 
-    /**
-     * @param UploadedFile $imageFile
-     *
-     * @return self
-     */
     public function setImageFile(UploadedFile $imageFile): self
     {
         $this->imgFile = $imageFile;
@@ -146,19 +124,11 @@ class EditTitleCommand
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getImageWidth(): ?int
     {
         return $this->imgWidth;
     }
 
-    /**
-     * @param int|null $imageWidth
-     *
-     * @return self
-     */
     public function setImageWidth(?int $imageWidth): self
     {
         $this->imgWidth = $imageWidth;
@@ -166,19 +136,11 @@ class EditTitleCommand
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getImageHeight(): ?int
     {
         return $this->imgHeight;
     }
 
-    /**
-     * @param int|null $imageHeight
-     *
-     * @return self
-     */
     public function setImageHeight(?int $imageHeight): self
     {
         $this->imgHeight = $imageHeight;

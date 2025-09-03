@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,25 +59,16 @@ abstract class AbstractColumn implements ColumnInterface
         $this->name = '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -84,9 +76,6 @@ abstract class AbstractColumn implements ColumnInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOptions(array $options)
     {
         $this->resolveOptions($options);
@@ -94,34 +83,26 @@ abstract class AbstractColumn implements ColumnInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions()
     {
-        if (null === $this->options) {
+        if ($this->options === null) {
             $this->resolveOptions();
         }
 
         return $this->options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOption(string $name)
     {
-        if (array_key_exists($name, $this->options)) {
+        if (\array_key_exists($name, $this->options)) {
             return $this->options[$name];
         }
 
-        throw new NoSuchOptionException(sprintf('Option "%s" does not exist in "%s"', $name, static::class));
+        throw new NoSuchOptionException(\sprintf('Option "%s" does not exist in "%s"', $name, static::class));
     }
 
     /**
      * Default column options configuration. You can override or extend it needed options.
-     *
-     * @param OptionsResolver $resolver
      */
     protected function configureOptions(OptionsResolver $resolver)
     {
@@ -142,8 +123,6 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * Resolve column options.
-     *
-     * @param array $options
      */
     private function resolveOptions(array $options = [])
     {

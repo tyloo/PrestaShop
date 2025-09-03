@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 final class FeatureValuesCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['details']['features']['feature_collection'])) {
+        if (! isset($formData['details']['features']['feature_collection'])) {
             return [];
         }
 
@@ -57,11 +55,6 @@ final class FeatureValuesCommandsBuilder implements ProductCommandsBuilderInterf
         return [$command];
     }
 
-    /**
-     * @param array $featuresCollection
-     *
-     * @return array
-     */
     private function formatFeatureValues(array $featuresCollection): array
     {
         $featureValues = [];
@@ -90,11 +83,6 @@ final class FeatureValuesCommandsBuilder implements ProductCommandsBuilderInterf
         return $featureValues;
     }
 
-    /**
-     * @param array $featureValueData
-     *
-     * @return bool
-     */
     private function hasCustomValues(array $featureValueData): bool
     {
         if (empty($featureValueData['custom_value']) || empty($featureValueData['is_custom'])) {
@@ -102,7 +90,7 @@ final class FeatureValuesCommandsBuilder implements ProductCommandsBuilderInterf
         }
 
         foreach ($featureValueData['custom_value'] as $localizedValue) {
-            if (!empty($localizedValue)) {
+            if (! empty($localizedValue)) {
                 return true;
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,17 +54,11 @@ class RelatedProduct
      */
     private $imageUrl;
 
-    /**
-     * @param int $productId
-     * @param string $name
-     * @param string $reference
-     * @param string $imageUrl
-     */
     public function __construct(
         int $productId,
         string $name,
         string $reference,
-        string $imageUrl
+        string $imageUrl,
     ) {
         $this->productId = $productId;
         $this->name = $name;
@@ -71,33 +66,21 @@ class RelatedProduct
         $this->imageUrl = $imageUrl;
     }
 
-    /**
-     * @return int
-     */
     public function getProductId(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getReference(): string
     {
         return $this->reference;
     }
 
-    /**
-     * @return string
-     */
     public function getImageUrl(): string
     {
         return $this->imageUrl;

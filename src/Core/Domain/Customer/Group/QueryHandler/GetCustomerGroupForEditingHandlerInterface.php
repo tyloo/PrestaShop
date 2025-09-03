@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,10 +33,5 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\QueryResult\EditableCustome
 
 interface GetCustomerGroupForEditingHandlerInterface
 {
-    /**
-     * @param GetCustomerGroupForEditing $customerForEditingQuery
-     *
-     * @return EditableCustomerGroup
-     */
     public function handle(GetCustomerGroupForEditing $customerForEditingQuery): EditableCustomerGroup;
 }

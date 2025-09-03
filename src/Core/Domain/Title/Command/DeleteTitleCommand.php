@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class DeleteTitleCommand
      */
     private $titleId;
 
-    /**
-     * @param int $titleId
-     */
     public function __construct(int $titleId)
     {
         $this->titleId = new TitleId($titleId);
     }
 
-    /**
-     * @return TitleId
-     */
     public function getTitleId(): TitleId
     {
         return $this->titleId;

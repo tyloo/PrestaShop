@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,8 +67,8 @@ class Key
      */
     private function assertKeyIsStringAndRequiredLength($key)
     {
-        if (!is_string($key) || strlen($key) !== self::LENGTH) {
-            throw new WebserviceConstraintException(sprintf('Webservice key must be string of %d characters length but %s given', self::LENGTH, var_export($key, true)), WebserviceConstraintException::INVALID_KEY);
+        if (! \is_string($key) || \strlen($key) !== self::LENGTH) {
+            throw new WebserviceConstraintException(\sprintf('Webservice key must be string of %d characters length but %s given', self::LENGTH, var_export($key, true)), WebserviceConstraintException::INVALID_KEY);
         }
     }
 }

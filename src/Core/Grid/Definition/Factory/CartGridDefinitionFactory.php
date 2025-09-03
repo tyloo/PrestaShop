@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,25 +75,16 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
         parent::__construct($hookDispatcher);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Carts', [], 'Admin.Global');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columnCollection = (new ColumnCollection())
@@ -180,9 +172,6 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
         return $columnCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -207,9 +196,6 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -284,9 +270,6 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -297,8 +280,6 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
 
     /**
      * Add row actions in grid.
-     *
-     * @return RowActionCollectionInterface
      */
     protected function getRowActions(): RowActionCollectionInterface
     {
@@ -331,11 +312,9 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
     /**
      * Function aim to define if we need to add Shop Name column in grid.
      * (Only if we are on Multistore mode and All ou Group context)
-     *
-     * @return bool
      */
     private function needShopNameColumn(): bool
     {
-        return $this->multistoreFeature->isActive() && !$this->multistoreContextChecker->isSingleShopContext();
+        return $this->multistoreFeature->isActive() && ! $this->multistoreContextChecker->isSingleShopContext();
     }
 }

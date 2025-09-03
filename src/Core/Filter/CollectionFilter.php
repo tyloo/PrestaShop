@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,8 @@ class CollectionFilter implements FilterInterface
     public function queue(array $filters)
     {
         foreach ($filters as $filter) {
-            if (!$filter instanceof FilterInterface) {
-                throw new FilterException(sprintf('The provided filter is not valid filter: "%s"', print_r($filter, true)));
+            if (! $filter instanceof FilterInterface) {
+                throw new FilterException(\sprintf('The provided filter is not valid filter: "%s"', print_r($filter, true)));
             }
         }
 
@@ -79,8 +80,8 @@ class CollectionFilter implements FilterInterface
      */
     public function filter($subject)
     {
-        if (!is_array($subject)) {
-            throw new FilterException(sprintf('Invalid subject: %s', print_r($subject, true)));
+        if (! \is_array($subject)) {
+            throw new FilterException(\sprintf('Invalid subject: %s', print_r($subject, true)));
         }
 
         foreach ($subject as $k => $value) {

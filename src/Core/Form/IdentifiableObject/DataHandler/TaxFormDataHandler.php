@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,10 +50,6 @@ final class TaxFormDataHandler implements FormDataHandlerInterface
 
     /**
      * Create object from form data.
-     *
-     * @param array $data
-     *
-     * @return mixed
      */
     public function create(array $data)
     {
@@ -69,8 +66,6 @@ final class TaxFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws TaxException
      */
     public function update($id, array $data)

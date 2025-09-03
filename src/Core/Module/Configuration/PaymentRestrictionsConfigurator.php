@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,16 +56,14 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     private $paymentModuleProvider;
 
     /**
-     * @param Connection $connection
      * @param string $databasePrefix
-     * @param int $shopId
-     * @param PaymentModuleListProviderInterface $paymentModuleProvider
+     * @param int    $shopId
      */
     public function __construct(
         Connection $connection,
         $databasePrefix,
         $shopId,
-        PaymentModuleListProviderInterface $paymentModuleProvider
+        PaymentModuleListProviderInterface $paymentModuleProvider,
     ) {
         $this->connection = $connection;
         $this->databasePrefix = $databasePrefix;
@@ -73,8 +72,6 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     }
 
     /**
-     * @param array $currencyRestrictions
-     *
      * @return bool|void
      */
     public function configureCurrencyRestrictions(array $currencyRestrictions)
@@ -83,8 +80,6 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     }
 
     /**
-     * @param array $countryRestrictions
-     *
      * @return bool|void
      */
     public function configureCountryRestrictions(array $countryRestrictions)
@@ -93,8 +88,6 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     }
 
     /**
-     * @param array $groupRestrictions
-     *
      * @return bool|void
      */
     public function configureGroupRestrictions(array $groupRestrictions)
@@ -103,8 +96,6 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     }
 
     /**
-     * @param array $carrierRestrictions
-     *
      * @return bool|void
      */
     public function configureCarrierRestrictions(array $carrierRestrictions)
@@ -114,7 +105,6 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
 
     /**
      * @param string $restrictionType
-     * @param array $restrictions
      */
     private function configureRestrictions($restrictionType, array $restrictions)
     {
@@ -128,7 +118,7 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
      * Clear current configuration for given restriction type.
      *
      * @param string $restrictionType
-     * @param int[] $moduleIds
+     * @param int[]  $moduleIds
      *
      * @return int
      */
@@ -146,12 +136,12 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
      * Insert new configuration for given restriction type.
      *
      * @param string $restrictionType
-     * @param array $newConfiguration
+     * @param array  $newConfiguration
      */
     private function insertNewConfiguration($restrictionType, $newConfiguration)
     {
-        if (!empty($newConfiguration)) {
-            $fieldName = 'carrier' === $restrictionType ? 'reference' : $restrictionType;
+        if (! empty($newConfiguration)) {
+            $fieldName = $restrictionType === 'carrier' ? 'reference' : $restrictionType;
 
             $this->connection->executeUpdate('
                 INSERT INTO `' . $this->getTableNameForRestriction($restrictionType) . '`
@@ -175,8 +165,6 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     /**
      * Parse data from restrictions.
      *
-     * @param array $restrictions
-     *
      * @return array
      */
     private function parseRestrictionData(array $restrictions)
@@ -192,7 +180,7 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
 
                 $moduleIds[] = $moduleId;
 
-                if (!is_array($restriction)) {
+                if (! \is_array($restriction)) {
                     $restriction = [$restriction];
                 }
 

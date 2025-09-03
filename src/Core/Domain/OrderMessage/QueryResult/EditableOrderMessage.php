@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,6 @@ class EditableOrderMessage
     private $localizedMessage;
 
     /**
-     * @param OrderMessageId $orderMessageId
      * @param string[] $localizedName
      * @param string[] $localizedMessage
      */
@@ -60,9 +60,6 @@ class EditableOrderMessage
         $this->localizedMessage = $localizedMessage;
     }
 
-    /**
-     * @return OrderMessageId
-     */
     public function getOrderMessageId(): OrderMessageId
     {
         return $this->orderMessageId;

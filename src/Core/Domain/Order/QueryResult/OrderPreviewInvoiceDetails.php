@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,13 +28,13 @@
 namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 
 @trigger_error(
-    sprintf(
+    \sprintf(
         '%s is deprecated since version 1.7.7.5 and will be removed in the next major version. Use %s::%s instead.',
         OrderPreviewShippingDetails::class,
         OrderPreview::class,
         'getInvoiceAddressFormatted()'
     ),
-    E_USER_DEPRECATED
+    \E_USER_DEPRECATED
 );
 
 /**
@@ -108,23 +109,6 @@ class OrderPreviewInvoiceDetails
      */
     private $dni;
 
-    /**
-     * InvoiceDetails constructor.
-     *
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $company
-     * @param string|null $vatNumber
-     * @param string $address1
-     * @param string $address2
-     * @param string $city
-     * @param string $postalCode
-     * @param string|null $stateName
-     * @param string $country
-     * @param string|null $email
-     * @param string $phone
-     * @param string|null $dni
-     */
     public function __construct(
         string $firstName,
         string $lastName,
@@ -138,7 +122,7 @@ class OrderPreviewInvoiceDetails
         string $country,
         ?string $email,
         string $phone,
-        ?string $dni = null
+        ?string $dni = null,
     ) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -155,105 +139,66 @@ class OrderPreviewInvoiceDetails
         $this->dni = $dni;
     }
 
-    /**
-     * @return string
-     */
     public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @return string
-     */
     public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
     public function getAddress1(): string
     {
         return $this->address1;
     }
 
-    /**
-     * @return string
-     */
     public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * @return string
-     */
     public function getCountry(): string
     {
         return $this->country;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function getPhone(): string
     {
         return $this->phone;
     }
 
-    /**
-     * @return string
-     */
     public function getAddress2(): string
     {
         return $this->address2;
     }
 
-    /**
-     * @return string
-     */
     public function getCompany(): string
     {
         return $this->company;
     }
 
-    /**
-     * @return string|null
-     */
     public function getVatNumber(): ?string
     {
         return $this->vatNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getPostalCode(): string
     {
         return $this->postalCode;
     }
 
-    /**
-     * @return string|null
-     */
     public function getStateName(): ?string
     {
         return $this->stateName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDNI(): ?string
     {
         return $this->dni;

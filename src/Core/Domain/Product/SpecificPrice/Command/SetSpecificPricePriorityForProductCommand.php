@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,28 +48,21 @@ class SetSpecificPricePriorityForProductCommand
     private $priorityList;
 
     /**
-     * @param int $productId
      * @param string[] $priorities
      */
     public function __construct(
         int $productId,
-        array $priorities
+        array $priorities,
     ) {
         $this->productId = new ProductId($productId);
         $this->priorityList = new PriorityList($priorities);
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return PriorityList
-     */
     public function getPriorityList(): PriorityList
     {
         return $this->priorityList;

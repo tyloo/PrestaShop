@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -118,12 +119,6 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
     private $translationDomains;
 
     /**
-     * @param DatabaseTranslationLoader $databaseTranslationLoader
-     * @param LegacyModuleExtractorInterface $legacyModuleExtractor
-     * @param LoaderInterface $legacyFileLoader
-     * @param string $modulesDirectory
-     * @param string $translationsDirectory
-     * @param string $moduleName
      * @param array<int, string> $filenameFilters
      * @param array<int, string> $translationDomains
      */
@@ -135,7 +130,7 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
         string $translationsDirectory,
         string $moduleName,
         array $filenameFilters,
-        array $translationDomains
+        array $translationDomains,
     ) {
         $this->databaseTranslationLoader = $databaseTranslationLoader;
         $this->moduleName = $moduleName;
@@ -147,9 +142,6 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
         $this->translationDomains = $translationDomains;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultCatalogue(string $locale): MessageCatalogue
     {
         // There are 2 kind of modules : Native (built with core) and Non-Native (the modules installed by user himself)
@@ -175,11 +167,6 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
         return $defaultCatalogue;
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return MessageCatalogue
-     */
     public function getFileTranslatedCatalogue(string $locale): MessageCatalogue
     {
         try { // First we search in the module's translation directory
@@ -196,24 +183,19 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUserTranslatedCatalogue(string $locale): MessageCatalogue
     {
         return $this->getUserTranslatedCatalogueFinder()->getCatalogue($locale);
     }
 
     /**
-     * @return DefaultCatalogueFinder
-     *
      * @throws TranslationFilesNotFoundException
      */
     private function getDefaultCatalogueFinder(): DefaultCatalogueFinder
     {
-        if (null === $this->defaultCatalogueFinder) {
+        if ($this->defaultCatalogueFinder === null) {
             $this->defaultCatalogueFinder = new DefaultCatalogueFinder(
-                $this->translationsDirectory . DIRECTORY_SEPARATOR . 'default',
+                $this->translationsDirectory . \DIRECTORY_SEPARATOR . 'default',
                 $this->filenameFilters
             );
         }
@@ -222,13 +204,11 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
     }
 
     /**
-     * @return FileTranslatedCatalogueFinder
-     *
      * @throws TranslationFilesNotFoundException
      */
     private function getCoreFileTranslatedCatalogueFinder(): FileTranslatedCatalogueFinder
     {
-        if (null === $this->fileTranslatedCatalogueFinder) {
+        if ($this->fileTranslatedCatalogueFinder === null) {
             $this->fileTranslatedCatalogueFinder = new FileTranslatedCatalogueFinder(
                 $this->translationsDirectory,
                 $this->filenameFilters
@@ -238,12 +218,9 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
         return $this->fileTranslatedCatalogueFinder;
     }
 
-    /**
-     * @return UserTranslatedCatalogueFinder
-     */
     private function getUserTranslatedCatalogueFinder(): UserTranslatedCatalogueFinder
     {
-        if (null === $this->userTranslatedCatalogueFinder) {
+        if ($this->userTranslatedCatalogueFinder === null) {
             $this->userTranslatedCatalogueFinder = new UserTranslatedCatalogueFinder(
                 $this->databaseTranslationLoader,
                 $this->translationDomains
@@ -254,15 +231,13 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
     }
 
     /**
-     * @return FileTranslatedCatalogueFinder
-     *
      * @throws TranslationFilesNotFoundException
      */
     private function getModuleBuiltInFileTranslatedCatalogueFinder(): FileTranslatedCatalogueFinder
     {
-        if (null === $this->builtInFileTranslatedCatalogueFinder) {
+        if ($this->builtInFileTranslatedCatalogueFinder === null) {
             $this->builtInFileTranslatedCatalogueFinder = new FileTranslatedCatalogueFinder(
-                implode(DIRECTORY_SEPARATOR, [
+                implode(\DIRECTORY_SEPARATOR, [
                     $this->modulesDirectory,
                     $this->moduleName,
                     'translations',
@@ -276,10 +251,6 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
 
     /**
      * Builds the catalogue including the translated wordings ONLY
-     *
-     * @param string $locale
-     *
-     * @return MessageCatalogue
      */
     private function buildTranslationCatalogueFromLegacyFiles(string $locale): MessageCatalogue
     {
@@ -321,30 +292,24 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
 
     /**
      * Returns the translations directory within the module files
-     *
-     * @return string
      */
     private function getBuiltInModuleDirectory(): string
     {
-        return implode(DIRECTORY_SEPARATOR, [
+        return implode(\DIRECTORY_SEPARATOR, [
             $this->modulesDirectory,
             $this->moduleName,
             'translations',
-        ]) . DIRECTORY_SEPARATOR;
+        ]) . \DIRECTORY_SEPARATOR;
     }
 
     /**
      * Returns the cached default catalogue
-     *
-     * @param string $locale
-     *
-     * @return MessageCatalogue
      */
     private function getDefaultCatalogueExtractedFromTemplates(string $locale): MessageCatalogue
     {
         $catalogueCacheKey = $this->moduleName . '|' . $locale;
 
-        if (!isset($this->defaultCatalogueCache[$catalogueCacheKey])) {
+        if (! isset($this->defaultCatalogueCache[$catalogueCacheKey])) {
             $this->defaultCatalogueCache[$catalogueCacheKey] = $this->buildFreshDefaultCatalogueFromTemplates($locale);
         }
 
@@ -353,10 +318,6 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
 
     /**
      * Builds the default catalogue
-     *
-     * @param string $locale
-     *
-     * @return MessageCatalogue
      */
     private function buildFreshDefaultCatalogueFromTemplates(string $locale): MessageCatalogue
     {
@@ -379,10 +340,6 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
      *
      * When extracted from templates, the domain names are in format Modules.MODULENAME.DOMAIN.DOMAIN
      * The required catalogue domains format is something like ModulesModulenameDomain... : Camelcased with max 3 levels
-     *
-     * @param MessageCatalogue $catalogue
-     *
-     * @return MessageCatalogue
      */
     private function convertDomainsAndFilterCatalogue(MessageCatalogue $catalogue): MessageCatalogue
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,17 @@ class Theme implements AddonInterface
     private $attributes;
 
     /**
-     * @param array $attributes Theme attributes
+     * @param array       $attributes                  Theme attributes
      * @param string|null $configurationCacheDirectory Default _PS_CACHE_DIR_
-     * @param string $themesDirectory Default _PS_ALL_THEMES_DIR_
+     * @param string      $themesDirectory             Default _PS_ALL_THEMES_DIR_
      */
     public function __construct(
         array $attributes,
         ?string $configurationCacheDirectory = null,
-        string $themesDirectory = _PS_ALL_THEMES_DIR_
+        string $themesDirectory = _PS_ALL_THEMES_DIR_,
     ) {
         if (isset($attributes['parent'])) {
-            if (null === $configurationCacheDirectory) {
+            if ($configurationCacheDirectory === null) {
                 $configurationCacheDirectory = (new Configuration())->get('_PS_CACHE_DIR_');
             }
 
@@ -96,12 +97,12 @@ class Theme implements AddonInterface
         $modulesToHook = $this->get('global_settings.hooks.modules_to_hook', []);
 
         foreach ($modulesToHook as $modules) {
-            if (is_array($modules)) {
+            if (\is_array($modules)) {
                 foreach (array_values($modules) as $module) {
-                    if (is_array($module)) {
+                    if (\is_array($module)) {
                         $module = key($module);
                     }
-                    if (null !== $module && !in_array($module, $modulesToEnable)) {
+                    if ($module !== null && ! \in_array($module, $modulesToEnable, true)) {
                         $modulesToEnable[] = $module;
                     }
                 }
@@ -249,18 +250,18 @@ class Theme implements AddonInterface
         );
         foreach ($css as $key => &$entry) {
             // Required parameters
-            if (!isset($entry['id']) || !isset($entry['path'])) {
+            if (! isset($entry['id']) || ! isset($entry['path'])) {
                 unset($css[$key]);
 
                 continue;
             }
-            if (!isset($entry['media'])) {
+            if (! isset($entry['media'])) {
                 $entry['media'] = AbstractAssetManager::DEFAULT_MEDIA;
             }
-            if (!isset($entry['priority'])) {
+            if (! isset($entry['priority'])) {
                 $entry['priority'] = AbstractAssetManager::DEFAULT_PRIORITY;
             }
-            if (!isset($entry['inline'])) {
+            if (! isset($entry['inline'])) {
                 $entry['inline'] = false;
             }
         }
@@ -276,21 +277,21 @@ class Theme implements AddonInterface
         );
         foreach ($js as $key => &$entry) {
             // Required parameters
-            if (!isset($entry['id']) || !isset($entry['path'])) {
+            if (! isset($entry['id']) || ! isset($entry['path'])) {
                 unset($js[$key]);
 
                 continue;
             }
-            if (!isset($entry['position'])) {
+            if (! isset($entry['position'])) {
                 $entry['position'] = AbstractAssetManager::DEFAULT_JS_POSITION;
             }
-            if (!isset($entry['priority'])) {
+            if (! isset($entry['priority'])) {
                 $entry['priority'] = AbstractAssetManager::DEFAULT_PRIORITY;
             }
-            if (!isset($entry['inline'])) {
+            if (! isset($entry['inline'])) {
                 $entry['inline'] = false;
             }
-            if (!isset($entry['attribute'])) {
+            if (! isset($entry['attribute'])) {
                 $entry['attribute'] = false;
             }
         }
@@ -300,8 +301,6 @@ class Theme implements AddonInterface
 
     /**
      * Defines if the theme requires core.js scripts or it provides it's own implementation.
-     *
-     * @return bool
      */
     public function requiresCoreScripts(): bool
     {

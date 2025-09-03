@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,29 +47,20 @@ final class ModuleMetaPageNameChoiceProvider implements FormChoiceProviderInterf
      */
     private $dataProvider;
 
-    /**
-     * DefaultPageChoiceProvider constructor.
-     *
-     * @param RequestStack $requestStack
-     * @param MetaDataProviderInterface $dataProvider
-     */
     public function __construct(
         RequestStack $requestStack,
-        MetaDataProviderInterface $dataProvider
+        MetaDataProviderInterface $dataProvider,
     ) {
         $this->requestStack = $requestStack;
         $this->dataProvider = $dataProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $defaultPages = $this->dataProvider->getNotConfiguredModuleMetaPageNames();
         $currentPage = $this->getCurrentPage();
 
-        if (null !== $currentPage) {
+        if ($currentPage !== null) {
             $defaultPages[str_replace('module-', '', $currentPage)] = $currentPage;
             asort($defaultPages);
         }
@@ -86,7 +78,7 @@ final class ModuleMetaPageNameChoiceProvider implements FormChoiceProviderInterf
         $currentRequest = $this->requestStack->getCurrentRequest();
 
         $metaId = null;
-        if (null !== $currentRequest) {
+        if ($currentRequest !== null) {
             $metaId = $currentRequest->attributes->get('metaId');
         }
 

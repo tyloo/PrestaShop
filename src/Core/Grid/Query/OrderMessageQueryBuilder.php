@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,19 +63,12 @@ final class OrderMessageQueryBuilder implements DoctrineQueryBuilderInterface
      */
     private $doctrineSearchCriteriaApplicator;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param int $contextLanguageId
-     * @param DoctrineFilterApplicatorInterface $doctrineFilterApplicator
-     * @param DoctrineSearchCriteriaApplicatorInterface $doctrineSearchCriteriaApplicator
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         int $contextLanguageId,
         DoctrineFilterApplicatorInterface $doctrineFilterApplicator,
-        DoctrineSearchCriteriaApplicatorInterface $doctrineSearchCriteriaApplicator
+        DoctrineSearchCriteriaApplicatorInterface $doctrineSearchCriteriaApplicator,
     ) {
         $this->connection = $connection;
         $this->dbPrefix = $dbPrefix;
@@ -83,9 +77,6 @@ final class OrderMessageQueryBuilder implements DoctrineQueryBuilderInterface
         $this->doctrineSearchCriteriaApplicator = $doctrineSearchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->buildBaseQuery($searchCriteria);
@@ -99,9 +90,6 @@ final class OrderMessageQueryBuilder implements DoctrineQueryBuilderInterface
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->buildBaseQuery($searchCriteria);
@@ -110,11 +98,6 @@ final class OrderMessageQueryBuilder implements DoctrineQueryBuilderInterface
         return $qb;
     }
 
-    /**
-     * @param SearchCriteriaInterface $criteria
-     *
-     * @return QueryBuilder
-     */
     private function buildBaseQuery(SearchCriteriaInterface $criteria): QueryBuilder
     {
         $qb = $this->connection->createQueryBuilder();

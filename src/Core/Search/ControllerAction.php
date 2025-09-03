@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ final class ControllerAction
     {
         preg_match('~(\w+)Controller(?:::(?:\w+)Action)?$~', $controller, $matches);
 
-        return !empty($matches) ? strtolower($matches[1]) : 'N/A';
+        return ! empty($matches) ? strtolower($matches[1]) : 'N/A';
     }
 
     /**
@@ -72,6 +73,6 @@ final class ControllerAction
     {
         preg_match('~::(\w+)Action$~', $controller, $matches);
 
-        return !empty($matches) ? strtolower($matches[1]) : 'N/A';
+        return ! empty($matches) ? strtolower($matches[1]) : 'N/A';
     }
 }

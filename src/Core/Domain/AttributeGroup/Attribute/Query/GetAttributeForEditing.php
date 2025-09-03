@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class GetAttributeForEditing
      */
     private $attributeId;
 
-    /**
-     * @param int $attributeId
-     */
     public function __construct(int $attributeId)
     {
         $this->attributeId = new AttributeId($attributeId);
     }
 
-    /**
-     * @return AttributeId
-     */
     public function getAttributeId(): AttributeId
     {
         return $this->attributeId;

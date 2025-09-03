@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,6 +44,6 @@ class ProductPresentationSettings
 
     public function shouldShowPrice()
     {
-        return $this->showPrices && (!$this->catalog_mode || $this->catalog_mode_with_prices);
+        return $this->showPrices && (! $this->catalog_mode || $this->catalog_mode_with_prices);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,14 @@ class StateFormDataProvider implements FormDataProviderInterface
      */
     private $defaultCountryId;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param int $defaultCountryId
-     */
     public function __construct(
         CommandBusInterface $queryBus,
-        int $defaultCountryId
+        int $defaultCountryId,
     ) {
         $this->queryBus = $queryBus;
         $this->defaultCountryId = $defaultCountryId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($stateId)
     {
         /** @var EditableState $editableState */
@@ -77,9 +71,6 @@ class StateFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         return [

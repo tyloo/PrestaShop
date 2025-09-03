@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,7 +57,7 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
     public function getGenerationFormats(): array
     {
         // Return formats from cache
-        if (!empty($this->formatsToGenerate)) {
+        if (! empty($this->formatsToGenerate)) {
             return $this->formatsToGenerate;
         }
 
@@ -65,9 +66,9 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
 
         // If it is enabled, we check for configured formats.
         $configuration = $this->configuration->get(self::IMAGE_FORMAT_CONFIGURATION_KEY);
-        if (!empty($configuration)) {
+        if (! empty($configuration)) {
             foreach (explode(self::SEPARATOR, $configuration) as $format) {
-                if (in_array($format, self::SUPPORTED_FORMATS) && !in_array($format, $this->formatsToGenerate)) {
+                if (\in_array($format, self::SUPPORTED_FORMATS, true) && ! \in_array($format, $this->formatsToGenerate, true)) {
                     $this->formatsToGenerate[] = $format;
                 }
             }
@@ -78,12 +79,12 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
 
     public function addGenerationFormat(string $format): void
     {
-        if (!in_array($format, self::SUPPORTED_FORMATS)) {
-            throw new ImageFormatConfigurationException(sprintf('Image format %s unknown or not supported', $format));
+        if (! \in_array($format, self::SUPPORTED_FORMATS, true)) {
+            throw new ImageFormatConfigurationException(\sprintf('Image format %s unknown or not supported', $format));
         }
 
         $formats = $this->getGenerationFormats();
-        if (!in_array($format, $formats)) {
+        if (! \in_array($format, $formats, true)) {
             $formats[] = $format;
         }
 
@@ -93,8 +94,8 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
     public function setListOfGenerationFormats(array $formatList): void
     {
         foreach ($formatList as $format) {
-            if (!in_array($format, self::SUPPORTED_FORMATS)) {
-                throw new ImageFormatConfigurationException(sprintf('Image format %s unknown or not supported', $format));
+            if (! \in_array($format, self::SUPPORTED_FORMATS, true)) {
+                throw new ImageFormatConfigurationException(\sprintf('Image format %s unknown or not supported', $format));
             }
         }
 
@@ -103,6 +104,6 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
 
     public function isGenerationFormatSet(string $format): bool
     {
-        return in_array($format, $this->getGenerationFormats());
+        return \in_array($format, $this->getGenerationFormats(), true);
     }
 }

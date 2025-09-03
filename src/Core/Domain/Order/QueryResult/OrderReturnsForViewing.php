@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,7 +29,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 
 class OrderReturnsForViewing
 {
-    /** @var OrderReturnForViewing[] */
+    /**
+     * @var OrderReturnForViewing[]
+     */
     private $orderReturns = [];
 
     /**
@@ -49,9 +52,6 @@ class OrderReturnsForViewing
         return $this->orderReturns;
     }
 
-    /**
-     * @param OrderReturnForViewing $orderReturn
-     */
     private function add(OrderReturnForViewing $orderReturn): void
     {
         $this->orderReturns[] = $orderReturn;

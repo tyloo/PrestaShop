@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,12 +43,6 @@ class CancelOrderProductCommand
      */
     private $orderId;
 
-    /**
-     * CancelOrderProductCommand constructor.
-     *
-     * @param array $cancelledProducts
-     * @param int $orderId
-     */
     public function __construct(array $cancelledProducts, int $orderId)
     {
         $this->cancelledProducts = $cancelledProducts;

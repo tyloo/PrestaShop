@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,13 +71,9 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
     private $multistoreFeature;
 
     /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicator $searchCriteriaApplicator
-     * @param int $contextLangId
-     * @param int $contextShopId
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
-     * @param FeatureInterface $multistoreFeature
+     * @param string   $dbPrefix
+     * @param int      $contextLangId
+     * @param int      $contextShopId
      * @param int|null $rootCategoryId
      */
     public function __construct(
@@ -87,7 +84,7 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         $contextShopId,
         MultistoreContextCheckerInterface $multistoreContextChecker,
         FeatureInterface $multistoreFeature,
-        $rootCategoryId = null
+        $rootCategoryId = null,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -99,9 +96,6 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->multistoreFeature = $multistoreFeature;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -121,9 +115,6 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -134,8 +125,6 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get generic query builder.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -166,7 +155,7 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
         );
 
         foreach ($filters as $filterName => $filterValue) {
-            if ('id_category' === $filterName) {
+            if ($filterName === 'id_category') {
                 $qb->andWhere("c.id_category = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
 
@@ -179,21 +168,21 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
                 $qb->setParameter('root_category_id', $this->rootCategoryId);
             }
 
-            if ('name' === $filterName) {
+            if ($filterName === 'name') {
                 $qb->andWhere("cl.name LIKE :$filterName");
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('description' === $filterName) {
+            if ($filterName === 'description') {
                 $qb->andWhere("cl.description LIKE :$filterName");
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('position' === $filterName) {
+            if ($filterName === 'position') {
                 // When filtering by position,
                 // value must be decreased by 1,
                 // since position value in database starts at 0,
@@ -210,14 +199,14 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ('active' === $filterName) {
+            if ($filterName === 'active') {
                 $qb->andWhere("c.active = :$filterName");
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('id_category_parent' === $filterName) {
+            if ($filterName === 'id_category_parent') {
                 if ($this->isSearchRequestOnHomeCategory($filters)) {
                     continue;
                 }
@@ -237,8 +226,6 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param array $filters
-     *
      * @return bool
      */
     private function isSearchRequestOnHomeCategory(array $filters)

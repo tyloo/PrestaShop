@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class ProductAttachmentsCommandsBuilder implements ProductCommandsBuilderInterfa
 {
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['details']['attachments']['attached_files'])) {
+        if (! isset($formData['details']['attachments']['attached_files'])) {
             return [];
         }
 
@@ -51,7 +52,7 @@ class ProductAttachmentsCommandsBuilder implements ProductCommandsBuilderInterfa
         foreach ($attachedFiles as $attachedFile) {
             $attachmentId = (int) $attachedFile['attachment_id'];
             // Just avoid duplicate IDs from the form
-            if (!in_array($attachmentId, $attachmentIds)) {
+            if (! \in_array($attachmentId, $attachmentIds, true)) {
                 $attachmentIds[] = $attachmentId;
             }
         }

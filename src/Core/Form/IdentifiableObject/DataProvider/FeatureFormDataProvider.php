@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,23 +52,18 @@ class FeatureFormDataProvider implements FormDataProviderInterface
     private $defaultShopAssociation;
 
     /**
-     * @param CommandBusInterface $queryBus
      * @param bool $isMultistoreFeatureActive
-     * @param array $defaultShopAssociation
      */
     public function __construct(
         CommandBusInterface $queryBus,
         $isMultistoreFeatureActive,
-        array $defaultShopAssociation
+        array $defaultShopAssociation,
     ) {
         $this->queryBus = $queryBus;
         $this->isMultistoreFeatureActive = $isMultistoreFeatureActive;
         $this->defaultShopAssociation = $defaultShopAssociation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id)
     {
         /** @var EditableFeature $editableFeature */
@@ -79,9 +75,6 @@ class FeatureFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         $data = [];

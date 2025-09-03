@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,11 +89,8 @@ class CountryContextBuilder implements LegacyContextBuilderInterface
 
     private function assertArguments(): void
     {
-        if (null === $this->countryId) {
-            throw new InvalidArgumentException(sprintf(
-                'Cannot build Country context as no countryId has been defined you need to call %s::setCountryId to define it before building the Country context',
-                self::class
-            ));
+        if ($this->countryId === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot build Country context as no countryId has been defined you need to call %s::setCountryId to define it before building the Country context', self::class));
         }
     }
 

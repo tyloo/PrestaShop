@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,9 +56,6 @@ class DefaultLanguage extends Constraint
         $this->allowNull = $allowNull ?? $this->allowNull;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return DefaultLanguageValidator::class;

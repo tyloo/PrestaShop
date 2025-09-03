@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ final class DataRowCollection implements DataRowCollectionInterface
      */
     private $dataRows = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function addDataRow(DataRowInterface $dataRow)
     {
         $this->dataRows[] = $dataRow;
@@ -50,60 +48,42 @@ final class DataRowCollection implements DataRowCollectionInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetExists($offset): bool
     {
-        return array_key_exists($offset, $this->dataRows);
+        return \array_key_exists($offset, $this->dataRows);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if (!$this->offsetExists($offset)) {
+        if (! $this->offsetExists($offset)) {
             return null;
         }
 
         return $this->dataRows[$offset];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetSet($offset, $value): void
     {
         $this->dataRows[$offset] = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetUnset($offset): void
     {
         unset($this->dataRows[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->dataRows);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLargestRowSize()
     {
         $maxSize = 0;
 
         foreach ($this->dataRows as $dataRow) {
-            $maxSize = max($maxSize, count($dataRow));
+            $maxSize = max($maxSize, \count($dataRow));
         }
 
         return $maxSize;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,8 +73,8 @@ class Formatter
     /**
      * Create a number formatter instance.
      *
-     * @param string $roundingMode The wanted rounding mode when formatting numbers
-     *                             Cf. PrestaShop\Decimal\Operation\Rounding::ROUND_* values
+     * @param string $roundingMode    The wanted rounding mode when formatting numbers
+     *                                Cf. PrestaShop\Decimal\Operation\Rounding::ROUND_* values
      * @param string $numberingSystem Numbering system to use when formatting numbers
      *
      *                             @see http://cldr.unicode.org/translation/numbering-systems
@@ -87,8 +88,8 @@ class Formatter
     /**
      * Formats the passed number according to specifications.
      *
-     * @param int|float|string $number
-     *                                 The number to format
+     * @param int|float|string    $number
+     *                                           The number to format
      * @param NumberSpecification $specification
      *                                           Number specification to be used (can be a number spec, a price spec, a percentage spec)
      *
@@ -121,7 +122,7 @@ class Formatter
 
         // Assemble the final number
         $formattedNumber = $majorDigits;
-        if (strlen($minorDigits)) {
+        if (\strlen($minorDigits)) {
             $formattedNumber .= self::DECIMAL_SEPARATOR_PLACEHOLDER . $minorDigits;
         }
 
@@ -163,8 +164,6 @@ class Formatter
      * Usage example:
      *  list($majorDigits, $minorDigits) = $this->getMajorMinorDigits($decimalNumber);
      *
-     * @param DecimalNumber $number
-     *
      * @return string[]
      */
     protected function extractMajorMinorDigits(DecimalNumber $number)
@@ -172,7 +171,7 @@ class Formatter
         // Get the number's major and minor digits.
         $majorDigits = $number->getIntegerPart();
         $minorDigits = $number->getFractionalPart();
-        $minorDigits = ('0' === $minorDigits) ? '' : $minorDigits;
+        $minorDigits = ($minorDigits === '0') ? '' : $minorDigits;
 
         return [$majorDigits, $minorDigits];
     }
@@ -195,7 +194,7 @@ class Formatter
             // Group the major digits.
             $groups = $groupsDigits = [];
             $groups[] = array_splice($majorDigits, 0, $this->numberSpecification->getPrimaryGroupSize());
-            while (!empty($majorDigits)) {
+            while (! empty($majorDigits)) {
                 $groups[] = array_splice($majorDigits, 0, $this->numberSpecification->getSecondaryGroupSize());
             }
             // Reverse back the digits and the groups
@@ -219,7 +218,7 @@ class Formatter
      */
     protected function adjustMinorDigitsZeroes($minorDigits)
     {
-        if (strlen($minorDigits) < $this->numberSpecification->getMinFractionDigits()) {
+        if (\strlen($minorDigits) < $this->numberSpecification->getMinFractionDigits()) {
             // Re-add needed zeroes
             $minorDigits = str_pad(
                 $minorDigits,
@@ -228,7 +227,7 @@ class Formatter
             );
         }
 
-        if (strlen($minorDigits) > $this->numberSpecification->getMaxFractionDigits()) {
+        if (\strlen($minorDigits) > $this->numberSpecification->getMaxFractionDigits()) {
             // Strip any trailing zeroes.
             $minorDigits = rtrim($minorDigits, '0');
         }
@@ -332,7 +331,7 @@ class Formatter
      * @see http://cldr.unicode.org/translation/number-patterns
      *
      * @param string $formattedNumber Number to process
-     * @param string $pattern CLDR formatting pattern to use
+     * @param string $pattern         CLDR formatting pattern to use
      *
      * @return string
      */
@@ -358,8 +357,6 @@ class Formatter
      * add currency symbol to the formatted number.
      *
      * @param string $formattedNumber
-     *
-     * @return mixed
      */
     public function performSpecificReplacements($formattedNumber)
     {
@@ -380,7 +377,7 @@ class Formatter
     protected function tryCurrencyReplacement($formattedNumber)
     {
         if ($this->numberSpecification instanceof PriceSpecification) {
-            $currency = PriceSpecification::CURRENCY_DISPLAY_CODE == $this->numberSpecification->getCurrencyDisplay()
+            $currency = $this->numberSpecification->getCurrencyDisplay() === PriceSpecification::CURRENCY_DISPLAY_CODE
                 ? $this->numberSpecification->getCurrencyCode()
                 : $this->numberSpecification->getCurrencySymbol();
 

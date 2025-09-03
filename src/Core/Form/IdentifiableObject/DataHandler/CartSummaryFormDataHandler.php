@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,13 +47,9 @@ class CartSummaryFormDataHandler implements FormDataHandlerInterface
      */
     private $contextEmployeeId;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param int $contextEmployeeId
-     */
     public function __construct(
         CommandBusInterface $commandBus,
-        int $contextEmployeeId
+        int $contextEmployeeId,
     ) {
         $this->commandBus = $commandBus;
         $this->contextEmployeeId = $contextEmployeeId;
@@ -74,9 +71,6 @@ class CartSummaryFormDataHandler implements FormDataHandlerInterface
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data)
     {
         // not used for edition, only creation

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,11 +46,10 @@ class CatalogPriceRuleList
 
     /**
      * @param CatalogPriceRuleForListing[] $catalogPriceRules
-     * @param int $totalCount;
      */
     public function __construct(
         array $catalogPriceRules,
-        int $totalCount
+        int $totalCount,
     ) {
         $this->catalogPriceRules = $catalogPriceRules;
         $this->totalCount = $totalCount;
@@ -63,9 +63,6 @@ class CatalogPriceRuleList
         return $this->catalogPriceRules;
     }
 
-    /**
-     * @return int
-     */
     public function getTotalCount(): int
     {
         return $this->totalCount;

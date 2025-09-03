@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,39 +70,28 @@ final class AttributeGridDefinitionFactory extends AbstractFilterableGridDefinit
     private $attributeGroupViewDataProvider;
 
     /**
-     * @param HookDispatcherInterface $hookDispatcher
      * @param int $attributeGroupId
-     * @param AttributeGroupViewDataProviderInterface $attributeGroupViewDataProvider
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         $attributeGroupId,
-        AttributeGroupViewDataProviderInterface $attributeGroupViewDataProvider
+        AttributeGroupViewDataProviderInterface $attributeGroupViewDataProvider,
     ) {
         parent::__construct($hookDispatcher);
         $this->attributeGroupId = $attributeGroupId;
         $this->attributeGroupViewDataProvider = $attributeGroupViewDataProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->attributeGroupViewDataProvider->getAttributeGroupNameById((int) $this->attributeGroupId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -179,9 +169,6 @@ final class AttributeGridDefinitionFactory extends AbstractFilterableGridDefinit
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -220,9 +207,6 @@ final class AttributeGridDefinitionFactory extends AbstractFilterableGridDefinit
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = (new FilterCollection())
@@ -277,9 +261,6 @@ final class AttributeGridDefinitionFactory extends AbstractFilterableGridDefinit
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

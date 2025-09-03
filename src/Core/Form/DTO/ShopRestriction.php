@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,7 @@ class ShopRestriction
     private $shopRestrictionFields;
 
     /**
-     * @param int[] $shopIds
+     * @param int[]                  $shopIds
      * @param ShopRestrictionField[] $shopRestrictionFields
      */
     public function __construct(array $shopIds, array $shopRestrictionFields)

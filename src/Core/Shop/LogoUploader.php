@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,7 @@ class LogoUploader
     public function __construct(
         private Shop $shop,
         private ImageFormatConfigurationInterface $imageFormatConfiguration,
-        private string $imageDirection
+        private string $imageDirection,
     ) {
     }
 
@@ -74,7 +75,7 @@ class LogoUploader
     public function updateFavicon()
     {
         $shopId = (int) $this->shop->id;
-        if ($shopId == Configuration::get('PS_SHOP_DEFAULT')) {
+        if ($shopId === Configuration::get('PS_SHOP_DEFAULT')) {
             $this->uploadIco('PS_FAVICON', $this->imageDirection . 'favicon.ico');
         }
         if ($this->uploadIco('PS_FAVICON', $this->imageDirection . 'favicon-' . $shopId . '.ico')) {
@@ -87,9 +88,9 @@ class LogoUploader
     /**
      * Generic function which allows logo upload.
      *
-     * @param string $fieldName
-     * @param string $logoPrefix
-     * @param array<string,array<string,string>> $files[] the array of files to avoid use $_POST
+     * @param string                             $fieldName
+     * @param string                             $logoPrefix
+     * @param array<string,array<string,string>> $files[]    the array of files to avoid use $_POST
      *
      * @return bool
      *
@@ -100,31 +101,31 @@ class LogoUploader
         $files = empty($files) ? $_FILES : $files;
 
         if (isset($files[$fieldName]['tmp_name'], $files[$fieldName]['tmp_name'], $files[$fieldName]['size'])) {
-            $availableExtensions = (in_array($fieldName, ['PS_LOGO_MAIL', 'PS_LOGO_INVOICE'])) ? ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS : ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS;
+            $availableExtensions = (\in_array($fieldName, ['PS_LOGO_MAIL', 'PS_LOGO_INVOICE'], true)) ? ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS : ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS;
             if ($error = ImageManager::validateUpload($files[$fieldName], Tools::getMaxUploadSize(), $availableExtensions)) {
                 throw new PrestaShopException($error);
             }
             $tmpName = tempnam(_PS_TMP_IMG_DIR_, 'PS');
 
-            if (!$tmpName || !move_uploaded_file($files[$fieldName]['tmp_name'], $tmpName)) {
-                throw new PrestaShopException(sprintf('Upload of temporary file to %s has failed.', $tmpName));
+            if (! $tmpName || ! move_uploaded_file($files[$fieldName]['tmp_name'], $tmpName)) {
+                throw new PrestaShopException(\sprintf('Upload of temporary file to %s has failed.', $tmpName));
             }
 
             if (ImageManager::isSvgMimeType($files[$fieldName]['type'])) {
                 $fileExtension = '.svg';
             } else {
-                $fileExtension = ($fieldName == 'PS_STORES_ICON') ? '.gif' : '.jpg';
+                $fileExtension = ($fieldName === 'PS_STORES_ICON') ? '.gif' : '.jpg';
             }
             $logoName = $this->getLogoName($logoPrefix, $fileExtension);
 
-            if ($fieldName == 'PS_STORES_ICON') {
-                if (!@ImageManager::resize($tmpName, $this->imageDirection . $logoName, null, null, 'gif', true)) {
-                    throw new PrestaShopException(sprintf('An error occurred while attempting to copy shop icon %s.', $logoName));
+            if ($fieldName === 'PS_STORES_ICON') {
+                if (! @ImageManager::resize($tmpName, $this->imageDirection . $logoName, null, null, 'gif', true)) {
+                    throw new PrestaShopException(\sprintf('An error occurred while attempting to copy shop icon %s.', $logoName));
                 }
             } else {
                 if (ImageManager::isSvgMimeType($files[$fieldName]['type'])) {
-                    if (!copy($tmpName, $this->imageDirection . $logoName)) {
-                        throw new PrestaShopException(sprintf('An error occurred while attempting to copy shop logo %s.', $logoName));
+                    if (! copy($tmpName, $this->imageDirection . $logoName)) {
+                        throw new PrestaShopException(\sprintf('An error occurred while attempting to copy shop logo %s.', $logoName));
                     }
                 } else {
                     /*
@@ -134,14 +135,14 @@ class LogoUploader
                     */
                     $configuredImageFormats = $this->imageFormatConfiguration->getGenerationFormats();
                     foreach ($configuredImageFormats as $imageFormat) {
-                        if (!ImageManager::resize(
+                        if (! ImageManager::resize(
                             $tmpName,
                             $this->imageDirection . $this->getLogoName($logoPrefix, '.' . $imageFormat),
                             null,
                             null,
                             $imageFormat
                         )) {
-                            throw new PrestaShopException(sprintf('An error occurred while attempting to copy shop logo %s.', $logoName));
+                            throw new PrestaShopException(\sprintf('An error occurred while attempting to copy shop logo %s.', $logoName));
                         }
                     }
                 }
@@ -151,7 +152,7 @@ class LogoUploader
             $idShopGroup = null;
 
             // on updating PS_LOGO if the new file is an svg, copy old logo for mail and invoice
-            if ($fieldName == 'PS_LOGO' && ImageManager::isSvgMimeType($files[$fieldName]['type'])) {
+            if ($fieldName === 'PS_LOGO' && ImageManager::isSvgMimeType($files[$fieldName]['type'])) {
                 if (empty(Configuration::get('PS_LOGO_MAIL'))) {
                     $newLogoMail = $this->getLogoName('logo_mail', '.' . pathinfo($this->imageDirection . Configuration::get($fieldName), \PATHINFO_EXTENSION));
                     // copy old logo file for mail
@@ -169,7 +170,7 @@ class LogoUploader
             }
 
             // manage deleting old logo
-            if (!count($this->errors) && @filemtime($this->imageDirection . Configuration::get($fieldName))) {
+            if (! \count($this->errors) && @filemtime($this->imageDirection . Configuration::get($fieldName))) {
                 if (Shop::isFeatureActive()) {
                     $this->updateInMultiShopContext($idShop, $idShopGroup, $fieldName);
                 } else {
@@ -188,7 +189,7 @@ class LogoUploader
 
     private function updateInMultiShopContext(&$idShop, &$idShopGroup, $fieldName)
     {
-        if (Shop::getContext() == Shop::CONTEXT_SHOP) {
+        if (Shop::getContext() === Shop::CONTEXT_SHOP) {
             $idShop = Shop::getContextShopID();
             $idShopGroup = Shop::getContextShopGroupID();
             Shop::setContext(Shop::CONTEXT_ALL);
@@ -197,15 +198,15 @@ class LogoUploader
             $logoGroup = Configuration::get($fieldName);
             Shop::setContext(Shop::CONTEXT_SHOP);
             $logoShop = Configuration::get($fieldName);
-            if ($logoAll != $logoShop && $logoGroup != $logoShop && $logoShop != false) {
+            if ($logoAll !== $logoShop && $logoGroup !== $logoShop && $logoShop !== false) {
                 @unlink($this->imageDirection . Configuration::get($fieldName));
             }
-        } elseif (Shop::getContext() == Shop::CONTEXT_GROUP) {
+        } elseif (Shop::getContext() === Shop::CONTEXT_GROUP) {
             $idShopGroup = Shop::getContextShopGroupID();
             Shop::setContext(Shop::CONTEXT_ALL);
             $logoAll = Configuration::get($fieldName);
             Shop::setContext(Shop::CONTEXT_GROUP);
-            if ($logoAll != Configuration::get($fieldName)) {
+            if ($logoAll !== Configuration::get($fieldName)) {
                 @unlink($this->imageDirection . Configuration::get($fieldName));
             }
         }
@@ -215,15 +216,16 @@ class LogoUploader
     {
         $files = empty($files) ? $_FILES : $files;
 
-        if (isset($files[$name]['tmp_name']) && !empty($files[$name]['tmp_name'])) {
+        if (isset($files[$name]['tmp_name']) && ! empty($files[$name]['tmp_name'])) {
             if ($error = ImageManager::validateIconUpload($files[$name])) {
                 throw new PrestaShopException($error);
-            } elseif (!copy($_FILES[$name]['tmp_name'], $destination)) {
+            }
+            if (! copy($_FILES[$name]['tmp_name'], $destination)) {
                 throw new PrestaShopException(Context::getContext()->getTranslator()->trans('An error occurred while uploading the favicon: cannot copy file "%s" to folder "%s".', [$files[$name]['tmp_name'], $destination], 'Admin.Design.Notification'));
             }
         }
 
-        return !count($this->errors);
+        return ! \count($this->errors);
     }
 
     /**
@@ -241,9 +243,9 @@ class LogoUploader
             . (int) Configuration::get('PS_IMG_UPDATE_TIME')
             . (int) $shopId . $fileExtension;
 
-        if ($this->shop->getContext() == Shop::CONTEXT_ALL
-            || $shopId == 0
-            || Shop::isFeatureActive() == false
+        if ($this->shop->getContext() === Shop::CONTEXT_ALL
+            || $shopId === 0
+            || Shop::isFeatureActive() === false
         ) {
             $logoName = $logoPrefix . '-' . (int) Configuration::get('PS_IMG_UPDATE_TIME') . $fileExtension;
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,14 @@ class SearchProductCombinationsHandler implements SearchProductCombinationsHandl
      */
     private $combinationNameBuilder;
 
-    /**
-     * @param CombinationRepository $combinationRepository
-     * @param CombinationNameBuilderInterface $combinationNameBuilder
-     */
     public function __construct(
         CombinationRepository $combinationRepository,
-        CombinationNameBuilderInterface $combinationNameBuilder
+        CombinationNameBuilderInterface $combinationNameBuilder,
     ) {
         $this->combinationRepository = $combinationRepository;
         $this->combinationNameBuilder = $combinationNameBuilder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SearchProductCombinations $query): ProductCombinationsCollection
     {
         $combinationsAttributesInformation = $this->combinationRepository->searchProductCombinations(

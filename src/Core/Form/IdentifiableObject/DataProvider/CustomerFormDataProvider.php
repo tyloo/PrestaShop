@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,16 +59,13 @@ final class CustomerFormDataProvider implements FormDataProviderInterface
     private $isB2bFeatureEnabled;
 
     /**
-     * @param CommandBusInterface $queryBus
-     * @param ConfigurationInterface $configuration
-     * @param DefaultGroupsProviderInterface $defaultGroupsProvider
      * @param bool $isB2bFeatureEnabled
      */
     public function __construct(
         CommandBusInterface $queryBus,
         ConfigurationInterface $configuration,
         DefaultGroupsProviderInterface $defaultGroupsProvider,
-        $isB2bFeatureEnabled
+        $isB2bFeatureEnabled,
     ) {
         $this->queryBus = $queryBus;
         $this->configuration = $configuration;
@@ -75,9 +73,6 @@ final class CustomerFormDataProvider implements FormDataProviderInterface
         $this->isB2bFeatureEnabled = $isB2bFeatureEnabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($customerId)
     {
         /** @var EditableCustomer $editableCustomer */
@@ -112,9 +107,6 @@ final class CustomerFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         $defaultGroups = $this->defaultGroupsProvider->getGroups();

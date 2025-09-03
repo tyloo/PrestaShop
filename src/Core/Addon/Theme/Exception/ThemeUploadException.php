@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Addon\Theme\Exception;
 
 use PrestaShop\PrestaShop\Core\Exception\CoreException;
 
-/**
- * Class ThemeUploadException
- */
 class ThemeUploadException extends CoreException
 {
     public const FILE_SIZE_EXCEEDED_ERROR = 1;

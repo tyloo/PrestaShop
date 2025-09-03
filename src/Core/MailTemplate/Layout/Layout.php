@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,29 +34,37 @@ namespace PrestaShop\PrestaShop\Core\MailTemplate\Layout;
  */
 class Layout implements LayoutInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $htmlPath;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $txtPath;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $moduleName;
 
     /**
-     * @param string $name Name of the layout to describe its purpose
-     * @param string $htmlPath Absolute path of the html layout file
-     * @param string $txtPath Absolute path of the txt layout file
+     * @param string $name       Name of the layout to describe its purpose
+     * @param string $htmlPath   Absolute path of the html layout file
+     * @param string $txtPath    Absolute path of the txt layout file
      * @param string $moduleName Which module this layout is associated to (if any)
      */
     public function __construct(
         $name,
         $htmlPath,
         $txtPath,
-        $moduleName = ''
+        $moduleName = '',
     ) {
         $this->name = $name;
         $this->htmlPath = $htmlPath;

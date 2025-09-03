@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,40 +52,26 @@ class QuantifiedProduct
      */
     private $combinationId;
 
-    /**
-     * @param int $productId
-     * @param int $quantity
-     * @param int $combinationId
-     */
     public function __construct(
         int $productId,
         int $quantity,
-        ?int $combinationId = null
+        ?int $combinationId = null,
     ) {
         $this->productId = new ProductId($productId);
         $this->quantity = $quantity;
         $this->combinationId = $combinationId ? new CombinationId($combinationId) : null;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return CombinationId|null
-     */
     public function getCombinationId(): ?CombinationId
     {
         return $this->combinationId;

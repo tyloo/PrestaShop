@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,27 +48,20 @@ final class OutOfStockTypeChoiceProvider implements FormChoiceProviderInterface
      */
     private $configuration;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param ShopConfigurationInterface $configuration
-     */
     public function __construct(
         TranslatorInterface $translator,
-        ShopConfigurationInterface $configuration
+        ShopConfigurationInterface $configuration,
     ) {
         $this->translator = $translator;
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $allowOrdersLabel = $this->translator->trans('Allow orders', [], 'Admin.Catalog.Feature');
         $denyOrdersLabel = $this->translator->trans('Deny orders', [], 'Admin.Catalog.Feature');
 
-        $defaultLabel = sprintf(
+        $defaultLabel = \sprintf(
             '%s (%s)',
             $this->translator->trans('Use default behavior', [], 'Admin.Catalog.Feature'),
             $this->configuration->get('PS_ORDER_OUT_OF_STOCK') ? $allowOrdersLabel : $denyOrdersLabel

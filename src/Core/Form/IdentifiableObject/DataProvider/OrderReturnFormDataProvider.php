@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,14 +60,11 @@ class OrderReturnFormDataProvider implements FormDataProviderInterface
      */
     private $dateFormat;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     */
     public function __construct(
         CommandBusInterface $queryBus,
         RouterInterface $router,
         TranslatorInterface $translator,
-        string $dateFormat
+        string $dateFormat,
     ) {
         $this->queryBus = $queryBus;
         $this->router = $router;
@@ -74,9 +72,6 @@ class OrderReturnFormDataProvider implements FormDataProviderInterface
         $this->dateFormat = $dateFormat;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($orderReturnId): array
     {
         /** @var OrderReturnForEditing $orderReturnForEditing */
@@ -96,19 +91,11 @@ class OrderReturnFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         return [];
     }
 
-    /**
-     * @param OrderReturnForEditing $orderReturnForEditing
-     *
-     * @return string
-     */
     private function buildOrderReturnInformation(OrderReturnForEditing $orderReturnForEditing): string
     {
         return $this->translator->trans(

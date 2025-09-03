@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Security\ValueObject;
 
 use PrestaShop\PrestaShop\Core\Domain\Security\Exception\SessionException;
 
-/**
- * Class CustomerSessionId
- */
 class CustomerSessionId
 {
     /**
@@ -41,22 +39,17 @@ class CustomerSessionId
     private $sessionId;
 
     /**
-     * @param int $sessionId
-     *
      * @throws SessionException
      */
     public function __construct(int $sessionId)
     {
-        if (0 >= $sessionId) {
+        if ($sessionId <= 0) {
             throw new SessionException('Session id must be greater than zero.');
         }
 
         $this->sessionId = $sessionId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->sessionId;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductType;
  */
 class ProductFormOptionsProvider implements FormOptionsProviderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getOptions(int $id, array $data): array
     {
         return [
@@ -50,9 +48,6 @@ class ProductFormOptionsProvider implements FormOptionsProviderInterface
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultOptions(array $data): array
     {
         return [];

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,13 +51,6 @@ class IssueStandardRefundCommand extends AbstractRefundCommand
      *      ],
      * ];
      *
-     * @param int $orderId
-     * @param array $orderDetailRefunds
-     * @param bool $refundShippingCost
-     * @param bool $generateCreditSlip
-     * @param bool $generateVoucher
-     * @param int $voucherRefundType
-     *
      * @throws InvalidCancelProductException
      * @throws OrderException
      */
@@ -66,7 +60,7 @@ class IssueStandardRefundCommand extends AbstractRefundCommand
         bool $refundShippingCost,
         bool $generateCreditSlip,
         bool $generateVoucher,
-        int $voucherRefundType
+        int $voucherRefundType,
     ) {
         parent::__construct(
             $orderId,
@@ -79,17 +73,11 @@ class IssueStandardRefundCommand extends AbstractRefundCommand
         $this->refundShippingCost = $refundShippingCost;
     }
 
-    /**
-     * @return bool
-     */
     public function refundShippingCost(): bool
     {
         return $this->refundShippingCost;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setOrderDetailRefunds(array $orderDetailRefunds)
     {
         $this->orderDetailRefunds = [];

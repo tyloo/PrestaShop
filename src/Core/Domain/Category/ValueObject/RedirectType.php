@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,8 +72,6 @@ class RedirectType
     private $value;
 
     /**
-     * @param string $type
-     *
      * @throws CategoryConstraintException
      */
     public function __construct(string $type)
@@ -81,54 +80,33 @@ class RedirectType
         $this->value = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
-    /**
-     * @return bool
-     */
     public function isTypeNotFound(): bool
     {
         return $this->getValue() === static::TYPE_NOT_FOUND;
     }
 
-    /**
-     * @return bool
-     */
     public function isTypeGone(): bool
     {
         return $this->getValue() === static::TYPE_GONE;
     }
 
-    /**
-     * @return bool
-     */
     public function isCategoryType(): bool
     {
-        return in_array($this->value, [static::TYPE_PERMANENT, static::TYPE_TEMPORARY]);
+        return \in_array($this->value, [static::TYPE_PERMANENT, static::TYPE_TEMPORARY], true);
     }
 
     /**
-     * @param string $type
-     *
      * @throws CategoryConstraintException
      */
     private function assertRedirectTypeIsAvailable(string $type): void
     {
-        if (!in_array($type, static::AVAILABLE_REDIRECT_TYPES)) {
-            throw new CategoryConstraintException(
-                sprintf(
-                    'Invalid redirect type "%s". Available redirect types are: %s',
-                    $type,
-                    implode(', ', static::AVAILABLE_REDIRECT_TYPES)
-                ),
-                CategoryConstraintException::INVALID_REDIRECT_TYPE
-            );
+        if (! \in_array($type, static::AVAILABLE_REDIRECT_TYPES, true)) {
+            throw new CategoryConstraintException(\sprintf('Invalid redirect type "%s". Available redirect types are: %s', $type, implode(', ', static::AVAILABLE_REDIRECT_TYPES)), CategoryConstraintException::INVALID_REDIRECT_TYPE);
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,12 +41,11 @@ class RestrictionRuleGroup
     private array $restrictionRules;
 
     /**
-     * @param int $requiredQuantityInCart
      * @param RestrictionRule[] $restrictionRules
      */
     public function __construct(
         int $requiredQuantityInCart,
-        array $restrictionRules
+        array $restrictionRules,
     ) {
         $this->assertQuantityIsNotNegative($requiredQuantityInCart);
         $this->assertRestrictionRules($restrictionRules);
@@ -53,9 +53,6 @@ class RestrictionRuleGroup
         $this->restrictionRules = $restrictionRules;
     }
 
-    /**
-     * @return int
-     */
     public function getRequiredQuantityInCart(): int
     {
         return $this->requiredQuantityInCart;
@@ -72,27 +69,19 @@ class RestrictionRuleGroup
     private function assertQuantityIsNotNegative(int $quantity): void
     {
         if ($quantity < 0) {
-            throw new CartRuleConstraintException(
-                'Restrictions required quantity in cart cannot be negative',
-                CartRuleConstraintException::INVALID_QUANTITY
-            );
+            throw new CartRuleConstraintException('Restrictions required quantity in cart cannot be negative', CartRuleConstraintException::INVALID_QUANTITY);
         }
     }
 
     /**
      * @param RestrictionRule[] $rules
      *
-     * @return void
-     *
      * @throws CartRuleConstraintException
      */
     private function assertRestrictionRules(array $rules): void
     {
         if (empty($rules)) {
-            throw new CartRuleConstraintException(
-                'Restriction rules list cannot be empty',
-                CartRuleConstraintException::EMPTY_RESTRICTION_RULES
-            );
+            throw new CartRuleConstraintException('Restriction rules list cannot be empty', CartRuleConstraintException::EMPTY_RESTRICTION_RULES);
         }
     }
 }

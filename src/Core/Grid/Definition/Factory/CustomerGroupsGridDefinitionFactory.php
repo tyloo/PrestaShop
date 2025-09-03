@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,25 +45,16 @@ class CustomerGroupsGridDefinitionFactory extends AbstractGridDefinitionFactory
 {
     public const GRID_ID = 'customer_groups';
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getName()
     {
         return $this->trans('Customer groups', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -127,9 +119,6 @@ class CustomerGroupsGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())

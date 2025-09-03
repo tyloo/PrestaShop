@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,14 +48,14 @@ class FileSystem
     public function normalizePath($path)
     {
         return rtrim(
-            str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path),
-            DIRECTORY_SEPARATOR
+            str_replace(['/', '\\'], \DIRECTORY_SEPARATOR, $path),
+            \DIRECTORY_SEPARATOR
         );
     }
 
     private function joinTwoPaths($a, $b)
     {
-        return $this->normalizePath($a) . DIRECTORY_SEPARATOR . $this->normalizePath($b);
+        return $this->normalizePath($a) . \DIRECTORY_SEPARATOR . $this->normalizePath($b);
     }
 
     /**
@@ -62,25 +63,25 @@ class FileSystem
      */
     public function joinPaths()
     {
-        if (func_num_args() < 2) {
+        if (\func_num_args() < 2) {
             throw new Exception('joinPaths requires at least 2 arguments.');
         }
-        if (func_num_args() === 2) {
+        if (\func_num_args() === 2) {
             $arg_O = func_get_arg(0);
             $arg_1 = func_get_arg(1);
 
             return $this->joinTwoPaths($arg_O, $arg_1);
         }
 
-        $func_args = func_get_args();
+        $func_args = \func_get_args();
         $arg_0 = func_get_arg(0);
 
         return $this->joinPaths(
             $arg_0,
-            call_user_func_array(
+            \call_user_func_array(
                 [$this,
                     'joinPaths', ],
-                array_slice($func_args, 1)
+                \array_slice($func_args, 1)
             )
         );
     }
@@ -97,12 +98,12 @@ class FileSystem
      */
     public function listEntriesRecursively($path)
     {
-        if (!file_exists($path)) {
-            throw new Exception(sprintf('No such file or directory: %s', $path));
+        if (! file_exists($path)) {
+            throw new Exception(\sprintf('No such file or directory: %s', $path));
         }
 
-        if (!is_dir($path)) {
-            throw new Exception(sprintf('%s is not a directory', $path));
+        if (! is_dir($path)) {
+            throw new Exception(\sprintf('%s is not a directory', $path));
         }
 
         $entries = [];

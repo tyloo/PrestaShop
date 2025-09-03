@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,10 +47,6 @@ final class AddressFormDataProvider implements FormDataProviderInterface
      */
     private $defaultCountryId;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param int $defaultCountryId
-     */
     public function __construct(CommandBusInterface $queryBus, int $defaultCountryId)
     {
         $this->queryBus = $queryBus;
@@ -57,8 +54,6 @@ final class AddressFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws AddressConstraintException
      */
     public function getData($addressId)
@@ -89,9 +84,6 @@ final class AddressFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         return [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ class ZoneId
     private $zoneId;
 
     /**
-     * @param int $zoneId
-     *
      * @throws ZoneException
      */
     public function __construct(int $zoneId)
@@ -51,23 +50,18 @@ class ZoneId
         $this->zoneId = $zoneId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->zoneId;
     }
 
     /**
-     * @param int $zoneId
-     *
      * @throws ZoneException
      */
     private function assertIntegerIsGreaterThanZero(int $zoneId): void
     {
-        if (0 >= $zoneId) {
-            throw new ZoneException(sprintf('Zone id %d is invalid. Zone id have to be number bigger than zero.', $zoneId));
+        if ($zoneId <= 0) {
+            throw new ZoneException(\sprintf('Zone id %d is invalid. Zone id have to be number bigger than zero.', $zoneId));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class GetOrderReturnForEditing
     private $orderReturnId;
 
     /**
-     * @param int $orderReturnId
-     *
      * @throws OrderReturnConstraintException
      */
     public function __construct(int $orderReturnId)
@@ -51,9 +50,6 @@ class GetOrderReturnForEditing
         $this->orderReturnId = new OrderReturnId($orderReturnId);
     }
 
-    /**
-     * @return OrderReturnId
-     */
     public function getOrderReturnId(): OrderReturnId
     {
         return $this->orderReturnId;

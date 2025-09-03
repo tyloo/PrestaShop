@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,24 +56,21 @@ class IsUrlRewriteValidator extends ConstraintValidator
         $this->accentedCharsConfiguration = $accentedCharsConfiguration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof IsUrlRewrite) {
+        if (! $constraint instanceof IsUrlRewrite) {
             throw new UnexpectedTypeException($constraint, IsUrlRewrite::class);
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
-        if (!is_string($value)) {
+        if (! \is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        if (!$this->isUrlRewriteValid($value)) {
+        if (! $this->isUrlRewriteValid($value)) {
             $this->context->buildViolation($constraint->message)
                 ->setTranslationDomain('Admin.Notifications.Error')
                 ->setParameter('%s', $this->formatValue($value))

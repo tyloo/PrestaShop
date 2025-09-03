@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,14 +45,11 @@ final class OrderStateFormDataHandler implements FormDataHandlerInterface
     private $bus;
 
     public function __construct(
-        CommandBusInterface $bus
+        CommandBusInterface $bus,
     ) {
         $this->bus = $bus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         $command = $this->buildOrderStateAddCommandFromFormData($data);
@@ -62,9 +60,6 @@ final class OrderStateFormDataHandler implements FormDataHandlerInterface
         return $orderStateId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($orderStateId, array $data)
     {
         $command = $this->buildOrderStateEditCommand($orderStateId, $data);

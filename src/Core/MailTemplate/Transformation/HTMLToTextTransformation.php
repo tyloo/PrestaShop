@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,14 +43,11 @@ class HTMLToTextTransformation extends AbstractTransformation
         parent::__construct(MailTemplateInterface::TXT_TYPE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function apply($templateContent, array $templateVariables)
     {
         $templateContent = Html2Text::convert($templateContent, ['ignore_errors' => true]);
-        if (PHP_EOL != $templateContent[strlen($templateContent) - 1]) {
-            $templateContent .= PHP_EOL;
+        if ($templateContent[\strlen($templateContent) - 1] !== \PHP_EOL) {
+            $templateContent .= \PHP_EOL;
         }
 
         return $templateContent;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,22 +46,15 @@ final class CustomerAddressesChoiceProvider implements ConfigurableFormChoicePro
      */
     private $langId;
 
-    /**
-     * @param CustomerDataProvider $customerDataProvider
-     * @param int $langId
-     */
     public function __construct(CustomerDataProvider $customerDataProvider, int $langId)
     {
         $this->customerDataProvider = $customerDataProvider;
         $this->langId = $langId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices(array $options)
     {
-        if (!isset($options['customer_id'])) {
+        if (! isset($options['customer_id'])) {
             throw new InvalidArgumentException('Expected a customer_id option, none found');
         }
 
@@ -68,7 +62,7 @@ final class CustomerAddressesChoiceProvider implements ConfigurableFormChoicePro
 
         $result = [];
         foreach ($addresses as $address) {
-            $description = sprintf(
+            $description = \sprintf(
                 '#%d %s - %s %s %s %s',
                 $address['id_address'],
                 $address['alias'],

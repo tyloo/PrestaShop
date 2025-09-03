@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,10 @@ final class LanguageFormDataProvider implements FormDataProviderInterface
     public function __construct(
         private readonly CommandBusInterface $bus,
         private readonly bool $isMultistoreFeatureActive,
-        private readonly array $defaultShopAssociation
+        private readonly array $defaultShopAssociation,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id)
     {
         /** @var EditableLanguage $editableLanguage */
@@ -68,9 +66,6 @@ final class LanguageFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         $data = [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\ImportedThemeAlreadyExists
 use PrestaShop\PrestaShop\Core\Domain\Theme\ValueObject\ThemeImportSource;
 use PrestaShop\PrestaShop\Core\Domain\Theme\ValueObject\ThemeName;
 
-/**
- * Class ImportThemeHandler
- */
 #[AsCommandHandler]
 final class ImportThemeHandler implements ImportThemeHandlerInterface
 {
@@ -57,49 +55,36 @@ final class ImportThemeHandler implements ImportThemeHandlerInterface
      */
     private $configuration;
 
-    /**
-     * @param ThemeUploaderInterface $themeUploader
-     * @param ThemeManager $themeManager
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(
         ThemeUploaderInterface $themeUploader,
         ThemeManager $themeManager,
-        ConfigurationInterface $configuration
+        ConfigurationInterface $configuration,
     ) {
         $this->themeUploader = $themeUploader;
         $this->themeManager = $themeManager;
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ImportThemeCommand $command)
     {
         $type = $command->getImportSource()->getSourceType();
         $source = $command->getImportSource()->getSource();
 
         $themePath = '';
-        if (ThemeImportSource::FROM_ARCHIVE === $type) {
+        if ($type === ThemeImportSource::FROM_ARCHIVE) {
             $themePath = $this->themeUploader->upload($source);
-        } elseif (ThemeImportSource::FROM_WEB === $type) {
+        } elseif ($type === ThemeImportSource::FROM_WEB) {
             $themePath = $source;
-        } elseif (ThemeImportSource::FROM_FTP === $type) {
+        } elseif ($type === ThemeImportSource::FROM_FTP) {
             $themePath = $this->configuration->get('_PS_ALL_THEMES_DIR_') . $source;
         }
 
         try {
             $this->themeManager->install($themePath);
         } catch (ThemeAlreadyExistsException $e) {
-            throw new ImportedThemeAlreadyExistsException(
-                new ThemeName($e->getThemeName()),
-                sprintf('Imported theme "%s" already exists.', $e->getThemeName()),
-                0,
-                $e
-            );
+            throw new ImportedThemeAlreadyExistsException(new ThemeName($e->getThemeName()), \sprintf('Imported theme "%s" already exists.', $e->getThemeName()), 0, $e);
         } finally {
-            if (ThemeImportSource::FROM_ARCHIVE === $type) {
+            if ($type === ThemeImportSource::FROM_ARCHIVE) {
                 @unlink($themePath);
             }
         }

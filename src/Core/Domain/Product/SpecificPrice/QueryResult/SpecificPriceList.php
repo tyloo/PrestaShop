@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,11 +46,10 @@ class SpecificPriceList
 
     /**
      * @param SpecificPriceForListing[] $specificPrices
-     * @param int $totalSpecificPricesCount
      */
     public function __construct(
         array $specificPrices,
-        int $totalSpecificPricesCount
+        int $totalSpecificPricesCount,
     ) {
         $this->specificPrices = $specificPrices;
         $this->totalSpecificPricesCount = $totalSpecificPricesCount;
@@ -63,9 +63,6 @@ class SpecificPriceList
         return $this->specificPrices;
     }
 
-    /**
-     * @return int
-     */
     public function getTotalSpecificPricesCount(): int
     {
         return $this->totalSpecificPricesCount;

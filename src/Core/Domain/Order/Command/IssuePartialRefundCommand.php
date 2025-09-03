@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,15 +55,6 @@ class IssuePartialRefundCommand extends AbstractRefundCommand
      *      ],
      * ];
      *
-     * @param int $orderId
-     * @param array $orderDetailRefunds
-     * @param string $shippingCostRefundAmount
-     * @param bool $restockRefundedProducts
-     * @param bool $generateVoucher
-     * @param bool $generateCreditSlip
-     * @param int $voucherRefundType
-     * @param string|null $voucherRefundAmount
-     *
      * @throws InvalidCancelProductException
      * @throws OrderException
      */
@@ -74,7 +66,7 @@ class IssuePartialRefundCommand extends AbstractRefundCommand
         bool $generateCreditSlip,
         bool $generateVoucher,
         int $voucherRefundType,
-        ?string $voucherRefundAmount = null
+        ?string $voucherRefundAmount = null,
     ) {
         parent::__construct(
             $orderId,
@@ -92,17 +84,11 @@ class IssuePartialRefundCommand extends AbstractRefundCommand
         }
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getShippingCostRefundAmount(): DecimalNumber
     {
         return $this->shippingCostRefundAmount;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setOrderDetailRefunds(array $orderDetailRefunds)
     {
         $this->orderDetailRefunds = [];

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,13 +77,8 @@ final class GridDefinition implements GridDefinitionInterface
     private $filters;
 
     /**
-     * @param string $id Unique grid identifier
+     * @param string $id   Unique grid identifier
      * @param string $name
-     * @param ColumnCollectionInterface $columns
-     * @param FilterCollectionInterface $filters
-     * @param GridActionCollectionInterface $gridActions
-     * @param BulkActionCollectionInterface $bulkActions
-     * @param ViewOptionsCollectionInterface $viewOptions
      */
     public function __construct(
         $id,
@@ -91,7 +87,7 @@ final class GridDefinition implements GridDefinitionInterface
         FilterCollectionInterface $filters,
         GridActionCollectionInterface $gridActions,
         BulkActionCollectionInterface $bulkActions,
-        ViewOptionsCollectionInterface $viewOptions
+        ViewOptionsCollectionInterface $viewOptions,
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -102,33 +98,21 @@ final class GridDefinition implements GridDefinitionInterface
         $this->viewOptions = $viewOptions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getColumns()
     {
         return $this->columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getColumnById(string $id): ColumnInterface
     {
         /** @var ColumnInterface $column */
@@ -138,47 +122,32 @@ final class GridDefinition implements GridDefinitionInterface
             }
         }
 
-        throw new ColumnNotFoundException(sprintf('Column with id "%s" not found', $id));
+        throw new ColumnNotFoundException(\sprintf('Column with id "%s" not found', $id));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBulkActions()
     {
         return $this->bulkActions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGridActions()
     {
         return $this->gridActions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getViewOptions()
     {
         return $this->viewOptions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
         return $this->filters;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name)
     {
-        if (!is_string($name)) {
+        if (! \is_string($name)) {
             throw new InvalidDataException('Definition name should be a string.');
         }
 
@@ -193,25 +162,16 @@ final class GridDefinition implements GridDefinitionInterface
         $this->columns = $columns;
     }
 
-    /**
-     * @param GridActionCollectionInterface $gridActions
-     */
     public function setGridActions(GridActionCollectionInterface $gridActions)
     {
         $this->gridActions = $gridActions;
     }
 
-    /**
-     * @param BulkActionCollectionInterface $bulkActions
-     */
     public function setBulkActions(BulkActionCollectionInterface $bulkActions)
     {
         $this->bulkActions = $bulkActions;
     }
 
-    /**
-     * @param FilterCollectionInterface $filters
-     */
     public function setFilters(FilterCollectionInterface $filters)
     {
         $this->filters = $filters;

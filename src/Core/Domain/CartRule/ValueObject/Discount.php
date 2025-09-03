@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,16 +61,11 @@ class Discount
     /**
      * Static factory method to build amount reduction type discount
      *
-     * @param Money $amountDiscount
-     * @param DiscountApplicationType $discountApplicationType
-     *
-     * @return self
-     *
      * @throws CartRuleConstraintException
      */
     public static function buildAmountDiscount(
         Money $amountDiscount,
-        DiscountApplicationType $discountApplicationType
+        DiscountApplicationType $discountApplicationType,
     ): self {
         $unsupportedTypeMessages = [
             DiscountApplicationType::CHEAPEST_PRODUCT => 'Cart rule, which is applied to cheapest product, cannot be applied to amount discount type.',
@@ -77,10 +73,7 @@ class Discount
         ];
 
         if (isset($unsupportedTypeMessages[$discountApplicationType->getType()])) {
-            throw new CartRuleConstraintException(
-                $unsupportedTypeMessages[$discountApplicationType->getType()],
-                CartRuleConstraintException::INVALID_DISCOUNT_APPLICATION_TYPE
-            );
+            throw new CartRuleConstraintException($unsupportedTypeMessages[$discountApplicationType->getType()], CartRuleConstraintException::INVALID_DISCOUNT_APPLICATION_TYPE);
         }
 
         return new self(
@@ -93,18 +86,12 @@ class Discount
     /**
      * Static factory method to build percentage reduction type discount
      *
-     * @param DecimalNumber $reductionValue
-     * @param bool $applyToDiscountedProducts
-     * @param DiscountApplicationType $discountApplicationType
-     *
-     * @return self
-     *
      * @throws CartRuleConstraintException
      */
     public static function buildPercentageDiscount(
         DecimalNumber $reductionValue,
         bool $applyToDiscountedProducts,
-        DiscountApplicationType $discountApplicationType
+        DiscountApplicationType $discountApplicationType,
     ): self {
         return new self(
             $discountApplicationType,
@@ -137,22 +124,15 @@ class Discount
      * @see buildAmountDiscount
      * @see buildPercentageDiscount
      *
-     * @param DiscountApplicationType $discountApplicationType
-     * @param Money|null $amountDiscount
-     * @param PercentageDiscount|null $percentageDiscount
-     *
      * @throws CartRuleConstraintException
      */
     private function __construct(
         DiscountApplicationType $discountApplicationType,
         ?Money $amountDiscount,
-        ?PercentageDiscount $percentageDiscount
+        ?PercentageDiscount $percentageDiscount,
     ) {
-        if (($amountDiscount && $percentageDiscount) || (!$amountDiscount && !$percentageDiscount)) {
-            throw new CartRuleConstraintException(
-                sprintf('Only one of the following must be set for %s: $amountDiscount or $percentageDiscount', self::class),
-                CartRuleConstraintException::INVALID_PRICE_DISCOUNT
-            );
+        if (($amountDiscount && $percentageDiscount) || (! $amountDiscount && ! $percentageDiscount)) {
+            throw new CartRuleConstraintException(\sprintf('Only one of the following must be set for %s: $amountDiscount or $percentageDiscount', self::class), CartRuleConstraintException::INVALID_PRICE_DISCOUNT);
         }
 
         $this->discountApplicationType = $discountApplicationType;

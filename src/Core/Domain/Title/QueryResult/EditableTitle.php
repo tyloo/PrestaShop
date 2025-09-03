@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,23 +49,18 @@ class EditableTitle
     protected $gender;
 
     /**
-     * @param int $titleId
      * @param array<string> $localizedNames
-     * @param int $gender
      */
     public function __construct(
         int $titleId,
         array $localizedNames,
-        int $gender
+        int $gender,
     ) {
         $this->titleId = $titleId;
         $this->localizedNames = $localizedNames;
         $this->gender = $gender;
     }
 
-    /**
-     * @return int
-     */
     public function getTitleId(): int
     {
         return $this->titleId;
@@ -78,9 +74,6 @@ class EditableTitle
         return $this->localizedNames;
     }
 
-    /**
-     * @return int
-     */
     public function getGender(): int
     {
         return $this->gender;

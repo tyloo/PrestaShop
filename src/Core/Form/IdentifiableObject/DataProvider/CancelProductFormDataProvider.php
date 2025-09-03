@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,14 @@ final class CancelProductFormDataProvider implements FormDataProviderInterface
      */
     private $currencyDataProvider;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param CurrencyDataProviderInterface $currencyDataProvider
-     */
     public function __construct(
         CommandBusInterface $queryBus,
-        CurrencyDataProviderInterface $currencyDataProvider
+        CurrencyDataProviderInterface $currencyDataProvider,
     ) {
         $this->queryBus = $queryBus;
         $this->currencyDataProvider = $currencyDataProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($orderId)
     {
         /** @var OrderForViewing $orderForViewing */
@@ -76,9 +70,6 @@ final class CancelProductFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         return [];

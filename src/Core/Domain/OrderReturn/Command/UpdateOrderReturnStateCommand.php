@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,9 +49,6 @@ class UpdateOrderReturnStateCommand
     private $orderReturnStateId;
 
     /**
-     * @param int $orderReturnId
-     * @param int $orderReturnStateId
-     *
      * @throws OrderReturnConstraintException
      */
     public function __construct(int $orderReturnId, int $orderReturnStateId)
@@ -59,17 +57,11 @@ class UpdateOrderReturnStateCommand
         $this->orderReturnStateId = new OrderReturnStateId($orderReturnStateId);
     }
 
-    /**
-     * @return OrderReturnId
-     */
     public function getOrderReturnId(): OrderReturnId
     {
         return $this->orderReturnId;
     }
 
-    /**
-     * @return OrderReturnStateId
-     */
     public function getOrderReturnStateId(): OrderReturnStateId
     {
         return $this->orderReturnStateId;

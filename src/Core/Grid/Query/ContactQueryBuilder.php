@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,18 +52,15 @@ final class ContactQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextShopsIds;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $languageId
-     * @param array $contextShopsIds
+     * @param int    $languageId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         $languageId,
-        array $contextShopsIds
+        array $contextShopsIds,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -71,9 +69,6 @@ final class ContactQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextShopsIds = $contextShopsIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -88,9 +83,6 @@ final class ContactQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -101,8 +93,6 @@ final class ContactQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get generic query builder.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -126,11 +116,11 @@ final class ContactQueryBuilder extends AbstractDoctrineQueryBuilder
             ->setParameter('shops', $this->contextShopsIds, Connection::PARAM_INT_ARRAY);
 
         foreach ($filters as $name => $value) {
-            if (!in_array($name, $allowedFilters, true)) {
+            if (! \in_array($name, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('id_contact' === $name) {
+            if ($name === 'id_contact') {
                 $qb->andWhere('c.`id_contact` = :' . $name);
                 $qb->setParameter($name, $value);
 

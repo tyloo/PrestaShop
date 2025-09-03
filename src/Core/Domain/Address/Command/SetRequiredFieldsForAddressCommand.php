@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,8 +66,8 @@ class SetRequiredFieldsForAddressCommand
     private function assertContainsOnlyAllowedFields(array $requiredFields)
     {
         foreach ($requiredFields as $requiredField) {
-            if (!in_array($requiredField, RequiredFields::ALLOWED_REQUIRED_FIELDS)) {
-                throw new AddressConstraintException(sprintf('Required field %s is invalid. Allowed fields are: %s', $requiredField, implode(',', RequiredFields::ALLOWED_REQUIRED_FIELDS)), AddressConstraintException::INVALID_REQUIRED_FIELDS);
+            if (! \in_array($requiredField, RequiredFields::ALLOWED_REQUIRED_FIELDS, true)) {
+                throw new AddressConstraintException(\sprintf('Required field %s is invalid. Allowed fields are: %s', $requiredField, implode(',', RequiredFields::ALLOWED_REQUIRED_FIELDS)), AddressConstraintException::INVALID_REQUIRED_FIELDS);
             }
         }
     }

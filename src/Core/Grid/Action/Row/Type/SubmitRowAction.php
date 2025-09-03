@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,11 @@ final class SubmitRowAction extends AbstractRowAction
     public const MESSAGE_TYPE_STATIC = 'static'; // Static confirmation message type is standard confirmation message type
     public const MESSAGE_TYPE_DYNAMIC = 'dynamic'; // Dynamic confirmation message type enables dynamic confirmation message
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return 'submit';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -80,9 +75,6 @@ final class SubmitRowAction extends AbstractRowAction
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isApplicable(array $record)
     {
         $accessibilityChecker = $this->getOptions()['accessibility_checker'];
@@ -91,8 +83,8 @@ final class SubmitRowAction extends AbstractRowAction
             return $accessibilityChecker->isGranted($record);
         }
 
-        if (is_callable($accessibilityChecker)) {
-            return call_user_func($accessibilityChecker, $record);
+        if (\is_callable($accessibilityChecker)) {
+            return \call_user_func($accessibilityChecker, $record);
         }
 
         return parent::isApplicable($record);

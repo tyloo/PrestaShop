@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,15 +40,15 @@ final class SqlFilters
     public const WHERE_DATE = 4;
     public const MIN_MAX = 5;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $filters = [];
 
     /**
      * @param string $filterName
      * @param string $sqlField
-     * @param int $comparison
-     *
-     * @return self
+     * @param int    $comparison
      */
     public function addFilter($filterName, $sqlField, $comparison = self::WHERE_STRICT): self
     {
@@ -60,9 +61,6 @@ final class SqlFilters
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getFilters(): array
     {
         return $this->filters;

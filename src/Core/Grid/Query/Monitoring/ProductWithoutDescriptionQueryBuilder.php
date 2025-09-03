@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class ProductWithoutDescriptionQueryBuilder extends AbstractProductQueryBuilder
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria);
@@ -48,9 +46,6 @@ final class ProductWithoutDescriptionQueryBuilder extends AbstractProductQueryBu
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria);
@@ -61,8 +56,6 @@ final class ProductWithoutDescriptionQueryBuilder extends AbstractProductQueryBu
 
     /**
      * Get generic query builder.
-     *
-     * @param SearchCriteriaInterface $searchCriteria
      *
      * @return QueryBuilder
      */

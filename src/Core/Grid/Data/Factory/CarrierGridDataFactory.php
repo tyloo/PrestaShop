@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,24 +55,16 @@ class CarrierGridDataFactory implements GridDataFactoryInterface
      */
     private $configuration;
 
-    /**
-     * @param GridDataFactoryInterface $carrierDataFactory
-     * @param ImageProviderInterface $carrierLogoProvider
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(
         GridDataFactoryInterface $carrierDataFactory,
         ImageProviderInterface $carrierLogoProvider,
-        ConfigurationInterface $configuration
+        ConfigurationInterface $configuration,
     ) {
         $this->carrierDataFactory = $carrierDataFactory;
         $this->carrierLogoProvider = $carrierLogoProvider;
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $carrierData = $this->carrierDataFactory->getData($searchCriteria);
@@ -86,10 +79,6 @@ class CarrierGridDataFactory implements GridDataFactoryInterface
 
     /**
      * Add logo column to grid.
-     *
-     * @param array $carriers
-     *
-     * @return array
      */
     private function applyModifications(array $carriers): array
     {

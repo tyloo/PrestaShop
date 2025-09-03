@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -26,9 +27,6 @@
 
 namespace PrestaShop\PrestaShop\Core\Addon\Theme;
 
-/**
- * Class ThemeProvider
- */
 final class ThemeProvider implements ThemeProviderInterface
 {
     /**
@@ -41,27 +39,17 @@ final class ThemeProvider implements ThemeProviderInterface
      */
     private $theme;
 
-    /**
-     * @param ThemeRepository $themeRepository
-     * @param Theme $theme
-     */
     public function __construct(ThemeRepository $themeRepository, Theme $theme)
     {
         $this->themeRepository = $themeRepository;
         $this->theme = $theme;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentlyUsedTheme()
     {
         return $this->theme;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNotUsedThemes()
     {
         return $this->themeRepository->getListExcluding([

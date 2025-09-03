@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,13 +34,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult;
  */
 class CarrierRangeZone
 {
-    /** @var CarrierRangePrice[] */
+    /**
+     * @var CarrierRangePrice[]
+     */
     private array $ranges;
 
     public function __construct(
         private int $zoneId,
 
-        /* @var array{
+        /** @var array{
          *     range_from: float,
          *     range_to: float,
          *     range_price: string,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class SetCarrierTaxRuleGroupCommand
     public function __construct(
         int $carrierId,
         int $carrierTaxRuleGroupId,
-        private ShopConstraint $shopConstraint
+        private ShopConstraint $shopConstraint,
     ) {
         $this->assertShopConstraint($this->shopConstraint);
         $this->carrierId = new CarrierId($carrierId);
@@ -64,11 +65,8 @@ class SetCarrierTaxRuleGroupCommand
 
     private function assertShopConstraint(ShopConstraint $shopConstraint): void
     {
-        if (!$shopConstraint->forAllShops()) {
-            throw new CarrierConstraintException(
-                'Shop constraint isn\'t supported yet.',
-                CarrierConstraintException::INVALID_SHOP_CONSTRAINT
-            );
+        if (! $shopConstraint->forAllShops()) {
+            throw new CarrierConstraintException('Shop constraint isn\'t supported yet.', CarrierConstraintException::INVALID_SHOP_CONSTRAINT);
         }
     }
 }

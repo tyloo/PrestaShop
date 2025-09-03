@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,18 +43,12 @@ final class CustomerThreadGridDataFactoryDecorator implements GridDataFactoryInt
      */
     private $customerDoctrineGridDataFactory;
 
-    /**
-     * @param GridDataFactoryInterface $customerDoctrineGridDataFactory
-     */
     public function __construct(
-        GridDataFactoryInterface $customerDoctrineGridDataFactory
+        GridDataFactoryInterface $customerDoctrineGridDataFactory,
     ) {
         $this->customerDoctrineGridDataFactory = $customerDoctrineGridDataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $customerThreadData = $this->customerDoctrineGridDataFactory->getData($searchCriteria);
@@ -67,11 +62,6 @@ final class CustomerThreadGridDataFactoryDecorator implements GridDataFactoryInt
         );
     }
 
-    /**
-     * @param RecordCollectionInterface $customerThreads
-     *
-     * @return RecordCollection
-     */
     private function applyModifications(RecordCollectionInterface $customerThreads): RecordCollection
     {
         $modifiedCustomerThreads = [];

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,30 +44,21 @@ final class ShipmentGridDefinitionFactory extends AbstractFilterableGridDefiniti
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        private LanguageContext $languageContext
+        private LanguageContext $languageContext,
     ) {
         parent::__construct($hookDispatcher);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Shipments', [], 'Admin.Global');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())

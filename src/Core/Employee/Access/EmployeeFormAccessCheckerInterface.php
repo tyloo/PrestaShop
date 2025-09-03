@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,19 +38,11 @@ interface EmployeeFormAccessCheckerInterface
      * Restricted access means that the employee is restricted from some of
      * the fields in the edit form, which would modify his account's accessibility.
      * E.g. active status, profile, shop association.
-     *
-     * @param int $employeeId
-     *
-     * @return bool
      */
     public function isRestrictedAccess(int $employeeId): bool;
 
     /**
      * Check if context employee can access edit form for given employee.
-     *
-     * @param int $employeeId
-     *
-     * @return bool
      */
     public function canAccessEditFormFor(int $employeeId): bool;
 }

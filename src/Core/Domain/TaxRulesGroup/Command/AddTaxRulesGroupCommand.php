@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,27 +51,17 @@ class AddTaxRulesGroupCommand
      */
     protected $shopAssociation = [];
 
-    /**
-     * @param string $name
-     * @param bool $enabled
-     */
     public function __construct(string $name, bool $enabled)
     {
         $this->name = $name;
         $this->enabled = $enabled;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
@@ -87,20 +78,12 @@ class AddTaxRulesGroupCommand
     /**
      * @param int[] $shopAssociation
      *
-     * @return self
-     *
      * @throws TaxRulesGroupConstraintException
      */
     public function setShopAssociation(array $shopAssociation): self
     {
-        if (!$this->assertArrayContainsOnlyIntegerValues($shopAssociation)) {
-            throw new TaxRulesGroupConstraintException(
-                sprintf(
-                    'Given shop association %s must contain only integer values',
-                    var_export($shopAssociation, true)
-                ),
-                TaxRulesGroupConstraintException::INVALID_SHOP_ASSOCIATION
-            );
+        if (! $this->assertArrayContainsOnlyIntegerValues($shopAssociation)) {
+            throw new TaxRulesGroupConstraintException(\sprintf('Given shop association %s must contain only integer values', var_export($shopAssociation, true)), TaxRulesGroupConstraintException::INVALID_SHOP_ASSOCIATION);
         }
 
         $this->shopAssociation = $shopAssociation;
@@ -108,17 +91,12 @@ class AddTaxRulesGroupCommand
         return $this;
     }
 
-    /**
-     * @param array $values
-     *
-     * @return bool
-     */
     protected function assertArrayContainsOnlyIntegerValues(array $values): bool
     {
         $filterAllIntegers = function ($value) {
-            return is_int($value);
+            return \is_int($value);
         };
 
-        return !empty($values) && count($values) === count(array_filter($values, $filterAllIntegers));
+        return ! empty($values) && \count($values) === \count(array_filter($values, $filterAllIntegers));
     }
 }

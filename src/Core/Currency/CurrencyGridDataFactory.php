@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,19 +43,11 @@ final class CurrencyGridDataFactory implements GridDataFactoryInterface
      */
     private $gridDataFactory;
 
-    /**
-     * CurrencyGridDataFactory constructor.
-     *
-     * @param GridDataFactoryInterface $gridDataFactory
-     */
     public function __construct(GridDataFactoryInterface $gridDataFactory)
     {
         $this->gridDataFactory = $gridDataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $gridData = $this->gridDataFactory->getData($searchCriteria);
@@ -71,8 +64,6 @@ final class CurrencyGridDataFactory implements GridDataFactoryInterface
     /**
      * Gets record collection with extra and modified rows.
      *
-     * @param RecordCollectionInterface $records
-     *
      * @return RecordCollection
      */
     private function getModifiedRecords(RecordCollectionInterface $records)
@@ -87,8 +78,6 @@ final class CurrencyGridDataFactory implements GridDataFactoryInterface
     }
 
     /**
-     * @param array $currency
-     *
      * @return string
      */
     private function buildCurrencyName(array $currency)

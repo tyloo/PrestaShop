@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,33 +62,21 @@ class GetPackedProducts
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return PackId
-     */
     public function getPackId(): PackId
     {
         return $this->packId;
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
     }
 
-    /**
-     * @param ShopConstraint $shopConstraint
-     */
     private function assertShopConstraintIsSupported(ShopConstraint $shopConstraint): void
     {
         if ($shopConstraint->getShopId()) {

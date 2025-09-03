@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,29 +38,26 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 final class ReductionValidator extends ConstraintValidator
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof ReductionConstraint) {
+        if (! $constraint instanceof ReductionConstraint) {
             throw new UnexpectedTypeException($constraint, ReductionConstraint::class);
         }
 
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
 
-        if (!is_array($value)) {
+        if (! \is_array($value)) {
             throw new UnexpectedTypeException($value, 'array');
         }
 
-        if (null === $value['value'] || null === $value['type']) {
+        if ($value['value'] === null || $value['type'] === null) {
             // when one of these are null, then we assume the ReductionType was disabled, so we skip the validation
             return;
         }
 
-        if (!$this->isAllowedType($value['type'])) {
+        if (! $this->isAllowedType($value['type'])) {
             $this->buildViolation(
                 $constraint->invalidTypeMessage,
                 [
@@ -70,16 +68,16 @@ final class ReductionValidator extends ConstraintValidator
             );
         }
 
-        if (Reduction::TYPE_AMOUNT === $value['type']) {
-            if (!is_numeric($value['value']) || !$this->assertIsValidAmount($value['value'])) {
+        if ($value['type'] === Reduction::TYPE_AMOUNT) {
+            if (! is_numeric($value['value']) || ! $this->assertIsValidAmount($value['value'])) {
                 $this->buildViolation(
                     $constraint->invalidAmountValueMessage,
                     ['%value%' => $value['value']],
                     '[value]'
                 );
             }
-        } elseif (Reduction::TYPE_PERCENTAGE === $value['type']) {
-            if (!is_numeric($value['value']) || !$this->assertIsValidPercentage($value['value'])) {
+        } elseif ($value['type'] === Reduction::TYPE_PERCENTAGE) {
+            if (! is_numeric($value['value']) || ! $this->assertIsValidPercentage($value['value'])) {
                 $this->buildViolation(
                     $constraint->invalidPercentageValueMessage,
                     [
@@ -94,46 +92,34 @@ final class ReductionValidator extends ConstraintValidator
 
     /**
      * Returns true if type is defined in allowed types, false otherwise
-     *
-     * @param string $type
-     *
-     * @return bool
      */
     private function isAllowedType(string $type): bool
     {
-        return in_array($type, Reduction::ALLOWED_TYPES, true);
+        return \in_array($type, Reduction::ALLOWED_TYPES, true);
     }
 
     /**
      * Returns true is percentage is considered valid
      *
-     * @param float $value
-     *
      * @return bool
      */
     private function assertIsValidPercentage(float $value)
     {
-        return 0 < $value && Reduction::MAX_ALLOWED_PERCENTAGE >= $value;
+        return $value > 0 && $value <= Reduction::MAX_ALLOWED_PERCENTAGE;
     }
 
     /**
      * Returns true if amount value is considered valid
      *
-     * @param float $value
-     *
      * @return bool
      */
     private function assertIsValidAmount(float $value)
     {
-        return 0 < $value;
+        return $value > 0;
     }
 
     /**
      * Builds violation dependent from exception code
-     *
-     * @param string $message
-     * @param array $params
-     * @param string $errorPath
      */
     private function buildViolation(string $message, array $params, string $errorPath)
     {

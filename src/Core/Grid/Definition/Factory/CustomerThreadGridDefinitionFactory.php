@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -80,7 +81,7 @@ class CustomerThreadGridDefinitionFactory extends AbstractGridDefinitionFactory
         HookDispatcherInterface $hookDispatcher,
         FormChoiceProviderInterface $contactTypeProvider,
         FormChoiceProviderInterface $shopNameByIdChoiceProvider,
-        ConfigurableFormChoiceProviderInterface $customerThreadStatusesChoiceProvider
+        ConfigurableFormChoiceProviderInterface $customerThreadStatusesChoiceProvider,
     ) {
         parent::__construct($hookDispatcher);
         $this->contactTypeProvider = $contactTypeProvider;
@@ -88,25 +89,16 @@ class CustomerThreadGridDefinitionFactory extends AbstractGridDefinitionFactory
         $this->customerThreadStatusesChoiceProvider = $customerThreadStatusesChoiceProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Customer threads', [], 'Admin.Global');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -209,9 +201,6 @@ class CustomerThreadGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters(): FilterCollectionInterface
     {
         return (new FilterCollection())
@@ -327,9 +316,6 @@ class CustomerThreadGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * @return RowActionCollection
-     */
     protected function getRowActions(): RowActionCollection
     {
         $rowActionCollection = new RowActionCollection();
@@ -356,9 +342,6 @@ class CustomerThreadGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $rowActionCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions(): GridActionCollectionInterface
     {
         return (new GridActionCollection())
@@ -379,9 +362,6 @@ class CustomerThreadGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         return (new BulkActionCollection())

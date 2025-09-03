@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,8 @@ class FormHandlerResult implements FormHandlerResultInterface
 
     /**
      * @param int|null $identifiableObjectId ID of identifiable object or null if it does not exist
-     * @param bool $isSubmitted
-     * @param bool $isValid
+     * @param bool     $isSubmitted
+     * @param bool     $isValid
      */
     private function __construct($identifiableObjectId, $isSubmitted, $isValid)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -89,8 +90,6 @@ class ProductShopsGridDefinitionFactory extends ProductGridDefinitionFactory
 
     /**
      * Adapt the action which target multiple shop on the initial row, they here have to be shop specific.
-     *
-     * @return RowActionCollection
      */
     protected function getRowActions(): RowActionCollection
     {
@@ -147,8 +146,6 @@ class ProductShopsGridDefinitionFactory extends ProductGridDefinitionFactory
 
     /**
      * Edit attributes are only used to handle the shop selection modal, not needed in a shop row.
-     *
-     * @return array
      */
     protected function getMultiShopEditionAttributes(): array
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,21 +58,14 @@ class CombinationFormDataProvider implements FormDataProviderInterface
      */
     private $shopContext;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param Context $shopContext
-     */
     public function __construct(
         CommandBusInterface $queryBus,
-        Context $shopContext
+        Context $shopContext,
     ) {
         $this->queryBus = $queryBus;
         $this->shopContext = $shopContext;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getData($id): array
     {
         $combinationId = (int) $id;
@@ -99,9 +93,6 @@ class CombinationFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param CombinationForEditing $combinationForEditing
-     * @param ShopConstraint $shopConstraint
-     *
      * @return array<string, mixed>
      */
     private function extractStockData(CombinationForEditing $combinationForEditing, ShopConstraint $shopConstraint): array
@@ -124,7 +115,7 @@ class CombinationFormDataProvider implements FormDataProviderInterface
             'options' => [
                 'stock_location' => $stockInformation->getLocation(),
                 'low_stock_threshold' => $stockInformation->getLowStockThreshold(),
-                sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => $stockInformation->isLowStockAlertEnabled(),
+                \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => $stockInformation->isLowStockAlertEnabled(),
             ],
             'available_date' => DateTime::isNull($availableDate) ? '' : $availableDate->format(DateTime::DEFAULT_DATE_FORMAT),
             'available_now_label' => $stockInformation->getLocalizedAvailableNowLabels(),
@@ -163,11 +154,6 @@ class CombinationFormDataProvider implements FormDataProviderInterface
         );
     }
 
-    /**
-     * @param CombinationForEditing $combinationForEditing
-     *
-     * @return array
-     */
     private function extractPriceImpactData(CombinationForEditing $combinationForEditing): array
     {
         $priceImpactInformation = $combinationForEditing->getPrices();
@@ -187,11 +173,6 @@ class CombinationFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * @param CombinationForEditing $combinationForEditing
-     *
-     * @return array
-     */
     private function extractReferencesData(CombinationForEditing $combinationForEditing): array
     {
         $details = $combinationForEditing->getDetails();
@@ -206,8 +187,6 @@ class CombinationFormDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param CombinationForEditing $combinationForEditing
-     *
      * @return array<string, array<int, array<string, int|string|null>>|int>
      */
     private function extractSuppliersData(CombinationForEditing $combinationForEditing): array
@@ -243,9 +222,6 @@ class CombinationFormDataProvider implements FormDataProviderInterface
         return $suppliersData;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultData(): array
     {
         // Not supposed to happen, Combinations are created via Generator

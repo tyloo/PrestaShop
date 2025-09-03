@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,7 +89,7 @@ class OrderDocumentForViewing
         ?string $amount,
         ?string $amountMismatch,
         ?string $note,
-        bool $isAddPaymentAllowed
+        bool $isAddPaymentAllowed,
     ) {
         $this->id = $id;
         $this->type = $type;
@@ -116,49 +117,31 @@ class OrderDocumentForViewing
         return $this->createdAt;
     }
 
-    /**
-     * @return string
-     */
     public function getReferenceNumber(): string
     {
         return $this->referenceNumber;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAmount(): ?string
     {
         return $this->amount;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAmountMismatch(): ?string
     {
         return $this->amountMismatch;
     }
 
-    /**
-     * @return string
-     */
     public function getNote(): ?string
     {
         return $this->note;
     }
 
-    /**
-     * @return bool
-     */
     public function isAddPaymentAllowed(): bool
     {
         return $this->isAddPaymentAllowed;
     }
 
-    /**
-     * @return float|null
-     */
     public function getNumericalAmount(): ?float
     {
         return $this->numericalAmount;

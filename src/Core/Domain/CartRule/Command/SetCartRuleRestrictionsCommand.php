@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,9 +69,6 @@ class SetCartRuleRestrictionsCommand
      */
     private ?array $restrictedGroupIds = null;
 
-    /**
-     * @param int $cartRuleId
-     */
     public function __construct(
         int $cartRuleId,
     ) {
@@ -128,9 +126,6 @@ class SetCartRuleRestrictionsCommand
         return $this->restrictedGroupIds;
     }
 
-    /**
-     * @return CartRuleId
-     */
     public function getCartRuleId(): CartRuleId
     {
         return $this->cartRuleId;
@@ -139,8 +134,6 @@ class SetCartRuleRestrictionsCommand
     /**
      * @param int[] $restrictedCartRuleIds
      *
-     * @return self
-     *
      * @throws CartRuleConstraintException
      */
     public function setRestrictedCartRuleIds(array $restrictedCartRuleIds): self
@@ -148,10 +141,7 @@ class SetCartRuleRestrictionsCommand
         $this->restrictedCartRuleIds = [];
         foreach ($restrictedCartRuleIds as $restrictedCartRuleId) {
             if ($restrictedCartRuleId === $this->getCartRuleId()->getValue()) {
-                throw new CartRuleConstraintException(
-                    'Restricted CartRule ids cannot contain id of current cart rule',
-                    CartRuleConstraintException::INVALID_CART_RULE_RESTRICTION
-                );
+                throw new CartRuleConstraintException('Restricted CartRule ids cannot contain id of current cart rule', CartRuleConstraintException::INVALID_CART_RULE_RESTRICTION);
             }
             $this->restrictedCartRuleIds[] = new CartRuleId($restrictedCartRuleId);
         }
@@ -169,8 +159,6 @@ class SetCartRuleRestrictionsCommand
 
     /**
      * @param RestrictionRuleGroup[] $productRestrictionRuleGroups
-     *
-     * @return self
      */
     public function setProductRestrictionRuleGroups(array $productRestrictionRuleGroups): self
     {

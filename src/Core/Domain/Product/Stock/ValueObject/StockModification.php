@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,10 +47,6 @@ class StockModification
 
     /**
      * Builds class using delta quantity (delta means the quantity will be added up to the previous quantity)
-     *
-     * @param int $deltaQuantity
-     *
-     * @return self
      */
     public static function buildDeltaQuantity(int $deltaQuantity): self
     {
@@ -58,27 +55,17 @@ class StockModification
 
     /**
      * Builds class using fixed quantity (fixed means the new quantity will replace the previous quantity)
-     *
-     * @param int $fixedQuantity
-     *
-     * @return self
      */
     public static function buildFixedQuantity(int $fixedQuantity): self
     {
         return new self(null, $fixedQuantity);
     }
 
-    /**
-     * @return int|null
-     */
     public function getDeltaQuantity(): ?int
     {
         return $this->deltaQuantity;
     }
 
-    /**
-     * @return int|null
-     */
     public function getFixedQuantity(): ?int
     {
         return $this->fixedQuantity;
@@ -91,30 +78,21 @@ class StockModification
      * @see buildDeltaQuantity
      * @see buildFixedQuantity
      *
-     * @param int|null $deltaQuantity
-     * @param int|null $fixedQuantity
-     *
      * @throws ProductStockConstraintException
      */
     private function __construct(
         ?int $deltaQuantity,
-        ?int $fixedQuantity
+        ?int $fixedQuantity,
     ) {
         $this->assertDeltaQuantityIsNotZero($deltaQuantity);
         $this->deltaQuantity = $deltaQuantity;
         $this->fixedQuantity = $fixedQuantity;
     }
 
-    /**
-     * @param int|null $quantity
-     */
     private function assertDeltaQuantityIsNotZero(?int $quantity): void
     {
-        if (0 === $quantity) {
-            throw new ProductStockConstraintException(
-                'Delta quantity cannot be 0',
-                ProductStockConstraintException::INVALID_DELTA_QUANTITY
-            );
+        if ($quantity === 0) {
+            throw new ProductStockConstraintException('Delta quantity cannot be 0', ProductStockConstraintException::INVALID_DELTA_QUANTITY);
         }
     }
 }

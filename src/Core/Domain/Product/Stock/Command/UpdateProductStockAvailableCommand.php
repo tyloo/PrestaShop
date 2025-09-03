@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,47 +66,29 @@ class UpdateProductStockAvailableCommand
      */
     private $location;
 
-    /**
-     * @param int $productId
-     * @param ShopConstraint $shopConstraint
-     */
     public function __construct(
         int $productId,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
     }
 
-    /**
-     * @return int|null
-     */
     public function getDeltaQuantity(): ?int
     {
         return $this->deltaQuantity;
     }
 
-    /**
-     * @param int $deltaQuantity
-     *
-     * @return self
-     */
     public function setDeltaQuantity(int $deltaQuantity): self
     {
         $this->deltaQuantity = $deltaQuantity;
@@ -113,17 +96,12 @@ class UpdateProductStockAvailableCommand
         return $this;
     }
 
-    /**
-     * @return OutOfStockType|null
-     */
     public function getOutOfStockType(): ?OutOfStockType
     {
         return $this->outOfStockType;
     }
 
     /**
-     * @param int $outOfStockType
-     *
      * @return $this
      *
      * @throws ProductStockConstraintException
@@ -135,19 +113,11 @@ class UpdateProductStockAvailableCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLocation(): ?string
     {
         return $this->location;
     }
 
-    /**
-     * @param string $location
-     *
-     * @return self
-     */
     public function setLocation(string $location): self
     {
         $this->location = $location;

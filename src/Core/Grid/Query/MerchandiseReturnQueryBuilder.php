@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,18 +52,14 @@ final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextLanguageId
-     * @param array $contextShopIds
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         int $contextLanguageId,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
@@ -70,9 +67,6 @@ final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextShopIds = $contextShopIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getMerchandiseReturnQueryBuilder($searchCriteria);
@@ -87,9 +81,6 @@ final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this->getMerchandiseReturnQueryBuilder($searchCriteria)
@@ -97,8 +88,6 @@ final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
      * @return QueryBuilder
      */
     private function getMerchandiseReturnQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -134,9 +123,6 @@ final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply filters to merchandise returns query builder.
-     *
-     * @param array $filters
-     * @param QueryBuilder $qb
      */
     private function applyFilters(array $filters, QueryBuilder $qb)
     {
@@ -148,33 +134,33 @@ final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('id_order' === $filterName) {
+            if ($filterName === 'id_order') {
                 $qb->andWhere('o.`' . $filterName . '` LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('status' === $filterName) {
+            if ($filterName === 'status') {
                 $qb->andWhere('orsl.`name` LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
-            if ('date_add' === $filterName) {
+            if ($filterName === 'date_add') {
                 if (isset($filterValue['from'])) {
                     $qb->andWhere('r.date_add >= :date_from');
-                    $qb->setParameter('date_from', sprintf('%s 0:0:0', $filterValue['from']));
+                    $qb->setParameter('date_from', \sprintf('%s 0:0:0', $filterValue['from']));
                 }
 
                 if (isset($filterValue['to'])) {
                     $qb->andWhere('r.date_add <= :date_to');
-                    $qb->setParameter('date_to', sprintf('%s 23:59:59', $filterValue['to']));
+                    $qb->setParameter('date_to', \sprintf('%s 23:59:59', $filterValue['to']));
                 }
 
                 continue;

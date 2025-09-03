@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,12 @@ final class MetaFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(CommandBusInterface $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws MetaException
      */
     public function create(array $data)
@@ -70,8 +66,6 @@ final class MetaFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws MetaException
      */
     public function update($metaId, array $data)

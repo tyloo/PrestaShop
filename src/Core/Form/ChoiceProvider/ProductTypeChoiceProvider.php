@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,21 +47,14 @@ class ProductTypeChoiceProvider implements FormChoiceProviderInterface, FormChoi
      */
     private $combinationFeature;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param FeatureInterface $combinationFeature
-     */
     public function __construct(
         TranslatorInterface $translator,
-        FeatureInterface $combinationFeature
+        FeatureInterface $combinationFeature,
     ) {
         $this->translator = $translator;
         $this->combinationFeature = $combinationFeature;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoicesAttributes()
     {
         return [
@@ -83,9 +77,6 @@ class ProductTypeChoiceProvider implements FormChoiceProviderInterface, FormChoi
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices()
     {
         $choices = [
@@ -95,19 +86,13 @@ class ProductTypeChoiceProvider implements FormChoiceProviderInterface, FormChoi
             $this->trans('Virtual product', 'Admin.Catalog.Feature') => ProductType::TYPE_VIRTUAL,
         ];
 
-        if (!$this->combinationFeature->isActive()) {
+        if (! $this->combinationFeature->isActive()) {
             unset($choices[$this->trans('Product with combinations', 'Admin.Catalog.Feature')]);
         }
 
         return $choices;
     }
 
-    /**
-     * @param string $id
-     * @param string $domain
-     *
-     * @return string
-     */
     private function trans(string $id, string $domain): string
     {
         return $this->translator->trans($id, [], $domain);

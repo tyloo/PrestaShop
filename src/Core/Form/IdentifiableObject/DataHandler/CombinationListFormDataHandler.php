@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,17 +65,12 @@ class CombinationListFormDataHandler implements FormDataHandlerInterface
      */
     private $defaultShopId;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param CombinationListFormDataFormatter $combinationListFormDataFormatter
-     * @param CombinationCommandsBuilderInterface $commandsBuilder
-     */
     public function __construct(
         CommandBusInterface $commandBus,
         CombinationListFormDataFormatter $combinationListFormDataFormatter,
         CombinationCommandsBuilderInterface $commandsBuilder,
         int $contextShopId,
-        int $defaultShopId
+        int $defaultShopId,
     ) {
         $this->commandBus = $commandBus;
         $this->combinationListFormDataFormatter = $combinationListFormDataFormatter;
@@ -83,18 +79,12 @@ class CombinationListFormDataHandler implements FormDataHandlerInterface
         $this->defaultShopId = $defaultShopId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         // Does not handle creation. Combinations are created using different approach
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($productId, array $data)
     {
         $singleShopConstraint = $this->contextShopId ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);

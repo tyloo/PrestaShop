@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,16 +63,12 @@ interface BulkActionInterface
     /**
      * Set options for bulk action.
      *
-     * @param array $options
-     *
      * @return self
      */
     public function setOptions(array $options);
 
     /**
      * Set bulk action name.
-     *
-     * @param string $name
      *
      * @return self
      */
@@ -86,8 +83,6 @@ interface BulkActionInterface
 
     /**
      * Set action icon name.
-     *
-     * @param string $icon
      *
      * @return self
      */

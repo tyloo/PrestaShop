@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,41 +59,25 @@ class AssignProductToCategoryCommand
         $this->setProductId($productId);
     }
 
-    /**
-     * @param int $categoryId
-     *
-     * @return self
-     */
-    public function setCategoryId(int $categoryId): AssignProductToCategoryCommand
+    public function setCategoryId(int $categoryId): self
     {
         $this->categoryId = new CategoryId($categoryId);
 
         return $this;
     }
 
-    /**
-     * @return CategoryId
-     */
     public function getCategoryId(): CategoryId
     {
         return $this->categoryId;
     }
 
-    /**
-     * @param int $productId
-     *
-     * @return self
-     */
-    public function setProductId(int $productId): AssignProductToCategoryCommand
+    public function setProductId(int $productId): self
     {
         $this->productId = new ProductId($productId);
 
         return $this;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;

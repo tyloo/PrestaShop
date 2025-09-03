@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,24 +53,16 @@ class CountryFormDataProvider implements FormDataProviderInterface
      */
     protected $defaultShopAssociation;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param bool $multistoreEnabled
-     * @param array $defaultShopAssociation
-     */
     public function __construct(
         CommandBusInterface $queryBus,
         bool $multistoreEnabled,
-        array $defaultShopAssociation
+        array $defaultShopAssociation,
     ) {
         $this->queryBus = $queryBus;
         $this->multistoreEnabled = $multistoreEnabled;
         $this->defaultShopAssociation = $defaultShopAssociation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id): array
     {
         /** @var CountryForEditing $editableCountry */
@@ -82,7 +75,7 @@ class CountryFormDataProvider implements FormDataProviderInterface
             'default_currency' => $editableCountry->getDefaultCurrency(),
             'zone' => $editableCountry->getZone(),
             'need_zip_code' => $editableCountry->isNeedZipCode(),
-            'zip_code_format' => null !== $editableCountry->getZipCodeFormat() ? $editableCountry->getZipCodeFormat()->getValue() : null,
+            'zip_code_format' => $editableCountry->getZipCodeFormat() !== null ? $editableCountry->getZipCodeFormat()->getValue() : null,
             'address_format' => $editableCountry->getAddressFormat(),
             'is_enabled' => $editableCountry->isEnabled(),
             'contains_states' => $editableCountry->isContainsStates(),
@@ -97,9 +90,6 @@ class CountryFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData(): array
     {
         $data = [

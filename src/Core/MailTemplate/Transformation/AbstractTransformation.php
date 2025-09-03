@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,14 @@ use PrestaShop\PrestaShop\Core\MailTemplate\MailTemplateInterface;
  */
 abstract class AbstractTransformation implements TransformationInterface
 {
-    /** @var LanguageInterface */
+    /**
+     * @var LanguageInterface
+     */
     protected $language;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $type;
 
     /**
@@ -52,24 +57,18 @@ abstract class AbstractTransformation implements TransformationInterface
             MailTemplateInterface::HTML_TYPE,
             MailTemplateInterface::TXT_TYPE,
         ];
-        if (!in_array($type, $availableTypes)) {
-            throw new InvalidArgumentException(sprintf('Invalid type %s, available types are: %s', $type, implode(', ', $availableTypes)));
+        if (! \in_array($type, $availableTypes, true)) {
+            throw new InvalidArgumentException(\sprintf('Invalid type %s, available types are: %s', $type, implode(', ', $availableTypes)));
         }
 
         $this->type = $type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLanguage(LanguageInterface $language)
     {
         $this->language = $language;

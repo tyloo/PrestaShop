@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,6 @@ class BulkToggleModuleStatusCommand
 
     /**
      * @param array<string> $modules Array of technical names for modules
-     * @param bool $expectedStatus
      */
     public function __construct(array $modules, bool $expectedStatus)
     {
@@ -61,9 +61,6 @@ class BulkToggleModuleStatusCommand
         return $this->modules;
     }
 
-    /**
-     * @return bool
-     */
     public function getExpectedStatus(): bool
     {
         return $this->expectedStatus;

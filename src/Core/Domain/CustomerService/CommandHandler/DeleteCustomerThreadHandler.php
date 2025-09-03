@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,11 +49,6 @@ class DeleteCustomerThreadHandler implements DeleteCustomerThreadHandlerInterfac
         $this->customerThreadRepository = $customerThreadRepository;
     }
 
-    /**
-     * @param DeleteCustomerThreadCommand $command
-     *
-     * @return void
-     */
     public function handle(DeleteCustomerThreadCommand $command): void
     {
         $this->customerThreadRepository->delete($command->getCustomerThreadId());

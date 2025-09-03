@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,8 +48,8 @@ interface CurrencyDataLayerInterface
     /**
      * Write a currency data object into the data source.
      *
-     * @param string $currencyCode
-     *                             The currency code (ISO 4217)
+     * @param string       $currencyCode
+     *                                   The currency code (ISO 4217)
      * @param CurrencyData $currencyData
      *                                   The currency data to write
      *
@@ -67,5 +68,5 @@ interface CurrencyDataLayerInterface
      *
      * @return self
      */
-    public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer);
+    public function setLowerLayer(self $lowerLayer);
 }

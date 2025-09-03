@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,16 +57,13 @@ final class EmployeeFormDataProvider implements FormDataProviderInterface
     private $defaultAvatarUrl;
 
     /**
-     * @param CommandBusInterface $queryBus
      * @param bool $isMultistoreFeatureActive
-     * @param array $defaultShopAssociation
-     * @param string $defaultAvatarUrl
      */
     public function __construct(
         CommandBusInterface $queryBus,
         $isMultistoreFeatureActive,
         array $defaultShopAssociation,
-        string $defaultAvatarUrl
+        string $defaultAvatarUrl,
     ) {
         $this->queryBus = $queryBus;
         $this->isMultistoreFeatureActive = $isMultistoreFeatureActive;
@@ -73,9 +71,6 @@ final class EmployeeFormDataProvider implements FormDataProviderInterface
         $this->defaultAvatarUrl = $defaultAvatarUrl;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($employeeId)
     {
         /** @var EditableEmployee $editableEmployee */
@@ -95,9 +90,6 @@ final class EmployeeFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         $data = [

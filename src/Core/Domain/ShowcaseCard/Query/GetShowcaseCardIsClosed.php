@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,7 @@ class GetShowcaseCardIsClosed
     private $showcaseCard;
 
     /**
-     * GetShowcaseCardIsClosed constructor.
-     *
-     * @param int $employeeId
+     * @param int    $employeeId
      * @param string $showcaseCardName
      *
      * @throws InvalidShowcaseCardNameException
@@ -55,8 +54,8 @@ class GetShowcaseCardIsClosed
      */
     public function __construct($employeeId, $showcaseCardName)
     {
-        if (!is_int($employeeId)) {
-            throw new ShowcaseCardException(sprintf('Expected employee id to be an int, but was %s', gettype($employeeId)));
+        if (! \is_int($employeeId)) {
+            throw new ShowcaseCardException(\sprintf('Expected employee id to be an int, but was %s', \gettype($employeeId)));
         }
 
         $this->employeeId = $employeeId;

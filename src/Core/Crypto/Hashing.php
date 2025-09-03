@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,21 +32,23 @@ namespace PrestaShop\PrestaShop\Core\Crypto;
  */
 class Hashing
 {
-    /** @var array should contain hashing methods */
+    /**
+     * @var array should contain hashing methods
+     */
     private $hashMethods = [];
 
     /**
      * Check if it's the first function of the array that was used for hashing.
      *
-     * @param string $passwd The password you want to check
-     * @param string $hash The hash you want to check
+     * @param string $passwd     The password you want to check
+     * @param string $hash       The hash you want to check
      * @param string $staticSalt A static salt
      *
      * @return bool Result of the verify function
      */
     public function isFirstHash($passwd, $hash, $staticSalt = _COOKIE_KEY_)
     {
-        if (!count($this->hashMethods)) {
+        if (! \count($this->hashMethods)) {
             $this->initHashMethods();
         }
 
@@ -57,15 +60,15 @@ class Hashing
     /**
      * Iterate on hash_methods array and return true if it matches.
      *
-     * @param string $passwd The password you want to check
-     * @param string $hash The hash you want to check
+     * @param string $passwd     The password you want to check
+     * @param string $hash       The hash you want to check
      * @param string $staticSalt A static salt
      *
      * @return bool `true` is returned if the function find a match else false
      */
     public function checkHash($passwd, $hash, $staticSalt = _COOKIE_KEY_)
     {
-        if (!count($this->hashMethods)) {
+        if (! \count($this->hashMethods)) {
             $this->initHashMethods();
         }
 
@@ -83,13 +86,13 @@ class Hashing
      * contained in PrestaShop\PrestaShop\Core\Crypto\Hashing::hash_methods.
      *
      * @param string $plaintextPassword The password you want to hash
-     * @param string $staticSalt The static salt
+     * @param string $staticSalt        The static salt
      *
      * @return string
      */
     public function hash($plaintextPassword, $staticSalt = _COOKIE_KEY_)
     {
-        if (!count($this->hashMethods)) {
+        if (! \count($this->hashMethods)) {
             $this->initHashMethods();
         }
 
@@ -108,7 +111,7 @@ class Hashing
                 'option' => [],
                 'hash' => function ($passwd, $staticSalt, $option) {
                     /* @phpstan-ignore-next-line */
-                    return password_hash($passwd, PASSWORD_BCRYPT);
+                    return password_hash($passwd, \PASSWORD_BCRYPT);
                 },
                 'verify' => function ($passwd, $hash, $staticSalt) {
                     /*

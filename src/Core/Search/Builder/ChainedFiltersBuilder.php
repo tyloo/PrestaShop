@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,9 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
  */
 final class ChainedFiltersBuilder extends AbstractFiltersBuilder
 {
-    /** @var FiltersBuilderCollection */
+    /**
+     * @var FiltersBuilderCollection
+     */
     private $builders;
 
     /**
@@ -51,9 +54,6 @@ final class ChainedFiltersBuilder extends AbstractFiltersBuilder
         $this->builders = new FiltersBuilderCollection($builders);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config)
     {
         parent::setConfig($config);
@@ -66,9 +66,6 @@ final class ChainedFiltersBuilder extends AbstractFiltersBuilder
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildFilters(?Filters $filters = null)
     {
         if ($this->builders->count() === 0) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,29 +46,19 @@ final class GetCategoriesTree
      */
     private $shopId;
 
-    /**
-     * @param int $languageId
-     * @param int $shopId
-     */
     public function __construct(
         int $languageId,
-        int $shopId
+        int $shopId,
     ) {
         $this->languageId = new LanguageId($languageId);
         $this->shopId = new ShopId($shopId);
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }
 
-    /**
-     * @return ShopId
-     */
     public function getShopId(): ShopId
     {
         return $this->shopId;

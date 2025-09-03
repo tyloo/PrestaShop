@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,20 +40,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 final class EventFiltersBuilder extends AbstractFiltersBuilder
 {
-    /** @var EventDispatcherInterface */
+    /**
+     * @var EventDispatcherInterface
+     */
     private $dispatcher;
 
-    /**
-     * @param EventDispatcherInterface $dispatcher
-     */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildFilters(?Filters $filters = null)
     {
         $filterSearchParametersEvent = new FilterSearchCriteriaEvent($filters);

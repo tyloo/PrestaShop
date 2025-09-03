@@ -47,7 +47,7 @@ class SplitShipment
     public function __construct(
         int $shipmentId,
         array $orderDetailQuantity,
-        int $carrierId
+        int $carrierId,
     ) {
         $this->shipmentId = new ShipmentId($shipmentId);
         $this->orderDetailQuantity = new OrderDetailQuantity(

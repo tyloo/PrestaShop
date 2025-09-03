@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,7 +66,7 @@ final class FolderThemeScanner
         $this->checkThemeFolder($mailThemeFolder);
 
         $mailTheme = new Theme(basename($mailThemeFolder));
-        $this->baseThemeFolder = dirname($mailThemeFolder);
+        $this->baseThemeFolder = \dirname($mailThemeFolder);
 
         // If the scanned directory is in the modules folder we need to adapt the Twig namespace
         if (str_starts_with($this->baseThemeFolder, $this->moduleDirectory)) {
@@ -101,16 +102,15 @@ final class FolderThemeScanner
     }
 
     /**
-     * @param LayoutCollectionInterface $collection
      * @param string $mailThemeFolder
      */
     private function addCoreLayouts(LayoutCollectionInterface $collection, $mailThemeFolder)
     {
-        $coreLayoutsFolder = implode(DIRECTORY_SEPARATOR, [
+        $coreLayoutsFolder = implode(\DIRECTORY_SEPARATOR, [
             $mailThemeFolder,
             MailTemplateInterface::CORE_CATEGORY,
         ]);
-        if (!is_dir($coreLayoutsFolder)) {
+        if (! is_dir($coreLayoutsFolder)) {
             return;
         }
 
@@ -118,37 +118,35 @@ final class FolderThemeScanner
     }
 
     /**
-     * @param LayoutCollectionInterface $collection
      * @param string $mailThemeFolder
      */
     private function addModulesLayouts(LayoutCollectionInterface $collection, $mailThemeFolder)
     {
-        $moduleLayoutsFolder = implode(DIRECTORY_SEPARATOR, [
+        $moduleLayoutsFolder = implode(\DIRECTORY_SEPARATOR, [
             $mailThemeFolder,
             MailTemplateInterface::MODULES_CATEGORY,
         ]);
-        if (!is_dir($moduleLayoutsFolder)) {
+        if (! is_dir($moduleLayoutsFolder)) {
             return;
         }
 
         $moduleFinder = new Finder();
         $moduleFinder->directories()->in($moduleLayoutsFolder)->depth(0);
 
-        /* @var SplFileInfo $moduleFolder */
+        /** @var SplFileInfo $moduleFolder */
         foreach ($moduleFinder as $moduleFolder) {
             $this->addLayoutsFromFolder($collection, $moduleFolder->getPathname(), $moduleFolder->getFilename());
         }
     }
 
     /**
-     * @param LayoutCollectionInterface $collection
      * @param string $folder
      * @param string $moduleName
      */
     private function addLayoutsFromFolder(
         LayoutCollectionInterface $collection,
         $folder,
-        $moduleName = ''
+        $moduleName = '',
     ) {
         $layoutFiles = [];
         $finder = new Finder();
@@ -157,7 +155,7 @@ final class FolderThemeScanner
         foreach ($finder as $fileInfo) {
             // Get filename without any extension (ex: account.html.twig -> account)
             $layoutName = preg_replace('/\..+/', '', $fileInfo->getBasename());
-            if (!isset($layoutFiles[$layoutName])) {
+            if (! isset($layoutFiles[$layoutName])) {
                 $layoutFiles[$layoutName] = [
                     MailTemplateInterface::HTML_TYPE => '',
                     MailTemplateInterface::TXT_TYPE => '',
@@ -178,14 +176,12 @@ final class FolderThemeScanner
     }
 
     /**
-     * @param SplFileInfo $fileInfo
-     *
      * @return string
      */
     private function getTemplateType(SplFileInfo $fileInfo)
     {
-        $ext = !empty($fileInfo->getExtension()) ? '.' . $fileInfo->getExtension() : '';
-        $htmlTypeRegexp = sprintf('/.+\.%s%s/', MailTemplateInterface::HTML_TYPE, $ext);
+        $ext = ! empty($fileInfo->getExtension()) ? '.' . $fileInfo->getExtension() : '';
+        $htmlTypeRegexp = \sprintf('/.+\.%s%s/', MailTemplateInterface::HTML_TYPE, $ext);
         if (preg_match($htmlTypeRegexp, $fileInfo->getFilename())) {
             return MailTemplateInterface::HTML_TYPE;
         }
@@ -198,14 +194,14 @@ final class FolderThemeScanner
      */
     private function checkThemeFolder($mailThemeFolder)
     {
-        if (!is_dir($mailThemeFolder)) {
-            throw new FileNotFoundException(sprintf('Invalid mail theme folder "%s": no such directory', $mailThemeFolder));
+        if (! is_dir($mailThemeFolder)) {
+            throw new FileNotFoundException(\sprintf('Invalid mail theme folder "%s": no such directory', $mailThemeFolder));
         }
     }
 
     private function getTemplatePath(SplFileInfo $fileInfo): string
     {
-        $templateRelativePath = substr($fileInfo->getPathname(), strlen($this->baseThemeFolder));
+        $templateRelativePath = substr($fileInfo->getPathname(), \strlen($this->baseThemeFolder));
 
         return $this->themeTwigNamespace . $templateRelativePath;
     }

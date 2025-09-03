@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,44 +69,27 @@ class EditAttachmentCommand
      */
     private $fileSize;
 
-    /**
-     * @param AttachmentId $attachmentId
-     */
     public function __construct(AttachmentId $attachmentId)
     {
         $this->attachmentId = $attachmentId;
     }
 
-    /**
-     * @return AttachmentId
-     */
     public function getAttachmentId(): AttachmentId
     {
         return $this->attachmentId;
     }
 
-    /**
-     * @return string
-     */
     public function getPathName(): ?string
     {
         return $this->pathName;
     }
 
-    /**
-     * @param string $pathName
-     * @param string $mimeType
-     * @param string $originalFileName
-     * @param int $fileSize
-     *
-     * @return EditAttachmentCommand
-     */
     public function setFileInfo(
         string $pathName,
         string $mimeType,
         string $originalFileName,
-        int $fileSize
-    ): EditAttachmentCommand {
+        int $fileSize,
+    ): self {
         $this->pathName = $pathName;
         $this->mimeType = $mimeType;
         $this->originalFileName = $originalFileName;
@@ -114,17 +98,11 @@ class EditAttachmentCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOriginalFileName(): ?string
     {
         return $this->originalFileName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMimeType(): ?string
     {
         return $this->mimeType;
@@ -140,10 +118,8 @@ class EditAttachmentCommand
 
     /**
      * @param string[] $localizedNames
-     *
-     * @return EditAttachmentCommand
      */
-    public function setLocalizedNames(array $localizedNames): EditAttachmentCommand
+    public function setLocalizedNames(array $localizedNames): self
     {
         $this->localizedNames = $localizedNames;
 
@@ -160,19 +136,14 @@ class EditAttachmentCommand
 
     /**
      * @param string[]|null $localizedDescriptions
-     *
-     * @return EditAttachmentCommand
      */
-    public function setLocalizedDescriptions(?array $localizedDescriptions): EditAttachmentCommand
+    public function setLocalizedDescriptions(?array $localizedDescriptions): self
     {
         $this->localizedDescriptions = $localizedDescriptions;
 
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getFileSize(): ?int
     {
         return $this->fileSize;

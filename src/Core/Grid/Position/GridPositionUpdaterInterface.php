@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ interface GridPositionUpdaterInterface
      * of the PositionDefinitionInterface allowing to build the query, the
      * new positions and optionally a parentId
      * Throws a PositionUpdateException if something went wrong.
-     *
-     * @param PositionUpdateInterface $positionUpdate
      *
      * @throws PositionUpdateException
      */

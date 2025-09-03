@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,20 +47,16 @@ final class ImportEntityFieldChoiceProvider implements FormChoiceProviderInterfa
     private $selectedEntity;
 
     /**
-     * @param EntityFieldsProviderFinderInterface $entityFieldsProviderFinder
      * @param int $selectedEntity
      */
     public function __construct(
         EntityFieldsProviderFinderInterface $entityFieldsProviderFinder,
-        $selectedEntity
+        $selectedEntity,
     ) {
         $this->entityFieldsProviderFinder = $entityFieldsProviderFinder;
         $this->selectedEntity = $selectedEntity;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         try {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,23 +42,18 @@ final class EmailLogsQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
+        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
 
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -70,9 +66,6 @@ final class EmailLogsQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -84,8 +77,6 @@ final class EmailLogsQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Get generic query builder.
      *
-     * @param array $filters
-     *
      * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters)
@@ -96,22 +87,22 @@ final class EmailLogsQueryBuilder extends AbstractDoctrineQueryBuilder
             ->leftJoin('m', $this->dbPrefix . 'lang', 'l', 'm.id_lang = l.id_lang');
 
         foreach ($filters as $name => $value) {
-            if ('id_lang' === $name) {
+            if ($name === 'id_lang') {
                 $qb->andWhere("l.id_lang = :$name");
                 $qb->setParameter($name, $value);
 
                 continue;
             }
 
-            if ('date_add' === $name) {
+            if ($name === 'date_add') {
                 if (isset($value['from'])) {
                     $qb->andWhere('m.date_add >= :date_from');
-                    $qb->setParameter('date_from', sprintf('%s %s', $value['from'], '0:0:0'));
+                    $qb->setParameter('date_from', \sprintf('%s %s', $value['from'], '0:0:0'));
                 }
 
                 if (isset($value['to'])) {
                     $qb->andWhere('m.date_add <= :date_to');
-                    $qb->setParameter('date_to', sprintf('%s %s', $value['to'], '23:59:59'));
+                    $qb->setParameter('date_to', \sprintf('%s %s', $value['to'], '23:59:59'));
                 }
 
                 continue;

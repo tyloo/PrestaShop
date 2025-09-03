@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,9 +55,6 @@ interface LayoutCollectionInterface extends IteratorAggregate, \Countable
     public function remove($layout);
 
     /**
-     * @param LayoutInterface $oldLayout
-     * @param LayoutInterface $newLayout
-     *
      * @return bool
      */
     public function replace(LayoutInterface $oldLayout, LayoutInterface $newLayout);
@@ -69,8 +67,5 @@ interface LayoutCollectionInterface extends IteratorAggregate, \Countable
      */
     public function getLayout($layoutName, $moduleName);
 
-    /**
-     * @param LayoutCollectionInterface $collection
-     */
-    public function merge(LayoutCollectionInterface $collection);
+    public function merge(self $collection);
 }

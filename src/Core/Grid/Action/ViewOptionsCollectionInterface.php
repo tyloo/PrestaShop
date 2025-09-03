@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ interface ViewOptionsCollectionInterface extends Iterator
 {
     /**
      * Add view option to collection.
-     *
-     * @param string $action
-     * @param mixed $value
      *
      * @return self
      */

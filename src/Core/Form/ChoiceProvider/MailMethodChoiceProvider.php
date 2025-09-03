@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ final class MailMethodChoiceProvider implements FormChoiceProviderInterface
      */
     private $translator;
 
-    /**
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $choices = [];
@@ -72,7 +67,6 @@ final class MailMethodChoiceProvider implements FormChoiceProviderInterface
 
     /**
      * @param string $key
-     * @param array $params
      * @param string $domain
      *
      * @return string

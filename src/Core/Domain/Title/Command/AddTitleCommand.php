@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,17 +64,13 @@ class AddTitleCommand
 
     /**
      * @param array<string> $localizedNames
-     * @param int $gender
-     * @param UploadedFile|null $imgFile
-     * @param int|null $imgWidth
-     * @param int|null $imgHeight
      */
     public function __construct(
         array $localizedNames,
         int $gender,
         ?UploadedFile $imgFile = null,
         ?int $imgWidth = null,
-        ?int $imgHeight = null
+        ?int $imgHeight = null,
     ) {
         $this->localizedNames = $localizedNames;
         $this->gender = new Gender($gender);
@@ -90,33 +87,21 @@ class AddTitleCommand
         return $this->localizedNames;
     }
 
-    /**
-     * @return Gender
-     */
     public function getGender(): Gender
     {
         return $this->gender;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
     public function getImageFile(): ?UploadedFile
     {
         return $this->imgFile;
     }
 
-    /**
-     * @return int|null
-     */
     public function getImageWidth(): ?int
     {
         return $this->imgWidth;
     }
 
-    /**
-     * @return int|null
-     */
     public function getImageHeight(): ?int
     {
         return $this->imgHeight;

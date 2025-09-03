@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,7 +78,7 @@ class EmployeeContextBuilder implements LegacyContextBuilderInterface
     public function buildLegacyContext(): void
     {
         $legacyEmployee = $this->getLegacyEmployee();
-        if (!empty($legacyEmployee)) {
+        if (! empty($legacyEmployee)) {
             // Only update the legacy context when the employee is not the expected one, if not leave the context unchanged
             if ($this->legacyObjectNeedsUpdate($this->contextStateManager->getContext()->employee, (int) $legacyEmployee->id)) {
                 $this->contextStateManager->setEmployee($legacyEmployee);

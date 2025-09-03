@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class OpenSSL implements OpenSSLInterface
         // Try catch needed here because it can not work on some systems
         // @see https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php
         try {
-            return \openssl_random_pseudo_bytes($length);
+            return openssl_random_pseudo_bytes($length);
         } catch (Throwable) {
             throw new RuntimeException('OpenSSL is not supported');
         }

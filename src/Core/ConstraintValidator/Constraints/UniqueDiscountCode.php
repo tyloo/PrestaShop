@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class UniqueDiscountCode extends Constraint
 {
     public $message = 'The discount code is already used (conflict with discount "%s").';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return UniqueDiscountCodeValidator::class;

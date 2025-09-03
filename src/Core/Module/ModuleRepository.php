@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,25 +56,39 @@ class ModuleRepository implements ModuleRepositoryInterface
         'confirmUninstall',
     ];
 
-    /** @var ModuleDataProvider */
+    /**
+     * @var ModuleDataProvider
+     */
     private $moduleDataProvider;
 
-    /** @var AdminModuleDataProvider */
+    /**
+     * @var AdminModuleDataProvider
+     */
     private $adminModuleDataProvider;
 
-    /** @var HookManager */
+    /**
+     * @var HookManager
+     */
     private $hookManager;
 
-    /** @var CacheProvider */
+    /**
+     * @var CacheProvider
+     */
     private $cacheProvider;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $modulePath;
 
-    /** @var array|null */
+    /**
+     * @var array|null
+     */
     private $installedModules;
 
-    /** @var Module[] */
+    /**
+     * @var Module[]
+     */
     private $modulesFromHook;
 
     public function __construct(
@@ -102,7 +117,7 @@ class ModuleRepository implements ModuleRepositoryInterface
 
         foreach ($modulesDirsList as $moduleDir) {
             $moduleName = $moduleDir->getFilename();
-            if (null === $this->getModulePath($moduleName)) {
+            if ($this->getModulePath($moduleName) === null) {
                 continue;
             }
 
@@ -122,7 +137,7 @@ class ModuleRepository implements ModuleRepositoryInterface
     public function getMustBeConfiguredModules(): ModuleCollection
     {
         return $this->getList()->filter(static function (Module $module) {
-            return $module->isConfigurable() && $module->isActive() && $module->hasValidInstance() && !empty($module->getInstance()->warning);
+            return $module->isConfigurable() && $module->isActive() && $module->hasValidInstance() && ! empty($module->getInstance()->warning);
         });
     }
 
@@ -132,7 +147,7 @@ class ModuleRepository implements ModuleRepositoryInterface
     public function getPresentModule(string $technicalName): Module
     {
         $module = $this->getModule($technicalName);
-        if (!$module->disk->get('is_present')) {
+        if (! $module->disk->get('is_present')) {
             throw new ModuleNotFoundException();
         }
 
@@ -147,8 +162,6 @@ class ModuleRepository implements ModuleRepositoryInterface
     }
 
     /**
-     * @param string $moduleName
-     *
      * @return Module
      */
     public function getModule(string $moduleName): ModuleInterface
@@ -189,7 +202,7 @@ class ModuleRepository implements ModuleRepositoryInterface
         $path = $this->modulePath . '/' . $moduleName;
         $filePath = $path . '/' . $moduleName . '.php';
 
-        if (!is_file($filePath)) {
+        if (! is_file($filePath)) {
             return null;
         }
 
@@ -203,9 +216,7 @@ class ModuleRepository implements ModuleRepositoryInterface
 
     /**
      * @param string|null $moduleName The module to clear the cache for. If the name is null, the cache will be cleared for all modules.
-     * @param bool $allShops Default to false. If the value is true, the cache will be cleared for all the active shops. If not it will be cleared only for the shop in the context.
-     *
-     * @return bool
+     * @param bool        $allShops   Default to false. If the value is true, the cache will be cleared for all the active shops. If not it will be cleared only for the shop in the context.
      */
     public function clearCache(?string $moduleName = null, bool $allShops = false): bool
     {
@@ -215,7 +226,7 @@ class ModuleRepository implements ModuleRepositoryInterface
                 foreach (Shop::getShops(true, null, true) as $shopId) {
                     $cacheKey = $this->getCacheKey($moduleName, $shopId);
                     if ($this->cacheProvider->contains($cacheKey)) {
-                        if (!$this->cacheProvider->delete($cacheKey)) {
+                        if (! $this->cacheProvider->delete($cacheKey)) {
                             return false;
                         }
                     }
@@ -232,10 +243,7 @@ class ModuleRepository implements ModuleRepositoryInterface
     }
 
     /**
-     * @param string $moduleName
      * @param int|null $shopId If this parameter is given, the key returned will be the one for the shop. Otherwise, it will be the cache key for the shop in the context.
-     *
-     * @return string
      */
     protected function getCacheKey(string $moduleName, ?int $shopId = null): string
     {
@@ -305,18 +313,13 @@ class ModuleRepository implements ModuleRepositoryInterface
             $modulesFromHook = array_values($modulesFromHook ?? []);
 
             // Merge hooks from modules if it's an array and not empty
-            $filteredModulesFromHook = array_filter($modulesFromHook, function ($item) { return is_array($item); });
+            $filteredModulesFromHook = array_filter($modulesFromHook, function ($item) { return \is_array($item); });
             $this->modulesFromHook = empty($filteredModulesFromHook) ? [] : array_merge(...$filteredModulesFromHook);
         }
 
         return $this->modulesFromHook;
     }
 
-    /**
-     * @param ModuleCollection $modules
-     *
-     * @return ModuleCollection
-     */
     protected function addModulesFromHook(ModuleCollection $modules): ModuleCollection
     {
         try {
@@ -335,7 +338,7 @@ class ModuleRepository implements ModuleRepositoryInterface
                     break;
                 }
             }
-            if (!$merged) {
+            if (! $merged) {
                 $modules->add(new Module($externalModule));
             }
         }
@@ -344,8 +347,6 @@ class ModuleRepository implements ModuleRepositoryInterface
     }
 
     /**
-     * @param Module $module
-     *
      * @return Module
      */
     protected function enrichModuleAttributesFromHook(Module $module): ModuleInterface
@@ -361,15 +362,15 @@ class ModuleRepository implements ModuleRepositoryInterface
                 $moduleVersionAvailable = $module->getAttributes()->get('version_available');
                 $moduleHookVersionAvailable = $moduleFromHook['version_available'];
                 // We keep the more up-to-date information (in case multiple sources provide the same module)
-                if (!empty($moduleVersionAvailable) && !empty($moduleHookVersionAvailable) && version_compare($moduleVersionAvailable, $moduleHookVersionAvailable, '>')) {
+                if (! empty($moduleVersionAvailable) && ! empty($moduleHookVersionAvailable) && version_compare($moduleVersionAvailable, $moduleHookVersionAvailable, '>')) {
                     continue;
                 }
 
                 // Prevent data from hooks from overriding local translations on displayName and description
-                if ($module->attributes->has('displayName') && !empty($module->attributes->get('displayName'))) {
+                if ($module->attributes->has('displayName') && ! empty($module->attributes->get('displayName'))) {
                     unset($moduleFromHook['displayName']);
                 }
-                if ($module->attributes->has('description') && !empty($module->attributes->get('description'))) {
+                if ($module->attributes->has('description') && ! empty($module->attributes->get('description'))) {
                     unset($moduleFromHook['description']);
                 }
 

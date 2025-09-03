@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class AddImageTypeCommand
         private readonly bool $categories,
         private readonly bool $manufacturers,
         private readonly bool $suppliers,
-        private readonly bool $stores
+        private readonly bool $stores,
     ) {
     }
 

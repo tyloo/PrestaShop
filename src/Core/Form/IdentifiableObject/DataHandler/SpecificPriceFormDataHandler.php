@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,18 +43,15 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(
-        CommandBusInterface $commandBus
+        CommandBusInterface $commandBus,
     ) {
         $this->commandBus = $commandBus;
     }
 
     public function create(array $data): int
     {
-        $fixedPrice = isset($data['impact']['fixed_price_tax_excluded']) && !InitialPrice::isInitialPriceValue((string) $data['impact']['fixed_price_tax_excluded']) ?
+        $fixedPrice = isset($data['impact']['fixed_price_tax_excluded']) && ! InitialPrice::isInitialPriceValue((string) $data['impact']['fixed_price_tax_excluded']) ?
             (string) $data['impact']['fixed_price_tax_excluded'] :
             InitialPrice::INITIAL_PRICE_VALUE
         ;
@@ -85,22 +83,22 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
         if (isset($data['from_quantity'])) {
             $command->setFromQuantity((int) $data['from_quantity']);
         }
-        if (isset($data['date_range']) && array_key_exists('from', $data['date_range'])) {
+        if (isset($data['date_range']) && \array_key_exists('from', $data['date_range'])) {
             $command->setDateTimeFrom(DateTime::buildNullableDateTime($data['date_range']['from']));
         }
-        if (isset($data['date_range']) && array_key_exists('to', $data['date_range'])) {
+        if (isset($data['date_range']) && \array_key_exists('to', $data['date_range'])) {
             $command->setDateTimeTo(DateTime::buildNullableDateTime($data['date_range']['to']));
         }
 
         // It switch input is true it means the price field is enabled
-        if (!empty($data['impact']['disabling_switch_fixed_price_tax_excluded'])) {
+        if (! empty($data['impact']['disabling_switch_fixed_price_tax_excluded'])) {
             $command->setFixedPrice((string) $data['impact']['fixed_price_tax_excluded']);
         } else {
             $command->setFixedPrice(InitialPrice::INITIAL_PRICE_VALUE);
         }
 
         // It switch input is true it means the price field is enabled
-        if (!empty($data['impact']['disabling_switch_reduction'])) {
+        if (! empty($data['impact']['disabling_switch_reduction'])) {
             if (isset($data['impact']['reduction']['type'], $data['impact']['reduction']['value'])) {
                 $command->setReduction((string) $data['impact']['reduction']['type'], (string) $data['impact']['reduction']['value']);
             }
@@ -117,7 +115,7 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
 
     /**
      * @param AddSpecificPriceCommand|EditSpecificPriceCommand $command
-     * @param array<string, mixed> $data
+     * @param array<string, mixed>                             $data
      */
     private function fillRelations($command, array $data): void
     {
@@ -127,13 +125,13 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
         if (isset($data['groups']['group_id'])) {
             $command->setGroupId((int) $data['groups']['group_id']);
         }
-        if (array_key_exists('combination_id', $data)) {
+        if (\array_key_exists('combination_id', $data)) {
             $command->setCombinationId((int) $data['combination_id']);
         }
         if (isset($data['groups']['country_id'])) {
             $command->setCountryId((int) $data['groups']['country_id']);
         }
-        if (array_key_exists('shop_id', $data['groups'])) {
+        if (\array_key_exists('shop_id', $data['groups'])) {
             $command->setShopId((int) $data['groups']['shop_id']);
         }
         if (isset($data['customer'])) {
@@ -143,8 +141,6 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
 
     /**
      * @param array<string, mixed> $data
-     *
-     * @return int
      */
     private function getCustomerId(array $data): int
     {

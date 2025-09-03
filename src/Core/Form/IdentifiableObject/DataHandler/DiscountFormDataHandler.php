@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -187,7 +188,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                 $productRuleGroups = [];
 
                 foreach ($specificProducts as $specificProduct) {
-                    if (!empty($specificProduct['combination_id']) && $specificProduct['combination_id'] !== NoCombinationId::NO_COMBINATION_ID) {
+                    if (! empty($specificProduct['combination_id']) && $specificProduct['combination_id'] !== NoCombinationId::NO_COMBINATION_ID) {
                         $productRuleGroups[] = new ProductRuleGroup(
                             $specificProduct['quantity'],
                             [
@@ -210,7 +211,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                 $category = $data['conditions']['cart_conditions']['product_segment']['category'] ?? '';
                 $supplier = $data['conditions']['cart_conditions']['product_segment']['supplier'] ?? [];
                 $productRuleGroups = [];
-                if (!empty($manufacturer)) {
+                if (! empty($manufacturer)) {
                     $productRuleGroups[] = new ProductRuleGroup(
                         $data['conditions']['cart_conditions']['product_segment']['quantity'],
                         [
@@ -218,7 +219,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                         ]
                     );
                 }
-                if (!empty($category)) {
+                if (! empty($category)) {
                     $productRuleGroups[] = new ProductRuleGroup(
                         $data['conditions']['cart_conditions']['product_segment']['quantity'],
                         [
@@ -226,7 +227,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                         ]
                     );
                 }
-                if (!empty($supplier)) {
+                if (! empty($supplier)) {
                     $productRuleGroups[] = new ProductRuleGroup(
                         $data['conditions']['cart_conditions']['product_segment']['quantity'],
                         [
@@ -235,7 +236,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                     );
                 }
 
-                if (!empty($productRuleGroups)) {
+                if (! empty($productRuleGroups)) {
                     $conditionsCommand->setProductConditions($productRuleGroups);
                 }
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -92,7 +93,7 @@ class HookParserVisitor extends NodeVisitorAbstract
         $usedParameters = [];
         if ($node instanceof FuncCall || $node instanceof MethodCall || $node instanceof StaticCall) {
             foreach ($node->args as $index => $arg) {
-                if ($index >= count($parameterNames)) {
+                if ($index >= \count($parameterNames)) {
                     break;
                 }
                 $paramName = $parameterNames[$index];
@@ -124,31 +125,31 @@ class HookParserVisitor extends NodeVisitorAbstract
     {
         if ($expr instanceof Node\Scalar\String_) {
             return "'" . $expr->value . "'";
-        } elseif ($expr instanceof Node\Expr\ConstFetch) {
+        }
+        if ($expr instanceof Node\Expr\ConstFetch) {
             return $expr->name->toString();
-        } elseif ($expr instanceof Node\Scalar\LNumber || $expr instanceof Node\Scalar\DNumber) {
+        }
+        if ($expr instanceof Node\Scalar\LNumber || $expr instanceof Node\Scalar\DNumber) {
             return (string) $expr->value;
-        } elseif ($expr instanceof Node\Expr\Array_) {
+        }
+        if ($expr instanceof Node\Expr\Array_) {
             $prettyPrinter = new Standard();
 
             return $prettyPrinter->prettyPrintExpr($expr);
-        } elseif ($expr instanceof Node\Expr\Variable) {
-            return '$' . $expr->name;
-        } else {
-            $prettyPrinter = new Standard();
-            if ($expr instanceof Node\Stmt\Expression) {
-                return $prettyPrinter->prettyPrint([$expr->expr]);
-            } elseif ($expr instanceof Node\Expr) {
-                return $prettyPrinter->prettyPrint([$expr]);
-            } else {
-                throw new InvalidArgumentException('Unsupported node type.');
-            }
         }
+        if ($expr instanceof Node\Expr\Variable) {
+            return '$' . $expr->name;
+        }
+        $prettyPrinter = new Standard();
+        if ($expr instanceof Node\Stmt\Expression) {
+            return $prettyPrinter->prettyPrint([$expr->expr]);
+        }
+        if ($expr instanceof Node\Expr) {
+            return $prettyPrinter->prettyPrint([$expr]);
+        }
+        throw new InvalidArgumentException('Unsupported node type.');
     }
 
-    /**
-     * @return array
-     */
     public function getHooks(): array
     {
         return $this->hooks;
@@ -230,7 +231,7 @@ class HookParserVisitor extends NodeVisitorAbstract
 
                     // Check if the argument is one of the known placeholders
                     $knownPlaceholders = ['<FormName>', '<DefinitionId>', '<LegacyControllerName>', '<HookName>', '<Action>', '<ClassName>'];
-                    if (in_array($argumentValue, $knownPlaceholders, true)) {
+                    if (\in_array($argumentValue, $knownPlaceholders, true)) {
                         $isDynamic = true;
 
                         return $argumentValue;
@@ -260,7 +261,7 @@ class HookParserVisitor extends NodeVisitorAbstract
 
                     // Check for known placeholders
                     $knownPlaceholders = ['<FormName>', '<DefinitionId>', '<LegacyControllerName>', '<HookName>', '<Action>', '<ClassName>'];
-                    if (in_array($argumentValue, $knownPlaceholders, true)) {
+                    if (\in_array($argumentValue, $knownPlaceholders, true)) {
                         $isDynamic = true;
 
                         return $argumentValue;
@@ -337,17 +338,16 @@ class HookParserVisitor extends NodeVisitorAbstract
 
         if ($startPos !== null && $endPos !== null) {
             return substr($this->code, $startPos, $endPos - $startPos + 1);
-        } else {
-            // Fallback to pretty printer if positions are not available
-            $prettyPrinter = new Standard();
-
-            if ($node instanceof Node\Stmt\Expression) {
-                return $prettyPrinter->prettyPrint([$node->expr]);
-            } elseif ($node instanceof Node\Expr) {
-                return $prettyPrinter->prettyPrint([$node]);
-            } else {
-                throw new InvalidArgumentException('Unsupported node type.');
-            }
         }
+        // Fallback to pretty printer if positions are not available
+        $prettyPrinter = new Standard();
+
+        if ($node instanceof Node\Stmt\Expression) {
+            return $prettyPrinter->prettyPrint([$node->expr]);
+        }
+        if ($node instanceof Node\Expr) {
+            return $prettyPrinter->prettyPrint([$node]);
+        }
+        throw new InvalidArgumentException('Unsupported node type.');
     }
 }

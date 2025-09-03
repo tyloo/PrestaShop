@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,12 +63,12 @@ class CustomerThreadTimelineItem
     private $relatedOrderId;
 
     /**
-     * @param string $content
-     * @param string $icon
-     * @param string $arrow
-     * @param string $date
+     * @param string      $content
+     * @param string      $icon
+     * @param string      $arrow
+     * @param string      $date
      * @param string|null $color
-     * @param int|null $relatedOrderId
+     * @param int|null    $relatedOrderId
      */
     public function __construct(
         $content,
@@ -75,7 +76,7 @@ class CustomerThreadTimelineItem
         $arrow,
         $date,
         $color = null,
-        $relatedOrderId = null
+        $relatedOrderId = null,
     ) {
         $this->content = $content;
         $this->icon = $icon;

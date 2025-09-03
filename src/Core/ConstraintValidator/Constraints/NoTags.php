@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class NoTags extends Constraint
 {
     public $message = 'Field must not contain HTML or PHP tags';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return NoTagsValidator::class;

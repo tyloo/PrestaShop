@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,8 +62,8 @@ class LanguageId
      */
     private function assertIsIntegerGreaterThanZero($id)
     {
-        if (!is_int($id) || 0 >= $id) {
-            throw new LanguageException(sprintf('Invalid language id %s provided', var_export($id, true)));
+        if (! \is_int($id) || $id <= 0) {
+            throw new LanguageException(\sprintf('Invalid language id %s provided', var_export($id, true)));
         }
     }
 }

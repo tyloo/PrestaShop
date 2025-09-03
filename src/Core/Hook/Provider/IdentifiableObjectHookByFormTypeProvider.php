@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,17 +57,11 @@ final class IdentifiableObjectHookByFormTypeProvider implements HookByFormTypePr
      */
     private $formFactory;
 
-    /**
-     * @param FormFactoryInterface $formFactory
-     */
     public function __construct(FormFactoryInterface $formFactory)
     {
         $this->formFactory = $formFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHookNames(array $formTypes)
     {
         $formNames = $this->getFormNames($formTypes);
@@ -147,9 +142,9 @@ final class IdentifiableObjectHookByFormTypeProvider implements HookByFormTypePr
             try {
                 yield $this->formFactory->createBuilder($formType)->getName();
             } catch (Exception $e) {
-                Logger::addLog(sprintf('Error while loading formType: %s . Error: %s', $formType, $e));
+                Logger::addLog(\sprintf('Error while loading formType: %s . Error: %s', $formType, $e));
             } catch (Throwable $e) {
-                Logger::addLog(sprintf('Invalid argument exception: %s . Error: %s', $formType, $e));
+                Logger::addLog(\sprintf('Invalid argument exception: %s . Error: %s', $formType, $e));
             }
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,24 +51,16 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
      */
     private $stringModifier;
 
-    /**
-     * @param array $hookDescriptions
-     * @param StringValidatorInterface $stringValidator
-     * @param StringModifierInterface $stringModifier
-     */
     public function __construct(
         array $hookDescriptions,
         StringValidatorInterface $stringValidator,
-        StringModifierInterface $stringModifier
+        StringModifierInterface $stringModifier,
     ) {
         $this->hookDescriptions = $hookDescriptions;
         $this->stringValidator = $stringValidator;
         $this->stringModifier = $stringModifier;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate($hookName)
     {
         foreach ($this->hookDescriptions as $hookDescription) {
@@ -75,7 +68,7 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
             $suffix = isset($hookDescription['suffix']) ? $hookDescription['suffix'] : '';
 
             if ($this->stringValidator->startsWithAndEndsWith($hookName, $prefix, $suffix)
-                && !$this->stringValidator->doesContainsWhiteSpaces($hookName)
+                && ! $this->stringValidator->doesContainsWhiteSpaces($hookName)
             ) {
                 $hookId = $this->extractHookId($hookName, $prefix, $suffix);
 
@@ -118,7 +111,7 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
      */
     private function getTextWithHookId($description, $hookId)
     {
-        if (!$this->doesHookDescriptionContainsPlaceholder($description)) {
+        if (! $this->doesHookDescriptionContainsPlaceholder($description)) {
             return $description;
         }
 
@@ -132,7 +125,7 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
             $hookIdSplitByCamelCase = strtolower($hookIdSplitByCamelCase);
         }
 
-        return sprintf($description, $hookIdSplitByCamelCase);
+        return \sprintf($description, $hookIdSplitByCamelCase);
     }
 
     /**

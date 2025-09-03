@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,42 +51,26 @@ class Ean13
      */
     private $value;
 
-    /**
-     * @param string $value
-     */
     public function __construct(string $value)
     {
         $this->assertEan13IsValid($value);
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
-     *
      * @throws ProductConstraintException
      */
     private function assertEan13IsValid(string $value): void
     {
-        if (strlen($value) <= self::MAX_LENGTH && preg_match(self::VALID_PATTERN, $value)) {
+        if (\strlen($value) <= self::MAX_LENGTH && preg_match(self::VALID_PATTERN, $value)) {
             return;
         }
 
-        throw new ProductConstraintException(
-            sprintf(
-                'Invalid Ean13 "%s". It should match pattern "%s" and cannot exceed %s symbols',
-                $value,
-                self::VALID_PATTERN,
-                self::MAX_LENGTH
-            ),
-            ProductConstraintException::INVALID_EAN_13
-        );
+        throw new ProductConstraintException(\sprintf('Invalid Ean13 "%s". It should match pattern "%s" and cannot exceed %s symbols', $value, self::VALID_PATTERN, self::MAX_LENGTH), ProductConstraintException::INVALID_EAN_13);
     }
 }

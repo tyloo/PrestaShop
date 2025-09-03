@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,37 +46,24 @@ class ProductLightGridDefinitionFactory extends AbstractGridDefinitionFactory
      */
     private $configuration;
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        ConfigurationInterface $configuration
+        ConfigurationInterface $configuration,
     ) {
         parent::__construct($hookDispatcher);
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Products', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -129,9 +117,6 @@ class ProductLightGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getViewOptions()
     {
         return (new ViewOptionsCollection())->add('pagination_view', 'quicknav');

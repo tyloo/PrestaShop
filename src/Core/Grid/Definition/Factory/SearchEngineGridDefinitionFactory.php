@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,25 +61,16 @@ final class SearchEngineGridDefinitionFactory extends AbstractFilterableGridDefi
      */
     public const GRID_ID = 'search_engine';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Search engines', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -118,9 +110,6 @@ final class SearchEngineGridDefinitionFactory extends AbstractFilterableGridDefi
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters(): FilterCollectionInterface
     {
         return (new FilterCollection())
@@ -161,9 +150,6 @@ final class SearchEngineGridDefinitionFactory extends AbstractFilterableGridDefi
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions(): GridActionCollectionInterface
     {
         return (new GridActionCollection())
@@ -184,9 +170,6 @@ final class SearchEngineGridDefinitionFactory extends AbstractFilterableGridDefi
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         return (new BulkActionCollection())
@@ -197,8 +180,6 @@ final class SearchEngineGridDefinitionFactory extends AbstractFilterableGridDefi
 
     /**
      * Provides search engines grid row actions.
-     *
-     * @return RowActionCollectionInterface
      */
     private function getRowActions(): RowActionCollectionInterface
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,8 +50,8 @@ class PasswordGenerator
     /**
      * Random password generator.
      *
-     * @param int $length Desired length (optional)
-     * @param string $type Output type (NUMERIC, ALPHANUMERIC, NO_NUMERIC, RANDOM)
+     * @param int    $length Desired length (optional)
+     * @param string $type   Output type (NUMERIC, ALPHANUMERIC, NO_NUMERIC, RANDOM)
      *
      * @return string Password
      */
@@ -86,7 +87,7 @@ class PasswordGenerator
         $result = '';
 
         for ($i = 0; $i < $length; ++$i) {
-            $position = ($position + ord($bytes[$i])) % strlen($str);
+            $position = ($position + \ord($bytes[$i])) % \strlen($str);
             $result .= $str[$position];
         }
 

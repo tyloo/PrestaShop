@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,29 +40,19 @@ class ProductCombination
      */
     private $combinationName;
 
-    /**
-     * @param int $combinationId
-     * @param string $combinationName
-     */
     public function __construct(
         int $combinationId,
-        string $combinationName
+        string $combinationName,
     ) {
         $this->combinationId = $combinationId;
         $this->combinationName = $combinationName;
     }
 
-    /**
-     * @return int
-     */
     public function getCombinationId(): int
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return string
-     */
     public function getCombinationName(): string
     {
         return $this->combinationName;

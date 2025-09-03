@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,8 +69,8 @@ class SetRequiredFieldsForCustomerCommand
             return;
         }
 
-        if (!empty(array_diff($requiredFields, RequiredField::ALLOWED_REQUIRED_FIELDS))) {
-            throw new InvalidCustomerRequiredFieldsException(sprintf('Invalid customer required fields provided. Allowed fields are: %s', implode(',', RequiredField::ALLOWED_REQUIRED_FIELDS)));
+        if (! empty(array_diff($requiredFields, RequiredField::ALLOWED_REQUIRED_FIELDS))) {
+            throw new InvalidCustomerRequiredFieldsException(\sprintf('Invalid customer required fields provided. Allowed fields are: %s', implode(',', RequiredField::ALLOWED_REQUIRED_FIELDS)));
         }
     }
 }

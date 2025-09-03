@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,24 +40,28 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class FolderThemeCatalog implements ThemeCatalogInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $mailThemesFolder;
 
-    /** @var HookDispatcherInterface */
+    /**
+     * @var HookDispatcherInterface
+     */
     private $hookDispatcher;
 
-    /** @var FolderThemeScanner */
+    /**
+     * @var FolderThemeScanner
+     */
     private $scanner;
 
     /**
      * @param string $mailThemesFolder
-     * @param FolderThemeScanner $scanner
-     * @param HookDispatcherInterface $hookDispatcher
      */
     public function __construct(
         $mailThemesFolder,
         FolderThemeScanner $scanner,
-        HookDispatcherInterface $hookDispatcher
+        HookDispatcherInterface $hookDispatcher,
     ) {
         $this->mailThemesFolder = $mailThemesFolder;
         $this->scanner = $scanner;
@@ -119,7 +124,7 @@ final class FolderThemeCatalog implements ThemeCatalogInterface
             $themeNames[] = $availableTheme->getName();
         }
 
-        throw new InvalidArgumentException(sprintf('Invalid requested theme "%s", only available themes are: %s', $theme, implode(', ', $themeNames)));
+        throw new InvalidArgumentException(\sprintf('Invalid requested theme "%s", only available themes are: %s', $theme, implode(', ', $themeNames)));
     }
 
     /**
@@ -127,8 +132,8 @@ final class FolderThemeCatalog implements ThemeCatalogInterface
      */
     private function checkThemesFolder()
     {
-        if (!is_dir($this->mailThemesFolder)) {
-            throw new FileNotFoundException(sprintf('Invalid mail themes folder "%s": no such directory', $this->mailThemesFolder));
+        if (! is_dir($this->mailThemesFolder)) {
+            throw new FileNotFoundException(\sprintf('Invalid mail themes folder "%s": no such directory', $this->mailThemesFolder));
         }
     }
 }

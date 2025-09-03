@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,23 +52,19 @@ final class ManufacturerFormDataProvider implements FormDataProviderInterface
     private $defaultShopAssociation;
 
     /**
-     * @param CommandBusInterface $bus
-     * @param bool $multistoreEnabled
+     * @param bool  $multistoreEnabled
      * @param int[] $defaultShopAssociation
      */
     public function __construct(
         CommandBusInterface $bus,
         $multistoreEnabled,
-        array $defaultShopAssociation
+        array $defaultShopAssociation,
     ) {
         $this->bus = $bus;
         $this->multistoreEnabled = $multistoreEnabled;
         $this->defaultShopAssociation = $defaultShopAssociation;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData($manufacturerId)
     {
         /** @var EditableManufacturer $editableManufacturer */
@@ -89,9 +86,6 @@ final class ManufacturerFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         $data['is_enabled'] = true;

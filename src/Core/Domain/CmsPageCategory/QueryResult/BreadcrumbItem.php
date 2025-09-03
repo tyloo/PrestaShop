@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class BreadcrumbItem
     private $name;
 
     /**
-     * @param int $cmsPageCategoryId
+     * @param int    $cmsPageCategoryId
      * @param string $name
      *
      * @throws CmsPageCategoryException

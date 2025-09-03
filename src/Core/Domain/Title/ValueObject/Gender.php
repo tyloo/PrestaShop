@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class Gender
     protected $type;
 
     /**
-     * @param int $gender
-     *
      * @throws TitleConstraintException
      */
     public function __construct(int $gender)
@@ -53,26 +52,19 @@ class Gender
     }
 
     /**
-     * @param int $gender
-     *
-     * @return void
-     *
      * @throws TitleConstraintException
      */
     protected function assertIsAuthValues(int $gender): void
     {
-        if (!in_array($gender, [
+        if (! \in_array($gender, [
             self::TYPE_MALE,
             self::TYPE_FEMALE,
             self::TYPE_OTHER,
-        ])) {
-            throw new TitleConstraintException(sprintf('Invalid type : "%d".', $gender), TitleConstraintException::INVALID_TYPE);
+        ], true)) {
+            throw new TitleConstraintException(\sprintf('Invalid type : "%d".', $gender), TitleConstraintException::INVALID_TYPE);
         }
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->type;

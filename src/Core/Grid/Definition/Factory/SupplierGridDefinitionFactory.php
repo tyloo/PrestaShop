@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,25 +61,16 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
      */
     public const GRID_ID = 'supplier';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Suppliers', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -159,9 +151,6 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         return (new FilterCollection())
@@ -209,9 +198,6 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())
@@ -233,9 +219,6 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

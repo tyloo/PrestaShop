@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class ToggleLanguageStatusCommand implements ToggleLanguageStatusCommandInterfac
     private $languageId;
 
     /**
-     * @param int $languageId
+     * @param int  $languageId
      * @param bool $expectedStatus
      *
      * @throws LanguageConstraintException Is thrown when invalid data is provided
@@ -81,7 +82,7 @@ class ToggleLanguageStatusCommand implements ToggleLanguageStatusCommandInterfac
      */
     private function assertStatusIsBool($status)
     {
-        if (!is_bool($status)) {
+        if (! \is_bool($status)) {
             throw new LanguageConstraintException('Invalid status provided, language status must be type of "bool"');
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,22 +39,17 @@ class OrderDetailsId
     private $orderDetailsId;
 
     /**
-     * @param array $orderDetailsId
-     *
      * @throws Exception
      */
     public function __construct(array $orderDetailsId)
     {
-        if (0 >= count($orderDetailsId)) {
+        if (\count($orderDetailsId) <= 0) {
             throw new Exception('You need to provide at least one order detail ID');
         }
 
         $this->orderDetailsId = $orderDetailsId;
     }
 
-    /**
-     * @return array
-     */
     public function getValue(): array
     {
         return $this->orderDetailsId;

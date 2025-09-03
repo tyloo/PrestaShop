@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,23 +50,17 @@ class GroupedAttributeIds
     private $attributeIds = [];
 
     /**
-     * @param int $attributeGroupId
-     * @param array $attributeIds
-     *
      * @throws AttributeConstraintException
      * @throws AttributeGroupConstraintException
      */
     public function __construct(
         int $attributeGroupId,
-        array $attributeIds
+        array $attributeIds,
     ) {
         $this->attributeGroupId = new AttributeGroupId($attributeGroupId);
         $this->setAttributeIds($attributeIds);
     }
 
-    /**
-     * @return AttributeGroupId
-     */
     public function getAttributeGroupId(): AttributeGroupId
     {
         return $this->attributeGroupId;

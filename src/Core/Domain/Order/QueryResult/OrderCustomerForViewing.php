@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -100,22 +101,6 @@ class OrderCustomerForViewing
      */
     private $groups;
 
-    /**
-     * @param int $id
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $gender
-     * @param string $email
-     * @param DateTimeImmutable $accountRegistrationDate
-     * @param string $totalSpentSinceRegistration
-     * @param int $validOrdersPlaced
-     * @param string|null $privateNote
-     * @param bool $isGuest
-     * @param int $languageId
-     * @param string $ape
-     * @param string $siret
-     * @param array $groups
-     */
     public function __construct(
         int $id,
         string $firstName,
@@ -130,7 +115,7 @@ class OrderCustomerForViewing
         int $languageId,
         string $ape = '',
         string $siret = '',
-        array $groups = []
+        array $groups = [],
     ) {
         $this->id = $id;
         $this->firstName = $firstName;
@@ -148,113 +133,71 @@ class OrderCustomerForViewing
         $this->groups = $groups;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @return string
-     */
     public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
     public function getGender(): string
     {
         return $this->gender;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getAccountRegistrationDate(): DateTimeImmutable
     {
         return $this->accountRegistrationDate;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalSpentSinceRegistration(): string
     {
         return $this->totalSpentSinceRegistration;
     }
 
-    /**
-     * @return int
-     */
     public function getValidOrdersPlaced(): int
     {
         return $this->validOrdersPlaced;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPrivateNote(): ?string
     {
         return $this->privateNote;
     }
 
-    /**
-     * @return bool
-     */
     public function isGuest(): bool
     {
         return $this->isGuest;
     }
 
-    /**
-     * @return string
-     */
     public function getApe(): string
     {
         return $this->ape;
     }
 
-    /**
-     * @return string
-     */
     public function getSiret(): string
     {
         return $this->siret;
     }
 
-    /**
-     * @return int
-     */
     public function getLanguageId(): int
     {
         return $this->languageId;
     }
 
-    /**
-     * @return array
-     */
     public function getGroups(): array
     {
         return $this->groups;

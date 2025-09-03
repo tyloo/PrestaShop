@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -79,15 +80,9 @@ class EditableManufacturer
     private $associatedShops;
 
     /**
-     * @param ManufacturerId $manufacturerId
-     * @param string $name
-     * @param bool $enabled
-     * @param array $localizedShortDescriptions
-     * @param array $localizedDescriptions
-     * @param array $localizedMetaTitles
-     * @param array $localizedMetaDescriptions
+     * @param string     $name
+     * @param bool       $enabled
      * @param array|null $logoImage
-     * @param array $associatedShops
      */
     public function __construct(
         ManufacturerId $manufacturerId,
@@ -98,7 +93,7 @@ class EditableManufacturer
         array $localizedMetaTitles,
         array $localizedMetaDescriptions,
         $logoImage,
-        array $associatedShops
+        array $associatedShops,
     ) {
         $this->manufacturerId = $manufacturerId;
         $this->name = $name;

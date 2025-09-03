@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,10 +38,6 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryResult\Combinatio
 interface GetCombinationForEditingHandlerInterface
 {
     /**
-     * @param GetCombinationForEditing $query
-     *
-     * @return CombinationForEditing
-     *
      * @throws CombinationNotFoundException
      * @throws CombinationShopAssociationNotFoundException
      */

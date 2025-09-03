@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,8 +77,8 @@ class Password
     {
         $length = mb_strlen($password, 'UTF-8');
 
-        if (self::MIN_LENGTH > $length || $length > self::MAX_LENGTH) {
-            throw new CustomerConstraintException(sprintf('Customer password length must be between %s and %s', self::MIN_LENGTH, self::MAX_LENGTH), CustomerConstraintException::INVALID_PASSWORD);
+        if ($length < self::MIN_LENGTH || $length > self::MAX_LENGTH) {
+            throw new CustomerConstraintException(\sprintf('Customer password length must be between %s and %s', self::MIN_LENGTH, self::MAX_LENGTH), CustomerConstraintException::INVALID_PASSWORD);
         }
     }
 }

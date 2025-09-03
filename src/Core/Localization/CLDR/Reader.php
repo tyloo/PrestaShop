@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -125,8 +126,8 @@ class Reader implements ReaderInterface
      */
     protected function validateLocaleCodeForFilenames($localeCode)
     {
-        if (!preg_match('#^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$#', $localeCode)) {
-            throw new LocalizationException(sprintf('Invalid locale code: "%s"', $localeCode));
+        if (! preg_match('#^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$#', $localeCode)) {
+            throw new LocalizationException(\sprintf('Invalid locale code: "%s"', $localeCode));
         }
     }
 
@@ -136,7 +137,7 @@ class Reader implements ReaderInterface
     protected function initSupplementalData()
     {
         // Supplemental data about currencies, languages and parent locales
-        if (!isset($this->supplementalXml)) {
+        if (! isset($this->supplementalXml)) {
             $supplementalPath = realpath(
                 _PS_ROOT_DIR_ . '/'
                 . self::CLDR_SUPPLEMENTAL
@@ -146,7 +147,7 @@ class Reader implements ReaderInterface
         }
 
         // This file contains special digits for non-occidental numbering systems
-        if (!isset($this->numberingSystemsXml)) {
+        if (! isset($this->numberingSystemsXml)) {
             $numberingSystemsPath = realpath(
                 _PS_ROOT_DIR_ . '/'
                 . self::CLDR_SUPPLEMENTAL
@@ -190,21 +191,21 @@ class Reader implements ReaderInterface
     protected function getParentLocale($localeCode)
     {
         // root is the... root of all CLDR locales' data. Then no parent.
-        if (self::CLDR_ROOT_LOCALE == $localeCode) {
+        if ($localeCode === self::CLDR_ROOT_LOCALE) {
             return null;
         }
 
         // The special case from supplemental data
         foreach ($this->supplementalXml->parentLocales->parentLocale as $data) {
             $locales = explode(' ', $data['locales']);
-            if (in_array($localeCode, $locales)) {
+            if (\in_array($localeCode, $locales, true)) {
                 return $data['parent'];
             }
         }
 
         // The common case with truncation
         $pos = strrpos($localeCode, '_');
-        if (false !== $pos) {
+        if ($pos !== false) {
             return substr($localeCode, 0, $pos);
         }
 
@@ -241,7 +242,7 @@ class Reader implements ReaderInterface
     protected function mainPath($filename = '')
     {
         $path = realpath(_PS_ROOT_DIR_ . '/' . self::CLDR_MAIN . ($filename ? $filename : ''));
-        if (false === $path) {
+        if ($path === false) {
             throw new LocalizationFileNotFoundException("The file $filename does not exist");
         }
 
@@ -269,9 +270,9 @@ class Reader implements ReaderInterface
      * Maps locale data from SimplexmlElement to a LocaleData object.
      *
      * @param SimpleXMLElement $xmlLocaleData
-     *                                        XML locale data
-     * @param array $supplementalData
-     *                                Supplemental locale data
+     *                                           XML locale data
+     * @param array            $supplementalData
+     *                                           Supplemental locale data
      *
      * @return LocaleData
      *                    The mapped locale data
@@ -312,7 +313,7 @@ class Reader implements ReaderInterface
         if (isset($numbersData->otherNumberingSystems)) {
             $numberingSystems = [];
             foreach ($numbersData->otherNumberingSystems->children() as $system) {
-                /* @var $system SimplexmlElement */
+                /** @var SimplexmlElement $system */
                 $numberingSystems[$system->getName()] = (string) $system;
             }
             $localeData->setNumberingSystems($numberingSystems);
@@ -322,7 +323,7 @@ class Reader implements ReaderInterface
             $numberSymbols = $localeData->getNumberSymbols();
             /** @var SimpleXMLElement $symbolsNode */
             foreach ($numbersData->symbols as $symbolsNode) {
-                if (!isset($symbolsNode['numberSystem'])) {
+                if (! isset($symbolsNode['numberSystem'])) {
                     continue;
                 }
                 $thisNumberingSystem = (string) $symbolsNode['numberSystem'];
@@ -494,7 +495,7 @@ class Reader implements ReaderInterface
             $currencies = $localeData->getCurrencies();
             foreach ($currenciesData->currency as $currencyNode) {
                 $currencyCode = (string) $currencyNode['type'];
-                if ($currencyCode == self::CURRENCY_CODE_TEST) {
+                if ($currencyCode === self::CURRENCY_CODE_TEST) {
                     // dont store test currency
                     continue;
                 }
@@ -504,7 +505,7 @@ class Reader implements ReaderInterface
 
                 // check if currency is still active in one territory
                 $currencyDates = $this->supplementalXml->currencyData->xpath('//region/currency[@iso4217="' . $currencyCode . '"]');
-                if (!empty($currencyDates) && $this->isCurrencyActiveSomewhere($currencyDates, $currencyActiveDateThreshold)) {
+                if (! empty($currencyDates) && $this->isCurrencyActiveSomewhere($currencyDates, $currencyActiveDateThreshold)) {
                     $currencyData->setActive(true);
                 } else {
                     // no territory with dates means currency was never used
@@ -526,7 +527,7 @@ class Reader implements ReaderInterface
                 $displayNames = $currencyData->getDisplayNames();
                 foreach ($currencyNode->displayName as $nameNode) {
                     $countContext = 'default';
-                    if (!empty($nameNode['count'])) {
+                    if (! empty($nameNode['count'])) {
                         $countContext = (string) $nameNode['count'];
                     }
                     $displayNames[$countContext] = (string) $nameNode;
@@ -538,12 +539,12 @@ class Reader implements ReaderInterface
                     '//codeMappings/currencyCodes[@type="' . $currencyCode . '"]'
                 );
 
-                if (!empty($codesMapping)) {
+                if (! empty($codesMapping)) {
                     /** @var SimpleXMLElement $codesMapping */
                     $codesMapping = $codesMapping[0];
                     $numericIsoCode = (string) $codesMapping->attributes()->numeric;
-                    if (strlen($numericIsoCode) < 3) {
-                        $numericIsoCode = str_pad($numericIsoCode, 3, '0', STR_PAD_LEFT);
+                    if (\strlen($numericIsoCode) < 3) {
+                        $numericIsoCode = str_pad($numericIsoCode, 3, '0', \STR_PAD_LEFT);
                     }
                     $currencyData->setNumericIsoCode($numericIsoCode);
                 }
@@ -558,7 +559,7 @@ class Reader implements ReaderInterface
                     );
                 }
 
-                if (!empty($fractionsData)) {
+                if (! empty($fractionsData)) {
                     /** @var SimpleXMLElement $fractionsData */
                     $fractionsData = $fractionsData[0];
                     $currencyData->setDecimalDigits((int) (string) $fractionsData->attributes()->digits);
@@ -597,16 +598,16 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param string $currencyCode currency iso code
-     * @param SimpleXMLElement $supplementalData xml bloc from CLDR
-     * @param int $currencyActiveDateThreshold timestamp after which currency should be used
+     * @param string           $currencyCode                currency iso code
+     * @param SimpleXMLElement $supplementalData            xml bloc from CLDR
+     * @param int              $currencyActiveDateThreshold timestamp after which currency should be used
      *
      * @return bool
      */
     protected function shouldCurrencyBeReturned($currencyCode, SimpleXMLElement $supplementalData, $currencyActiveDateThreshold)
     {
         // dont store test currency
-        if ($currencyCode == self::CURRENCY_CODE_TEST) {
+        if ($currencyCode === self::CURRENCY_CODE_TEST) {
             return false;
         }
         // check if currency is still active in one territory
@@ -622,7 +623,6 @@ class Reader implements ReaderInterface
     /**
      * check if currency is still in use in some territory
      *
-     * @param array $currencyDates
      * @param int $currencyActiveDateThreshold timestamp after which currency should be used
      *
      * @return bool
@@ -637,7 +637,7 @@ class Reader implements ReaderInterface
 
             // date "to" given: check if currency was active in near past to propose it
             $dateTo = DateTime::createFromFormat('Y-m-d', $currencyDate->attributes()->to);
-            if (false !== $dateTo && $dateTo->getTimestamp() > $currencyActiveDateThreshold) {
+            if ($dateTo !== false && $dateTo->getTimestamp() > $currencyActiveDateThreshold) {
                 return true;
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,27 +40,21 @@ class FeatureValueFiltersBuilder extends AbstractFiltersBuilder implements Typed
     private Request $request;
 
     public function __construct(
-        protected readonly ContextLanguageProviderInterface $contextLanguageProvider
+        protected readonly ContextLanguageProviderInterface $contextLanguageProvider,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setConfig(array $config): FeatureValueFiltersBuilder
+    public function setConfig(array $config): self
     {
         $this->request = $config['request'] ?? null;
 
         return parent::setConfig($config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildFilters(?Filters $filters = null)
     {
         $filterParameters = FeatureValueFilters::getDefaults();
-        if (null !== $filters) {
+        if ($filters !== null) {
             $filterParameters = array_replace($filterParameters, $filters->all());
         }
 
@@ -69,9 +64,6 @@ class FeatureValueFiltersBuilder extends AbstractFiltersBuilder implements Typed
         return new FeatureValueFilters($filterParameters);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function supports(string $filterClassName): bool
     {
         return $filterClassName === FeatureValueFilters::class;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ final class ThemeZipUploader implements ThemeUploaderInterface
      */
     private $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function upload(UploadedFile $uploadedTheme)
     {
         $this->assertThemeWasUploadedWithoutErrors($uploadedTheme);
@@ -59,7 +54,7 @@ final class ThemeZipUploader implements ThemeUploaderInterface
         $themesDir = $this->configuration->get('_PS_ALL_THEMES_DIR_');
         $destination = $themesDir . $uploadedTheme->getClientOriginalName();
 
-        if (!preg_match('/^[a-zA-Z0-9_.-]+$/', $uploadedTheme->getClientOriginalName())) {
+        if (! preg_match('/^[a-zA-Z0-9_.-]+$/', $uploadedTheme->getClientOriginalName())) {
             $destination = $themesDir . sha1_file($uploadedTheme->getPathname()) . '.zip';
         }
 
@@ -72,26 +67,22 @@ final class ThemeZipUploader implements ThemeUploaderInterface
     }
 
     /**
-     * @param UploadedFile $uploadedTheme
-     *
      * @throws ThemeUploadException
      */
     private function assertThemeWasUploadedWithoutErrors(UploadedFile $uploadedTheme)
     {
-        if (UPLOAD_ERR_OK === $uploadedTheme->getError()) {
+        if ($uploadedTheme->getError() === \UPLOAD_ERR_OK) {
             return;
         }
 
-        if (in_array($uploadedTheme->getError(), [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE])) {
+        if (\in_array($uploadedTheme->getError(), [\UPLOAD_ERR_INI_SIZE, \UPLOAD_ERR_FORM_SIZE], true)) {
             throw new ThemeUploadException('Allowed file size exceeded for uploaded theme.', ThemeUploadException::FILE_SIZE_EXCEEDED_ERROR);
         }
 
-        throw new ThemeUploadException(sprintf('Unknown error "%s" occurred while uploading theme.', $uploadedTheme->getError()), ThemeUploadException::UNKNOWN_ERROR);
+        throw new ThemeUploadException(\sprintf('Unknown error "%s" occurred while uploading theme.', $uploadedTheme->getError()), ThemeUploadException::UNKNOWN_ERROR);
     }
 
     /**
-     * @param UploadedFile $uploadedTheme
-     *
      * @throws ThemeUploadException
      */
     private function assertUploadedFileIsZip(UploadedFile $uploadedTheme)

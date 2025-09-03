@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,40 +48,26 @@ class CategoryInformation
      */
     private $displayName;
 
-    /**
-     * @param int $id
-     * @param string $name
-     * @param string $displayName
-     */
     public function __construct(
         int $id,
         string $name,
-        string $displayName
+        string $displayName,
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->displayName = $displayName;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayName(): string
     {
         return $this->displayName;

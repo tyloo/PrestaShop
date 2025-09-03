@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class NoCombinationId implements CombinationIdInterface
      */
     public const NO_COMBINATION_ID = 0;
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return self::NO_COMBINATION_ID;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 class RelatedProductsCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['description']['related_products'])) {
+        if (! isset($formData['description']['related_products'])) {
             return [];
         }
 
@@ -52,7 +50,7 @@ class RelatedProductsCommandsBuilder implements ProductCommandsBuilderInterface
         $relatedProductIds = [];
         foreach ($relatedProducts as $relatedProduct) {
             $relatedProductId = (int) $relatedProduct['id'];
-            if (!in_array($relatedProductId, $relatedProductIds)) {
+            if (! \in_array($relatedProductId, $relatedProductIds, true)) {
                 $relatedProductIds[] = $relatedProductId;
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ class CartRuleActionBuilder
 {
     /**
      * @param array<string, mixed> $actionsData
-     *
-     * @return CartRuleAction
      */
     public function build(array $actionsData): CartRuleAction
     {
@@ -58,8 +57,6 @@ class CartRuleActionBuilder
      * It can be used for example in partial update action, when action data is not being updated.
      *
      * @param array<string, mixed> $data
-     *
-     * @return bool
      */
     public function supports(array $data): bool
     {
@@ -68,7 +65,7 @@ class CartRuleActionBuilder
             ->getPropertyAccessor()
         ;
 
-        if (array_key_exists('free_shipping', $data)) {
+        if (\array_key_exists('free_shipping', $data)) {
             return true;
         }
 
@@ -88,7 +85,7 @@ class CartRuleActionBuilder
 
     private function buildFreeShipping(array $data): bool
     {
-        return !empty($data['free_shipping']);
+        return ! empty($data['free_shipping']);
     }
 
     private function buildGiftProduct(array $data): ?GiftProduct
@@ -112,7 +109,7 @@ class CartRuleActionBuilder
         }
 
         $specificProductId = null;
-        if (!empty($data['discount']['specific_product'][0]['id'])) {
+        if (! empty($data['discount']['specific_product'][0]['id'])) {
             $specificProductId = (int) $data['discount']['specific_product'][0]['id'];
         }
 
@@ -138,7 +135,7 @@ class CartRuleActionBuilder
 
         return Discount::buildPercentageDiscount(
             $reduction->getValue(),
-            !empty($data['discount']['apply_to_discounted_products']),
+            ! empty($data['discount']['apply_to_discounted_products']),
             $discountApplicationType
         );
     }

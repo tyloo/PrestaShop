@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,11 @@ final class OrderReturnStatesFilters extends Filters
 {
     public const LIST_LIMIT = 50;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $filterId = OrderReturnStatesGridDefinitionFactory::GRID_ID;
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [

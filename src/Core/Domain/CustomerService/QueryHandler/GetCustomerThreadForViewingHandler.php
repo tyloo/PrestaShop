@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,10 +74,6 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
      */
     protected $locale;
 
-    /**
-     * @param Context $context
-     * @param Locale $locale
-     */
     public function __construct(Context $context, Locale $locale)
     {
         $this->context = $context;
@@ -84,9 +81,6 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
         $this->locale = $locale;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCustomerThreadForViewing $query)
     {
         $customerThread = $this->getCustomerThread($query->getCustomerThreadId());
@@ -105,8 +99,6 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
     }
 
     /**
-     * @param array $messages
-     *
      * @return CustomerThreadMessage[]
      */
     private function getCustomerThreadMessages(array $messages)
@@ -123,7 +115,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
 
             $attachmentFile = null;
 
-            if (!empty($message['file_name'])
+            if (! empty($message['file_name'])
                 && file_exists(_PS_UPLOAD_DIR_ . $message['file_name'])
             ) {
                 $attachmentFile = $message['file_name'];
@@ -162,8 +154,6 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
     }
 
     /**
-     * @param CustomerThreadId $customerThreadId
-     *
      * @return CustomerThread
      */
     private function getCustomerThread(CustomerThreadId $customerThreadId)
@@ -171,7 +161,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
         $customerThread = new CustomerThread($customerThreadId->getValue());
 
         if ($customerThread->id !== $customerThreadId->getValue()) {
-            throw new CustomerThreadNotFoundException(sprintf('Customer thread with id "%s" was not found', $customerThreadId->getValue()));
+            throw new CustomerThreadNotFoundException(\sprintf('Customer thread with id "%s" was not found', $customerThreadId->getValue()));
         }
 
         return $customerThread;
@@ -179,9 +169,6 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
 
     /**
      * Get customer thread messages in timeline
-     *
-     * @param array $messages
-     * @param CustomerThread $customerThread
      *
      * @return CustomerThreadTimeline
      */
@@ -194,16 +181,16 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
 
             $content = '';
 
-            if (!$message['private']) {
-                $content .= sprintf(
+            if (! $message['private']) {
+                $content .= \sprintf(
                     '%s <span class="badge badge-primary rounded">%s</span><br/>',
                     $this->translator->trans('Message to:', [], 'Admin.Catalog.Feature'),
-                    !$message['id_employee'] ? $message['subject'] : $message['customer_name']
+                    ! $message['id_employee'] ? $message['subject'] : $message['customer_name']
                 );
             }
 
             if (Validate::isLoadedObject($product)) {
-                $content .= sprintf(
+                $content .= \sprintf(
                     '<br/>%s<span class="badge badge-primary-hover rounded">%s</span><br/><br/>',
                     $this->translator->trans('Product:', [], 'Admin.Catalog.Feature'),
                     $product->name
@@ -232,14 +219,14 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
                     'id_order' => (int) $order->id,
                 ]);
 
-                $content = sprintf(
+                $content = \sprintf(
                     '<a class="badge badge-primary rounded" target="_blank" href="%s">%s #%d</a><br/><br/>',
                     Tools::safeOutput($link_order),
                     $this->translator->trans('Order', [], 'Admin.Global'),
                     $order->id
                 );
 
-                $content .= sprintf(
+                $content .= \sprintf(
                     '<span>%s %s</span>',
                     $this->translator->trans('Status:', [], 'Admin.Catalog.Feature'),
                     $history['ostate_name']
@@ -279,8 +266,6 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
     }
 
     /**
-     * @param CustomerThread $thread
-     *
      * @return array
      */
     private function getAvailableActions(CustomerThread $thread)
@@ -335,13 +320,11 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
     }
 
     /**
-     * @param CustomerThread $thread
-     *
      * @return CustomerInformation
      */
     private function getCustomerInformation(CustomerThread $thread)
     {
-        if (!$thread->id_customer) {
+        if (! $thread->id_customer) {
             return CustomerInformation::withEmailOnly($thread->email);
         }
 
@@ -351,7 +334,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
         $totalOk = 0;
         $ordersOk = [];
 
-        if (count($orders)) {
+        if (\count($orders)) {
             foreach ($orders as $key => $order) {
                 if ($order['valid']) {
                     $ordersOk[] = $order;
@@ -371,7 +354,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
             $customer->firstname,
             $customer->lastname,
             $thread->email,
-            count($ordersOk),
+            \count($ordersOk),
             $totalOk
                 ? $this->context->getCurrentLocale()->formatPrice($totalOk, $this->context->currency->iso_code)
                 : $totalOk,
@@ -380,8 +363,6 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
     }
 
     /**
-     * @param CustomerThread $thread
-     *
      * @return string|null
      */
     private function getContactName(CustomerThread $thread)

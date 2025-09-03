@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,17 +34,11 @@ final class DisabledProductGridDefinitionFactory extends AbstractProductGridDefi
 {
     public const GRID_ID = 'disabled_product';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('List of disabled products', [], 'Admin.Catalog.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         return parent::getColumns()->remove('active');

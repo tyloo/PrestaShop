@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -226,7 +227,7 @@ class EditRootCategoryCommand
      */
     public function setIsActive($isActive)
     {
-        if (!is_bool($isActive)) {
+        if (! \is_bool($isActive)) {
             throw new CategoryConstraintException('Invalid Category status supplied', CategoryConstraintException::INVALID_STATUS);
         }
 
@@ -315,33 +316,21 @@ class EditRootCategoryCommand
         return $this;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
     public function getCoverImage(): ?UploadedFile
     {
         return $this->coverImage;
     }
 
-    /**
-     * @param UploadedFile|null $coverImage
-     */
     public function setCoverImage(?UploadedFile $coverImage): void
     {
         $this->coverImage = $coverImage;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
     public function getThumbnailImage(): ?UploadedFile
     {
         return $this->thumbnailImage;
     }
 
-    /**
-     * @param UploadedFile|null $thumbnailImage
-     */
     public function setThumbnailImage(?UploadedFile $thumbnailImage): void
     {
         $this->thumbnailImage = $thumbnailImage;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,7 +71,7 @@ class CartRuleCollection implements Iterator
     public function valid(): bool
     {
         return $this->getKey($this->iteratorPosition) !== null
-               && array_key_exists(
+               && \array_key_exists(
                    $this->getKey($this->iteratorPosition),
                    $this->cartRules
                );
@@ -79,10 +80,10 @@ class CartRuleCollection implements Iterator
     protected function getKey($iteratorPosition)
     {
         $keys = array_keys($this->cartRules);
-        if (!isset($keys[$iteratorPosition])) {
+        if (! isset($keys[$iteratorPosition])) {
             return null;
-        } else {
-            return $keys[$iteratorPosition];
         }
+
+        return $keys[$iteratorPosition];
     }
 }

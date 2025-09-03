@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,19 +63,12 @@ final class CarrierQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $contextShopIds;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param string $contextIdLang
-     * @param array $contextShopIds
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         string $contextIdLang,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -83,9 +77,6 @@ final class CarrierQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextShopIds = $contextShopIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getCarrierQueryBuilder($searchCriteria)
@@ -99,9 +90,6 @@ final class CarrierQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this->getCarrierQueryBuilder($searchCriteria)
@@ -129,7 +117,7 @@ final class CarrierQueryBuilder extends AbstractDoctrineQueryBuilder
     private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, self::ALLOWED_FILTERS)) {
+            if (! \in_array($filterName, self::ALLOWED_FILTERS, true)) {
                 continue;
             }
 

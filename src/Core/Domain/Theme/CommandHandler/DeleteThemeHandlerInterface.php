@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,13 +29,7 @@ namespace PrestaShop\PrestaShop\Core\Domain\Theme\CommandHandler;
 
 use PrestaShop\PrestaShop\Core\Domain\Theme\Command\DeleteThemeCommand;
 
-/**
- * Interface DeleteThemeHandlerInterface
- */
 interface DeleteThemeHandlerInterface
 {
-    /**
-     * @param DeleteThemeCommand $command
-     */
     public function handle(DeleteThemeCommand $command);
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,8 +73,8 @@ class Name
     {
         $matchesFirstNamePattern = preg_match('/^[^0-9!<>,;?=+()@#"°{}_$%:¤|]*$/u', stripslashes($name));
 
-        if (!$matchesFirstNamePattern) {
-            throw new OrderStateConstraintException(sprintf('Order state name %s is invalid', var_export($name, true)), OrderStateConstraintException::INVALID_NAME);
+        if (! $matchesFirstNamePattern) {
+            throw new OrderStateConstraintException(\sprintf('Order state name %s is invalid', var_export($name, true)), OrderStateConstraintException::INVALID_NAME);
         }
     }
 
@@ -84,10 +85,10 @@ class Name
      */
     private function assertNameDoesNotExceedAllowedLength($name)
     {
-        $name = html_entity_decode($name, ENT_COMPAT, 'UTF-8');
+        $name = html_entity_decode($name, \ENT_COMPAT, 'UTF-8');
 
-        if (self::MAX_LENGTH < mb_strlen($name, 'UTF-8')) {
-            throw new OrderStateConstraintException(sprintf('Order state name is too long. Max allowed length is %s', self::MAX_LENGTH), OrderStateConstraintException::INVALID_NAME);
+        if (mb_strlen($name, 'UTF-8') > self::MAX_LENGTH) {
+            throw new OrderStateConstraintException(\sprintf('Order state name is too long. Max allowed length is %s', self::MAX_LENGTH), OrderStateConstraintException::INVALID_NAME);
         }
     }
 }

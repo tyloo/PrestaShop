@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,12 +68,12 @@ class EditableContact
     private $shopAssociation;
 
     /**
-     * @param int $contactId
+     * @param int      $contactId
      * @param string[] $localisedTitles
-     * @param string $email
-     * @param bool $isMessagesSavingEnabled
+     * @param string   $email
+     * @param bool     $isMessagesSavingEnabled
      * @param string[] $localisedDescription
-     * @param int[] $shopAssociation
+     * @param int[]    $shopAssociation
      *
      * @throws ContactException
      * @throws DomainConstraintException
@@ -83,7 +84,7 @@ class EditableContact
         $email,
         $isMessagesSavingEnabled,
         $localisedDescription,
-        array $shopAssociation
+        array $shopAssociation,
     ) {
         $this->contactId = new ContactId($contactId);
         $this->localisedTitles = $localisedTitles;

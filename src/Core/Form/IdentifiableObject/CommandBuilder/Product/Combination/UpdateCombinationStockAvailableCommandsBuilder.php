@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,17 +46,11 @@ class UpdateCombinationStockAvailableCommandsBuilder implements CombinationComma
      */
     private $modifyAllNamePrefix;
 
-    /**
-     * @param string $modifyAllNamePrefix
-     */
     public function __construct(string $modifyAllNamePrefix)
     {
         $this->modifyAllNamePrefix = $modifyAllNamePrefix;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(CombinationId $combinationId, array $formData, ShopConstraint $singleShopConstraint): array
     {
         $config = new CommandBuilderConfig($this->modifyAllNamePrefix);

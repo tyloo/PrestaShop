@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,8 +70,6 @@ class EditStateCommand
     private $active;
 
     /**
-     * @param int $stateId
-     *
      * @throws StateConstraintException
      */
     public function __construct(int $stateId)
@@ -78,112 +77,71 @@ class EditStateCommand
         $this->stateId = new StateId($stateId);
     }
 
-    /**
-     * @return StateId
-     */
     public function getStateId(): StateId
     {
         return $this->stateId;
     }
 
-    /**
-     * @return CountryId|null
-     */
     public function getCountryId(): ?CountryId
     {
         return $this->countryId;
     }
 
     /**
-     * @param int $countryId
-     *
-     * @return EditStateCommand
-     *
      * @throws CountryConstraintException
      */
-    public function setCountryId(int $countryId): EditStateCommand
+    public function setCountryId(int $countryId): self
     {
         $this->countryId = new CountryId($countryId);
 
         return $this;
     }
 
-    /**
-     * @return ZoneId|null
-     */
     public function getZoneId(): ?ZoneId
     {
         return $this->zoneId;
     }
 
     /**
-     * @param int $zoneId
-     *
-     * @return EditStateCommand
-     *
      * @throws ZoneException
      */
-    public function setZoneId(int $zoneId): EditStateCommand
+    public function setZoneId(int $zoneId): self
     {
         $this->zoneId = new ZoneId($zoneId);
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return EditStateCommand
-     */
-    public function setName(string $name): EditStateCommand
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getIsoCode(): ?string
     {
         return $this->isoCode;
     }
 
-    /**
-     * @param string $isoCode
-     *
-     * @return EditStateCommand
-     */
-    public function setIsoCode(string $isoCode): EditStateCommand
+    public function setIsoCode(string $isoCode): self
     {
         $this->isoCode = $isoCode;
 
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getActive(): ?bool
     {
         return $this->active;
     }
 
-    /**
-     * @param bool $active
-     *
-     * @return EditStateCommand
-     */
-    public function setActive(bool $active): EditStateCommand
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 

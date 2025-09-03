@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,29 +43,17 @@ class UpdateHookStatusCommand
      */
     private bool $active;
 
-    /**
-     * UpdateHookStatusCommand constructor.
-     *
-     * @param int $id
-     * @param bool $active
-     */
     public function __construct(int $id, bool $active)
     {
         $this->id = new HookId($id);
         $this->active = $active;
     }
 
-    /**
-     * @return HookId
-     */
     public function getHookId(): HookId
     {
         return $this->id;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->active;

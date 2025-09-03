@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,11 +65,11 @@ class AddOrderFromBackOfficeCommand
     private $employeeId;
 
     /**
-     * @param int $cartId
-     * @param int $employeeId
+     * @param int    $cartId
+     * @param int    $employeeId
      * @param string $orderMessage
      * @param string $paymentModuleName
-     * @param int $orderStateId
+     * @param int    $orderStateId
      */
     public function __construct($cartId, $employeeId, $orderMessage, $paymentModuleName, $orderStateId)
     {
@@ -129,7 +130,7 @@ class AddOrderFromBackOfficeCommand
      */
     private function assertIsModuleName($moduleName)
     {
-        if (!is_string($moduleName) || !preg_match('/^[a-zA-Z0-9_-]+$/', $moduleName)) {
+        if (! \is_string($moduleName) || ! preg_match('/^[a-zA-Z0-9_-]+$/', $moduleName)) {
             throw new InvalidModuleException();
         }
     }
@@ -141,11 +142,8 @@ class AddOrderFromBackOfficeCommand
      */
     private function assertOrderStateIsPositiveInt($orderStateId)
     {
-        if (!is_int($orderStateId) || 0 >= $orderStateId) {
-            throw new InvalidOrderStateException(
-                InvalidOrderStateException::INVALID_ID,
-                'Invalid order state id'
-            );
+        if (! \is_int($orderStateId) || $orderStateId <= 0) {
+            throw new InvalidOrderStateException(InvalidOrderStateException::INVALID_ID, 'Invalid order state id');
         }
     }
 }

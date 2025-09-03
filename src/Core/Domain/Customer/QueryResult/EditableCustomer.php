@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -133,25 +134,19 @@ class EditableCustomer
     private $isGuest;
 
     /**
-     * @param CustomerId $customerId
-     * @param int $genderId
-     * @param FirstName $firstName
-     * @param LastName $lastName
-     * @param Email $email
-     * @param Birthday $birthday
-     * @param bool $isEnabled
-     * @param bool $isPartnerOffersSubscribed
-     * @param bool $isNewsletterSubscribed
-     * @param int[] $groupIds
-     * @param int $defaultGroupId
+     * @param int    $genderId
+     * @param bool   $isEnabled
+     * @param bool   $isPartnerOffersSubscribed
+     * @param bool   $isNewsletterSubscribed
+     * @param int[]  $groupIds
+     * @param int    $defaultGroupId
      * @param string $companyName
      * @param string $siretCode
      * @param string $apeCode
      * @param string $website
-     * @param float $allowedOutstandingAmount
-     * @param int $maxPaymentDays
-     * @param int $riskId
-     * @param bool $isGuest
+     * @param float  $allowedOutstandingAmount
+     * @param int    $maxPaymentDays
+     * @param int    $riskId
      */
     public function __construct(
         CustomerId $customerId,
@@ -172,7 +167,7 @@ class EditableCustomer
         $allowedOutstandingAmount,
         $maxPaymentDays,
         $riskId,
-        bool $isGuest = false
+        bool $isGuest = false,
     ) {
         $this->customerId = $customerId;
         $this->genderId = $genderId;
@@ -339,9 +334,6 @@ class EditableCustomer
         return $this->isNewsletterSubscribed;
     }
 
-    /**
-     * @return bool
-     */
     public function isGuest(): bool
     {
         return $this->isGuest;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class CannotUnlinkAttachmentException extends CannotUnlinkFileException
 
     /**
      * @param string $message
-     * @param int $code
+     * @param int    $code
      */
     public function __construct($message = '', $code = 0, ?Throwable $previous = null, string $filePath = '')
     {

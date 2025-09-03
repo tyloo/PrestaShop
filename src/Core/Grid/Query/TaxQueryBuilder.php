@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,14 @@ final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
     private $employeeIdLang;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $employeeIdLang
+     * @param int    $employeeIdLang
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $employeeIdLang
+        $employeeIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -63,9 +62,6 @@ final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->employeeIdLang = $employeeIdLang;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -82,9 +78,6 @@ final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -96,8 +89,6 @@ final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql used for displaying webservice list and applying filter actions.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -131,11 +122,11 @@ final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap)) {
                 continue;
             }
 
-            if ('active' === $filterName || 'id_tax' === $filterName) {
+            if ($filterName === 'active' || $filterName === 'id_tax') {
                 $qb->andWhere($allowedFiltersMap[$filterName] . ' = :' . $filterName);
                 $qb->setParameter($filterName, $value);
 

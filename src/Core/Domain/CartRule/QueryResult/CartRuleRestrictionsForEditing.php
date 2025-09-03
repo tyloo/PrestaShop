@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,18 +34,18 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\Restriction\Restricti
 class CartRuleRestrictionsForEditing
 {
     /**
-     * @param int[] $restrictedCartRuleIds
+     * @param int[]                  $restrictedCartRuleIds
      * @param RestrictionRuleGroup[] $productRestrictionRuleGroups
-     * @param int[] $restrictedCarrierIds
-     * @param int[] $restrictedCountryIds
-     * @param int[] $restrictedGroupIds
+     * @param int[]                  $restrictedCarrierIds
+     * @param int[]                  $restrictedCountryIds
+     * @param int[]                  $restrictedGroupIds
      */
     public function __construct(
         private readonly array $restrictedCartRuleIds,
         private readonly array $productRestrictionRuleGroups,
         private readonly array $restrictedCarrierIds,
         private readonly array $restrictedCountryIds,
-        private readonly array $restrictedGroupIds
+        private readonly array $restrictedGroupIds,
     ) {
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,16 +32,13 @@ namespace PrestaShop\PrestaShop\Core\Image\Deleter;
  */
 final class ImageFileDeleter implements ImageFileDeleterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function deleteFromPath($path, $recursively = false, $deleteSubdirectories = false, $format = 'jpg')
     {
-        if (!$path || !$format || !is_dir($path)) {
+        if (! $path || ! $format || ! is_dir($path)) {
             return false;
         }
 
-        foreach (scandir($path, SCANDIR_SORT_NONE) as $file) {
+        foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
             $pattern = '/^[0-9]+(\-(.*))?\.' . $format . '$/';
 
             if ($recursively && is_dir($path . $file) && preg_match('/^[0-9]$/', $file)) {
@@ -60,8 +58,8 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
         // Can we remove the image folder?
         if ($deleteSubdirectories && is_numeric(basename($path))) {
             $removeFolder = true;
-            foreach (scandir($path, SCANDIR_SORT_NONE) as $file) {
-                if ($file != '.' && $file != '..' && $file != 'index.php') {
+            foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
+                if ($file !== '.' && $file !== '..' && $file !== 'index.php') {
                     $removeFolder = false;
                     break;
                 }
@@ -79,12 +77,9 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteAllImages($path, $format = 'jpg')
     {
-        foreach (scandir($path, SCANDIR_SORT_NONE) as $file) {
+        foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
             $this->deleteByPattern(
                 '/(.*)\.' . $format . '$/',
                 $path,
@@ -96,8 +91,8 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
     /**
      * Delete images by given regex pattern from given path.
      *
-     * @param string $pattern regex pattern
-     * @param string $path file directory path
+     * @param string $pattern  regex pattern
+     * @param string $path     file directory path
      * @param string $filename
      */
     private function deleteByPattern($pattern, $path, $filename)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -97,7 +98,7 @@ final class ShipmentQueryBuilder extends AbstractDoctrineQueryBuilder
     private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, self::ALLOWED_FILTERS)) {
+            if (! \in_array($filterName, self::ALLOWED_FILTERS, true)) {
                 continue;
             }
 

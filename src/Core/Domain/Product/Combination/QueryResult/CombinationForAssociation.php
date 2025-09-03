@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,13 +56,6 @@ class CombinationForAssociation
      */
     private $imageUrl;
 
-    /**
-     * @param int $productId
-     * @param int $combinationId
-     * @param string $name
-     * @param string $reference
-     * @param string $imageUrl
-     */
     public function __construct(int $productId, int $combinationId, string $name, string $reference, string $imageUrl)
     {
         $this->productId = $productId;
@@ -71,41 +65,26 @@ class CombinationForAssociation
         $this->imageUrl = $imageUrl;
     }
 
-    /**
-     * @return int
-     */
     public function getProductId(): int
     {
         return $this->productId;
     }
 
-    /**
-     * @return int
-     */
     public function getCombinationId(): int
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getReference(): string
     {
         return $this->reference;
     }
 
-    /**
-     * @return string
-     */
     public function getImageUrl(): string
     {
         return $this->imageUrl;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,29 +44,19 @@ class StoreForEditing
      */
     private $active;
 
-    /**
-     * @param int $storeId
-     * @param bool $isActive
-     */
     public function __construct(
         int $storeId,
-        bool $isActive
+        bool $isActive,
     ) {
         $this->storeId = $storeId;
         $this->active = $isActive;
     }
 
-    /**
-     * @return int
-     */
     public function getStoreId(): int
     {
         return $this->storeId;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->active;

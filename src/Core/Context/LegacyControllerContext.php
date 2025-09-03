@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,8 +58,6 @@ class LegacyControllerContext
 
     /**
      * Controller name alias kept for backward compatibility.
-     *
-     * @var string
      */
     public readonly string $php_self;
 
@@ -92,15 +91,11 @@ class LegacyControllerContext
 
     /**
      * Image type
-     *
-     * @var string
      */
     public string $imageType = 'jpg';
 
     /**
      * Array description of buttons to add in the header toolbar
-     *
-     * @var array|Traversable
      */
     public array|Traversable $page_header_toolbar_btn = [];
 
@@ -111,15 +106,14 @@ class LegacyControllerContext
     public bool $multishop_context_group = true;
 
     /**
-     * @param ContainerInterface $container Dependency container
-     * @param string $controller_name Current controller name without suffix
-     * @param string $controller_type Controller type. Possible values: 'front', 'modulefront', 'admin', 'moduleadmin'.
-     * @param int $multishop_context Allowed multi shop contexts Possible values: Byte addition of ShopConstraint::ALL_SHOPS | ShopConstraint::SHOP_GROUP | ShopConstraint::SHOP
-     * @param string|null $className Legacy ObjectModel associated to the controller (if possible)
-     * @param int $id Tab ID
-     * @param string|null $token Legacy security token
-     * @param string $override_folder
-     * @param string $currentIndex Legacy current index built like a legacy URL based on controller name
+     * @param ContainerInterface $container         Dependency container
+     * @param string             $controller_name   Current controller name without suffix
+     * @param string             $controller_type   Controller type. Possible values: 'front', 'modulefront', 'admin', 'moduleadmin'.
+     * @param int                $multishop_context Allowed multi shop contexts Possible values: Byte addition of ShopConstraint::ALL_SHOPS | ShopConstraint::SHOP_GROUP | ShopConstraint::SHOP
+     * @param string|null        $className         Legacy ObjectModel associated to the controller (if possible)
+     * @param int                $id                Tab ID
+     * @param string|null        $token             Legacy security token
+     * @param string             $currentIndex      Legacy current index built like a legacy URL based on controller name
      */
     public function __construct(
         protected readonly ContainerInterface $container,
@@ -151,12 +145,12 @@ class LegacyControllerContext
 
     public function addCSS(array|string $css_uri, string $css_media_type = 'all', ?int $offset = null, bool $check_path = true): void
     {
-        if (!is_array($css_uri)) {
+        if (! \is_array($css_uri)) {
             $css_uri = [$css_uri];
         }
 
         foreach ($css_uri as $css_file => $media) {
-            if (is_string($css_file) && strlen($css_file) > 1) {
+            if (\is_string($css_file) && \strlen($css_file) > 1) {
                 if ($check_path) {
                     $css_path = Media::getCSSPath($css_file, $media);
                 } else {
@@ -170,21 +164,21 @@ class LegacyControllerContext
                 }
             }
 
-            $key = is_array($css_path) ? key($css_path) : $css_path;
-            if ($css_path && (!isset($this->css_files[$key]) || ($this->css_files[$key] != reset($css_path)))) {
-                $size = count($this->css_files);
-                if ($offset === null || $offset > $size || $offset < 0 || !is_numeric($offset)) {
+            $key = \is_array($css_path) ? key($css_path) : $css_path;
+            if ($css_path && (! isset($this->css_files[$key]) || ($this->css_files[$key] !== reset($css_path)))) {
+                $size = \count($this->css_files);
+                if ($offset === null || $offset > $size || $offset < 0 || ! is_numeric($offset)) {
                     $offset = $size;
                 }
 
-                $this->css_files = array_merge(array_slice($this->css_files, 0, $offset), $css_path, array_slice($this->css_files, $offset));
+                $this->css_files = array_merge(\array_slice($this->css_files, 0, $offset), $css_path, \array_slice($this->css_files, $offset));
             }
         }
     }
 
     public function addJS(array|string $js_uri, bool $check_path = true): void
     {
-        if (!is_array($js_uri)) {
+        if (! \is_array($js_uri)) {
             $js_uri = [$js_uri];
         }
 
@@ -199,7 +193,7 @@ class LegacyControllerContext
                 $js_path = Media::getJSPath($js_file);
             }
 
-            if ($js_path && !in_array($js_path, $this->js_files)) {
+            if ($js_path && ! \in_array($js_path, $this->js_files, true)) {
                 $this->js_files[] = $js_path . ($version ? '?' . $version : '');
             }
         }
@@ -210,7 +204,7 @@ class LegacyControllerContext
      */
     public function addJqueryUI(string|array $component, string $theme = 'base', bool $checkDependencies = true): void
     {
-        if (!is_array($component)) {
+        if (! \is_array($component)) {
             $component = [$component];
         }
 
@@ -226,17 +220,17 @@ class LegacyControllerContext
      */
     public function addJqueryPlugin(string|array $name, ?string $folder = null, bool $css = true): void
     {
-        if (!is_array($name)) {
+        if (! \is_array($name)) {
             $name = [$name];
         }
 
         foreach ($name as $plugin) {
             $plugin_path = Media::getJqueryPluginPath($plugin, $folder);
 
-            if (!empty($plugin_path['js'])) {
+            if (! empty($plugin_path['js'])) {
                 $this->addJS($plugin_path['js'], false);
             }
-            if ($css && !empty($plugin_path['css'])) {
+            if ($css && ! empty($plugin_path['css'])) {
                 $this->addCSS(key($plugin_path['css']), 'all', null, false);
             }
         }
@@ -244,13 +238,13 @@ class LegacyControllerContext
 
     public function getLanguages(): array
     {
-        if (!empty($this->languages)) {
+        if (! empty($this->languages)) {
             return $this->languages;
         }
 
         $this->languages = Language::getLanguages(false);
         foreach ($this->languages as $k => $language) {
-            $this->languages[$k]['is_default'] = (int) ($language['id_lang'] == $this->employeeLanguageId);
+            $this->languages[$k]['is_default'] = (int) ($language['id_lang'] === $this->employeeLanguageId);
         }
 
         return $this->languages;
@@ -263,8 +257,6 @@ class LegacyControllerContext
 
     /**
      * This is an equivalent of AdminController::setMedia(false)
-     *
-     * @return void
      */
     public function loadLegacyMedia(): void
     {
@@ -296,16 +288,16 @@ class LegacyControllerContext
 
         $this->addJS($jsDir . '/jquery/plugins/timepicker/jquery-ui-timepicker-addon.js');
 
-        if (!$this->request->get('liteDisplaying')) {
+        if (! $this->request->get('liteDisplaying')) {
             $this->addJS($adminDir . '/themes/default/js/help.js?v=' . $this->psVersion);
         }
 
-        if (!$this->request->get('submitFormAjax')) {
+        if (! $this->request->get('submitFormAjax')) {
             $this->addJS($jsDir . '/admin/notifications.js?v=' . $this->psVersion);
         }
 
         // Specific Admin Theme
-        $this->addCSS($adminDir . '/themes/default/css/overrides.css', 'all', PHP_INT_MAX);
+        $this->addCSS($adminDir . '/themes/default/css/overrides.css', 'all', \PHP_INT_MAX);
 
         $this->addCSS($adminDir . '/themes/new-theme/public/create_product_default_theme.css?v=' . $this->psVersion, 'all', 0);
         $this->addJS([

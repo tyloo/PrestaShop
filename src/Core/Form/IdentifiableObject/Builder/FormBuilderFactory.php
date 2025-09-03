@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,15 +53,10 @@ final class FormBuilderFactory implements FormBuilderFactoryInterface
      */
     private $registry;
 
-    /**
-     * @param FormFactoryInterface $formFactory
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param FormRegistryInterface $registry
-     */
     public function __construct(
         FormFactoryInterface $formFactory,
         HookDispatcherInterface $hookDispatcher,
-        FormRegistryInterface $registry
+        FormRegistryInterface $registry,
     ) {
         $this->formFactory = $formFactory;
         $this->hookDispatcher = $hookDispatcher;
@@ -69,15 +65,13 @@ final class FormBuilderFactory implements FormBuilderFactoryInterface
 
     /**
      * @param string $formType
-     * @param FormDataProviderInterface $dataProvider
-     * @param FormOptionsProviderInterface|null $optionProvider
      *
      * @return FormBuilder
      */
     public function create(
         $formType,
         FormDataProviderInterface $dataProvider,
-        ?FormOptionsProviderInterface $optionProvider = null
+        ?FormOptionsProviderInterface $optionProvider = null,
     ) {
         return new FormBuilder(
             $this->formFactory,

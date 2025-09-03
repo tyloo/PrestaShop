@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,9 @@ class EditCarrierCommand
 {
     private CarrierId $carrierId;
     private ?string $name;
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private ?array $localizedDelay;
     private ?int $grade;
     private ?string $trackingUrl;
@@ -59,7 +62,9 @@ class EditCarrierCommand
     private ?ShippingMethod $shippingMethod;
     private ?int $idTaxRuleGroup;
     private ?OutOfRangeBehavior $rangeBehavior;
-    /** @var int[] */
+    /**
+     * @var int[]
+     */
     private ?array $zones;
 
     private ?array $associatedShopIds;
@@ -292,8 +297,6 @@ class EditCarrierCommand
     /**
      * @param int[] $associatedShopIds
      *
-     * @return void
-     *
      * @throws ShopException
      */
     public function setAssociatedShopIds(array $associatedShopIds): void
@@ -308,11 +311,8 @@ class EditCarrierCommand
 
     public function setZones(array $zones): self
     {
-        if (count($zones) === 0) {
-            throw new CarrierConstraintException(
-                'Carrier need to have at least one zone',
-                CarrierConstraintException::INVALID_ZONE_MISSING
-            );
+        if (\count($zones) === 0) {
+            throw new CarrierConstraintException('Carrier need to have at least one zone', CarrierConstraintException::INVALID_ZONE_MISSING);
         }
 
         $this->zones = $zones;

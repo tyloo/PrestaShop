@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,10 +52,6 @@ class AddSearchTermAliasesCommand
      */
     private $aliases;
 
-    /**
-     * @param string $searchTerm
-     * @param array $aliases
-     */
     public function __construct(array $aliases, string $searchTerm)
     {
         $this->assertArrayNotEmpty($aliases);
@@ -77,9 +74,6 @@ class AddSearchTermAliasesCommand
         return $this->aliases;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchTerm(): string
     {
         return $this->searchTerm;
@@ -92,30 +86,22 @@ class AddSearchTermAliasesCommand
      */
     private function assertArrayNotEmpty(array $array): void
     {
-        if (!empty($array)) {
+        if (! empty($array)) {
             return;
         }
 
-        throw new AliasConstraintException(
-            'Alias parameter aliases must not be empty',
-            AliasConstraintException::INVALID_ALIAS
-        );
+        throw new AliasConstraintException('Alias parameter aliases must not be empty', AliasConstraintException::INVALID_ALIAS);
     }
 
     /**
-     * @param string $string
-     *
      * @throws InvalidArgumentException
      */
     private function assertStringNotEmpty(string $string): void
     {
-        if (!empty($string)) {
+        if (! empty($string)) {
             return;
         }
 
-        throw new AliasConstraintException(
-            'Alias parameter search term must not be empty',
-            AliasConstraintException::INVALID_SEARCH
-        );
+        throw new AliasConstraintException('Alias parameter search term must not be empty', AliasConstraintException::INVALID_SEARCH);
     }
 }

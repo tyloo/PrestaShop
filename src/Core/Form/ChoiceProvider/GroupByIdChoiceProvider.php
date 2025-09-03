@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,20 +47,16 @@ final class GroupByIdChoiceProvider implements FormChoiceProviderInterface
     private $langId;
 
     /**
-     * @param GroupDataProvider $groupDataProvider
      * @param int $langId
      */
     public function __construct(
         GroupDataProvider $groupDataProvider,
-        $langId
+        $langId,
     ) {
         $this->groupDataProvider = $groupDataProvider;
         $this->langId = $langId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return FormChoiceFormatter::formatFormChoices(

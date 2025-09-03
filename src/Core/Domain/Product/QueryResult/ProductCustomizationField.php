@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,17 +55,11 @@ class ProductCustomizationField
      */
     private $isRequired;
 
-    /**
-     * @param int $customizationFieldId
-     * @param int $type
-     * @param string $name
-     * @param bool $isRequired
-     */
     public function __construct(
         int $customizationFieldId,
         int $type,
         string $name,
-        bool $isRequired
+        bool $isRequired,
     ) {
         $this->customizationFieldId = $customizationFieldId;
         $this->type = $type;
@@ -72,33 +67,21 @@ class ProductCustomizationField
         $this->isRequired = $isRequired;
     }
 
-    /**
-     * @return int
-     */
     public function getCustomizationFieldId(): int
     {
         return $this->customizationFieldId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
     public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @return bool
-     */
     public function isRequired(): bool
     {
         return $this->isRequired;

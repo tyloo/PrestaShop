@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,10 +42,10 @@ class FormChoiceFormatter
      * So, when there are two items with the same name, they get lost.
      * This will automatically mark duplicate options with their ID.
      *
-     * @param array $rawChoices Raw array with data to build the options from
-     * @param string $idKey Key name of the item IDs, id_carrier for example
-     * @param string $nameKey Key name of the item NAMEs, carrier_name for example
-     * @param bool $sortByName Should the list be automatically sorted by name
+     * @param array  $rawChoices Raw array with data to build the options from
+     * @param string $idKey      Key name of the item IDs, id_carrier for example
+     * @param string $nameKey    Key name of the item NAMEs, carrier_name for example
+     * @param bool   $sortByName Should the list be automatically sorted by name
      *
      * @return array Formatted choices
      */
@@ -53,7 +54,7 @@ class FormChoiceFormatter
         // Remove items with duplicate name and ID
         $tmp = [];
         foreach ($rawChoices as $k => $rawChoice) {
-            if (!empty($tmp[$rawChoice[$idKey]]) && $tmp[$rawChoice[$idKey]] == $rawChoice[$nameKey]) {
+            if (! empty($tmp[$rawChoice[$idKey]]) && $tmp[$rawChoice[$idKey]] === $rawChoice[$nameKey]) {
                 unset($rawChoices[$k]);
                 continue;
             }
@@ -71,9 +72,9 @@ class FormChoiceFormatter
         foreach ($rawChoices as $k => $rawChoice) {
             // If we already came across this exact value name before, we will
             // append the option ID before the name.
-            if (in_array($rawChoice[$nameKey], $alreadyProcessedKeys)) {
+            if (\in_array($rawChoice[$nameKey], $alreadyProcessedKeys, true)) {
                 // We store it with ID prepended before the name.
-                $finalChoices[sprintf('%s (%d)', $rawChoice[$nameKey], $rawChoice[$idKey])] = $rawChoice[$idKey];
+                $finalChoices[\sprintf('%s (%d)', $rawChoice[$nameKey], $rawChoice[$idKey])] = $rawChoice[$idKey];
 
                 // And if it's the first duplicate (second occurence), we also modify the previous normal one.
                 if (isset($finalChoices[$rawChoice[$nameKey]])) {
@@ -81,7 +82,7 @@ class FormChoiceFormatter
                     $finalChoices = self::replaceArrayKey(
                         $finalChoices,
                         $rawChoice[$nameKey],
-                        sprintf('%s (%d)', $rawChoice[$nameKey], $previousId)
+                        \sprintf('%s (%d)', $rawChoice[$nameKey], $previousId)
                     );
                 }
             } else {
@@ -116,7 +117,7 @@ class FormChoiceFormatter
     public static function replaceArrayKey($array, $oldKey, $newKey): array
     {
         $keys = array_keys($array);
-        $keys[array_search($oldKey, $keys)] = $newKey;
+        $keys[array_search($oldKey, $keys, true)] = $newKey;
 
         return array_combine($keys, $array);
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,6 @@ interface BulkActionCollectionInterface extends Iterator
 {
     /**
      * Add bulk action to collection.
-     *
-     * @param BulkActionInterface $bulkAction
      *
      * @return self
      */

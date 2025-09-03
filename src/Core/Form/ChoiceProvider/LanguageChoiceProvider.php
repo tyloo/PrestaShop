@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ final class LanguageChoiceProvider implements FormChoiceProviderInterface
      */
     private $languages;
 
-    /**
-     * @param array $languages
-     */
     public function __construct(array $languages)
     {
         $this->languages = $languages;

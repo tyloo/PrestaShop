@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,8 +58,6 @@ class EditTaxRulesGroupCommand
     protected $shopAssociation;
 
     /**
-     * @param int $taxRulesGroupId
-     *
      * @throws TaxRulesGroupConstraintException
      */
     public function __construct(int $taxRulesGroupId)
@@ -66,27 +65,16 @@ class EditTaxRulesGroupCommand
         $this->taxRulesGroupId = new TaxRulesGroupId($taxRulesGroupId);
     }
 
-    /**
-     * @return TaxRulesGroupId
-     */
     public function getTaxRulesGroupId(): TaxRulesGroupId
     {
         return $this->taxRulesGroupId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     *
-     * @return self
-     */
     public function setName(?string $name): self
     {
         $this->name = $name;
@@ -94,19 +82,11 @@ class EditTaxRulesGroupCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isEnabled(): ?bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param bool|null $enabled
-     *
-     * @return self
-     */
     public function setEnabled(?bool $enabled): self
     {
         $this->enabled = $enabled;
@@ -125,20 +105,12 @@ class EditTaxRulesGroupCommand
     /**
      * @param int[] $shopAssociation
      *
-     * @return self
-     *
      * @throws TaxRulesGroupConstraintException
      */
     public function setShopAssociation(?array $shopAssociation): self
     {
-        if (!is_null($shopAssociation) && !$this->assertArrayContainsOnlyIntegerValues($shopAssociation)) {
-            throw new TaxRulesGroupConstraintException(
-                sprintf(
-                    'Given shop association %s must contain only integer values',
-                    var_export($shopAssociation, true)
-                ),
-                TaxRulesGroupConstraintException::INVALID_SHOP_ASSOCIATION
-            );
+        if ($shopAssociation !== null && ! $this->assertArrayContainsOnlyIntegerValues($shopAssociation)) {
+            throw new TaxRulesGroupConstraintException(\sprintf('Given shop association %s must contain only integer values', var_export($shopAssociation, true)), TaxRulesGroupConstraintException::INVALID_SHOP_ASSOCIATION);
         }
 
         $this->shopAssociation = $shopAssociation;
@@ -146,17 +118,12 @@ class EditTaxRulesGroupCommand
         return $this;
     }
 
-    /**
-     * @param array $values
-     *
-     * @return bool
-     */
     protected function assertArrayContainsOnlyIntegerValues(array $values): bool
     {
         $filterAllIntegers = function ($value) {
-            return is_int($value);
+            return \is_int($value);
         };
 
-        return !empty($values) && count($values) === count(array_filter($values, $filterAllIntegers));
+        return ! empty($values) && \count($values) === \count(array_filter($values, $filterAllIntegers));
     }
 }

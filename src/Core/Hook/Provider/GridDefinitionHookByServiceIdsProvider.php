@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,17 +51,11 @@ final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsPr
      */
     private $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHookNames(array $gridDefinitionServiceIds)
     {
         /** @var Generator $gridDefinitionIds */
@@ -116,8 +111,6 @@ final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsPr
     /**
      * Gets grid definition ids which are used in a grid hook formation.
      *
-     * @param array $gridDefinitionServiceIds
-     *
      * @return Generator
      */
     private function getGridDefinitionIds(array $gridDefinitionServiceIds)
@@ -125,7 +118,7 @@ final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsPr
         foreach ($gridDefinitionServiceIds as $serviceId) {
             try {
                 $service = $this->container->get($serviceId);
-                if (!$service instanceof GridDefinitionFactoryInterface) {
+                if (! $service instanceof GridDefinitionFactoryInterface) {
                     continue;
                 }
                 $definition = $service->getDefinition();
@@ -133,7 +126,7 @@ final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsPr
                 $camelizedDefinitionId = Container::camelize($definitionId);
                 yield $camelizedDefinitionId;
             } catch (Exception $e) {
-                Logger::addLog(sprintf('Error while loading service: %s . Error: %s', $serviceId, $e));
+                Logger::addLog(\sprintf('Error while loading service: %s . Error: %s', $serviceId, $e));
             }
         }
     }

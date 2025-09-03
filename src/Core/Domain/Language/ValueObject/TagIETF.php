@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,8 +72,8 @@ class TagIETF
      */
     private function assertIsTagIETF($tagIETF)
     {
-        if (!is_string($tagIETF) || !preg_match(sprintf('/%s/', static::IETF_TAG_REGEXP), $tagIETF)) {
-            throw new LanguageConstraintException(sprintf('Invalid IETF tag %s provided', var_export($tagIETF, true)), LanguageConstraintException::INVALID_IETF_TAG);
+        if (! \is_string($tagIETF) || ! preg_match(\sprintf('/%s/', static::IETF_TAG_REGEXP), $tagIETF)) {
+            throw new LanguageConstraintException(\sprintf('Invalid IETF tag %s provided', var_export($tagIETF, true)), LanguageConstraintException::INVALID_IETF_TAG);
         }
     }
 }

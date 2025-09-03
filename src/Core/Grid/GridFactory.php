@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,23 +39,14 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class GridFactory implements GridFactoryInterface
 {
-    /**
-     * @param GridDefinitionFactoryInterface $definitionFactory
-     * @param GridDataFactoryInterface $dataFactory
-     * @param GridFilterFormFactoryInterface $filterFormFactory
-     * @param HookDispatcherInterface $hookDispatcher
-     */
     public function __construct(
         protected readonly GridDefinitionFactoryInterface $definitionFactory,
         protected readonly GridDataFactoryInterface $dataFactory,
         protected readonly GridFilterFormFactoryInterface $filterFormFactory,
-        protected readonly HookDispatcherInterface $hookDispatcher
+        protected readonly HookDispatcherInterface $hookDispatcher,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGrid(SearchCriteriaInterface $searchCriteria): GridInterface
     {
         $definition = $this->definitionFactory->getDefinition();

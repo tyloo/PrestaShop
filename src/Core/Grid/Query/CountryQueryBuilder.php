@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,9 +54,6 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextLangId;
 
     /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
      * @param int[] $contextShopIds
      */
     public function __construct(
@@ -63,7 +61,7 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         array $contextShopIds,
-        int $contextLangId
+        int $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
@@ -71,9 +69,6 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextLangId = $contextLangId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria)
@@ -86,19 +81,11 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->getQueryBuilder($searchCriteria)->select('COUNT(DISTINCT c.id_country)');
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     protected function getQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->connection->createQueryBuilder()
@@ -131,20 +118,16 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param SearchCriteriaInterface $criteria
-     */
     protected function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $criteria): void
     {
         $allowedFilters = ['id_country', 'name', 'iso_code', 'call_prefix', 'zone_name', 'active'];
 
         foreach ($criteria->getFilters() as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if (in_array($filterName, ['id_country', 'active'])) {
+            if (\in_array($filterName, ['id_country', 'active'], true)) {
                 $builder->andWhere('c.' . $filterName . ' = :' . $filterName);
                 $builder->setParameter($filterName, $filterValue);
                 continue;
@@ -162,7 +145,7 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if (in_array($filterName, ['iso_code', 'call_prefix'])) {
+            if (\in_array($filterName, ['iso_code', 'call_prefix'], true)) {
                 $builder->andWhere('c.' . $filterName . ' LIKE :' . $filterName);
                 $builder->setParameter($filterName, '%' . $filterValue . '%');
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,8 +35,6 @@ interface ConfigReaderInterface
      * Read file properties
      *
      * @param string $name The theme name
-     *
-     * @return ArrayFinder|null
      */
     public function read(string $name): ?ArrayFinder;
 }

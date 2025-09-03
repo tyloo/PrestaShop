@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -134,18 +135,18 @@ class AddCustomerCommand
     private $isGuest;
 
     /**
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $email
-     * @param string $password
-     * @param int $defaultGroupId
-     * @param int[] $groupIds
-     * @param int $shopId
-     * @param int|null $genderId
-     * @param bool $isEnabled
-     * @param bool $isPartnerOffersSubscribed
+     * @param string      $firstName
+     * @param string      $lastName
+     * @param string      $email
+     * @param string      $password
+     * @param int         $defaultGroupId
+     * @param int[]       $groupIds
+     * @param int         $shopId
+     * @param int|null    $genderId
+     * @param bool        $isEnabled
+     * @param bool        $isPartnerOffersSubscribed
      * @param string|null $birthday
-     * @param bool $isGuest
+     * @param bool        $isGuest
      */
     public function __construct(
         $firstName,
@@ -159,7 +160,7 @@ class AddCustomerCommand
         $isEnabled = true,
         $isPartnerOffersSubscribed = false,
         $birthday = null,
-        $isGuest = false
+        $isGuest = false,
     ) {
         $this->firstName = new FirstName($firstName);
         $this->lastName = new LastName($lastName);
@@ -171,7 +172,7 @@ class AddCustomerCommand
         $this->genderId = $genderId;
         $this->isEnabled = $isEnabled;
         $this->isPartnerOffersSubscribed = $isPartnerOffersSubscribed;
-        $this->birthday = null !== $birthday ? new Birthday($birthday) : Birthday::createEmpty();
+        $this->birthday = $birthday !== null ? new Birthday($birthday) : Birthday::createEmpty();
         $this->isGuest = $isGuest;
     }
 
@@ -403,9 +404,6 @@ class AddCustomerCommand
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isGuest(): bool
     {
         return $this->isGuest;

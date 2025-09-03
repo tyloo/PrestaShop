@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,10 +65,6 @@ class ArabicToLatinDigitConverter
 
     /**
      * Convert from arabic/persian digits to latin digits
-     *
-     * @param string $str
-     *
-     * @return string
      */
     public function convert(string $str): string
     {
@@ -76,15 +73,10 @@ class ArabicToLatinDigitConverter
 
     /**
      * Convert from latin digits to arabic or persian digits
-     *
-     * @param string $str
-     * @param int $lang
-     *
-     * @return string
      */
     public function reverseConvert(string $str, int $lang = self::ARABIC): string
     {
-        $table = array_slice(self::TRANSLATION_TABLE, $lang === self::ARABIC ? 0 : 10, 10, true);
+        $table = \array_slice(self::TRANSLATION_TABLE, $lang === self::ARABIC ? 0 : 10, 10, true);
 
         return strtr($str, array_flip($table));
     }

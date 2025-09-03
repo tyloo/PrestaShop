@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,17 +35,11 @@ use PrestaShop\PrestaShop\Core\FeatureFlag\TypeLayerInterface;
 
 class EnvLayer implements TypeLayerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getTypeName(): string
     {
         return FeatureFlagSettings::TYPE_ENV;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isReadonly(): bool
     {
         // It's always NOT editable via Env layer!
@@ -59,37 +54,25 @@ class EnvLayer implements TypeLayerInterface
         return FeatureFlagSettings::PREFIX . strtoupper($featureFlagName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed(string $featureFlagName): bool
     {
         // Check if PS_FF_{featureFlag's name} is on Env variable.
         return getenv($this->getConstName($featureFlagName)) !== false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(string $featureFlagName): bool
     {
         return $this->canBeUsed($featureFlagName)
             && filter_var(getenv($this->getConstName($featureFlagName)), \FILTER_VALIDATE_BOOLEAN);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enable(string $featureFlagName): void
     {
-        throw new InvalidArgumentException(sprintf('We cannot change status of the env feature flag %s.', $featureFlagName));
+        throw new InvalidArgumentException(\sprintf('We cannot change status of the env feature flag %s.', $featureFlagName));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function disable(string $featureFlagName): void
     {
-        throw new InvalidArgumentException(sprintf('We cannot change status of the env feature flag %s.', $featureFlagName));
+        throw new InvalidArgumentException(\sprintf('We cannot change status of the env feature flag %s.', $featureFlagName));
     }
 }

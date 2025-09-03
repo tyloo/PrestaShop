@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,26 +44,23 @@ class DefaultLanguageValidator extends ConstraintValidator
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof DefaultLanguage) {
+        if (! $constraint instanceof DefaultLanguage) {
             throw new UnexpectedTypeException($constraint, DefaultLanguage::class);
         }
 
         if ($constraint->allowNull) {
-            if (null === $value) {
+            if ($value === null) {
                 return;
             }
         }
 
-        if (!is_array($value)) {
+        if (! \is_array($value)) {
             throw new UnexpectedTypeException($value, 'array');
         }
 
-        if ($constraint->allowNull && !isset($value[$this->defaultLanguageContext->getId()]) && !isset($value[$this->defaultLanguageContext->getLocale()])) {
+        if ($constraint->allowNull && ! isset($value[$this->defaultLanguageContext->getId()]) && ! isset($value[$this->defaultLanguageContext->getLocale()])) {
             // Check that the array actually contains a value for the default language (regardless of its empty value or not), if no index
             // matching the default language is set it means there is no planned modification
             return;

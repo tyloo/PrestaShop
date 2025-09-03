@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,17 +63,11 @@ class PasswordPolicyConfiguration implements DataConfigurationInterface
      */
     private $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -82,9 +77,6 @@ class PasswordPolicyConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -99,13 +91,10 @@ class PasswordPolicyConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         return isset($configuration['minimum_score'])
-            && in_array($configuration['minimum_score'], static::AVAILABLE_PASSWORD_TYPE)
+            && \in_array($configuration['minimum_score'], static::AVAILABLE_PASSWORD_TYPE, true)
             && isset($configuration['maximum_length'])
             && $configuration['maximum_length'] >= 1 && $configuration['maximum_length'] <= 100
             && isset($configuration['minimum_length'])

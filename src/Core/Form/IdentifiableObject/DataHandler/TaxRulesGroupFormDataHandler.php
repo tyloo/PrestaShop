@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,10 +53,6 @@ class TaxRulesGroupFormDataHandler implements FormDataHandlerInterface
     /**
      * Create object from form data.
      *
-     * @param array $data
-     *
-     * @return mixed
-     *
      * @throws TaxRulesGroupConstraintException
      */
     public function create(array $data)
@@ -65,7 +62,7 @@ class TaxRulesGroupFormDataHandler implements FormDataHandlerInterface
             (bool) $data['is_enabled']
         );
         if (isset($data['shop_association'])) {
-            $command->setShopAssociation(is_array($data['shop_association']) ? $data['shop_association'] : []);
+            $command->setShopAssociation(\is_array($data['shop_association']) ? $data['shop_association'] : []);
         }
 
         /** @var TaxRulesGroupId $taxRulesGroupId */
@@ -75,8 +72,6 @@ class TaxRulesGroupFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws TaxRulesGroupConstraintException
      */
     public function update($id, array $data)
@@ -84,7 +79,7 @@ class TaxRulesGroupFormDataHandler implements FormDataHandlerInterface
         $command = (new EditTaxRulesGroupCommand($id))
             ->setName($data['name'])
             ->setEnabled((bool) $data['is_enabled'])
-            ->setShopAssociation(is_array($data['shop_association']) ? $data['shop_association'] : [])
+            ->setShopAssociation(\is_array($data['shop_association']) ? $data['shop_association'] : [])
         ;
 
         $this->commandBus->handle($command);

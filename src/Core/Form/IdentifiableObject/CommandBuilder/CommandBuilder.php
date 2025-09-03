@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -138,16 +139,12 @@ class CommandBuilder
      * array of either one, two or zero commands depending on the modifications that have been detected or not (the
      * single shop command is always returned before the all shops one though).
      *
-     * @param array $data
-     * @param object $singleShopCommand
-     * @param object|null $allShopsCommand
-     *
      * @return array Returns prepared commands (if no updated field was detected an empty array is returned)
      */
     public function buildCommands(
         array $data,
         object $singleShopCommand,
-        ?object $allShopsCommand = null
+        ?object $allShopsCommand = null,
     ): array {
         $updatedCommands = [];
 
@@ -164,10 +161,10 @@ class CommandBuilder
         }
         // Make sure the order of returned commands is always consistent (single shop comes first)
         $commands = [];
-        if (in_array($singleShopCommand, $updatedCommands, true)) {
+        if (\in_array($singleShopCommand, $updatedCommands, true)) {
             $commands[] = $singleShopCommand;
         }
-        if (in_array($allShopsCommand, $updatedCommands, true)) {
+        if (\in_array($allShopsCommand, $updatedCommands, true)) {
             $commands[] = $allShopsCommand;
         }
 
@@ -176,10 +173,6 @@ class CommandBuilder
 
     /**
      * Updates the provided command with data selected by field
-     *
-     * @param object $command
-     * @param CommandField $commandField
-     * @param array $data
      *
      * @return bool Returns true if command has been updated, or false otherwise
      */
@@ -193,33 +186,24 @@ class CommandBuilder
         }
         $setterMethod = $commandField->getCommandSetter();
 
-        if (!method_exists($command, $setterMethod)) {
-            throw new InvalidArgumentException(
-                sprintf('Setter method "%s" not found in command "%s"', $setterMethod, $command::class)
-            );
+        if (! method_exists($command, $setterMethod)) {
+            throw new InvalidArgumentException(\sprintf('Setter method "%s" not found in command "%s"', $setterMethod, $command::class));
         }
-        $command->$setterMethod(...$setterArguments);
+        $command->{$setterMethod}(...$setterArguments);
 
         return true;
     }
 
     /**
      * Check if the data has a mapping checkbox to modify all shops for the tested field, if so use the allShopsCommand
-     *
-     * @param CommandField $commandField
-     * @param array $data
-     * @param object $singleShopCommand
-     * @param object|null $allShopsCommand
-     *
-     * @return object
      */
     private function getAppropriateCommand(
         CommandField $commandField,
         array $data,
         object $singleShopCommand,
-        ?object $allShopsCommand
+        ?object $allShopsCommand,
     ): object {
-        if (null === $allShopsCommand || !$commandField->isMultiShopField()) {
+        if ($allShopsCommand === null || ! $commandField->isMultiShopField()) {
             return $singleShopCommand;
         }
         // Search multi-shop checkbox in data fields
@@ -233,7 +217,7 @@ class CommandBuilder
                 $stringPath,
                 $modifyAllElement,
                 strrpos($stringPath, $lastElement),
-                strlen($lastElement)
+                \strlen($lastElement)
             );
             // Return multi-shop command if any of the fields is enabled by checkbox
             try {
@@ -250,9 +234,6 @@ class CommandBuilder
 
     /**
      * Extracts field values from data
-     *
-     * @param array $data
-     * @param CommandField $commandField
      *
      * @return array<int, mixed>
      *
@@ -284,11 +265,6 @@ class CommandBuilder
 
     /**
      * Casts the provided value
-     *
-     * @param mixed $value
-     * @param string $type
-     *
-     * @return mixed
      */
     private function castValue($value, string $type)
     {

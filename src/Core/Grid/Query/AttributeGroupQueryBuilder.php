@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,12 +58,9 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextShopIds;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextLangId
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
-     * @param int[] $contextShopIds
+     * @param int    $contextLangId
+     * @param int[]  $contextShopIds
      */
     public function __construct(
         Connection $connection,
@@ -70,7 +68,7 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         $contextLangId,
         MultistoreContextCheckerInterface $multistoreContextChecker,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->contextLangId = $contextLangId;
@@ -81,8 +79,6 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Get query that searches grid rows.
-     *
-     * @param SearchCriteriaInterface $searchCriteria
      *
      * @return QueryBuilder
      */
@@ -101,8 +97,6 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Get query that counts grid rows.
      *
-     * @param SearchCriteriaInterface $searchCriteria
-     *
      * @return QueryBuilder
      */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -114,8 +108,6 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param array $filters
-     *
      * @return QueryBuilder
      */
     private function getQueryBuilder(array $filters)
@@ -125,7 +117,7 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
             ->from($this->dbPrefix . 'attribute', 'a')
             ->groupBy('a.id_attribute_group');
 
-        if (!$this->multistoreContextChecker->isAllShopContext()) {
+        if (! $this->multistoreContextChecker->isAllShopContext()) {
             $subQuery->andWhere('attrShop.id_shop IN (:contextShopIds)');
         }
 
@@ -167,10 +159,6 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param array $filters
-     * @param QueryBuilder $qb
-     */
     private function applyFilters(array $filters, QueryBuilder $qb)
     {
         $allowedFiltersMap = [
@@ -180,17 +168,17 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $allowedFiltersMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap)) {
                 continue;
             }
 
-            if ('name' === $filterName) {
+            if ($filterName === 'name') {
                 $qb->andWhere($allowedFiltersMap[$filterName] . ' LIKE :' . $filterName)
                     ->setParameter($filterName, '%' . $value . '%');
                 continue;
             }
 
-            if ('position' === $filterName) {
+            if ($filterName === 'position') {
                 // When filtering by position,
                 // value must be decreased by 1,
                 // since position value in database starts at 0,

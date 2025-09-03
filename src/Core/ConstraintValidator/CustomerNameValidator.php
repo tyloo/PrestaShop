@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,20 +40,17 @@ class CustomerNameValidator extends ConstraintValidator
     public const PATTERN_NAME = '/^(?!\s*$)(?:[^0-9!<>,;?=+()\/\\\\@#"°*`{}_^$%:¤\[\]|\.。]|[。\.](?:\s|$))*$/u';
     public const PATTERN_DOT_SPACED = '/[\.。](\s{1}[^\ ]|$)/';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof CustomerName) {
+        if (! $constraint instanceof CustomerName) {
             throw new UnexpectedTypeException($constraint, CustomerName::class);
         }
 
-        if (!is_string($value)) {
+        if (! \is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        if (!$this->isNameValid($value) || !$this->isPointSpacedValid($value)) {
+        if (! $this->isNameValid($value) || ! $this->isPointSpacedValid($value)) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation()
             ;

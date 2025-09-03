@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,35 +44,28 @@ final class RequestSqlQueryBuilder extends AbstractDoctrineQueryBuilder
     private $requestSqlTable;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix
+        $dbPrefix,
     ) {
         parent::__construct($connection, $dbPrefix);
 
         $this->requestSqlTable = $dbPrefix . 'request_sql';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(?SearchCriteriaInterface $searchCriteria = null): QueryBuilder
     {
         $searchQueryBuilder = $this->buildQueryBySearchCriteria($searchCriteria);
 
         return $searchQueryBuilder
             ->select('rs.*')
-            ->orderBy(sprintf('`%s`', $searchCriteria->getOrderBy()), $searchCriteria->getOrderWay())
+            ->orderBy(\sprintf('`%s`', $searchCriteria->getOrderBy()), $searchCriteria->getOrderWay())
             ->setFirstResult($searchCriteria->getOffset() ?? 0)
             ->setMaxResults($searchCriteria->getLimit());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(?SearchCriteriaInterface $searchCriteria = null)
     {
         $countQueryBuilder = $this->buildQueryBySearchCriteria($searchCriteria);
@@ -82,8 +76,6 @@ final class RequestSqlQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Build partial query by search criteria.
-     *
-     * @param SearchCriteriaInterface $criteria
      *
      * @return QueryBuilder
      */
@@ -97,7 +89,7 @@ final class RequestSqlQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ('id_request_sql' === $filterName) {
+            if ($filterName === 'id_request_sql') {
                 $qb->andWhere('rs.id_request_sql = :id_request_sql');
                 $qb->setParameter('id_request_sql', $value);
 

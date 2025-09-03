@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,7 +60,7 @@ class BulkCombinationFormDataFormatter extends AbstractFormDataFormatter
             '[stock][minimal_quantity]' => '[stock][quantities][minimal_quantity]',
             '[stock][stock_location]' => '[stock][options][stock_location]',
             '[stock][low_stock_threshold][threshold_value]' => '[stock][options][low_stock_threshold]',
-            '[stock][low_stock_threshold][low_stock_alert]' => sprintf(
+            '[stock][low_stock_threshold][low_stock_alert]' => \sprintf(
                 '[stock][options][%slow_stock_threshold]',
                 DisablingSwitchExtension::FIELD_PREFIX
             ),
@@ -71,7 +72,7 @@ class BulkCombinationFormDataFormatter extends AbstractFormDataFormatter
         $formattedData = $this->formatByPath($formData, $pathAssociations);
 
         // We only update images if disabling_switch_images value is truthy
-        if (!empty($formData['images'][sprintf('%simages', DisablingSwitchExtension::FIELD_PREFIX)])) {
+        if (! empty($formData['images'][\sprintf('%simages', DisablingSwitchExtension::FIELD_PREFIX)])) {
             if (empty($formData['images']['images'])) {
                 // Images are collection of checkboxes and there are no values submitted if none of them are checked, but
                 // truthy disabling_switch_images value suggests, that it was intended to "unselect" all images

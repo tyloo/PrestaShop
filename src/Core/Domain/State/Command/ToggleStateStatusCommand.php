@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class ToggleStateStatusCommand
      */
     private $stateId;
 
-    /**
-     * @param int $stateId
-     */
     public function __construct(int $stateId)
     {
         $this->stateId = new StateId($stateId);
     }
 
-    /**
-     * @return StateId
-     */
     public function getStateId(): StateId
     {
         return $this->stateId;

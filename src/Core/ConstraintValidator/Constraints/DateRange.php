@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class DateRange extends Constraint
 {
     public $message = 'The selected date range is not valid.';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return DateRangeValidator::class;

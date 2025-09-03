@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,11 +68,6 @@ class CombinationDetails
 
     /**
      * @param string $gtin this is the new renamed ean13
-     * @param string $isbn
-     * @param string $mpn
-     * @param string $reference
-     * @param string $upc
-     * @param DecimalNumber $impactOnWeight
      */
     public function __construct(
         string $gtin,
@@ -79,7 +75,7 @@ class CombinationDetails
         string $mpn,
         string $reference,
         string $upc,
-        DecimalNumber $impactOnWeight
+        DecimalNumber $impactOnWeight,
     ) {
         $this->gtin = $gtin;
         $this->isbn = $isbn;
@@ -89,9 +85,6 @@ class CombinationDetails
         $this->impactOnWeight = $impactOnWeight;
     }
 
-    /**
-     * @return string
-     */
     public function getGtin(): string
     {
         return $this->gtin;
@@ -102,41 +95,26 @@ class CombinationDetails
         return $this->getGtin();
     }
 
-    /**
-     * @return string
-     */
     public function getIsbn(): string
     {
         return $this->isbn;
     }
 
-    /**
-     * @return string
-     */
     public function getMpn(): string
     {
         return $this->mpn;
     }
 
-    /**
-     * @return string
-     */
     public function getReference(): string
     {
         return $this->reference;
     }
 
-    /**
-     * @return string
-     */
     public function getUpc(): string
     {
         return $this->upc;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getImpactOnWeight(): DecimalNumber
     {
         return $this->impactOnWeight;

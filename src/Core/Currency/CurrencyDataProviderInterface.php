@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,11 +66,11 @@ interface CurrencyDataProviderInterface
     /**
      * Get a Currency entity instance by ISO code.
      *
-     * @param string $isoCode
-     *                        An ISO 4217 currency code
+     * @param string   $isoCode
+     *                          An ISO 4217 currency code
      * @param int|null $idLang
-     *                         Set this parameter if you want the currency in a specific language.
-     *                         If null, default language will be used
+     *                          Set this parameter if you want the currency in a specific language.
+     *                          If null, default language will be used
      *
      * @return Currency|null
      *                       The asked Currency object, or null if not found
@@ -80,11 +81,11 @@ interface CurrencyDataProviderInterface
      * Get a Currency entity instance.
      * If the passed ISO code is known, this Currency entity will be loaded with known data.
      *
-     * @param string $isoCode
-     *                        An ISO 4217 currency code
+     * @param string   $isoCode
+     *                          An ISO 4217 currency code
      * @param int|null $idLang
-     *                         Set this parameter if you want the currency in a specific language.
-     *                         If null, default language will be used
+     *                          Set this parameter if you want the currency in a specific language.
+     *                          If null, default language will be used
      *
      * @return Currency
      *                  The asked Currency object, loaded with relevant data if passed ISO code is known
@@ -101,7 +102,7 @@ interface CurrencyDataProviderInterface
      * @throws PrestaShopException
      *                             If something wrong happened with DB when saving $currencyEntity
      * @throws Exception
-     *                   If an unexpected result is retrieved when saving $currencyEntity
+     *                             If an unexpected result is retrieved when saving $currencyEntity
      */
     public function saveCurrency(Currency $currencyEntity);
 

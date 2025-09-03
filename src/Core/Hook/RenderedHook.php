@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,35 +42,22 @@ final class RenderedHook implements RenderedHookInterface
      */
     private $content;
 
-    /**
-     * @param HookInterface $hook
-     * @param array $content
-     */
     public function __construct(HookInterface $hook, array $content = [])
     {
         $this->hook = $hook;
         $this->content = $content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHook()
     {
         return $this->hook;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContent()
     {
         return $this->content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function outputContent()
     {
         return implode('', $this->content);

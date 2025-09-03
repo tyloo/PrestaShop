@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,11 +56,9 @@ class CategoryId
     }
 
     /**
-     * @param CategoryId $categoryId
-     *
      * @return bool
      */
-    public function isEqual(CategoryId $categoryId)
+    public function isEqual(self $categoryId)
     {
         return $this->getValue() === $categoryId->getValue();
     }
@@ -69,8 +68,8 @@ class CategoryId
      */
     private function setCategoryId($categoryId)
     {
-        if (!is_int($categoryId) || 0 >= $categoryId) {
-            throw new CategoryException(sprintf('Invalid Category id %s supplied', var_export($categoryId, true)));
+        if (! \is_int($categoryId) || $categoryId <= 0) {
+            throw new CategoryException(\sprintf('Invalid Category id %s supplied', var_export($categoryId, true)));
         }
 
         $this->categoryId = $categoryId;

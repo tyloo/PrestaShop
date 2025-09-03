@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,11 @@ class CartRuleValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof CartRule) {
+        if (! $constraint instanceof CartRule) {
             throw new UnexpectedTypeException($constraint, CartRule::class);
         }
 
-        if (!is_array($value)) {
+        if (! \is_array($value)) {
             throw new UnexpectedValueException($value, 'array');
         }
 
@@ -55,19 +56,19 @@ class CartRuleValidator extends ConstraintValidator
     {
         // actions supposed to be validated already with validateActions method,
         // so in case discount is missing it means only free shipping or gift product action is applied
-        if (!isset($formData['actions']['discount'])) {
+        if (! isset($formData['actions']['discount'])) {
             return;
         }
 
         $discountData = $formData['actions']['discount'];
         $discountApplicationType = $discountData['discount_application'];
 
-        if (DiscountApplicationType::SPECIFIC_PRODUCT === $discountApplicationType && empty($discountData['specific_product'][0]['id'])) {
+        if ($discountApplicationType === DiscountApplicationType::SPECIFIC_PRODUCT && empty($discountData['specific_product'][0]['id'])) {
             $this->buildViolation($constraint->missingSpecificProductMessage, '[actions][discount][specific_product]');
         }
 
         if (
-            DiscountApplicationType::SELECTED_PRODUCTS === $discountApplicationType
+            $discountApplicationType === DiscountApplicationType::SELECTED_PRODUCTS
             // @todo: restrictions are not implemented, so this will still adapt,
             //       but the point is to check if any products restrictions are applied
             //       also need to check more in depth if its legit with products only or also with categories/attributes etc.)
@@ -79,17 +80,17 @@ class CartRuleValidator extends ConstraintValidator
 
     private function validateActions(array $formData, CartRule $constraint): void
     {
-        if (!empty($formData['actions']['free_shipping'])) {
+        if (! empty($formData['actions']['free_shipping'])) {
             return;
         }
 
-        if (!empty($formData['actions']['gift_product'][0]['product_id'])) {
+        if (! empty($formData['actions']['gift_product'][0]['product_id'])) {
             return;
         }
 
         // in theory there are more required properties, but we already assume they are present when reduction value is present
         // (the disabling switch and reduction value can be violated by user, therefor other values missing would mean developer error instead of constraint violation)
-        if (!empty($formData['actions']['disabling_switch_discount']) && !empty($formData['actions']['discount']['reduction']['value'])) {
+        if (! empty($formData['actions']['disabling_switch_discount']) && ! empty($formData['actions']['discount']['reduction']['value'])) {
             return;
         }
 

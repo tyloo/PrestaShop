@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -112,30 +113,30 @@ class LocaleData
      *
      * @return $this Fluent interface
      */
-    public function overrideWith(LocaleData $localeData)
+    public function overrideWith(self $localeData)
     {
-        if (null !== $localeData->getLocaleCode()) {
+        if ($localeData->getLocaleCode() !== null) {
             $this->setLocaleCode($localeData->getLocaleCode());
         }
 
-        if (null !== $localeData->getNumberingSystems()) {
-            if (null === $this->numberingSystems) {
+        if ($localeData->getNumberingSystems() !== null) {
+            if ($this->numberingSystems === null) {
                 $this->numberingSystems = [];
             }
             $this->setNumberingSystems(array_merge($this->numberingSystems, $localeData->getNumberingSystems()));
         }
 
-        if (null !== $localeData->getDefaultNumberingSystem()) {
+        if ($localeData->getDefaultNumberingSystem() !== null) {
             $this->setDefaultNumberingSystem($localeData->getDefaultNumberingSystem());
         }
 
-        if (null !== $localeData->getMinimumGroupingDigits()) {
+        if ($localeData->getMinimumGroupingDigits() !== null) {
             $this->setMinimumGroupingDigits($localeData->getMinimumGroupingDigits());
         }
 
-        if (null !== $localeData->getNumberSymbols()) {
+        if ($localeData->getNumberSymbols() !== null) {
             foreach ($localeData->getNumberSymbols() as $numberingSystem => $symbolsData) {
-                if (!isset($this->numberSymbols[$numberingSystem])) {
+                if (! isset($this->numberSymbols[$numberingSystem])) {
                     $this->numberSymbols[$numberingSystem] = $symbolsData;
 
                     continue;
@@ -144,30 +145,30 @@ class LocaleData
             }
         }
 
-        if (null !== $localeData->getDecimalPatterns()) {
-            if (null === $this->decimalPatterns) {
+        if ($localeData->getDecimalPatterns() !== null) {
+            if ($this->decimalPatterns === null) {
                 $this->decimalPatterns = [];
             }
             $this->setDecimalPatterns(array_merge($this->decimalPatterns, $localeData->getDecimalPatterns()));
         }
 
-        if (null !== $localeData->getPercentPatterns()) {
-            if (null === $this->percentPatterns) {
+        if ($localeData->getPercentPatterns() !== null) {
+            if ($this->percentPatterns === null) {
                 $this->percentPatterns = [];
             }
             $this->setPercentPatterns(array_merge($this->numberingSystems, $localeData->getPercentPatterns()));
         }
 
-        if (null !== $localeData->getCurrencyPatterns()) {
-            if (null === $this->currencyPatterns) {
+        if ($localeData->getCurrencyPatterns() !== null) {
+            if ($this->currencyPatterns === null) {
                 $this->currencyPatterns = [];
             }
             $this->setCurrencyPatterns(array_merge($this->currencyPatterns, $localeData->getCurrencyPatterns()));
         }
 
-        if (null !== $localeData->getCurrencies()) {
+        if ($localeData->getCurrencies() !== null) {
             foreach ($localeData->getCurrencies() as $code => $currencyData) {
-                if (!isset($this->currencies[$code])) {
+                if (! isset($this->currencies[$code])) {
                     $this->currencies[$code] = $currencyData;
                     continue;
                 }
@@ -354,7 +355,7 @@ class LocaleData
     public function getCurrencyByIsoCode($currencyIsoCode)
     {
         foreach ($this->getCurrencies() as $currencyData) {
-            if ($currencyData->getIsoCode() == $currencyIsoCode) {
+            if ($currencyData->getIsoCode() === $currencyIsoCode) {
                 return $currencyData;
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject;
 
 use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
 
-/**
- * Class SupplierId
- */
 class SupplierId implements SupplierIdInterface
 {
     /**
@@ -39,8 +37,6 @@ class SupplierId implements SupplierIdInterface
     private $value;
 
     /**
-     * @param int $supplierId
-     *
      * @throws SupplierException
      */
     public function __construct(int $supplierId)
@@ -49,23 +45,18 @@ class SupplierId implements SupplierIdInterface
         $this->value = $supplierId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->value;
     }
 
     /**
-     * @param int $supplierId
-     *
      * @throws SupplierException
      */
     private function assertIsIntegerGreaterThanZero(int $supplierId)
     {
-        if (0 >= $supplierId) {
-            throw new SupplierException(sprintf('Invalid Supplier id: %s', var_export($supplierId, true)));
+        if ($supplierId <= 0) {
+            throw new SupplierException(\sprintf('Invalid Supplier id: %s', var_export($supplierId, true)));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,11 +91,11 @@ abstract class AbstractDataLayer
         $data = $this->doRead($id);
 
         // If nothing found, ask lower layer
-        if (null === $data) {
+        if ($data === null) {
             $data = $this->propagateRead($id);
 
             // If nothing was found deeper, there is nothing more to do
-            if (null === $data) {
+            if ($data === null) {
                 return null;
             }
 
@@ -112,7 +113,7 @@ abstract class AbstractDataLayer
      * current layer (because lower layer might hydrate/update the data object).
      *
      * @param mixed $id
-     *                  The data object identifier
+     *                    The data object identifier
      * @param mixed $data
      *                    The data object to write
      *
@@ -156,7 +157,7 @@ abstract class AbstractDataLayer
      * Propagate write to lower layer.
      *
      * @param mixed $id
-     *                  The data object identifier
+     *                    The data object identifier
      * @param mixed $data
      *                    The data object to write into this field
      *
@@ -181,7 +182,7 @@ abstract class AbstractDataLayer
      * This data object is written in the current layer to avoid read propagation next time.
      *
      * @param mixed $id
-     *                  Data object identifier
+     *                    Data object identifier
      * @param mixed $data
      *                    Data object received from lower layers
      *
@@ -205,7 +206,7 @@ abstract class AbstractDataLayer
      * This data object is written in the current layer after lower layers have hydrated/updated (and written) it
      *
      * @param mixed $id
-     *                  Data object identifier
+     *                    Data object identifier
      * @param mixed $data
      *                    Data object received from lower layers
      *
@@ -281,7 +282,7 @@ abstract class AbstractDataLayer
      * Might be a file edit, cache update, DB insert/update...
      *
      * @param mixed $id
-     *                  The data object identifier
+     *                    The data object identifier
      * @param mixed $data
      *                    The data object to be written
      *

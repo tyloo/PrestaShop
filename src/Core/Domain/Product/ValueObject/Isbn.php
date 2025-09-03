@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,42 +70,26 @@ class Isbn
      */
     private $value;
 
-    /**
-     * @param string $value
-     */
     public function __construct(string $value)
     {
         $this->assertIsbnIsValid($value);
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
-     *
      * @throws ProductConstraintException
      */
     private function assertIsbnIsValid(string $value): void
     {
-        if ((strlen($value) <= self::MAX_LENGTH && preg_match(self::VALID_PATTERN, $value)) || !$value) {
+        if ((\strlen($value) <= self::MAX_LENGTH && preg_match(self::VALID_PATTERN, $value)) || ! $value) {
             return;
         }
 
-        throw new ProductConstraintException(
-            sprintf(
-                'Invalid ISBN "%s". It should match pattern "%s" and cannot exceed %s symbols',
-                $value,
-                self::VALID_PATTERN,
-                self::MAX_LENGTH
-            ),
-            ProductConstraintException::INVALID_ISBN
-        );
+        throw new ProductConstraintException(\sprintf('Invalid ISBN "%s". It should match pattern "%s" and cannot exceed %s symbols', $value, self::VALID_PATTERN, self::MAX_LENGTH), ProductConstraintException::INVALID_ISBN);
     }
 }

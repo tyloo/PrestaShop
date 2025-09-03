@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -86,10 +87,7 @@ class Calculator
     protected $computePrecision;
 
     /**
-     * @param CartCore $cart
      * @param int $carrierId
-     * @param int|null $computePrecision
-     * @param int|null $orderId
      */
     public function __construct(CartCore $cart, $carrierId, ?FeatureFlagStateCheckerInterface $featureFlagManager = null, ?int $computePrecision = null, ?int $orderId = null)
     {
@@ -101,7 +99,7 @@ class Calculator
         $this->cartRules = new CartRuleCollection();
         $this->cartRuleCalculator = new CartRuleCalculator($featureFlagManager);
 
-        if (null === $computePrecision) {
+        if ($computePrecision === null) {
             $currency = new Currency((int) $cart->id_currency);
             $computePrecision = (new ComputingPrecision())->getPrecision($currency->precision);
         }
@@ -127,8 +125,6 @@ class Calculator
 
     /**
      * insert a new cart rule in the calculator.
-     *
-     * @param CartRuleData $cartRule
      *
      * @return $this
      */
@@ -172,18 +168,18 @@ class Calculator
      */
     public function getTotal($ignoreProcessedFlag = false)
     {
-        if (!$this->isProcessed && !$ignoreProcessedFlag) {
+        if (! $this->isProcessed && ! $ignoreProcessedFlag) {
             throw new Exception('Cart must be processed before getting its total');
         }
 
         $amount = $this->rounded($this->getRowTotalWithoutDiscount(), $this->computePrecision);
         $amount = $amount->sub($this->rounded($this->getDiscountTotal(), $this->computePrecision));
         $shippingFees = $this->fees->getInitialShippingFees();
-        if (null !== $shippingFees) {
+        if ($shippingFees !== null) {
             $amount = $amount->add($this->rounded($shippingFees, $this->computePrecision));
         }
         $wrappingFees = $this->fees->getFinalWrappingFees();
-        if (null !== $wrappingFees) {
+        if ($wrappingFees !== null) {
             $amount = $amount->add($this->rounded($wrappingFees, $this->computePrecision));
         }
 
@@ -242,7 +238,7 @@ class Calculator
 
         $allowedMaxDiscount = $this->getRowTotalWithoutDiscount();
 
-        if (null !== $this->getFees()->getFinalShippingFees()) {
+        if ($this->getFees()->getFinalShippingFees() !== null) {
             $shippingDiscount = (new AmountImmutable())
                 ->add($this->getFees()->getInitialShippingFees())
                 ->sub($this->getFees()->getFinalShippingFees())
@@ -273,8 +269,6 @@ class Calculator
     }
 
     /**
-     * @param mixed $id_carrier
-     *
      * @return Calculator
      */
     protected function setCarrierId($id_carrier)
@@ -305,8 +299,6 @@ class Calculator
 
     /**
      * Calculate row total.
-     *
-     * @param CartRow $cartRow
      */
     protected function calculateRowTotal(CartRow $cartRow)
     {
@@ -365,9 +357,6 @@ class Calculator
     }
 
     /**
-     * @param AmountImmutable $amount
-     * @param int $computePrecision
-     *
      * @return AmountImmutable
      */
     private function rounded(AmountImmutable $amount, int $computePrecision)

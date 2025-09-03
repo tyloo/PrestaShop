@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,8 @@ abstract class ShopFilters extends Filters implements ShopSearchCriteriaInterfac
     private $shopConstraint;
 
     /**
-     * @param ShopConstraint $shopConstraint
      * @param array<string, mixed> $filters
-     * @param string $filterId
+     * @param string               $filterId
      */
     public function __construct(ShopConstraint $shopConstraint, array $filters = [], $filterId = '')
     {

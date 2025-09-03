@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,19 +43,12 @@ final class SqlRequestExporter implements SqlRequestExporterInterface
     private FileWriterInterface $csvFileWriter;
     private ConfigurationInterface $configuration;
 
-    /**
-     * @param FileWriterInterface $csvFileWriter
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(FileWriterInterface $csvFileWriter, ConfigurationInterface $configuration)
     {
         $this->csvFileWriter = $csvFileWriter;
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function exportToFile(SqlRequestId $sqlRequestId, SqlRequestExecutionResult $result): SplFileInfo
     {
         $exportData = new ExportableData(
@@ -62,7 +56,7 @@ final class SqlRequestExporter implements SqlRequestExporterInterface
             $result->getRows()
         );
 
-        $exportFileName = sprintf('request_sql_%s.csv', $sqlRequestId->getValue());
+        $exportFileName = \sprintf('request_sql_%s.csv', $sqlRequestId->getValue());
 
         return $this->csvFileWriter->write(
             $exportFileName,

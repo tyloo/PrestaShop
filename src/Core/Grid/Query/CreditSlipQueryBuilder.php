@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,13 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextShopIds;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param array $contextShopIds
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -63,9 +61,6 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextShopIds = $contextShopIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters());
@@ -83,9 +78,6 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getQueryBuilder($searchCriteria->getFilters())
@@ -97,8 +89,6 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Gets query builder with the common sql for credit slip listing.
-     *
-     * @param array $filters
      *
      * @return QueryBuilder
      */
@@ -121,10 +111,6 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     * @param array $filters
-     */
     private function applyFilters(QueryBuilder $qb, array $filters)
     {
         $availableFiltersMap = [
@@ -134,25 +120,25 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!array_key_exists($filterName, $availableFiltersMap)) {
+            if (! \array_key_exists($filterName, $availableFiltersMap)) {
                 continue;
             }
 
-            if ('id_credit_slip' === $filterName || 'id_order' === $filterName) {
+            if ($filterName === 'id_credit_slip' || $filterName === 'id_order') {
                 $qb->andWhere($availableFiltersMap[$filterName] . "= :$filterName");
                 $qb->setParameter($filterName, $value);
 
                 continue;
             }
 
-            if ('date_issued' === $filterName) {
+            if ($filterName === 'date_issued') {
                 if (isset($value['from'])) {
                     $qb->andWhere($availableFiltersMap[$filterName] . ' >= :date_from');
-                    $qb->setParameter('date_from', sprintf('%s 0:0:0', $value['from']));
+                    $qb->setParameter('date_from', \sprintf('%s 0:0:0', $value['from']));
                 }
                 if (isset($value['to'])) {
                     $qb->andWhere($availableFiltersMap[$filterName] . ' <= :date_to');
-                    $qb->setParameter('date_to', sprintf('%s 23:59:59', $value['to']));
+                    $qb->setParameter('date_to', \sprintf('%s 23:59:59', $value['to']));
                 }
                 continue;
             }

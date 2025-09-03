@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,7 +52,7 @@ class ShopContextBuilder implements LegacyContextBuilderInterface
     public function __construct(
         private readonly ShopRepository $shopRepository,
         private readonly ContextStateManager $contextStateManager,
-        private readonly MultistoreFeature $multistoreFeature
+        private readonly MultistoreFeature $multistoreFeature,
     ) {
     }
 
@@ -96,7 +97,7 @@ class ShopContextBuilder implements LegacyContextBuilderInterface
         // Now we properly set the context
         if ($this->shopConstraint->forAllShops()) {
             $this->contextStateManager->setShopContext(ShopConstraint::ALL_SHOPS);
-        } elseif (!empty($this->shopConstraint->getShopGroupId())) {
+        } elseif (! empty($this->shopConstraint->getShopGroupId())) {
             $this->contextStateManager->setShopContext(ShopConstraint::SHOP_GROUP, $this->shopConstraint->getShopGroupId()->getValue());
         } else {
             $this->contextStateManager->setShopContext(ShopConstraint::SHOP, $this->shopConstraint->getShopId()->getValue());
@@ -124,18 +125,12 @@ class ShopContextBuilder implements LegacyContextBuilderInterface
 
     private function assertArguments(): void
     {
-        if (null === $this->shopConstraint) {
-            throw new InvalidArgumentException(sprintf(
-                'Cannot build shop context as no shopConstraint has been defined you need to call %s::setShopConstraint to define it before building the shop context',
-                self::class
-            ));
+        if ($this->shopConstraint === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot build shop context as no shopConstraint has been defined you need to call %s::setShopConstraint to define it before building the shop context', self::class));
         }
 
-        if (null === $this->shopId) {
-            throw new InvalidArgumentException(sprintf(
-                'Cannot build shop context as no shopId has been defined you need to call %s::setShopId to define it before building the shop context',
-                self::class
-            ));
+        if ($this->shopId === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot build shop context as no shopId has been defined you need to call %s::setShopId to define it before building the shop context', self::class));
         }
     }
 

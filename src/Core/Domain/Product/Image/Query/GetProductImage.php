@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,23 +46,17 @@ class GetProductImage
 
     public function __construct(
         int $imageId,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->imageId = new ImageId($imageId);
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return ImageId
-     */
     public function getImageId(): ImageId
     {
         return $this->imageId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

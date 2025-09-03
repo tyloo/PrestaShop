@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -140,37 +141,27 @@ class UpdateCombinationCommand
     private $shopConstraint;
 
     /**
-     * @param int $combinationId
-     *
      * @throws ProductConstraintException
      */
     public function __construct(
         int $combinationId,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ) {
         $this->combinationId = new CombinationId($combinationId);
         $this->shopConstraint = $shopConstraint;
     }
 
-    /**
-     * @return CombinationId
-     */
     public function getCombinationId(): CombinationId
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isDefault(): ?bool
     {
         return $this->isDefault;
     }
 
     /**
-     * @param bool|null $isDefault
-     *
      * @return static
      */
     public function setIsDefault(?bool $isDefault): self
@@ -182,8 +173,6 @@ class UpdateCombinationCommand
 
     /**
      * @deprecated since 9.0 will be removed in 10.0
-     *
-     * @return Gtin|null
      */
     public function getEan13(): ?Gtin
     {
@@ -193,8 +182,6 @@ class UpdateCombinationCommand
     /**
      * @deprecated since 9.0 will be removed in 10.0
      *
-     * @param string $gtin
-     *
      * @return $this
      */
     public function setEan13(string $gtin): self
@@ -202,17 +189,12 @@ class UpdateCombinationCommand
         return $this->setGtin($gtin);
     }
 
-    /**
-     * @return Gtin|null
-     */
     public function getGtin(): ?Gtin
     {
         return $this->gtin;
     }
 
     /**
-     * @param string $gtin
-     *
      * @return $this
      */
     public function setGtin(string $gtin): self
@@ -222,17 +204,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return Isbn|null
-     */
     public function getIsbn(): ?Isbn
     {
         return $this->isbn;
     }
 
     /**
-     * @param string $isbn
-     *
      * @return $this
      */
     public function setIsbn(string $isbn): self
@@ -242,17 +219,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMpn(): ?string
     {
         return $this->mpn;
     }
 
     /**
-     * @param string $mpn
-     *
      * @return $this
      */
     public function setMpn(string $mpn): self
@@ -262,17 +234,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return Reference|null
-     */
     public function getReference(): ?Reference
     {
         return $this->reference;
     }
 
     /**
-     * @param string $reference
-     *
      * @return $this
      */
     public function setReference(string $reference): self
@@ -282,17 +249,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return Upc|null
-     */
     public function getUpc(): ?Upc
     {
         return $this->upc;
     }
 
     /**
-     * @param string $upc
-     *
      * @return $this
      */
     public function setUpc(string $upc): self
@@ -302,17 +264,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getImpactOnWeight(): ?DecimalNumber
     {
         return $this->impactOnWeight;
     }
 
     /**
-     * @param string $impactOnWeight
-     *
      * @return $this
      */
     public function setImpactOnWeight(string $impactOnWeight): self
@@ -322,17 +279,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getImpactOnPrice(): ?DecimalNumber
     {
         return $this->impactOnPrice;
     }
 
     /**
-     * @param string $impactOnPrice
-     *
      * @return $this
      */
     public function setImpactOnPrice(string $impactOnPrice): self
@@ -342,17 +294,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getEcoTax(): ?DecimalNumber
     {
         return $this->ecoTax;
     }
 
     /**
-     * @param string $ecoTax
-     *
      * @return $this
      */
     public function setEcoTax(string $ecoTax): self
@@ -362,17 +309,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getImpactOnUnitPrice(): ?DecimalNumber
     {
         return $this->impactOnUnitPrice;
     }
 
     /**
-     * @param string $impactOnUnitPrice
-     *
      * @return $this
      */
     public function setImpactOnUnitPrice(string $impactOnUnitPrice): self
@@ -382,17 +324,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return DecimalNumber|null
-     */
     public function getWholesalePrice(): ?DecimalNumber
     {
         return $this->wholesalePrice;
     }
 
     /**
-     * @param string $wholesalePrice
-     *
      * @return $this
      */
     public function setWholesalePrice(string $wholesalePrice): self
@@ -402,17 +339,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMinimalQuantity(): ?int
     {
         return $this->minimalQuantity;
     }
 
     /**
-     * @param int $minimalQuantity
-     *
      * @return $this
      */
     public function setMinimalQuantity(int $minimalQuantity): self
@@ -422,17 +354,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return LowStockThreshold|null
-     */
     public function getLowStockThreshold(): ?LowStockThreshold
     {
         return $this->lowStockThreshold;
     }
 
     /**
-     * @param int $lowStockThreshold
-     *
      * @return $this
      */
     public function setLowStockThreshold(int $lowStockThreshold): self
@@ -442,17 +369,12 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getAvailableDate(): ?DateTimeInterface
     {
         return $this->availableDate;
     }
 
     /**
-     * @param DateTimeInterface $availableDate
-     *
      * @return $this
      */
     public function setAvailableDate(DateTimeInterface $availableDate): self
@@ -502,9 +424,6 @@ class UpdateCombinationCommand
         return $this;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;

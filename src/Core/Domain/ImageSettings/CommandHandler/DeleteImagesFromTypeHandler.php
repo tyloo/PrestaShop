@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,21 +44,18 @@ final class DeleteImagesFromTypeHandler implements DeleteImagesFromTypeHandlerIn
 {
     public function __construct(
         private readonly ImageTypeRepository $imageTypeRepository,
-        private readonly ImageThumbnailsRegenerator $imageThumbnailsRegenerator
+        private readonly ImageThumbnailsRegenerator $imageThumbnailsRegenerator,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteImagesFromTypeCommand $command): void
     {
         // Get image type by id
         /** @var ?ImageType $imageType */
         $imageType = $this->imageTypeRepository->find($command->getImageTypeId()->getValue());
 
-        if (!$imageType) {
-            throw new ImageTypeNotFoundException(sprintf('Unable to find image type with id "%d" for deletion', $command->getImageTypeId()->getValue()));
+        if (! $imageType) {
+            throw new ImageTypeNotFoundException(\sprintf('Unable to find image type with id "%d" for deletion', $command->getImageTypeId()->getValue()));
         }
 
         // Delete all images linked to image type

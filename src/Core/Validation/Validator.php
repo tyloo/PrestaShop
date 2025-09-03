@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,11 @@ final class Validator implements ValidatorInterface
      */
     private $validate;
 
-    /**
-     * @param Validate $validate
-     */
     public function __construct(Validate $validate)
     {
         $this->validate = $validate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCleanHtml($html, array $options = [])
     {
         $defaultOptions = [
@@ -59,9 +54,6 @@ final class Validator implements ValidatorInterface
         return $this->validate->isCleanHtml($html, $options['allow_iframe']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isModuleName($name)
     {
         return $this->validate->isModuleName($name);

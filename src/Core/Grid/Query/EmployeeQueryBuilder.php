@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,18 +52,16 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextShopIds;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
      * @param string $contextIdLang
-     * @param int[] $contextShopIds
+     * @param int[]  $contextShopIds
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         $contextIdLang,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -71,9 +70,6 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->contextShopIds = $contextShopIds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $searchQueryBuilder = $this->getEmployeeQueryBuilder($searchCriteria)
@@ -85,9 +81,6 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
         return $searchQueryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $countQueryBuilder = $this->getEmployeeQueryBuilder($searchCriteria)
@@ -97,8 +90,6 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
      * @return QueryBuilder
      */
     private function getEmployeeQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -127,9 +118,6 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Apply filters for Query builder.
-     *
-     * @param QueryBuilder $queryBuilder
-     * @param array $filters
      */
     private function applyFilters(QueryBuilder $queryBuilder, array $filters)
     {
@@ -143,25 +131,25 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $filterValue) {
-            if (!in_array($filterName, $allowedFilters)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('id_employee' === $filterName) {
+            if ($filterName === 'id_employee') {
                 $queryBuilder->andWhere('e.id_employee = :' . $filterName);
                 $queryBuilder->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            if ('profile' === $filterName) {
+            if ($filterName === 'profile') {
                 $queryBuilder->andWhere('pl.id_profile = :id_profile');
                 $queryBuilder->setParameter('id_profile', $filterValue);
 
                 continue;
             }
 
-            if ('active' === $filterName) {
+            if ($filterName === 'active') {
                 $queryBuilder->andWhere('e.active = :active');
                 $queryBuilder->setParameter('active', $filterValue);
 
@@ -173,16 +161,12 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
         }
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     * @param QueryBuilder $queryBuilder
-     */
     private function applySorting(SearchCriteriaInterface $searchCriteria, QueryBuilder $queryBuilder)
     {
         if ($searchCriteria->getOrderBy() && $searchCriteria->getOrderWay()) {
             $orderBy = $searchCriteria->getOrderBy();
 
-            if ('profile' === $orderBy) {
+            if ($orderBy === 'profile') {
                 $orderBy = 'pl.name';
             }
 

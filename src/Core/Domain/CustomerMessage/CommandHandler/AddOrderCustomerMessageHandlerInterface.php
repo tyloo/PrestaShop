@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\CustomerMessage\CommandHandler;
 
 use PrestaShop\PrestaShop\Core\Domain\CustomerMessage\Command\AddOrderCustomerMessageCommand;
 
-/**
- * Interface AddOrderCustomerMessageHandlerInterface
- */
 interface AddOrderCustomerMessageHandlerInterface
 {
     public function handle(AddOrderCustomerMessageCommand $command);

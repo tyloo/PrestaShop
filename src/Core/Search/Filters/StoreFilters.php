@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,7 +33,9 @@ use PrestaShop\PrestaShop\Core\Search\ShopFilters;
 
 class StoreFilters extends ShopFilters
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $filterId = StoreGridDefinitionFactory::GRID_ID;
 
     /**

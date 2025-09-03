@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class ReductionTypeChoiceProvider implements FormChoiceProviderInterface
     private $currencyDataProvider;
 
     public function __construct(
-        CurrencyDataProviderInterface $currencyDataProvider
+        CurrencyDataProviderInterface $currencyDataProvider,
     ) {
         $this->currencyDataProvider = $currencyDataProvider;
     }

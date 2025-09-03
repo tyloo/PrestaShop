@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,17 +48,11 @@ class TitleQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $languageId;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $languageId
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $languageId
+        int $languageId,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -65,9 +60,6 @@ class TitleQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->languageId = $languageId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $builder = $this->getTitleQueryBuilder($searchCriteria)
@@ -80,19 +72,11 @@ class TitleQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         return $this->getTitleQueryBuilder($searchCriteria)->select('COUNT(g.id_gender)');
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     */
     private function getTitleQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $builder = $this->connection->createQueryBuilder()
@@ -107,10 +91,6 @@ class TitleQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param SearchCriteriaInterface $searchCriteria
-     */
     private function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $searchCriteria): void
     {
         $allowedFiltersMap = [
@@ -120,7 +100,7 @@ class TitleQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($searchCriteria->getFilters() as $filterName => $filterValue) {
-            if (!array_key_exists($filterName, $allowedFiltersMap)) {
+            if (! \array_key_exists($filterName, $allowedFiltersMap)) {
                 continue;
             }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,8 +51,6 @@ class ThemeImportSource
     private $source;
 
     /**
-     * @param UploadedFile $uploadedTheme
-     *
      * @return ThemeImportSource
      */
     public static function fromArchive(UploadedFile $uploadedTheme)
@@ -80,7 +79,7 @@ class ThemeImportSource
     }
 
     /**
-     * @param string $sourceType
+     * @param string              $sourceType
      * @param UploadedFile|string $source
      *
      * @throws NotSupportedThemeImportSourceException
@@ -118,8 +117,8 @@ class ThemeImportSource
     {
         $supportedSources = [self::FROM_ARCHIVE, self::FROM_WEB, self::FROM_FTP];
 
-        if (!in_array($sourceType, $supportedSources)) {
-            throw new NotSupportedThemeImportSourceException(sprintf('Not supported %s theme import source type supplied. Supported sources are: "%s"', var_export($sourceType, true), implode(',', $supportedSources)));
+        if (! \in_array($sourceType, $supportedSources, true)) {
+            throw new NotSupportedThemeImportSourceException(\sprintf('Not supported %s theme import source type supplied. Supported sources are: "%s"', var_export($sourceType, true), implode(',', $supportedSources)));
         }
     }
 }

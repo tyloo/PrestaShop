@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,11 +46,11 @@ class Factory
      * Build a Number specification from a CLDR Locale object.
      *
      * @param CldrLocaleInterface $cldrLocale
-     *                                        This CldrLocale object is a low level data object extracted from CLDR data source
-     * @param int $maxFractionDigits
-     *                               Max number of digits to display in a number's decimal part
-     * @param bool $numberGroupingUsed
-     *                                 Should we group digits in a number's integer part ?
+     *                                                This CldrLocale object is a low level data object extracted from CLDR data source
+     * @param int                 $maxFractionDigits
+     *                                                Max number of digits to display in a number's decimal part
+     * @param bool                $numberGroupingUsed
+     *                                                Should we group digits in a number's integer part ?
      *
      * @return NumberSpecification
      *
@@ -77,13 +78,13 @@ class Factory
     /**
      * Build a Price specification from a CLDR Locale object and a Currency object.
      *
-     * @param string $localeCode The concerned locale
-     * @param CldrLocaleInterface $cldrLocale his CldrLocale object is a low level data object extracted from CLDR data source
-     *                                        It contains data about the concerned locale
-     * @param Currency $currency This Currency object brings missing specification to format a number as a price
-     * @param bool $numberGroupingUsed Should we group digits when formatting prices ?
-     * @param string $currencyDisplayType Type of display for currency symbol (symbol or ISO code)
-     * @param int|null $maxFractionDigits The decimal precision of the price
+     * @param string              $localeCode          The concerned locale
+     * @param CldrLocaleInterface $cldrLocale          his CldrLocale object is a low level data object extracted from CLDR data source
+     *                                                 It contains data about the concerned locale
+     * @param Currency            $currency            This Currency object brings missing specification to format a number as a price
+     * @param bool                $numberGroupingUsed  Should we group digits when formatting prices ?
+     * @param string              $currencyDisplayType Type of display for currency symbol (symbol or ISO code)
+     * @param int|null            $maxFractionDigits   The decimal precision of the price
      *
      * @return PriceSpecification
      *
@@ -95,7 +96,7 @@ class Factory
         Currency $currency,
         $numberGroupingUsed,
         $currencyDisplayType,
-        ?int $maxFractionDigits = null
+        ?int $maxFractionDigits = null,
     ) {
         $currencyPattern = $currency->getPattern($localeCode) ?: $cldrLocale->getCurrencyPattern();
         $numbersSymbols = $cldrLocale->getAllNumberSymbols();
@@ -225,7 +226,7 @@ class Factory
     {
         $dotPos = (int) strpos($pattern, '.');
 
-        return strlen(substr($pattern, $dotPos + 1));
+        return \strlen(substr($pattern, $dotPos + 1));
     }
 
     /**
@@ -240,9 +241,9 @@ class Factory
     protected function getPrimaryGroupSize($pattern)
     {
         $groups = $this->getPatternGroups($pattern);
-        $nbGroups = count($groups);
+        $nbGroups = \count($groups);
 
-        return strlen($groups[$nbGroups - 1]);
+        return \strlen($groups[$nbGroups - 1]);
     }
 
     /**
@@ -257,13 +258,13 @@ class Factory
     protected function getSecondaryGroupSize($pattern)
     {
         $groups = $this->getPatternGroups($pattern);
-        $nbGroups = count($groups);
+        $nbGroups = \count($groups);
 
         if ($nbGroups > 2) {
-            return strlen($groups[$nbGroups - 2]);
+            return \strlen($groups[$nbGroups - 2]);
         }
 
-        return strlen($groups[$nbGroups - 1]);
+        return \strlen($groups[$nbGroups - 1]);
     }
 
     protected function getPatternGroups($pattern)

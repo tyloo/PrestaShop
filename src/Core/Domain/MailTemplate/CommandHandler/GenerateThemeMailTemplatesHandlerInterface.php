@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,13 +29,7 @@ namespace PrestaShop\PrestaShop\Core\Domain\MailTemplate\CommandHandler;
 
 use PrestaShop\PrestaShop\Core\Domain\MailTemplate\Command\GenerateThemeMailTemplatesCommand;
 
-/**
- * Interface GenerateThemeMailTemplatesHandlerInterface
- */
 interface GenerateThemeMailTemplatesHandlerInterface
 {
-    /**
-     * @param GenerateThemeMailTemplatesCommand $command
-     */
     public function handle(GenerateThemeMailTemplatesCommand $command);
 }

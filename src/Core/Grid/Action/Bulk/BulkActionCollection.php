@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class BulkActionCollection extends AbstractCollection implements BulkActionCollectionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function add(BulkActionInterface $bulkAction)
     {
         $this->items[$bulkAction->getId()] = $bulkAction;
@@ -45,9 +43,6 @@ final class BulkActionCollection extends AbstractCollection implements BulkActio
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
         $bulkActionsArray = [];

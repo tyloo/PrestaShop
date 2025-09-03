@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class IniConfiguration
      */
     public function getPostMaxSizeInBytes()
     {
-        return $this->convertToBytes(ini_get('post_max_size'));
+        return $this->convertToBytes(\ini_get('post_max_size'));
     }
 
     /**
@@ -49,7 +50,7 @@ class IniConfiguration
     public function getUploadMaxSizeInBytes()
     {
         return min(
-            $this->convertToBytes(ini_get('upload_max_filesize')),
+            $this->convertToBytes(\ini_get('upload_max_filesize')),
             $this->getPostMaxSizeInBytes()
         );
     }
@@ -64,7 +65,7 @@ class IniConfiguration
     private function convertToBytes($value)
     {
         $bytes = (int) trim($value);
-        $last = strtolower($value[strlen($value) - 1]);
+        $last = strtolower($value[\strlen($value) - 1]);
 
         switch ($last) {
             case 'g':

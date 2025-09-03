@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,22 +48,20 @@ class ConfigurationMap
     public function __construct()
     {
         $this->closedCardConfiguration = [
-            ShowcaseCard::SEO_URLS_CARD => sprintf(self::CLOSED_TEMPLATE, 'SEO_URLS'),
-            ShowcaseCard::CATEGORIES_CARD => sprintf(self::CLOSED_TEMPLATE, 'CATEGORIES'),
-            ShowcaseCard::CUSTOMERS_CARD => sprintf(self::CLOSED_TEMPLATE, 'CUSTOMERS'),
-            ShowcaseCard::EMPLOYEES_CARD => sprintf(self::CLOSED_TEMPLATE, 'EMPLOYEES'),
-            ShowcaseCard::CMS_PAGES_CARD => sprintf(self::CLOSED_TEMPLATE, 'CMS_PAGES'),
-            ShowcaseCard::ATTRIBUTES_CARD => sprintf(self::CLOSED_TEMPLATE, 'ATTRIBUTES'),
-            ShowcaseCard::MONITORING_CARD => sprintf(self::CLOSED_TEMPLATE, 'MONITORING'),
-            ShowcaseCard::CARRIERS_CARD => sprintf(self::CLOSED_TEMPLATE, 'CARRIERS'),
-            ShowcaseCard::FEATURES_CARD => sprintf(self::CLOSED_TEMPLATE, 'FEATURES'),
+            ShowcaseCard::SEO_URLS_CARD => \sprintf(self::CLOSED_TEMPLATE, 'SEO_URLS'),
+            ShowcaseCard::CATEGORIES_CARD => \sprintf(self::CLOSED_TEMPLATE, 'CATEGORIES'),
+            ShowcaseCard::CUSTOMERS_CARD => \sprintf(self::CLOSED_TEMPLATE, 'CUSTOMERS'),
+            ShowcaseCard::EMPLOYEES_CARD => \sprintf(self::CLOSED_TEMPLATE, 'EMPLOYEES'),
+            ShowcaseCard::CMS_PAGES_CARD => \sprintf(self::CLOSED_TEMPLATE, 'CMS_PAGES'),
+            ShowcaseCard::ATTRIBUTES_CARD => \sprintf(self::CLOSED_TEMPLATE, 'ATTRIBUTES'),
+            ShowcaseCard::MONITORING_CARD => \sprintf(self::CLOSED_TEMPLATE, 'MONITORING'),
+            ShowcaseCard::CARRIERS_CARD => \sprintf(self::CLOSED_TEMPLATE, 'CARRIERS'),
+            ShowcaseCard::FEATURES_CARD => \sprintf(self::CLOSED_TEMPLATE, 'FEATURES'),
         ];
     }
 
     /**
      * Returns the ps_configuration configuration name for "closed status" of the provided card
-     *
-     * @param ShowcaseCard $cardName
      *
      * @return string
      *
@@ -72,8 +71,8 @@ class ConfigurationMap
     {
         $name = $cardName->getName();
 
-        if (!isset($this->closedCardConfiguration[$name])) {
-            throw new ShowcaseCardException(sprintf('No closed status configuration found for showcase card "%s"', $name));
+        if (! isset($this->closedCardConfiguration[$name])) {
+            throw new ShowcaseCardException(\sprintf('No closed status configuration found for showcase card "%s"', $name));
         }
 
         return $this->closedCardConfiguration[$name];

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,14 +42,11 @@ final class ProductVisibilityChoiceProvider implements FormChoiceProviderInterfa
     private $translator;
 
     public function __construct(
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices(): array
     {
         return [

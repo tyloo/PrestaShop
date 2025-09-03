@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,25 +59,16 @@ abstract class AbstractBulkAction implements BulkActionInterface
         $this->id = $id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -84,9 +76,6 @@ abstract class AbstractBulkAction implements BulkActionInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOptions(array $options)
     {
         $this->resolveOptions($options);
@@ -94,29 +83,21 @@ abstract class AbstractBulkAction implements BulkActionInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions()
     {
-        if (null === $this->options) {
+        if ($this->options === null) {
             $this->resolveOptions();
         }
 
         return $this->options;
     }
 
-    /**
-     * @return string
-     */
     public function getIcon(): string
     {
         return $this->icon;
     }
 
     /**
-     * @param string $icon
-     *
      * @return static
      */
     public function setIcon(string $icon): self
@@ -128,8 +109,6 @@ abstract class AbstractBulkAction implements BulkActionInterface
 
     /**
      * Default bulk action options configuration. You can override it if options are needed.
-     *
-     * @param OptionsResolver $resolver
      */
     protected function configureOptions(OptionsResolver $resolver)
     {
@@ -137,8 +116,6 @@ abstract class AbstractBulkAction implements BulkActionInterface
 
     /**
      * Resolve bulk action options.
-     *
-     * @param array $options
      */
     private function resolveOptions(array $options = [])
     {

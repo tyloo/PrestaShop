@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ class OrderDiscountForViewing
         int $orderCartRuleId,
         string $name,
         DecimalNumber $amountRaw,
-        string $amountFormatted
+        string $amountFormatted,
     ) {
         $this->orderCartRuleId = $orderCartRuleId;
         $this->name = $name;
@@ -62,33 +63,21 @@ class OrderDiscountForViewing
         $this->amountRaw = $amountRaw;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderCartRuleId(): int
     {
         return $this->orderCartRuleId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getAmountFormatted(): string
     {
         return $this->amountFormatted;
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getAmountRaw(): DecimalNumber
     {
         return $this->amountRaw;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,16 +55,16 @@ class ProductBasicInformation
     private $localizedTags;
 
     /**
-     * @param string[] $localizedNames
-     * @param string[] $localizedDescriptions
-     * @param string[] $localizedShortDescriptions
+     * @param string[]        $localizedNames
+     * @param string[]        $localizedDescriptions
+     * @param string[]        $localizedShortDescriptions
      * @param LocalizedTags[] $localizedTags
      */
     public function __construct(
         array $localizedNames,
         array $localizedDescriptions,
         array $localizedShortDescriptions,
-        array $localizedTags
+        array $localizedTags,
     ) {
         $this->localizedNames = $localizedNames;
         $this->localizedDescriptions = $localizedDescriptions;

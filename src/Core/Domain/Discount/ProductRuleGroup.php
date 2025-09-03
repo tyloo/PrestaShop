@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Discount;
 class ProductRuleGroup
 {
     /**
-     * @param int $quantity
      * @param ProductRule[] $rules
      */
     public function __construct(

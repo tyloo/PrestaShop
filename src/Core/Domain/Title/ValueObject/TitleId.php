@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class TitleId
     protected $id;
 
     /**
-     * @param int $id
-     *
      * @throws TitleConstraintException
      */
     public function __construct(int $id)
@@ -49,23 +48,18 @@ class TitleId
         $this->id = $id;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->id;
     }
 
     /**
-     * @param int $value
-     *
      * @throws TitleConstraintException
      */
     private function assertPositiveInt(int $value)
     {
-        if (0 >= $value) {
-            throw new TitleConstraintException(sprintf('Invalid title id "%s".', var_export($value, true)), TitleConstraintException::INVALID_ID);
+        if ($value <= 0) {
+            throw new TitleConstraintException(\sprintf('Invalid title id "%s".', var_export($value, true)), TitleConstraintException::INVALID_ID);
         }
     }
 }

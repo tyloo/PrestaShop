@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,25 +56,16 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'image_type';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Image Settings', [], 'Admin.Navigation.Menu');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -170,9 +162,6 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    /**
-     * @return RowActionCollection
-     */
     private function getRowActions(): RowActionCollection
     {
         $rowActionCollection = new RowActionCollection();
@@ -201,9 +190,6 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $rowActionCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = (new FilterCollection())
@@ -286,9 +272,6 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,8 +39,6 @@ class Precision
     private $precision;
 
     /**
-     * @param int $precision
-     *
      * @throws CurrencyConstraintException
      */
     public function __construct(int $precision)
@@ -57,14 +56,12 @@ class Precision
     }
 
     /**
-     * @param int $precision
-     *
      * @throws CurrencyConstraintException
      */
     private function assertIsPositiveInteger(int $precision)
     {
         if ((int) $precision < 0) {
-            throw new CurrencyConstraintException(sprintf('Given precision "%s" is not valid. It must be a positive integer', var_export($precision, true)), CurrencyConstraintException::INVALID_PRECISION);
+            throw new CurrencyConstraintException(\sprintf('Given precision "%s" is not valid. It must be a positive integer', var_export($precision, true)), CurrencyConstraintException::INVALID_PRECISION);
         }
     }
 }

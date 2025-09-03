@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -87,16 +88,12 @@ interface RowActionInterface
     /**
      * Set action options.
      *
-     * @param array $options
-     *
      * @return self
      */
     public function setOptions(array $options);
 
     /**
      * Check if action is applicable for given record.
-     *
-     * @param array $record
      *
      * @return bool
      */

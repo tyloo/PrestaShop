@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,15 +62,12 @@ final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface,
 
     /**
      * @param int $langId language ID
-     * @param OrderStateDataProviderInterface $orderStateDataProvider
-     * @param ColorBrightnessCalculator $colorBrightnessCalculator
-     * @param TranslatorInterface $translator
      */
     public function __construct(
         $langId,
         OrderStateDataProviderInterface $orderStateDataProvider,
         ColorBrightnessCalculator $colorBrightnessCalculator,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->langId = $langId;
         $this->orderStateDataProvider = $orderStateDataProvider;
@@ -80,8 +78,6 @@ final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface,
     /**
      * Get order state choices.
      *
-     * @param array $options
-     *
      * @return array
      */
     public function getChoices(array $options = [])
@@ -91,8 +87,8 @@ final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface,
         // Filters on non-deleted order state
         // or deleted & active order state
         $orderStates = array_filter($orderStates, function (array $item) use ($options) {
-            if ($item['deleted'] == 1) {
-                if (!empty($options['current_state']) && $options['current_state'] != $item['id_order_state']) {
+            if ($item['deleted'] === 1) {
+                if (! empty($options['current_state']) && $options['current_state'] !== $item['id_order_state']) {
                     return false;
                 }
             }
@@ -131,13 +127,11 @@ final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface,
 
     /**
      * Update name for deleted order states
-     *
-     * @return array
      */
-    protected function updateOrderStatesNames(array $orderStates): array
+    private function updateOrderStatesNames(array $orderStates): array
     {
         return array_map(function (array $item) {
-            $item['name'] .= $item['deleted'] == 1 ? ' ' . $this->translator->trans('(deleted)', [], 'Admin.Global') : '';
+            $item['name'] .= $item['deleted'] === 1 ? ' ' . $this->translator->trans('(deleted)', [], 'Admin.Global') : '';
 
             return $item;
         }, $orderStates);

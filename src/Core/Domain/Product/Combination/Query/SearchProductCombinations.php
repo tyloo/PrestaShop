@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,18 +61,12 @@ class SearchProductCombinations
      */
     private $limit;
 
-    /**
-     * @param int $productId
-     * @param int $languageId
-     * @param ShopConstraint $shopConstraint
-     * @param string $searchPhrase
-     */
     public function __construct(
         int $productId,
         int $languageId,
         ShopConstraint $shopConstraint,
         string $searchPhrase,
-        int $limit = self::DEFAULT_RESULTS_LIMIT
+        int $limit = self::DEFAULT_RESULTS_LIMIT,
     ) {
         $this->productId = new ProductId($productId);
         $this->languageId = new LanguageId($languageId);
@@ -80,41 +75,26 @@ class SearchProductCombinations
         $this->limit = $limit;
     }
 
-    /**
-     * @return ProductId
-     */
     public function getProductId(): ProductId
     {
         return $this->productId;
     }
 
-    /**
-     * @return LanguageId
-     */
     public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }
 
-    /**
-     * @return ShopConstraint
-     */
     public function getShopConstraint(): ShopConstraint
     {
         return $this->shopConstraint;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchPhrase(): string
     {
         return $this->searchPhrase;
     }
 
-    /**
-     * @return int
-     */
     public function getLimit(): int
     {
         return $this->limit;

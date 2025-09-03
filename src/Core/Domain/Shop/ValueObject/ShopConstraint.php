@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,9 +54,6 @@ class ShopConstraint
     /**
      * Constraint to target a specific shop
      *
-     * @param int $shopId
-     * @param bool $isStrict
-     *
      * @return static
      *
      * @throws ShopException
@@ -67,9 +65,6 @@ class ShopConstraint
 
     /**
      * Constraint to target a specific shop group
-     *
-     * @param int $shopGroupId
-     * @param bool $isStrict
      *
      * @return static
      *
@@ -83,8 +78,6 @@ class ShopConstraint
     /**
      * Constraint to target all shops
      *
-     * @param bool $isStrict
-     *
      * @return static
      */
     public static function allShops(bool $isStrict = false): self
@@ -93,23 +86,17 @@ class ShopConstraint
     }
 
     /**
-     * @param int|null $shopId
-     * @param int|null $shopGroupId
-     * @param bool $strict
-     *
      * @throws ShopException
      */
     protected function __construct(?int $shopId, ?int $shopGroupId, bool $strict = false)
     {
-        $this->shopId = null !== $shopId ? new ShopId($shopId) : null;
-        $this->shopGroupId = null !== $shopGroupId ? new ShopGroupId($shopGroupId) : null;
+        $this->shopId = $shopId !== null ? new ShopId($shopId) : null;
+        $this->shopGroupId = $shopGroupId !== null ? new ShopGroupId($shopGroupId) : null;
         $this->strict = $strict;
     }
 
     /**
      * Clone the constraint, you can specify a force $strict value, if not set the same value is kept.
-     *
-     * @param bool|null $strict
      *
      * @return static
      *
@@ -120,33 +107,21 @@ class ShopConstraint
         return new static($this->shopId?->getValue(), $this->shopGroupId?->getValue(), $strict !== null ? $strict : $this->strict);
     }
 
-    /**
-     * @return ShopId|null
-     */
     public function getShopId(): ?ShopId
     {
         return $this->shopId;
     }
 
-    /**
-     * @return ShopGroupId|null
-     */
     public function getShopGroupId(): ?ShopGroupId
     {
         return $this->shopGroupId;
     }
 
-    /**
-     * @return bool
-     */
     public function forAllShops(): bool
     {
-        return null === $this->shopId && null === $this->shopGroupId;
+        return $this->shopId === null && $this->shopGroupId === null;
     }
 
-    /**
-     * @return bool
-     */
     public function isStrict(): bool
     {
         return $this->strict;
@@ -175,12 +150,12 @@ class ShopConstraint
 
     public function isSingleShopContext(): bool
     {
-        return null !== $this->shopId;
+        return $this->shopId !== null;
     }
 
     public function isShopGroupContext(): bool
     {
-        return null !== $this->shopGroupId;
+        return $this->shopGroupId !== null;
     }
 
     public function isAllShopContext(): bool

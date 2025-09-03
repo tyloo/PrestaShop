@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,17 +33,11 @@ namespace PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider;
  */
 class EmptyFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getData($id)
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultData()
     {
         return [];

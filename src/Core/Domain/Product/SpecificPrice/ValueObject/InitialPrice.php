@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,19 +51,11 @@ class InitialPrice implements FixedPriceInterface
         $this->value = new DecimalNumber(self::INITIAL_PRICE_VALUE);
     }
 
-    /**
-     * @return DecimalNumber
-     */
     public function getValue(): DecimalNumber
     {
         return $this->value;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return bool
-     */
     public static function isInitialPriceValue(string $value): bool
     {
         $initialPrice = new DecimalNumber(self::INITIAL_PRICE_VALUE);

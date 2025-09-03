@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\Command\EditCurrencyCommand;
 use PrestaShop\PrestaShop\Core\Domain\Currency\Command\EditUnofficialCurrencyCommand;
 use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId;
 
-/**
- * Class CurrencyFormDataHandler
- */
 final class CurrencyFormDataHandler implements FormDataHandlerInterface
 {
     /**
@@ -50,20 +48,16 @@ final class CurrencyFormDataHandler implements FormDataHandlerInterface
     private $cacheClearerCollection;
 
     /**
-     * @param CommandBusInterface $commandBus
      * @param CacheClearerInterface[] $cacheClearerCollection
      */
     public function __construct(
         CommandBusInterface $commandBus,
-        array $cacheClearerCollection
+        array $cacheClearerCollection,
     ) {
         $this->commandBus = $commandBus;
         $this->cacheClearerCollection = $cacheClearerCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         if ($data['unofficial']) {
@@ -85,7 +79,7 @@ final class CurrencyFormDataHandler implements FormDataHandlerInterface
             ->setLocalizedNames($data['names'])
             ->setLocalizedSymbols($data['symbols'])
             ->setLocalizedTransformations($data['transformations'])
-            ->setShopIds(is_array($data['shop_association']) ? $data['shop_association'] : [])
+            ->setShopIds(\is_array($data['shop_association']) ? $data['shop_association'] : [])
         ;
 
         /** @var CurrencyId $currencyId */
@@ -95,9 +89,6 @@ final class CurrencyFormDataHandler implements FormDataHandlerInterface
         return $currencyId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data)
     {
         if ($data['unofficial']) {
@@ -116,7 +107,7 @@ final class CurrencyFormDataHandler implements FormDataHandlerInterface
             ->setExchangeRate((float) $data['exchange_rate'])
             ->setPrecision((int) $data['precision'])
             ->setIsEnabled($data['active'])
-            ->setShopIds(is_array($data['shop_association']) ? $data['shop_association'] : [])
+            ->setShopIds(\is_array($data['shop_association']) ? $data['shop_association'] : [])
         ;
 
         $this->commandBus->handle($command);

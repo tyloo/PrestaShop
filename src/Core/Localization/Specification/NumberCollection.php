@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,14 +67,14 @@ class NumberCollection implements IteratorAggregate, Countable
      */
     public function count(): int
     {
-        return count($this->numberSpecifications);
+        return \count($this->numberSpecifications);
     }
 
     /**
      * Adds a Number specification item at the end of the collection.
      *
-     * @param int|string $index
-     *                          The item index
+     * @param int|string                   $index
+     *                                                          The item index
      * @param NumberSpecificationInterface $numberSpecification
      *                                                          The Number specification item to add
      *

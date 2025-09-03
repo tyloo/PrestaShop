@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -93,11 +94,9 @@ class AmountImmutable
     /**
      * Sums another amount object.
      *
-     * @param AmountImmutable $amount
-     *
      * @return AmountImmutable
      */
-    public function add(AmountImmutable $amount)
+    public function add(self $amount)
     {
         return new static(
             $this->getTaxIncluded() + $amount->getTaxIncluded(),
@@ -108,11 +107,9 @@ class AmountImmutable
     /**
      * Substract another amount object.
      *
-     * @param AmountImmutable $amount
-     *
      * @return AmountImmutable
      */
-    public function sub(AmountImmutable $amount)
+    public function sub(self $amount)
     {
         return new static(
             $this->getTaxIncluded() - $amount->getTaxIncluded(),

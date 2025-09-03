@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,9 @@ use PrestaShop\PrestaShop\Core\MailTemplate\Layout\LayoutCollectionInterface;
  */
 class Theme implements ThemeInterface
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
     /**
@@ -51,9 +54,6 @@ class Theme implements ThemeInterface
         $this->layouts = new LayoutCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;

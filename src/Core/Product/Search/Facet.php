@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -125,8 +126,8 @@ class Facet
     }
 
     /**
-     * @param string $name the facet property name
-     * @param mixed $value the facet property value
+     * @param string $name  the facet property name
+     * @param mixed  $value the facet property value
      *
      * @return $this
      */
@@ -144,7 +145,7 @@ class Facet
      */
     public function getProperty($name)
     {
-        if (!array_key_exists($name, $this->properties)) {
+        if (! \array_key_exists($name, $this->properties)) {
             return null;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use PrestaShop\PrestaShop\Core\Import\File\DataCell\DataCellInterface;
  */
 final class DataRowPresenter implements DataRowPresenterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function present(DataRowInterface $dataRow)
     {
         $presentedRow = [];

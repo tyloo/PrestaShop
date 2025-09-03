@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,8 +46,6 @@ class AttributeGroupType
     private $type;
 
     /**
-     * @param string $type
-     *
      * @throws InvalidAttributeGroupTypeException
      */
     public function __construct(string $type)
@@ -56,31 +55,19 @@ class AttributeGroupType
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
-     *
-     * @return void
-     *
      * @throws InvalidAttributeGroupTypeException
      */
     private function assertTypeExists(string $type): void
     {
         $types = [static::ATTRIBUTE_GROUP_TYPE_COLOR, static::ATTRIBUTE_GROUP_TYPE_SELECT, static::ATTRIBUTE_GROUP_TYPE_RADIO];
-        if (!in_array($type, $types)) {
-            throw new InvalidAttributeGroupTypeException(
-                sprintf(
-                    'Invalid attributeGroup type %s supplied.',
-                    $type
-                )
-            );
+        if (! \in_array($type, $types, true)) {
+            throw new InvalidAttributeGroupTypeException(\sprintf('Invalid attributeGroup type %s supplied.', $type));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,11 +43,11 @@ class UrlCleaner
             unset($parameters[$removedParam]);
         }
 
-        $query = http_build_query($parameters, '', '&', PHP_QUERY_RFC3986);
+        $query = http_build_query($parameters, '', '&', \PHP_QUERY_RFC3986);
 
         foreach ($parameters as $key => $value) {
             // Empty parameter that had no defined value must remain defined with no value (?action&otherAction not ?action=&otherAction=)
-            if ($value === '' && !preg_match('/' . $key . '=[^&]*/', $parsedUrl['query'])) {
+            if ($value === '' && ! preg_match('/' . $key . '=[^&]*/', $parsedUrl['query'])) {
                 $query = preg_replace('/' . $key . '=/', $key, $query);
             }
         }

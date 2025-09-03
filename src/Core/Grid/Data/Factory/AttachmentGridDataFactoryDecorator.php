@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,19 +67,12 @@ final class AttachmentGridDataFactoryDecorator implements GridDataFactoryInterfa
      */
     private $fileSizeConverter;
 
-    /**
-     * @param GridDataFactoryInterface $attachmentDoctrineGridDataFactory
-     * @param int $employeeIdLang
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param FileSizeConverter $fileSizeConverter
-     */
     public function __construct(
         GridDataFactoryInterface $attachmentDoctrineGridDataFactory,
         int $employeeIdLang,
         Connection $connection,
         string $dbPrefix,
-        FileSizeConverter $fileSizeConverter
+        FileSizeConverter $fileSizeConverter,
     ) {
         $this->attachmentDoctrineGridDataFactory = $attachmentDoctrineGridDataFactory;
         $this->employeeIdLang = $employeeIdLang;
@@ -87,9 +81,6 @@ final class AttachmentGridDataFactoryDecorator implements GridDataFactoryInterfa
         $this->fileSizeConverter = $fileSizeConverter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $attachmentData = $this->attachmentDoctrineGridDataFactory->getData($searchCriteria);
@@ -103,11 +94,6 @@ final class AttachmentGridDataFactoryDecorator implements GridDataFactoryInterfa
         );
     }
 
-    /**
-     * @param RecordCollectionInterface $attachments
-     *
-     * @return RecordCollection
-     */
     private function applyModifications(RecordCollectionInterface $attachments): RecordCollection
     {
         $modifiedAttachments = [];
@@ -121,7 +107,7 @@ final class AttachmentGridDataFactoryDecorator implements GridDataFactoryInterfa
                     [],
                     'Admin.Catalog.Notification'
                 );
-                $attachment['dynamic_message'] .= PHP_EOL . PHP_EOL . $productNames;
+                $attachment['dynamic_message'] .= \PHP_EOL . \PHP_EOL . $productNames;
             }
 
             $attachment['file_size'] = $this->fileSizeConverter->convert((int) $attachment['file_size']);
@@ -133,11 +119,6 @@ final class AttachmentGridDataFactoryDecorator implements GridDataFactoryInterfa
         return new RecordCollection($modifiedAttachments);
     }
 
-    /**
-     * @param string $attachmentId
-     *
-     * @return array
-     */
     private function getProductNames(string $attachmentId): array
     {
         $qb = $this->connection->createQueryBuilder();

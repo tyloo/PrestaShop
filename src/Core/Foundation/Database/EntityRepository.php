@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ class EntityRepository
     public function __construct(
         EntityManager $entityManager,
         $tablesPrefix,
-        EntityMetaData $entityMetaData
+        EntityMetaData $entityMetaData,
     ) {
         $this->entityManager = $entityManager;
         $this->db = $this->entityManager->getDatabase();
@@ -72,14 +73,14 @@ class EntityRepository
             $one = false;
             $by = substr($method, 6);
         } else {
-            throw new Exception(sprintf('Undefind method %s.', $method));
+            throw new Exception(\sprintf('Undefind method %s.', $method));
         }
 
-        if (count($arguments) !== 1) {
-            throw new Exception(sprintf('Method %s takes exactly one argument.', $method));
+        if (\count($arguments) !== 1) {
+            throw new Exception(\sprintf('Method %s takes exactly one argument.', $method));
         }
 
-        if (!$by) {
+        if (! $by) {
             $where = $arguments[0];
         } else {
             $where = [];
@@ -106,18 +107,17 @@ class EntityRepository
     /**
      * Return ID field name.
      *
-     * @return mixed
-     *
      * @throws Exception
      */
     protected function getIdFieldName()
     {
         $primary = $this->entityMetaData->getPrimaryKeyFieldnames();
 
-        if (count($primary) === 0) {
-            throw new Exception(sprintf('No primary key defined in entity `%s`.', $this->entityMetaData->getEntityClassName()));
-        } elseif (count($primary) > 1) {
-            throw new Exception(sprintf('Entity `%s` has a composite primary key, which is not supported by entity repositories.', $this->entityMetaData->getEntityClassName()));
+        if (\count($primary) === 0) {
+            throw new Exception(\sprintf('No primary key defined in entity `%s`.', $this->entityMetaData->getEntityClassName()));
+        }
+        if (\count($primary) > 1) {
+            throw new Exception(\sprintf('Entity `%s` has a composite primary key, which is not supported by entity repositories.', $this->entityMetaData->getEntityClassName()));
         }
 
         return $primary[0];
@@ -125,8 +125,6 @@ class EntityRepository
 
     /**
      * Returns escaped+prefixed current table name.
-     *
-     * @return mixed
      */
     protected function getTableNameWithPrefix()
     {
@@ -135,8 +133,6 @@ class EntityRepository
 
     /**
      * Returns escaped DB table prefix.
-     *
-     * @return mixed
      */
     protected function getPrefix()
     {
@@ -145,8 +141,6 @@ class EntityRepository
 
     /**
      * Return a new empty Entity depending on current Repository selected.
-     *
-     * @return mixed
      */
     public function getNewEntity()
     {
@@ -166,17 +160,17 @@ class EntityRepository
      */
     protected function hydrateOne(array $rows)
     {
-        if (count($rows) === 0) {
+        if (\count($rows) === 0) {
             return null;
-        } elseif (count($rows) > 1) {
-            throw new Exception('Too many rows returned.');
-        } else {
-            $data = $rows[0];
-            $entity = $this->getNewEntity();
-            $entity->hydrate($data);
-
-            return $entity;
         }
+        if (\count($rows) > 1) {
+            throw new Exception('Too many rows returned.');
+        }
+        $data = $rows[0];
+        $entity = $this->getNewEntity();
+        $entity->hydrate($data);
+
+        return $entity;
     }
 
     protected function hydrateMany(array $rows)
@@ -195,7 +189,6 @@ class EntityRepository
      * Constructs and performs 'SELECT' in DB.
      *
      * @param bool $one
-     * @param array $cumulativeConditions
      *
      * @return array|mixed|null
      *
@@ -211,9 +204,9 @@ class EntityRepository
 
         if ($one) {
             return $this->hydrateOne($rows);
-        } else {
-            return $this->hydrateMany($rows);
         }
+
+        return $this->hydrateMany($rows);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,7 @@ class LocalizedCurrencyId
 
     /**
      * @param string $currencyCode ISO 4217 currency code
-     * @param string $localeCode IETF tag (e.g.: fr-FR, en-US...)
+     * @param string $localeCode   IETF tag (e.g.: fr-FR, en-US...)
      */
     public function __construct($currencyCode, $localeCode)
     {

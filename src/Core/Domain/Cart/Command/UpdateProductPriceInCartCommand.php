@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,9 +57,9 @@ class UpdateProductPriceInCartCommand
     private $price;
 
     /**
-     * @param int $cartId
-     * @param int $productId
-     * @param int $combinationId
+     * @param int   $cartId
+     * @param int   $productId
+     * @param int   $combinationId
      * @param float $price
      */
     public function __construct($cartId, $productId, $combinationId, $price)
@@ -108,8 +109,8 @@ class UpdateProductPriceInCartCommand
      */
     private function assertPriceIsPositiveFloat($price)
     {
-        if (!is_float($price) || 0 > $price) {
-            throw new CartException(sprintf('Price %s is invalid. Price must be float greater than zero.', var_export($price, true)));
+        if (! \is_float($price) || $price < 0) {
+            throw new CartException(\sprintf('Price %s is invalid. Price must be float greater than zero.', var_export($price, true)));
         }
     }
 }

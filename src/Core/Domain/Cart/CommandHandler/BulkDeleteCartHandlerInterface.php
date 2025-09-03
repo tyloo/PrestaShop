@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\Exception\CartException;
 interface BulkDeleteCartHandlerInterface
 {
     /**
-     * @param BulkDeleteCartCommand $command
-     *
      * @throw CartException
      */
     public function handle(BulkDeleteCartCommand $command): void;

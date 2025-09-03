@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class IsUrlRewrite extends Constraint
 {
     public $message = '%s is invalid.';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return IsUrlRewriteValidator::class;

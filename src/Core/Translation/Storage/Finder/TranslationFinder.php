@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,11 +46,9 @@ class TranslationFinder
     private const ERR_DIRECTORY_NOT_FOUND = 2;
 
     /**
-     * @param array $paths a list of paths when we can look for translations
-     * @param string $locale the Symfony (not the PrestaShop one) locale
+     * @param array       $paths   a list of paths when we can look for translations
+     * @param string      $locale  the Symfony (not the PrestaShop one) locale
      * @param string|null $pattern a regular expression
-     *
-     * @return MessageCatalogue
      *
      * @throws TranslationFilesNotFoundException
      */
@@ -60,17 +59,12 @@ class TranslationFinder
         return $this->buildCatalogueFromFiles($translationFiles, $locale);
     }
 
-    /**
-     * @param MessageCatalogueInterface $catalogue
-     *
-     * @return MessageCatalogue
-     */
     private function removeTrailingLocaleFromDomains(MessageCatalogueInterface $catalogue): MessageCatalogue
     {
         $messages = $catalogue->all();
         $locale = $catalogue->getLocale();
         $localeSuffix = '.' . $locale;
-        $suffixLength = strlen($localeSuffix);
+        $suffixLength = \strlen($localeSuffix);
 
         foreach ($catalogue->getDomains() as $domain) {
             if (substr($domain, -$suffixLength) === $localeSuffix) {
@@ -85,9 +79,6 @@ class TranslationFinder
 
     /**
      * @param string[] $paths
-     * @param string $pattern
-     *
-     * @return Finder
      *
      * @throws TranslationFilesNotFoundException
      */
@@ -95,29 +86,23 @@ class TranslationFinder
     {
         $finder = new Finder();
 
-        if (null !== $pattern) {
+        if ($pattern !== null) {
             $finder->name($pattern);
         }
 
         try {
             $translationFiles = $finder->files()->notName('index.php')->in($paths);
         } catch (InvalidArgumentException $e) {
-            throw new TranslationFilesNotFoundException(sprintf('Could not crawl for translation files: %s', $e->getMessage()), self::ERR_DIRECTORY_NOT_FOUND, $e);
+            throw new TranslationFilesNotFoundException(\sprintf('Could not crawl for translation files: %s', $e->getMessage()), self::ERR_DIRECTORY_NOT_FOUND, $e);
         }
 
-        if (count($translationFiles) === 0) {
+        if (\count($translationFiles) === 0) {
             throw new TranslationFilesNotFoundException('There are no translation file available.', self::ERR_NO_FILES_IN_DIRECTORY);
         }
 
         return $translationFiles;
     }
 
-    /**
-     * @param Finder $translationFiles
-     * @param string $locale
-     *
-     * @return MessageCatalogue
-     */
     private function buildCatalogueFromFiles(Finder $translationFiles, string $locale): MessageCatalogue
     {
         $messageCatalogue = new MessageCatalogue($locale);
@@ -125,7 +110,7 @@ class TranslationFinder
 
         /** @var SplFileInfo $file */
         foreach ($translationFiles as $file) {
-            if ('xlf' === $file->getExtension()) {
+            if ($file->getExtension() === 'xlf') {
                 $domain = $this->getDomainFromFile($file, $locale);
 
                 $fileCatalogue = $xliffFileLoader->load($file->getPathname(), $locale, $domain);
@@ -138,18 +123,12 @@ class TranslationFinder
         return $messageCatalogue;
     }
 
-    /**
-     * @param SplFileInfo $file
-     * @param string $locale
-     *
-     * @return string
-     */
     private function getDomainFromFile(SplFileInfo $file, string $locale): string
     {
         $basename = $file->getBasename('.xlf');
 
         $domain = $basename;
-        if (!str_contains($basename, $locale)) {
+        if (! str_contains($basename, $locale)) {
             $domain .= '.' . $locale;
         }
 

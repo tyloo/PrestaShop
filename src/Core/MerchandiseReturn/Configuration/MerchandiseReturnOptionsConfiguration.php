@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class MerchandiseReturnOptionsConfiguration extends AbstractMultistoreConfigurat
         'order_return_prefix',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -54,12 +52,9 @@ class MerchandiseReturnOptionsConfiguration extends AbstractMultistoreConfigurat
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
-        if (!$this->validateConfiguration($configuration)) {
+        if (! $this->validateConfiguration($configuration)) {
             return [
                 [
                     'key' => 'Invalid configuration',
@@ -91,9 +86,6 @@ class MerchandiseReturnOptionsConfiguration extends AbstractMultistoreConfigurat
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
         return (new OptionsResolver())

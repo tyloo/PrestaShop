@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -78,18 +79,12 @@ class PriorityList
     {
         $checkedPriorities = [];
         foreach ($priorities as $priority) {
-            if (!in_array($priority, static::AVAILABLE_PRIORITIES, true)) {
-                throw new SpecificPriceConstraintException(
-                    sprintf('Invalid priority value "%s"', $priority),
-                    SpecificPriceConstraintException::INVALID_PRIORITY
-                );
+            if (! \in_array($priority, static::AVAILABLE_PRIORITIES, true)) {
+                throw new SpecificPriceConstraintException(\sprintf('Invalid priority value "%s"', $priority), SpecificPriceConstraintException::INVALID_PRIORITY);
             }
 
-            if (in_array($priority, $checkedPriorities)) {
-                throw new SpecificPriceConstraintException(
-                    'Invalid priorities. Priorities cannot duplicate.',
-                    SpecificPriceConstraintException::DUPLICATE_PRIORITY
-                );
+            if (\in_array($priority, $checkedPriorities, true)) {
+                throw new SpecificPriceConstraintException('Invalid priorities. Priorities cannot duplicate.', SpecificPriceConstraintException::DUPLICATE_PRIORITY);
             }
 
             $checkedPriorities[] = $priority;

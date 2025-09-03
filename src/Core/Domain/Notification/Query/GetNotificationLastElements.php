@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,10 +41,6 @@ class GetNotificationLastElements
     private $employeeId;
 
     /**
-     * GetNotificationLastElements constructor.
-     *
-     * @param int $employeeId
-     *
      * @throws InvalidEmployeeIdException
      */
     public function __construct(int $employeeId)
@@ -51,9 +48,6 @@ class GetNotificationLastElements
         $this->employeeId = new EmployeeId($employeeId);
     }
 
-    /**
-     * @return EmployeeId
-     */
     public function getEmployeeId(): EmployeeId
     {
         return $this->employeeId;

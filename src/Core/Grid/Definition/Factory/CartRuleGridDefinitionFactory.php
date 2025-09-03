@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,39 +67,27 @@ final class CartRuleGridDefinitionFactory extends AbstractGridDefinitionFactory 
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        string $contextDateFormat
+        string $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
         $this->contextDateFormat = $contextDateFormat;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilterId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId(): string
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName(): string
     {
         return $this->trans('Cart rules', [], 'Admin.Catalog.Feature');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(): ColumnCollectionInterface
     {
         return (new ColumnCollection())
@@ -178,9 +167,6 @@ final class CartRuleGridDefinitionFactory extends AbstractGridDefinitionFactory 
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters(): FilterCollectionInterface
     {
         return (new FilterCollection())
@@ -263,9 +249,6 @@ final class CartRuleGridDefinitionFactory extends AbstractGridDefinitionFactory 
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions(): BulkActionCollectionInterface
     {
         return (new BulkActionCollection())

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,8 +56,8 @@ final class CustomerThreadStatus
             self::PENDING_2,
         ];
 
-        if (!in_array($status, $availableStatuses)) {
-            throw new CustomerServiceException(sprintf('Customer thread status "%s" is not defined, available statuses are "%s"', $status, implode(',', $availableStatuses)));
+        if (! \in_array($status, $availableStatuses, true)) {
+            throw new CustomerServiceException(\sprintf('Customer thread status "%s" is not defined, available statuses are "%s"', $status, implode(',', $availableStatuses)));
         }
 
         $this->status = $status;

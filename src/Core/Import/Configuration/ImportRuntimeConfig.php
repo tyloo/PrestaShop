@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -93,17 +94,15 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
 
     /**
      * @param bool $shouldValidateData
-     * @param int $offset
-     * @param int $limit
-     * @param array $sharedData
-     * @param array $entityFields
+     * @param int  $offset
+     * @param int  $limit
      */
     public function __construct(
         $shouldValidateData,
         $offset,
         $limit,
         array $sharedData,
-        array $entityFields
+        array $entityFields,
     ) {
         $this->shouldValidateData = $shouldValidateData;
         $this->offset = $offset;
@@ -112,105 +111,67 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         $this->sharedData = $sharedData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function shouldValidateData()
     {
         return $this->shouldValidateData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOffset()
     {
         return $this->offset;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLimit()
     {
         return $this->limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEntityFields()
     {
         return $this->entityFields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSharedData()
     {
         return $this->sharedData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addSharedDataItem($key, $value)
     {
         $this->sharedData[$key] = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isFinished()
     {
         return $this->processedRows < $this->limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setNumberOfProcessedRows($number)
     {
         $this->processedRows = $number;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNumberOfProcessedRows()
     {
         return $this->processedRows;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setRequestSizeInBytes($size)
     {
         $this->requestSize = $size;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPostSizeLimitInBytes($size)
     {
         $this->postSizeLimit = $size;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTotalNumberOfRows($number)
     {
         $this->totalNumberOfRows = $number;
     }
 
     /**
-     * @param array $notices
-     *
      * @return array|void
      */
     public function setNotices(array $notices)
@@ -219,8 +180,6 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
     }
 
     /**
-     * @param array $warnings
-     *
      * @return array|void
      */
     public function setWarnings(array $warnings)
@@ -229,8 +188,6 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
     }
 
     /**
-     * @param array $errors
-     *
      * @return array|void
      */
     public function setErrors(array $errors)
@@ -238,9 +195,6 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         $this->errors = $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray()
     {
         return [

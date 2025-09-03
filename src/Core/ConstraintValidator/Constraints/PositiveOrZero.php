@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class PositiveOrZero extends Constraint
 {
     public $message = 'This value should be either positive or zero.';
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return PositiveOrZeroValidator::class;

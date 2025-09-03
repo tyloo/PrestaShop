@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,10 +41,6 @@ interface AuthorisationServerInterface
      * server must be able to recognize an access token it created, usually relying on the issuer saved in the metadata included
      * in the JWT token (no convention is forced, each authorization server may store this info differently as long as it can
      * recognize itself).
-     *
-     * @param Request $request
-     *
-     * @return bool
      */
     public function isTokenValid(Request $request): bool;
 
@@ -55,10 +52,6 @@ interface AuthorisationServerInterface
      *  - issuer: An identifier for the authorization server that issued the token:
      *    - for external authorization servers: usually the address of the server
      *    - for our internal authorization server: null (it is the only allowed to use null as an issuer)
-     *
-     * @param Request $request
-     *
-     * @return JwtTokenUser|null
      */
     public function getJwtTokenUser(Request $request): ?JwtTokenUser;
 }

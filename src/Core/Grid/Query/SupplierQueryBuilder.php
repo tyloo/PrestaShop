@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,18 +52,15 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
     private $searchCriteriaApplicator;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $contextLangId
-     * @param array $contextShopIds
+     * @param int    $contextLangId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         $contextLangId,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
 
@@ -71,13 +69,10 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $filters = $searchCriteria->getFilters();
-        $isCountFilter = array_key_exists('products_count', $filters);
+        $isCountFilter = \array_key_exists('products_count', $filters);
 
         if ($isCountFilter) {
             $qb = $this->getQueryBuilderByProductsCount($filters);
@@ -99,13 +94,10 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $filters = $searchCriteria->getFilters();
-        $isCountFilter = array_key_exists('products_count', $filters);
+        $isCountFilter = \array_key_exists('products_count', $filters);
 
         if ($isCountFilter) {
             $alias = 'subQuery';
@@ -160,8 +152,6 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Gets query builder by product count which uses the main query as the sub-query in FROM condition.
      *
-     * @param array $filters
-     *
      * @return QueryBuilder
      */
     private function getQueryBuilderByProductsCount(array $filters)
@@ -187,8 +177,6 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Adds select and group by statements.
-     *
-     * @param QueryBuilder $qb
      */
     private function applyListQuerySelection(QueryBuilder $qb)
     {
@@ -201,8 +189,6 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Sets the parameters which are used in the queries.
-     *
-     * @param QueryBuilder $qb
      */
     private function applyListQueryParameters(QueryBuilder $qb)
     {
@@ -215,8 +201,6 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Adds filter restrictions.
      *
-     * @param QueryBuilder $qb
-     * @param array $filters
      * @param string $alias
      */
     private function applyFilters(QueryBuilder $qb, array $filters, $alias)
@@ -228,11 +212,11 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
         ];
 
         foreach ($filters as $filterName => $value) {
-            if (!in_array($filterName, $availableFilters, true)) {
+            if (! \in_array($filterName, $availableFilters, true)) {
                 continue;
             }
 
-            if (in_array($filterName, ['id_supplier', 'active'], true)) {
+            if (\in_array($filterName, ['id_supplier', 'active'], true)) {
                 $qb->andWhere($alias . '.`' . $filterName . '` = :' . $filterName);
                 $qb->setParameter($filterName, $value);
 

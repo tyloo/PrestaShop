@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,13 +48,9 @@ class SpecificPriceFormDataProvider implements FormDataProviderInterface
      */
     private $contextShopId;
 
-    /**
-     * @param CommandBusInterface $queryBus
-     * @param int $contextShopId
-     */
     public function __construct(
         CommandBusInterface $queryBus,
-        int $contextShopId
+        int $contextShopId,
     ) {
         $this->queryBus = $queryBus;
         $this->contextShopId = $contextShopId;
@@ -98,7 +95,7 @@ class SpecificPriceFormDataProvider implements FormDataProviderInterface
             $data['customer'] = [
                 [
                     'id_customer' => $customerInfo->getId(),
-                    'fullname_and_email' => sprintf(
+                    'fullname_and_email' => \sprintf(
                         '%s %s - %s',
                         $customerInfo->getFirstname(),
                         $customerInfo->getLastname(),

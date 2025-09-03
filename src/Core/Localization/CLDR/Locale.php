@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ final class Locale implements LocaleInterface
      *
      * @var string
      */
-    protected $localeCode;
+    private $localeCode;
 
     /**
      * List of available numbering systems
@@ -49,14 +50,14 @@ final class Locale implements LocaleInterface
      *
      * @var string[]
      */
-    protected $numberingSystems;
+    private $numberingSystems;
 
     /**
      * Default numbering system.
      *
      * @var string
      */
-    protected $defaultNumberingSystem;
+    private $defaultNumberingSystem;
 
     /**
      * Used to suppress groupings below a certain value.
@@ -66,14 +67,14 @@ final class Locale implements LocaleInterface
      *
      * @var int
      */
-    protected $minimumGroupingDigits;
+    private $minimumGroupingDigits;
 
     /**
      * Collection of all available symbols list (by numbering system).
      *
      * @var NumberSymbolsData[]
      */
-    protected $numberSymbols;
+    private $numberSymbols;
 
     /**
      * Collection of all available decimal patterns (by numbering system)
@@ -81,7 +82,7 @@ final class Locale implements LocaleInterface
      *
      * @var string[]
      */
-    protected $decimalPatterns;
+    private $decimalPatterns;
 
     /**
      * Collection of all available percent patterns (by numbering system)
@@ -89,7 +90,7 @@ final class Locale implements LocaleInterface
      *
      * @var string[]
      */
-    protected $percentPatterns;
+    private $percentPatterns;
 
     /**
      * Collection of all available currency patterns (by numbering system)
@@ -97,14 +98,14 @@ final class Locale implements LocaleInterface
      *
      * @var string[]
      */
-    protected $currencyPatterns;
+    private $currencyPatterns;
 
     /**
      * All currencies, by ISO code.
      *
      * @var CurrencyData[]
      */
-    protected $currencies;
+    private $currencies;
 
     public function __construct(LocaleData $localeData)
     {
@@ -182,10 +183,10 @@ final class Locale implements LocaleInterface
      */
     public function getNumberSymbolsByNumberingSystem($numberingSystem = null)
     {
-        if (null === $numberingSystem) {
+        if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
-        if (!isset($this->getAllNumberSymbols()[$numberingSystem])) {
+        if (! isset($this->getAllNumberSymbols()[$numberingSystem])) {
             throw new LocalizationException('Invalid numbering system: ' . $numberingSystem);
         }
 
@@ -204,10 +205,10 @@ final class Locale implements LocaleInterface
      */
     public function getDecimalPattern($numberingSystem = null)
     {
-        if (null === $numberingSystem) {
+        if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
-        if (!isset($this->decimalPatterns[$numberingSystem])) {
+        if (! isset($this->decimalPatterns[$numberingSystem])) {
             throw new LocalizationException('No decimal pattern found for numbering system: ' . $numberingSystem);
         }
 
@@ -226,10 +227,10 @@ final class Locale implements LocaleInterface
      */
     public function getPercentPattern($numberingSystem = null)
     {
-        if (null === $numberingSystem) {
+        if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
-        if (!isset($this->percentPatterns[$numberingSystem])) {
+        if (! isset($this->percentPatterns[$numberingSystem])) {
             throw new LocalizationException('No percent pattern found for numbering system: ' . $numberingSystem);
         }
 
@@ -248,10 +249,10 @@ final class Locale implements LocaleInterface
      */
     public function getCurrencyPattern($numberingSystem = null)
     {
-        if (null === $numberingSystem) {
+        if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
-        if (!isset($this->currencyPatterns[$numberingSystem])) {
+        if (! isset($this->currencyPatterns[$numberingSystem])) {
             throw new LocalizationException('No currency pattern found for numbering system: ' . $numberingSystem);
         }
 
@@ -268,7 +269,7 @@ final class Locale implements LocaleInterface
     public function getCurrency($currencyCode)
     {
         $currencyData = $this->getCurrencyData($currencyCode);
-        if (!empty($currencyData)) {
+        if (! empty($currencyData)) {
             return new Currency($currencyData);
         }
 
@@ -284,7 +285,7 @@ final class Locale implements LocaleInterface
      */
     public function getCurrencyData($currencyCode)
     {
-        if (!empty($this->currencies[$currencyCode])) {
+        if (! empty($this->currencies[$currencyCode])) {
             return $this->currencies[$currencyCode];
         }
 

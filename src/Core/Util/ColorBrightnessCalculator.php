@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,7 +60,7 @@ final class ColorBrightnessCalculator
 
         $hexColor = str_replace('#', '', $hexColor);
 
-        if (strlen($hexColor) === 3) {
+        if (\strlen($hexColor) === 3) {
             $hexColor = $hexColor[0] . $hexColor[0] . $hexColor[1] . $hexColor[1] . $hexColor[2] . $hexColor[2];
         }
 

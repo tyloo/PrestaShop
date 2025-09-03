@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,9 +33,6 @@ class AllTab implements TabIdInterface
 {
     public const ALL_TAB_ID = -1;
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return static::ALL_TAB_ID;

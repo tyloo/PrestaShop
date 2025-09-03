@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,18 +42,12 @@ final class FeatureFormDataHandler implements FormDataHandlerInterface
      */
     private $commandBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     */
     public function __construct(
-        CommandBusInterface $commandBus
+        CommandBusInterface $commandBus,
     ) {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         /** @var FeatureId $featureId */
@@ -64,9 +59,6 @@ final class FeatureFormDataHandler implements FormDataHandlerInterface
         return $featureId->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($id, array $data)
     {
         $command = (new EditFeatureCommand($id))

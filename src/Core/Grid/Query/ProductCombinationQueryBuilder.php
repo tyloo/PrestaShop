@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,32 +45,19 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
      */
     private $searchCriteriaApplicator;
 
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
+        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        if (!$searchCriteria instanceof ProductCombinationFilters) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Expected %s, but got %s',
-                    ProductCombinationFilters::class, $searchCriteria::class
-                )
-            );
+        if (! $searchCriteria instanceof ProductCombinationFilters) {
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ProductCombinationFilters::class, $searchCriteria::class));
         }
 
         $qb = $this->getCombinationsQueryBuilder($searchCriteria)
@@ -90,18 +78,10 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        if (!$searchCriteria instanceof ProductCombinationFilters) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Expected %s, but got %s',
-                    ProductCombinationFilters::class, $searchCriteria::class
-                )
-            );
+        if (! $searchCriteria instanceof ProductCombinationFilters) {
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ProductCombinationFilters::class, $searchCriteria::class));
         }
 
         return $this->getCombinationsQueryBuilder($searchCriteria)
@@ -109,11 +89,6 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
         ;
     }
 
-    /**
-     * @param ProductCombinationFilters $productCombinationFilters
-     *
-     * @return QueryBuilder
-     */
     private function getCombinationsQueryBuilder(ProductCombinationFilters $productCombinationFilters): QueryBuilder
     {
         $filters = $productCombinationFilters->getFilters();
@@ -170,12 +145,6 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Adds "where" condition for shop or shopGroup depending if the shop is in a shop group with shared stock
      * (reusing legacy logic from StockAvailable::addSqlShopParams)
-     *
-     * @param QueryBuilder $qb
-     * @param string $stockAlias
-     * @param int $shopId
-     *
-     * @return QueryBuilder
      */
     private function addShopCondition(QueryBuilder $qb, string $stockAlias, int $shopId): QueryBuilder
     {
@@ -189,11 +158,11 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
         }
 
         foreach ($shopParams as $key => $value) {
-            if (!in_array($key, ['id_shop', 'id_shop_group'])) {
+            if (! \in_array($key, ['id_shop', 'id_shop_group'], true)) {
                 continue;
             }
 
-            $qb->andWhere(sprintf('%s.%s = :%s', $stockAlias, $key, $key))
+            $qb->andWhere(\sprintf('%s.%s = :%s', $stockAlias, $key, $key))
                 ->setParameter($key, $value, ParameterType::INTEGER)
             ;
         }
@@ -202,7 +171,6 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param int $productId
      * @param array<int, int[]> $attributeGroups
      *
      * @return int[]
@@ -229,7 +197,7 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
             ->setParameter('productId', $productId)
         ;
         $results = $qb->executeQuery()->fetchAllAssociative();
-        if (!$results) {
+        if (! $results) {
             return [];
         }
 

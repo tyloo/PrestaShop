@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,8 +59,8 @@ class ForwardCustomerThreadCommand
     /**
      * Creates command for forwarding customer thread for another employee
      *
-     * @param int $customerThreadId
-     * @param int $employeeId
+     * @param int    $customerThreadId
+     * @param int    $employeeId
      * @param string $comment
      *
      * @return self
@@ -77,7 +78,7 @@ class ForwardCustomerThreadCommand
     /**
      * Creates command for forwarding customer thread for someone else (not employee)
      *
-     * @param int $customerThreadId
+     * @param int    $customerThreadId
      * @param string $email
      * @param string $comment
      *
@@ -137,6 +138,6 @@ class ForwardCustomerThreadCommand
      */
     public function forwardToEmployee()
     {
-        return null !== $this->employeeId;
+        return $this->employeeId !== null;
     }
 }

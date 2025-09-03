@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,7 +70,7 @@ class StockMovement
     /**
      * @var string|null
      */
-    protected $employeeName = null;
+    protected $employeeName;
 
     /**
      * @var int
@@ -77,14 +78,11 @@ class StockMovement
     protected $deltaQuantity;
 
     /**
-     * @param string $type
      * @param string[] $dates
-     * @param int[] $stockMovementIds
-     * @param int[] $stockIds
-     * @param int[] $orderIds
-     * @param int[] $employeeIds
-     * @param string|null $employeeName
-     * @param int $deltaQuantity
+     * @param int[]    $stockMovementIds
+     * @param int[]    $stockIds
+     * @param int[]    $orderIds
+     * @param int[]    $employeeIds
      */
     protected function __construct(
         string $type,
@@ -94,7 +92,7 @@ class StockMovement
         array $orderIds,
         array $employeeIds,
         ?string $employeeName,
-        int $deltaQuantity
+        int $deltaQuantity,
     ) {
         $this->type = $type;
         $this->dates = $this->initializeDates($dates);
@@ -145,7 +143,7 @@ class StockMovement
         ?int $orderId,
         int $employeeId,
         ?string $employeeName,
-        int $deltaQuantity
+        int $deltaQuantity,
     ): self {
         return new static(
             static::EDITION_TYPE,
@@ -162,13 +160,10 @@ class StockMovement
     }
 
     /**
-     * @param string $fromDate
-     * @param string $toDate
      * @param string[]|int[] $stockMovementIds
      * @param string[]|int[] $stockIds
      * @param string[]|int[] $orderIds
      * @param string[]|int[] $employeeIds
-     * @param int $deltaQuantity
      */
     public static function createOrdersMovement(
         string $fromDate,
@@ -177,7 +172,7 @@ class StockMovement
         array $stockIds,
         array $orderIds,
         array $employeeIds,
-        int $deltaQuantity
+        int $deltaQuantity,
     ): self {
         return new static(
             static::ORDERS_TYPE,
@@ -266,14 +261,8 @@ class StockMovement
     {
         $dates = $this->getDates();
 
-        if (!array_key_exists($key, $dates)) {
-            throw new RuntimeException(
-                sprintf(
-                    'Invalid date key "%s" provided, available keys: %s',
-                    $key,
-                    implode(', ', array_keys($dates))
-                )
-            );
+        if (! \array_key_exists($key, $dates)) {
+            throw new RuntimeException(\sprintf('Invalid date key "%s" provided, available keys: %s', $key, implode(', ', array_keys($dates))));
         }
 
         return $dates[$key];

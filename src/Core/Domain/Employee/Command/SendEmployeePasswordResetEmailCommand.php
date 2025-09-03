@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,7 +34,7 @@ class SendEmployeePasswordResetEmailCommand
     private Email $email;
 
     public function __construct(
-        string $email
+        string $email,
     ) {
         $this->email = new Email($email);
     }

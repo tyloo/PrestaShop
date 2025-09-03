@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,14 +35,11 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\Exception\AliasConstraintException;
 class SearchTerm
 {
     public function __construct(
-        private string $searchTerm
+        private string $searchTerm,
     ) {
         $this->assertStringNotEmpty($searchTerm);
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->searchTerm;
@@ -50,10 +48,7 @@ class SearchTerm
     private function assertStringNotEmpty(string $searchTerm): void
     {
         if (empty($searchTerm)) {
-            throw new AliasConstraintException(
-                'Search term cannot be empty.',
-                AliasConstraintException::INVALID_SEARCH
-            );
+            throw new AliasConstraintException('Search term cannot be empty.', AliasConstraintException::INVALID_SEARCH);
         }
     }
 }

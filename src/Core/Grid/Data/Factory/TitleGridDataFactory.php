@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,24 +56,16 @@ class TitleGridDataFactory implements GridDataFactoryInterface
      */
     private $titleImageThumbnailProvider;
 
-    /**
-     * @param GridDataFactoryInterface $doctrineTitleDataFactory
-     * @param TranslatorInterface $translator
-     * @param ImageProviderInterface $titleImageThumbnailProvider
-     */
     public function __construct(
         GridDataFactoryInterface $doctrineTitleDataFactory,
         TranslatorInterface $translator,
-        ImageProviderInterface $titleImageThumbnailProvider
+        ImageProviderInterface $titleImageThumbnailProvider,
     ) {
         $this->doctrineTitleDataFactory = $doctrineTitleDataFactory;
         $this->translator = $translator;
         $this->titleImageThumbnailProvider = $titleImageThumbnailProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $titleData = $this->doctrineTitleDataFactory->getData($searchCriteria);
@@ -88,11 +81,6 @@ class TitleGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @param array $titles
-     *
-     * @return array
-     */
     private function applyModification(array $titles): array
     {
         foreach ($titles as $i => $title) {

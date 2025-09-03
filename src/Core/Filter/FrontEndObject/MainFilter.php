@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,15 +49,13 @@ class MainFilter implements FilterInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array
      */
     public function filter($subject)
     {
         foreach ($this->filters as $key => $filter) {
             if (isset($subject[$key]) && $filter instanceof FilterInterface) {
-                if ($filter instanceof CollectionFilter && !is_array($subject[$key])) {
+                if ($filter instanceof CollectionFilter && ! \is_array($subject[$key])) {
                     continue;
                 }
 

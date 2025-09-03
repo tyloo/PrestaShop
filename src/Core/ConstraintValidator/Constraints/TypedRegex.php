@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -81,25 +82,16 @@ class TypedRegex extends Constraint
      */
     public $type;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequiredOptions()
     {
         return ['type'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy()
     {
         return TypedRegexValidator::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultOption()
     {
         return 'type';

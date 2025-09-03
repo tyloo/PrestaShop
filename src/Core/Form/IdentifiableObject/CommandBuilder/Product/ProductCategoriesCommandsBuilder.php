@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,12 +39,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class ProductCategoriesCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
-        if (!isset($formData['description']['categories']['product_categories'])) {
+        if (! isset($formData['description']['categories']['product_categories'])) {
             return [];
         }
 
@@ -63,7 +61,7 @@ class ProductCategoriesCommandsBuilder implements ProductCommandsBuilderInterfac
         $defaultCategoryId = (int) $formData['description']['categories']['default_category_id'];
 
         // Default is always amongst the associated
-        if (!empty($defaultCategoryId) && !in_array($defaultCategoryId, $associatedCategoryIds)) {
+        if (! empty($defaultCategoryId) && ! \in_array($defaultCategoryId, $associatedCategoryIds, true)) {
             $associatedCategoryIds[] = $defaultCategoryId;
         }
 

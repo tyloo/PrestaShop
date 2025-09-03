@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ final class ExportDirectory
      */
     private $configuration;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
@@ -53,7 +51,7 @@ final class ExportDirectory
      */
     public function getDir()
     {
-        return $this->configuration->get('_PS_ADMIN_DIR_') . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR;
+        return $this->configuration->get('_PS_ADMIN_DIR_') . \DIRECTORY_SEPARATOR . 'export' . \DIRECTORY_SEPARATOR;
     }
 
     /**

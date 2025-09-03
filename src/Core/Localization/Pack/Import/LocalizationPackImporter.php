@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,17 +56,11 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
      */
     private $translator;
 
-    /**
-     * @param LocalizationPackLoaderInterface $remoteLocalizationPackLoader
-     * @param LocalizationPackLoaderInterface $localLocalizationPackLoader
-     * @param LocalizationPackFactoryInterface $localizationPackFactory
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         LocalizationPackLoaderInterface $remoteLocalizationPackLoader,
         LocalizationPackLoaderInterface $localLocalizationPackLoader,
         LocalizationPackFactoryInterface $localizationPackFactory,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->remoteLocalizationPackLoader = $remoteLocalizationPackLoader;
         $this->localLocalizationPackLoader = $localLocalizationPackLoader;
@@ -73,13 +68,10 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function import(LocalizationPackImportConfig $config)
     {
         $errors = $this->checkConfig($config);
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 
@@ -91,12 +83,12 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
             );
         }
 
-        if (null === $pack) {
+        if ($pack === null) {
             $pack = $this->localLocalizationPackLoader->getLocalizationPack(
                 $config->getCountryIsoCode()
             );
 
-            if (null === $pack) {
+            if ($pack === null) {
                 $error = $this->trans('Cannot load the localization pack.', 'Admin.International.Notification');
 
                 return [$error];
@@ -117,8 +109,6 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
 
     /**
      * Check if configuration is valid.
-     *
-     * @param LocalizationPackImportConfig $config
      *
      * @return array Errors if any
      */
@@ -146,7 +136,7 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
         ];
 
         foreach ($config->getContentToImport() as $contentItem) {
-            if (!in_array($contentItem, $contentItems)) {
+            if (! \in_array($contentItem, $contentItems, true)) {
                 $error = $this->trans('Invalid selection', 'Admin.Notifications.Error');
 
                 return [$error];
@@ -161,7 +151,6 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
      *
      * @param string $message
      * @param string $domain
-     * @param array $params
      *
      * @return string
      */

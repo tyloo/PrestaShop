@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,12 +62,6 @@ class UpdateTabPermissionsCommand
      */
     private $isActive;
 
-    /**
-     * @param int $profileId
-     * @param int $tabId
-     * @param string $permission
-     * @param bool $isActive
-     */
     public function __construct(int $profileId, int $tabId, string $permission, bool $isActive)
     {
         $this->profileId = new ProfileId($profileId);
@@ -75,9 +70,6 @@ class UpdateTabPermissionsCommand
         $this->isActive = $isActive;
     }
 
-    /**
-     * @return ProfileId
-     */
     public function getProfileId(): ProfileId
     {
         return $this->profileId;
@@ -91,17 +83,11 @@ class UpdateTabPermissionsCommand
         return $this->tabId;
     }
 
-    /**
-     * @return PermissionInterface
-     */
     public function getPermission(): PermissionInterface
     {
         return $this->permission;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->isActive;

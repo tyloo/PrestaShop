@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,9 +55,6 @@ class BulkDeleteAttachmentsCommand
         return $this->attachmentIds;
     }
 
-    /**
-     * @param array $attachmentIds
-     */
     private function setAttachmentIds(array $attachmentIds)
     {
         foreach ($attachmentIds as $attachmentId) {

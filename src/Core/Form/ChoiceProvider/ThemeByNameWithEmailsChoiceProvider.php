@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,17 +42,11 @@ final class ThemeByNameWithEmailsChoiceProvider implements FormChoiceProviderInt
      */
     private $themeCollection;
 
-    /**
-     * @param ThemeCollection $themeCollection
-     */
     public function __construct(ThemeCollection $themeCollection)
     {
         $this->themeCollection = $themeCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $themeChoices = [];

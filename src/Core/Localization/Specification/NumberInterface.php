@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ interface NumberInterface
      *
      * @return NumberSymbolList
      */
-    public function getSymbolsByNumberingSystem($numberingSystem = NumberInterface::NUMBERING_SYSTEM_LATIN);
+    public function getSymbolsByNumberingSystem($numberingSystem = self::NUMBERING_SYSTEM_LATIN);
 
     /**
      * Get the formatting rules for this number (when positive).
@@ -115,8 +116,6 @@ interface NumberInterface
 
     /**
      * To array function.
-     *
-     * @return array
      */
     public function toArray(): array;
 }

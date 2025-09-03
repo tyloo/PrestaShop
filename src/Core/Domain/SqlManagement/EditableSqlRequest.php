@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,6 @@ class EditableSqlRequest
     private $sql;
 
     /**
-     * @param SqlRequestId $requestSqlId
      * @param string $name
      * @param string $sql
      *
@@ -59,7 +59,7 @@ class EditableSqlRequest
     public function __construct(
         SqlRequestId $requestSqlId,
         $name,
-        $sql
+        $sql,
     ) {
         $this
             ->setSqlRequestId($requestSqlId)
@@ -92,8 +92,6 @@ class EditableSqlRequest
     }
 
     /**
-     * @param SqlRequestId $sqlRequestId
-     *
      * @return EditableSqlRequest
      */
     private function setSqlRequestId(SqlRequestId $sqlRequestId)

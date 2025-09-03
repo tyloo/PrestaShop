@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -342,15 +343,13 @@ class EditManufacturerAddressCommand
     }
 
     /**
-     * @param mixed $value
-     *
      * @throws AddressConstraintException
      */
     private function assertIsNullOrNonNegativeInt($value)
     {
-        if (null === $value || is_int($value) || 0 <= $value) {
+        if ($value === null || \is_int($value) || $value >= 0) {
             return;
         }
-        throw new AddressConstraintException(sprintf('Invalid manufacturer id "%s" provided for address.', var_export($value, true)), AddressConstraintException::INVALID_MANUFACTURER_ID);
+        throw new AddressConstraintException(\sprintf('Invalid manufacturer id "%s" provided for address.', var_export($value, true)), AddressConstraintException::INVALID_MANUFACTURER_ID);
     }
 }

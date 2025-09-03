@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,14 +38,11 @@ class FeatureValueQueryBuilder extends AbstractDoctrineQueryBuilder
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        protected readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
+        protected readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->getQueryBuilder($searchCriteria)
@@ -60,9 +58,6 @@ class FeatureValueQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->getQueryBuilder($searchCriteria)
@@ -71,16 +66,12 @@ class FeatureValueQueryBuilder extends AbstractDoctrineQueryBuilder
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return QueryBuilder
-     *
      * @throws InvalidArgumentException
      */
     private function getQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        if (!$searchCriteria instanceof FeatureValueFilters) {
-            throw new InvalidArgumentException(sprintf('Invalid search criteria type. Expected "%s"', FeatureValueFilters::class));
+        if (! $searchCriteria instanceof FeatureValueFilters) {
+            throw new InvalidArgumentException(\sprintf('Invalid search criteria type. Expected "%s"', FeatureValueFilters::class));
         }
 
         $filters = $searchCriteria->getFilters();
@@ -101,17 +92,17 @@ class FeatureValueQueryBuilder extends AbstractDoctrineQueryBuilder
         ;
 
         foreach ($filters as $filterName => $value) {
-            if (!in_array($filterName, $allowedFilters, true)) {
+            if (! \in_array($filterName, $allowedFilters, true)) {
                 continue;
             }
 
-            if ('value' === $filterName) {
+            if ($filterName === 'value') {
                 $qb->andWhere('fvl.value LIKE :' . $filterName)
                     ->setParameter($filterName, '%' . $value . '%');
                 continue;
             }
 
-            if ('position' === $filterName) {
+            if ($filterName === 'position') {
                 // Position in DB is 0-based, but in UI it is 1-based,
                 // so we need to decrement the value
                 if (is_numeric($value)) {

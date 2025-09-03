@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,6 +38,6 @@ trait LegacyObjectCheckerTrait
 {
     protected function legacyObjectNeedsUpdate(?ObjectModel $objectModel, ?int $expectedId): bool
     {
-        return !empty($expectedId) && (empty($objectModel) || (int) $objectModel->id !== $expectedId);
+        return ! empty($expectedId) && (empty($objectModel) || (int) $objectModel->id !== $expectedId);
     }
 }

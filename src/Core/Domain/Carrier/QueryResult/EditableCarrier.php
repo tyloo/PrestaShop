@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,9 @@ class EditableCarrier
         private string $trackingUrl,
         private int $position,
         private bool $active,
-        /** @var string[] $delay */
+        /**
+         * @var string[]
+         */
         private array $delay,
         private int $max_width,
         private int $max_height,

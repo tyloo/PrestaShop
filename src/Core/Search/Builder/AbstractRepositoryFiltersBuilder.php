@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,39 +40,44 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractRepositoryFiltersBuilder extends AbstractFiltersBuilder
 {
-    /** @var AdminFilterRepository */
+    /**
+     * @var AdminFilterRepository
+     */
     protected $adminFilterRepository;
 
-    /** @var ContextEmployeeProviderInterface */
+    /**
+     * @var ContextEmployeeProviderInterface
+     */
     protected $employeeProvider;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $shopId;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $controller;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $action;
 
     /**
-     * @param AdminFilterRepository $adminFilterRepository
-     * @param ContextEmployeeProviderInterface $employeeProvider
      * @param int $shopId
      */
     public function __construct(
         AdminFilterRepository $adminFilterRepository,
         ContextEmployeeProviderInterface $employeeProvider,
-        $shopId
+        $shopId,
     ) {
         $this->adminFilterRepository = $adminFilterRepository;
         $this->employeeProvider = $employeeProvider;
         $this->shopId = $shopId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config)
     {
         $defaultController = $defaultAction = '';

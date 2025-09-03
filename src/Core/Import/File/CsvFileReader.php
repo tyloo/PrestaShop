@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,9 +62,8 @@ final class CsvFileReader implements FileReaderInterface
     private $fileOpener;
 
     /**
-     * @param FileOpenerInterface $fileOpener
      * @param string $delimiter
-     * @param int $length
+     * @param int    $length
      * @param string $enclosure
      * @param string $escape
      */
@@ -72,7 +72,7 @@ final class CsvFileReader implements FileReaderInterface
         $delimiter = ';',
         $length = 0,
         $enclosure = '"',
-        $escape = '\\'
+        $escape = '\\',
     ) {
         $this->delimiter = $delimiter;
         $this->length = $length;
@@ -81,16 +81,13 @@ final class CsvFileReader implements FileReaderInterface
         $this->fileOpener = $fileOpener;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(SplFileInfo $file)
     {
-        if (!$file->isReadable()) {
+        if (! $file->isReadable()) {
             throw new UnreadableFileException();
         }
 
-        $convertToUtf8 = !mb_check_encoding(file_get_contents($file), 'UTF-8');
+        $convertToUtf8 = ! mb_check_encoding(file_get_contents($file), 'UTF-8');
         $handle = $this->fileOpener->open($file);
 
         while ($row = fgetcsv($handle, $this->length, $this->delimiter, $this->enclosure, $this->escape)) {

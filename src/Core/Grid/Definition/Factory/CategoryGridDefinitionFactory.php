@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,18 +73,13 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
      */
     private $multistoreContextChecker;
 
-    private $categoryId = null;
+    private $categoryId;
 
-    /**
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
-     * @param AccessibilityCheckerInterface $categoryForViewAccessibilityChecker
-     */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         MultistoreContextCheckerInterface $multistoreContextChecker,
         AccessibilityCheckerInterface $categoryForViewAccessibilityChecker,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         parent::__construct($hookDispatcher);
         $this->categoryForViewAccessibilityChecker = $categoryForViewAccessibilityChecker;
@@ -91,30 +87,21 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
 
         $request = $requestStack->getCurrentRequest();
 
-        if ($request !== null && $request->attributes->has('categoryId') && $request->get('categoryId') != null) {
+        if ($request !== null && $request->attributes->has('categoryId') && $request->get('categoryId') !== null) {
             $this->categoryId = (int) $request->get('categoryId');
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getId()
     {
         return self::GRID_ID;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getName()
     {
         return $this->trans('Categories', [], 'Admin.Global');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns()
     {
         $columns = (new ColumnCollection())
@@ -193,9 +180,6 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
         return $columns;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getFilters()
     {
         $filters = (new FilterCollection())
@@ -261,9 +245,6 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
         return $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getGridActions()
     {
         return (new GridActionCollection())
@@ -306,9 +287,6 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getBulkActions()
     {
         return (new BulkActionCollection())

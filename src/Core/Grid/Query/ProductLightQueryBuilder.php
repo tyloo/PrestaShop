@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ final class ProductLightQueryBuilder extends AbstractDoctrineQueryBuilder
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         Configuration $configuration,
-        ProductQueryBuilder $productQueryBuilder
+        ProductQueryBuilder $productQueryBuilder,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
@@ -66,9 +67,6 @@ final class ProductLightQueryBuilder extends AbstractDoctrineQueryBuilder
         $this->productQueryBuilder = $productQueryBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         $qb = $this->productQueryBuilder->getSearchQueryBuilder($searchCriteria);
@@ -90,9 +88,6 @@ final class ProductLightQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         return $this->productQueryBuilder->getCountQueryBuilder($searchCriteria);

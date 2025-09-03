@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,22 +52,18 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
     private $filterFormFactory;
 
     /**
-     * @param GridFactoryInterface $categoryGridFactory
      * @param GridFilterFormFactoryInterface $filterFormFactory optional
      *
      * $filterFormFactory is optional in order to comply with SemVer
      */
     public function __construct(
         GridFactoryInterface $categoryGridFactory,
-        ?GridFilterFormFactoryInterface $filterFormFactory = null
+        ?GridFilterFormFactoryInterface $filterFormFactory = null,
     ) {
         $this->categoryGridFactory = $categoryGridFactory;
         $this->filterFormFactory = $filterFormFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGrid(SearchCriteriaInterface $searchCriteria): GridInterface
     {
         $categoryGrid = $this->categoryGridFactory->getGrid($searchCriteria);
@@ -91,8 +88,6 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
     }
 
     /**
-     * @param array $filters
-     *
      * @return bool
      */
     private function isHomeCategory(array $filters)
@@ -105,15 +100,14 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
      * Position can only be changed when grid is
      * ordered by "position" in "asc" way.
      *
-     * @param SearchCriteriaInterface $searchCriteria
      * @param GridInterface $categoryGrid
      */
     private function removePositionDragColumnIfEligible(
         SearchCriteriaInterface $searchCriteria,
-        $categoryGrid
+        $categoryGrid,
     ) {
-        if ('position' !== $searchCriteria->getOrderBy()
-            || 'asc' !== $searchCriteria->getOrderWay()) {
+        if ($searchCriteria->getOrderBy() !== 'position'
+            || $searchCriteria->getOrderWay() !== 'asc') {
             $categoryGrid->getDefinition()
                 ->getColumns()
                 ->remove('position_drag');
@@ -122,7 +116,6 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
 
     /**
      * @param GridInterface $categoryGrid
-     * @param array $filters
      */
     private function injectCategoryIdIntoSearchTypeOptions($categoryGrid, array $filters)
     {
@@ -137,9 +130,6 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     * @param GridInterface $categoryGrid
-     *
      * @return FormInterface
      */
     private function rebuildFilterForm(

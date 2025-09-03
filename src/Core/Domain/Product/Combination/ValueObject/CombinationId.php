@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class CombinationId implements CombinationIdInterface
     private $combinationId;
 
     /**
-     * @param int $combinationId
-     *
      * @throws CombinationConstraintException
      */
     public function __construct(int $combinationId)
@@ -49,26 +48,18 @@ class CombinationId implements CombinationIdInterface
         $this->combinationId = $combinationId;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->combinationId;
     }
 
     /**
-     * @param int $value
-     *
      * @throws CombinationConstraintException
      */
     private function assertValueIsPositive(int $value)
     {
-        if (0 >= $value) {
-            throw new CombinationConstraintException(
-                sprintf('Combination id must be positive integer. "%s" given', $value),
-                CombinationConstraintException::INVALID_ID
-            );
+        if ($value <= 0) {
+            throw new CombinationConstraintException(\sprintf('Combination id must be positive integer. "%s" given', $value), CombinationConstraintException::INVALID_ID);
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,19 +75,12 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
      */
     private $validator;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param ValidatorInterface $validator
-     * @param int $contextShopId
-     * @param int $contextLanguageId
-     * @param int $contextEmployeeId
-     */
     public function __construct(
         TranslatorInterface $translator,
         ValidatorInterface $validator,
         int $contextShopId,
         int $contextLanguageId,
-        int $contextEmployeeId
+        int $contextEmployeeId,
     ) {
         $this->contextShopId = $contextShopId;
         $this->contextLanguageId = $contextLanguageId;
@@ -96,8 +90,6 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CustomerMessageException
      * @throws OrderNotFoundException
      */
@@ -107,13 +99,13 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
 
         $order = new Order($command->getOrderId()->getValue());
 
-        if (0 >= $order->id) {
+        if ($order->id <= 0) {
             throw new OrderNotFoundException($command->getOrderId(), "Order with id {$command->getOrderId()->getValue()} was not found");
         }
 
         $customer = new Customer($order->id_customer);
 
-        if (0 >= $customer->id) {
+        if ($customer->id <= 0) {
             throw new CustomerMessageException("Associated order customer with id {$command->getOrderId()->getValue()} was not found", CustomerMessageException::ORDER_CUSTOMER_NOT_FOUND);
         }
 
@@ -122,7 +114,7 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
             $order->id
         );
 
-        if (!$customerServiceThreadId) {
+        if (! $customerServiceThreadId) {
             try {
                 $customerServiceThreadId = $this->createCustomerMessageThread($order);
             } catch (PrestaShopException $e) {
@@ -141,7 +133,7 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
         try {
             $isSent = $this->sendMail($customer, $order, $command);
 
-            if (!$isSent) {
+            if (! $isSent) {
                 throw new CannotSendEmailException($failedMailSentMessage);
             }
         } catch (PrestaShopException $e) {
@@ -150,25 +142,19 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
     }
 
     /**
-     * @param string $message
-     *
      * @throws CustomerMessageConstraintException
      */
     private function assertIsValidMessage(string $message): void
     {
         $errors = $this->validator->validate($message, new CleanHtml());
 
-        if (0 !== \count($errors)) {
-            throw new CustomerMessageConstraintException(sprintf('Given message "%s" contains javascript events or script tags', $message), CustomerMessageConstraintException::INVALID_MESSAGE);
+        if (\count($errors) !== 0) {
+            throw new CustomerMessageConstraintException(\sprintf('Given message "%s" contains javascript events or script tags', $message), CustomerMessageConstraintException::INVALID_MESSAGE);
         }
     }
 
     /**
      * Creates customer message thread which groups customer message in an order group.
-     *
-     * @param Order $order
-     *
-     * @return int
      *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
@@ -194,9 +180,6 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
     /**
      * Creates actual message.
      *
-     * @param int $customerServiceThreadId
-     * @param AddOrderCustomerMessageCommand $command
-     *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
@@ -213,12 +196,6 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
     /**
      * Sends email to customer
      *
-     * @param Customer $customer
-     * @param Order $order
-     * @param AddOrderCustomerMessageCommand $command
-     *
-     * @return bool
-     *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
@@ -230,7 +207,7 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
 
         $message = $command->getMessage();
 
-        if (Configuration::get('PS_MAIL_TYPE', null, null, $order->id_shop) != Mail::TYPE_TEXT) {
+        if (Configuration::get('PS_MAIL_TYPE', null, null, $order->id_shop) !== Mail::TYPE_TEXT) {
             $message = Tools::nl2br(Tools::htmlentitiesUTF8($command->getMessage()));
         }
 

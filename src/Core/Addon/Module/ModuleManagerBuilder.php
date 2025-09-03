@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,19 +62,19 @@ class ModuleManagerBuilder
      *
      * @var ModuleRepository
      */
-    protected static $modulesRepository = null;
+    protected static $modulesRepository;
     /**
      * Singleton of ModuleManager.
      *
      * @var ModuleManager
      */
-    protected static $moduleManager = null;
-    protected static $adminModuleDataProvider = null;
-    protected static $legacyLogger = null;
-    protected static $moduleDataProvider = null;
-    protected static $translator = null;
-    protected static $instance = null;
-    protected static $cacheProvider = null;
+    protected static $moduleManager;
+    protected static $adminModuleDataProvider;
+    protected static $legacyLogger;
+    protected static $moduleDataProvider;
+    protected static $translator;
+    protected static $instance;
+    protected static $cacheProvider;
     /**
      * @var ApiClientContext
      */
@@ -81,7 +82,7 @@ class ModuleManagerBuilder
     /**
      * @var LanguageContext|null
      */
-    protected static $languageContext = null;
+    protected static $languageContext;
 
     /**
      * @var bool
@@ -93,7 +94,7 @@ class ModuleManagerBuilder
      */
     public static function getInstance()
     {
-        if (self::$instance == null) {
+        if (self::$instance === null) {
             self::$instance = new self();
         }
 
@@ -107,9 +108,9 @@ class ModuleManagerBuilder
      */
     public function build()
     {
-        if (null === self::$moduleManager) {
+        if (self::$moduleManager === null) {
             $sfContainer = SymfonyContainer::getInstance();
-            if (null !== $sfContainer) {
+            if ($sfContainer !== null) {
                 self::$moduleManager = $sfContainer->get(ModuleManager::class);
             } else {
                 self::$moduleManager = new ModuleManager(
@@ -137,9 +138,9 @@ class ModuleManagerBuilder
      */
     public function buildRepository()
     {
-        if (null === self::$modulesRepository) {
+        if (self::$modulesRepository === null) {
             $sfContainer = SymfonyContainer::getInstance();
-            if (null !== $sfContainer) {
+            if ($sfContainer !== null) {
                 self::$modulesRepository = $sfContainer->get(ModuleRepository::class);
             } else {
                 self::$modulesRepository = new ModuleRepository(
@@ -156,9 +157,6 @@ class ModuleManagerBuilder
         return self::$modulesRepository;
     }
 
-    /**
-     * @param bool $isDebug
-     */
     private function __construct(bool $isDebug = _PS_MODE_DEV_)
     {
         $this->isDebug = $isDebug;
@@ -167,7 +165,7 @@ class ModuleManagerBuilder
          * build & buildRepository. No need to init manually all the dependancies.
          */
         $sfContainer = SymfonyContainer::getInstance();
-        if (null !== $sfContainer) {
+        if ($sfContainer !== null) {
             return;
         }
 
@@ -188,7 +186,7 @@ class ModuleManagerBuilder
 
         self::$legacyLogger = new LegacyLogger();
 
-        if (null === self::$adminModuleDataProvider) {
+        if (self::$adminModuleDataProvider === null) {
             self::$moduleDataProvider = new ModuleDataProvider(self::$legacyLogger, self::$translator);
             self::$apiClientContext = new ApiClientContext(null);
             self::$adminModuleDataProvider = new AdminModuleDataProvider(

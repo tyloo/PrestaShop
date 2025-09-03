@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,12 +42,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class RequestFiltersBuilder extends AbstractFiltersBuilder
 {
-    /** @var Request */
+    /**
+     * @var Request
+     */
     private $request;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config)
     {
         $this->request = isset($config['request']) ? $config['request'] : null;
@@ -54,12 +54,9 @@ final class RequestFiltersBuilder extends AbstractFiltersBuilder
         return parent::setConfig($config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildFilters(?Filters $filters = null)
     {
-        if (null === $this->request) {
+        if ($this->request === null) {
             return $filters;
         }
 
@@ -68,7 +65,7 @@ final class RequestFiltersBuilder extends AbstractFiltersBuilder
         $requestParams = $this->request->request->all();
 
         // If filters have a filterId then parameters are sent in a namespace (eg: grid_id[limit]=10 instead of limit=10)
-        if (!empty($filterId)) {
+        if (! empty($filterId)) {
             $queryParams = isset($queryParams[$filterId]) ? $queryParams[$filterId] : [];
             $requestParams = isset($requestParams[$filterId]) ? $requestParams[$filterId] : [];
         }
@@ -82,7 +79,7 @@ final class RequestFiltersBuilder extends AbstractFiltersBuilder
             }
         }
 
-        if (null !== $filters) {
+        if ($filters !== null) {
             $filters->add($parameters);
         } else {
             $filters = new Filters($parameters, $filterId);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class LegacyFileReader
     /**
      * Loads legacy translations from a file
      *
-     * @param string $path Path where the locale file should be looked up
+     * @param string $path   Path where the locale file should be looked up
      * @param string $locale IETF language tag
      *
      * @return array Translation tokens
@@ -63,7 +64,7 @@ class LegacyFileReader
 
         $filePath = $path . "$shopLocale.php";
 
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             throw UnsupportedLocaleException::fileNotFound($filePath, $locale);
         }
 

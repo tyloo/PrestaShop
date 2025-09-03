@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,20 +39,14 @@ final class EntityFieldsProviderFinder implements EntityFieldsProviderFinderInte
      */
     private $entityFieldsProviders;
 
-    /**
-     * @param array $entityFieldsProviders
-     */
     public function __construct(array $entityFieldsProviders)
     {
         $this->entityFieldsProviders = $entityFieldsProviders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function find($importEntity)
     {
-        if (!isset($this->entityFieldsProviders[$importEntity])) {
+        if (! isset($this->entityFieldsProviders[$importEntity])) {
             throw new NotSupportedImportEntityException("Entity fields provider does not exist for entity $importEntity.");
         }
 

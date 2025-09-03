@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,40 +47,26 @@ class FoundCartRule
      */
     private $code;
 
-    /**
-     * @param int $cartRuleId
-     * @param string $name
-     * @param string $code
-     */
     public function __construct(
         int $cartRuleId,
         string $name,
-        string $code
+        string $code,
     ) {
         $this->cartRuleId = $cartRuleId;
         $this->name = $name;
         $this->code = $code;
     }
 
-    /**
-     * @return int
-     */
     public function getCartRuleId(): int
     {
         return $this->cartRuleId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getCode(): string
     {
         return $this->code;

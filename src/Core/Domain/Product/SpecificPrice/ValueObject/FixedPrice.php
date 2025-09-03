@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class FixedPrice implements FixedPriceInterface
     private $value;
 
     public function __construct(
-        string $value
+        string $value,
     ) {
         $this->setValue($value);
     }
@@ -49,23 +50,18 @@ class FixedPrice implements FixedPriceInterface
     }
 
     /**
-     * @param string $value
-     *
      * @throws SpecificPriceConstraintException
      */
     private function setValue(string $value): void
     {
         $decimalValue = new DecimalNumber($value);
 
-        if (!$decimalValue->isNegative()) {
+        if (! $decimalValue->isNegative()) {
             $this->value = $decimalValue;
 
             return;
         }
 
-        throw new SpecificPriceConstraintException(
-            sprintf('Invalid fixed price "%s". It cannot be negative', $value),
-            SpecificPriceConstraintException::INVALID_FIXED_PRICE
-        );
+        throw new SpecificPriceConstraintException(\sprintf('Invalid fixed price "%s". It cannot be negative', $value), SpecificPriceConstraintException::INVALID_FIXED_PRICE);
     }
 }

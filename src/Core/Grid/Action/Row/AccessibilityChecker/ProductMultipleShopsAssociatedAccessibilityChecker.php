@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class ProductMultipleShopsAssociatedAccessibilityChecker implements Accessibilit
     private $multiStoreContext;
 
     public function __construct(
-        MultistoreContextCheckerInterface $multiStoreContext
+        MultistoreContextCheckerInterface $multiStoreContext,
     ) {
         $this->multiStoreContext = $multiStoreContext;
     }
@@ -58,6 +59,6 @@ class ProductMultipleShopsAssociatedAccessibilityChecker implements Accessibilit
             return false;
         }
 
-        return !empty($record['associated_shops_ids']) && count($record['associated_shops_ids']) > 1;
+        return ! empty($record['associated_shops_ids']) && \count($record['associated_shops_ids']) > 1;
     }
 }

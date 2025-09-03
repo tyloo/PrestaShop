@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class EditableAttribute
         private readonly int $attributeGroupId,
         private readonly array $localizedNames,
         private readonly string $color,
-        private readonly array $shopAssociationIds
+        private readonly array $shopAssociationIds,
     ) {
     }
 

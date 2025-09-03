@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class CurrencyContextBuilder implements LegacyContextBuilderInterface
     public function __construct(
         private readonly CurrencyRepository $currencyRepository,
         private readonly ContextStateManager $contextStateManager,
-        private readonly LanguageContext $languageContext
+        private readonly LanguageContext $languageContext,
     ) {
     }
 
@@ -92,11 +93,8 @@ class CurrencyContextBuilder implements LegacyContextBuilderInterface
 
     private function assertArguments(): void
     {
-        if (null === $this->currencyId) {
-            throw new InvalidArgumentException(sprintf(
-                'Cannot build Currency context as no currencyId has been defined you need to call %s::setCurrencyId to define it before building the Currency context',
-                self::class
-            ));
+        if ($this->currencyId === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot build Currency context as no currencyId has been defined you need to call %s::setCurrencyId to define it before building the Currency context', self::class));
         }
     }
 

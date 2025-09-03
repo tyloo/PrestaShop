@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class DiscountApplicationChoiceProvider implements ConfigurableFormChoiceProvide
     private $translator;
 
     public function __construct(
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->translator = $translator;
     }
@@ -57,7 +58,7 @@ class DiscountApplicationChoiceProvider implements ConfigurableFormChoiceProvide
             $this->translator->trans('Specific product', [], 'Admin.Catalog.Feature') => DiscountApplicationType::SPECIFIC_PRODUCT,
         ];
 
-        if (Reduction::TYPE_PERCENTAGE === $options['reduction_type']) {
+        if ($options['reduction_type'] === Reduction::TYPE_PERCENTAGE) {
             $choices[$this->translator->trans('Cheapest product', [], 'Admin.Catalog.Feature')] = DiscountApplicationType::CHEAPEST_PRODUCT;
             $choices[$this->translator->trans('Selected product(s)', [], 'Admin.Catalog.Feature')] = DiscountApplicationType::SELECTED_PRODUCTS;
         }
@@ -67,8 +68,6 @@ class DiscountApplicationChoiceProvider implements ConfigurableFormChoiceProvide
 
     /**
      * @param array<string, string> $options
-     *
-     * @return array
      */
     protected function configureOptions(array $options): array
     {

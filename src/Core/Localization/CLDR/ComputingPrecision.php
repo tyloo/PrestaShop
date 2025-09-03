@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -26,17 +27,11 @@
 
 namespace PrestaShop\PrestaShop\Core\Localization\CLDR;
 
-/**
- * {@inheritdoc}
- */
 final class ComputingPrecision implements ComputingPrecisionInterface
 {
     public const MULTIPLIER = 1;
     public const MINIMAL_VALUE = 0;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPrecision(int $displayPrecision)
     {
         // the MULTIPLIER attribute is set to 1 for now, so that it matches display precision

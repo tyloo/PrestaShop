@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class DeleteOrderReturnStateCommand
      */
     private $orderReturnStateId;
 
-    /**
-     * @param int $orderReturnStateId
-     */
     public function __construct(int $orderReturnStateId)
     {
         $this->orderReturnStateId = new OrderReturnStateId($orderReturnStateId);
     }
 
-    /**
-     * @return OrderReturnStateId
-     */
     public function getOrderReturnStateId(): OrderReturnStateId
     {
         return $this->orderReturnStateId;

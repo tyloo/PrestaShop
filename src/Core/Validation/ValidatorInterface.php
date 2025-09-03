@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,7 +33,6 @@ interface ValidatorInterface
      * Check if HTML is clean.
      *
      * @param string $html
-     * @param array $options
      *
      * @return bool
      */

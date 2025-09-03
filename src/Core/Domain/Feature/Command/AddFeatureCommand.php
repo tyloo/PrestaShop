@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class AddFeatureCommand
 
     /**
      * @param string[] $localizedNames
-     * @param int[] $shopAssociation
+     * @param int[]    $shopAssociation
      */
     public function __construct(array $localizedNames, array $shopAssociation)
     {
@@ -79,10 +80,7 @@ class AddFeatureCommand
     private function assertNamesAreNotEmpty(array $names): void
     {
         if (empty($names)) {
-            throw new FeatureConstraintException(
-                'Feature name cannot be empty',
-                FeatureConstraintException::INVALID_NAME
-            );
+            throw new FeatureConstraintException('Feature name cannot be empty', FeatureConstraintException::INVALID_NAME);
         }
     }
 

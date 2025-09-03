@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ final class FilterCollection implements FilterCollectionInterface
      */
     private $filters = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function add(FilterInterface $filter)
     {
         $this->filters[$filter->getName()] = $filter;
@@ -46,9 +44,6 @@ final class FilterCollection implements FilterCollectionInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function remove($filterName)
     {
         if (isset($this->filters[$filterName])) {
@@ -72,9 +67,6 @@ final class FilterCollection implements FilterCollectionInterface
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function all()
     {
         return $this->filters;

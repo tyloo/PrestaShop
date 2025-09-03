@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,15 +51,12 @@ class ProductImageFormDataProvider implements FormDataProviderInterface
 
     public function __construct(
         CommandBusInterface $queryBus,
-        int $contextShopId
+        int $contextShopId,
     ) {
         $this->queryBus = $queryBus;
         $this->contextShopId = $contextShopId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getData($id)
     {
         /** @var ProductImage $productImage */
@@ -74,9 +72,6 @@ class ProductImageFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultData()
     {
         return [];

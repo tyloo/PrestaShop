@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,21 +47,14 @@ final class SqlRequestConfiguration implements DataConfigurationInterface
 
     private CommandBusInterface $queryBus;
 
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param CommandBusInterface $queryBus
-     */
     public function __construct(
         CommandBusInterface $commandBus,
-        CommandBusInterface $queryBus
+        CommandBusInterface $queryBus,
     ) {
         $this->commandBus = $commandBus;
         $this->queryBus = $queryBus;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration(): array
     {
         /** @var SqlRequestSettings $sqlRequestSettings */
@@ -73,9 +67,6 @@ final class SqlRequestConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration): array
     {
         $errors = [];
@@ -93,7 +84,7 @@ final class SqlRequestConfiguration implements DataConfigurationInterface
             }
 
             if ($configuration['enable_multi_statements'] !== $this->getMultiStatementsStatus()
-                && !$this->setMultiStatementsStatus($configuration['enable_multi_statements'])
+                && ! $this->setMultiStatementsStatus($configuration['enable_multi_statements'])
             ) {
                 $errors[] = [
                     'key' => 'Error: Could not write to file. Make sure that the correct permissions are set on the file %s',
@@ -106,9 +97,6 @@ final class SqlRequestConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration): bool
     {
         return isset($configuration['default_file_encoding'], $configuration['default_file_separator']);
@@ -116,7 +104,7 @@ final class SqlRequestConfiguration implements DataConfigurationInterface
 
     private function getMultiStatementsStatus(): bool
     {
-        return defined('_PS_ALLOW_MULTI_STATEMENTS_QUERIES_') && _PS_ALLOW_MULTI_STATEMENTS_QUERIES_;
+        return \defined('_PS_ALLOW_MULTI_STATEMENTS_QUERIES_') && _PS_ALLOW_MULTI_STATEMENTS_QUERIES_;
     }
 
     private function setMultiStatementsStatus(bool $status): bool
@@ -131,18 +119,18 @@ final class SqlRequestConfiguration implements DataConfigurationInterface
             $cleanedContent = php_strip_whitespace(self::CUSTOM_DEFINES_FILE);
         }
 
-        if (!$cleanedContent || !preg_match(self::PATTERN, $cleanedContent)) {
+        if (! $cleanedContent || ! preg_match(self::PATTERN, $cleanedContent)) {
             $content = file_get_contents(self::DEFINES_FILE);
             $cleanedContent = php_strip_whitespace(self::DEFINES_FILE);
             $file = self::DEFINES_FILE;
-            if (!$cleanedContent || !preg_match(self::PATTERN, $cleanedContent)) {
+            if (! $cleanedContent || ! preg_match(self::PATTERN, $cleanedContent)) {
                 return false;
             }
         }
 
         $status = file_put_contents($file, preg_replace(self::PATTERN, $replacement, $content));
 
-        if (function_exists('opcache_invalidate')) {
+        if (\function_exists('opcache_invalidate')) {
             @opcache_invalidate($file);
         }
 
@@ -151,8 +139,6 @@ final class SqlRequestConfiguration implements DataConfigurationInterface
 
     /**
      * Handle exception when configuration update fails.
-     *
-     * @param SqlRequestSettingsConstraintException $e
      *
      * @return array Array of errors
      */

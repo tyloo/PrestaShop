@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,7 @@ class CurrencyContext
         protected array $localizedSymbols,
         protected int $precision,
         protected string $pattern,
-        protected array $localizedPatterns
+        protected array $localizedPatterns,
     ) {
         $this->conversionRate = new DecimalNumber($conversionRate);
     }

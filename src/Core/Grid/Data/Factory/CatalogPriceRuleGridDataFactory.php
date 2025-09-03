@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,19 +48,12 @@ final class CatalogPriceRuleGridDataFactory implements GridDataFactoryInterface
      */
     private $translator;
 
-    /**
-     * @param GridDataFactoryInterface $priceRuleDataFactory
-     * @param TranslatorInterface $translator
-     */
     public function __construct(GridDataFactoryInterface $priceRuleDataFactory, TranslatorInterface $translator)
     {
         $this->priceRuleDataFactory = $priceRuleDataFactory;
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $priceRuleData = $this->priceRuleDataFactory->getData($searchCriteria);
@@ -76,8 +70,6 @@ final class CatalogPriceRuleGridDataFactory implements GridDataFactoryInterface
     }
 
     /**
-     * @param array $priceRules
-     *
      * @return array
      */
     private function applyModification(array $priceRules)
@@ -89,7 +81,7 @@ final class CatalogPriceRuleGridDataFactory implements GridDataFactoryInterface
                 }
             }
 
-            Reduction::TYPE_AMOUNT === $priceRule['reduction_type'] ?
+            $priceRule['reduction_type'] === Reduction::TYPE_AMOUNT ?
                 $priceRule['reduction_type'] = $this->translator->trans('Amount', [], 'Admin.Global') :
                 $priceRule['reduction_type'] = $this->translator->trans('Percentage', [], 'Admin.Global');
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class SearchAttachment
     private $searchPhrase;
 
     public function __construct(
-        string $searchPhrase
+        string $searchPhrase,
     ) {
         if (empty($searchPhrase)) {
             throw new EmptySearchInputException('Search parameter cannot be empty');
@@ -46,9 +47,6 @@ class SearchAttachment
         $this->searchPhrase = $searchPhrase;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchPhrase(): string
     {
         return $this->searchPhrase;

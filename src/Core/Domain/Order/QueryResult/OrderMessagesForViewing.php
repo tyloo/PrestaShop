@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,7 +29,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 
 class OrderMessagesForViewing
 {
-    /** @var OrderMessageForViewing[] */
+    /**
+     * @var OrderMessageForViewing[]
+     */
     private $messages = [];
 
     /**
@@ -38,7 +41,6 @@ class OrderMessagesForViewing
 
     /**
      * @param OrderMessageForViewing[] $messages
-     * @param int $total
      */
     public function __construct(array $messages, int $total)
     {
@@ -57,17 +59,11 @@ class OrderMessagesForViewing
         return $this->messages;
     }
 
-    /**
-     * @return int
-     */
     public function getTotal(): int
     {
         return $this->total;
     }
 
-    /**
-     * @param OrderMessageForViewing $message
-     */
     private function add(OrderMessageForViewing $message): void
     {
         $this->messages[] = $message;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,12 +39,9 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UniqueStateIsoCodeValidator extends ConstraintValidator
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint)
     {
-        if (!($constraint instanceof UniqueStateIsoCode)) {
+        if (! ($constraint instanceof UniqueStateIsoCode)) {
             return;
         }
         $countryStateByIsoCodeProvider = new CountryStateByIsoCodeProvider();
