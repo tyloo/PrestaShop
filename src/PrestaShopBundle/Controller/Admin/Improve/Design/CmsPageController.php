@@ -199,10 +199,10 @@ class CmsPageController extends PrestaShopAdminController
                     'open_preview' => 1,
                 ]);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->addFlash(
                 'error',
-                $this->getErrorMessageForException($e, $this->getErrorMessages())
+                $this->getErrorMessageForException($exception, $this->getErrorMessages())
             );
         }
 
@@ -243,10 +243,10 @@ class CmsPageController extends PrestaShopAdminController
                 'cms_preview_url' => $urlProvider->getUrl($cmsPageId, '{friendly-url}'),
             ]);
             $form->handleRequest($request);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->addFlash(
                 'error',
-                $this->getErrorMessageForException($e, $this->getErrorMessages())
+                $this->getErrorMessageForException($exception, $this->getErrorMessages())
             );
 
             return $this->redirectToRoute('admin_cms_pages_index');
@@ -270,10 +270,10 @@ class CmsPageController extends PrestaShopAdminController
 
                 return $this->redirectToParentIndexPageByCmsPageId($cmsPageId);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->addFlash(
                 'error',
-                $this->getErrorMessageForException($e, $this->getErrorMessages())
+                $this->getErrorMessageForException($exception, $this->getErrorMessages())
             );
         }
 

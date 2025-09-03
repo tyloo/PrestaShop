@@ -116,8 +116,8 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
                 Version::VERSION,
                 $input->getArgument('autoupgrade-path')
             );
-        } catch (FileNotFoundException $exception) {
-            $io->error($exception->getMessage());
+        } catch (FileNotFoundException $fileNotFoundException) {
+            $io->error($fileNotFoundException->getMessage());
 
             return 1;
         }

@@ -359,8 +359,8 @@ class ProductController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_products_select_shops', $redirectParams);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->renderProductShopsForm($productShopsForm, $productId, $request->query->has('liteDisplaying'));
@@ -407,8 +407,8 @@ class ProductController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_products_edit', $redirectParams);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->renderCreateProductForm($productForm, $request->query->has('liteDisplaying'));
@@ -451,7 +451,7 @@ class ProductController extends PrestaShopAdminController
                 // 'method' => Request::METHOD_PATCH,
                 'method' => Request::METHOD_POST,
             ]);
-        } catch (ShopAssociationNotFound $e) {
+        } catch (ShopAssociationNotFound) {
             return $this->renderMissingAssociation($productId);
         } catch (ProductNotFoundException $e) {
             $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
@@ -479,8 +479,8 @@ class ProductController extends PrestaShopAdminController
                     ));
                 }
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->renderEditProductForm($productForm, $productId, $categoryTreeFormBuilder);
@@ -513,8 +513,8 @@ class ProductController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_products_index');
@@ -534,8 +534,8 @@ class ProductController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_products_index');
@@ -555,8 +555,8 @@ class ProductController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (ProductException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ProductException $productException) {
+            $this->addFlash('error', $this->getErrorMessageForException($productException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_products_index');
@@ -760,8 +760,8 @@ class ProductController extends PrestaShopAdminController
                 )
             );
             $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_products_index');
         }
@@ -786,12 +786,12 @@ class ProductController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            if ($e instanceof BulkProductException) {
-                return $this->jsonBulkErrors($e);
+        } catch (Exception $exception) {
+            if ($exception instanceof BulkProductException) {
+                return $this->jsonBulkErrors($exception);
             }
 
-            return $this->json(['error' => $this->getErrorMessageForException($e, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => $this->getErrorMessageForException($exception, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
         }
 
         return $this->json(['success' => true]);
@@ -977,9 +977,9 @@ class ProductController extends PrestaShopAdminController
                 (int) $shopId,
                 (int) $request->get('limit', 20)
             ));
-        } catch (ProductConstraintException $e) {
+        } catch (ProductConstraintException $productConstraintException) {
             return $this->json([
-                'message' => $e->getMessage(),
+                'message' => $productConstraintException->getMessage(),
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -1085,12 +1085,12 @@ class ProductController extends PrestaShopAdminController
                     $shopConstraint
                 )
             );
-        } catch (Exception $e) {
-            if ($e instanceof BulkProductException) {
-                return $this->jsonBulkErrors($e);
+        } catch (Exception $exception) {
+            if ($exception instanceof BulkProductException) {
+                return $this->jsonBulkErrors($exception);
             }
 
-            return $this->json(['error' => $this->getErrorMessageForException($e, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => $this->getErrorMessageForException($exception, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
         }
 
         return $this->json(['success' => true]);
@@ -1111,8 +1111,8 @@ class ProductController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful duplication', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_products_index');
         }
@@ -1134,12 +1134,12 @@ class ProductController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            if ($e instanceof BulkProductException) {
-                return $this->jsonBulkErrors($e);
+        } catch (Exception $exception) {
+            if ($exception instanceof BulkProductException) {
+                return $this->jsonBulkErrors($exception);
             }
 
-            return $this->json(['error' => $this->getErrorMessageForException($e, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => $this->getErrorMessageForException($exception, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
         }
 
         return $this->json(['success' => true]);
@@ -1181,8 +1181,8 @@ class ProductController extends PrestaShopAdminController
             $command->setActive($isEnabled);
             $this->dispatchCommand($command);
             $this->addFlash('success', $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_products_index');
@@ -1201,10 +1201,10 @@ class ProductController extends PrestaShopAdminController
             $command = new UpdateProductCommand($productId, $shopConstraint);
             $command->setActive(! $productForEditing->isActive());
             $this->dispatchCommand($command);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json([
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'message' => $this->getErrorMessageForException($exception, $this->getErrorMessages()),
             ]);
         }
 
@@ -1227,12 +1227,12 @@ class ProductController extends PrestaShopAdminController
                     $shopConstraint
                 )
             );
-        } catch (Exception $e) {
-            if ($e instanceof BulkProductException) {
-                return $this->jsonBulkErrors($e);
+        } catch (Exception $exception) {
+            if ($exception instanceof BulkProductException) {
+                return $this->jsonBulkErrors($exception);
             }
 
-            return $this->json(['error' => $this->getErrorMessageForException($e, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
+            return $this->json(['error' => $this->getErrorMessageForException($exception, $this->getErrorMessages())], Response::HTTP_BAD_REQUEST);
         }
 
         return $this->json(['success' => true]);

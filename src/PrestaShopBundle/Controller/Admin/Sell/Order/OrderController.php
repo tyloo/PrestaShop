@@ -207,8 +207,8 @@ class OrderController extends PrestaShopAdminController
                     'orderId' => $orderId->getValue(),
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_create');
@@ -396,8 +396,8 @@ class OrderController extends PrestaShopAdminController
         try {
             /** @var OrderForViewing $orderForViewing */
             $orderForViewing = $this->dispatchQuery(new GetOrderForViewing($orderId, QuerySorting::DESC));
-        } catch (OrderException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderException $orderException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderException, $this->getErrorMessages($orderException)));
 
             return $this->redirectToRoute('admin_orders_index');
         }
@@ -489,8 +489,8 @@ class OrderController extends PrestaShopAdminController
             );
 
             $cancelProductForm = $formBuilder->getFormFor($orderId);
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
 
             return $this->redirectToRoute('admin_orders_index');
         }
@@ -661,8 +661,8 @@ class OrderController extends PrestaShopAdminController
                     $this->addFlashFormErrors($form);
                 }
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -691,8 +691,8 @@ class OrderController extends PrestaShopAdminController
                     $this->addFlashFormErrors($form);
                 }
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -721,8 +721,8 @@ class OrderController extends PrestaShopAdminController
                     $this->addFlashFormErrors($form);
                 }
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -776,9 +776,9 @@ class OrderController extends PrestaShopAdminController
             }
 
             $this->dispatchCommand($addProductCommand);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -837,9 +837,9 @@ class OrderController extends PrestaShopAdminController
                     'totalPrice' => $product->getTotalPrice(),
                 ];
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -956,10 +956,10 @@ class OrderController extends PrestaShopAdminController
                 $request->request->get('invoice_note')
             ));
             $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
-        } catch (InvoiceException $e) {
+        } catch (InvoiceException $invoiceException) {
             $this->addFlash(
                 'error',
-                $this->getErrorMessageForException($e, $this->getErrorMessages($e))
+                $this->getErrorMessageForException($invoiceException, $this->getErrorMessages($invoiceException))
             );
         }
 
@@ -988,9 +988,9 @@ class OrderController extends PrestaShopAdminController
                     (int) $request->get('invoice')
                 )
             );
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -1156,9 +1156,9 @@ class OrderController extends PrestaShopAdminController
                     'orderId' => $orderId,
                 ]),
             ]);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -1282,8 +1282,8 @@ class OrderController extends PrestaShopAdminController
             $this->dispatchCommand($command);
 
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -1311,8 +1311,8 @@ class OrderController extends PrestaShopAdminController
             );
 
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -1332,8 +1332,8 @@ class OrderController extends PrestaShopAdminController
                 'success',
                 $this->trans('The message was successfully sent to the customer.', [], 'Admin.Orderscustomers.Notification')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -1350,9 +1350,9 @@ class OrderController extends PrestaShopAdminController
             );
 
             return $this->json(null, Response::HTTP_NO_CONTENT);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -1399,9 +1399,9 @@ class OrderController extends PrestaShopAdminController
                 'payments' => $orderForViewing->getPayments(),
                 'linkedOrders' => $orderForViewing->getLinkedOrders(),
             ]);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -1463,8 +1463,8 @@ class OrderController extends PrestaShopAdminController
             $this->dispatchCommand(new GenerateInvoiceCommand($orderId));
 
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -1484,9 +1484,9 @@ class OrderController extends PrestaShopAdminController
             return $this->json([
                 'message' => $this->trans('The email was sent to your customer.', [], 'Admin.Orderscustomers.Notification'),
             ]);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -1512,8 +1512,8 @@ class OrderController extends PrestaShopAdminController
                     $this->addFlashFormErrors($form);
                 }
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [
@@ -1531,9 +1531,9 @@ class OrderController extends PrestaShopAdminController
 
         try {
             $this->getConfiguration()->set('PS_ORDER_PRODUCTS_NB_PER_PAGE', $numPerPage);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -1567,8 +1567,8 @@ class OrderController extends PrestaShopAdminController
             $fileName = \sprintf('%s-customization-%s.%s', $orderId, $value, $imageFile->guessExtension() ?? 'jpg');
 
             return $this->file($filePath, $fileName);
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_orders_view', [

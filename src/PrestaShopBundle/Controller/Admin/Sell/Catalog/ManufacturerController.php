@@ -154,8 +154,8 @@ class ManufacturerController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_manufacturers_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Manufacturer/add.html.twig', [
@@ -180,8 +180,8 @@ class ManufacturerController extends PrestaShopAdminController
                 (int) $manufacturerId,
                 (int) $this->getLanguageContext()->getId()
             ));
-        } catch (ManufacturerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ManufacturerException $manufacturerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_manufacturers_index');
         }
@@ -229,10 +229,10 @@ class ManufacturerController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_manufacturers_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
-            if ($e instanceof ManufacturerNotFoundException) {
+            if ($exception instanceof ManufacturerNotFoundException) {
                 return $this->redirectToRoute('admin_manufacturers_index');
             }
         }
@@ -272,8 +272,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (ManufacturerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ManufacturerException $manufacturerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_index');
@@ -294,8 +294,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (ManufacturerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ManufacturerException $manufacturerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_index');
@@ -317,8 +317,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (ManufacturerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ManufacturerException $manufacturerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_index');
@@ -340,8 +340,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (ManufacturerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ManufacturerException $manufacturerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_index');
@@ -366,8 +366,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (ManufacturerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ManufacturerException $manufacturerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_index');
@@ -427,8 +427,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('Image successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (ManufacturerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ManufacturerException $manufacturerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_edit', [
@@ -449,8 +449,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (AddressException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (AddressException $addressException) {
+            $this->addFlash('error', $this->getErrorMessageForException($addressException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_index');
@@ -516,8 +516,8 @@ class ManufacturerController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (AddressException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (AddressException $addressException) {
+            $this->addFlash('error', $this->getErrorMessageForException($addressException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_manufacturers_index');
@@ -551,10 +551,10 @@ class ManufacturerController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_manufacturers_index');
             }
-        } catch (DomainException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (DomainException $domainException) {
+            $this->addFlash('error', $this->getErrorMessageForException($domainException, $this->getErrorMessages()));
 
-            if ($e instanceof ManufacturerConstraintException) {
+            if ($domainException instanceof ManufacturerConstraintException) {
                 return $this->redirectToRoute('admin_manufacturers_index');
             }
         }
@@ -597,10 +597,10 @@ class ManufacturerController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_manufacturers_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
-            if ($e instanceof AddressNotFoundException || $e instanceof AddressConstraintException) {
+            if ($exception instanceof AddressNotFoundException || $exception instanceof AddressConstraintException) {
                 return $this->redirectToRoute('admin_manufacturers_index');
             }
         }

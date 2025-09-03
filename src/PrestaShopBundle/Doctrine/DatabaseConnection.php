@@ -59,12 +59,12 @@ class DatabaseConnection extends Connection
     {
         try {
             $detectedVersion = parent::getDatabasePlatform();
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             if (! file_exists(self::PARAMETERS_FILE)) {
                 return new MySQL57Platform();
             }
 
-            throw $e;
+            throw $exception;
         }
 
         return $detectedVersion;

@@ -111,8 +111,8 @@ class CreditSlipController extends PrestaShopAdminController
             $creditSlipId = new CreditSlipId($creditSlipId);
 
             return new BinaryFileResponse($creditSlipPdfGenerator->generatePDF([$creditSlipId]));
-        } catch (CoreException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CoreException $coreException) {
+            $this->addFlash('error', $this->getErrorMessageForException($coreException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_credit_slips_index');

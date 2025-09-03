@@ -138,8 +138,8 @@ class CatalogPriceRuleController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_catalog_price_rules_index');
@@ -160,8 +160,8 @@ class CatalogPriceRuleController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_catalog_price_rules_index');
@@ -188,8 +188,8 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_catalog_price_rules_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/CatalogPriceRule/create.html.twig', [
@@ -222,8 +222,8 @@ class CatalogPriceRuleController extends PrestaShopAdminController
             $catalogPriceRuleForm->handleRequest($request);
 
             $result = $catalogPriceRuleHandler->handleFor($catalogPriceRuleId, $catalogPriceRuleForm);
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_catalog_price_rules_index');
         }

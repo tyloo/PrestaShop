@@ -117,8 +117,8 @@ class AppendConfigurationFileHooksListCommand extends Command
 
         try {
             $addedHooks = $this->appendHooksInConfigurationFile($fixtureHooks);
-        } catch (Exception $e) {
-            $io->error($e->getMessage());
+        } catch (Exception $exception) {
+            $io->error($exception->getMessage());
         }
 
         if (! empty($addedHooks)) {

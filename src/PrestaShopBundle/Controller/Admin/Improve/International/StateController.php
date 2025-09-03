@@ -80,10 +80,10 @@ class StateController extends PrestaShopAdminController
             return $this->json([
                 'states' => $states,
             ]);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
                 [
-                    'message' => $this->getErrorMessageForException($e, []),
+                    'message' => $this->getErrorMessageForException($exception, []),
                 ],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -119,10 +119,10 @@ class StateController extends PrestaShopAdminController
 
                 return new Response($htmlResponse);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
                 [
-                    'message' => $this->getErrorMessageForException($e, []),
+                    'message' => $this->getErrorMessageForException($exception, []),
                 ],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -164,8 +164,8 @@ class StateController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (StateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (StateException $stateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($stateException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_states_index');
@@ -186,8 +186,8 @@ class StateController extends PrestaShopAdminController
         try {
             /** @var EditableState $editableState */
             $editableState = $this->dispatchQuery(new GetStateForEditing((int) $stateId));
-        } catch (StateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (StateException $stateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($stateException, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_states_index');
         }
@@ -240,8 +240,8 @@ class StateController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_states_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Locations/State/add.html.twig', [
@@ -277,10 +277,10 @@ class StateController extends PrestaShopAdminController
                     'Admin.Notifications.Success'
                 ),
             ];
-        } catch (StateException $e) {
+        } catch (StateException $stateException) {
             $response = [
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'message' => $this->getErrorMessageForException($stateException, $this->getErrorMessages()),
             ];
         }
 
@@ -301,8 +301,8 @@ class StateController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (StateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (StateException $stateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($stateException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_states_index');
@@ -324,8 +324,8 @@ class StateController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (StateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (StateException $stateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($stateException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_states_index');
@@ -347,8 +347,8 @@ class StateController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (StateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (StateException $stateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($stateException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_states_index');

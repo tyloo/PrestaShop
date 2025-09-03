@@ -234,12 +234,12 @@ class ThemeController extends PrestaShopAdminController
         try {
             $this->dispatchCommand(new EnableThemeCommand(new ThemeName($themeName)));
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (ThemeException $e) {
+        } catch (ThemeException $themeException) {
             $this->addFlash(
                 'error',
                 $this->getErrorMessageForException(
-                    $e,
-                    $this->handleEnableThemeException($e)
+                    $themeException,
+                    $this->handleEnableThemeException($themeException)
                 )
             );
 
@@ -263,8 +263,8 @@ class ThemeController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (ThemeException $e) {
-            $this->addFlash('error', $this->handleDeleteThemeException($e));
+        } catch (ThemeException $themeException) {
+            $this->addFlash('error', $this->handleDeleteThemeException($themeException));
 
             return $this->redirectToRoute('admin_themes_index');
         }
@@ -301,8 +301,8 @@ class ThemeController extends PrestaShopAdminController
                 'success',
                 $this->trans('Your RTL stylesheets has been generated successfully', [], 'Admin.Design.Notification')
             );
-        } catch (ThemeException $e) {
-            $this->addFlash('error', $this->handleAdaptThemeToRTLLanguagesException($e));
+        } catch (ThemeException $themeException) {
+            $this->addFlash('error', $this->handleAdaptThemeToRTLLanguagesException($themeException));
         }
 
         return $this->redirectToRoute('admin_themes_index');

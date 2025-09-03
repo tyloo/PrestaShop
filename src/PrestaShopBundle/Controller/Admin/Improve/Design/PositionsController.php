@@ -249,10 +249,10 @@ class PositionsController extends PrestaShopAdminController
                 'status' => true,
                 'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
             ];
-        } catch (HookException $e) {
+        } catch (HookException $hookException) {
             $response = [
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'message' => $this->getErrorMessageForException($hookException, $this->getErrorMessages()),
             ];
         }
 

@@ -55,8 +55,8 @@ class StockMovementController extends ApiController
     {
         try {
             $queryParamsCollection = $this->queryParams->fromRequest($request);
-        } catch (InvalidPaginationParamsException $exception) {
-            return $this->handleException(new BadRequestHttpException($exception->getMessage(), $exception));
+        } catch (InvalidPaginationParamsException $invalidPaginationParamsException) {
+            return $this->handleException(new BadRequestHttpException($invalidPaginationParamsException->getMessage(), $invalidPaginationParamsException));
         }
 
         $stockMovement = $this->stockMovementRepository->getData($queryParamsCollection);

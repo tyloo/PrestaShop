@@ -129,8 +129,8 @@ class FeatureController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_features_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Features/create.html.twig', [
@@ -153,8 +153,8 @@ class FeatureController extends PrestaShopAdminController
     ): Response {
         try {
             $editableFeature = $this->dispatchQuery(new GetFeatureForEditing($featureId));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_features_index');
         }
@@ -177,8 +177,8 @@ class FeatureController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_features_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->renderEditForm([
@@ -226,8 +226,8 @@ class FeatureController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(new DeleteFeatureCommand($featureId));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
@@ -240,8 +240,8 @@ class FeatureController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(new BulkDeleteFeatureCommand($this->getBulkActionIds($request, 'feature_bulk')));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));

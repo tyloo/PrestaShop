@@ -172,8 +172,8 @@ class MetaController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_metas_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_metas_index');
         }

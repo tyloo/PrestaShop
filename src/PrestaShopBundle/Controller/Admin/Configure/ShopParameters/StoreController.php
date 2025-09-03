@@ -87,8 +87,8 @@ class StoreController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_stores_index');
@@ -101,8 +101,8 @@ class StoreController extends PrestaShopAdminController
             $this->dispatchCommand(new DeleteStoreCommand($storeId));
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_stores_index');
@@ -118,8 +118,8 @@ class StoreController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_stores_index');
@@ -151,8 +151,8 @@ class StoreController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status of the selection has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_stores_index');

@@ -152,8 +152,8 @@ class SqlManagerController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_sql_requests_index');
             }
-        } catch (SqlRequestException $e) {
-            $this->addFlash('error', $this->handleException($e));
+        } catch (SqlRequestException $sqlRequestException) {
+            $this->addFlash('error', $this->handleException($sqlRequestException));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/RequestSql/create.html.twig', [
@@ -232,8 +232,8 @@ class SqlManagerController extends PrestaShopAdminController
             $this->dispatchCommand($deleteSqlRequestCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (SqlRequestException $e) {
-            $this->addFlash('error', $this->handleException($e));
+        } catch (SqlRequestException $sqlRequestException) {
+            $this->addFlash('error', $this->handleException($sqlRequestException));
         }
 
         return $this->redirectToRoute('admin_sql_requests_index');
@@ -256,8 +256,8 @@ class SqlManagerController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (SqlRequestException $e) {
-            $this->addFlash('error', $this->handleException($e));
+        } catch (SqlRequestException $sqlRequestException) {
+            $this->addFlash('error', $this->handleException($sqlRequestException));
         }
 
         return $this->redirectToRoute('admin_sql_requests_index');
@@ -273,8 +273,8 @@ class SqlManagerController extends PrestaShopAdminController
             $query = new GetSqlRequestExecutionResult($sqlRequestId);
 
             $sqlRequestExecutionResult = $this->dispatchQuery($query);
-        } catch (SqlRequestException $e) {
-            $this->addFlash('error', $this->handleViewException($e));
+        } catch (SqlRequestException $sqlRequestException) {
+            $this->addFlash('error', $this->handleViewException($sqlRequestException));
 
             return $this->redirectToRoute('admin_sql_requests_index');
         }
@@ -311,8 +311,8 @@ class SqlManagerController extends PrestaShopAdminController
 
             /** @var SqlRequestSettings $sqlRequestSettings */
             $sqlRequestSettings = $this->dispatchQuery(new GetSqlRequestSettings());
-        } catch (SqlRequestException $e) {
-            $this->addFlash('error', $this->handleExportException($e));
+        } catch (SqlRequestException $sqlRequestException) {
+            $this->addFlash('error', $this->handleExportException($sqlRequestException));
 
             return $this->redirectToRoute('admin_sql_requests_index');
         }

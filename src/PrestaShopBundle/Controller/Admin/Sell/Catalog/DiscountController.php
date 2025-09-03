@@ -110,8 +110,8 @@ class DiscountController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_discount_edit', ['discountId' => $result->getIdentifiableObjectId()]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Discount/create.html.twig', [
@@ -135,8 +135,8 @@ class DiscountController extends PrestaShopAdminController
     ): RedirectResponse|Response {
         try {
             $form = $formBuilder->getFormFor($discountId);
-        } catch (DiscountNotFoundException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (DiscountNotFoundException $discountNotFoundException) {
+            $this->addFlash('error', $this->getErrorMessageForException($discountNotFoundException, $this->getErrorMessages($discountNotFoundException)));
 
             return $this->redirectToRoute('admin_discounts_index');
         }
@@ -161,8 +161,8 @@ class DiscountController extends PrestaShopAdminController
                     ));
                 }
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Discount/edit.html.twig', [
@@ -193,8 +193,8 @@ class DiscountController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CartRuleException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CartRuleException $cartRuleException) {
+            $this->addFlash('error', $this->getErrorMessageForException($cartRuleException, $this->getErrorMessages($cartRuleException)));
         }
 
         return $this->redirectToRoute('admin_discounts_index');
@@ -213,8 +213,8 @@ class DiscountController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_discounts_index');

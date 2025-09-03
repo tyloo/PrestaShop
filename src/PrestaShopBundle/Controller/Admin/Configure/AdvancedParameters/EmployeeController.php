@@ -144,8 +144,8 @@ class EmployeeController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (EmployeeException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (EmployeeException $employeeException) {
+            $this->addFlash('error', $this->getErrorMessageForException($employeeException, $this->getErrorMessages($employeeException)));
         }
 
         return $this->redirectToRoute('admin_employees_index');
@@ -166,8 +166,8 @@ class EmployeeController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (EmployeeException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (EmployeeException $employeeException) {
+            $this->addFlash('error', $this->getErrorMessageForException($employeeException, $this->getErrorMessages($employeeException)));
         }
 
         return $this->redirectToRoute('admin_employees_index');
@@ -188,8 +188,8 @@ class EmployeeController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (EmployeeException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (EmployeeException $employeeException) {
+            $this->addFlash('error', $this->getErrorMessageForException($employeeException, $this->getErrorMessages($employeeException)));
         }
 
         return $this->redirectToRoute('admin_employees_index');
@@ -203,8 +203,8 @@ class EmployeeController extends PrestaShopAdminController
             $this->dispatchCommand(new DeleteEmployeeCommand((int) $employeeId));
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (EmployeeException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (EmployeeException $employeeException) {
+            $this->addFlash('error', $this->getErrorMessageForException($employeeException, $this->getErrorMessages($employeeException)));
         }
 
         return $this->redirectToRoute('admin_employees_index');
@@ -223,8 +223,8 @@ class EmployeeController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (EmployeeException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (EmployeeException $employeeException) {
+            $this->addFlash('error', $this->getErrorMessageForException($employeeException, $this->getErrorMessages($employeeException)));
         }
 
         return $this->redirectToRoute('admin_employees_index');
@@ -250,8 +250,8 @@ class EmployeeController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_employees_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         $templateVars = [
@@ -309,8 +309,8 @@ class EmployeeController extends PrestaShopAdminController
                 'is_restricted_access' => $isRestrictedAccess,
                 'is_for_editing' => true,
             ]);
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
 
             return $this->redirectToRoute('admin_employees_index');
         }
@@ -324,8 +324,8 @@ class EmployeeController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_employees_edit', ['employeeId' => $employeeId]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         try {

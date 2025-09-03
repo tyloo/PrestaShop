@@ -219,8 +219,8 @@ class PerformanceController extends PrestaShopAdminController
             $this->dispatchCommand($bulkToggleModuleStatusCommand);
 
             $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
         }
 
         return $this->redirectToRoute('admin_performance');

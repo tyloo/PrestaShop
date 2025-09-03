@@ -213,8 +213,8 @@ class TranslationController extends ApiController
             }
 
             return new JsonResponse($response, 200);
-        } catch (BadRequestHttpException $exception) {
-            return $this->handleException($exception);
+        } catch (BadRequestHttpException $badRequestHttpException) {
+            return $this->handleException($badRequestHttpException);
         }
     }
 
@@ -257,8 +257,8 @@ class TranslationController extends ApiController
             $this->clearCache();
 
             return new JsonResponse($response, 200);
-        } catch (BadRequestHttpException $exception) {
-            return $this->handleException($exception);
+        } catch (BadRequestHttpException $badRequestHttpException) {
+            return $this->handleException($badRequestHttpException);
         }
     }
 

@@ -99,8 +99,8 @@ class SpecificPriceController extends PrestaShopAdminController
                     'specificPriceId' => $result->getIdentifiableObjectId(),
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/SpecificPrice/create.html.twig', [
@@ -132,8 +132,8 @@ class SpecificPriceController extends PrestaShopAdminController
                     'liteDisplaying' => $request->query->has('liteDisplaying'),
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/SpecificPrice/edit.html.twig', [
@@ -147,9 +147,9 @@ class SpecificPriceController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(new DeleteSpecificPriceCommand($specificPriceId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json([
-                'error' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'error' => $this->getErrorMessageForException($exception, $this->getErrorMessages()),
             ], Response::HTTP_BAD_REQUEST);
         }
 

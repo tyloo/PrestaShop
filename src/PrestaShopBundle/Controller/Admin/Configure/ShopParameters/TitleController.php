@@ -86,8 +86,8 @@ class TitleController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_title_index');
             }
-        } catch (TitleException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (TitleException $titleException) {
+            $this->addFlash('error', $this->getErrorMessageForException($titleException, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/CustomerSettings/Title/create.html.twig', [
@@ -150,8 +150,8 @@ class TitleController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (TitleException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (TitleException $titleException) {
+            $this->addFlash('error', $this->getErrorMessageForException($titleException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_title_index');
@@ -169,8 +169,8 @@ class TitleController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (TitleException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (TitleException $titleException) {
+            $this->addFlash('error', $this->getErrorMessageForException($titleException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_title_index');

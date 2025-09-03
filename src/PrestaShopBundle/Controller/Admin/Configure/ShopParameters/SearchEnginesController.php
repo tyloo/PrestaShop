@@ -88,8 +88,8 @@ class SearchEnginesController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_search_engines_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/TrafficSeo/SearchEngines/create.html.twig', [
@@ -116,8 +116,8 @@ class SearchEnginesController extends PrestaShopAdminController
     ): Response {
         try {
             $searchEngineForm = $searchEngineFormBuilder->getFormFor($searchEngineId);
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_search_engines_index');
         }
@@ -131,10 +131,10 @@ class SearchEnginesController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_search_engines_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
-            if ($e instanceof SearchEngineNotFoundException) {
+            if ($exception instanceof SearchEngineNotFoundException) {
                 return $this->redirectToRoute('admin_search_engines_index');
             }
         }
@@ -164,8 +164,8 @@ class SearchEnginesController extends PrestaShopAdminController
             $this->dispatchCommand(new DeleteSearchEngineCommand($searchEngineId));
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (SearchEngineException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (SearchEngineException $searchEngineException) {
+            $this->addFlash('error', $this->getErrorMessageForException($searchEngineException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_search_engines_index');
@@ -183,8 +183,8 @@ class SearchEnginesController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (SearchEngineException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (SearchEngineException $searchEngineException) {
+            $this->addFlash('error', $this->getErrorMessageForException($searchEngineException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_search_engines_index');

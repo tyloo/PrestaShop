@@ -166,8 +166,8 @@ class MonitoringController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, [$e::class => $e->getMessage()]));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, [$exception::class => $exception->getMessage()]));
         }
 
         return $this->redirectToRoute('admin_monitorings_index');

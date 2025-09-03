@@ -104,8 +104,8 @@ class OrderMessageController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_order_messages_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/CustomerService/OrderMessage/create.html.twig', [
@@ -151,8 +151,8 @@ class OrderMessageController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_order_messages_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
 
             return $this->redirectToRoute('admin_order_messages_index');
         }
@@ -175,8 +175,8 @@ class OrderMessageController extends PrestaShopAdminController
             $this->dispatchCommand(new DeleteOrderMessageCommand($orderMessageId));
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_order_messages_index');
@@ -197,8 +197,8 @@ class OrderMessageController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_order_messages_index');

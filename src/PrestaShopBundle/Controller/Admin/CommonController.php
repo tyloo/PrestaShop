@@ -315,8 +315,8 @@ class CommonController extends PrestaShopAdminController
         try {
             $this->updateGridPosition($positionDefinition, $positionsData);
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (PositionUpdateException $e) {
-            $errors = [$e->toArray()];
+        } catch (PositionUpdateException $positionUpdateException) {
+            $errors = [$positionUpdateException->toArray()];
             $this->addFlashErrors($errors);
         }
 

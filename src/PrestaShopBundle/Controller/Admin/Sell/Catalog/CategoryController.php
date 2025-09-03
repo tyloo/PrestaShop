@@ -170,8 +170,8 @@ class CategoryController extends PrestaShopAdminController
                     'categoryId' => $categoryForm->getData()['id_parent'],
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         $defaultGroups = $defaultGroupsProvider->getGroups();
@@ -215,8 +215,8 @@ class CategoryController extends PrestaShopAdminController
                     'categoryId' => (int) $this->getConfiguration()->get('PS_ROOT_CATEGORY'),
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         $defaultGroups = $defaultGroupsProvider->getGroups();
@@ -254,8 +254,8 @@ class CategoryController extends PrestaShopAdminController
             if ($editableCategory->isRootCategory()) {
                 return $this->redirectToRoute('admin_categories_edit_root', ['categoryId' => $categoryId]);
             }
-        } catch (CategoryException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CategoryException $categoryException) {
+            $this->addFlash('error', $this->getErrorMessageForException($categoryException, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_categories_index');
         }
@@ -284,8 +284,8 @@ class CategoryController extends PrestaShopAdminController
                     'categoryId' => $categoryForm->getData()['id_parent'],
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         $defaultGroups = $defaultGroupsProvider->getGroups();
@@ -362,8 +362,8 @@ class CategoryController extends PrestaShopAdminController
                     'categoryId' => (int) $this->getConfiguration()->get('PS_ROOT_CATEGORY'),
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         $defaultGroups = $defaultGroupsProvider->getGroups();
@@ -404,8 +404,8 @@ class CategoryController extends PrestaShopAdminController
                 'success',
                 $this->trans('Image successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (CategoryException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CategoryException $categoryException) {
+            $this->addFlash('error', $this->getErrorMessageForException($categoryException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_categories_edit', [
@@ -428,8 +428,8 @@ class CategoryController extends PrestaShopAdminController
                 'success',
                 $this->trans('Image successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (CategoryException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CategoryException $categoryException) {
+            $this->addFlash('error', $this->getErrorMessageForException($categoryException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_categories_edit', [
@@ -463,10 +463,10 @@ class CategoryController extends PrestaShopAdminController
                 'status' => true,
                 'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
             ];
-        } catch (CategoryException $e) {
+        } catch (CategoryException $categoryException) {
             $response = [
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'message' => $this->getErrorMessageForException($categoryException, $this->getErrorMessages()),
             ];
         }
 
@@ -491,8 +491,8 @@ class CategoryController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CategoryException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CategoryException $categoryException) {
+            $this->addFlash('error', $this->getErrorMessageForException($categoryException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_categories_index');
@@ -516,8 +516,8 @@ class CategoryController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CategoryException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CategoryException $categoryException) {
+            $this->addFlash('error', $this->getErrorMessageForException($categoryException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_categories_index');
@@ -644,10 +644,10 @@ class CategoryController extends PrestaShopAdminController
                 $request->request->all('positions'),
                 $request->request->getBoolean('found_first')
             ));
-        } catch (CategoryException $e) {
+        } catch (CategoryException $categoryException) {
             return $this->json([
                 'success' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'message' => $this->getErrorMessageForException($categoryException, $this->getErrorMessages()),
             ]);
         }
 

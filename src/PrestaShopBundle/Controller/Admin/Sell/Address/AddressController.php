@@ -132,8 +132,8 @@ class AddressController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $request->query->has('redirectUrl') ?
@@ -155,8 +155,8 @@ class AddressController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_addresses_index');
@@ -226,8 +226,8 @@ class AddressController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_addresses_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Address/add.html.twig', [
@@ -266,8 +266,8 @@ class AddressController extends PrestaShopAdminController
             }
 
             $addressForm = $addressFormBuilder->getFormFor($addressId, $formData);
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
 
             return $this->redirectToRoute('admin_addresses_index');
         }
@@ -288,8 +288,8 @@ class AddressController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_addresses_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         $customerInfo = $editableAddress->getLastName() . ' ' .
@@ -351,10 +351,10 @@ class AddressController extends PrestaShopAdminController
 
             // Address form is built based on address id to fill the data related to this address
             $addressForm = $addressFormBuilder->getFormFor($addressId, $formData);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->addFlash(
                 'error',
-                $this->getErrorMessageForException($e, $this->getErrorMessages($e))
+                $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))
             );
 
             return $this->redirectToRoute('admin_orders_view', ['orderId' => $orderId]);
@@ -378,8 +378,8 @@ class AddressController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_orders_view', ['orderId' => $orderId]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         $customerInfo = $editableAddress->getLastName() . ' ' .
@@ -441,10 +441,10 @@ class AddressController extends PrestaShopAdminController
 
             // Address form is built based on address id to fill the data related to this address
             $addressForm = $addressFormBuilder->getFormFor($addressId, $formData);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->addFlash(
                 'error',
-                $this->getErrorMessageForException($e, $this->getErrorMessages($e))
+                $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))
             );
 
             return $this->redirectToRoute('admin_carts_view', ['cartId' => $cartId]);
@@ -468,8 +468,8 @@ class AddressController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_carts_view', ['cartId' => $cartId]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         $customerInfo = $editableAddress->getLastName() . ' ' .

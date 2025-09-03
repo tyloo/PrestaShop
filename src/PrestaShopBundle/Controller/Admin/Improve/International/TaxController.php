@@ -139,8 +139,8 @@ class TaxController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_taxes_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Tax/create.html.twig', [
@@ -189,10 +189,10 @@ class TaxController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_taxes_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
-            if ($e instanceof TaxNotFoundException) {
+            if ($exception instanceof TaxNotFoundException) {
                 return $this->redirectToRoute('admin_taxes_index');
             }
         }
@@ -249,8 +249,8 @@ class TaxController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (TaxException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (TaxException $taxException) {
+            $this->addFlash('error', $this->getErrorMessageForException($taxException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_taxes_index');
@@ -270,8 +270,8 @@ class TaxController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (TaxException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (TaxException $taxException) {
+            $this->addFlash('error', $this->getErrorMessageForException($taxException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_taxes_index');
@@ -291,8 +291,8 @@ class TaxController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (TaxException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (TaxException $taxException) {
+            $this->addFlash('error', $this->getErrorMessageForException($taxException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_taxes_index');
@@ -312,8 +312,8 @@ class TaxController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (TaxException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (TaxException $taxException) {
+            $this->addFlash('error', $this->getErrorMessageForException($taxException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_taxes_index');

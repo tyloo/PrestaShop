@@ -433,8 +433,8 @@ class Install extends AbstractInstall
             } else {
                 $languages = $this->installLanguages();
             }
-        } catch (Throwable $e) {
-            $this->setError($e->getMessage());
+        } catch (Throwable $throwable) {
+            $this->setError($throwable->getMessage());
 
             return false;
         }
@@ -513,8 +513,8 @@ class Install extends AbstractInstall
                     return false;
                 }
             }
-        } catch (Throwable $e) {
-            $this->setError($e->getMessage());
+        } catch (Throwable $throwable) {
+            $this->setError($throwable->getMessage());
 
             return false;
         }
@@ -1198,8 +1198,8 @@ class Install extends AbstractInstall
         try {
             Tools::clearSf2Cache('prod');
             Tools::clearSf2Cache('dev');
-        } catch (Exception $e) {
-            $this->setError($e->getMessage());
+        } catch (Exception $exception) {
+            $this->setError($exception->getMessage());
 
             return false;
         }

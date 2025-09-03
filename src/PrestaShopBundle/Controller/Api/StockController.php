@@ -71,8 +71,8 @@ class StockController extends ApiController
             }
 
             $queryParamsCollection = $this->queryParams->fromRequest($request);
-        } catch (InvalidPaginationParamsException $exception) {
-            return $this->handleException(new BadRequestHttpException($exception->getMessage(), $exception));
+        } catch (InvalidPaginationParamsException $invalidPaginationParamsException) {
+            return $this->handleException(new BadRequestHttpException($invalidPaginationParamsException->getMessage(), $invalidPaginationParamsException));
         }
 
         $stock = [
@@ -98,8 +98,8 @@ class StockController extends ApiController
         try {
             $this->guardAgainstMissingDeltaParameter($request);
             $delta = $request->request->getInt('delta');
-        } catch (BadRequestHttpException $exception) {
-            return $this->handleException($exception);
+        } catch (BadRequestHttpException $badRequestHttpException) {
+            return $this->handleException($badRequestHttpException);
         }
 
         $productIdentity = ProductIdentity::fromArray([
@@ -110,8 +110,8 @@ class StockController extends ApiController
         try {
             $movement = new Movement($productIdentity, $delta);
             $product = $this->stockRepository->updateStock($movement);
-        } catch (ProductNotFoundException $exception) {
-            return $this->handleException($exception);
+        } catch (ProductNotFoundException $productNotFoundException) {
+            return $this->handleException($productNotFoundException);
         }
 
         return new JsonResponse($product);
@@ -129,16 +129,16 @@ class StockController extends ApiController
         try {
             $this->guardAgainstInvalidBulkEditionRequest($request);
             $stockMovementsParams = json_decode($request->getContent(), true);
-        } catch (BadRequestHttpException $exception) {
-            return $this->handleException($exception);
+        } catch (BadRequestHttpException $badRequestHttpException) {
+            return $this->handleException($badRequestHttpException);
         }
 
         $movementsCollection = $this->movements->fromArray($stockMovementsParams);
 
         try {
             $products = $this->stockRepository->bulkUpdateStock($movementsCollection);
-        } catch (ProductNotFoundException $exception) {
-            return $this->handleException($exception);
+        } catch (ProductNotFoundException $productNotFoundException) {
+            return $this->handleException($productNotFoundException);
         }
 
         return new JsonResponse($products);
@@ -155,8 +155,8 @@ class StockController extends ApiController
 
         try {
             $queryParamsCollection = $this->queryParams->fromRequest($request);
-        } catch (InvalidPaginationParamsException $exception) {
-            return $this->handleException(new BadRequestHttpException($exception->getMessage(), $exception));
+        } catch (InvalidPaginationParamsException $invalidPaginationParamsException) {
+            return $this->handleException(new BadRequestHttpException($invalidPaginationParamsException->getMessage(), $invalidPaginationParamsException));
         }
 
         $dataCallback = (fn ($page, $limit) => $this->stockRepository->getDataExport($page, $limit, $queryParamsCollection));

@@ -171,8 +171,8 @@ class CustomerController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_customers_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         // Get default groups for JS purposes
@@ -236,9 +236,9 @@ class CustomerController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_customers_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
-            if ($e instanceof CustomerNotFoundException) {
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
+            if ($exception instanceof CustomerNotFoundException) {
                 return $this->redirectToRoute('admin_customers_index');
             }
         }
@@ -406,8 +406,8 @@ class CustomerController extends PrestaShopAdminController
             $this->dispatchCommand(new TransformGuestToCustomerCommand($customerId));
 
             $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
-        } catch (CustomerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CustomerException $customerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($customerException, $this->getErrorMessages($customerException)));
         }
 
         if ($request->query->get('id_order')) {
@@ -467,9 +467,9 @@ class CustomerController extends PrestaShopAdminController
                 $phrases,
                 $shopConstraint
             ));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -499,16 +499,16 @@ class CustomerController extends PrestaShopAdminController
             $customerInformation = $this->dispatchQuery(new GetCustomerForAddressCreation($email));
 
             return $this->json($customerInformation);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $code = Response::HTTP_INTERNAL_SERVER_ERROR;
 
-            if ($e instanceof CustomerException) {
+            if ($exception instanceof CustomerException) {
                 $code = Response::HTTP_NOT_FOUND;
             }
 
             return $this->json(
                 [
-                    'message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                    'message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)),
                 ],
                 $code
             );
@@ -534,10 +534,10 @@ class CustomerController extends PrestaShopAdminController
                 'status' => true,
                 'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
             ];
-        } catch (CustomerException $e) {
+        } catch (CustomerException $customerException) {
             $response = [
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                'message' => $this->getErrorMessageForException($customerException, $this->getErrorMessages($customerException)),
             ];
         }
 
@@ -565,10 +565,10 @@ class CustomerController extends PrestaShopAdminController
                 'status' => true,
                 'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
             ];
-        } catch (CustomerException $e) {
+        } catch (CustomerException $customerException) {
             $response = [
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                'message' => $this->getErrorMessageForException($customerException, $this->getErrorMessages($customerException)),
             ];
         }
 
@@ -594,10 +594,10 @@ class CustomerController extends PrestaShopAdminController
                 'status' => true,
                 'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
             ];
-        } catch (CustomerException $e) {
+        } catch (CustomerException $customerException) {
             $response = [
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                'message' => $this->getErrorMessageForException($customerException, $this->getErrorMessages($customerException)),
             ];
         }
 
@@ -683,8 +683,8 @@ class CustomerController extends PrestaShopAdminController
             $this->dispatchCommand($command);
 
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (CustomerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CustomerException $customerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($customerException, $this->getErrorMessages($customerException)));
         }
 
         return $this->redirectToRoute('admin_customers_index');
@@ -704,8 +704,8 @@ class CustomerController extends PrestaShopAdminController
             $this->dispatchCommand($command);
 
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (CustomerException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CustomerException $customerException) {
+            $this->addFlash('error', $this->getErrorMessageForException($customerException, $this->getErrorMessages($customerException)));
         }
 
         return $this->redirectToRoute('admin_customers_index');
@@ -770,9 +770,9 @@ class CustomerController extends PrestaShopAdminController
     {
         try {
             $carts = $this->dispatchQuery(new GetCustomerCarts($customerId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -787,9 +787,9 @@ class CustomerController extends PrestaShopAdminController
     {
         try {
             $orders = $this->dispatchQuery(new GetCustomerOrders($customerId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }

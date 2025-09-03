@@ -60,8 +60,8 @@ class AccessTokenController extends AbstractController
 
         try {
             $response = $this->authorizationServer->respondToAccessTokenRequest($request, $psr7Response);
-        } catch (OAuthServerException $exception) {
-            $response = $exception->generateHttpResponse($psr7Response);
+        } catch (OAuthServerException $oAuthServerException) {
+            $response = $oAuthServerException->generateHttpResponse($psr7Response);
         }
 
         return $this->httpFoundationFactory->createResponse($response);

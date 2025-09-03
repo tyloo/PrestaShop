@@ -191,8 +191,8 @@ class SecurityController extends PrestaShopAdminController
             $this->dispatchCommand($clearSessionCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CoreException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CoreException $coreException) {
+            $this->addFlash('error', $this->getErrorMessageForException($coreException, $this->getErrorMessages($coreException)));
         }
 
         return $this->redirectToRoute('admin_security_sessions_customer_list');
@@ -207,8 +207,8 @@ class SecurityController extends PrestaShopAdminController
             $this->dispatchCommand($clearSessionCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CoreException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CoreException $coreException) {
+            $this->addFlash('error', $this->getErrorMessageForException($coreException, $this->getErrorMessages($coreException)));
         }
 
         return $this->redirectToRoute('admin_security_sessions_employee_list');
@@ -226,8 +226,8 @@ class SecurityController extends PrestaShopAdminController
             $this->dispatchCommand($deleteSessionCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CoreException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CoreException $coreException) {
+            $this->addFlash('error', $this->getErrorMessageForException($coreException, $this->getErrorMessages($coreException)));
         }
 
         return $this->redirectToRoute('admin_security_sessions_employee_list');
@@ -245,8 +245,8 @@ class SecurityController extends PrestaShopAdminController
             $this->dispatchCommand($deleteSessionCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CoreException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CoreException $coreException) {
+            $this->addFlash('error', $this->getErrorMessageForException($coreException, $this->getErrorMessages($coreException)));
         }
 
         return $this->redirectToRoute('admin_security_sessions_customer_list');
@@ -266,8 +266,8 @@ class SecurityController extends PrestaShopAdminController
             $this->dispatchCommand($deleteSessionsCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CoreException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CoreException $coreException) {
+            $this->addFlash('error', $this->getErrorMessageForException($coreException, $this->getErrorMessages($coreException)));
         }
 
         return $this->redirectToRoute('admin_security_sessions_customer_list');
@@ -287,8 +287,8 @@ class SecurityController extends PrestaShopAdminController
             $this->dispatchCommand($deleteSessionsCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CoreException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CoreException $coreException) {
+            $this->addFlash('error', $this->getErrorMessageForException($coreException, $this->getErrorMessages($coreException)));
         }
 
         return $this->redirectToRoute('admin_security_sessions_employee_list');

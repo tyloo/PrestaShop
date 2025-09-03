@@ -116,8 +116,8 @@ class ImageSettingsController extends PrestaShopAdminController
                     $this->addFlashFormErrors($configForm);
                 }
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
         }
 
         return $this->redirectToRoute('admin_image_settings_index');
@@ -145,8 +145,8 @@ class ImageSettingsController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_image_settings_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
         }
 
         return $this->render('@PrestaShop/Admin/Improve/Design/ImageSettings/ImageType/create.html.twig', [
@@ -183,10 +183,10 @@ class ImageSettingsController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_image_settings_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
 
-            if ($e instanceof ImageTypeNotFoundException) {
+            if ($exception instanceof ImageTypeNotFoundException) {
                 return $this->redirectToRoute('admin_image_settings_index');
             }
         }
@@ -217,8 +217,8 @@ class ImageSettingsController extends PrestaShopAdminController
             // Delete image type
             $this->dispatchCommand(new DeleteImageTypeCommand($imageTypeId));
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
         }
 
         return $this->redirectToRoute('admin_image_settings_index');
@@ -239,8 +239,8 @@ class ImageSettingsController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
         }
 
         return $this->redirectToRoute('admin_image_settings_index');
@@ -262,8 +262,8 @@ class ImageSettingsController extends PrestaShopAdminController
                 $regenThumbnailsForm->get('erase-previous-images')->getData()
             ));
             $this->addFlash('success', $this->trans('The thumbnails were successfully regenerated.', [], 'Admin.Notifications.Success'));
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
         }
 
         return $this->redirectToRoute('admin_image_settings_index');

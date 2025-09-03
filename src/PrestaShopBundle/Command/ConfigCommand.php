@@ -139,10 +139,10 @@ class ConfigCommand extends Command
         try {
             $this->init();
             $this->{$this->action}();
-        } catch (Exception $e) {
-            $this->io->error($e->getMessage());
+        } catch (Exception $exception) {
+            $this->io->error($exception->getMessage());
 
-            return $e->getCode();
+            return $exception->getCode();
         }
 
         return self::STATUS_OK;
@@ -166,8 +166,8 @@ class ConfigCommand extends Command
             } else {
                 $this->shopConstraint = ShopConstraint::allShops();
             }
-        } catch (Exception $e) {
-            $msg = \sprintf('Failed initializing ShopConstraint: %s', $e->getMessage());
+        } catch (Exception $exception) {
+            $msg = \sprintf('Failed initializing ShopConstraint: %s', $exception->getMessage());
             throw new Exception($msg, self::STATUS_FAILED_SHOPCONSTRAINT);
         }
     }
@@ -259,8 +259,8 @@ class ConfigCommand extends Command
         // set the value
         try {
             $this->configuration->set($key, $newvalue, $this->shopConstraint);
-        } catch (Exception $e) {
-            $msg = \sprintf('Failed setting value: %s', $e->getMessage());
+        } catch (Exception $exception) {
+            $msg = \sprintf('Failed setting value: %s', $exception->getMessage());
             throw new Exception($msg, self::STATUS_FAILED_SET);
         }
 
@@ -285,8 +285,8 @@ class ConfigCommand extends Command
             // this will give the user at least some backup
             $this->get();
             $this->configuration->remove($key);
-        } catch (Exception $e) {
-            $msg = \sprintf('Failed removing: %s. Original message: %s', $key, $e->getMessage());
+        } catch (Exception $exception) {
+            $msg = \sprintf('Failed removing: %s. Original message: %s', $key, $exception->getMessage());
             throw new Exception($msg, self::STATUS_FAILED_REMOVE);
         }
 

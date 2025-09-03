@@ -276,8 +276,8 @@ class CustomerThreadController extends PrestaShopAdminController
         try {
             $this->dispatchCommand(new DeleteCustomerThreadCommand($customerThreadId));
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CustomerServiceException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CustomerServiceException $customerServiceException) {
+            $this->addFlash('error', $this->getErrorMessageForException($customerServiceException, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_customer_threads');
         }
@@ -300,8 +300,8 @@ class CustomerThreadController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (CustomerThreadNotFoundException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CustomerThreadNotFoundException $customerThreadNotFoundException) {
+            $this->addFlash('error', $this->getErrorMessageForException($customerThreadNotFoundException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_customer_threads');

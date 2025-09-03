@@ -74,13 +74,13 @@ class ShowcaseCardController extends PrestaShopAdminController
                     'message' => '',
                 ]
             );
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
                 [
                     'success' => false,
-                    'message' => $e->getMessage(),
+                    'message' => $exception->getMessage(),
                 ],
-                ($e instanceof InvalidShowcaseCardNameException) ? Response::HTTP_BAD_REQUEST : Response::HTTP_INTERNAL_SERVER_ERROR
+                ($exception instanceof InvalidShowcaseCardNameException) ? Response::HTTP_BAD_REQUEST : Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }

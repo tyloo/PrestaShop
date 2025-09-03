@@ -150,8 +150,8 @@ class TranslationsController extends PrestaShopAdminController
         try {
             $route = $routeFinder->findRoute($request);
             $routeParameters = $routeFinder->findRouteParameters($request);
-        } catch (InvalidModuleException $e) {
-            $this->addFlash('error', $this->trans('An error has occurred, this module does not exist: %s', [$e->getMessage()], 'Admin.International.Notification'));
+        } catch (InvalidModuleException $invalidModuleException) {
+            $this->addFlash('error', $this->trans('An error has occurred, this module does not exist: %s', [$invalidModuleException->getMessage()], 'Admin.International.Notification'));
 
             return $this->redirectToRoute('admin_international_translations_show_settings');
         }

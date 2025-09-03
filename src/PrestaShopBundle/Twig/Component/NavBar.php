@@ -107,13 +107,13 @@ class NavBar
 
         try {
             $tab['href'] = $this->context->getContext()->link->getTabLink($tab);
-        } catch (RouteNotFoundException $e) {
+        } catch (RouteNotFoundException $routeNotFoundException) {
             $this->logger->warning(
                 \sprintf('Route not found in one of the Tab %s', $tab['route_name'] ?? ''),
                 [
-                    'message' => $e->getMessage(),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
+                    'message' => $routeNotFoundException->getMessage(),
+                    'file' => $routeNotFoundException->getFile(),
+                    'line' => $routeNotFoundException->getLine(),
                 ]
             );
             $tab['href'] = '';

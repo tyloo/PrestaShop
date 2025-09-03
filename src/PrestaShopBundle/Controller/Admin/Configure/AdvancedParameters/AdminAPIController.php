@@ -127,8 +127,8 @@ class AdminAPIController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_api_clients_edit', ['apiClientId' => $createdApiClient->getApiClientId()->getValue()]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render(
@@ -164,8 +164,8 @@ class AdminAPIController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_api_clients_edit', ['apiClientId' => $apiClientId]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         $formData = $apiClientForm->getData();
@@ -185,8 +185,8 @@ class AdminAPIController extends PrestaShopAdminController
                 $this->trans('Your new client secret has been generated successfully. Your former client secret is now obsolete.', [], 'Admin.Notifications.Success'),
                 $newSecret
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_api_clients_edit', ['apiClientId' => $apiClientId]);
@@ -202,10 +202,10 @@ class AdminAPIController extends PrestaShopAdminController
             $command = new EditApiClientCommand($apiClientId);
             $command->setEnabled(! $editableApiClient->isEnabled());
             $this->dispatchCommand($command);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json([
                 'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'message' => $this->getErrorMessageForException($exception, $this->getErrorMessages()),
             ]);
         }
 
@@ -224,8 +224,8 @@ class AdminAPIController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_api_index');

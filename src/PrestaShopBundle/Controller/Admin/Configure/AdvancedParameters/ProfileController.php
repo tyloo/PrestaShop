@@ -138,8 +138,8 @@ class ProfileController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_profiles_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/Profiles/create.html.twig', [
@@ -189,10 +189,10 @@ class ProfileController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_profiles_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
-            if ($e instanceof ProfileNotFoundException) {
+            if ($exception instanceof ProfileNotFoundException) {
                 return $this->redirectToRoute('admin_profiles_index');
             }
         }
@@ -227,8 +227,8 @@ class ProfileController extends PrestaShopAdminController
             $this->dispatchCommand($deleteProfileCommand);
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (ProfileException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ProfileException $profileException) {
+            $this->addFlash('error', $this->getErrorMessageForException($profileException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_profiles_index');
@@ -247,8 +247,8 @@ class ProfileController extends PrestaShopAdminController
             $this->dispatchCommand(new BulkDeleteProfileCommand($profileIds));
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (ProfileException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (ProfileException $profileException) {
+            $this->addFlash('error', $this->getErrorMessageForException($profileException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_profiles_index');

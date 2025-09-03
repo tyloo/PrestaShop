@@ -154,8 +154,8 @@ class ImportController extends PrestaShopAdminController
 
         try {
             $file = $fileUploader->upload($uploadedFile);
-        } catch (FileUploadException $e) {
-            return $this->json(['error' => $e->getMessage()]);
+        } catch (FileUploadException $fileUploadException) {
+            return $this->json(['error' => $fileUploadException->getMessage()]);
         }
 
         $response['file'] = [

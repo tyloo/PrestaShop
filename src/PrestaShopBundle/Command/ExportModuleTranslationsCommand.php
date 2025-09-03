@@ -101,8 +101,8 @@ class ExportModuleTranslationsCommand extends Command
             }
 
             return $this->exportSingleLocale($moduleName, $localeOrIso, $autoInstall, $output, $formatter);
-        } catch (Exception $e) {
-            $errorMsg = \sprintf('An error occurred during export: %s', $e->getMessage());
+        } catch (Exception $exception) {
+            $errorMsg = \sprintf('An error occurred during export: %s', $exception->getMessage());
             $formattedBlock = $formatter->formatBlock($errorMsg, 'error', true);
             $output->writeln($formattedBlock);
 
@@ -183,8 +183,8 @@ class ExportModuleTranslationsCommand extends Command
             }
 
             return Command::SUCCESS;
-        } catch (Exception $e) {
-            throw $e;
+        } catch (Exception $exception) {
+            throw $exception;
         }
     }
 
@@ -278,8 +278,8 @@ class ExportModuleTranslationsCommand extends Command
             if (! $module || ! $module->isUsingNewTranslationSystem()) {
                 throw new Exception(\sprintf('Module "%s" does not use the new translation system (XLF files). Only modules using the new translation system can be exported with this command.', $moduleName));
             }
-        } catch (Throwable $e) {
-            throw new Exception(\sprintf('Could not validate module "%s": %s', $moduleName, $e->getMessage()));
+        } catch (Throwable $throwable) {
+            throw new Exception(\sprintf('Could not validate module "%s": %s', $moduleName, $throwable->getMessage()));
         }
     }
 

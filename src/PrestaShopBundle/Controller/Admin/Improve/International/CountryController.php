@@ -97,8 +97,8 @@ class CountryController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_countries_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Country/create.html.twig', [
@@ -134,8 +134,8 @@ class CountryController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_countries_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
 
             return $this->redirectToRoute('admin_countries_index');
         }
@@ -158,8 +158,8 @@ class CountryController extends PrestaShopAdminController
         try {
             $this->dispatchCommand(new DeleteCountryCommand($countryId));
             $this->addFlash('success', $this->trans('Successful deletion.', [], 'Admin.Notifications.Success'));
-        } catch (CountryException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CountryException $countryException) {
+            $this->addFlash('error', $this->getErrorMessageForException($countryException, $this->getErrorMessages($countryException)));
 
             return $this->redirectToRoute('admin_countries_index');
         }

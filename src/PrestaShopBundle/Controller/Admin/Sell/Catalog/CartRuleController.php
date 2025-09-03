@@ -128,8 +128,8 @@ class CartRuleController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_cart_rules_index');
@@ -150,8 +150,8 @@ class CartRuleController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_cart_rules_index');
@@ -174,8 +174,8 @@ class CartRuleController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CartRuleException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CartRuleException $cartRuleException) {
+            $this->addFlash('error', $this->getErrorMessageForException($cartRuleException, $this->getErrorMessages($cartRuleException)));
         }
 
         return $this->redirectToRoute('admin_cart_rules_index');
@@ -202,8 +202,8 @@ class CartRuleController extends PrestaShopAdminController
                 // @todo: redirect to edition page when it is implemented
                 return $this->redirectToRoute('admin_cart_rules_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/CartRule/create.html.twig', [
@@ -229,8 +229,8 @@ class CartRuleController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CartRuleException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CartRuleException $cartRuleException) {
+            $this->addFlash('error', $this->getErrorMessageForException($cartRuleException, $this->getErrorMessages($cartRuleException)));
         }
 
         return $this->redirectToRoute('admin_cart_rules_index');
@@ -252,8 +252,8 @@ class CartRuleController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CartRuleException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CartRuleException $cartRuleException) {
+            $this->addFlash('error', $this->getErrorMessageForException($cartRuleException, $this->getErrorMessages($cartRuleException)));
         }
 
         return $this->redirectToRoute('admin_cart_rules_index');

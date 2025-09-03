@@ -240,14 +240,14 @@ class ModuleController extends ModuleAbstractController
             }
 
             $response[$moduleName]['status'] = \call_user_func([$moduleManager, $action], ...$args);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $response[$moduleName]['status'] = false;
             $response[$moduleName]['msg'] = $this->trans(
                 'Cannot %action% module %module%. %error_details%',
                 [
                     '%action%' => $actionTitle,
                     '%module%' => $moduleName,
-                    '%error_details%' => $e->getMessage(),
+                    '%error_details%' => $exception->getMessage(),
                 ],
                 'Admin.Modules.Notification',
             );

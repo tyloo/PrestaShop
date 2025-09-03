@@ -162,8 +162,8 @@ class CarrierController extends PrestaShopAdminController
                 (int) $carrierId,
                 ShopConstraint::allShops()
             ));
-        } catch (CarrierNotFoundException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CarrierNotFoundException $carrierNotFoundException) {
+            $this->addFlash('error', $this->getErrorMessageForException($carrierNotFoundException, $this->getErrorMessages()));
 
             return $this->redirectToRoute('admin_carriers_index');
         }
@@ -188,8 +188,8 @@ class CarrierController extends PrestaShopAdminController
         try {
             $this->dispatchCommand(new DeleteCarrierCommand($carrierId));
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CarrierException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CarrierException $carrierException) {
+            $this->addFlash('error', $this->getErrorMessageForException($carrierException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_carriers_index');
@@ -209,8 +209,8 @@ class CarrierController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CarrierException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CarrierException $carrierException) {
+            $this->addFlash('error', $this->getErrorMessageForException($carrierException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_carriers_index');
@@ -230,8 +230,8 @@ class CarrierController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CarrierException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CarrierException $carrierException) {
+            $this->addFlash('error', $this->getErrorMessageForException($carrierException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_carriers_index');
@@ -252,8 +252,8 @@ class CarrierController extends PrestaShopAdminController
                 'positions' => $request->request->all('positions'),
             ]);
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (PositionUpdateException $e) {
-            $errors = [$e->toArray()];
+        } catch (PositionUpdateException $positionUpdateException) {
+            $errors = [$positionUpdateException->toArray()];
             $this->addFlashErrors($errors);
         }
 
@@ -275,8 +275,8 @@ class CarrierController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (CarrierException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CarrierException $carrierException) {
+            $this->addFlash('error', $this->getErrorMessageForException($carrierException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_carriers_index');
@@ -297,8 +297,8 @@ class CarrierController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CarrierException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CarrierException $carrierException) {
+            $this->addFlash('error', $this->getErrorMessageForException($carrierException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_carriers_index');
@@ -319,8 +319,8 @@ class CarrierController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CarrierException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (CarrierException $carrierException) {
+            $this->addFlash('error', $this->getErrorMessageForException($carrierException, $this->getErrorMessages()));
         }
 
         return $this->redirectToRoute('admin_carriers_index');

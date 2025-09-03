@@ -121,8 +121,8 @@ class CartController extends PrestaShopAdminController
         try {
             $this->dispatchCommand(new DeleteCartCommand($cartId));
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (CartException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration)));
+        } catch (CartException $cartException) {
+            $this->addFlash('error', $this->getErrorMessageForException($cartException, $this->getErrorMessages($cartException, $iniConfiguration)));
         }
 
         return $this->redirectToRoute('admin_carts_index');
@@ -144,8 +144,8 @@ class CartController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration)));
         }
 
         return $this->redirectToRoute('admin_carts_index');
@@ -207,8 +207,8 @@ class CartController extends PrestaShopAdminController
     ): RedirectResponse|Response {
         try {
             $cartView = $this->dispatchQuery(new GetCartForViewing($cartId));
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration)));
 
             return $this->redirectToRoute('admin_carts_index');
         }
@@ -247,9 +247,9 @@ class CartController extends PrestaShopAdminController
             );
 
             return $this->json($cartInfo);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -268,9 +268,9 @@ class CartController extends PrestaShopAdminController
             $cartId = $this->dispatchCommand(new CreateEmptyCustomerCartCommand($customerId))->getValue();
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -296,9 +296,9 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -317,9 +317,9 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -338,9 +338,9 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -360,9 +360,9 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -388,9 +388,9 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -410,9 +410,9 @@ class CartController extends PrestaShopAdminController
             $this->dispatchCommand(new AddCartRuleToCartCommand($cartId, $cartRuleId));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -431,9 +431,9 @@ class CartController extends PrestaShopAdminController
             $this->dispatchCommand(new RemoveCartRuleFromCartCommand($cartId, $cartRuleId));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -469,10 +469,10 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
-                $this->getErrorCode($e)
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
+                $this->getErrorCode($exception)
             );
         }
     }
@@ -500,9 +500,9 @@ class CartController extends PrestaShopAdminController
             $this->dispatchCommand($addSpecificPriceCommand);
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -533,13 +533,13 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
-            if ($e instanceof CartConstraintException && $e->getCode() === CartConstraintException::UNCHANGED_QUANTITY) {
+        } catch (Exception $exception) {
+            if ($exception instanceof CartConstraintException && $exception->getCode() === CartConstraintException::UNCHANGED_QUANTITY) {
                 return $this->json($this->getCartInfo($cartId));
             }
 
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -567,9 +567,9 @@ class CartController extends PrestaShopAdminController
             ));
 
             return $this->json($this->getCartInfo($cartId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e, $iniConfiguration))],
+                ['message' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception, $iniConfiguration))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }

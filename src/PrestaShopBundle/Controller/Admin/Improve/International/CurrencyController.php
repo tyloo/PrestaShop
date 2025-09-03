@@ -131,8 +131,8 @@ class CurrencyController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_currencies_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Currency/create.html.twig', [
@@ -166,8 +166,8 @@ class CurrencyController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_currencies_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         $templateVars = [
@@ -184,8 +184,8 @@ class CurrencyController extends PrestaShopAdminController
         try {
             $languageData = $this->getLanguagesData($currencyForm->getData()['iso_code']);
             $templateVars['languages'] = $languageData;
-        } catch (Exception $e) {
-            $templateVars['languageDataError'] = $e->getMessage();
+        } catch (Exception $exception) {
+            $templateVars['languageDataError'] = $exception->getMessage();
             $templateVars['languages'] = [];
         }
 
@@ -201,8 +201,8 @@ class CurrencyController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(new DeleteCurrencyCommand((int) $currencyId));
-        } catch (CurrencyException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CurrencyException $currencyException) {
+            $this->addFlash('error', $this->getErrorMessageForException($currencyException, $this->getErrorMessages($currencyException)));
 
             return $this->redirectToRoute('admin_currencies_index');
         }
@@ -263,8 +263,8 @@ class CurrencyController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(new ToggleCurrencyStatusCommand((int) $currencyId));
-        } catch (CurrencyException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CurrencyException $currencyException) {
+            $this->addFlash('error', $this->getErrorMessageForException($currencyException, $this->getErrorMessages($currencyException)));
 
             return $this->redirectToRoute('admin_currencies_index');
         }
@@ -288,8 +288,8 @@ class CurrencyController extends PrestaShopAdminController
             $this->dispatchCommand(new RefreshExchangeRatesCommand());
 
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
-        } catch (CannotRefreshExchangeRatesException $exception) {
-            $this->addFlash('error', $exception->getMessage());
+        } catch (CannotRefreshExchangeRatesException $cannotRefreshExchangeRatesException) {
+            $this->addFlash('error', $cannotRefreshExchangeRatesException->getMessage());
         }
 
         return $this->redirectToRoute('admin_currencies_index');
@@ -379,8 +379,8 @@ class CurrencyController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (CurrencyException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CurrencyException $currencyException) {
+            $this->addFlash('error', $this->getErrorMessageForException($currencyException, $this->getErrorMessages($currencyException)));
         }
 
         return $this->redirectToRoute('admin_currencies_index');
@@ -402,8 +402,8 @@ class CurrencyController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (CurrencyException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (CurrencyException $currencyException) {
+            $this->addFlash('error', $this->getErrorMessageForException($currencyException, $this->getErrorMessages($currencyException)));
         }
 
         return $this->redirectToRoute('admin_currencies_index');

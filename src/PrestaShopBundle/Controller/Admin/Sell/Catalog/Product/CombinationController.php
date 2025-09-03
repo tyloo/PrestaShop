@@ -89,7 +89,7 @@ class CombinationController extends PrestaShopAdminController
         $liteDisplaying = $request->query->has('liteDisplaying');
         try {
             $combinationForm = $combinationFormBuilder->getFormFor($combinationId);
-        } catch (CombinationNotFoundException $e) {
+        } catch (CombinationNotFoundException) {
             return $this->render(
                 '@PrestaShop/Admin/Sell/Catalog/Product/Combination/not_found.html.twig',
                 [],
@@ -110,8 +110,8 @@ class CombinationController extends PrestaShopAdminController
                     'liteDisplaying' => $liteDisplaying,
                 ]);
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/Combination/edit.html.twig', [
@@ -150,9 +150,9 @@ class CombinationController extends PrestaShopAdminController
                 $request->get('filters', []),
                 (int) $request->get('limit', 20)
             ));
-        } catch (ProductConstraintException $e) {
+        } catch (ProductConstraintException $productConstraintException) {
             return $this->json([
-                'message' => $e->getMessage(),
+                'message' => $productConstraintException->getMessage(),
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -359,9 +359,9 @@ class CombinationController extends PrestaShopAdminController
                 $combinationId,
                 $shopId ? ShopConstraint::shop($shopId) : ShopConstraint::allShops()
             ));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json([
-                'error' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'error' => $this->getErrorMessageForException($exception, $this->getErrorMessages()),
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -386,13 +386,13 @@ class CombinationController extends PrestaShopAdminController
                 json_decode($combinationIds),
                 $shopId ? ShopConstraint::shop($shopId) : ShopConstraint::allShops()
             ));
-        } catch (Exception $e) {
-            if ($e instanceof BulkCombinationException) {
-                return $this->jsonBulkErrors($e);
+        } catch (Exception $exception) {
+            if ($exception instanceof BulkCombinationException) {
+                return $this->jsonBulkErrors($exception);
             }
 
             return $this->json([
-                'error' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                'error' => $this->getErrorMessageForException($exception, $this->getErrorMessages()),
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -428,9 +428,9 @@ class CombinationController extends PrestaShopAdminController
                     ]),
                 ], Response::HTTP_BAD_REQUEST);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json(
-                ['errors' => [$this->getErrorMessageForException($e, $this->getErrorMessages())]],
+                ['errors' => [$this->getErrorMessageForException($exception, $this->getErrorMessages())]],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -456,10 +456,10 @@ class CombinationController extends PrestaShopAdminController
                 $attributes,
                 $shopId ? ShopConstraint::shop($shopId) : ShopConstraint::allShops()
             ));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return $this->json([
                 'error' => [
-                    $this->getErrorMessageForException($e, $this->getErrorMessages()),
+                    $this->getErrorMessageForException($exception, $this->getErrorMessages()),
                 ],
             ], Response::HTTP_BAD_REQUEST);
         }

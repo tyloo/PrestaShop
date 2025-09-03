@@ -100,8 +100,8 @@ class WebserviceController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_webservice_keys_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render(
@@ -138,8 +138,8 @@ class WebserviceController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_webservice_keys_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
         }
 
         return $this->render(
@@ -376,8 +376,8 @@ class WebserviceController extends PrestaShopAdminController
                 'max_redirects' => 5,
             ]);
             $statusCode = $response->getStatusCode();
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
 
             return false;
         }

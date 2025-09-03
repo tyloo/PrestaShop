@@ -140,8 +140,8 @@ class OrderStateController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_order_states');
             }
-        } catch (OrderStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderStateException $orderStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderStates/create.html.twig', [
@@ -191,8 +191,8 @@ class OrderStateController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_order_states');
             }
-        } catch (OrderStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderStateException $orderStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
         $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
@@ -239,8 +239,8 @@ class OrderStateController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_order_states');
             }
-        } catch (OrderReturnStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderReturnStateException $orderReturnStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderReturnStateException, $this->getErrorMessages($orderReturnStateException)));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderReturnStates/create.html.twig', [
@@ -281,8 +281,8 @@ class OrderStateController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_order_states');
             }
-        } catch (OrderReturnStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderReturnStateException $orderReturnStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderReturnStateException, $this->getErrorMessages($orderReturnStateException)));
         }
 
         $editableOrderReturnState = $this->dispatchQuery(new GetOrderReturnStateForEditing((int) $orderReturnStateId));
@@ -312,8 +312,8 @@ class OrderStateController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (OrderReturnStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderReturnStateException $orderReturnStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderReturnStateException, $this->getErrorMessages($orderReturnStateException)));
         }
 
         return $request->query->has('redirectUrl') ?
@@ -332,8 +332,8 @@ class OrderStateController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (OrderReturnStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderReturnStateException $orderReturnStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderReturnStateException, $this->getErrorMessages($orderReturnStateException)));
         }
 
         return $this->redirectToRoute('admin_order_states');
@@ -355,8 +355,8 @@ class OrderStateController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (OrderStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderStateException $orderStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
         return $this->redirectToRoute('admin_order_states');
@@ -378,8 +378,8 @@ class OrderStateController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (OrderStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderStateException $orderStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
         return $this->redirectToRoute('admin_order_states');
@@ -401,8 +401,8 @@ class OrderStateController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (OrderStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderStateException $orderStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
         return $this->redirectToRoute('admin_order_states');
@@ -417,8 +417,8 @@ class OrderStateController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (OrderStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderStateException $orderStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
         return $request->query->has('redirectUrl') ?
@@ -437,8 +437,8 @@ class OrderStateController extends PrestaShopAdminController
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
             );
-        } catch (OrderStateException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (OrderStateException $orderStateException) {
+            $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
         return $this->redirectToRoute('admin_order_states');

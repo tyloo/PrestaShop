@@ -120,8 +120,8 @@ class ZoneController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_zones_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Zone/create.html.twig', [
@@ -158,10 +158,10 @@ class ZoneController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_zones_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
 
-            if ($e instanceof ZoneNotFoundException) {
+            if ($exception instanceof ZoneNotFoundException) {
                 return $this->redirectToRoute('admin_zones_index');
             }
         }
@@ -191,8 +191,8 @@ class ZoneController extends PrestaShopAdminController
         try {
             $this->dispatchCommand(new DeleteZoneCommand($zoneId));
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
-        } catch (ZoneException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (ZoneException $zoneException) {
+            $this->addFlash('error', $this->getErrorMessageForException($zoneException, $this->getErrorMessages($zoneException)));
 
             return $this->redirectToRoute('admin_zones_index');
         }
@@ -213,8 +213,8 @@ class ZoneController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->redirectToRoute('admin_zones_index');
@@ -236,8 +236,8 @@ class ZoneController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (ZoneException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (ZoneException $zoneException) {
+            $this->addFlash('error', $this->getErrorMessageForException($zoneException, $this->getErrorMessages($zoneException)));
         }
 
         return $this->redirectToRoute('admin_zones_index');
@@ -259,8 +259,8 @@ class ZoneController extends PrestaShopAdminController
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
             );
-        } catch (ZoneException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (ZoneException $zoneException) {
+            $this->addFlash('error', $this->getErrorMessageForException($zoneException, $this->getErrorMessages($zoneException)));
         }
 
         return $this->redirectToRoute('admin_zones_index');

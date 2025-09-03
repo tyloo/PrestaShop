@@ -137,9 +137,9 @@ class ImageController extends PrestaShopAdminController
                     'error' => 'Could not create image.',
                 ], Response::HTTP_BAD_REQUEST);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return new JsonResponse([
-                'error' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                'error' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)),
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -169,9 +169,9 @@ class ImageController extends PrestaShopAdminController
                     'form_errors' => $this->getFormErrorsForJS($imageForm),
                 ], Response::HTTP_BAD_REQUEST);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return new JsonResponse([
-                'error' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                'error' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)),
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -183,9 +183,9 @@ class ImageController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(new DeleteProductImageCommand($productImageId));
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return new JsonResponse([
-                'error' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                'error' => $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)),
             ], Response::HTTP_BAD_REQUEST);
         }
 

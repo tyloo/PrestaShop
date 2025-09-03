@@ -95,8 +95,8 @@ class SearchAliasController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_search_alias_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/Search/form.html.twig', [
@@ -129,8 +129,8 @@ class SearchAliasController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_search_alias_index');
             }
-        } catch (Exception $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (Exception $exception) {
+            $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages($exception)));
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/Search/form.html.twig', [
@@ -153,8 +153,8 @@ class SearchAliasController extends PrestaShopAdminController
         try {
             $this->dispatchCommand(new DeleteSearchTermAliasesCommand($searchTerm));
             $this->addFlash('success', $this->trans('Successful deletion.', [], 'Admin.Notifications.Success'));
-        } catch (AliasException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (AliasException $aliasException) {
+            $this->addFlash('error', $this->getErrorMessageForException($aliasException, $this->getErrorMessages($aliasException)));
 
             return $this->redirectToRoute('admin_search_alias_index');
         }
@@ -174,8 +174,8 @@ class SearchAliasController extends PrestaShopAdminController
                 'success',
                 $this->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success')
             );
-        } catch (AliasException $e) {
-            $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
+        } catch (AliasException $aliasException) {
+            $this->addFlash('error', $this->getErrorMessageForException($aliasException, $this->getErrorMessages($aliasException)));
         }
 
         return $this->redirectToRoute('admin_search_alias_index');
