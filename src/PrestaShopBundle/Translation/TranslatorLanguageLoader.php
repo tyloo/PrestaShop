@@ -31,6 +31,7 @@ use PrestaShop\PrestaShop\Adapter\Module\Repository\ModuleRepository;
 use PrestaShop\PrestaShop\Core\Addon\Theme\Theme;
 use PrestaShop\TranslationToolsBundle\Translation\Helper\DomainHelper;
 use PrestaShopBundle\Translation\Loader\SqlTranslationLoader;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
 use Symfony\Component\Translation\TranslatorBagInterface;
@@ -38,8 +39,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TranslatorLanguageLoader
 {
-    public const TRANSLATION_DIR = _PS_ROOT_DIR_ . '/translations';
-
     private const MODULE_TRANSLATION_FILENAME_PATTERN = '#^%s[A-Z][\w.-]+\.%s\.xlf$#';
 
     private bool $isAdminContext = false;
@@ -48,6 +47,8 @@ class TranslatorLanguageLoader
 
     public function __construct(
         private readonly ModuleRepository $moduleRepository,
+        #[Autowire(param: 'kernel.project_dir')]
+        private readonly string $projectDir,
     ) {
         $this->xliffFileLoader = new XliffFileLoader();
     }
@@ -165,7 +166,7 @@ class TranslatorLanguageLoader
 
     protected function getTranslationResourcesDirectories(?Theme $theme = null): array
     {
-        $locations = ['core' => self::TRANSLATION_DIR];
+        $locations = ['core' => $this->projectDir . '/translations'];
 
         if ($theme !== null) {
             $activeThemeLocation = $theme->getDirectory() . '/translations';
