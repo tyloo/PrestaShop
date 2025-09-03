@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,11 +38,6 @@ class CategoryTreeIterator
      */
     public $categoryTreeChoiceProvider;
 
-    /**
-     * CategoryTreeIterator constructor.
-     *
-     * @param CategoryTreeChoiceProvider $categoryTreeChoiceProvider
-     */
     public function __construct(CategoryTreeChoiceProvider $categoryTreeChoiceProvider)
     {
         $this->categoryTreeChoiceProvider = $categoryTreeChoiceProvider;
@@ -55,9 +51,6 @@ class CategoryTreeIterator
     }
 
     /**
-     * @param string $categoryName
-     * @param array $nodes
-     *
      * @return int|void|null
      */
     private function getCategoryNodeId(string $categoryName, array $nodes)
@@ -65,7 +58,7 @@ class CategoryTreeIterator
         $i = 0;
         foreach ($nodes as $node) {
             ++$i;
-            if ($node['name'] == $categoryName) {
+            if ($node['name'] === $categoryName) {
                 return (int) $node['id_category'];
             }
             if (isset($node['children'])) {
@@ -74,7 +67,7 @@ class CategoryTreeIterator
                     return $categoryId;
                 }
             }
-            if (count($nodes) === $i) {
+            if (\count($nodes) === $i) {
                 return null;
             }
         }

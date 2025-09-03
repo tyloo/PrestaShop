@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class NamingConventionLinterTest extends TestCase
      */
     private $namingConventionLinter;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->namingConventionLinter = new NamingConventionLinter();
     }
@@ -91,14 +92,14 @@ class NamingConventionLinterTest extends TestCase
         yield [
             'admin_tests_index',
             new Route('/', [
-                '_controller' => sprintf('%s::%s', TestController::class, 'indexAction'),
+                '_controller' => \sprintf('%s::%s', TestController::class, 'indexAction'),
             ]),
         ];
 
         yield [
             'admin_tests_do_something_complex',
             new Route('/', [
-                '_controller' => sprintf('%s::%s', TestController::class, 'doSomethingComplexAction'),
+                '_controller' => \sprintf('%s::%s', TestController::class, 'doSomethingComplexAction'),
             ]),
         ];
     }
@@ -108,14 +109,14 @@ class NamingConventionLinterTest extends TestCase
         yield [
             'admin_test_index',
             new Route('/', [
-                '_controller' => sprintf('%s::%s', TestController::class, 'createAction'),
+                '_controller' => \sprintf('%s::%s', TestController::class, 'createAction'),
             ]),
         ];
 
         yield [
             'admin_tests_do_something',
             new Route('/', [
-                '_controller' => sprintf('%s::%s', TestController::class, 'doSomethingComplexAction'),
+                '_controller' => \sprintf('%s::%s', TestController::class, 'doSomethingComplexAction'),
             ]),
         ];
     }
@@ -125,7 +126,7 @@ class NamingConventionLinterTest extends TestCase
         yield [
             'admin_tests_do_something',
             new Route('/', [
-                '_controller' => sprintf('%s:%s', TestController::class, 'doSomethingComplexAction'),
+                '_controller' => \sprintf('%s:%s', TestController::class, 'doSomethingComplexAction'),
             ]),
         ];
     }
@@ -135,7 +136,7 @@ class NamingConventionLinterTest extends TestCase
         yield [
             'admin_tests_do_something',
             new Route('/', [
-                '_controller' => sprintf('%s::%s', TestController::class, 'methodNotFound'),
+                '_controller' => \sprintf('%s::%s', TestController::class, 'methodNotFound'),
             ]),
         ];
     }

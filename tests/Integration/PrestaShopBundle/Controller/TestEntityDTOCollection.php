@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,11 @@ class TestEntityDTOCollection extends AbstractTypedCollection
      */
     private $totalCount = 0;
 
-    /**
-     * @return int
-     */
     public function getTotalCount(): int
     {
         return $this->totalCount;
     }
 
-    /**
-     * @param int $totalCount
-     */
     public function setTotalCount(int $totalCount): void
     {
         $this->totalCount = $totalCount;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,9 +63,6 @@ class LocaleTest extends TestCase
      */
     protected $stubCurrencyData;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $localeData = new LocaleData();

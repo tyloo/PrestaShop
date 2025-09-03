@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,10 +38,6 @@ class ProductCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
     /**
      * @dataProvider getExpectedCommands
-     *
-     * @param array $formData
-     * @param array $commandBuilders
-     * @param array $expectedCommands
      */
     public function testBuildCommands(array $formData, array $commandBuilders, array $expectedCommands)
     {
@@ -113,9 +110,6 @@ class ProductCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 
 class FakeProductCommand
 {
-    /**
-     * @var mixed
-     */
     public $value;
 
     /**
@@ -123,10 +117,6 @@ class FakeProductCommand
      */
     public $productId;
 
-    /**
-     * @param ProductId $productId
-     * @param mixed $value
-     */
     public function __construct(ProductId $productId, $value)
     {
         $this->productId = $productId;
@@ -141,28 +131,18 @@ class ConditionBuilder implements ProductCommandsBuilderInterface
      */
     private $formCondition;
 
-    /**
-     * @var mixed
-     */
     private $command;
 
-    /**
-     * @param array $formCondition
-     * @param mixed $command
-     */
     public function __construct(array $formCondition, $command)
     {
         $this->formCondition = $formCondition;
         $this->command = $command;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
         foreach ($this->formCondition as $key => $value) {
-            if (!isset($formData[$key]) || $formData[$key] !== $value) {
+            if (! isset($formData[$key]) || $formData[$key] !== $value) {
                 return [];
             }
         }
@@ -173,9 +153,6 @@ class ConditionBuilder implements ProductCommandsBuilderInterface
 
 class AlwaysEmptyBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $shopConstraint): array
     {
         return [];
@@ -189,19 +166,11 @@ class MultiCommandsBuilder implements ProductCommandsBuilderInterface
      */
     private $builders;
 
-    /**
-     * MultiCommandsBuilder constructor.
-     *
-     * @param array $commandBuilders
-     */
     public function __construct(array $commandBuilders)
     {
         $this->builders = $commandBuilders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
     {
         $commands = [];

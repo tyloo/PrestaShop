@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -119,13 +120,13 @@ class FeatureFlagCommandTest extends KernelTestCase
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $regexp = sprintf('/\|[ ]+%s[ ]+\|[ ]+([^ ]+)[ ]+\|[ ]+([^ ]+)[ ]+\|/', $featureFlag);
+        $regexp = \sprintf('/\|[ ]+%s[ ]+\|[ ]+([^ ]+)[ ]+\|[ ]+([^ ]+)[ ]+\|/', $featureFlag);
         $matches = [];
         preg_match($regexp, $output, $matches);
         $type = $matches[1];
         $this->assertTrue($type === 'env,dotenv,[db]' || $type === 'env,query,dotenv,[db]');
         $state = $matches[2];
-        $this->assertTrue(in_array($state, ['Enabled', 'Disabled']));
+        $this->assertTrue(\in_array($state, ['Enabled', 'Disabled'], true));
 
         return $state === 'Enabled';
     }

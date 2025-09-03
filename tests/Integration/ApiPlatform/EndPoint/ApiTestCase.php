@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,11 +68,6 @@ abstract class ApiTestCase extends ApiPlatformTestCase
 
     /**
      * @dataProvider getProtectedEndpoints
-     *
-     * @param string $method
-     * @param string $uri
-     * @param string $contentType
-     * @param bool $scopeNeeded
      */
     public function testProtectedEndpoints(string $method, string $uri, string $contentType = 'application/json', bool $scopeNeeded = true): void
     {
@@ -103,8 +99,6 @@ abstract class ApiTestCase extends ApiPlatformTestCase
      *      'GET',
      *      '/product/1',
      *  ];
-     *
-     * @return iterable
      */
     public function getProtectedEndpoints(): iterable
     {
@@ -120,8 +114,6 @@ abstract class ApiTestCase extends ApiPlatformTestCase
 
     /**
      * API endpoints are only available in the OAuth application so we force using the proper kernel here.
-     *
-     * @return string
      */
     protected static function getKernelClass(): string
     {
@@ -130,11 +122,11 @@ abstract class ApiTestCase extends ApiPlatformTestCase
 
     protected static function createClient(array $kernelOptions = [], array $defaultOptions = []): Client
     {
-        if (!isset($defaultOptions['headers']['accept'])) {
+        if (! isset($defaultOptions['headers']['accept'])) {
             $defaultOptions['headers']['accept'] = ['application/json'];
         }
 
-        if (!isset($defaultOptions['headers']['content-type'])) {
+        if (! isset($defaultOptions['headers']['content-type'])) {
             $defaultOptions['headers']['content-type'] = ['application/json'];
         }
 
@@ -143,7 +135,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
 
     protected function getBearerToken(array $scopes = [], array $kernelOptions = [], array $clientOptions = []): string
     {
-        if (null === self::$clientSecret) {
+        if (self::$clientSecret === null) {
             self::createApiClient($scopes);
         }
         $options = [
@@ -192,7 +184,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
             $shopGroup->color = $color;
         }
 
-        if (!$shopGroup->add()) {
+        if (! $shopGroup->add()) {
             throw new RuntimeException('Could not create shop group');
         }
 
@@ -212,7 +204,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
             $shop->color = $color;
         }
 
-        if (!$shop->add()) {
+        if (! $shop->add()) {
             throw new RuntimeException('Could not create shop');
         }
         $shop->setTheme();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class WebserviceControllerTest extends WebTestCase
      */
     protected $webserviceKey;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -67,7 +68,7 @@ class WebserviceControllerTest extends WebTestCase
         $this->webserviceKey->add();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

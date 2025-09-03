@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,9 +64,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add new brand address :manufacturerAddressReference with following details:
-     *
-     * @param string $manufacturerAddressReference
-     * @param TableNode $table
      */
     public function addNewBrandAddressWithFollowingDetails(string $manufacturerAddressReference, TableNode $table)
     {
@@ -91,9 +89,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then brand address :manufacturerAddressReference should have following details:
-     *
-     * @param string $manufacturerAddressReference
-     * @param TableNode $table
      */
     public function manufacturerAddressShouldHaveFollowingDetails(string $manufacturerAddressReference, TableNode $table)
     {
@@ -112,9 +107,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add new address to customer :customerReference with following details:
-     *
-     * @param string $customerReference
-     * @param TableNode $table
      */
     public function addNewAddressToCustomerWithFollowingDetails(string $customerReference, TableNode $table)
     {
@@ -149,9 +141,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit address :addressReference with following details:
-     *
-     * @param string $addressReference
-     * @param TableNode $table
      */
     public function editAddressToCustomerWithFollowingDetails(string $addressReference, TableNode $table)
     {
@@ -172,18 +161,14 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit :addressType address for order :orderReference with following details:
-     *
-     * @param string $addressType
-     * @param string $orderReference
-     * @param TableNode $table
      */
     public function editOrderAddressWithFollowingDetails(string $addressType, string $orderReference, TableNode $table)
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $testCaseData = $table->getRowsHash();
-        if ('delivery' === $addressType) {
+        if ($addressType === 'delivery') {
             $addressType = OrderAddressType::DELIVERY_ADDRESS_TYPE;
-        } elseif ('invoice' === $addressType) {
+        } elseif ($addressType === 'invoice') {
             $addressType = OrderAddressType::INVOICE_ADDRESS_TYPE;
         }
 
@@ -201,18 +186,14 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit :addressType address for cart :cartReference with following details:
-     *
-     * @param string $addressType
-     * @param string $cartReference
-     * @param TableNode $table
      */
     public function editCartAddressWithFollowingDetails(string $addressType, string $cartReference, TableNode $table)
     {
         $cartId = SharedStorage::getStorage()->get($cartReference);
         $testCaseData = $table->getRowsHash();
-        if ('delivery' === $addressType) {
+        if ($addressType === 'delivery') {
             $addressType = CartAddressType::DELIVERY_ADDRESS_TYPE;
-        } elseif ('invoice' === $addressType) {
+        } elseif ($addressType === 'invoice') {
             $addressType = CartAddressType::INVOICE_ADDRESS_TYPE;
         }
 
@@ -228,41 +209,34 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         }
     }
 
-    /**
-     * @param AbstractEditAddressCommand $editAddressCommand
-     * @param array $testCaseData
-     */
     private function updateEditCommandFields(AbstractEditAddressCommand $editAddressCommand, array $testCaseData)
     {
-        if (!empty($testCaseData['Address alias'])) {
+        if (! empty($testCaseData['Address alias'])) {
             $editAddressCommand->setAddressAlias($testCaseData['Address alias']);
         }
-        if (!empty($testCaseData['First name'])) {
+        if (! empty($testCaseData['First name'])) {
             $editAddressCommand->setFirstName($testCaseData['First name']);
         }
-        if (!empty($testCaseData['Last name'])) {
+        if (! empty($testCaseData['Last name'])) {
             $editAddressCommand->setLastName($testCaseData['Last name']);
         }
-        if (!empty($testCaseData['Address'])) {
+        if (! empty($testCaseData['Address'])) {
             $editAddressCommand->setAddress($testCaseData['Address']);
         }
-        if (!empty($testCaseData['City'])) {
+        if (! empty($testCaseData['City'])) {
             $editAddressCommand->setCity($testCaseData['City']);
         }
-        if (!empty($testCaseData['Country'])) {
+        if (! empty($testCaseData['Country'])) {
             /** @var CountryByIdChoiceProvider $countryChoiceProvider */
             $countryChoiceProvider = $this->getContainer()->get('prestashop.core.form.choice_provider.country_by_id');
             $countryList = $countryChoiceProvider->getChoices();
-            if (!isset($countryList[$testCaseData['Country']])) {
-                throw new RuntimeException(sprintf(
-                    'Cannot find country %s',
-                    $testCaseData['Country']
-                ));
+            if (! isset($countryList[$testCaseData['Country']])) {
+                throw new RuntimeException(\sprintf('Cannot find country %s', $testCaseData['Country']));
             }
             $countryId = (int) $countryList[$testCaseData['Country']];
             $editAddressCommand->setCountryId($countryId);
             $stateId = $this->getStateId($countryId, $testCaseData);
-            if (null !== $stateId) {
+            if ($stateId !== null) {
                 $editAddressCommand->setStateId($stateId);
             }
         }
@@ -270,10 +244,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then address :addressReference is assigned to an order :orderReference for :customerReference
-     *
-     * @param string $addressReference
-     * @param string $orderReference
-     * @param string $customerReference
      */
     public function assignAddressToOrder(string $addressReference, string $orderReference, string $customerReference)
     {
@@ -294,14 +264,14 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         $order->total_paid = $order->total_paid_real = $order->total_paid_tax_incl = $order->total_paid_tax_excl = 42;
         $order->total_products = $order->total_products_wt = 42;
         $order->conversion_rate = 1.0;
-        if (false === $order->save()) {
+        if ($order->save() === false) {
             throw new RuntimeException('Cannot save order');
         }
         // Update cart addresses so that they match
         $cart = new Cart($order->id_cart);
         $cart->id_address_delivery = $customerAddressId;
         $cart->id_address_invoice = $customerAddressId;
-        if (false === $cart->save()) {
+        if ($cart->save() === false) {
             throw new RuntimeException('Cannot save cart');
         }
         SharedStorage::getStorage()->set($orderReference, $order->id);
@@ -332,21 +302,17 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         Assert::assertEquals(
             $expectedAddressId,
             $orderAddressId,
-            sprintf('Invalid order %s address, expected %s but found %s', $addressType, $expectedAddressId, $orderAddressId)
+            \sprintf('Invalid order %s address, expected %s but found %s', $addressType, $expectedAddressId, $orderAddressId)
         );
         Assert::assertEquals(
             $expectedAddressId,
             $cartAddressId,
-            sprintf('Invalid cart %s address, expected %s but found %s', $addressType, $expectedAddressId, $cartAddressId)
+            \sprintf('Invalid cart %s address, expected %s but found %s', $addressType, $expectedAddressId, $cartAddressId)
         );
     }
 
     /**
      * @Then address :addressReference is assigned to a cart :cartReference for :customerReference
-     *
-     * @param string $addressReference
-     * @param string $cartReference
-     * @param string $customerReference
      */
     public function assignAddressToCart(string $addressReference, string $cartReference, string $customerReference)
     {
@@ -359,7 +325,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         $cart->id_currency = 1;
         $cart->id_address_delivery = $customerAddressId;
         $cart->id_address_invoice = $customerAddressId;
-        if (false === $cart->save()) {
+        if ($cart->save() === false) {
             throw new RuntimeException('Cannot save cart');
         }
         SharedStorage::getStorage()->set($cartReference, $cart->id);
@@ -386,16 +352,12 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         Assert::assertEquals(
             $expectedAddressId,
             $cartAddressId,
-            sprintf('Invalid cart %s address, expected %d but found %d', $addressType, $expectedAddressId, $cartAddressId)
+            \sprintf('Invalid cart %s address, expected %d but found %d', $addressType, $expectedAddressId, $cartAddressId)
         );
     }
 
     /**
      * @Then customer :customerReference should have address :addressReference with following details:
-     *
-     * @param string $customerReference
-     * @param string $addressReference
-     * @param TableNode $table
      */
     public function customerShouldHaveAddressWithFollowingDetails(
         string $customerReference,
@@ -421,15 +383,11 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         $countryId = (int) $countryChoiceProvider->getChoices()[$testCaseData['Country']];
         Assert::assertSame((int) $countryId, $customerAddress->getCountryId()->getValue());
 
-        if (!empty($testCaseData['State'])) {
+        if (! empty($testCaseData['State'])) {
             $countryStateChoiceProvider = $this->getContainer()->get('prestashop.adapter.form.choice_provider.country_state_by_id');
             $countryStateList = $countryStateChoiceProvider->getChoices(['id_country' => $countryId]);
-            if (!isset($countryStateList[$testCaseData['State']])) {
-                throw new RuntimeException(sprintf(
-                    'Cannot find state %s for country %s',
-                    $testCaseData['State'],
-                    $testCaseData['Country']
-                ));
+            if (! isset($countryStateList[$testCaseData['State']])) {
+                throw new RuntimeException(\sprintf('Cannot find state %s for country %s', $testCaseData['State'], $testCaseData['Country']));
             }
             $countryStateId = $countryStateList[$testCaseData['State']];
             Assert::assertSame((int) $countryStateId, $customerAddress->getStateId()->getValue());
@@ -442,9 +400,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then customer :customerReference should have :addressCount addresses
-     *
-     * @param string $customerReference
-     * @param int $expectedCount
      */
     public function checkCustomerAddressCount(string $customerReference, int $expectedCount)
     {
@@ -461,15 +416,12 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         Assert::assertEquals(
             (int) $expectedCount,
             $databaseCount,
-            sprintf('Found %s addresses for customer %s, expected %s', $databaseCount, $customerReference, $expectedCount)
+            \sprintf('Found %s addresses for customer %s, expected %s', $databaseCount, $customerReference, $expectedCount)
         );
     }
 
     /**
      * @Then customer :customerReference should have :addressCount deleted addresses
-     *
-     * @param string $customerReference
-     * @param int $expectedCount
      */
     public function checkCustomerDeletedAddressCount(string $customerReference, int $expectedCount)
     {
@@ -486,16 +438,10 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         Assert::assertEquals(
             (int) $expectedCount,
             $databaseCount,
-            sprintf('Found %s deleted addresses for customer %s, expected %s', $databaseCount, $customerReference, $expectedCount)
+            \sprintf('Found %s deleted addresses for customer %s, expected %s', $databaseCount, $customerReference, $expectedCount)
         );
     }
 
-    /**
-     * @param array $testCaseData
-     * @param int $addressId
-     *
-     * @return EditableManufacturerAddress
-     */
     private function mapEditableManufacturerAddress(array $testCaseData, int $addressId): EditableManufacturerAddress
     {
         /** @var ManufacturerNameByIdChoiceProvider $manufacturerProvider */
@@ -526,8 +472,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete address :addressReference
-     *
-     * @param string $addressReference
      */
     public function deleteAddress(string $addressReference)
     {
@@ -537,24 +481,20 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then brand address :addressReference does not exist
-     *
-     * @param string $addressReference
      */
     public function brandAddressDoesNotExist(string $addressReference)
     {
         $addressId = SharedStorage::getStorage()->get($addressReference);
         try {
-            /* @var EditableManufacturerAddress $editableManufacturerAddress */
+            /** @var EditableManufacturerAddress $editableManufacturerAddress */
             $this->getQueryBus()->handle(new GetManufacturerAddressForEditing($addressId));
-            throw new RuntimeException(sprintf('Manufacturer address "%s" should not be found', $addressReference));
+            throw new RuntimeException(\sprintf('Manufacturer address "%s" should not be found', $addressReference));
         } catch (AddressNotFoundException $exception) {
         }
     }
 
     /**
      * @When I bulk delete addresses :addressesReferences
-     *
-     * @param string $addressesReferences
      */
     public function BulkDeleteAddresses(string $addressesReferences)
     {
@@ -569,9 +509,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit brand address :manufacturerAddressReference with following details:
-     *
-     * @param string $manufacturerAddressReference
-     * @param TableNode $table
      */
     public function editBrandAddressWithFollowingDetails(string $manufacturerAddressReference, TableNode $table): void
     {
@@ -591,11 +528,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param int $countryId
-     * @param array $testCaseData
-     *
-     * @return int|null
-     *
      * @throws RuntimeException
      */
     private function getStateId(int $countryId, array $testCaseData): ?int
@@ -604,15 +536,11 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
             return null;
         }
         $stateId = null;
-        /* @var CountryStateByIdChoiceProvider $countryStateChoiceProvider */
+        /** @var CountryStateByIdChoiceProvider $countryStateChoiceProvider */
         $countryStateChoiceProvider = $this->getContainer()->get('prestashop.adapter.form.choice_provider.country_state_by_id');
         $countryStateList = $countryStateChoiceProvider->getChoices(['id_country' => $countryId]);
-        if (!isset($countryStateList[$testCaseData['State']])) {
-            throw new RuntimeException(sprintf(
-                'Cannot find state %s for country %s',
-                $testCaseData['State'],
-                $testCaseData['Country']
-            ));
+        if (! isset($countryStateList[$testCaseData['State']])) {
+            throw new RuntimeException(\sprintf('Cannot find state %s for country %s', $testCaseData['State'], $testCaseData['Country']));
         }
 
         return (int) $countryStateList[$testCaseData['State']];

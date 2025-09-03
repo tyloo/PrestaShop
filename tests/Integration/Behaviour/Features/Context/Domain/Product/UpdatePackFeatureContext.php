@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I update pack :packReference with following product quantities:
-     *
-     * @param string $packReference
-     * @param TableNode $table
      */
     public function updateProductPack(string $packReference, TableNode $table): void
     {
@@ -71,8 +69,6 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I remove all products from pack :packReference
-     *
-     * @param string $packReference
      */
     public function removeAllProductsFromPack(string $packReference): void
     {
@@ -87,8 +83,6 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When pack :packReference should be empty
-     *
-     * @param string $packReference
      */
     public function assertPackEmptyForDefaultShop(string $packReference): void
     {
@@ -97,9 +91,6 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When pack :packReference should be empty for shop(s) :shopReferences
-     *
-     * @param string $packReference
-     * @param string $shopReferences
      */
     public function assertPackEmptyForShops(string $packReference, string $shopReferences): void
     {
@@ -110,9 +101,6 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then pack :packReference should contain products with following details:
-     *
-     * @param string $packReference
-     * @param TableNode $table
      */
     public function assertPackContentsForDefaultShop(string $packReference, TableNode $table): void
     {
@@ -121,10 +109,6 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then pack :packReference should contain products with following details for shop(s) :shopReferences:
-     *
-     * @param string $packReference
-     * @param TableNode $table
-     * @param string $shopReferences
      */
     public function assertPackContentsForShops(string $packReference, TableNode $table, string $shopReferences): void
     {
@@ -157,12 +141,10 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @param array<string, string> $dataRow
-     *
-     * @return int
      */
     private function getExpectedCombinationId(array $dataRow): int
     {
-        if (isset($dataRow['combination']) && '' !== $dataRow['combination']) {
+        if (isset($dataRow['combination']) && $dataRow['combination'] !== '') {
             return $this->getSharedStorage()->get($dataRow['combination']);
         }
 
@@ -181,13 +163,8 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
                 $shopConstraint
             )
         );
-        if (count($data) !== count($packedProducts)) {
-            throw new RuntimeException(sprintf(
-                'Incorrect number of product for shop %d expected %d but got %d instead',
-                $shopConstraint->getShopId()->getValue(),
-                count($data),
-                count($packedProducts)
-            ));
+        if (\count($data) !== \count($packedProducts)) {
+            throw new RuntimeException(\sprintf('Incorrect number of product for shop %d expected %d but got %d instead', $shopConstraint->getShopId()->getValue(), \count($data), \count($packedProducts)));
         }
 
         $notExistingProducts = [];
@@ -198,7 +175,7 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
             $expectedName = $expectedPackedProduct['name'];
             $expectedCombination = $expectedPackedProduct['combination'];
             $expectedPackedProductId = $this->getSharedStorage()->get($productReference);
-            $expectedCombinationId = !empty($expectedPackedProduct['combination']) ? $this->getSharedStorage()->get($expectedPackedProduct['combination']) : 0;
+            $expectedCombinationId = ! empty($expectedPackedProduct['combination']) ? $this->getSharedStorage()->get($expectedPackedProduct['combination']) : 0;
             $foundProduct = false;
 
             foreach ($packedProducts as $key => $packedProduct) {
@@ -208,28 +185,28 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
                     Assert::assertEquals(
                         $expectedName,
                         $packedProduct->getProductName(),
-                        sprintf('Unexpected name of packed product "%s"', $productReference)
+                        \sprintf('Unexpected name of packed product "%s"', $productReference)
                     );
 
                     if ($expectedCombination !== '') {
                         Assert::assertEquals(
                             $expectedCombinationId,
                             $packedProduct->getCombinationId(),
-                            sprintf('Unexpected combination (%s) of packed product "%s"', $expectedCombinationId, $productReference)
+                            \sprintf('Unexpected combination (%s) of packed product "%s"', $expectedCombinationId, $productReference)
                         );
                     }
 
                     Assert::assertEquals(
                         $expectedQuantity,
                         $packedProduct->getQuantity(),
-                        sprintf('Unexpected quantity of packed product "%s"', $productReference)
+                        \sprintf('Unexpected quantity of packed product "%s"', $productReference)
                     );
 
                     $realImageUrl = $this->getRealImageUrl($expectedPackedProduct['image url']);
                     Assert::assertEquals(
                         $realImageUrl,
                         $packedProduct->getImageUrl(),
-                        sprintf(
+                        \sprintf(
                             'Invalid product image url, expected %s but got %s instead.',
                             $realImageUrl,
                             $packedProduct->getImageUrl()
@@ -240,7 +217,7 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
                         Assert::assertEquals(
                             $expectedPackedProduct['reference'],
                             $packedProduct->getReference(),
-                            sprintf('Unexpected reference of packed product "%s"', $productReference)
+                            \sprintf('Unexpected reference of packed product "%s"', $productReference)
                         );
                     }
 
@@ -250,7 +227,7 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
                 }
             }
 
-            if (!$foundProduct) {
+            if (! $foundProduct) {
                 if ($expectedCombinationId) {
                     $notExistingProducts[$productReference][$expectedPackedProduct['combination']] = $expectedQuantity;
                 } else {
@@ -259,20 +236,12 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
             }
         }
 
-        if (!empty($notExistingProducts)) {
-            throw new RuntimeException(sprintf(
-                'Failed to find following packed products for shop %d: %s',
-                $shopConstraint->getShopId()->getValue(),
-                var_export($notExistingProducts, true)
-            ));
+        if (! empty($notExistingProducts)) {
+            throw new RuntimeException(\sprintf('Failed to find following packed products for shop %d: %s', $shopConstraint->getShopId()->getValue(), var_export($notExistingProducts, true)));
         }
 
-        if (!empty($packedProducts)) {
-            throw new RuntimeException(sprintf(
-                'Following packed products were not expected for shop %d: %s',
-                $shopConstraint->getShopId()->getValue(),
-                var_export($packedProducts, true)
-            ));
+        if (! empty($packedProducts)) {
+            throw new RuntimeException(\sprintf('Following packed products were not expected for shop %d: %s', $shopConstraint->getShopId()->getValue(), var_export($packedProducts, true)));
         }
     }
 

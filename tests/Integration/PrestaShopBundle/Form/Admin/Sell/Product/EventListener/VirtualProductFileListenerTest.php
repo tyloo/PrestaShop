@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,9 +50,6 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
      */
     private $formCloner;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -71,7 +69,7 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
     /**
      * @dataProvider getTestData
      *
-     * @param array<string, mixed> $formData
+     * @param array<string, mixed>        $formData
      * @param array<string, Constraint[]> $expectedFieldConstraints
      */
     public function testUpdateFormConstraints(array $formData, array $expectedFieldConstraints): void
@@ -165,7 +163,6 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
     }
 
     /**
-     * @param FormInterface $form
      * @param array<string, Constraint[]> $expectedFieldConstraints
      */
     private function assertConstraints(FormInterface $form, array $expectedFieldConstraints): void
@@ -186,14 +183,14 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
             }
 
             $this->assertCount(
-                count($constraints),
+                \count($constraints),
                 $formFieldConstraints,
                 'expected and actual constraints count doesn\'t match'
             );
 
             foreach ($constraints as $index => $expectedConstraint) {
                 $actualConstraint = $formFieldConstraints[$index];
-                $this->assertInstanceOf(get_class($expectedConstraint), $actualConstraint);
+                $this->assertInstanceOf(\get_class($expectedConstraint), $actualConstraint);
             }
         }
     }

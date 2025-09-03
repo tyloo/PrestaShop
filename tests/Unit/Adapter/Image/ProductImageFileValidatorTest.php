@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,17 +42,13 @@ class ProductImageFileValidatorTest extends TestCase
     /**
      * @dataProvider getInvalidMaxUploadSizesForFile
      *
-     * @param string $filePath
-     * @param int $maxPhpIniUploadSize
-     * @param int $maxUploadQuotaSize
-     *
      * @throws UploadedImageConstraintException
      * @throws ImageUploadException
      */
     public function testItThrowsExceptionWhenFileSizeIsLargerThanMaxUploadSize(
         string $filePath,
         int $maxPhpIniUploadSize,
-        int $maxUploadQuotaSize
+        int $maxUploadQuotaSize,
     ) {
         $imageValidator = new ProductImageFileValidator($maxPhpIniUploadSize, $this->mockQuotaConfiguration($maxUploadQuotaSize));
 
@@ -62,15 +59,11 @@ class ProductImageFileValidatorTest extends TestCase
 
     /**
      * @dataProvider getValidMaxUploadSizesForFile
-     *
-     * @param string $filePath
-     * @param int $maxPhpIniUploadSize
-     * @param int $maxUploadQuotaSize
      */
     public function testItValidatesImageFileSuccessfully(
         string $filePath,
         int $maxPhpIniUploadSize,
-        int $maxUploadQuotaSize
+        int $maxUploadQuotaSize,
     ): void {
         $imageValidator = new ProductImageFileValidator(
             $maxPhpIniUploadSize,

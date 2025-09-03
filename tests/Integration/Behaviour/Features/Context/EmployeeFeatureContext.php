@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ use Employee as LegacyEmployee;
 use PrestaShop\PrestaShop\Core\Context\Employee;
 use Tests\Resources\Context\EmployeeContextDecorator;
 
-/**
- * Class EmployeeFeatureContext
- */
 class EmployeeFeatureContext extends AbstractPrestaShopFeatureContext
 {
     /**

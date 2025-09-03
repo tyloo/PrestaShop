@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,9 +54,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
         ProductResetter::resetProducts();
     }
 
-    /**
-     * @return int
-     */
     public function testCreate(): int
     {
         $this->client->disableReboot();
@@ -79,8 +77,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $productId
      *
      * @return int[]
      */
@@ -109,7 +105,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         $generatedCombinations = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertNotFalse($generatedCombinations);
         $this->assertNotEmpty($generatedCombinations['combination_ids']);
-        $this->assertEquals(count($sizeAttributes), count($generatedCombinations['combination_ids']));
+        $this->assertEquals(\count($sizeAttributes), \count($generatedCombinations['combination_ids']));
 
         $generatedCombinations['product_id'] = $productId;
 
@@ -118,10 +114,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testGenerateCombinations
-     *
-     * @param array $generatedCombinations
-     *
-     * @return array
      */
     public function testEditDefaultCombination(array $generatedCombinations): array
     {
@@ -182,10 +174,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testEditDefaultCombination
-     *
-     * @param array $generatedCombinations
-     *
-     * @return array
      */
     public function testEditNotDefaultCombination(array $generatedCombinations): array
     {
@@ -207,10 +195,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testEditNotDefaultCombination
-     *
-     * @param array $generatedCombinations
-     *
-     * @return array
      */
     public function testEditFromList(array $generatedCombinations): array
     {
@@ -255,10 +239,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testEditFromList
-     *
-     * @param array $generatedCombinations
-     *
-     * @return array
      */
     public function testDefaultFromList(array $generatedCombinations): array
     {
@@ -303,10 +283,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
 
     /**
      * Combination form is specific because it has no submit button, so we fetch it differently from other forms.
-     *
-     * @param int $combinationId
-     *
-     * @return Form
      */
     private function getCombinationForm(int $combinationId): Form
     {
@@ -321,9 +297,6 @@ class CombinationControllerTest extends FormGridControllerTestCase
 
     /**
      * Combination form is specific because it has no submit button, so we fetch it differently from other forms.
-     *
-     * @param int $productId
-     * @param array $formData
      */
     private function updateCombinationFromList(int $productId, array $formData): void
     {
@@ -332,7 +305,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         $tokenCrawler = $productCrawler->filter('[name="combination_list[_token]"]');
 
         $tokenInput = $tokenCrawler->getNode(0);
-        if (!$tokenInput instanceof DOMElement) {
+        if (! $tokenInput instanceof DOMElement) {
             throw new RuntimeException('Could not find combination list token in product page.');
         }
         $this->assertTrue($tokenInput->hasAttribute('value'));

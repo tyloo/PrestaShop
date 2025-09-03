@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,8 @@ class PriceDisplayMethodConfigurationFeatureContext extends AbstractConfiguratio
     {
         $data = Customer::getCustomersByEmail($customerEmail);
         $data = reset($data);
-        if (!isset($data['id_customer'])) {
-            throw new RuntimeException(sprintf('Customer with email %s was not found', $customerEmail));
+        if (! isset($data['id_customer'])) {
+            throw new RuntimeException(\sprintf('Customer with email %s was not found', $customerEmail));
         }
         $customer = new Customer($data['id_customer']);
 
@@ -50,7 +51,7 @@ class PriceDisplayMethodConfigurationFeatureContext extends AbstractConfiguratio
         } elseif ($priceDisplayMethod === 'tax excluded') {
             $group->price_display_method = Group::PRICE_DISPLAY_METHOD_TAX_EXCL;
         } else {
-            throw new RuntimeException(sprintf('Price display method %s is not known', $priceDisplayMethod));
+            throw new RuntimeException(\sprintf('Price display method %s is not known', $priceDisplayMethod));
         }
 
         $group->update();

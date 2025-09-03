@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,9 +33,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class ChoiceProviderTestCase extends TestCase
 {
-    /**
-     * @return TranslatorInterface
-     */
     protected function mockTranslator(): TranslatorInterface
     {
         $mock = $this->createMock(TranslatorInterface::class);

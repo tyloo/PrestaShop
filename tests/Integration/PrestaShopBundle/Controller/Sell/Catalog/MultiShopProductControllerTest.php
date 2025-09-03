@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -156,7 +157,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
     {
         $this->updateShopConstraintTokenAttribute($shopContext);
         $products = $this->getFilteredEntitiesFromGrid($listFilters);
-        $this->assertEquals($totalCount, $products->getTotalCount(), sprintf(
+        $this->assertEquals($totalCount, $products->getTotalCount(), \sprintf(
             'Expected %d product(s) with filters %s but got %d instead',
             $totalCount,
             var_export($listFilters, true),
@@ -167,7 +168,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         foreach ($productsValues as $productIndex => $productValues) {
             /** @var TestEntityDTO $testProductDTO */
             $testProductDTO = $products->get($productIndex);
-            $this->assertNotNull($testProductDTO, sprintf('Expected product at index %d', $productIndex));
+            $this->assertNotNull($testProductDTO, \sprintf('Expected product at index %d', $productIndex));
             foreach ($productValues as $variableName => $variableValue) {
                 $this->assertEquals($variableValue, $testProductDTO->getVariable($variableName));
             }
@@ -180,7 +181,9 @@ class MultiShopProductControllerTest extends GridControllerTestCase
             'shop_context' => [
                 'shop_name' => static::DEFAULT_SHOP_NAME,
             ],
-            'filters' => ['product[name]' => ''],
+            'filters' => [
+                'product[name]' => '',
+            ],
             'total_count' => 21,
             'products_values' => [
                 0 => static::ALL_SHOPS_PRODUCT_DATA[static::DEFAULT_SHOP_NAME],
@@ -193,7 +196,9 @@ class MultiShopProductControllerTest extends GridControllerTestCase
             'shop_context' => [
                 'shop_name' => static::DEFAULT_SHOP_NAME,
             ],
-            'filters' => ['product[name]' => static::ALL_SHOPS_PRODUCT_DATA[static::DEFAULT_SHOP_NAME]['name']],
+            'filters' => [
+                'product[name]' => static::ALL_SHOPS_PRODUCT_DATA[static::DEFAULT_SHOP_NAME]['name'],
+            ],
             'total_count' => 1,
             'products_values' => [
                 0 => static::ALL_SHOPS_PRODUCT_DATA[static::DEFAULT_SHOP_NAME],
@@ -204,7 +209,9 @@ class MultiShopProductControllerTest extends GridControllerTestCase
             'shop_context' => [
                 'shop_name' => static::INDEPENDENT_SHOP_NAME,
             ],
-            'filters' => ['product[name]' => ''],
+            'filters' => [
+                'product[name]' => '',
+            ],
             'total_count' => 2,
             'products_values' => [
                 0 => static::ALL_SHOPS_PRODUCT_DATA[static::INDEPENDENT_SHOP_NAME],
@@ -216,7 +223,9 @@ class MultiShopProductControllerTest extends GridControllerTestCase
             'shop_context' => [
                 'shop_name' => static::SHARED_SHOP_NAME,
             ],
-            'filters' => ['product[name]' => ''],
+            'filters' => [
+                'product[name]' => '',
+            ],
             'total_count' => 2,
             'products_values' => [
                 0 => array_merge(static::ALL_SHOPS_PRODUCT_DATA[static::SHARED_SHOP_NAME], [
@@ -318,7 +327,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         $filteredProduct = $products->get(0);
 
         $routeParams = ['productId' => $filteredProduct->getId()];
-        if (!empty($shopContext['group_shop_name'])) {
+        if (! empty($shopContext['group_shop_name'])) {
             $routeParams['shopGroupId'] = ShopGroup::getIdByName($shopContext['group_shop_name']);
         }
         $shopPreviewsUrl = $this->router->generate('admin_products_grid_shop_previews', $routeParams);
@@ -329,7 +338,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         foreach ($shopPreviews as $shopPreviewIndex => $shopPreviewData) {
             /** @var TestEntityDTO $productShopPreview */
             $productShopPreview = $productShopPreviews->get($shopPreviewIndex);
-            $this->assertNotNull($productShopPreview, sprintf('Expected shop preview at index %d', $shopPreviewIndex));
+            $this->assertNotNull($productShopPreview, \sprintf('Expected shop preview at index %d', $shopPreviewIndex));
             // The check at the shop preview values
             foreach ($shopPreviewData as $variableName => $variableValue) {
                 $this->assertEquals($variableValue, $productShopPreview->getVariable($variableName));
@@ -428,9 +437,6 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function parseEntityFromRow(Crawler $tr, int $i): TestEntityDTO
     {
         $shopListNode = $tr->filter('.column-associated_shops .product-shop-list');
@@ -454,17 +460,11 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFilterSearchButtonSelector(): string
     {
         return 'product[actions][search]';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateGridUrl(array $routeParams = []): string
     {
         if (empty($routeParams)) {
@@ -477,9 +477,6 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         return $this->router->generate('admin_products_index', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getGridSelector(): string
     {
         return '#product_grid_table';
@@ -488,15 +485,13 @@ class MultiShopProductControllerTest extends GridControllerTestCase
     /**
      * The shop context is defined via a token attribute, to dynamically change the shop context we login the
      * user by specifying the expected shop context identified by a ShopConstraint object.
-     *
-     * @param array $shopContext
      */
     protected function updateShopConstraintTokenAttribute(array $shopContext): void
     {
-        if (!empty($shopContext['shop_name'])) {
+        if (! empty($shopContext['shop_name'])) {
             $shopId = Shop::getIdByName($shopContext['shop_name']);
             $shopConstraint = ShopConstraint::shop((int) $shopId);
-        } elseif (!empty($shopContext['group_shop_name'])) {
+        } elseif (! empty($shopContext['group_shop_name'])) {
             $shopGroupId = ShopGroup::getIdByName($shopContext['group_shop_name']);
             $shopConstraint = ShopConstraint::shopGroup((int) $shopGroupId);
         } else {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I update product :productReference tags with following values:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function updateProductTags(string $productReference, TableNode $table): void
     {
@@ -64,8 +62,6 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I remove all product :productReference tags
-     *
-     * @param string $productReference
      */
     public function removeAllTags(string $productReference)
     {
@@ -79,8 +75,8 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
      * (whereas common property will have one value per language)
      * This is why it needs some additional parsing
      *
-     * @param array $localizedTagStrings key value pairs where key is language id and value is string representation of array separated by comma
-     *                                   e.g. [1 => 'hello,goodbye', 2 => 'bonjour,Au revoir']
+     * @param array              $localizedTagStrings     key value pairs where key is language id and value is string representation of array separated by comma
+     *                                                    e.g. [1 => 'hello,goodbye', 2 => 'bonjour,Au revoir']
      * @param LocalizedTagsDto[] $actualLocalizedTagsList
      */
     public static function assertLocalizedTags(array $localizedTagStrings, array $actualLocalizedTagsList)
@@ -92,11 +88,7 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
                 // if tags string is empty, then we should not have any actual value in this language
                 foreach ($actualLocalizedTagsList as $actualLocalizedTags) {
                     if ($actualLocalizedTags->getLanguageId() === $langId) {
-                        throw new RuntimeException(sprintf(
-                            'Expected no tags in %s language, but got "%s"',
-                            $langIso,
-                            var_export($actualLocalizedTags->getTags(), true))
-                        );
+                        throw new RuntimeException(\sprintf('Expected no tags in %s language, but got "%s"', $langIso, var_export($actualLocalizedTags->getTags(), true)));
                     }
                 }
 
@@ -115,7 +107,7 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
                 Assert::assertEquals(
                     $expectedTags,
                     $actualLocalizedTags->getTags(),
-                    sprintf(
+                    \sprintf(
                         'Expected tags in "%s" language was "%s", but got "%s"',
                         $langIso,
                         var_export($expectedTags, true),
@@ -127,12 +119,8 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
 
             // All empty values have ben filtered out above,
             // so if this lang value doesn't exist, it means it didn't meet the expectations
-            if (!$valueInLangExists) {
-                throw new RuntimeException(sprintf(
-                    'Expected localized tags value "%s" is not set in %s language',
-                    var_export($expectedTags, true),
-                    $langIso
-                ));
+            if (! $valueInLangExists) {
+                throw new RuntimeException(\sprintf('Expected localized tags value "%s" is not set in %s language', var_export($expectedTags, true), $langIso));
             }
         }
     }

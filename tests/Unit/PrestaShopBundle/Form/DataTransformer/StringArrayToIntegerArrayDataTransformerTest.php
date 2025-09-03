@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ use PHPUnit\Framework\TestCase;
 use PrestaShopBundle\Form\DataTransformer\StringArrayToIntegerArrayDataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 
-/**
- * Class StringArrayToIntegerArrayDataTransformerTest
- */
 class StringArrayToIntegerArrayDataTransformerTest extends TestCase
 {
     /**
@@ -40,7 +38,7 @@ class StringArrayToIntegerArrayDataTransformerTest extends TestCase
      */
     private $dataTransformer;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

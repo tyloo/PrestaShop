@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,9 +61,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
      * @see transformPriorityList
      *
      * @When I set following custom specific price priorities for product :productReference:
-     *
-     * @param string $productReference
-     * @param PriorityList $priorityList
      */
     public function setPrioritiesForProduct(string $productReference, PriorityList $priorityList): void
     {
@@ -78,8 +76,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
 
     /**
      * @When I remove custom specific price priorities for product ":productReference"
-     *
-     * @param string $productReference
      */
     public function removePrioritiesForProduct(string $productReference): void
     {
@@ -92,8 +88,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
      * @see transformPriorityList
      *
      * @When I set following default specific price priorities:
-     *
-     * @param PriorityList $priorityList
      */
     public function setDefaultPriorities(PriorityList $priorityList): void
     {
@@ -115,8 +109,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
      * @Given default specific price priorities are set to following:
      *
      * @Then default specific price priorities should be the following:
-     *
-     * @param PriorityList $priorityList
      */
     public function assertDefaultPriorities(PriorityList $priorityList): void
     {
@@ -129,9 +121,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
      * @see transformPriorityList
      *
      * @Then product :productReference should have following custom specific price priorities:
-     *
-     * @param string $productReference
-     * @param PriorityList $priorityList
      */
     public function assertProductPriorities(string $productReference, PriorityList $priorityList): void
     {
@@ -146,9 +135,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
      * @see transformPriorityList
      *
      * @Then following specific price priorities should be used for product :productReference:
-     *
-     * @param string $productReference
-     * @param PriorityList $priorityList
      */
     public function assertUsablePriorities(string $productReference, PriorityList $priorityList): void
     {
@@ -157,8 +143,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
 
     /**
      * @Then default specific price priorities should be used for product ":productReference"
-     *
-     * @param string $productReference
      */
     public function assertDefaultPrioritiesAreUsed(string $productReference): void
     {
@@ -176,8 +160,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
 
     /**
      * @Then product ":productReference" should not have custom specific price priorities
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoCustomPriorities(string $productReference): void
     {
@@ -189,10 +171,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
 
     /**
      * @Transform table:priorities
-     *
-     * @param TableNode $tableNode
-     *
-     * @return PriorityList
      */
     public function transformPriorityList(TableNode $tableNode): PriorityList
     {
@@ -205,16 +183,12 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
         return new PriorityList($priorities);
     }
 
-    /**
-     * @param PriorityList $expectedPriorities
-     * @param PriorityList $actualPriorities
-     */
     private function assertPriorities(PriorityList $expectedPriorities, PriorityList $actualPriorities)
     {
         Assert::assertEquals(
             $expectedPriorities,
             $actualPriorities,
-            sprintf('Unexpected specific price priorities [%s]', var_export($actualPriorities, true))
+            \sprintf('Unexpected specific price priorities [%s]', var_export($actualPriorities, true))
         );
     }
 
@@ -222,8 +196,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
      * Retrieves priority list using object model method which is actually used when prioritizing in FO.
      *
      * @param string|null $productReference gets default priority list if $productReference is null
-     *
-     * @return PriorityList
      */
     private function getUsablePriorities(?string $productReference): PriorityList
     {
@@ -231,7 +203,7 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
         $productId = $productReference ? $this->getSharedStorage()->get($productReference) : 0;
         $actualPriorities = SpecificPrice::getPriority($productId);
 
-        if ($actualPriorities[0] == 'id_customer') {
+        if ($actualPriorities[0] === 'id_customer') {
             unset($actualPriorities[0]);
         }
 
@@ -239,8 +211,6 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
     }
 
     /**
-     * @return PriorityList
-     *
      * @throws CoreException
      */
     private function getDefaultPriorities(): PriorityList

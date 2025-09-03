@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,12 @@ class CategoryDisplayNameBuilderTest extends TestCase
 {
     /**
      * @dataProvider getDataForTestBuildsDisplayNames
-     *
-     * @param CategoryDisplayNameBuilder $builder
-     * @param string $categoryName
-     * @param int $categoryId
-     * @param string $expectedResult
      */
     public function testBuildsDisplayNames(
         CategoryDisplayNameBuilder $builder,
         string $categoryName,
         int $categoryId,
-        string $expectedResult
+        string $expectedResult,
     ): void {
         $actualResult = $builder->build(
             $categoryName,
@@ -62,9 +58,6 @@ class CategoryDisplayNameBuilderTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataForTestBuildsDisplayNames(): iterable
     {
         $categoryRepositoryMock = $this->mockRepository([]);
@@ -166,8 +159,6 @@ class CategoryDisplayNameBuilderTest extends TestCase
 
     /**
      * @param array<int, string[]> $breadcrumbPartsByDuplicatedIds
-     *
-     * @return CategoryRepository
      */
     private function mockRepository(array $breadcrumbPartsByDuplicatedIds): CategoryRepository
     {

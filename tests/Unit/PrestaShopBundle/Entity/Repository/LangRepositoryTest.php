@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -136,7 +137,7 @@ class LangRepositoryTest extends TestCase
         ;
 
         for ($i = 0; $i < $consecutiveCalls; ++$i) {
-            if ($i % 2 == 0) {
+            if ($i % 2 === 0) {
                 $locale = $partialMock->getOneByIsoCode('en');
             } else {
                 $locale = $partialMock->getOneByLocale('en');
@@ -153,9 +154,6 @@ class LangRepositoryTest extends TestCase
      */
 
     /**
-     * @param array $expectedCriteria
-     * @param LanguageInterface $language
-     *
      * @return MockObject
      */
     private function buildPartialMock(array $expectedCriteria, LanguageInterface $language)

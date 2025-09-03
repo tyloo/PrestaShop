@@ -1,4 +1,5 @@
 <?php
+
 /*
 * 2007-2015 PrestaShop
 *
@@ -24,7 +25,7 @@
 *  International Registered Trademark & Property of PrestaShop SA
 */
 
-if (!defined('_PS_VERSION_')) {
+if (! defined('_PS_VERSION_')) {
     exit;
 }
 
@@ -49,7 +50,10 @@ class translationtest extends Module
         $this->displayName = 'translation tests';
         $this->description = 'Test the translations accross different templating engines and controllers';
 
-        $this->ps_versions_compliancy = ['min' => '1.7.5.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = [
+            'min' => '1.7.5.0',
+            'max' => _PS_VERSION_,
+        ];
 
         $this->adminControllerName = 'AdminTranslationtestFoo';
         $this->controllers = ['bar']; // this is a front controller
@@ -69,17 +73,11 @@ class translationtest extends Module
         return $content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function install()
     {
         return parent::install() && $this->installTab();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function uninstall()
     {
         return parent::uninstall() && $this->uninstallTab();

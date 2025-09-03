@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,9 +53,6 @@ class CategoryFeatureContext extends AbstractPrestaShopFeatureContext
         $this->categories[$categoryName] = $category;
     }
 
-    /**
-     * @param string $categoryName
-     */
     public function checkCategoryWithNameExists(string $categoryName): void
     {
         $this->checkFixtureExists($this->categories, 'Category', $categoryName);
@@ -62,8 +60,6 @@ class CategoryFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @param string $categoryName
-     *
-     * @return Category
      */
     public function getCategoryWithName($categoryName): Category
     {

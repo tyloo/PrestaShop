@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,12 @@ class OptionsFillerTest extends ProductFillerTestCase
     /**
      * @dataProvider getDataToTestUpdatablePropertiesFilling
      * @dataProvider getDataToTestShowPriceAndAvailableForOrderPropertiesFilling
-     *
-     * @param Product $product
-     * @param UpdateProductCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param Product $expectedProduct
      */
     public function testFillsUpdatableProperties(
         Product $product,
         UpdateProductCommand $command,
         array $expectedUpdatableProperties,
-        Product $expectedProduct
+        Product $expectedProduct,
     ): void {
         $this->fillUpdatableProperties(
             $this->getFiller(),
@@ -62,8 +58,6 @@ class OptionsFillerTest extends ProductFillerTestCase
     /**
      * This provider Provides the initial product and the expected one,
      * because there are some cases that depends on previous and new values
-     *
-     * @return iterable
      */
     public function getDataToTestShowPriceAndAvailableForOrderPropertiesFilling(): iterable
     {
@@ -139,9 +133,6 @@ class OptionsFillerTest extends ProductFillerTestCase
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToTestUpdatablePropertiesFilling(): iterable
     {
         $command = $this->getEmptyCommand();

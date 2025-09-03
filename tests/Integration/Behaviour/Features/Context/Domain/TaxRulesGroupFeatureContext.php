@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,18 +48,13 @@ use Tests\Integration\Behaviour\Features\Context\Util\PrimitiveUtils;
 
 class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
 {
-    /**
-     * @param string $name
-     *
-     * @return TaxRulesGroup
-     */
     public static function getTaxRulesGroupByName(string $name): TaxRulesGroup
     {
         $taxRulesGroupId = (int) TaxRulesGroup::getIdByName($name);
         $taxRulesGroup = new TaxRulesGroup($taxRulesGroupId);
 
         if ($taxRulesGroupId !== (int) $taxRulesGroup->id) {
-            throw new RuntimeException(sprintf('Tax rules group "%s" not found', $name));
+            throw new RuntimeException(\sprintf('Tax rules group "%s" not found', $name));
         }
 
         return $taxRulesGroup;
@@ -66,8 +62,6 @@ class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given tax rules group named :name exists
-     *
-     * @param string $name
      */
     public function assertTaxRuleGroupExists(string $name): void
     {
@@ -76,8 +70,6 @@ class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I identify tax rules group named :name as :taxRuleGroupReference
-     *
-     * @param string $name
      */
     public function identifyTaxRulesGroup(string $name, string $taxRuleGroupReference): void
     {
@@ -190,12 +182,7 @@ class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
         $editableTaxRulesGroup = $this->getEditableTaxRulesGroup($taxRulesGroupReference);
 
         if ($editableTaxRulesGroup->getName() !== $name) {
-            throw new RuntimeException(sprintf(
-                'Tax Rules Group "%s" has "%s" name, but "%s" was expected.',
-                $taxRulesGroupReference,
-                $editableTaxRulesGroup->getName(),
-                $name
-            ));
+            throw new RuntimeException(\sprintf('Tax Rules Group "%s" has "%s" name, but "%s" was expected.', $taxRulesGroupReference, $editableTaxRulesGroup->getName(), $name));
         }
     }
 
@@ -209,12 +196,7 @@ class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
         $editableTaxRulesGroup = $this->getEditableTaxRulesGroup($taxRulesGroupReference);
 
         if ($isEnabled !== $editableTaxRulesGroup->isActive()) {
-            throw new RuntimeException(sprintf(
-                'Tax Rules Group "%s" is %s, but it was expected to be %s',
-                $taxRulesGroupReference,
-                $editableTaxRulesGroup->isActive() ? 'enabled' : 'disabled',
-                $isEnabled ? 'enabled' : 'disabled'
-            ));
+            throw new RuntimeException(\sprintf('Tax Rules Group "%s" is %s, but it was expected to be %s', $taxRulesGroupReference, $editableTaxRulesGroup->isActive() ? 'enabled' : 'disabled', $isEnabled ? 'enabled' : 'disabled'));
         }
     }
 
@@ -252,12 +234,7 @@ class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle(new GetTaxRulesGroupForEditing($taxRulesGroupId));
 
-            throw new NoExceptionAlthoughExpectedException(
-                sprintf(
-                    'Tax rules group  %s expected to be deleted, but it was found',
-                    $taxRulesGroupReference
-                )
-            );
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Tax rules group  %s expected to be deleted, but it was found', $taxRulesGroupReference));
         } catch (TaxRulesGroupNotFoundException $e) {
             SharedStorage::getStorage()->clear($taxRulesGroupReference);
         }

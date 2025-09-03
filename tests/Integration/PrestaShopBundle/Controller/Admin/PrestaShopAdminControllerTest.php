@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,9 +62,6 @@ class PrestaShopAdminControllerTest extends SymfonyIntegrationTestCase
 
     /**
      * @dataProvider getDataProvider
-     *
-     * @param string $pageName
-     * @param string $route
      */
     public function testPagesAreAvailable(string $pageName, string $route): void
     {
@@ -84,7 +82,7 @@ class PrestaShopAdminControllerTest extends SymfonyIntegrationTestCase
          */
         $this->assertTrue(
             $response->isSuccessful(),
-            sprintf(
+            \sprintf(
                 '%s page should be available, but status code is %s',
                 $pageName,
                 $response->getStatusCode()

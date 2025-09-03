@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,33 +32,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DummyTranslator implements TranslatorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string
     {
         return 'not implemented yet';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLocale($locale)
     {
         // not implemented yet
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLocale(): string
     {
         return 'not implemented yet';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
         return str_replace(

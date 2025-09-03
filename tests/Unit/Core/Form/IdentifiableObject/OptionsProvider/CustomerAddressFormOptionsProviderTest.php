@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,9 @@ class CustomerAddressFormOptionsProviderTest extends TestCase
     public function testGetOptions(): void
     {
         $this->assertSame(
-            ['requiredFields' => ['field1', 'field2']],
+            [
+                'requiredFields' => ['field1', 'field2'],
+            ],
             $this->customerAddressFormOptionsProvider->getOptions(1, [])
         );
     }
@@ -59,9 +62,6 @@ class CustomerAddressFormOptionsProviderTest extends TestCase
         );
     }
 
-    /**
-     * @return CommandBusInterface
-     */
     private function mockQueryBus(): CommandBusInterface
     {
         $queryBus = $this

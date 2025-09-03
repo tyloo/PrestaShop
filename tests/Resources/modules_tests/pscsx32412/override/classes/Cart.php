@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,17 +29,17 @@ class Cart extends CartCore
     /**
      * Update the address id of the cart
      *
-     * @param int $id_address Current address id to change
+     * @param int $id_address     Current address id to change
      * @param int $id_address_new New address id
      */
     public function updateAddressId($id_address, $id_address_new)
     {
         $to_update = false;
-        if (!isset($this->id_address_invoice) || $this->id_address_invoice == $id_address) {
+        if (! isset($this->id_address_invoice) || $this->id_address_invoice === $id_address) {
             $to_update = true;
             $this->id_address_invoice = $id_address_new;
         }
-        if (!isset($this->id_address_delivery) || $this->id_address_delivery == $id_address) {
+        if (! isset($this->id_address_delivery) || $this->id_address_delivery === $id_address) {
             $to_update = true;
             $this->id_address_delivery = $id_address_new;
         }
@@ -84,8 +85,8 @@ class Cart extends CartCore
 			WHERE `id_cart` = ' . (int) $this->id
         );
 
-        if (!Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_rule` WHERE `id_cart` = ' . (int) $this->id)
-         || !Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_product` WHERE `id_cart` = ' . (int) $this->id)) {
+        if (! Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_rule` WHERE `id_cart` = ' . (int) $this->id)
+         || ! Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_product` WHERE `id_cart` = ' . (int) $this->id)) {
             return false;
         }
 

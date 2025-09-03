@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,13 +51,6 @@ class LegacyControllerContextBuilderTest extends TestCase
 
     /**
      * @dataProvider getControllerValues
-     *
-     * @param string $controllerName
-     * @param string $expectedControllerName
-     * @param ?string $className
-     * @param int $multishopContext
-     * @param string $expectedCurrentIndex
-     * @param ?string $redirectionUrl
      */
     public function testBuild(string $controllerName, string $expectedControllerName, ?string $className, int $multishopContext, string $expectedCurrentIndex, string $expectedTable, ?string $redirectionUrl = null): void
     {
@@ -75,7 +69,7 @@ class LegacyControllerContextBuilderTest extends TestCase
         );
 
         $builder->setControllerName($controllerName);
-        if (null !== $redirectionUrl) {
+        if ($redirectionUrl !== null) {
             $builder->setRedirectionUrl($redirectionUrl);
         }
         $legacyController = $builder->build();

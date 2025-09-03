@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class TemplateFinderTest extends TestCase
     {
         $root = realpath(_PS_ROOT_DIR_) . '/tests/Resources/template-hierarchy/templates/';
 
-        /* @var TemplateFinder */
+        /** @var TemplateFinder $this */
         $this->templateFinder = new TemplateFinder([$root], '.tpl');
     }
 

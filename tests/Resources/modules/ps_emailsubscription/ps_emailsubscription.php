@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2018 PrestaShop
  *
@@ -23,7 +24,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-if (!defined('_PS_VERSION_')) {
+if (! defined('_PS_VERSION_')) {
     exit;
 }
 
@@ -73,7 +74,7 @@ class Ps_Emailsubscription extends Module
 
     public function install()
     {
-        if (!parent::install() || !Configuration::updateValue('PS_NEWSLETTER_RAND', mt_rand(0, mt_getrandmax()) . mt_rand(0, mt_getrandmax())) || !$this->registerHook(['displayFooterBefore', 'actionCustomerAccountAdd'])) {
+        if (! parent::install() || ! Configuration::updateValue('PS_NEWSLETTER_RAND', mt_rand(0, mt_getrandmax()) . mt_rand(0, mt_getrandmax())) || ! $this->registerHook(['displayFooterBefore', 'actionCustomerAccountAdd'])) {
             return false;
         }
 

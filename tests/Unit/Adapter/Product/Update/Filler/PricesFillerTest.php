@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,19 +41,13 @@ class PricesFillerTest extends ProductFillerTestCase
     /**
      * @dataProvider getDataToTestUpdatablePropertiesFilling
      * @dataProvider getDataToTestUnitPriceAndPricePropertiesFilling
-     *
-     * @param Product $product
-     * @param UpdateProductCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param bool $ecoTaxEnabled
-     * @param Product $expectedProduct
      */
     public function testFillsUpdatableProperties(
         Product $product,
         UpdateProductCommand $command,
         array $expectedUpdatableProperties,
         bool $ecoTaxEnabled,
-        Product $expectedProduct
+        Product $expectedProduct,
     ): void {
         $this->fillUpdatableProperties(
             $this->getFiller($ecoTaxEnabled, $command->getShopConstraint()),
@@ -63,9 +58,6 @@ class PricesFillerTest extends ProductFillerTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToTestUpdatablePropertiesFilling(): iterable
     {
         $command = $this->getEmptyCommand()
@@ -112,9 +104,6 @@ class PricesFillerTest extends ProductFillerTestCase
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToTestUnitPriceAndPricePropertiesFilling(): iterable
     {
         // When product price is 0 and ecotax is disabled, it should force unit_price to 0 as well
@@ -165,12 +154,6 @@ class PricesFillerTest extends ProductFillerTestCase
         ];
     }
 
-    /**
-     * @param bool $ecoTaxEnabled
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return PricesFiller
-     */
     private function getFiller(bool $ecoTaxEnabled, ShopConstraint $shopConstraint): PricesFiller
     {
         $numberExtractor = $this->getMockBuilder(NumberExtractor::class)

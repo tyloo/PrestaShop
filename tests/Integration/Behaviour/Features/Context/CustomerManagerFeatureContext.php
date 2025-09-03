@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,8 +60,6 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * "When" steps perform actions, and some of them store the latest result
      * in this variable so that "Then" action can check its content
-     *
-     * @var mixed
      */
     protected $latestResult;
 
@@ -92,16 +91,16 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
             'email',
         ];
         foreach ($mandatoryFields as $mandatoryField) {
-            if (!array_key_exists($mandatoryField, $data)) {
-                throw new Exception(sprintf('Mandatory property %s for customer has not been provided', $mandatoryField));
+            if (! \array_key_exists($mandatoryField, $data)) {
+                throw new Exception(\sprintf('Mandatory property %s for customer has not been provided', $mandatoryField));
             }
         }
-        if (!array_key_exists('password', $data) && empty($data['isGuest'])) {
+        if (! \array_key_exists('password', $data) && empty($data['isGuest'])) {
             throw new Exception('Password must be provided, if creating a registered customer');
         }
 
         // Apply minor differences for guests
-        if (!empty($data['isGuest'])) {
+        if (! empty($data['isGuest'])) {
             $password = (new PasswordGenerator(new OpenSSL()))->generatePassword(16, 'RANDOM');
             $defaultGroupId = $defaultGroups->getGuestsGroup()->getId();
             $groupIds = [$defaultGroups->getGuestsGroup()->getId()];
@@ -156,9 +155,6 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
      * todo hint: move to domain context?
      *
      * @When I create not existing customer :customerReference with following properties:
-     *
-     * @param string $customerReference
-     * @param TableNode $table
      */
     public function iCreateNotExistingCustomerWithFollowingProperties(string $customerReference, TableNode $table)
     {
@@ -238,9 +234,6 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     }
 
     /**
-     * @param string $customerReference
-     * @param string $methodName
-     *
      * @throws Exception
      */
     private function deleteCustomer(string $customerReference, string $methodName): void
@@ -281,8 +274,6 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @When customer ":customerReference" should be soft deleted
-     *
-     * @param string $customerReference
      */
     public function checkSoftDeleted(string $customerReference): void
     {
@@ -305,10 +296,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
         }
 
         if ($caughtException === null) {
-            throw new Exception(sprintf(
-                'The customer "%s" exists.',
-                $this->customerRegistry[$customerReference]
-            ));
+            throw new Exception(\sprintf('The customer "%s" exists.', $this->customerRegistry[$customerReference]));
         }
     }
 
@@ -320,7 +308,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
         $this->assertCustomerReferenceExistsInRegistry($customerReference);
 
         $queryBus = $this->getQueryBus();
-        /* @var EditableCustomer $result */
+        /** @var EditableCustomer $result */
         try {
             $result = $queryBus->handle(new GetCustomerForEditing($this->customerRegistry[$customerReference]));
 
@@ -341,12 +329,12 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function assertGotErrorMessage($message)
     {
-        if (!$this->latestResult instanceof Exception) {
+        if (! $this->latestResult instanceof Exception) {
             throw new Exception('Latest Command did not return an error');
         }
 
         if ($this->latestResult->getMessage() !== $message) {
-            throw new Exception(sprintf("Expected error message '%s', got '%s'", $message, $this->latestResult->getMessage()));
+            throw new Exception(\sprintf("Expected error message '%s', got '%s'", $message, $this->latestResult->getMessage()));
         }
 
         $this->latestResult = null;
@@ -364,11 +352,11 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
 
     protected function formatCustomerDataIfNeeded(array $data)
     {
-        if (array_key_exists('defaultGroupId', $data)) {
+        if (\array_key_exists('defaultGroupId', $data)) {
             $data['defaultGroupId'] = $this->validateAndFormatCustomerGroupData($data['defaultGroupId']);
         }
 
-        if (array_key_exists('groupIds', $data)) {
+        if (\array_key_exists('groupIds', $data)) {
             $groupIds = PrimitiveUtils::castStringArrayIntoArray($data['groupIds']);
 
             $data['groupIds'] = [];
@@ -377,25 +365,25 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        if (array_key_exists('genderId', $data)) {
+        if (\array_key_exists('genderId', $data)) {
             $data['genderId'] = $this->validateAndFormatCustomerGenderData($data['genderId']);
         }
 
-        if (array_key_exists('isEnabled', $data)) {
+        if (\array_key_exists('isEnabled', $data)) {
             $data['isEnabled'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['isEnabled']);
         }
-        if (array_key_exists('isPartnerOffersSubscribed', $data)) {
+        if (\array_key_exists('isPartnerOffersSubscribed', $data)) {
             $data['isPartnerOffersSubscribed'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['isPartnerOffersSubscribed']);
         }
-        if (array_key_exists('newsletterSubscribed', $data)) {
+        if (\array_key_exists('newsletterSubscribed', $data)) {
             $data['newsletterSubscribed'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['newsletterSubscribed']);
         }
-        if (!empty($data['riskId'])) {
+        if (! empty($data['riskId'])) {
             $data['riskId'] = SharedStorage::getStorage()->get($data['riskId']);
         } else {
             $data['riskId'] = 0;
         }
-        if (array_key_exists('isGuest', $data)) {
+        if (\array_key_exists('isGuest', $data)) {
             $data['isGuest'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['isGuest']);
         }
 
@@ -424,24 +412,22 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        if (!$isValid) {
-            throw new Exception(sprintf('groupId %s does not exist', $groupName));
+        if (! $isValid) {
+            throw new Exception(\sprintf('groupId %s does not exist', $groupName));
         }
 
         return $groupId;
     }
 
     /**
-     * @param string $methodName
-     *
      * @throws Exception
      */
     protected function validateDeleteCustomerMethod(string $methodName)
     {
         $availableMethods = CustomerDeleteMethod::getAvailableMethods();
 
-        if (!in_array($methodName, $availableMethods)) {
-            throw new Exception(sprintf('Delete method %s does not exist', $methodName));
+        if (! \in_array($methodName, $availableMethods, true)) {
+            throw new Exception(\sprintf('Delete method %s does not exist', $methodName));
         }
     }
 
@@ -467,8 +453,8 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        if (!$isValid) {
-            throw new Exception(sprintf('genderId %s does not exist, available genders are %s', $genderName, implode(', ', array_keys($availableGenders))));
+        if (! $isValid) {
+            throw new Exception(\sprintf('genderId %s does not exist, available genders are %s', $genderName, implode(', ', array_keys($availableGenders))));
         }
 
         return $genderId;
@@ -497,8 +483,8 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
      */
     protected function assertCustomerReferenceExistsInRegistry($customerReference)
     {
-        if (!array_key_exists($customerReference, $this->customerRegistry)) {
-            throw new Exception(sprintf('Cannot find customer %s in registry', $customerReference));
+        if (! \array_key_exists($customerReference, $this->customerRegistry)) {
+            throw new Exception(\sprintf('Cannot find customer %s in registry', $customerReference));
         }
     }
 }

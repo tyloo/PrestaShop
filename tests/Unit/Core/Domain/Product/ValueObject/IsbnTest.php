@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,8 +47,6 @@ class IsbnTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param string $value
      */
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
@@ -57,9 +56,6 @@ class IsbnTest extends TestCase
         new Isbn($value);
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidValues(): Generator
     {
         yield ['123456789123456789123456789-33'];

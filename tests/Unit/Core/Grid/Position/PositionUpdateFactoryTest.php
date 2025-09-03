@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,11 @@ class PositionUpdateFactoryTest extends TestCase
     public function testHandleData()
     {
         $definition = $this->getDefinition();
-        $data = ['positions' => [
-            ['rowId' => 1, 'oldPosition' => 1, 'newPosition' => 2],
-        ]];
+        $data = [
+            'positions' => [
+                ['rowId' => 1, 'oldPosition' => 1, 'newPosition' => 2],
+            ],
+        ];
 
         $positionUpdateFactory = $this->getPositionUpdateFactory();
         $positionUpdate = $positionUpdateFactory->buildPositionUpdate($data, $definition);
@@ -123,14 +126,13 @@ class PositionUpdateFactoryTest extends TestCase
     }
 
     /**
-     * @param array $data
-     * @param string|null $expectedErrorKey
-     * @param array|null $expectedErrorParameters
+     * @param string|null             $expectedErrorKey
+     * @param array|null              $expectedErrorParameters
      * @param PositionDefinition|null $definition
      */
     private function checkDataValidation(array $data, $expectedErrorKey = null, $expectedErrorParameters = null, $definition = null)
     {
-        if (null === $definition) {
+        if ($definition === null) {
             $definition = $this->getDefinition();
         }
         $positionUpdateFactory = $this->getPositionUpdateFactory();
@@ -144,14 +146,14 @@ class PositionUpdateFactoryTest extends TestCase
             $caughtException = $e;
         }
 
-        if (null === $expectedErrorKey) {
+        if ($expectedErrorKey === null) {
             $this->assertNull($caughtException);
         } else {
             $this->assertNotNull($caughtException);
             $this->assertInstanceOf(PositionDataException::class, $caughtException);
             $this->assertEquals($expectedErrorKey, $caughtException->getKey());
             $this->assertEquals('Admin.Notifications.Failure', $caughtException->getDomain());
-            if (null !== $expectedErrorParameters) {
+            if ($expectedErrorParameters !== null) {
                 $this->assertSame($expectedErrorParameters, $caughtException->getParameters());
             }
         }

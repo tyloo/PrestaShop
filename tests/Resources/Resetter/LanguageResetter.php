@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class LanguageResetter
     {
         // Removing Language manually includes cleaning all related lang tables, this cleaning is handled in
         // Language::delete in a more efficient way than relying on table restoration
-        $langIds = Db::getInstance()->executeS(sprintf('SELECT id_lang FROM %slang;', _DB_PREFIX_));
+        $langIds = Db::getInstance()->executeS(\sprintf('SELECT id_lang FROM %slang;', _DB_PREFIX_));
         unset($langIds[0]);
         foreach ($langIds as $langId) {
             $lang = new Language($langId['id_lang']);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,11 +67,24 @@ class TestableObjectModel extends ObjectModel
         'multilang_shop' => true,
         'fields' => [
             // Classic fields
-            'quantity' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedFloat'],
+            'quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedFloat',
+            ],
             // Multi lang fields
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCatalogName', 'required' => false, 'size' => 128],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isCatalogName',
+                'required' => false,
+                'size' => 128,
+            ],
             // Shop fields
-            'enabled' => ['type' => self::TYPE_BOOL, 'shop' => true, 'validate' => 'isBool'],
+            'enabled' => [
+                'type' => self::TYPE_BOOL,
+                'shop' => true,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 

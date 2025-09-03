@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,15 +58,13 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add a search term :searchTerm with following aliases:
-     *
-     * @param TableNode $table
      */
     public function addAlias(string $searchTerm, TableNode $table): void
     {
         // We retrieve the data from the table and cast the active column to a boolean
         $aliases = $table->getColumnsHash();
         array_walk($aliases, function (&$alias) {
-            $alias['active'] = filter_var($alias['active'], FILTER_VALIDATE_BOOL);
+            $alias['active'] = filter_var($alias['active'], \FILTER_VALIDATE_BOOL);
         });
 
         // Then, we create the AddSearchTermAliasesCommand and dispatch it
@@ -78,8 +77,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update search term :searchTerm with following aliases:
-     *
-     * @param TableNode $table
      */
     public function updateSearchTermAliases(string $searchTerm, TableNode $table): void
     {
@@ -88,8 +85,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update search term :oldSearchTerm by :newSearchTerm with following aliases:
-     *
-     * @param TableNode $table
      */
     public function updateWithNewSearchTermAliases(string $oldSearchTerm, string $newSearchTerm, TableNode $table): void
     {
@@ -98,8 +93,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then following aliases should exist:
-     *
-     * @param TableNode $table
      */
     public function assertAliasesList(TableNode $table): void
     {
@@ -124,8 +117,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then following aliases shouldn't exist:
-     *
-     * @param TableNode $table
      */
     public function assertAliasesNotInList(TableNode $table): void
     {
@@ -150,9 +141,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I should have the following aliases for search term :searchTerm:
-     *
-     * @param string $searchTerm
-     * @param TableNode $table
      */
     public function assertOneSearchTermWithAliases(string $searchTerm, TableNode $table): void
     {
@@ -172,7 +160,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
             Assert::assertEquals(
                 $expectedAlias['alias'],
                 $foundedAlias['alias'],
-                sprintf(
+                \sprintf(
                     'Invalid Alias, expected %s but got %s instead.',
                     $expectedAlias['alias'],
                     $foundedAlias['alias'],
@@ -180,9 +168,9 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
             );
 
             Assert::assertEquals(
-                filter_var($expectedAlias['active'], FILTER_VALIDATE_BOOL),
-                filter_var($foundedAlias['active'], FILTER_VALIDATE_BOOL),
-                sprintf(
+                filter_var($expectedAlias['active'], \FILTER_VALIDATE_BOOL),
+                filter_var($foundedAlias['active'], \FILTER_VALIDATE_BOOL),
+                \sprintf(
                     'Invalid Alias Active, expected %s but got %s instead.',
                     $expectedAlias['active'],
                     $foundedAlias['active']
@@ -193,9 +181,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I search for alias search term matching :search I should get the following results:
-     *
-     * @param string $search
-     * @param TableNode $tableNode
      */
     public function assertSearchAliases(string $search, TableNode $tableNode): void
     {
@@ -205,7 +190,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
         foreach ($expectedSearchTermsRows as $expectedSearchTermRow) {
             $expectedSearchTerms = PrimitiveUtils::castStringArrayIntoArray($expectedSearchTermRow['searchTerm']);
-            Assert::assertCount(count($expectedSearchTerms), $foundAliasesForAssociation, 'Expected and found search terms count doesn\'t match');
+            Assert::assertCount(\count($expectedSearchTerms), $foundAliasesForAssociation, 'Expected and found search terms count doesn\'t match');
 
             foreach ($expectedSearchTerms as $index => $searchTerm) {
                 $foundAliasSearchTerm = $foundAliasesForAssociation[$index];
@@ -213,7 +198,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
                 Assert::assertEquals(
                     $searchTerm,
                     $foundAliasSearchTerm,
-                    sprintf(
+                    \sprintf(
                         'Invalid Alias Search Term, expected %d but got %d instead.',
                         $searchTerm,
                         $foundAliasSearchTerm
@@ -225,8 +210,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I should get error that alias cannot be empty
-     *
-     * @return void
      */
     public function assertLastErrorIsInvalidAliasConstraint(): void
     {
@@ -235,8 +218,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I should get error that search term cannot be empty
-     *
-     * @return void
      */
     public function assertLastErrorIsInvalidSearchTermConstraint(): void
     {
@@ -245,8 +226,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I should get error that alias is already used by another search term
-     *
-     * @return void
      */
     public function assertLastErrorIsAliasAlreadyInUse(): void
     {
@@ -267,7 +246,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
         // We retrieve the data from the table and cast the active column to a boolean
         $aliases = $table->getColumnsHash();
         array_walk($aliases, function (&$alias) {
-            $alias['active'] = filter_var($alias['active'], FILTER_VALIDATE_BOOL);
+            $alias['active'] = filter_var($alias['active'], \FILTER_VALIDATE_BOOL);
         });
 
         // Then, we create the UpdateAliasesBySearchTermCommand and dispatch it
@@ -280,7 +259,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param object[] $expectedData
-     * @param array[] $aliases
+     * @param array[]  $aliases
      */
     private function assertExistAliasProperties(array $expectedData, array $aliases): void
     {
@@ -289,7 +268,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param object[] $expectedData
-     * @param array[] $aliases
+     * @param array[]  $aliases
      */
     private function assertNotExistAliasProperties(array $expectedData, array $aliases): void
     {
@@ -298,8 +277,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param object[] $expectedData
-     * @param array[] $aliases
-     * @param bool $exist
+     * @param array[]  $aliases
      */
     private function assertAliasProperties(array $expectedData, array $aliases, bool $exist = false)
     {
@@ -308,14 +286,14 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
                 return
                     $alias['alias'] === $expectedAlias['alias']
                     && $alias['search'] === $expectedAlias['search']
-                    && filter_var($alias['active'], FILTER_VALIDATE_BOOL) === filter_var($expectedAlias['active'], FILTER_VALIDATE_BOOL)
+                    && filter_var($alias['active'], \FILTER_VALIDATE_BOOL) === filter_var($expectedAlias['active'], \FILTER_VALIDATE_BOOL)
                 ;
             });
 
             Assert::assertCount(
                 $exist ? 1 : 0,
                 $filter,
-                sprintf(
+                \sprintf(
                     "Alias '%s' for search term '%s' and active '%s' not found.",
                     $expectedAlias['alias'],
                     $expectedAlias['search'],
@@ -327,8 +305,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete search term :searchTerm
-     *
-     * @param string $searchTerm
      */
     public function deleteSearchTerm(string $searchTerm): void
     {
@@ -341,8 +317,6 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk delete search terms :searchTerms
-     *
-     * @param string $searchTerms
      */
     public function bulkDeleteSearchTerm(string $searchTerms): void
     {

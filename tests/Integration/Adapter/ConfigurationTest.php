@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,10 +67,6 @@ class ConfigurationTest extends KernelTestCase
     }
 
     /**
-     * @param array $setParams
-     * @param array $getParams
-     * @param string $expectedResult
-     *
      * @dataProvider getProvider
      */
     public function testGet(array $setParams, array $getParams, string $expectedResult): void
@@ -78,10 +75,6 @@ class ConfigurationTest extends KernelTestCase
     }
 
     /**
-     * @param array $setParams
-     * @param array $getParams
-     * @param string|null $expectedResult
-     *
      * @dataProvider getWithStrictParameterProvider
      */
     public function testGetWithSrictParameter(array $setParams, array $getParams, ?string $expectedResult): void
@@ -90,15 +83,11 @@ class ConfigurationTest extends KernelTestCase
     }
 
     /**
-     * @param array $setParams
-     * @param array $getParams
-     * @param bool $expectedResult
-     *
      * @dataProvider hasProvider
      */
     public function testHas(array $setParams, array $getParams, bool $expectedResult): void
     {
-        if (!empty($setParams)) {
+        if (! empty($setParams)) {
             $this->configuration->set($setParams['key'], $setParams['value'], $setParams['shopConstraint']);
         }
         $result = $this->configuration->has($getParams['key'], $getParams['shopConstraint']);
@@ -106,9 +95,6 @@ class ConfigurationTest extends KernelTestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    /**
-     * @return iterable
-     */
     public function hasProvider(): iterable
     {
         // simple test when value doesn't exist and we ask for it in all shop context
@@ -231,9 +217,6 @@ class ConfigurationTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public function getProvider(): iterable
     {
         // simple case: get an all shop config value
@@ -374,9 +357,6 @@ class ConfigurationTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public function getWithStrictParameterProvider(): iterable
     {
         // try getting a non existing value for a aingle shop, with is strict = true => should not inherit from parent group
@@ -447,16 +427,11 @@ class ConfigurationTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @param array $setParams
-     * @param array $getParams
-     * @param string|null $expectedResult
-     */
     private function setAndGetValuesForTesting(array $setParams, array $getParams, ?string $expectedResult): void
     {
-        if (!empty($setParams) && isset($setParams['key'])) {
+        if (! empty($setParams) && isset($setParams['key'])) {
             $this->configuration->set($setParams['key'], $setParams['value'], $setParams['shopConstraint']);
-        } elseif (!empty($setParams)) {
+        } elseif (! empty($setParams)) {
             foreach ($setParams as $params) {
                 $this->configuration->set($params['key'], $params['value'], $params['shopConstraint']);
             }

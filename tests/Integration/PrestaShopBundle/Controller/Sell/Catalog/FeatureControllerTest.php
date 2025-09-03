@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,10 +60,6 @@ class FeatureControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testIndex
-     *
-     * @param int $initialEntityCount
-     *
-     * @return int
      */
     public function testCreate(int $initialEntityCount): int
     {
@@ -94,10 +91,6 @@ class FeatureControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $featureId
-     *
-     * @return int
      */
     public function testEdit(int $featureId): int
     {
@@ -120,10 +113,6 @@ class FeatureControllerTest extends FormGridControllerTestCase
     /**
      * @depends testIndex
      * @depends testEdit
-     *
-     * @param int $featureId
-     *
-     * @return int
      */
     public function testFilters(int $initialEntityCount, int $featureId): int
     {
@@ -143,7 +132,7 @@ class FeatureControllerTest extends FormGridControllerTestCase
 
         foreach ($gridFilters as $testFilter) {
             $features = $this->getFilteredEntitiesFromGrid($testFilter);
-            $this->assertGreaterThanOrEqual(1, count($features), sprintf(
+            $this->assertGreaterThanOrEqual(1, \count($features), \sprintf(
                 'Expected at least one product with filters %s',
                 var_export($testFilter, true)
             ));
@@ -153,49 +142,31 @@ class FeatureControllerTest extends FormGridControllerTestCase
         return $featureId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFilterSearchButtonSelector(): string
     {
         return 'feature[actions][search]';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getCreateSubmitButtonSelector(): string
     {
         return 'save-button';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getEditSubmitButtonSelector(): string
     {
         return 'save-button';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateCreateUrl(): string
     {
         return $this->router->generate('admin_features_add');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateEditUrl(array $routeParams): string
     {
         return $this->router->generate('admin_features_edit', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFormHandlerChecker(): FormHandlerChecker
     {
         /** @var FormHandlerChecker $checker */
@@ -204,9 +175,6 @@ class FeatureControllerTest extends FormGridControllerTestCase
         return $checker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function parseEntityFromRow(Crawler $tr, int $i): TestEntityDTO
     {
         return new TestEntityDTO(
@@ -215,9 +183,6 @@ class FeatureControllerTest extends FormGridControllerTestCase
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateGridUrl(array $routeParams = []): string
     {
         if (empty($routeParams)) {
@@ -230,9 +195,6 @@ class FeatureControllerTest extends FormGridControllerTestCase
         return $this->router->generate('admin_features_index', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getGridSelector(): string
     {
         return '#feature_grid_table';

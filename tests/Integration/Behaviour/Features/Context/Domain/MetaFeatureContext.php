@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -142,8 +143,6 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param array $data
-     *
      * @return array
      */
     private function getWithDefaultLanguage(array $data)
@@ -159,7 +158,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
         ];
 
         foreach ($data as $key => $item) {
-            if (!in_array($key, $languageFields, true)) {
+            if (! \in_array($key, $languageFields, true)) {
                 continue;
             }
 
@@ -214,7 +213,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
         }
 
         if ($actualValue !== $value) {
-            throw new RuntimeException(sprintf('For given field "%s" expected value "%s" did not matched given value "%s"', $field, $value, $actualValue));
+            throw new RuntimeException(\sprintf('For given field "%s" expected value "%s" did not matched given value "%s"', $field, $value, $actualValue));
         }
     }
 
@@ -255,8 +254,8 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
             $layoutCustomizationPages)
         ;
 
-        if (!in_array($pageName, $pageNames, true)) {
-            throw new RuntimeException(sprintf('Page name "%s" not found in available customization layout pages "%s"', $pageName, var_export($pageNames, true)));
+        if (! \in_array($pageName, $pageNames, true)) {
+            throw new RuntimeException(\sprintf('Page name "%s" not found in available customization layout pages "%s"', $pageName, var_export($pageNames, true)));
         }
     }
 }

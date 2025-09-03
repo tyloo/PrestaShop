@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,7 +62,7 @@ class ThemeExtractorTest extends KernelTestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$rootDir = dirname(__DIR__, 4) . '/Resources/themes/fake-theme';
+        self::$rootDir = \dirname(__DIR__, 4) . '/Resources/themes/fake-theme';
         self::$legacyFolder = self::$rootDir . '/lang';
         self::$xliffFolder = self::$rootDir . '/translations';
     }

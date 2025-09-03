@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ class CurrencyIdTest extends TestCase
 {
     /**
      * @dataProvider getValidValues
-     *
-     * @param int $value
      */
     public function testCreateWithPositiveValue(int $value): void
     {
@@ -48,8 +47,6 @@ class CurrencyIdTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param int $value
      */
     public function testItThrowsExceptionWhenProvidingInvalidValue(int $value): void
     {
@@ -59,9 +56,6 @@ class CurrencyIdTest extends TestCase
         new CurrencyId($value);
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidValues(): Generator
     {
         yield [
@@ -73,9 +67,6 @@ class CurrencyIdTest extends TestCase
         ];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidValues(): Generator
     {
         yield [

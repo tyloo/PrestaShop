@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,6 @@ class CountryContextBuilderTest extends ContextBuilderTestCase
 
     /**
      * @dataProvider getCountryValues
-     *
-     * @param int $languageId
-     * @param string $expectedName
      */
     public function testBuild(int $languageId, string $expectedName): void
     {

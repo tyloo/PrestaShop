@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,9 +73,6 @@ class CombinationFormDataProviderTest extends TestCase
 
     /**
      * @dataProvider getExpectedData
-     *
-     * @param array $combinationData
-     * @param array $expectedData
      */
     public function testGetData(array $combinationData, array $expectedData): void
     {
@@ -106,9 +104,6 @@ class CombinationFormDataProviderTest extends TestCase
         }
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForStock(): array
     {
         $datasets = [];
@@ -131,7 +126,7 @@ class CombinationFormDataProviderTest extends TestCase
             'quantity' => 42,
             'minimal_quantity' => 7,
             'low_stock_threshold' => 5,
-            sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
+            \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
             'location' => 'top shelf',
             'available_date' => new DateTime('1969/07/20'),
             'stock_movements' => [
@@ -192,7 +187,7 @@ class CombinationFormDataProviderTest extends TestCase
         $expectedOutputData['stock']['quantities']['delta_quantity']['quantity'] = 42;
         $expectedOutputData['stock']['quantities']['minimal_quantity'] = 7;
         $expectedOutputData['stock']['options']['low_stock_threshold'] = 5;
-        $expectedOutputData['stock']['options'][sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX)] = true;
+        $expectedOutputData['stock']['options'][\sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX)] = true;
         $expectedOutputData['stock']['options']['stock_location'] = 'top shelf';
         $expectedOutputData['stock']['available_date'] = '1969-07-20';
         $expectedOutputData['stock']['quantities']['stock_movements'] = [
@@ -238,9 +233,6 @@ class CombinationFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForPriceImpact(): array
     {
         $datasets = [];
@@ -288,9 +280,6 @@ class CombinationFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForDetails(): array
     {
         $datasets = [];
@@ -325,9 +314,6 @@ class CombinationFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForProductSuppliers(): array
     {
         $datasets = [];
@@ -387,9 +373,6 @@ class CombinationFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForImages(): array
     {
         $datasets = [];
@@ -435,8 +418,6 @@ class CombinationFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $combinationData
-     *
      * @return MockObject|CommandBusInterface
      */
     private function createQueryBusMock(array $combinationData)
@@ -461,13 +442,12 @@ class CombinationFormDataProviderTest extends TestCase
 
     /**
      * @param GetCombinationForEditing $query
-     * @param array $combinationData
      *
      * @return CombinationForEditing|AssociatedSuppliers|ProductSupplierForEditing[]|StockMovement[]
      */
     private function createResultBasedOnQuery($query, array $combinationData)
     {
-        switch ($queryClass = get_class($query)) {
+        switch ($queryClass = \get_class($query)) {
             case GetCombinationForEditing::class:
                 return $this->createCombinationForEditing($combinationData);
             case GetAssociatedSuppliers::class:
@@ -478,14 +458,9 @@ class CombinationFormDataProviderTest extends TestCase
                 return $this->createStockMovementHistories($combinationData);
         }
 
-        throw new RuntimeException(sprintf('Query "%s" was not expected in query bus mock', $queryClass));
+        throw new RuntimeException(\sprintf('Query "%s" was not expected in query bus mock', $queryClass));
     }
 
-    /**
-     * @param array $combination
-     *
-     * @return CombinationForEditing
-     */
     private function createCombinationForEditing(array $combination): CombinationForEditing
     {
         return new CombinationForEditing(
@@ -501,11 +476,6 @@ class CombinationFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $combination
-     *
-     * @return CombinationPrices
-     */
     private function createPrices(array $combination): CombinationPrices
     {
         return new CombinationPrices(
@@ -522,18 +492,13 @@ class CombinationFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $combination
-     *
-     * @return CombinationStock
-     */
     private function createStock(array $combination): CombinationStock
     {
         return new CombinationStock(
             $combination['quantity'] ?? self::DEFAULT_QUANTITY,
             $combination['minimal_quantity'] ?? 0,
             $combination['low_stock_threshold'] ?? 0,
-            $combination[sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX)] ?? false,
+            $combination[\sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX)] ?? false,
             $combination['location'] ?? 'location',
             $combination['available_date'] ?? null,
             $combination['available_now'] ?? [],
@@ -541,11 +506,6 @@ class CombinationFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $combination
-     *
-     * @return CombinationDetails
-     */
     private function createDetails(array $combination): CombinationDetails
     {
         return new CombinationDetails(
@@ -558,11 +518,6 @@ class CombinationFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $combinationData
-     *
-     * @return AssociatedSuppliers
-     */
     private function createAssociatedSuppliers(array $combinationData): AssociatedSuppliers
     {
         return new AssociatedSuppliers(
@@ -572,8 +527,6 @@ class CombinationFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $combinationData
-     *
      * @return ProductSupplierForEditing[]
      */
     private function createCombinationSupplierInfos(array $combinationData): array
@@ -600,15 +553,13 @@ class CombinationFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $combinationData
-     *
      * @return StockMovement[]
      */
     private function createStockMovementHistories(array $combinationData): array
     {
         return array_map(
             static function (array $historyData): StockMovement {
-                if (StockMovement::EDITION_TYPE === $historyData['type']) {
+                if ($historyData['type'] === StockMovement::EDITION_TYPE) {
                     return StockMovement::createEditionMovement(
                         $historyData['date_add'],
                         $historyData['stock_movement_id'],
@@ -619,7 +570,7 @@ class CombinationFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
-                if (StockMovement::ORDERS_TYPE === $historyData['type']) {
+                if ($historyData['type'] === StockMovement::ORDERS_TYPE) {
                     return StockMovement::createOrdersMovement(
                         $historyData['from_date'],
                         $historyData['to_date'],
@@ -630,17 +581,12 @@ class CombinationFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
-                throw new RuntimeException(
-                    sprintf('Unsupported stock movement event type "%s"', $historyData['type'])
-                );
+                throw new RuntimeException(\sprintf('Unsupported stock movement event type "%s"', $historyData['type']));
             },
             $combinationData['stock_movements'] ?? []
         );
     }
 
-    /**
-     * @return array
-     */
     private function getDefaultOutputData(): array
     {
         return [
@@ -663,7 +609,7 @@ class CombinationFormDataProviderTest extends TestCase
                 'options' => [
                     'stock_location' => 'location',
                     'low_stock_threshold' => 0,
-                    sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                    \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                 ],
                 'available_date' => '',
                 'available_now_label' => [],
@@ -696,7 +642,7 @@ class CombinationFormDataProviderTest extends TestCase
     }
 
     private function createFormDataProvider(
-        CommandBusInterface $queryBusMock
+        CommandBusInterface $queryBusMock,
     ): CombinationFormDataProvider {
         return new CombinationFormDataProvider(
             $queryBusMock,
@@ -704,9 +650,6 @@ class CombinationFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @return Context
-     */
     private function mockShopContext(): Context
     {
         $shopContext = $this->getMockBuilder(Context::class)

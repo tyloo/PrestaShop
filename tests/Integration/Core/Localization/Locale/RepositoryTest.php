@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,10 +91,6 @@ class RepositoryTest extends KernelTestCase
      *
      * @dataProvider provideLocalizedNumbers
      *
-     * @param string $localeCode
-     * @param float $rawNumber
-     * @param string $formattedNumber
-     *
      * @throws LocalizationException
      */
     public function testItShouldFormatNumbers(string $localeCode, float $rawNumber, string $formattedNumber): void
@@ -110,7 +107,7 @@ class RepositoryTest extends KernelTestCase
 
     private function checkAndInstallLanguage(string $isoCode): void
     {
-        if (!empty(Language::getIdByIso($isoCode))) {
+        if (! empty(Language::getIdByIso($isoCode))) {
             return;
         }
 
@@ -119,7 +116,7 @@ class RepositoryTest extends KernelTestCase
 
     private function installLanguagesByLocaleCode(string $localeCode): void
     {
-        $cacheDir = _PS_CACHE_DIR_ . 'sandbox' . DIRECTORY_SEPARATOR;
+        $cacheDir = _PS_CACHE_DIR_ . 'sandbox' . \DIRECTORY_SEPARATOR;
         $countryCode = strtolower(substr($localeCode, 3, 2));
         $localizationWarmer = new LocalizationWarmer(_PS_VERSION_, $countryCode);
         $xmlContent = $localizationWarmer->warmUp($cacheDir);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class StreamWrapperPHP
      * @var int
      */
     protected $index = 0;
-    protected $length = null;
+    protected $length;
     protected $data = '';
 
     public $context;
@@ -84,7 +85,7 @@ class StreamWrapperPHP
             $this->data = file_get_contents($this->buffer_filename());
         }
         $this->index = 0;
-        $this->length = strlen($this->data);
+        $this->length = \strlen($this->data);
     }
 
     protected function buffer_filename(): string
@@ -113,8 +114,8 @@ class StreamWrapperPHP
 
     public function stream_read(int $count): string
     {
-        if (is_null($this->length) === true) {
-            $this->length = strlen($this->data);
+        if (($this->length === null) === true) {
+            $this->length = \strlen($this->data);
         }
         $length = min($count, $this->length - $this->index);
         $data = substr($this->data, $this->index);

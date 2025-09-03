@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,9 @@ class ZipSourceHandlerTest extends TestCase
     private const INVALID_SOURCE = __DIR__ . '/../../../../Resources/dummyFile/invalid_module.zip';
     private const VALID_SOURCE = __DIR__ . '/../../../../Resources/dummyFile/valid_module.zip';
 
-    /** @var ZipSourceHandler */
+    /**
+     * @var ZipSourceHandler
+     */
     private $zipSourceHandler;
 
     /**
@@ -48,7 +51,7 @@ class ZipSourceHandlerTest extends TestCase
      * */
     private $resourceResetter;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->resourceResetter = new ResourceResetter();
         $this->resourceResetter->backupTestModules();
@@ -62,7 +65,7 @@ class ZipSourceHandlerTest extends TestCase
         );
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->resourceResetter->resetTestModules();
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ class AddCustomerGroupCommandTest extends TestCase
 {
     /**
      * @dataProvider getValidValues
-     *
-     * @param DecimalNumber $reductionPercent
      */
     public function testItWorksWhenProvidingValidReduction(DecimalNumber $reductionPercent): void
     {
@@ -54,8 +53,6 @@ class AddCustomerGroupCommandTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param DecimalNumber $reductionPercent
      */
     public function testItThrowsExceptionWhenProvidingInvalidReduction(DecimalNumber $reductionPercent): void
     {
@@ -70,9 +67,6 @@ class AddCustomerGroupCommandTest extends TestCase
         );
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidValues(): Generator
     {
         yield [new DecimalNumber('-0.00')];
@@ -89,9 +83,6 @@ class AddCustomerGroupCommandTest extends TestCase
         yield [new DecimalNumber('100.00')];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidValues(): Generator
     {
         yield [new DecimalNumber('-0.001')];

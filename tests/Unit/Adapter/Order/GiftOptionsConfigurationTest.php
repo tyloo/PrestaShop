@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,8 +48,6 @@ class GiftOptionsConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideShopConstraints
-     *
-     * @param ShopConstraint $shopConstraint
      */
     public function testGetConfiguration(ShopConstraint $shopConstraint): void
     {
@@ -79,9 +78,6 @@ class GiftOptionsConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideInvalidConfiguration
-     *
-     * @param string $exception
-     * @param array $values
      */
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,12 +40,6 @@ class RedirectTypeTest extends TestCase
     /**
      * @dataProvider getValidDataForCreation
      *
-     * @param string $type
-     * @param bool $isProductType
-     * @param bool $isCategoryType
-     * @param bool $isTypeNotFound
-     * @param bool $isTypeGone
-     *
      * @throws ProductConstraintException
      */
     public function testItSuccessfullyCreatesRedirectType(
@@ -52,7 +47,7 @@ class RedirectTypeTest extends TestCase
         bool $isProductType,
         bool $isCategoryType,
         bool $isTypeNotFound,
-        bool $isTypeGone
+        bool $isTypeGone,
     ): void {
         $redirectType = new RedirectType($type);
 
@@ -63,9 +58,6 @@ class RedirectTypeTest extends TestCase
         Assert::assertEquals($isTypeGone, $redirectType->isTypeGone());
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidDataForCreation(): Generator
     {
         yield ['404', false, false, true, false];
@@ -78,8 +70,6 @@ class RedirectTypeTest extends TestCase
 
     /**
      * @dataProvider getInvalidDataForCreation
-     *
-     * @param string $type
      *
      * @throws ProductConstraintException
      */

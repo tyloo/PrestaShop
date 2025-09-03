@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Given profile :productReference with default name :profileName exists
-     *
-     * @param string $profileReference
-     * @param string $profileName
      */
     public function assertProfileExists(string $profileReference, string $profileName): void
     {
@@ -64,9 +62,6 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add a profile :profileReference with following information:
-     *
-     * @param string $profileReference
-     * @param TableNode $table
      */
     public function addProfile(string $profileReference, TableNode $table): void
     {
@@ -77,9 +72,6 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit a profile :profileReference with following information:
-     *
-     * @param string $profileReference
-     * @param TableNode $table
      */
     public function editProfile(string $profileReference, TableNode $table): void
     {
@@ -92,8 +84,6 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete profile :profileReference
-     *
-     * @param string $profileReference
      */
     public function deleteProfile(string $profileReference): void
     {
@@ -104,9 +94,6 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then profile :profileReference should have the following information:
-     *
-     * @param string $profileReference
-     * @param TableNode $table
      */
     public function assertProfile(string $profileReference, TableNode $table): void
     {
@@ -125,8 +112,6 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then profile :profileReference cannot be found
-     *
-     * @param string $profileReference
      */
     public function assertProfileNotFound(string $profileReference): void
     {

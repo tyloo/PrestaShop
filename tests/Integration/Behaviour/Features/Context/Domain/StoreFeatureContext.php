@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I toggle :reference
-     *
-     * @param string $reference
      */
     public function disableStoreWithReference(string $reference): void
     {
@@ -55,13 +54,10 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I (enable|disable) multiple stores "(.+)" using bulk action$/
-     *
-     * @param string $action
-     * @param string $storeReferences
      */
     public function bulkToggleStatus(string $action, string $storeReferences): void
     {
-        $expectedStatus = 'enable' === $action;
+        $expectedStatus = $action === 'enable';
         $storeIds = [];
 
         foreach (PrimitiveUtils::castStringArrayIntoArray($storeReferences) as $storeReference) {
@@ -79,8 +75,6 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete store :storeReference
-     *
-     * @param string $storeReference
      */
     public function deleteStore(string $storeReference): void
     {
@@ -96,8 +90,6 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I delete stores "(.+)" using bulk action$/
-     *
-     * @param string $storeReferences
      */
     public function bulkDeleteStores(string $storeReferences): void
     {
@@ -115,9 +107,6 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^the store "(.*)" should have status (enabled|disabled)$/
-     *
-     * @param string $reference
-     * @param string $status
      */
     public function isStoreToggledWithReference(string $reference, string $status): void
     {
@@ -129,9 +118,6 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^stores "(.+)" should be (enabled|disabled)$/
-     *
-     * @param string $storeReferences
-     * @param string $expectedStatus
      */
     public function assertMultipleStoreStatus(string $storeReferences, string $expectedStatus): void
     {
@@ -145,19 +131,16 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
         /** @var Store $store */
         $store = SharedStorage::getStorage()->get($storeReference);
 
-        $isEnabled = 'enabled' === $expectedStatus;
+        $isEnabled = $expectedStatus === 'enabled';
         $actualStatus = (bool) $store->active;
 
         if ($actualStatus !== $isEnabled) {
-            throw new RuntimeException(sprintf('Store "%s" is %s, but it was expected to be %s', $storeReference, $actualStatus ? 'enabled' : 'disabled', $expectedStatus));
+            throw new RuntimeException(\sprintf('Store "%s" is %s, but it was expected to be %s', $storeReference, $actualStatus ? 'enabled' : 'disabled', $expectedStatus));
         }
     }
 
     /**
      * @Then /^stores "(.+)" should (exist|be deleted)$/
-     *
-     * @param string $storeReferences
-     * @param string $expectedPresence
      */
     public function assertMultipleStorePresence(string $storeReferences, string $expectedPresence): void
     {
@@ -171,17 +154,17 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
         /** @var Store $store */
         $store = SharedStorage::getStorage()->get($storeReference);
 
-        $isToBePresent = 'exist' === $expectedPresence;
-        $isToBeDeleted = 'be deleted' === $expectedPresence;
+        $isToBePresent = $expectedPresence === 'exist';
+        $isToBeDeleted = $expectedPresence === 'be deleted';
         $query = new GetStoreForEditing((int) $store->id);
         try {
             $storeQueried = $this->getQueryBus()->handle($query);
             if ($storeQueried && $isToBeDeleted) {
-                throw new RuntimeException(sprintf('Store "%s" is present, but it was expected to be deleted', $storeReference));
+                throw new RuntimeException(\sprintf('Store "%s" is present, but it was expected to be deleted', $storeReference));
             }
         } catch (StoreNotFoundException $e) {
             if ($isToBePresent) {
-                throw new RuntimeException(sprintf('Store "%s" is present, but it was expected to be deleted', $storeReference));
+                throw new RuntimeException(\sprintf('Store "%s" is present, but it was expected to be deleted', $storeReference));
             }
             SharedStorage::getStorage()->clear($storeReference);
         }

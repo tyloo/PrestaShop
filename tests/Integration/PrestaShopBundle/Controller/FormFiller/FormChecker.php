@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,10 @@ use Symfony\Component\DomCrawler\Form;
 
 class FormChecker
 {
-    /**
-     * @param Form $form
-     * @param array $expectedFormData
-     *
-     * @return Form
-     */
     public function checkForm(Form $form, array $expectedFormData): Form
     {
         foreach ($expectedFormData as $fieldName => $expectedFormDatum) {
-            if (!is_array($expectedFormDatum)) {
+            if (! \is_array($expectedFormDatum)) {
                 /** @var FormField $formField */
                 $formField = $form->get($fieldName);
                 $this->assertFormValue($expectedFormDatum, $formField->getValue(), $fieldName);
@@ -56,18 +51,13 @@ class FormChecker
         return $form;
     }
 
-    /**
-     * @param mixed $expectedValue
-     * @param mixed $formValue
-     * @param string $fieldName
-     */
     private function assertFormValue($expectedValue, $formValue, string $fieldName): void
     {
         // We use assertTrue instead of assertEquals because when it fails it raises an error related to Closure
         // serialization which makes it very hard to debug (this is because of processIsolation)
         Assert::assertTrue(
-            $expectedValue == $formValue,
-            sprintf(
+            $expectedValue === $formValue,
+            \sprintf(
                 'Invalid value for field %s, expected %s but got %s instead.',
                 $fieldName,
                 $expectedValue,

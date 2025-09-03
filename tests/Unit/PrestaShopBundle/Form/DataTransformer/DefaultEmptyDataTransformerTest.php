@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ class DefaultEmptyDataTransformerTest extends TestCase
 {
     /**
      * @dataProvider getTransformValues
-     *
-     * @param mixed $emptyData
-     * @param mixed $inputValue
-     * @param mixed $expectedValue
      */
     public function testTransform($emptyData, $inputValue, $expectedValue): void
     {
@@ -52,10 +49,6 @@ class DefaultEmptyDataTransformerTest extends TestCase
 
     /**
      * @dataProvider getTransformValues
-     *
-     * @param mixed $emptyData
-     * @param mixed $inputValue
-     * @param mixed $expectedValue
      */
     public function testReverseTransform($emptyData, $inputValue, $expectedValue): void
     {
@@ -72,21 +65,21 @@ class DefaultEmptyDataTransformerTest extends TestCase
         $transformer = new DefaultEmptyDataTransformer(0);
         $transformedValue = $transformer->transform(null);
         $this->assertEquals(0, $transformedValue);
-        $this->assertTrue(0 === $transformedValue);
+        $this->assertTrue($transformedValue === 0);
 
         $reverseTransformedValue = $transformer->reverseTransform(null);
         $this->assertEquals(0, $reverseTransformedValue);
-        $this->assertTrue(0 === $reverseTransformedValue);
+        $this->assertTrue($reverseTransformedValue === 0);
 
         // With extra view empty data now
         $transformer = new DefaultEmptyDataTransformer(0, null);
         $transformedValue = $transformer->transform(null);
         $this->assertEquals(null, $transformedValue);
-        $this->assertTrue(null === $transformedValue);
+        $this->assertTrue($transformedValue === null);
 
         $reverseTransformedValue = $transformer->reverseTransform(null);
         $this->assertEquals(0, $reverseTransformedValue);
-        $this->assertTrue(0 === $reverseTransformedValue);
+        $this->assertTrue($reverseTransformedValue === 0);
     }
 
     public function getTransformValues()

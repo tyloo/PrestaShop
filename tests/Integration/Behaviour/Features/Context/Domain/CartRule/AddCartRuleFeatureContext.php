@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ class AddCartRuleFeatureContext extends AbstractCartRuleFeatureContext
     /**
      * @When I create cart rule :cartRuleReference with following properties:
      * @When there is a cart rule :cartRuleReference with following properties:
-     *
-     * @param string $cartRuleReference
-     * @param TableNode $node
      */
     public function createCartRuleIfNotExists(string $cartRuleReference, TableNode $node): void
     {

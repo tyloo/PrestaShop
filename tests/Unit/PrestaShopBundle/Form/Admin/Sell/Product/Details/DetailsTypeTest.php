@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,11 +39,6 @@ class DetailsTypeTest extends TestCase
 {
     /**
      * @dataProvider providerBuildForm
-     *
-     * @param bool $isFeatureEnabled
-     * @param array $expectedChildren
-     *
-     * @return void
      */
     public function testBuildForm(bool $isFeatureEnabled, array $expectedChildren): void
     {

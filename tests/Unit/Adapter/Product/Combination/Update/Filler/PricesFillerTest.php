@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,17 +37,12 @@ class PricesFillerTest extends CombinationFillerTestCase
 {
     /**
      * @dataProvider getDataToTestUpdatablePropertiesFilling
-     *
-     * @param Combination $combination
-     * @param UpdateCombinationCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param Combination $expectedProduct
      */
     public function testFillsUpdatableProperties(
         Combination $combination,
         UpdateCombinationCommand $command,
         array $expectedUpdatableProperties,
-        Combination $expectedProduct
+        Combination $expectedProduct,
     ): void {
         $this->fillUpdatableProperties(
             $this->getFiller(),
@@ -57,9 +53,6 @@ class PricesFillerTest extends CombinationFillerTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToTestUpdatablePropertiesFilling(): iterable
     {
         $command = $this->getEmptyCommand()
@@ -98,9 +91,6 @@ class PricesFillerTest extends CombinationFillerTestCase
         ];
     }
 
-    /**
-     * @return PricesFiller
-     */
     private function getFiller(): PricesFiller
     {
         return new PricesFiller();

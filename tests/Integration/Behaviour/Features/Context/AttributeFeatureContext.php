@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,13 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Given attribute :attributeReference named :name in :langIso language exists
-     *
-     * @param string $attributeReference
-     * @param string $name
-     * @param string $langIso
      */
     public function assertNamedAttributeExists(string $attributeReference, string $name, string $langIso): void
     {
         $langId = (int) Language::getIdByIso($langIso);
 
-        if (!$langId) {
-            throw new RuntimeException(sprintf('Language by iso code "%s" was not found', $langIso));
+        if (! $langId) {
+            throw new RuntimeException(\sprintf('Language by iso code "%s" was not found', $langIso));
         }
 
         $attributes = ProductAttribute::getAttributes($langId);
@@ -62,17 +59,12 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        Assert::assertNotNull($foundAttributeId, sprintf('Attribute named "%s" was not found', $name));
+        Assert::assertNotNull($foundAttributeId, \sprintf('Attribute named "%s" was not found', $name));
         $this->getSharedStorage()->set($attributeReference, $foundAttributeId);
     }
 
     /**
      * @Given /^I associate attribute "(.+)" with shops "(.+)"$/
-     *
-     * @param string $attributeReference
-     * @param string $shopReferences
-     *
-     * @return void
      */
     public function associateAttributeWithShops(string $attributeReference, string $shopReferences): void
     {
@@ -80,24 +72,13 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         $attribute = new ProductAttribute($attributeId);
 
         if ($attributeId !== (int) $attribute->id) {
-            throw new RuntimeException(
-                sprintf(
-                    'Failed to load Attribute with id %d. Referenced as "%s"',
-                    $attributeId,
-                    $attributeReference
-                )
-            );
+            throw new RuntimeException(\sprintf('Failed to load Attribute with id %d. Referenced as "%s"', $attributeId, $attributeReference));
         }
         $attribute->associateTo($this->referencesToIds($shopReferences));
     }
 
     /**
      * @Given /^I switch positions of attributes "(.+)" and "(.+)"$/
-     *
-     * @param string $attributeReference
-     * @param string $secondAttributeReference
-     *
-     * @return void
      */
     public function switchAttributePosition(string $attributeReference, string $secondAttributeReference): void
     {
@@ -115,11 +96,6 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given attribute ":attributeReference" is not associated to shops ":shopReferences"
-     *
-     * @param string $attributeReference
-     * @param string $shopReferences
-     *
-     * @return void
      */
     public function assertAttributeIsNotAssociatedToShops(string $attributeReference, string $shopReferences): void
     {
@@ -128,14 +104,8 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         $shopIds = $this->referencesToIds($shopReferences);
 
         foreach ($shopIds as $shopId) {
-            if (in_array($shopId, $attribute->id_shop_list)) {
-                throw new RuntimeException(
-                    sprintf(
-                        'Attribute with id "%d" is associated with shop "%d"',
-                        $attributeId,
-                        $shopId
-                    )
-                );
+            if (\in_array($shopId, $attribute->id_shop_list, true)) {
+                throw new RuntimeException(\sprintf('Attribute with id "%d" is associated with shop "%d"', $attributeId, $shopId));
             }
         }
     }

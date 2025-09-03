@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,11 +51,6 @@ class CLDRFeatureContext extends AbstractPrestaShopFeatureContext
         $this->createCurrencyWithIsoCode($reference, $isoCode, true);
     }
 
-    /**
-     * @param string $reference
-     * @param string $isoCode
-     * @param bool $unofficial
-     */
     private function createCurrencyWithIsoCode(string $reference, string $isoCode, bool $unofficial)
     {
         /*
@@ -63,14 +59,14 @@ class CLDRFeatureContext extends AbstractPrestaShopFeatureContext
          */
         if (SharedStorage::getStorage()->exists($reference)) {
             $currency = $this->getCurrency($reference);
-            if ($currency->iso_code == $isoCode) {
+            if ($currency->iso_code === $isoCode) {
                 return;
             }
         }
 
         $currencyId = Currency::getIdByIsoCode($isoCode, 0, true);
 
-        if (!$currencyId) {
+        if (! $currencyId) {
             $currency = new Currency();
             $currency->name = $isoCode;
             $currency->iso_code = $isoCode;
@@ -103,15 +99,10 @@ class CLDRFeatureContext extends AbstractPrestaShopFeatureContext
         $displayedPrice = $locale->formatPrice($price, $currencyIsoCode);
 
         if ($expectedPrice !== $displayedPrice) {
-            throw new RuntimeException(sprintf('Displayed price is "%s" but "%s" was expected', $displayedPrice, $expectedPrice));
+            throw new RuntimeException(\sprintf('Displayed price is "%s" but "%s" was expected', $displayedPrice, $expectedPrice));
         }
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return Currency
-     */
     private function getCurrency(string $reference): Currency
     {
         return new Currency(SharedStorage::getStorage()->get($reference));

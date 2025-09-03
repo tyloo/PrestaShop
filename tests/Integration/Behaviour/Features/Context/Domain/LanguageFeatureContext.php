@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,20 +52,17 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Given I add a new language :languageReference with the following details:
-     *
-     * @param string $languageReference
-     * @param TableNode $table
      */
     public function addNewLanguage(string $languageReference, TableNode $table): void
     {
         $data = $table->getRowsHash();
 
         copy(
-            dirname(__DIR__, 5) . '/Resources/assets/new_logo.jpg',
+            \dirname(__DIR__, 5) . '/Resources/assets/new_logo.jpg',
             _PS_TMP_IMG_DIR_ . $data['isoCode'] . '.jpg'
         );
         copy(
-            dirname(__DIR__, 5) . '/Resources/assets/new_logo.jpg',
+            \dirname(__DIR__, 5) . '/Resources/assets/new_logo.jpg',
             _PS_TMP_IMG_DIR_ . $data['isoCode'] . '_no.jpg'
         );
 
@@ -93,9 +91,6 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I update the language :languageReference with the following details:
-     *
-     * @param string $languageReference
-     * @param TableNode $table
      */
     public function updateLanguage(string $languageReference, TableNode $table): void
     {
@@ -132,8 +127,6 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete the language :languageReference
-     *
-     * @param string $languageReference
      */
     public function deleteLanguage(string $languageReference): void
     {
@@ -151,8 +144,6 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk delete languages :languageReferences
-     *
-     * @param string $languageReferences
      */
     public function bulkDeleteLanguage(string $languageReferences): void
     {
@@ -173,14 +164,11 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I toggle the language :languageReference status to :status
-     *
-     * @param string $status
-     * @param string $languageReference
      */
     public function setStatusLanguage(string $status, string $languageReference): void
     {
-        if (!in_array($status, ['enabled', 'disabled'])) {
-            throw new RuntimeException(sprintf('A status should be "enabled" or "disabled", not "%s"', $status));
+        if (! \in_array($status, ['enabled', 'disabled'], true)) {
+            throw new RuntimeException(\sprintf('A status should be "enabled" or "disabled", not "%s"', $status));
         }
 
         try {
@@ -197,14 +185,11 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk toggle languages :languageReferences status to :status
-     *
-     * @param string $status
-     * @param string $languageReferences
      */
     public function bulkSetStatusLanguage(string $status, string $languageReferences): void
     {
-        if (!in_array($status, ['enabled', 'disabled'])) {
-            throw new RuntimeException(sprintf('A status should be "enabled" or "disabled", not "%s"', $status));
+        if (! \in_array($status, ['enabled', 'disabled'], true)) {
+            throw new RuntimeException(\sprintf('A status should be "enabled" or "disabled", not "%s"', $status));
         }
 
         try {
@@ -218,9 +203,6 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the language :languageReference should have the following details:
-     *
-     * @param string $languageReference
-     * @param TableNode $table
      */
     public function checkLanguageDetails(string $languageReference, TableNode $table): void
     {
@@ -244,8 +226,6 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the language :languageReference should exist
-     *
-     * @param string $languageReference
      */
     public function checkLanguageExists(string $languageReference): void
     {
@@ -256,8 +236,6 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the language :languageReference shouldn't exist
-     *
-     * @param string $languageReference
      */
     public function checkLanguageNotExists(string $languageReference): void
     {
@@ -268,13 +246,11 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the language :languageReference should be :status
-     *
-     * @param string $languageReference
      */
     public function checkLanguageStatus(string $languageReference, string $status): void
     {
-        if (!in_array($status, ['enabled', 'disabled'])) {
-            throw new RuntimeException(sprintf('A status should be "enabled" or "disabled", not "%s"', $status));
+        if (! \in_array($status, ['enabled', 'disabled'], true)) {
+            throw new RuntimeException(\sprintf('A status should be "enabled" or "disabled", not "%s"', $status));
         }
 
         $editableLanguage = $this->getLanguage($languageReference);
@@ -316,11 +292,6 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
         );
     }
 
-    /**
-     * @param string $languageReference
-     *
-     * @return EditableLanguage|null
-     */
     private function getLanguage(string $languageReference): ?EditableLanguage
     {
         try {

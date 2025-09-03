@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class ReductionTest extends TestCase
 {
     /**
      * @dataProvider getValidValuesForClassCreation
-     *
-     * @param string $type
-     * @param string $value
      */
     public function testItCreatesClassWithValidValues(string $type, string $value): void
     {
@@ -52,8 +50,6 @@ class ReductionTest extends TestCase
 
     /**
      * @dataProvider getInvalidTypes
-     *
-     * @param string $type
      */
     public function testItThrowsExceptionWhenInvalidTypeIsProvided(string $type): void
     {
@@ -65,8 +61,6 @@ class ReductionTest extends TestCase
 
     /**
      * @dataProvider getInvalidPercentages
-     *
-     * @param string $value
      */
     public function testItThrowsExceptionWhenInvalidPercentageIsProvided(string $value): void
     {
@@ -78,8 +72,6 @@ class ReductionTest extends TestCase
 
     /**
      * @dataProvider getInvalidAmounts
-     *
-     * @param string $value
      */
     public function testItThrowsExceptionWhenInvalidAmountIsProvided(string $value): void
     {
@@ -89,9 +81,6 @@ class ReductionTest extends TestCase
         new Reduction('amount', $value);
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidTypes(): Generator
     {
         yield ['random'];
@@ -101,27 +90,18 @@ class ReductionTest extends TestCase
         yield ['percent'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidAmounts(): Generator
     {
         yield ['-10'];
         yield ['-0.33'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidPercentages(): Generator
     {
         yield ['-10'];
         yield ['200'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidValuesForClassCreation(): Generator
     {
         yield ['amount', '10'];

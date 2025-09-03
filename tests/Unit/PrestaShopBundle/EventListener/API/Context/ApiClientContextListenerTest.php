@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,9 @@ use PrestaShopBundle\Controller\Api\OAuth2\AccessTokenController;
 use PrestaShopBundle\Entity\ApiClient;
 use PrestaShopBundle\Entity\Repository\ApiClientRepository;
 use PrestaShopBundle\EventListener\API\Context\ApiClientContextListener;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Tests\Unit\PrestaShopBundle\EventListener\ContextEventListenerTestCase;
 
 class ApiClientContextListenerTest extends ContextEventListenerTestCase
@@ -160,7 +161,7 @@ class ApiClientContextListenerTest extends ContextEventListenerTestCase
         $apiClient->setId($apiId);
         $apiClient->setScopes($scopes);
         $apiClient->setClientId($expectedClientId);
-        if (!empty($externalIssuer)) {
+        if (! empty($externalIssuer)) {
             $apiClient->setExternalIssuer($externalIssuer);
         }
 

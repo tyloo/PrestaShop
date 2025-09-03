@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,6 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I add new attachment :reference with following properties:
-     *
-     * @param string $reference
-     * @param TableNode $tableNode
      */
     public function addAttachment(string $reference, TableNode $tableNode): void
     {
@@ -59,7 +57,7 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
         $destination = $this->uploadDummyFile($data['file_name']);
         $fileSize = filesize($destination);
         $addCommand->setFileInformation(
-            pathinfo($destination, PATHINFO_BASENAME),
+            pathinfo($destination, \PATHINFO_BASENAME),
             $fileSize,
             mime_content_type($destination),
             $data['file_name']
@@ -72,9 +70,6 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then attachment :reference should have following properties:
-     *
-     * @param string $reference
-     * @param TableNode $tableNode
      */
     public function assertAttachmentProperties(string $reference, TableNode $tableNode): void
     {
@@ -90,8 +85,6 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I search for attachment matching :searchPhrase I get following results:
-     *
-     * @param string $searchPhrase
      */
     public function searchAttachment(string $searchPhrase, TableNode $tableNode): void
     {
@@ -99,7 +92,7 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
         $foundAttachments = $this->getCommandBus()->handle(new SearchAttachment($searchPhrase));
         $expectedAttachments = $this->localizeByColumns($tableNode);
 
-        Assert::assertEquals(count($expectedAttachments), count($foundAttachments));
+        Assert::assertEquals(\count($expectedAttachments), \count($foundAttachments));
         foreach ($expectedAttachments as $expectedAttachment) {
             $expectedAttachmentId = (int) $this->getSharedStorage()->get($expectedAttachment['attachment_id']);
             $matchingAttachment = null;
@@ -109,8 +102,8 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
                     break;
                 }
             }
-            if (null === $matchingAttachment) {
-                throw new RuntimeException(sprintf('Could not find expected attachment %s', $expectedAttachment['attachment_id']));
+            if ($matchingAttachment === null) {
+                throw new RuntimeException(\sprintf('Could not find expected attachment %s', $expectedAttachment['attachment_id']));
             }
 
             $attachmentNames = $matchingAttachment->getLocalizedNames();
@@ -132,8 +125,6 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete attachment :attachmentReference
-     *
-     * @param string $attachmentReference
      */
     public function deleteAttachment(string $attachmentReference): void
     {
@@ -144,8 +135,6 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I search for attachment matching :searchPhrase I get no results
-     *
-     * @param string $searchPhrase
      */
     public function searchAttachmentFails(string $searchPhrase): void
     {
@@ -158,11 +147,6 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
         Assert::assertNotNull($caughtException, 'Expected to get no results for this search');
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return AttachmentInformation
-     */
     private function getAttachment(string $reference): AttachmentInformation
     {
         $id = $this->getSharedStorage()->get($reference);
@@ -171,8 +155,6 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param string $fileName
-     *
      * @return string uploaded file destination path including the file name
      */
     private function uploadDummyFile(string $fileName): string

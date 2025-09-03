@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class FormHandlerTest extends TestCase
     private $hookDispatcherMock;
     private $dataProviderMock;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         // mocks creation
         $formBuilderMock = $this->createMock(FormBuilderInterface::class);
@@ -67,7 +68,11 @@ class FormHandlerTest extends TestCase
             $formBuilderMock,
             $hookDispatcherMock,
             $dataProviderMock,
-            ['a' => 'a', 'b' => 'b', 'c' => 'c'],
+            [
+                'a' => 'a',
+                'b' => 'b',
+                'c' => 'c',
+            ],
             'AHook',
             'formA'
         );

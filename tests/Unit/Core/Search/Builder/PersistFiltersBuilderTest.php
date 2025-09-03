@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -121,12 +122,6 @@ class PersistFiltersBuilderTest extends TestCase
         $this->assertEquals('language', $filters->getFilterId());
     }
 
-    /**
-     * @param array $filters
-     * @param string $filterId
-     *
-     * @return AdminFilterRepository
-     */
     private function buildRepositoryByFilterIdMock(array $filters, string $filterId): AdminFilterRepository
     {
         $repositoryMock = $this->getMockBuilder(AdminFilterRepository::class)
@@ -153,13 +148,6 @@ class PersistFiltersBuilderTest extends TestCase
         return $repositoryMock;
     }
 
-    /**
-     * @param array $filters
-     * @param string $controller
-     * @param string $action
-     *
-     * @return AdminFilterRepository
-     */
     private function buildRepositoryByRouteMock(array $filters, string $controller, string $action): AdminFilterRepository
     {
         $repositoryMock = $this->getMockBuilder(AdminFilterRepository::class)
@@ -187,9 +175,6 @@ class PersistFiltersBuilderTest extends TestCase
         return $repositoryMock;
     }
 
-    /**
-     * @return AdminFilterRepository
-     */
     private function buildUnusedRepository(): AdminFilterRepository
     {
         $repositoryMock = $this->getMockBuilder(AdminFilterRepository::class)
@@ -210,9 +195,6 @@ class PersistFiltersBuilderTest extends TestCase
         return $repositoryMock;
     }
 
-    /**
-     * @return ContextEmployeeProviderInterface
-     */
     private function buildEmployeeProviderMock(?int $calledTimes = null): ContextEmployeeProviderInterface
     {
         $employeeProviderMock = $this->getMockBuilder(ContextEmployeeProviderInterface::class)
@@ -221,7 +203,7 @@ class PersistFiltersBuilderTest extends TestCase
         ;
 
         $employeeProviderMock
-            ->expects(null !== $calledTimes ? $this->exactly($calledTimes) : $this->atLeastOnce())
+            ->expects($calledTimes !== null ? $this->exactly($calledTimes) : $this->atLeastOnce())
             ->method('getId')
             ->willReturn(self::EMPLOYEE_ID)
         ;
@@ -229,9 +211,6 @@ class PersistFiltersBuilderTest extends TestCase
         return $employeeProviderMock;
     }
 
-    /**
-     * @return ContextEmployeeProviderInterface
-     */
     private function buildUnusedEmployeeProviderMock(): ContextEmployeeProviderInterface
     {
         $employeeProviderMock = $this->getMockBuilder(ContextEmployeeProviderInterface::class)
@@ -247,11 +226,6 @@ class PersistFiltersBuilderTest extends TestCase
         return $employeeProviderMock;
     }
 
-    /**
-     * @param string $controller
-     *
-     * @return Request
-     */
     private function buildRequestMock(string $controller): Request
     {
         $requestMock = $this->getMockBuilder(Request::class)

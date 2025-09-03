@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ class PatternTransformerTest extends TestCase
 {
     /**
      * @dataProvider getDataForTestTransform
-     *
-     * @param string $basePattern
-     * @param array $transformations
      */
     public function testTransform(string $basePattern, array $transformations)
     {
@@ -129,9 +127,6 @@ class PatternTransformerTest extends TestCase
     }
 
     /**
-     * @param string $expectedTransformationType
-     * @param array $patterns
-     *
      * @dataProvider getDataForTestGetTransformationType
      */
     public function testGetTransformationType(string $expectedTransformationType, array $patterns)

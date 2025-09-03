@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,20 @@ class ClientRepositoryTest extends TestCase
 {
     private $clientRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $userProvider = new InMemoryUserProvider(['myclientid' => ['password' => 'myclientsecret']]);
+        $userProvider = new InMemoryUserProvider([
+            'myclientid' => [
+                'password' => 'myclientsecret',
+            ],
+        ]);
         $this->clientRepository = new ClientRepository(
             $userProvider,
             new UserPasswordHasher(new PasswordHasherFactory([
-                InMemoryUser::class => ['algorithm' => 'plaintext', 'ignore_case' => false],
+                InMemoryUser::class => [
+                    'algorithm' => 'plaintext',
+                    'ignore_case' => false,
+                ],
             ]))
         );
         parent::setUp();

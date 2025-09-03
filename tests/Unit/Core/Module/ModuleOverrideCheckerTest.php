@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,8 @@ class ModuleOverrideCheckerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->psOverrideDir = dirname(__DIR__, 3) . '/Resources/modules_tests/override_for_unit_test/';
-        $this->modulesTestsDir = dirname(__DIR__, 3) . '/Resources/modules_tests';
+        $this->psOverrideDir = \dirname(__DIR__, 3) . '/Resources/modules_tests/override_for_unit_test/';
+        $this->modulesTestsDir = \dirname(__DIR__, 3) . '/Resources/modules_tests';
     }
 
     /**
@@ -55,7 +56,7 @@ class ModuleOverrideCheckerTest extends TestCase
     {
         $moduleOverrideChecker = $this->getModuleOverrideChecker();
 
-        $moduleOverridePath = sprintf('%s/%s/override', $this->modulesTestsDir, $moduleName);
+        $moduleOverridePath = \sprintf('%s/%s/override', $this->modulesTestsDir, $moduleName);
 
         $this->assertEquals($expectedResult, $moduleOverrideChecker->hasOverrideConflict($moduleOverridePath));
     }

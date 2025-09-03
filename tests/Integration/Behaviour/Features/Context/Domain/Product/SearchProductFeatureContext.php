@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,10 +42,6 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I search for products with locale :localeReference matching :search I should get following results:
-     *
-     * @param string $localeReference
-     * @param string $search
-     * @param TableNode $tableNode
      */
     public function assertSearchProducts(string $localeReference, string $search, TableNode $tableNode): void
     {
@@ -57,7 +54,7 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
         ));
         $expectedRelatedProducts = $tableNode->getColumnsHash();
 
-        Assert::assertEquals(count($expectedRelatedProducts), count($foundProducts));
+        Assert::assertEquals(\count($expectedRelatedProducts), \count($foundProducts));
 
         $index = 0;
         foreach ($expectedRelatedProducts as $expectedRelatedProduct) {
@@ -67,7 +64,7 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedProductId,
                 $foundProductForAssociation->getProductId(),
-                sprintf(
+                \sprintf(
                     'Invalid product ID, expected %d but got %d instead.',
                     $expectedProductId,
                     $foundProductForAssociation->getProductId()
@@ -77,7 +74,7 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedProduct['name'],
                 $foundProductForAssociation->getName(),
-                sprintf(
+                \sprintf(
                     'Invalid product name, expected %s but got %s instead.',
                     $expectedRelatedProduct['name'],
                     $foundProductForAssociation->getName()
@@ -87,7 +84,7 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedProduct['reference'],
                 $foundProductForAssociation->getReference(),
-                sprintf(
+                \sprintf(
                     'Invalid product reference, expected %s but got %s instead.',
                     $expectedRelatedProduct['reference'],
                     $foundProductForAssociation->getReference()
@@ -98,7 +95,7 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $realImageUrl,
                 $foundProductForAssociation->getImageUrl(),
-                sprintf(
+                \sprintf(
                     'Invalid product image url, expected %s but got %s instead.',
                     $realImageUrl,
                     $foundProductForAssociation->getImageUrl()
@@ -111,9 +108,6 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I search for products with locale :localeReference matching :search I should get no results
-     *
-     * @param string $localeReference
-     * @param string $search
      */
     public function assertNoProductsFound(string $localeReference, string $search): void
     {
@@ -147,8 +141,8 @@ class SearchProductFeatureContext extends AbstractProductFeatureContext
                 }
             }
 
-            if (!$foundProduct) {
-                throw new RuntimeException(sprintf('Could not find product %s in search result', $expectedProduct['product_id']));
+            if (! $foundProduct) {
+                throw new RuntimeException(\sprintf('Could not find product %s in search result', $expectedProduct['product_id']));
             }
         }
     }

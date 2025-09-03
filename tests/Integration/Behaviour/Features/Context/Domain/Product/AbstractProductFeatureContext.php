@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,10 +64,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
      * Where image1 is the reference to the image id in the shared storage, it allows to get the image
      * id and correctly rebuild the url into something like this:
      *  http://myshop.com/img/p/4/5/45-small_default.jpg
-     *
-     * @param string $imageUrl
-     *
-     * @return string
      */
     protected function getRealImageUrl(string $imageUrl): string
     {
@@ -74,7 +71,7 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         preg_match('_\{(.+)\}_', $imageUrl, $matches);
         $imageReference = $matches[1];
 
-        if ('no_picture' === $imageReference) {
+        if ($imageReference === 'no_picture') {
             $defaultIso = Language::getIsoById((int) Configuration::get('PS_LANG_DEFAULT'));
             $realImageUrl = str_replace(
                 '{' . $imageReference . '}',
@@ -102,10 +99,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
      * Where men is the reference to the category id in the shared storage, it allows to get the category
      * id and correctly rebuild the url into something like this:
      *  http://myshop.com/img/c/4.jpg
-     *
-     * @param string $imageUrl
-     *
-     * @return string
      */
     protected function getRealCategoryImageUrl(string $imageUrl): string
     {
@@ -124,15 +117,9 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         return $realImageUrl;
     }
 
-    /**
-     * @param string $reference
-     * @param int|null $shopId
-     *
-     * @return ProductForEditing
-     */
     protected function getProductForEditing(string $reference, ?int $shopId = null): ProductForEditing
     {
-        if (null === $shopId) {
+        if ($shopId === null) {
             $shopConstraint = ShopConstraint::shop($this->getDefaultShopId());
         } else {
             $shopConstraint = ShopConstraint::shop($shopId);
@@ -148,9 +135,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
     }
 
     /**
-     * @param string $productReference
-     * @param ShopConstraint $shopConstraint
-     *
      * @return CustomizationField[]
      */
     protected function getProductCustomizationFields(string $productReference, ShopConstraint $shopConstraint): array
@@ -161,12 +145,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         ));
     }
 
-    /**
-     * @param ProductForEditing $productForEditing
-     * @param array $data
-     * @param string $propertyName
-     * @param string $extraMessage
-     */
     protected function assertBoolProperty(ProductForEditing $productForEditing, array &$data, string $propertyName, string $extraMessage = ''): void
     {
         if (isset($data[$propertyName])) {
@@ -178,7 +156,7 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
             Assert::assertSame(
                 $expectedValue,
                 $actualValue,
-                sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $expectedValue, $actualValue, $extraMessage)
+                \sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $expectedValue, $actualValue, $extraMessage)
             );
 
             // Unset the checked field from array so we can validate they havel all been asserted
@@ -186,12 +164,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         }
     }
 
-    /**
-     * @param ProductForEditing $productForEditing
-     * @param array $data
-     * @param string $propertyName
-     * @param string $extraMessage
-     */
     protected function assertStringProperty(ProductForEditing $productForEditing, array &$data, string $propertyName, string $extraMessage = ''): void
     {
         if (isset($data[$propertyName])) {
@@ -203,7 +175,7 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
             Assert::assertSame(
                 $expectedValue,
                 $actualValue,
-                sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $expectedValue, $actualValue, $extraMessage)
+                \sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $expectedValue, $actualValue, $extraMessage)
             );
 
             // Unset the checked field from array so we can validate they havel all been asserted
@@ -211,12 +183,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         }
     }
 
-    /**
-     * @param ProductForEditing $productForEditing
-     * @param array $data
-     * @param string $propertyName
-     * @param string $extraMessage
-     */
     protected function assertIntegerProperty(ProductForEditing $productForEditing, array &$data, string $propertyName, string $extraMessage = ''): void
     {
         if (isset($data[$propertyName])) {
@@ -228,7 +194,7 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
             Assert::assertSame(
                 $expectedValue,
                 $actualValue,
-                sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $expectedValue, $actualValue, $extraMessage)
+                \sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $expectedValue, $actualValue, $extraMessage)
             );
 
             // Unset the checked field from array so we can validate they havel all been asserted
@@ -236,30 +202,24 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         }
     }
 
-    /**
-     * @param ProductForEditing $productForEditing
-     * @param array $data
-     * @param string $propertyName
-     * @param string $extraMessage
-     */
     protected function assertDateTimeProperty(ProductForEditing $productForEditing, array &$data, string $propertyName, string $extraMessage = ''): void
     {
-        if (!isset($data[$propertyName])) {
+        if (! isset($data[$propertyName])) {
             return;
         }
 
         $actualValue = $this->extractValueFromProductForEditing($productForEditing, $propertyName);
 
-        if ('' === $data[$propertyName]) {
+        if ($data[$propertyName] === '') {
             Assert::assertEquals(
                 null,
                 $actualValue,
-                sprintf('Unexpected available_date. Expected NULL, got "%s"%s', var_export($actualValue, true), $extraMessage)
+                \sprintf('Unexpected available_date. Expected NULL, got "%s"%s', var_export($actualValue, true), $extraMessage)
             );
         } else {
             $expectedDateTime = new DateTime($data[$propertyName]);
-            if (!($actualValue instanceof DateTimeInterface)) {
-                throw new RuntimeException(sprintf('Unexpected type %s, expected DateTimeInterface', get_class($actualValue)));
+            if (! ($actualValue instanceof DateTimeInterface)) {
+                throw new RuntimeException(\sprintf('Unexpected type %s, expected DateTimeInterface', \get_class($actualValue)));
             }
 
             $formattedExpectedDate = $expectedDateTime->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
@@ -267,7 +227,7 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
             Assert::assertSame(
                 $formattedExpectedDate,
                 $formattedActualDate,
-                sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $formattedExpectedDate, $formattedActualDate, $extraMessage)
+                \sprintf('Expected %s "%s". Got "%s"%s', $propertyName, $formattedExpectedDate, $formattedActualDate, $extraMessage)
             );
         }
 
@@ -277,11 +237,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
 
     /**
      * Extracts corresponding field value from ProductForEditing DTO
-     *
-     * @param ProductForEditing $productForEditing
-     * @param string $propertyName
-     *
-     * @return mixed
      */
     protected function extractValueFromProductForEditing(ProductForEditing $productForEditing, string $propertyName)
     {
@@ -323,11 +278,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         return $propertyAccessor->getValue($productForEditing, $pathsByNames[$propertyName]);
     }
 
-    /**
-     * @param string $outOfStock
-     *
-     * @return int
-     */
     protected function convertOutOfStockToInt(string $outOfStock): int
     {
         $intValues = [
@@ -340,11 +290,6 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         return $intValues[$outOfStock];
     }
 
-    /**
-     * @param string $outOfStock
-     *
-     * @return int
-     */
     protected function convertPackStockTypeToInt(string $outOfStock): int
     {
         $intValues = [
@@ -363,26 +308,15 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
      */
     protected function resolveHistoryDateKeys(string $type): array
     {
-        if (array_key_exists($type, self::DATE_KEYS_BY_TYPE)) {
+        if (\array_key_exists($type, self::DATE_KEYS_BY_TYPE)) {
             return self::DATE_KEYS_BY_TYPE[$type];
         }
-        throw new LogicException(
-            sprintf(
-                'Invalid history type "%s" given, expected any of: %s.',
-                $type,
-                implode(', ', array_keys(self::DATE_KEYS_BY_TYPE))
-            )
-        );
+        throw new LogicException(\sprintf('Invalid history type "%s" given, expected any of: %s.', $type, implode(', ', array_keys(self::DATE_KEYS_BY_TYPE))));
     }
 
-    /**
-     * @param string $manufacturerReference
-     *
-     * @return int
-     */
     protected function getManufacturerId(string $manufacturerReference): int
     {
-        if ('' === $manufacturerReference) {
+        if ($manufacturerReference === '') {
             return NoManufacturerId::NO_MANUFACTURER_ID;
         }
 

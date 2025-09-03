@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,9 +78,6 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the logo size configuration should be :width x :height
-     *
-     * @param int $width
-     * @param int $height
      */
     public function logoSizeConfigurationShouldbe(int $width, int $height): void
     {
@@ -96,13 +94,11 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given shop :reference does not exist
-     *
-     * @param string $reference
      */
     public function setNonExistingShopReference(string $reference): void
     {
         if ($this->getSharedStorage()->exists($reference) && $this->getSharedStorage()->get($reference)) {
-            throw new RuntimeException(sprintf('Expected that shop "%s" should not exist', $reference));
+            throw new RuntimeException(\sprintf('Expected that shop "%s" should not exist', $reference));
         }
 
         $this->getSharedStorage()->set($reference, self::NON_EXISTING_SHOP_ID);

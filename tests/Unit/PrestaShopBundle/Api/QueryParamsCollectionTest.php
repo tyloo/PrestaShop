@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,9 +53,6 @@ class QueryParamsCollectionTest extends TestCase
 
     /**
      * @dataProvider getInvalidPaginationParams
-     *
-     * @param int $pageIndex
-     * @param int $pageSize
      */
     public function testItShouldRaiseAnExceptionOnInvalidPaginationParams(int $pageIndex, int $pageSize): void
     {
@@ -71,14 +69,11 @@ class QueryParamsCollectionTest extends TestCase
             $this->assertInstanceOf(
                 $expectedInstanceOf,
                 $exception,
-                sprintf('It should raise an instance of %s', $expectedInstanceOf)
+                \sprintf('It should raise an instance of %s', $expectedInstanceOf)
             );
         }
     }
 
-    /**
-     * @return array
-     */
     public function getInvalidPaginationParams(): array
     {
         return [
@@ -96,16 +91,14 @@ class QueryParamsCollectionTest extends TestCase
     /**
      * @dataProvider getQueryParams
      *
-     * @param string $order
      * @param int|string|null $pageIndex
      * @param int|string|null $pageSize
-     * @param array $expectedSqlClauses
      */
     public function testItShouldMakeQueryParamsFromARequest(
         string $order,
         $pageIndex,
         $pageSize,
-        array $expectedSqlClauses
+        array $expectedSqlClauses,
     ): void {
         $requestMock = $this->mockRequest(
             [
@@ -134,16 +127,14 @@ class QueryParamsCollectionTest extends TestCase
     /**
      * @dataProvider getQueryParams
      *
-     * @param string $order
      * @param int|string|null $pageIndex
      * @param int|string|null $pageSize
-     * @param array $expectedSqlClauses
      */
     public function testItShouldMakeQueryParamsWithProductFilterFromARequest(
         string $order,
         $pageIndex,
         $pageSize,
-        array $expectedSqlClauses
+        array $expectedSqlClauses,
     ): void {
         $requestMock = $this->mockRequest(
             [
@@ -223,15 +214,11 @@ class QueryParamsCollectionTest extends TestCase
 
     /**
      * @dataProvider getFilterParams
-     *
-     * @param array $params
-     * @param array $expectedSql
-     * @param string $message
      */
     public function testItShouldMakeQueryParamsWithFilterFromARequest(
         array $params,
         array $expectedSql,
-        string $message
+        string $message,
     ): void {
         $requestMock = $this->mockRequest(array_merge(
             $params,
@@ -470,11 +457,6 @@ AND EXISTS(SELECT 1
         ];
     }
 
-    /**
-     * @param array $testedParams
-     *
-     * @return InputBag
-     */
     private function mockQuery(array $testedParams): InputBag
     {
         $params = [];
@@ -490,7 +472,7 @@ AND EXISTS(SELECT 1
         ];
 
         array_walk($validQueryParams, function ($name) use ($testedParams, &$params) {
-            if (array_key_exists($name, $testedParams) && null !== $testedParams[$name]) {
+            if (\array_key_exists($name, $testedParams) && $testedParams[$name] !== null) {
                 $params[$name] = $testedParams[$name];
             }
         });
@@ -502,8 +484,6 @@ AND EXISTS(SELECT 1
     }
 
     /**
-     * @param array $attributes
-     *
      * @return InputBag
      */
     private function mockAttributes(array $attributes)
@@ -515,21 +495,19 @@ AND EXISTS(SELECT 1
     }
 
     /**
-     * @param array $params
-     *
      * @return Request
      */
     private function mockRequest(array $params)
     {
         $attributesMock = null;
-        if (array_key_exists('_attributes', $params)) {
+        if (\array_key_exists('_attributes', $params)) {
             $attributesMock = $params['_attributes'];
         }
 
         $requestMock = $this->createMock(Request::class);
         $requestMock->query = $this->mockQuery($params);
 
-        if (null !== $attributesMock) {
+        if ($attributesMock !== null) {
             $requestMock->attributes = $attributesMock;
         }
 

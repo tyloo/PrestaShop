@@ -37,9 +37,9 @@ return RectorConfig::configure()
         // __DIR__ . '/controllers',
         // __DIR__ . '/install-dev',
         // __DIR__ . '/src/Adapter',
-         __DIR__ . '/src/Core',
+        __DIR__ . '/src/Core',
         __DIR__ . '/src/PrestaShopBundle',
-        // __DIR__ . '/tests',
+        __DIR__ . '/tests',
         // __DIR__ . '/webservice',
     ])
     ->withPhpSets(php81: true)
@@ -52,9 +52,9 @@ return RectorConfig::configure()
         symfony: true,
         doctrine: true,
     )
-    ->withTypeCoverageLevel(10) // max = 53
-    ->withDeadCodeLevel(10) // max = 51
-    ->withCodeQualityLevel(10) // max = 74
-    ->withCodingStyleLevel(10) // max = 25
+    ->withTypeCoverageLevel(0) // max = 53
+    ->withDeadCodeLevel(0) // max = 51
+    ->withCodeQualityLevel(0) // max = 74
+    ->withCodingStyleLevel(0) // max = 25
     ->withParallel()
 ;

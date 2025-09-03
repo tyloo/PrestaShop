@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -83,10 +84,6 @@ class DisabledEndpointsTest extends ApiTestCase
 
     /**
      * @dataProvider getConfigurations
-     *
-     * @param bool $isDebug
-     * @param bool $expectedEndpointStatus
-     * @param bool $forceExperimentalEndpoints
      */
     public function testDisabledEndpoints(bool $isDebug, bool $forceExperimentalEndpoints, bool $expectedEndpointStatus): void
     {
@@ -124,7 +121,7 @@ class DisabledEndpointsTest extends ApiTestCase
         $resourceScopes = $scopesExtractor->getAllApiResourceScopes();
         $foundScope = false;
         foreach ($resourceScopes as $resourceScope) {
-            if (in_array('experimental_scope', $resourceScope->getScopes())) {
+            if (\in_array('experimental_scope', $resourceScope->getScopes(), true)) {
                 $foundScope = true;
                 break;
             }
@@ -196,7 +193,7 @@ class DisabledEndpointsTest extends ApiTestCase
         $resourceScopes = $scopesExtractor->getAllApiResourceScopes();
         $foundScope = false;
         foreach ($resourceScopes as $resourceScope) {
-            if (in_array($endpointScope, $resourceScope->getScopes())) {
+            if (\in_array($endpointScope, $resourceScope->getScopes(), true)) {
                 $foundScope = true;
                 break;
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,12 @@ class DiscountApplicationTypeTest extends TestCase
 {
     /**
      * @dataProvider getDataToBuildDiscountApplicationType
-     *
-     * @param string $type
-     * @param int|null $productId
-     *
-     * @return void
      */
     public function testItBuildsDiscountApplicationType(string $type, ?int $productId = null): void
     {
         $discountApplicationType = new DiscountApplicationType($type, $productId);
         Assert::assertSame($type, $discountApplicationType->getType());
-        if (null === $productId) {
+        if ($productId === null) {
             Assert::assertNull($discountApplicationType->getProductId());
         } else {
             Assert::assertSame($productId, $discountApplicationType->getProductId()->getValue());
@@ -56,19 +52,12 @@ class DiscountApplicationTypeTest extends TestCase
 
     /**
      * @dataProvider getInvalidData
-     *
-     * @param string $type
-     * @param int|null $productId
-     * @param string $expectedException
-     * @param int $expectedCode
-     *
-     * @return void
      */
     public function testItThrowsExceptionWhenInvalidDataIsProvided(
         string $type,
         ?int $productId,
         string $expectedException,
-        int $expectedCode
+        int $expectedCode,
     ): void {
         $this->expectException($expectedException);
         $this->expectExceptionCode($expectedCode);

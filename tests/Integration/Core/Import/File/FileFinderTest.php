@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,19 +35,29 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FileFinderTest extends TestCase
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $adminDirectory;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $importSubDirectory;
 
-    /** @var FileFinder */
+    /**
+     * @var FileFinder
+     */
     protected $filefinder;
 
-    /** @var ImportDirectory */
+    /**
+     * @var ImportDirectory
+     */
     protected $importDirectory;
 
-    /** @var Filesystem */
+    /**
+     * @var Filesystem
+     */
     protected $fs;
 
     protected function setUp(): void

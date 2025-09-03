@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -23,7 +24,7 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
-if (!defined('_PS_VERSION_')) {
+if (! defined('_PS_VERSION_')) {
     exit;
 }
 
@@ -48,7 +49,10 @@ class xlftranslatedmodule extends Module
         $this->displayName = 'xlftranslatedmodule';
         $this->description = 'Test the translations accross different templating engines and controllers';
 
-        $this->ps_versions_compliancy = ['min' => '1.7.5.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = [
+            'min' => '1.7.5.0',
+            'max' => _PS_VERSION_,
+        ];
 
         $this->adminControllerName = 'AdminXlftranslatedmoduleFoo';
         $this->controllers = ['bar']; // this is a front controller
@@ -68,17 +72,11 @@ class xlftranslatedmodule extends Module
         return $content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function install()
     {
         return parent::install();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function uninstall()
     {
         return parent::uninstall();

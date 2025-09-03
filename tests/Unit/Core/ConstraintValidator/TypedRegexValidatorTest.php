@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,8 +54,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForNameType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -71,8 +70,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForCatalogNameType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForCatalogNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -89,8 +86,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForGenericNameType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForGenericNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -107,8 +102,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForCityNameType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForCityNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -125,8 +118,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForAddressType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForAddressTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -143,8 +134,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForPostCodeType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForPostCodeTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -161,8 +150,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForPhoneNumberType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForPhoneNumberTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -183,8 +170,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForMessageType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForMessageTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -201,8 +186,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForLanguageIsoCodeType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForLanguageIsoCodeTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -219,8 +202,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForLanguageCodeType
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForLanguageCodeTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -236,8 +217,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForUpc
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForUpcTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -253,8 +232,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForEan13
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForEan13TypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -270,8 +247,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForIsbn
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForIsbnTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -280,8 +255,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForReference
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForReferenceTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
@@ -304,8 +277,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForUrl
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForUrlTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
@@ -321,8 +292,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForModuleName
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForModuleNameTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
@@ -338,8 +307,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForWebserviceKey
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForWebserviceKeyTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
@@ -355,8 +322,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidZipCodeFormats
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForZipCodeFormatTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
@@ -372,8 +337,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForStateIsoCode
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForStateIsoCodeTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
@@ -382,8 +345,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidCharactersForDiscountCode
-     *
-     * @param string $invalidChar
      */
     public function testItFailsForDiscountCodeWhenInvalidCharactersGiven(string $invalidChar): void
     {
@@ -392,10 +353,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getDataForDiscountCodeTest
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function testDiscountCode(string $value, bool $expectSuccess): void
     {
@@ -413,10 +370,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getDataForLinkRewriteTest
-     *
-     * @param string $value
-     *
-     * @return void
      */
     public function testLinkRewriteType(string $value, string $allowAccentedChars, bool $expectSuccess): void
     {
@@ -439,9 +392,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getDataForTestHTMLType
-     *
-     * @param string $value
-     * @param bool $expectSuccess
      */
     public function testHTMLType(string $value, bool $allowIframe, bool $expectSuccess): void
     {
@@ -616,9 +566,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForUpc(): Generator
     {
         yield ['1234567890013'];
@@ -651,9 +598,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForEan13(): Generator
     {
         yield ['10000000000014'];
@@ -686,9 +630,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForIsbn(): Generator
     {
         yield ['12345678901234567890123412345678901234-33'];
@@ -720,9 +661,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForReference(): Generator
     {
         yield ['='];
@@ -733,9 +671,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [';'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForUrl(): Generator
     {
         yield ['!'];
@@ -751,9 +686,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [';'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForModuleName(): Generator
     {
         yield ['~'];
@@ -825,9 +757,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['|'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForWebServiceKey(): Generator
     {
         yield ['~'];
@@ -861,9 +790,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [' '];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidZipCodeFormats(): Generator
     {
         yield ['A'];
@@ -899,9 +825,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidCharactersForDiscountCode(): Generator
     {
         yield ['!'];
@@ -946,9 +869,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return TypedRegexValidator
-     */
     protected function createValidator(): TypedRegexValidator
     {
         $configurationMock = $this->createMock(ConfigurationInterface::class);
@@ -962,10 +882,6 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         return new TypedRegexValidator($configurationMock);
     }
 
-    /**
-     * @param TypedRegex $constraint
-     * @param string $invalidChar
-     */
     private function assertViolationIsRaised(TypedRegex $constraint, string $invalidChar): void
     {
         $this->validator->validate($invalidChar, $constraint);

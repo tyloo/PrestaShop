@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,9 +89,6 @@ class InvoiceOptionsConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideInvalidConfiguration
-     *
-     * @param string $exception
-     * @param array $values
      */
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {
@@ -128,8 +126,6 @@ class InvoiceOptionsConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideValidConfiguration
-     *
-     * @param array $values
      */
     public function testSuccessfulUpdate(array $values): void
     {

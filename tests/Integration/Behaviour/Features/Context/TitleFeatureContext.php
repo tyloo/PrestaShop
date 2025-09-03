@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,8 +33,6 @@ class TitleFeatureContext extends AbstractPrestaShopFeatureContext
 {
     /**
      * @When I define an uncreated title :titleReference
-     *
-     * @param string $titleReference
      */
     public function defineUnCreatedTitle(string $titleReference): void
     {

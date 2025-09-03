@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,7 +65,7 @@ class SpecificPriceFormatterTest extends KernelTestCase
 
         foreach (['us', 'fr'] as $country) {
             $localizationWarmer = new LocalizationWarmer(_PS_VERSION_, $country);
-            $xmlContent = $localizationWarmer->warmUp(_PS_CACHE_DIR_ . 'sandbox' . DIRECTORY_SEPARATOR);
+            $xmlContent = $localizationWarmer->warmUp(_PS_CACHE_DIR_ . 'sandbox' . \DIRECTORY_SEPARATOR);
 
             $localizationPack = new LocalizationPack();
             $localizationPack->loadLocalisationPack($xmlContent[0], [], true);
@@ -73,14 +74,6 @@ class SpecificPriceFormatterTest extends KernelTestCase
 
     /**
      * @dataProvider dataProviderSpecificPriceFormatter
-     *
-     * @param float $price
-     * @param float $taxRate
-     * @param float $ecotaxAmount
-     * @param array $currencyData
-     * @param array $specificPrices
-     * @param bool $isTaxIncluded
-     * @param array $expected
      */
     public function testSpecificPriceFormatter(
         float $price,
@@ -89,7 +82,7 @@ class SpecificPriceFormatterTest extends KernelTestCase
         array $currencyData,
         array $specificPrices,
         bool $isTaxIncluded,
-        array $expected
+        array $expected,
     ): void {
         $context = Context::getContext();
 

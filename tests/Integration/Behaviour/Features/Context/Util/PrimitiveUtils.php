@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,10 +45,7 @@ class PrimitiveUtils
     public const TYPE_UNKNOWN = 'unknown type';
 
     /**
-     * @param mixed $element
      * @param string $type
-     *
-     * @return mixed
      */
     public static function castElementInType($element, $type)
     {
@@ -56,10 +54,10 @@ class PrimitiveUtils
                 return self::castStringBooleanIntoBoolean($element);
 
             case self::TYPE_INTEGER:
-                return intval($element);
+                return \intval($element);
 
             case self::TYPE_DOUBLE:
-                return floatval($element);
+                return \floatval($element);
 
             case self::TYPE_STRING:
                 return $element;
@@ -68,23 +66,22 @@ class PrimitiveUtils
                 return new DateTime($element);
 
             case self::TYPE_ARRAY:
-                if ('empty' === $element) {
+                if ($element === 'empty') {
                     return [];
                 }
-                if (is_array($element)) {
+                if (\is_array($element)) {
                     return $element;
                 }
 
                 return explode('; ', $element);
 
             case self::TYPE_NULL:
-                if (('null' === $element) || ('Null' === $element) || ('NULL' === $element)) {
+                if (($element === 'null') || ($element === 'Null') || ($element === 'NULL')) {
                     return;
-                } else {
-                    return $element;
                 }
 
-                // no break
+                return $element;
+
             case self::TYPE_OBJECT:
             case self::TYPE_RESOURCE:
             case self::TYPE_UNKNOWN:
@@ -102,7 +99,7 @@ class PrimitiveUtils
      */
     public static function isIdentical($element1, $element2)
     {
-        if (gettype($element1) !== gettype($element2)) {
+        if (\gettype($element1) !== \gettype($element2)) {
             return false;
         }
 
@@ -110,7 +107,7 @@ class PrimitiveUtils
             return $element1->format('YmdHis') === $element2->format('YmdHis');
         }
 
-        $type = gettype($element1);
+        $type = \gettype($element1);
         switch ($type) {
             case self::TYPE_BOOLEAN:
             case self::TYPE_INTEGER:
@@ -139,7 +136,7 @@ class PrimitiveUtils
             case self::TYPE_OBJECT:
             case self::TYPE_RESOURCE:
             case self::TYPE_NULL:
-                if ((null === $element1) && (null === $element2)) {
+                if (($element1 === null) && ($element2 === null)) {
                     return true;
                 }
 
@@ -163,19 +160,17 @@ class PrimitiveUtils
             return false;
         }
 
-        return boolval($element);
+        return \boolval($element);
     }
 
     /**
-     * @param array $array
-     *
      * @return array
      */
     public static function castArrayElementsIntoString(array $array)
     {
         $newArray = [];
         foreach ($array as $key => $element) {
-            if (is_array($element)) {
+            if (\is_array($element)) {
                 throw new Exception('Cannot cast two-level array into string');
             }
 
@@ -210,8 +205,8 @@ class PrimitiveUtils
      */
     public static function castStringIntegerIntoInteger($element)
     {
-        if (intval($element) !== 0) {
-            return intval($element);
+        if (\intval($element) !== 0) {
+            return \intval($element);
         }
 
         switch ($element) {
@@ -239,10 +234,6 @@ class PrimitiveUtils
     }
 
     /**
-     * @param int $length
-     *
-     * @return string
-     *
      * @throws Exception
      */
     public static function generateRandomString(int $length): string

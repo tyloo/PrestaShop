@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -106,7 +107,7 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         if (isset($properties['shopIds'])) {
             $command->setAssociatedShopIds($this->referencesToIds($properties['shopIds']));
         }
-        if (isset($properties['texture']) && 'null' !== $properties['texture']) {
+        if (isset($properties['texture']) && $properties['texture'] !== 'null') {
             $file = DummyFileUploader::upload($properties['texture']);
             $command->setTextureFilePath($file);
         }
@@ -120,9 +121,6 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then attribute :reference should have the following properties:
-     *
-     * @param string $reference
-     * @param TableNode $tableNode
      */
     public function assertAttributeGroupProperties(string $reference, TableNode $tableNode): void
     {
@@ -143,12 +141,6 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param int $attributeGroupId
-     * @param array $localizedValues
-     * @param string $color
-     *
-     * @return AttributeId
-     *
      * @throws AttributeConstraintException
      */
     private function createAttributeUsingCommand(
@@ -156,7 +148,7 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         array $localizedValues,
         string $color,
         array $shopIds,
-        string $filePath
+        string $filePath,
     ): AttributeId {
         $command = new AddAttributeCommand(
             $attributeGroupId,
@@ -165,7 +157,7 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
             $shopIds
         );
 
-        if ('null' !== $filePath) {
+        if ($filePath !== 'null') {
             $file = DummyFileUploader::upload($filePath);
             $command->setTextureFilePath($file);
         }
@@ -193,17 +185,12 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle(new GetAttributeForEditing($attributeId));
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Attribute %s exists, but it was expected to be deleted', $reference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Attribute %s exists, but it was expected to be deleted', $reference));
         } catch (AttributeNotFoundException $e) {
             $this->getSharedStorage()->clear($reference);
         }
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return EditableAttribute
-     */
     private function getAttribute(string $reference): EditableAttribute
     {
         $id = $this->referenceToId($reference);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,8 +50,6 @@ class CartRuleActionBuilderTest extends TestCase
      * @dataProvider getSupportedData
      *
      * @param array<string, mixed> $data
-     *
-     * @return void
      */
     public function testItSupportsData(array $data): void
     {
@@ -61,8 +60,6 @@ class CartRuleActionBuilderTest extends TestCase
      * @dataProvider getUnsupportedData
      *
      * @param array<string, mixed> $data
-     *
-     * @return void
      */
     public function testItDoesNotSupportData(array $data): void
     {
@@ -73,10 +70,6 @@ class CartRuleActionBuilderTest extends TestCase
      * @dataProvider getInvalidData
      *
      * @param array<string, mixed> $data
-     * @param string $expectedException
-     * @param int $expectedCode
-     *
-     * @return void
      *
      * @throws CartRuleConstraintException
      */
@@ -95,13 +88,10 @@ class CartRuleActionBuilderTest extends TestCase
      * @dataProvider getDataForMixedAction
      *
      * @param array<string, mixed> $data
-     * @param CartRuleAction $expectedAction
-     *
-     * @return void
      */
     public function testItBuildsAction(
         array $data,
-        CartRuleAction $expectedAction
+        CartRuleAction $expectedAction,
     ): void {
         $action = $this->getCartRuleActionBuilder()->build($data);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -231,11 +232,6 @@ class FormClonerTest extends AbstractFormTester
         $this->assertEquals($overrideChoices, $clonedChoicesList->getStructuredValues());
     }
 
-    /**
-     * @param DataTransformerInterface $transformer
-     *
-     * @return ChoiceListInterface
-     */
     private function getTransformerChoiceList(DataTransformerInterface $transformer): ChoiceListInterface
     {
         $reflectionProperty = new ReflectionProperty(ChoiceToValueTransformer::class, 'choiceList');
@@ -247,24 +243,15 @@ class FormClonerTest extends AbstractFormTester
         return $choiceList;
     }
 
-    /**
-     * @param FormInterface $form
-     * @param int $expectedCount
-     */
     private function assertTotalNumberOfListeners(FormInterface $form, int $expectedCount): void
     {
         $listenersCount = 0;
         foreach ($form->getConfig()->getEventDispatcher()->getListeners() as $eventName => $listeners) {
-            $listenersCount += count($listeners);
+            $listenersCount += \count($listeners);
         }
         $this->assertSame($expectedCount, $listenersCount);
     }
 
-    /**
-     * @param FormInterface $originalForm
-     * @param FormInterface $clonedForm
-     * @param array $newOptions
-     */
     private function compareForms(FormInterface $originalForm, FormInterface $clonedForm, array $newOptions = []): void
     {
         // Note: we use assertSame everywhere instead of assertEquals because of a bug with isolated process in PHPUnit
@@ -281,15 +268,10 @@ class FormClonerTest extends AbstractFormTester
         }
     }
 
-    /**
-     * @param FormConfigInterface $originalConfig
-     * @param FormConfigInterface $clonedConfig
-     * @param array $newOptions
-     */
     private function compareFormConfigs(
         FormConfigInterface $originalConfig,
         FormConfigInterface $clonedConfig,
-        array $newOptions = []
+        array $newOptions = [],
     ): void {
         $this->assertSame($originalConfig->getName(), $clonedConfig->getName());
         $this->assertSame($originalConfig->getPropertyPath(), $clonedConfig->getPropertyPath());
@@ -305,14 +287,9 @@ class FormClonerTest extends AbstractFormTester
         $this->compareDataTransformers($originalConfig->getViewTransformers(), $clonedConfig->getViewTransformers());
     }
 
-    /**
-     * @param array $originalOptions
-     * @param array $clonedOptions
-     * @param array $newOptions
-     */
     private function compareFormOptions(array $originalOptions, array $clonedOptions, array $newOptions = []): void
     {
-        $this->assertSame(count($originalOptions), count($clonedOptions));
+        $this->assertSame(\count($originalOptions), \count($clonedOptions));
         foreach ($originalOptions as $optionName => $originalOption) {
             $this->assertArrayHasKey($optionName, $clonedOptions);
             $clonedOption = $clonedOptions[$optionName];
@@ -326,7 +303,7 @@ class FormClonerTest extends AbstractFormTester
                 } else {
                     $expectedOption = $originalOption;
                 }
-                $this->assertSame($expectedOption, $clonedOption, sprintf(
+                $this->assertSame($expectedOption, $clonedOption, \sprintf(
                     'Option "%s", expected %s but got %s instead',
                     $optionName,
                     var_export($originalOption, true),
@@ -336,27 +313,23 @@ class FormClonerTest extends AbstractFormTester
         }
     }
 
-    /**
-     * @param EventDispatcherInterface $originalDispatcher
-     * @param EventDispatcherInterface $clonedDispatcher
-     */
     private function compareEventDispatchers(EventDispatcherInterface $originalDispatcher, EventDispatcherInterface $clonedDispatcher): void
     {
         foreach ($originalDispatcher->getListeners() as $eventName => $originalListeners) {
             $clonedListeners = $clonedDispatcher->getListeners($eventName);
-            $this->assertSame(count($originalListeners), count($clonedListeners));
+            $this->assertSame(\count($originalListeners), \count($clonedListeners));
             foreach ($originalListeners as $index => $originalListener) {
                 $this->assertArrayHasKey($index, $clonedListeners);
                 $clonedListener = $clonedListeners[$index];
                 if ($originalListener instanceof Closure) {
                     // Closure cannot be serialized so we just check the type
                     $this->assertInstanceOf(Closure::class, $clonedListener);
-                } elseif (is_array($originalListener) && 2 === count($originalListener) && is_object($originalListener[0])) {
+                } elseif (\is_array($originalListener) && \count($originalListener) === 2 && \is_object($originalListener[0])) {
                     // Probably a callback array
                     $this->assertIsArray($clonedListener);
-                    $this->assertSame(2, count($clonedListener));
+                    $this->assertSame(2, \count($clonedListener));
                     $this->assertIsObject($clonedListener[0]);
-                    $this->assertInstanceOf(get_class($originalListener[0]), $clonedListener[0]);
+                    $this->assertInstanceOf(\get_class($originalListener[0]), $clonedListener[0]);
                     // This is the event name
                     $this->assertSame($originalListener[1], $clonedListener[1]);
                 } else {
@@ -372,12 +345,12 @@ class FormClonerTest extends AbstractFormTester
      */
     private function compareDataTransformers(array $originalTransformers, array $clonedTransformers): void
     {
-        $this->assertSame(count($originalTransformers), count($clonedTransformers));
+        $this->assertSame(\count($originalTransformers), \count($clonedTransformers));
         foreach ($originalTransformers as $index => $originalTransformer) {
             $this->assertArrayHasKey($index, $clonedTransformers);
             $clonedTransformer = $clonedTransformers[$index];
             // We can't check the whole object but at least the type
-            $this->assertInstanceOf(get_class($originalTransformer), $clonedTransformer);
+            $this->assertInstanceOf(\get_class($originalTransformer), $clonedTransformer);
         }
     }
 }

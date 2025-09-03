@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,8 +51,8 @@ class RiskFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        if (!$searchedRisk) {
-            throw new RuntimeException(sprintf('Cannot find risk with name %s', $name));
+        if (! $searchedRisk) {
+            throw new RuntimeException(\sprintf('Cannot find risk with name %s', $name));
         }
 
         SharedStorage::getStorage()->set($reference, $searchedRisk->id);

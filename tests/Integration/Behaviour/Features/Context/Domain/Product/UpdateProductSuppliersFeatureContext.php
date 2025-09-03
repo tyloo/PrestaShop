@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,8 +53,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I remove all associated product :productReference suppliers
-     *
-     * @param string $productReference
      */
     public function removeAssociatedProductSuppliers(string $productReference): void
     {
@@ -68,9 +67,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I set product :productReference default supplier to :defaultSupplierReference
-     *
-     * @param string $productReference
-     * @param string $defaultSupplierReference
      */
     public function updateProductDefaultSupplier(string $productReference, string $defaultSupplierReference): void
     {
@@ -88,9 +84,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I associate suppliers to product :productReference
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function associateSupplier(string $productReference, TableNode $tableNode): void
     {
@@ -110,9 +103,9 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
         foreach ($data as $supplierRow) {
             $supplierId = (int) $this->getSharedStorage()->get($supplierRow['supplier']);
 
-            if (!empty($supplierRow['product_supplier'])) {
+            if (! empty($supplierRow['product_supplier'])) {
                 $productSuppliersReferences[$supplierId][NoCombinationId::NO_COMBINATION_ID] = $supplierRow['product_supplier'];
-            } elseif (!empty($supplierRow['combination_suppliers'])) {
+            } elseif (! empty($supplierRow['combination_suppliers'])) {
                 $combinationReferences = explode(';', $supplierRow['combination_suppliers']);
                 foreach ($combinationReferences as $combinationReference) {
                     list($combinationReference, $productSupplierReference) = explode(':', $combinationReference);
@@ -139,9 +132,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I update product :productReference suppliers:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function updateProductSuppliers(string $productReference, TableNode $tableNode): void
     {
@@ -188,9 +178,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following suppliers:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function assertProductSuppliers(string $productReference, TableNode $table): void
     {
@@ -227,14 +214,12 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
         Assert::assertEquals(
             $expectedProductSuppliers,
             $actualProductSuppliers,
-            sprintf('Product "%s" suppliers doesn\'t match', $productReference)
+            \sprintf('Product "%s" suppliers doesn\'t match', $productReference)
         );
     }
 
     /**
      * @Then product :productReference default supplier reference should be empty
-     *
-     * @param string $productReference
      */
     public function assertProductDefaultSupplierReferenceIsEmpty(string $productReference): void
     {
@@ -243,34 +228,28 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should not have any suppliers assigned
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoSuppliers(string $productReference): void
     {
         Assert::assertEmpty(
             $this->getAssociatedSuppliers($productReference)->getSupplierIds(),
-            sprintf('Expected product %s to have no suppliers assigned', $productReference)
+            \sprintf('Expected product %s to have no suppliers assigned', $productReference)
         );
     }
 
     /**
      * @Then product :productReference should not have suppliers infos
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoSuppliersInfo(string $productReference): void
     {
         Assert::assertEmpty(
             $this->getProductSupplierOptions($productReference)->getProductSuppliers(),
-            sprintf('Expected product %s to have no suppliers assigned', $productReference)
+            \sprintf('Expected product %s to have no suppliers assigned', $productReference)
         );
     }
 
     /**
      * @Then product :productReference should have the following suppliers assigned:
-     *
-     * @param string $productReference
      */
     public function assertAssignedSuppliers(string $productReference, TableNode $tableNode): void
     {
@@ -283,7 +262,7 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
         Assert::assertEquals(
             $expectedSupplierIds,
             $supplierIds,
-            sprintf(
+            \sprintf(
                 'Expected product %s to have no suppliers %s but got %s instead',
                 $productReference,
                 implode(',', $expectedSupplierIds),
@@ -310,8 +289,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should not have a default supplier
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoDefaultSupplier(string $productReference): void
     {
@@ -319,15 +296,12 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
 
         Assert::assertEmpty(
             $defaultSupplierId,
-            sprintf('Product "%s" expected to have no default supplier', $productReference)
+            \sprintf('Product "%s" expected to have no default supplier', $productReference)
         );
     }
 
     /**
      * @Then product :productReference should have following supplier values:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function assertDefaultSupplier(string $productReference, TableNode $tableNode): void
     {
@@ -335,7 +309,7 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
         $associatedSuppliers = $this->getAssociatedSuppliers($productReference);
 
         if (isset($data['default supplier'])) {
-            $defaultSupplierId = !empty($data['default supplier']) ? $this->getSharedStorage()->get($data['default supplier']) : 0;
+            $defaultSupplierId = ! empty($data['default supplier']) ? $this->getSharedStorage()->get($data['default supplier']) : 0;
             Assert::assertEquals(
                 $defaultSupplierId,
                 $associatedSuppliers->getDefaultSupplierId(),
@@ -349,7 +323,7 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
             unset($data['default supplier reference']);
         }
 
-        Assert::assertEmpty($data, sprintf('Some provided product supplier fields haven\'t been asserted: %s', var_export($data, true)));
+        Assert::assertEmpty($data, \sprintf('Some provided product supplier fields haven\'t been asserted: %s', var_export($data, true)));
     }
 
     /**
@@ -360,11 +334,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
         $this->assertLastErrorIs(InvalidProductTypeException::class);
     }
 
-    /**
-     * @param string $productReference
-     *
-     * @return AssociatedSuppliers
-     */
     private function getAssociatedSuppliers(string $productReference): AssociatedSuppliers
     {
         return $this->getQueryBus()->handle(new GetAssociatedSuppliers(
@@ -372,11 +341,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
         ));
     }
 
-    /**
-     * @param string $productReference
-     *
-     * @return ProductSupplierOptions
-     */
     private function getProductSupplierOptions(string $productReference): ProductSupplierOptions
     {
         return $this->getQueryBus()->handle(new GetProductSupplierOptions(
@@ -387,9 +351,6 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
     /**
      * product->supplier_reference is deprecated and not used in domain anymore,
      * this assertion is here only to support backwards compatibility until $product->supplier_reference is completely removed
-     *
-     * @param string $productReference
-     * @param string $expectedValue
      */
     private function assertDefaultSupplierReference(string $productReference, string $expectedValue): void
     {

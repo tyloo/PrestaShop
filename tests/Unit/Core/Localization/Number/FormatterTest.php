@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,23 +42,23 @@ class FormatterTest extends TestCase
 {
     protected function setUp(): void
     {
-        if (!defined('PS_ROUND_UP')) {
-            define('PS_ROUND_UP', 0);
+        if (! \defined('PS_ROUND_UP')) {
+            \define('PS_ROUND_UP', 0);
         }
-        if (!defined('PS_ROUND_DOWN')) {
-            define('PS_ROUND_DOWN', 1);
+        if (! \defined('PS_ROUND_DOWN')) {
+            \define('PS_ROUND_DOWN', 1);
         }
-        if (!defined('PS_ROUND_HALF_UP')) {
-            define('PS_ROUND_HALF_UP', 2);
+        if (! \defined('PS_ROUND_HALF_UP')) {
+            \define('PS_ROUND_HALF_UP', 2);
         }
-        if (!defined('PS_ROUND_HALF_DOWN')) {
-            define('PS_ROUND_HALF_DOWN', 3);
+        if (! \defined('PS_ROUND_HALF_DOWN')) {
+            \define('PS_ROUND_HALF_DOWN', 3);
         }
-        if (!defined('PS_ROUND_HALF_EVEN')) {
-            define('PS_ROUND_HALF_EVEN', 4);
+        if (! \defined('PS_ROUND_HALF_EVEN')) {
+            \define('PS_ROUND_HALF_EVEN', 4);
         }
-        if (!defined('PS_ROUND_HALF_ODD')) {
-            define('PS_ROUND_HALF_ODD', 5);
+        if (! \defined('PS_ROUND_HALF_ODD')) {
+            \define('PS_ROUND_HALF_ODD', 5);
         }
     }
 
@@ -66,14 +67,14 @@ class FormatterTest extends TestCase
      * When asking the number formatter to format the said number, following the specification rules
      * Then the expected result should be retrieved
      *
-     * @param array $localeParams
-     *                            The locale params
+     * @param array                        $localeParams
+     *                                                          The locale params
      * @param NumberSpecificationInterface $numberSpecification
      *                                                          The number specification
-     * @param int|float|string $number
-     *                                 The number to be formatted
-     * @param string $expectedResult
-     *                               The formatted number
+     * @param int|float|string             $number
+     *                                                          The number to be formatted
+     * @param string                       $expectedResult
+     *                                                          The formatted number
      *
      * @dataProvider provideValidNumberFormatSpecs
      *

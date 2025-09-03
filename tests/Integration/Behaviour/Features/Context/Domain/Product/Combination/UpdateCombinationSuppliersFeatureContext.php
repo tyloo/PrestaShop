@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class UpdateCombinationSuppliersFeatureContext extends AbstractCombinationFeatur
 {
     /**
      * @When I update following suppliers for combination ":combinationReference":
-     *
-     * @param string $combinationReference
-     * @param TableNode $table
      */
     public function updateCombinationSuppliers(string $combinationReference, TableNode $table): void
     {
@@ -56,7 +54,7 @@ class UpdateCombinationSuppliersFeatureContext extends AbstractCombinationFeatur
                 'combination_id' => $this->getSharedStorage()->get($combinationReference),
             ];
 
-            if (!empty($row['product_supplier'])) {
+            if (! empty($row['product_supplier'])) {
                 $productSupplierData['product_supplier'] = $this->getSharedStorage()->get($row['product_supplier']);
             }
 
@@ -83,9 +81,6 @@ class UpdateCombinationSuppliersFeatureContext extends AbstractCombinationFeatur
 
     /**
      * @Then combination ":combinationReference" should have following suppliers:
-     *
-     * @param string $combinationReference
-     * @param TableNode $table
      */
     public function assertSuppliers(string $combinationReference, TableNode $table): void
     {
@@ -97,7 +92,7 @@ class UpdateCombinationSuppliersFeatureContext extends AbstractCombinationFeatur
             $expectedCombinationSupplier['combination'] = $this->getSharedStorage()->get($combinationReference);
             $expectedCombinationSupplier['price_tax_excluded'] = new DecimalNumber($expectedCombinationSupplier['price_tax_excluded']);
             $expectedCombinationSupplier['supplier'] = $this->getSharedStorage()->get($expectedCombinationSupplier['supplier']);
-            if (!empty($expectedCombinationSupplier['product_supplier'])) {
+            if (! empty($expectedCombinationSupplier['product_supplier'])) {
                 $expectedCombinationSupplier['product_supplier'] = $this->getSharedStorage()->get($expectedCombinationSupplier['product_supplier']);
                 $checkProductSuppliers = true;
             }
@@ -122,26 +117,22 @@ class UpdateCombinationSuppliersFeatureContext extends AbstractCombinationFeatur
         Assert::assertEquals(
             $expectedCombinationSuppliers,
             $actualCombinationSuppliers,
-            sprintf('Combination "%s" suppliers doesn\'t match', $combinationReference)
+            \sprintf('Combination "%s" suppliers doesn\'t match', $combinationReference)
         );
     }
 
     /**
      * @Given combination :combinationReference should not have any suppliers assigned
-     *
-     * @param string $combinationReference
      */
     public function assertNoSuppliers(string $combinationReference): void
     {
         Assert::assertEmpty(
             $this->getCombinationSuppliers($combinationReference),
-            sprintf('Combination "%s" should not have any suppliers assigned', $combinationReference)
+            \sprintf('Combination "%s" should not have any suppliers assigned', $combinationReference)
         );
     }
 
     /**
-     * @param string $combinationReference
-     *
      * @return ProductSupplierForEditing[]
      */
     private function getCombinationSuppliers(string $combinationReference): array

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Exception\DomainConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 
-/**
- * Class EmailTest
- */
 class EmailTest extends TestCase
 {
     /**
@@ -75,7 +73,7 @@ class EmailTest extends TestCase
     {
         yield [''];
         yield [123];
-        yield [sprintf('very_long_email_%s@demo.com', str_repeat('A', 231))];
+        yield [\sprintf('very_long_email_%s@demo.com', str_repeat('A', 231))];
     }
 
     public function getEmailCompareValues()

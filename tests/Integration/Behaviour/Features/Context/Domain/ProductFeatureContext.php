@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Then I set tax rule group :taxRulesGroupReference to product :productReference
-     *
-     * @param string $taxRulesGroupReference
-     * @param string $productName
      */
     public function setProductTaxRulesGroup(string $taxRulesGroupReference, string $productName)
     {
@@ -65,12 +63,12 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
         $productId = $this->getProductIdByName($productName);
 
         $product = new Product($productId);
-        if (!Category::categoryExists($product->id_category_default)) {
+        if (! Category::categoryExists($product->id_category_default)) {
             throw new RuntimeException('The product doesn\'t have default category');
         }
 
         $customerId = SharedStorage::getStorage()->get($customerReference);
-        if (!Customer::customerIdExistsStatic($customerId)) {
+        if (! Customer::customerIdExistsStatic($customerId)) {
             throw new RuntimeException('The customer doesn\'t exist');
         }
 
@@ -81,7 +79,7 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
         $groupReduction->id_group = $customer->id_default_group;
         $groupReduction->reduction = $reductionPercent / 100;
 
-        if (!$groupReduction->add()) {
+        if (! $groupReduction->add()) {
             throw new RuntimeException('Cannot add group reduction to database');
         }
 
@@ -106,9 +104,6 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then there is a product :productReference with name :productName
-     *
-     * @param string $productReference
-     * @param string $productName
      */
     public function storeProductReferenceByName(string $productReference, string $productName): void
     {
@@ -116,18 +111,13 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
         $this->getSharedStorage()->set($productReference, $productId);
     }
 
-    /**
-     * @param string $productName
-     *
-     * @return int
-     */
     private function getProductIdByName(string $productName): int
     {
         /** @var FoundProduct[] */
         $products = $this->getQueryBus()->handle(new SearchProducts($productName, 1, $this->getDefaultCurrencyIsoCode()));
 
         if (empty($products)) {
-            throw new RuntimeException(sprintf('Product with name "%s" was not found', $productName));
+            throw new RuntimeException(\sprintf('Product with name "%s" was not found', $productName));
         }
 
         /** @var FoundProduct $product */

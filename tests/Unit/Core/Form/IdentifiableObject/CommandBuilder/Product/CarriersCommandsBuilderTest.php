@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ class CarriersCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
     /**
      * @dataProvider getExpectedSingleShopCommands
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildSingleShopCommands(array $formData, array $expectedCommands): void
     {
@@ -49,9 +47,6 @@ class CarriersCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 
     /**
      * @dataProvider getExpectedMultiShopCommands
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildMultiShopCommands(array $formData, array $expectedCommands): void
     {

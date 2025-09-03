@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -102,7 +103,7 @@ class StoreControllerTest extends GridControllerTestCase
 
         foreach ($gridFilters as $testFilter) {
             $stores = $this->getFilteredEntitiesFromGrid($testFilter);
-            $this->assertGreaterThanOrEqual(1, count($stores), sprintf(
+            $this->assertGreaterThanOrEqual(1, \count($stores), \sprintf(
                 'Expected at least one store with filters %s',
                 var_export($testFilter, true)
             ));
@@ -210,8 +211,6 @@ class StoreControllerTest extends GridControllerTestCase
 
     /**
      * @depends testToggleStatus
-     *
-     * @return int
      */
     public function testDelete(): int
     {

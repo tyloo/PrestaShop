@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,19 +37,19 @@ class DotEnvLayerTest extends TestCase
     private const FEATURE_FLAG_TEST = 'feature_flag_test';
     private const VAR_FEATURE_FLAG_TEST = 'PS_FF_FEATURE_FLAG_TEST';
     private const DOTENV_PATH = _PS_ROOT_DIR_ . '/tests/Resources/env/.env.unit.local';
-    public static $save_dotenv_vars = null;
+    public static $save_dotenv_vars;
 
     public static function setUpBeforeClass(): void
     {
         static::$save_dotenv_vars = $_ENV['SYMFONY_DOTENV_VARS'] ?? '';
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->resetEnv();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->resetEnv();
     }
@@ -171,7 +172,7 @@ class DotEnvLayerTest extends TestCase
     {
         return new DotEnvLayer(
             new Environment(false, 'unit'),
-            dirname(self::DOTENV_PATH)
+            \dirname(self::DOTENV_PATH)
         );
     }
 }

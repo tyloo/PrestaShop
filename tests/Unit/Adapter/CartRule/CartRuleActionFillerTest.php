@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,17 +46,11 @@ class CartRuleActionFillerTest extends TestCase
 {
     /**
      * @dataProvider getDataToTestUpdatablePropertiesFilling
-     *
-     * @param CartRuleAction $cartRuleAction
-     * @param array $expectedUpdatableProperties
-     * @param CartRule $expectedCartRule
-     *
-     * @return void
      */
     public function testFillsUpdatableProperties(
         CartRuleAction $cartRuleAction,
         array $expectedUpdatableProperties,
-        CartRule $expectedCartRule
+        CartRule $expectedCartRule,
     ) {
         $cartRule = $this->mockDefaultCartRule();
         $updatableProperties = (new CartRuleActionFiller())->fillUpdatableProperties(

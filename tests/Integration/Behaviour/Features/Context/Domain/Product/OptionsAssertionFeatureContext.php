@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,10 +41,6 @@ class OptionsAssertionFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @Transform table:product option,value
-     *
-     * @param TableNode $tableNode
-     *
-     * @return ProductOptions
      */
     public function transformOptions(TableNode $tableNode): ProductOptions
     {
@@ -62,9 +59,6 @@ class OptionsAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following options:
-     *
-     * @param string $productReference
-     * @param ProductOptions $expectedOptions
      */
     public function assertOptionsForDefaultShop(string $productReference, ProductOptions $expectedOptions): void
     {
@@ -73,10 +67,6 @@ class OptionsAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following options for shops :shopReferences:
-     *
-     * @param string $productReference
-     * @param ProductOptions $expectedOptions
-     * @param string $shopReferences
      */
     public function assertOptionsForShops(string $productReference, ProductOptions $expectedOptions, string $shopReferences): void
     {
@@ -87,11 +77,6 @@ class OptionsAssertionFeatureContext extends AbstractProductFeatureContext
         }
     }
 
-    /**
-     * @param string $productReference
-     * @param ProductOptions $expectedOptions
-     * @param int $shopId
-     */
     private function assertOptions(string $productReference, ProductOptions $expectedOptions, int $shopId): void
     {
         $properties = [
@@ -110,7 +95,7 @@ class OptionsAssertionFeatureContext extends AbstractProductFeatureContext
             Assert::assertSame(
                 $propertyAccessor->getValue($expectedOptions, $property),
                 $propertyAccessor->getValue($actualOptions, $property),
-                sprintf('Unexpected %s of product "%s"', $property, $productReference)
+                \sprintf('Unexpected %s of product "%s"', $property, $productReference)
             );
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,19 +28,21 @@ class Cart extends CartCore
 {
     public $delivery_option;
 
-    /** @var bool Allow to seperate order in multiple package in order to recieve as soon as possible the available products */
+    /**
+     * @var bool Allow to seperate order in multiple package in order to recieve as soon as possible the available products
+     */
     public $allow_seperated_package = false;
 
     protected static $_nbProducts = [];
     protected static $_isVirtualCart = [];
 
-    protected $_products = null;
+    protected $_products;
     protected static $_totalWeight = [];
     protected $_taxCalculationMethod = PS_TAX_EXC;
-    protected static $_carriers = null;
-    protected static $_taxes_rate = null;
+    protected static $_carriers;
+    protected static $_taxes_rate;
     protected static $_attributesLists = [];
-    protected static $_customer = null;
+    protected static $_customer;
 
     public function deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0)
     {
@@ -54,7 +57,7 @@ class Cart extends CartCore
             null,
             false
         );
-        if ($result == false) {
+        if ($result === false) {
             parent::deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0);
         }
     }
@@ -67,17 +70,16 @@ class Cart extends CartCore
             $params = Hook::exec('ppbsGetProducts', ['products' => $products], null, true);
             if (isset($params['productpricebysize']['products'])) {
                 return $params['productpricebysize']['products'];
-            } else {
-                return $products;
             }
-        } else {
-            $params = Hook::exec('ppbsGetProducts', ['products' => $products], null);
-            $params = json_decode($params, true);
-            if (isset($params['products'])) {
-                return $params['products'];
-            } else {
-                return $products;
-            }
+
+            return $products;
         }
+        $params = Hook::exec('ppbsGetProducts', ['products' => $products], null);
+        $params = json_decode($params, true);
+        if (isset($params['products'])) {
+            return $params['products'];
+        }
+
+        return $products;
     }
 }

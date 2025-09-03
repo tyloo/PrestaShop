@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class OrderCartFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Given order :orderReference has customer :customerReference
-     *
-     * @param string $orderReference
-     * @param string $customerReference
      */
     public function orderHasCustomer(string $orderReference, string $customerReference)
     {
@@ -56,16 +54,12 @@ class OrderCartFeatureContext extends AbstractDomainFeatureContext
         Assert::assertSame(
             $customerId,
             $customerIdReceived,
-            sprintf('Expected customer with id "%s" but received "%s', $customerId, $customerIdReceived)
+            \sprintf('Expected customer with id "%s" but received "%s', $customerId, $customerIdReceived)
         );
     }
 
     /**
      * @When I duplicate order :orderReference cart :cartReference with reference :duplicatedCartReference
-     *
-     * @param string $orderReference
-     * @param string $cartReference
-     * @param string $duplicatedCartReference
      */
     public function duplicateOrderCart(string $orderReference, string $cartReference, string $duplicatedCartReference)
     {
@@ -77,9 +71,6 @@ class OrderCartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then there is duplicated cart :duplicatedCartReference for cart :cartReference
-     *
-     * @param string $duplicatedCartReference
-     * @param string $cartReference
      */
     public function thereIsDuplicatedCartForCart(string $duplicatedCartReference, string $cartReference)
     {
@@ -126,10 +117,6 @@ class OrderCartFeatureContext extends AbstractDomainFeatureContext
      * We convert the summary to an array to filter data that won't be eaquals:
      * - order message
      * - process order link
-     *
-     * @param CartForOrderCreation\CartSummary $cartSummary
-     *
-     * @return array
      */
     private function convertSummaryToArray(CartForOrderCreation\CartSummary $cartSummary): array
     {

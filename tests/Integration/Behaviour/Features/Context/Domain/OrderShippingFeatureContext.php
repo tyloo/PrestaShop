@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,9 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I update order :orderReference Tracking number to :trackingNumber and Carrier to :carrier
-     *
-     * @param string $orderReference
-     * @param string $trackingNumber
-     * @param string $carrierReference
      */
     public function updateOrderTrackingNumberToAndCarrierTo(
-        string $orderReference, string $trackingNumber, string $carrierReference
+        string $orderReference, string $trackingNumber, string $carrierReference,
     ) {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -67,9 +64,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then order :orderReference has Carrier :carrier
-     *
-     * @param string $orderReference
-     * @param string $carrier
      *
      * @throws RuntimeException
      */
@@ -90,8 +84,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param string $carrier
-     *
      * @return int
      *
      * @throws RuntimeException
@@ -110,8 +102,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param int $orderId
-     *
      * @return OrderCarrierForViewing[]
      */
     private function getOrderCarriersForViewing(int $orderId): array
@@ -119,7 +109,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
         $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing($orderId));
         $orderCarriersForViewing = $orderForViewing->getShipping()->getCarriers();
 
-        if (count($orderCarriersForViewing) == 0) {
+        if (\count($orderCarriersForViewing) === 0) {
             $msg = 'Order [' . $orderId . '] has no carriers';
             throw new RuntimeException($msg);
         }
@@ -129,9 +119,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then order :orderReference has Tracking number :trackingNumber
-     *
-     * @param string $orderReference
-     * @param string $trackingNumber
      *
      * @throws RuntimeException
      */
@@ -151,9 +138,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I change order :orderReference shipping address to :orderShippingAddress
-     *
-     * @param string $orderReference
-     * @param string $orderShippingAddress
      */
     public function changeOrderShippingAddressTo(string $orderReference, string $orderShippingAddress)
     {
@@ -164,9 +148,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I change order :orderReference invoice address to :orderInvoiceAddress
-     *
-     * @param string $orderReference
-     * @param string $orderInvoiceAddress
      */
     public function changeOrderInvoiceAddressTo(string $orderReference, string $orderInvoiceAddress)
     {
@@ -177,9 +158,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then order :orderReference shipping address should be :orderShippingAddress
-     *
-     * @param string $orderReference
-     * @param string $orderShippingAddress
      */
     public function orderShippingAddressShouldBe(string $orderReference, string $orderShippingAddress)
     {
@@ -194,9 +172,6 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then order :orderReference invoice address should be :orderInvoiceAddress
-     *
-     * @param string $orderReference
-     * @param string $orderInvoiceAddress
      */
     public function orderInvoiceAddressShouldBe(string $orderReference, string $orderInvoiceAddress)
     {

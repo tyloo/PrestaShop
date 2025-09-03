@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class GetPermissionsForConfigurationHandlerDecorator extends GetPermissionsForCo
     public function __construct(
         AuthorizationCheckerInterface $authorizationChecker,
         int $languageId,
-        array $nonConfigurableTabs
+        array $nonConfigurableTabs,
     ) {
         parent::__construct($authorizationChecker, $languageId, $nonConfigurableTabs);
     }

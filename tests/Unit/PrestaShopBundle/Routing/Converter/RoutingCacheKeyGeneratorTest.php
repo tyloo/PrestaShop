@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
     {
         parent::setUp();
         $this->fs = new Filesystem();
-        $this->filesTestDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'routing';
+        $this->filesTestDir = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'routing';
     }
 
     protected function tearDown(): void
@@ -70,29 +71,29 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles);
 
-        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . DIRECTORY_SEPARATOR . 'admin'], []);
+        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin'], []);
         $lastModifications = $generator->getLastModifications();
         $this->assertCount(6, $lastModifications);
         $this->assertSame([
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/products.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/configure/advanced_parameters/webservice.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/categories.yaml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/improve/payment/payment_methods.yaml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/configure/shop_parameters/product_preferences.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/products.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/configure/advanced_parameters/webservice.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/categories.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/improve/payment/payment_methods.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/configure/shop_parameters/product_preferences.yml',
         ], array_keys($lastModifications));
 
-        $this->fs->touch($this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/improve/payment/payment_methods.yaml');
+        $this->fs->touch($this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/improve/payment/payment_methods.yaml');
 
         $lastModifications = $generator->getLastModifications();
         $this->assertCount(6, $lastModifications);
         $this->assertSame([
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/improve/payment/payment_methods.yaml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/products.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/configure/advanced_parameters/webservice.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/categories.yaml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/configure/shop_parameters/product_preferences.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/improve/payment/payment_methods.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/products.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/configure/advanced_parameters/webservice.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/categories.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/configure/shop_parameters/product_preferences.yml',
         ], array_keys($lastModifications));
     }
 
@@ -113,7 +114,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles, $originalTime);
 
-        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . DIRECTORY_SEPARATOR . 'admin'], []);
+        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin'], []);
         $this->assertEquals($originalTime + 3200, $generator->getLatestModificationTime());
     }
 
@@ -134,7 +135,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles, $originalTime);
 
-        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . DIRECTORY_SEPARATOR . 'admin'], []);
+        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin'], []);
         $cacheKey = $generator->getCacheKey();
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . ($originalTime + 3200), $cacheKey);
     }
@@ -149,31 +150,31 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles);
         $modules = [
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification',
         ];
 
         $generator = new RoutingCacheKeyGenerator([], $modules);
         $lastModifications = $generator->getLastModifications();
         $this->assertCount(4, $lastModifications);
         $this->assertSame([
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml',
         ], array_keys($lastModifications));
 
-        $this->fs->touch($this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml');
+        $this->fs->touch($this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml');
 
         $lastModifications = $generator->getLastModifications();
         $this->assertCount(4, $lastModifications);
         $this->assertSame([
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml',
         ], array_keys($lastModifications));
     }
 
@@ -188,10 +189,10 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles, $originalTime);
         $modules = [
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification',
         ];
 
         $generator = new RoutingCacheKeyGenerator([], $modules);
@@ -209,10 +210,10 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles, $originalTime);
         $modules = [
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification',
         ];
 
         $generator = new RoutingCacheKeyGenerator([], $modules);
@@ -238,36 +239,36 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles, $originalTime);
         $modules = [
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification',
         ];
 
-        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . DIRECTORY_SEPARATOR . 'admin'], $modules);
+        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin'], $modules);
         $lastModifications = $generator->getLastModifications();
         $this->assertCount(8, $lastModifications);
         $this->assertSame([
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/products.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/categories.yaml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/configure/shop_parameters/product_preferences.yml',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/products.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/sell/catalog/products/categories.yaml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification/config/routes.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/configure/shop_parameters/product_preferences.yml',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml',
         ], array_keys($lastModifications));
 
         $this->assertEquals($originalTime + 3200, $generator->getLatestModificationTime());
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . ($originalTime + 3200), $generator->getCacheKey());
 
-        $this->fs->touch($this->filesTestDir . DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml', $originalTime);
+        $this->fs->touch($this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin/improve/international/translations.yml', $originalTime);
 
         $this->assertEquals($originalTime + 42, $generator->getLatestModificationTime());
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . ($originalTime + 42), $generator->getCacheKey());
 
         $now = time();
-        $this->fs->touch($this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml', $now);
+        $this->fs->touch($this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts/config/routes.yaml', $now);
         $this->assertEquals($now, $generator->getLatestModificationTime());
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . $now, $generator->getCacheKey());
     }
@@ -303,39 +304,38 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ];
         $this->generateFiles($testFiles, $originalTime);
         $modules = [
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_linklist',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
-            $this->filesTestDir . DIRECTORY_SEPARATOR . 'modules/ps_gamification',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_linklist',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_featuredproducts',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_viewedproducs',
+            $this->filesTestDir . \DIRECTORY_SEPARATOR . 'modules/ps_gamification',
         ];
 
-        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . DIRECTORY_SEPARATOR . 'admin'], $modules);
+        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin'], $modules);
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . ($originalTime + 3200), $generator->getCacheKey());
 
-        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . DIRECTORY_SEPARATOR . 'admin'], $modules, 'prod');
+        $generator = new RoutingCacheKeyGenerator([$this->filesTestDir . \DIRECTORY_SEPARATOR . 'admin'], $modules, 'prod');
         $this->assertEquals('PrestaShopBundle_Routing_Converter', $generator->getCacheKey());
     }
 
     /**
-     * @param array $fileOffsets
      * @param int|null $originalTime
      */
     private function generateFiles(array $fileOffsets, $originalTime = null)
     {
-        if (null === $originalTime) {
+        if ($originalTime === null) {
             // By default original time one hour ago
             $originalTime = time() - 3600;
         }
 
         $this->cleanTestDir();
-        if (!file_exists($this->filesTestDir)) {
+        if (! file_exists($this->filesTestDir)) {
             $this->fs->mkdir($this->filesTestDir);
         }
 
         foreach ($fileOffsets as $filePath => $fileOffset) {
-            $filePath = $this->filesTestDir . DIRECTORY_SEPARATOR . $filePath;
-            if (!file_exists(dirname($filePath))) {
-                $this->fs->mkdir(dirname($filePath));
+            $filePath = $this->filesTestDir . \DIRECTORY_SEPARATOR . $filePath;
+            if (! file_exists(\dirname($filePath))) {
+                $this->fs->mkdir(\dirname($filePath));
             }
             $this->fs->touch($filePath, $originalTime + $fileOffset);
         }

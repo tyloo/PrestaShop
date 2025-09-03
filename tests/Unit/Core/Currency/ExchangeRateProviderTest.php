@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,18 +37,21 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class ExchangeRateProviderTest extends TestCase
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $feedFilePath;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $feedContent;
 
-    /** @var CacheInterface */
+    /**
+     * @var CacheInterface
+     */
     private $cache;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

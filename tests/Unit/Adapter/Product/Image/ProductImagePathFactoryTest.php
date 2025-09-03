@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,15 +38,11 @@ class ProductImagePathFactoryTest extends TestCase
 {
     /**
      * @dataProvider getArgumentsForSmokeTest
-     *
-     * @param string $pathToBaseDir
-     * @param string $temporaryImgDir
-     * @param string $contextLangIsoCode
      */
     public function testConstructImagePathFactory(
         string $pathToBaseDir,
         string $temporaryImgDir,
-        string $contextLangIsoCode
+        string $contextLangIsoCode,
     ): void {
         $imagePathFactory = new ProductImagePathFactory(
             $pathToBaseDir,
@@ -57,10 +54,6 @@ class ProductImagePathFactoryTest extends TestCase
 
     /**
      * @dataProvider getDataForBaseImagePathBuilding
-     *
-     * @param string $pathToBaseDir
-     * @param ImageId $imageId
-     * @param string $expected
      */
     public function testGetPath(string $pathToBaseDir, ImageId $imageId, string $expected): void
     {
@@ -71,11 +64,6 @@ class ProductImagePathFactoryTest extends TestCase
 
     /**
      * @dataProvider getDataForPathByType
-     *
-     * @param string $pathToBaseDir
-     * @param ImageId $imageId
-     * @param string $type
-     * @param string $expected
      */
     public function testGetPathByType(string $pathToBaseDir, ImageId $imageId, string $type, string $expected): void
     {
@@ -86,10 +74,6 @@ class ProductImagePathFactoryTest extends TestCase
 
     /**
      * @dataProvider getDataForImageFolder
-     *
-     * @param string $pathToBaseDir
-     * @param ImageId $imageId
-     * @param string $expected
      */
     public function testGetImageFolder(string $pathToBaseDir, ImageId $imageId, string $expected): void
     {
@@ -100,11 +84,6 @@ class ProductImagePathFactoryTest extends TestCase
 
     /**
      * @dataProvider getDataForNoImagePath
-     *
-     * @param string $pathToBaseDir
-     * @param string $type
-     * @param string|null $langIso
-     * @param string $expected
      */
     public function testGetNoImagePath(string $pathToBaseDir, string $type, ?string $langIso, string $expected): void
     {
@@ -113,9 +92,6 @@ class ProductImagePathFactoryTest extends TestCase
         Assert::assertEquals($expected, $imagePathFactory->getNoImagePath($type, $langIso));
     }
 
-    /**
-     * @return Generator
-     */
     public function getArgumentsForSmokeTest(): Generator
     {
         yield ['/img/p/', 'img/tmp', 'en'];
@@ -123,9 +99,6 @@ class ProductImagePathFactoryTest extends TestCase
         yield ['/img', 'img/tmp', 'lt'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getDataForBaseImagePathBuilding(): Generator
     {
         yield ['/img/p', new ImageId(10), '/img/p/1/0/10.jpg'];
@@ -133,9 +106,6 @@ class ProductImagePathFactoryTest extends TestCase
         yield ['img/p/', new ImageId(2504), 'img/p/2/5/0/4/2504.jpg'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getDataForPathByType(): Generator
     {
         yield ['/img/p/', new ImageId(10), ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT, '/img/p/1/0/10-small_default.jpg'];
@@ -160,11 +130,6 @@ class ProductImagePathFactoryTest extends TestCase
         yield ['/img/p', 'large_default', 'fr', '/img/p/fr-default-large_default.jpg'];
     }
 
-    /**
-     * @param string $pathToBaseDir
-     *
-     * @return ProductImagePathFactory
-     */
     private function buildImagePathFactory(string $pathToBaseDir): ProductImagePathFactory
     {
         return new ProductImagePathFactory(

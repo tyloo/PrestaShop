@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-/**
- * Class IsUrlRewriteValidatorTest
- */
 class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
 {
     /**
@@ -48,7 +46,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
      */
     private $configurationMockWithAscendingCharsOn;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->useAscendedChars = false;
 

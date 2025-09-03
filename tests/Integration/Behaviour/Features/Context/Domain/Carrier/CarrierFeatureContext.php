@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,7 +68,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         $properties = $this->localizeByRows($node);
 
         try {
-            if (isset($properties['logoPathName']) && 'null' !== $properties['logoPathName']) {
+            if (isset($properties['logoPathName']) && $properties['logoPathName'] !== 'null') {
                 $tmpLogo = DummyFileUploader::upload($properties['logoPathName']);
                 $properties['logoPathName'] = DummyFileUploader::upload($properties['logoPathName']);
             }
@@ -78,7 +79,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
                 $associatedShops = [$this->getDefaultShopId()];
             }
 
-            if (!empty($properties['delay'])) {
+            if (! empty($properties['delay'])) {
                 $delay = $properties['delay'];
             } else {
                 $delay = [$this->getDefaultLangId() => 'Shipping delay'];
@@ -94,7 +95,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
 
             $zoneIds = array_column($zones, $keyToFilter);
 
-            if (!empty($properties['group_access'])) {
+            if (! empty($properties['group_access'])) {
                 $groupIds = $this->referencesToIds($properties['group_access']);
             } else {
                 $groupIds = Group::getAllGroupIds();
@@ -105,14 +106,14 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
                 $delay,
                 (int) ($properties['grade'] ?? 0),
                 $properties['trackingUrl'] ?? '',
-                filter_var($properties['active'] ?? true, FILTER_VALIDATE_BOOLEAN),
+                filter_var($properties['active'] ?? true, \FILTER_VALIDATE_BOOLEAN),
                 (int) ($properties['max_width'] ?? 0),
                 (int) ($properties['max_height'] ?? 0),
                 (int) ($properties['max_depth'] ?? 0),
                 (int) ($properties['max_weight'] ?? 0),
                 $groupIds,
-                filter_var($properties['shippingHandling'] ?? true, FILTER_VALIDATE_BOOLEAN),
-                filter_var($properties['isFree'] ?? false, FILTER_VALIDATE_BOOLEAN),
+                filter_var($properties['shippingHandling'] ?? true, \FILTER_VALIDATE_BOOLEAN),
+                filter_var($properties['isFree'] ?? false, \FILTER_VALIDATE_BOOLEAN),
                 $properties['shippingMethod'] ?? 'price',
                 $properties['rangeBehavior'] ?? 'highest_range',
                 $properties['logoPathName'] ?? null,
@@ -213,7 +214,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             $command->setPosition((int) $properties['position']);
         }
         if (isset($properties['active'])) {
-            $command->setActive(filter_var($properties['active'], FILTER_VALIDATE_BOOLEAN));
+            $command->setActive(filter_var($properties['active'], \FILTER_VALIDATE_BOOLEAN));
         }
         if (isset($properties['max_width'])) {
             $command->setMaxWidth((int) $properties['max_width']);
@@ -240,8 +241,8 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             $command->setAssociatedShopIds($this->referencesToIds($properties['associatedShops']));
         }
 
-        if (isset($properties['logoPathName']) && 'null' !== $properties['logoPathName']) {
-            if ('' !== $properties['logoPathName']) {
+        if (isset($properties['logoPathName']) && $properties['logoPathName'] !== 'null') {
+            if ($properties['logoPathName'] !== '') {
                 $tmpLogo = DummyFileUploader::upload($properties['logoPathName']);
             }
             $command->setLogoPathName($tmpLogo ?? '');
@@ -249,11 +250,11 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
 
         // Shipping information
         if (isset($properties['shippingHandling'])) {
-            $command->setAdditionalHandlingFee(filter_var($properties['shippingHandling'], FILTER_VALIDATE_BOOLEAN));
+            $command->setAdditionalHandlingFee(filter_var($properties['shippingHandling'], \FILTER_VALIDATE_BOOLEAN));
         }
 
         if (isset($properties['isFree'])) {
-            $command->setIsFree(filter_var($properties['isFree'], FILTER_VALIDATE_BOOLEAN));
+            $command->setIsFree(filter_var($properties['isFree'], \FILTER_VALIDATE_BOOLEAN));
         }
 
         if (isset($properties['shippingMethod'])) {
@@ -281,9 +282,6 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then carrier :reference should have the following properties:
-     *
-     * @param string $reference
-     * @param TableNode $tableNode
      */
     public function assertCarrierProperties(string $reference, TableNode $tableNode): void
     {
@@ -305,7 +303,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         }
         if (isset($data['active'])) {
             Assert::assertEquals(
-                filter_var($data['active'], FILTER_VALIDATE_BOOLEAN),
+                filter_var($data['active'], \FILTER_VALIDATE_BOOLEAN),
                 $carrier->isActive()
             );
         }
@@ -331,14 +329,14 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         // Shipping information
         if (isset($data['shippingHandling'])) {
             Assert::assertEquals(
-                filter_var($data['shippingHandling'], FILTER_VALIDATE_BOOLEAN),
+                filter_var($data['shippingHandling'], \FILTER_VALIDATE_BOOLEAN),
                 $carrier->hasAdditionalHandlingFee()
             );
         }
 
         if (isset($data['isFree'])) {
             Assert::assertEquals(
-                filter_var($data['isFree'], FILTER_VALIDATE_BOOLEAN),
+                filter_var($data['isFree'], \FILTER_VALIDATE_BOOLEAN),
                 $carrier->isFree()
             );
         }
@@ -403,15 +401,12 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
     {
         $this->assertLastErrorIs(
             CarrierConstraintException::class,
-            constant(CarrierConstraintException::class . '::' . $errorCode)
+            \constant(CarrierConstraintException::class . '::' . $errorCode)
         );
     }
 
     /**
      * @Then the products :products should have the following carriers:
-     *
-     * @param string $products
-     * @param TableNode $table
      */
     public function assertCarriersWithState(string $products, TableNode $table)
     {
@@ -506,7 +501,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             $logoPathName,
         );
 
-        if (null !== $position) {
+        if ($position !== null) {
             $command->setPosition($position);
         }
 
@@ -522,16 +517,11 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
 
     private function fakeUploadLogo(string $filename, int $carrierId): void
     {
-        if ('' !== $filename) {
+        if ($filename !== '') {
             copy($filename, _PS_SHIP_IMG_DIR_ . $carrierId . '.jpg');
         }
     }
 
-    /**
-     * @param string $shippingMethod
-     *
-     * @return int
-     */
     protected function convertShippingMethodToInt(string $shippingMethod): int
     {
         $intValues = [
@@ -543,11 +533,6 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         return $intValues[$shippingMethod];
     }
 
-    /**
-     * @param string $outOfRangeBehavior
-     *
-     * @return int
-     */
     protected function convertOutOfRangeBehaviorToInt(string $outOfRangeBehavior): int
     {
         $intValues = [

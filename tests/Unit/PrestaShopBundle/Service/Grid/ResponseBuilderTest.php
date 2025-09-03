@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,9 +54,6 @@ class ResponseBuilderTest extends TestCase
 
     /**
      * @dataProvider dataProviderBuildSearchResponse
-     *
-     * @param array $data
-     * @param array $redirectParams
      */
     public function testBuildSearchResponse(array $data, array $redirectParams): void
     {
@@ -72,9 +70,6 @@ class ResponseBuilderTest extends TestCase
 
     /**
      * @dataProvider dataProviderBuildSearchResponse
-     *
-     * @param array $data
-     * @param array $redirectParams
      */
     public function testInvalidBuildSearchResponse(array $data, array $redirectParams): void
     {
@@ -177,7 +172,7 @@ class ResponseBuilderTest extends TestCase
         $mockForm->method('isValid')->willReturn($isValid);
         $mockForm->method('getData')->willReturn($data);
 
-        if (!$isValid) {
+        if (! $isValid) {
             $mockFieldConfig = $this->createMock(FormConfigInterface::class);
             $mockFieldConfig->method('getOption')->with('label')->willReturn(self::ERROR_LABEL);
             $mockFormField = $this->createMock(FormInterface::class);
@@ -208,9 +203,9 @@ class ResponseBuilderTest extends TestCase
 
         $requestStack = $this->createMock(RequestStack::class);
         $session = $this->createMock(Session::class);
-        if (!$isValid) {
+        if (! $isValid) {
             $mockFlashBag = $this->createMock(FlashBagInterface::class);
-            $mockFlashBag->method('add')->with('error', sprintf('%s: %s', self::ERROR_LABEL, self::ERROR_MESSAGE));
+            $mockFlashBag->method('add')->with('error', \sprintf('%s: %s', self::ERROR_LABEL, self::ERROR_MESSAGE));
             $session->method('getFlashBag')->willReturn($mockFlashBag);
         }
         $requestStack->method('getSession')->willReturn($session);

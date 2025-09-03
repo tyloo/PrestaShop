@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,9 +74,6 @@ class PriorityListTest extends TestCase
         new PriorityList($priorities);
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidPriorities(): Generator
     {
         yield [
@@ -87,9 +85,6 @@ class PriorityListTest extends TestCase
         ];
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidPriorities(): Generator
     {
         yield [
@@ -98,9 +93,6 @@ class PriorityListTest extends TestCase
         ];
     }
 
-    /**
-     * @return Generator
-     */
     public function getDuplicatePriorities(): Generator
     {
         yield [

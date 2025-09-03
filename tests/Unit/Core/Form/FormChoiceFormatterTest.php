@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,6 @@ class FormChoiceFormatterTest extends TestCase
 {
     /**
      * @dataProvider getFormOptionsToFormat
-     *
-     * @param array $rawOptions
-     * @param string $idKey
-     * @param string $nameKey
-     * @param bool $sortByName
-     * @param array $expectedFormattedChoices
      */
     public function testFormatFormChoices(array $rawOptions, string $idKey, string $nameKey, bool $sortByName, array $expectedFormattedChoices): void
     {

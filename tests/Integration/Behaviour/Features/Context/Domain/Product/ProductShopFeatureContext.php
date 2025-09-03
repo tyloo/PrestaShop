@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class ProductShopFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @Then product :productReference is not associated to shop(s) :shopReferences
-     *
-     * @param string $productReference
-     * @param string $shopReferences
      */
     public function checkNoShopAssociation(string $productReference, string $shopReferences): void
     {
@@ -61,9 +59,6 @@ class ProductShopFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference is associated to shop(s) :shopReferences
-     *
-     * @param string $productReference
-     * @param string $shopReferences
      */
     public function checkShopAssociation(string $productReference, string $shopReferences): void
     {
@@ -73,7 +68,7 @@ class ProductShopFeatureContext extends AbstractProductFeatureContext
             try {
                 $product = $this->getProductForEditing($productReference, $shopId);
                 foreach ($shopIds as $checkedShopId) {
-                    Assert::assertTrue(in_array($checkedShopId, $product->getShopIds()));
+                    Assert::assertTrue(\in_array($checkedShopId, $product->getShopIds(), true));
                 }
             } catch (ProductShopAssociationNotFoundException $e) {
                 $caughtException = $e;
@@ -85,9 +80,6 @@ class ProductShopFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then default shop for product :productReference is :shopReference
-     *
-     * @param string $productReference
-     * @param string $shopReference
      */
     public function checkDefaultShop(string $productReference, string $shopReference): void
     {
@@ -102,9 +94,6 @@ class ProductShopFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I set following shops for product ":productReference":
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function setProductShops(string $productReference, TableNode $tableNode): void
     {

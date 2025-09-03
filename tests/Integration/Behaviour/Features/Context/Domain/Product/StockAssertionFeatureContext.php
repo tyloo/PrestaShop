@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,7 +71,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     public function assertStockInformationForShops(
         string $productReference,
         string $shopReferences,
-        TableNode $table
+        TableNode $table,
     ): void {
         $shopReferences = explode(',', $shopReferences);
 
@@ -125,7 +126,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     public function assertProductLastStockMovementsForSpecificShop(
         string $productReference,
         string $shopReferences,
-        TableNode $table
+        TableNode $table,
     ): void {
         foreach ($this->referencesToIds($shopReferences) as $shopId) {
             $this->assertLastStockMovementsForProduct(
@@ -154,7 +155,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     public function assertCombinationLastStockMovementsForSpecificShop(
         string $combinationReference,
         string $shopReferences,
-        TableNode $table
+        TableNode $table,
     ): void {
         foreach ($this->referencesToIds($shopReferences) as $shopId) {
             $this->assertLastStockMovementsForCombination(
@@ -167,13 +168,10 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then combination ":combinationReference" should have no stock movements for shop ":shopReference"
-     *
-     * @param string $combinationReference
-     * @param string $shopReference
      */
     public function assertCombinationNoLastStockMovementsForShop(
         string $combinationReference,
-        string $shopReference
+        string $shopReference,
     ): void {
         $this->assertNoStockMovementForCombination($combinationReference, $this->getSharedStorage()->get($shopReference));
     }
@@ -184,7 +182,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     public function assertProductLastStockMovementForDefaultShop(
         string $productReference,
         string $movementType,
-        int $movementQuantity
+        int $movementQuantity,
     ): void {
         $this->assertProductLastStockMovement(
             $productReference,
@@ -201,7 +199,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         string $productReference,
         string $shopReference,
         string $movementType,
-        int $movementQuantity
+        int $movementQuantity,
     ): void {
         $this->assertProductLastStockMovement(
             $productReference,
@@ -217,7 +215,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     public function assertCombinationLastStockMovementForDefaultShop(
         string $combinationReference,
         string $movementType,
-        int $movementQuantity
+        int $movementQuantity,
     ): void {
         $this->assertCombinationLastStockMovement(
             $combinationReference,
@@ -234,7 +232,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         string $combinationReference,
         string $shopReference,
         string $movementType,
-        int $movementQuantity
+        int $movementQuantity,
     ): void {
         $this->assertCombinationLastStockMovement(
             $combinationReference,
@@ -268,18 +266,16 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @param StockMovement[] $stockMovements
-     * @param TableNode $table
-     * @param int $shopId
      */
     private function assertStockMovementHistories(array $stockMovements, TableNode $table, int $shopId): void
     {
         $movementsData = $table->getColumnsHash();
 
-        Assert::assertEquals(count($movementsData), count($stockMovements), sprintf(
+        Assert::assertEquals(\count($movementsData), \count($stockMovements), \sprintf(
             'Unexpected number of movements for shop %d expected %d but got %d instead',
             $shopId,
-            count($movementsData),
-            count($stockMovements)
+            \count($movementsData),
+            \count($stockMovements)
         ));
         $index = 0;
         foreach ($movementsData as $movementDatum) {
@@ -287,7 +283,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $movementDatum['employee'],
                 $stockMovement->getEmployeeName(),
-                sprintf(
+                \sprintf(
                     'Invalid employee name of stock movement event for shop %d, expected "%s" instead of "%s"',
                     $shopId,
                     $movementDatum['employee'],
@@ -297,7 +293,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 (int) $movementDatum['delta_quantity'],
                 $stockMovement->getDeltaQuantity(),
-                sprintf(
+                \sprintf(
                     'Invalid delta quantity of stock movement event for shop %d, expected "%d" instead of "%d"',
                     $shopId,
                     $movementDatum['delta_quantity'],
@@ -318,14 +314,14 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     private function assertStockMovements(
         StockMovement $stockMovement,
         string $movementType,
-        int $movementQuantity
+        int $movementQuantity,
     ): void {
         $lastMovementType = $stockMovement->getDeltaQuantity() < 0 ? 'decreased' : 'increased';
 
         Assert::assertEquals(
             $movementType,
             $lastMovementType,
-            sprintf(
+            \sprintf(
                 'Invalid stock movement type, expected "%s" instead of "%s"',
                 $movementType,
                 $lastMovementType
@@ -334,7 +330,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         Assert::assertEquals(
             $movementQuantity,
             abs($stockMovement->getDeltaQuantity()),
-            sprintf(
+            \sprintf(
                 'Invalid stock movement quantity, expected "%d" instead of "%d"',
                 $movementQuantity,
                 abs($stockMovement->getDeltaQuantity())
@@ -346,7 +342,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         string $combinationReference,
         string $movementType,
         int $movementQuantity,
-        int $shopId
+        int $shopId,
     ): void {
         $combinationId = (int) $this->getSharedStorage()->get($combinationReference);
         $stockMovementHistories = $this->getQueryBus()->handle(
@@ -363,7 +359,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         string $productReference,
         string $movementType,
         int $movementQuantity,
-        int $shopId
+        int $shopId,
     ): void {
         $productId = (int) $this->getSharedStorage()->get($productReference);
         $stockMovementHistories = $this->getQueryBus()->handle(
@@ -379,7 +375,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     private function assertLastStockMovementsForCombination(
         string $combinationReference,
         int $shopId,
-        TableNode $table
+        TableNode $table,
     ): void {
         $combinationId = (int) $this->getSharedStorage()->get($combinationReference);
         $stockMovementHistories = $this->getQueryBus()->handle(
@@ -391,7 +387,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
     private function assertLastStockMovementsForProduct(
         string $productReference,
         int $shopId,
-        TableNode $table
+        TableNode $table,
     ): void {
         $productId = (int) $this->getSharedStorage()->get($productReference);
         $stockMovementHistories = $this->getQueryBus()->handle(
@@ -402,7 +398,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
 
     private function assertStockInformation(string $productReference, TableNode $table, int $shopId): void
     {
-        $shopErrorMessage = !empty($shopId) ? sprintf(' for shop %s', $shopId) : '';
+        $shopErrorMessage = ! empty($shopId) ? \sprintf(' for shop %s', $shopId) : '';
         $productForEditing = $this->getProductForEditing($productReference, $shopId);
         $data = $table->getRowsHash();
 
@@ -427,7 +423,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         // and finally, if provided data is not empty, it means there are some unnasserted values left
         Assert::assertEmpty(
             $data,
-            sprintf('Some provided product stock fields haven\'t been asserted: %s', var_export($data, true))
+            \sprintf('Some provided product stock fields haven\'t been asserted: %s', var_export($data, true))
         );
     }
 

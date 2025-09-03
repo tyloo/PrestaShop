@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ class FeatureFlagFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * "When" steps perform actions, and some of them store the latest result
      * in this variable so that "Then" action can check its content
-     *
-     * @var mixed
      */
     protected $latestResult;
 
@@ -92,22 +91,20 @@ class FeatureFlagFeatureContext extends AbstractPrestaShopFeatureContext
         /** @var FeatureFlag $featureFlag */
         $featureFlag = $doctrineEntityManager->getRepository(FeatureFlag::class)->findOneBy(['name' => $name]);
 
-        if ($state === 'enabled' && !$featureFlag->isEnabled()) {
-            throw new RuntimeException(sprintf('Feature flag %s is disabled although it was expected to be enabled', $name));
-        } elseif ($state === 'disabled' && $featureFlag->isEnabled()) {
-            throw new RuntimeException(sprintf('Feature flag %s is enabled although it was expected to be disabled', $name));
+        if ($state === 'enabled' && ! $featureFlag->isEnabled()) {
+            throw new RuntimeException(\sprintf('Feature flag %s is disabled although it was expected to be enabled', $name));
+        }
+        if ($state === 'disabled' && $featureFlag->isEnabled()) {
+            throw new RuntimeException(\sprintf('Feature flag %s is enabled although it was expected to be disabled', $name));
         }
     }
 
-    /**
-     * @return EntityManager
-     */
     protected function getDoctrineEntityManager(): EntityManager
     {
         /** @var EntityManager $doctrineEntityManager */
         $doctrineEntityManager = CommonFeatureContext::getContainer()->get('doctrine.orm.entity_manager');
 
-        if (!$doctrineEntityManager->isOpen()) {
+        if (! $doctrineEntityManager->isOpen()) {
             $doctrineEntityManager = CommonFeatureContext::getContainer()->get('doctrine')->resetManager();
         }
 
@@ -127,7 +124,7 @@ class FeatureFlagFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function assertGotErrorMessage()
     {
-        if (!$this->latestResult instanceof Exception) {
+        if (! $this->latestResult instanceof Exception) {
             throw new Exception('Latest action did not return an error');
         }
 

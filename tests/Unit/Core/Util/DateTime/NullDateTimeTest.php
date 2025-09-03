@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,9 +50,6 @@ class NullDateTimeTest extends TestCase
 
     /**
      * @dataProvider getValidDataForDateFormatting
-     *
-     * @param string $format
-     * @param string $expected
      */
     public function testItFormatsDateTimeToString(string $format, string $expected): void
     {
@@ -62,13 +60,11 @@ class NullDateTimeTest extends TestCase
 
     /**
      * @dataProvider getUnsupportedDateFormats
-     *
-     * @param string $format
      */
     public function testItThrowsExceptionWhenUnsupportedFormatIsProvided(string $format): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(sprintf(
+        $this->expectExceptionMessage(\sprintf(
             'Format "%s" is not supported by %s', $format, NullDateTime::class
         ));
         $nullDateTime = new NullDateTime();
@@ -183,18 +179,12 @@ class NullDateTimeTest extends TestCase
         NullDateTime::createFromInterface(new DateTime());
     }
 
-    /**
-     * @return iterable
-     */
     public function getValidDataForDateFormatting(): iterable
     {
         yield ['Y-m-d', '0000-00-00'];
         yield ['Y-m-d H:i:s', '0000-00-00 00:00:00'];
     }
 
-    /**
-     * @return iterable
-     */
     public function getSupportedDateFormats(): iterable
     {
         yield [
@@ -205,9 +195,6 @@ class NullDateTimeTest extends TestCase
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public function getUnsupportedDateFormats(): iterable
     {
         yield ['d-m-Y'];
@@ -217,14 +204,11 @@ class NullDateTimeTest extends TestCase
         yield ['undefined'];
     }
 
-    /**
-     * @param string $method
-     */
     private function expectUnusableMethodException(string $method): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
-            sprintf(
+            \sprintf(
                 '%s::%s should not be used, it might produce unexpected results',
                 NullDateTime::class,
                 $method

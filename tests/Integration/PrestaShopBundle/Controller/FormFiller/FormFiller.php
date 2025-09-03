@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,28 +40,22 @@ use Symfony\Component\DomCrawler\Form;
 
 class FormFiller
 {
-    /**
-     * @param Form $form
-     * @param array $formModifications
-     *
-     * @return Form
-     */
     public function fillForm(Form $form, array $formModifications): Form
     {
         foreach ($formModifications as $fieldName => $formValue) {
-            if (!is_array($formValue)) {
+            if (! \is_array($formValue)) {
                 /** @var FormField $formField */
                 $formField = $form->get($fieldName);
                 // Checkbox inputs must be used via tick/untick or exceptions are triggered because of invalid choices
                 if ($formField instanceof ChoiceFormField && $formField->getType() === 'checkbox') {
-                    if (boolval($formValue)) {
+                    if (\boolval($formValue)) {
                         $formField->tick();
                     } else {
                         $formField->untick();
                     }
                 } else {
                     // The form component converts boolean values into string ones, so we must do the same thing to remain compatible
-                    if ($formField instanceof ChoiceFormField && is_bool($formValue)) {
+                    if ($formField instanceof ChoiceFormField && \is_bool($formValue)) {
                         $formValue = $formValue ? '1' : '0';
                     }
                     $formField->setValue((string) $formValue);
@@ -73,7 +68,7 @@ class FormFiller
             // For multi select checkboxes or select inputs
             /** @var ChoiceFormField[]|ChoiceFormField $formFields */
             $formFields = $form->get($fieldName);
-            if (!is_array($formFields)) {
+            if (! \is_array($formFields)) {
                 $formFields->select($formValue);
 
                 continue;
@@ -81,14 +76,14 @@ class FormFiller
 
             // Multiple checkboxes are returned as array
             foreach ($formFields as $formField) {
-                if ('checkbox' !== $formField->getType()) {
+                if ($formField->getType() !== 'checkbox') {
                     $formField->select($formValue);
 
                     continue;
                 }
 
                 $optionValue = $formField->availableOptionValues()[0];
-                if (in_array($optionValue, $formValue)) {
+                if (\in_array($optionValue, $formValue, true)) {
                     $formField->tick();
                 } else {
                     $formField->untick();
@@ -102,9 +97,6 @@ class FormFiller
     /**
      * Some fields are based on the DisablingSwitchExtension in regular FO the field are enabled by JS but here
      * we need to force this or the data will be removed from the $form->getData()
-     *
-     * @param Form $form
-     * @param FormField $formField
      */
     private function enabledAssociatedField(Form $form, FormField $formField): void
     {
@@ -121,21 +113,21 @@ class FormFiller
         }
 
         $formCrawler = new Crawler($form->getFormNode());
-        $fieldCrawler = $formCrawler->filter(sprintf('[name="%s"]', $associatedFieldName));
-        if (!$fieldCrawler->count()) {
+        $fieldCrawler = $formCrawler->filter(\sprintf('[name="%s"]', $associatedFieldName));
+        if (! $fieldCrawler->count()) {
             return;
         }
 
         $fieldNode = $fieldCrawler->getNode(0);
-        if (!$fieldNode instanceof DOMElement) {
+        if (! $fieldNode instanceof DOMElement) {
             return;
         }
 
         $isDisabled = $associatedField->isDisabled();
         $isDisabling = (bool) $formField->getValue() === false;
-        if ($isDisabled && !$isDisabling) {
+        if ($isDisabled && ! $isDisabling) {
             $fieldNode->removeAttribute('disabled');
-        } elseif (!$isDisabled && $isDisabling) {
+        } elseif (! $isDisabled && $isDisabling) {
             $fieldNode->setAttribute('disabled', 'disabled');
         }
     }

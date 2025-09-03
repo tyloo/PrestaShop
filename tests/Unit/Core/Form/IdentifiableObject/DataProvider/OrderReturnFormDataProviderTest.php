@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,11 +58,6 @@ class OrderReturnFormDataProviderTest extends TestCase
         $this->assertEquals($expectedResult, $data);
     }
 
-    /**
-     * @param OrderReturnForEditing $orderReturnForEditing
-     *
-     * @return CommandBusInterface
-     */
     private function createQueryBusMock(OrderReturnForEditing $orderReturnForEditing): CommandBusInterface
     {
         $queryBusMock = $this->createMock(CommandBusInterface::class);
@@ -73,9 +69,6 @@ class OrderReturnFormDataProviderTest extends TestCase
         return $queryBusMock;
     }
 
-    /**
-     * @return Router
-     */
     private function createRouterMock(): Router
     {
         $routerMock = $this->createMock(Router::class);
@@ -89,9 +82,6 @@ class OrderReturnFormDataProviderTest extends TestCase
         return $routerMock;
     }
 
-    /**
-     * @return TranslatorInterface
-     */
     private function createTranslatorMock(): TranslatorInterface
     {
         $translatorMock = $this->createMock(TranslatorInterface::class);
@@ -116,9 +106,6 @@ class OrderReturnFormDataProviderTest extends TestCase
         return $translatorMock;
     }
 
-    /**
-     * @return Generator
-     */
     public function getExpectedChoices(): Generator
     {
         yield [
@@ -143,12 +130,6 @@ class OrderReturnFormDataProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @param string $route
-     * @param array $arguments
-     *
-     * @return string
-     */
     private function createResultBasedOnQuery(string $route, array $arguments): string
     {
         switch ($route) {
@@ -158,6 +139,6 @@ class OrderReturnFormDataProviderTest extends TestCase
                 return 'order_' . $arguments['orderId'];
         }
 
-        throw new RuntimeException(sprintf('Route "%s" was not expected in query bus mock', $route));
+        throw new RuntimeException(\sprintf('Route "%s" was not expected in query bus mock', $route));
     }
 }

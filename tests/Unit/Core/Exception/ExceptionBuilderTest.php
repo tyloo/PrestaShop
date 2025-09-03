@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,12 +44,6 @@ class ExceptionBuilderTest extends TestCase
 
     /**
      * @dataProvider getExceptionValues
-     *
-     * @param Throwable $expectedException
-     * @param string $exceptionClass
-     * @param string $message
-     * @param int $errorCode
-     * @param int|null $objectModelId
      */
     public function testBuild(Throwable $expectedException, string $exceptionClass, string $message, int $errorCode = 0, ?Throwable $previousException = null, ?int $objectModelId = null): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 {
     /**
      * @When I update combination ":combinationReference" with following values:
-     *
-     * @param string $combinationReference
-     * @param TableNode $tableNode
      */
     public function updateCombinationForDefaultShop(string $combinationReference, TableNode $tableNode): void
     {
@@ -55,9 +53,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @When I update combination ":combinationReference" with following values for shop ":shopReference":
-     *
-     * @param string $combinationReference
-     * @param TableNode $tableNode
      */
     public function updateCombinationForShop(string $combinationReference, TableNode $tableNode, string $shopReference): void
     {
@@ -70,10 +65,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @When I update combination ":combinationReference" with following values for shops ":shopReferences":
-     *
-     * @param string $combinationReference
-     * @param string $shopReferences
-     * @param TableNode $tableNode
      */
     public function updateCombinationForShopCollection(string $combinationReference, TableNode $tableNode, string $shopReferences): void
     {
@@ -86,9 +77,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @When I update combination ":combinationReference" with following values for all shops:
-     *
-     * @param string $combinationReference
-     * @param TableNode $tableNode
      */
     public function updateCombinationForAllShops(string $combinationReference, TableNode $tableNode): void
     {
@@ -101,8 +89,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @When I set combination ":combinationReference" as default
-     *
-     * @param string $combinationReference
      */
     public function setDefaultCombinationForDefaultShop(string $combinationReference): void
     {
@@ -111,9 +97,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @When I set combination ":combinationReference" as default for shop ":shopReference"
-     *
-     * @param string $combinationReference
-     * @param string $shopReference
      */
     public function setDefaultCombinationForShop(string $combinationReference, string $shopReference): void
     {
@@ -125,9 +108,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @When I set combination ":combinationReference" as default for shops ":shopReference"
-     *
-     * @param string $combinationReference
-     * @param string $shopReferences
      */
     public function setDefaultCombinationForShopCollection(string $combinationReference, string $shopReferences): void
     {
@@ -139,8 +119,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @When I set combination ":combinationReference" as default for all shops
-     *
-     * @param string $combinationReference
      */
     public function setDefaultCombinationForAllShops(string $combinationReference): void
     {
@@ -157,10 +135,6 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
         $this->getCommandBus()->handle($command);
     }
 
-    /**
-     * @param UpdateCombinationCommand $command
-     * @param array $dataRows
-     */
     private function fillCommand(UpdateCombinationCommand $command, array $dataRows): void
     {
         // Is default

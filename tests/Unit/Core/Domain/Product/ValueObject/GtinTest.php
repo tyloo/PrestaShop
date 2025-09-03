@@ -45,8 +45,6 @@ class GtinTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param string $value
      */
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
@@ -56,9 +54,6 @@ class GtinTest extends TestCase
         new Gtin($value);
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidValues(): Generator
     {
         yield ['123456789012345'];

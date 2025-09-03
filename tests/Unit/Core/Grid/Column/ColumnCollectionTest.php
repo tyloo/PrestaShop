@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -233,8 +234,6 @@ class ColumnCollectionTest extends TestCase
 
     /**
      * @param int|string $id
-     *
-     * @return ColumnInterface
      */
     private function createColumnMock($id): ColumnInterface
     {
@@ -246,8 +245,6 @@ class ColumnCollectionTest extends TestCase
     }
 
     /**
-     * @param ColumnCollection $columns
-     *
      * @return string[]
      */
     private function getColumnPositions(ColumnCollection $columns): array
@@ -263,9 +260,6 @@ class ColumnCollectionTest extends TestCase
 
     /**
      * Helper assertion.
-     *
-     * @param ColumnCollection $columnCollection
-     * @param string $columnId
      */
     private function assertValidColumnWithId(ColumnCollection $columnCollection, string $columnId): void
     {

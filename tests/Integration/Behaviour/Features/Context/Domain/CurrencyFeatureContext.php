@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -158,7 +159,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
         $data = $this->localizeByRows($node);
         $currency = $this->getCurrency($reference);
 
-        if (!empty($data['is_unofficial'])) {
+        if (! empty($data['is_unofficial'])) {
             $command = new EditUnofficialCurrencyCommand((int) $currency->id);
             if (isset($data['iso_code'])) {
                 $command->setIsoCode($data['iso_code']);
@@ -234,13 +235,11 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given currency :reference does not exist
-     *
-     * @param string $reference
      */
     public function setNonExistingCurrencyReference(string $reference): void
     {
         if ($this->getSharedStorage()->exists($reference) && $this->getCurrency($reference)->id) {
-            throw new RuntimeException(sprintf('Expected that currency "%s" should not exist', $reference));
+            throw new RuntimeException(\sprintf('Expected that currency "%s" should not exist', $reference));
         }
 
         $this->getSharedStorage()->set($reference, self::NON_EXISTING_CURRENCY_ID);
@@ -281,8 +280,8 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
                 $expectedValue = null;
             }
 
-            if ($expectedValue != $apiData[$key]) {
-                throw new RuntimeException(sprintf('Invalid currency data field %s: %s expected %s', $key, json_encode($apiData[$key]), json_encode($expectedValue)));
+            if ($expectedValue !== $apiData[$key]) {
+                throw new RuntimeException(\sprintf('Invalid currency data field %s: %s expected %s', $key, json_encode($apiData[$key]), json_encode($expectedValue)));
             }
         }
     }
@@ -335,11 +334,6 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
         $this->assertLastErrorIs(CurrencyNotFoundException::class);
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return Currency
-     */
     private function getCurrency(string $reference): Currency
     {
         return new Currency($this->getSharedStorage()->get($reference));

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -119,11 +120,11 @@ class ProductPresenterTest extends KernelTestCase
             $this->createMock(Language::class)
         );
 
-        if (null === $field) {
+        if ($field === null) {
             return $product;
-        } else {
-            return $product[$field];
         }
+
+        return $product[$field];
     }
 
     private function getPresentedProduct(?string $field = null)

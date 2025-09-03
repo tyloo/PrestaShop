@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,6 @@ use Tests\Integration\Behaviour\Features\Context\Util\PrimitiveUtils;
 
 abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureContext
 {
-    /**
-     * @param string $productReference
-     * @param int $shopId
-     * @param ProductCombinationFilters|null $combinationFilters
-     *
-     * @return CombinationListForEditing
-     */
     protected function getCombinationsList(string $productReference, int $shopId, ?ProductCombinationFilters $combinationFilters = null): CombinationListForEditing
     {
         return $this->getQueryBus()->handle(new GetEditableCombinationsList(
@@ -64,10 +58,6 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
     }
 
     /**
-     * @param string $productReference
-     * @param int $shopId
-     * @param ProductCombinationFilters|null $combinationFilters
-     *
      * @return CombinationId[]
      */
     protected function getCombinationIds(string $productReference, int $shopId, ?ProductCombinationFilters $combinationFilters = null): array
@@ -83,11 +73,6 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
         ));
     }
 
-    /**
-     * @param string $combinationReference
-     *
-     * @return CombinationForEditing
-     */
     protected function getCombinationForEditing(string $combinationReference, int $shopId): CombinationForEditing
     {
         return $this->getQueryBus()->handle(new GetCombinationForEditing(
@@ -96,12 +81,6 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
         ));
     }
 
-    /**
-     * @param int $productId
-     * @param TableNode $tableNode
-     *
-     * @return ProductCombinationFilters
-     */
     protected function buildProductCombinationFiltersForShop(int $productId, TableNode $tableNode, int $shopId): ProductCombinationFilters
     {
         $dataRows = $tableNode->getRowsHash();
@@ -119,13 +98,13 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
 
         foreach ($dataRows as $criteriaField => $criteriaValue) {
             $attributeGroupMatch = preg_match('/attributes\[(.*?)\]/', $criteriaField, $matches) ? $matches[1] : null;
-            if (null !== $attributeGroupMatch) {
+            if ($attributeGroupMatch !== null) {
                 $attributeGroupId = $this->getSharedStorage()->get($attributeGroupMatch);
                 $attributes = PrimitiveUtils::castStringArrayIntoArray($criteriaValue);
                 foreach ($attributes as $attributeRef) {
                     $filters['attributes'][$attributeGroupId][] = $this->getSharedStorage()->get($attributeRef);
                 }
-            } elseif ('is default' === $criteriaField) {
+            } elseif ($criteriaField === 'is default') {
                 $filters[$this->getDbField('is default')] = PrimitiveUtils::castStringBooleanIntoBoolean($dataRows['is default']);
             } else {
                 $filters[$this->getDbField($criteriaField)] = $criteriaValue;
@@ -144,11 +123,6 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
         );
     }
 
-    /**
-     * @param string $field
-     *
-     * @return string
-     */
     private function getDbField(string $field): string
     {
         $fieldMap = [
@@ -163,12 +137,6 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
         return $field;
     }
 
-    /**
-     * @param int $page
-     * @param int $limit
-     *
-     * @return int
-     */
     private function countOffset(int $page, int $limit): int
     {
         return ($page - 1) * $limit;

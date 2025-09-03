@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,15 +51,12 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
 
     /**
      * @dataProvider provideShouldAddMultistoreElements
-     *
-     * @param bool $isMultistoreUsed
-     * @param bool $isAllShopContext
      */
     public function testShouldAddMultistoreElements(bool $isMultistoreUsed, bool $isAllShopContext, bool $expectedValue): void
     {
         $checkboxEnabler = new MultistoreCheckboxEnabler(
             $this->mockedShopConfiguration,
-            $this->mockShopContext($isMultistoreUsed, $isAllShopContext, !$isAllShopContext),
+            $this->mockShopContext($isMultistoreUsed, $isAllShopContext, ! $isAllShopContext),
             new FormCloner(),
             $this->createMultistoreConfigurationDropdownRendererMock(),
         );
@@ -66,9 +64,6 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
         $this->assertEquals($expectedValue, $checkboxEnabler->shouldAddMultistoreElements());
     }
 
-    /**
-     * @return array
-     */
     public function provideShouldAddMultistoreElements(): array
     {
         return [
@@ -105,9 +100,6 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
         $this->assertArrayHasKey('multistore_dropdown', $multistoreFirstFieldCheckboxOptions);
     }
 
-    /**
-     * @return FormInterface
-     */
     private function getFormToTest(): FormInterface
     {
         $formFactory = Forms::createFormFactoryBuilder()
@@ -156,9 +148,6 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
         return $shopContextMock;
     }
 
-    /**
-     * @return ShopConfiguration
-     */
     private function createShopConfigurationMock(): ShopConfiguration
     {
         $stub = $this->createMock(ShopConfiguration::class);
@@ -168,9 +157,6 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
         return $stub;
     }
 
-    /**
-     * @return MultistoreConfigurationDropdownRenderer
-     */
     private function createMultistoreConfigurationDropdownRendererMock(): MultistoreConfigurationDropdownRenderer
     {
         $dropdownRenderer = $this->createMock(MultistoreConfigurationDropdownRenderer::class);

@@ -83,7 +83,7 @@ class ApiAccessTokenEndpointTest extends ApiTestCase
         ];
         $response = static::createClient()->request('POST', '/access_token', $options);
         $token = json_decode($response->getContent())->access_token;
-        $decodedToken = json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1]))));
+        $decodedToken = json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1])), true));
 
         static::assertEquals(9999, json_decode($response->getContent())->expires_in);
         static::assertEquals(

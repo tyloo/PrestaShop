@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,8 +29,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Classes\Db;
 
-if (!defined('_DB_PREFIX_')) {
-    define('_DB_PREFIX_', 'test_');
+if (! \defined('_DB_PREFIX_')) {
+    \define('_DB_PREFIX_', 'test_');
 }
 
 use DbQuery;
@@ -50,9 +51,6 @@ class DbQueryTest extends TestCase
     }
 
     /**
-     * @param mixed $type
-     * @param string $expectedType
-     *
      * @dataProvider providerType
      */
     public function testType($type, string $expectedType): void
@@ -63,9 +61,6 @@ class DbQueryTest extends TestCase
     }
 
     /**
-     * @param mixed $fields
-     * @param array $expectedSelect
-     *
      * @dataProvider providerSelect
      */
     public function testSelect($fields, array $expectedSelect): void
@@ -76,10 +71,6 @@ class DbQueryTest extends TestCase
     }
 
     /**
-     * @param string $table
-     * @param string|null $alias
-     * @param array $expectedValue
-     *
      * @dataProvider providerFrom
      */
     public function testFrom(string $table, ?string $alias, array $expectedValue): void
@@ -90,10 +81,6 @@ class DbQueryTest extends TestCase
     }
 
     /**
-     * @param DbQuery $table
-     * @param string|null $alias
-     * @param array $expectedValue
-     *
      * @dataProvider providerFromWithDbQuery
      */
     public function testFromWithDbQuery(DbQuery $table, ?string $alias, array $expectedValue): void
@@ -104,9 +91,6 @@ class DbQueryTest extends TestCase
     }
 
     /**
-     * @param DbQuery $dbQuery
-     * @param string $expectedValue
-     *
      * @dataProvider providerBuild
      */
     public function testBuild(DbQuery $dbQuery, string $expectedValue): void

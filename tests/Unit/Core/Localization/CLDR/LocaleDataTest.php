@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,29 +40,25 @@ class LocaleDataTest extends TestCase
     /**
      * Setup tested dependency
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->localeData = new LocaleData();
     }
 
     /**
-     * @param array|null $decimalPatternsInitial
-     * @param array|null $decimalPatternsOverride
-     * @param array|null $decimalPatternsExpected
-     *
      * @dataProvider providerDecimalPatterns
      */
     public function testOverrideWithDecimalPatterns(
         ?array $decimalPatternsInitial,
         ?array $decimalPatternsOverride,
-        ?array $decimalPatternsExpected
+        ?array $decimalPatternsExpected,
     ) {
         // Initial
         $this->localeData->setDecimalPatterns($decimalPatternsInitial);
 
         // Override
         $localeData = new LocaleData();
-        if (null !== $decimalPatternsOverride) {
+        if ($decimalPatternsOverride !== null) {
             $localeData->setDecimalPatterns($decimalPatternsOverride);
         }
 
@@ -103,23 +100,19 @@ class LocaleDataTest extends TestCase
     }
 
     /**
-     * @param array|null $decimalPatternsInitial
-     * @param array|null $decimalPatternsOverride
-     * @param array|null $decimalPatternsExpected
-     *
      * @dataProvider providerPercentPatterns
      */
     public function testOverrideWithPercentPatterns(
         ?array $decimalPatternsInitial,
         ?array $decimalPatternsOverride,
-        ?array $decimalPatternsExpected
+        ?array $decimalPatternsExpected,
     ) {
         // Initial
         $this->localeData->setDecimalPatterns($decimalPatternsInitial);
 
         // Override
         $localeData = new LocaleData();
-        if (null !== $decimalPatternsOverride) {
+        if ($decimalPatternsOverride !== null) {
             $localeData->setDecimalPatterns($decimalPatternsOverride);
         }
 

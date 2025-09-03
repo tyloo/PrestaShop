@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,7 +58,7 @@ class UpdateStockFeatureContext extends AbstractProductFeatureContext
     public function updateProductStockForShop(
         string $productReference,
         string $shopReference,
-        TableNode $table
+        TableNode $table,
     ): void {
         $shopId = $this->getSharedStorage()->get(trim($shopReference));
         $shopConstraint = ShopConstraint::shop($shopId);
@@ -75,7 +76,7 @@ class UpdateStockFeatureContext extends AbstractProductFeatureContext
     public function updateProductStockForShopCollection(
         string $productReference,
         string $shopReferences,
-        TableNode $table
+        TableNode $table,
     ): void {
         $shopConstraint = ShopCollection::shops($this->referencesToIds($shopReferences));
 
@@ -116,15 +117,10 @@ class UpdateStockFeatureContext extends AbstractProductFeatureContext
         }
     }
 
-    /**
-     * @param string $productReference
-     * @param TableNode $table
-     * @param ShopConstraint $shopConstraint
-     */
     private function updateProductStock(
         string $productReference,
         TableNode $table,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): void {
         $data = $this->localizeByRows($table);
         $productId = $this->getSharedStorage()->get($productReference);
@@ -143,7 +139,6 @@ class UpdateStockFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @param array<string, mixed> $data
-     * @param UpdateProductStockAvailableCommand $command
      */
     private function setUpdateStockCommandData(array $data, UpdateProductStockAvailableCommand $command): void
     {

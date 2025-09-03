@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,9 @@ use Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface;
  */
 class CsrfTokenStorage implements ClearableTokenStorageInterface
 {
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private array $tokens = ['test@prestashop.com' => 'fakeTestCsrfToken'];
 
     public function clear(): void
@@ -67,6 +70,6 @@ class CsrfTokenStorage implements ClearableTokenStorageInterface
 
     public function hasToken(string $tokenId): bool
     {
-        return array_key_exists($tokenId, $this->tokens);
+        return \array_key_exists($tokenId, $this->tokens);
     }
 }

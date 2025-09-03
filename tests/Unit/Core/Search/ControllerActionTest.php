@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ class ControllerActionTest extends TestCase
      * @dataProvider getControllers
      *
      * @param string $fqcn
-     * @param array $result
+     * @param array  $result
      */
     public function testGetFromString($fqcn, $result)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,10 +38,12 @@ use Symfony\Component\Finder\Finder;
 
 class GenerateMailTemplatesCommandTest extends KernelTestCase
 {
-    /** @var Filesystem */
+    /**
+     * @var Filesystem
+     */
     private $fileSystem;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fileSystem = new Filesystem();
@@ -88,13 +91,13 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
 
         $expectedFiles = [];
         foreach ($themeInfos['coreLayouts'] as $coreLayout) {
-            $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$outputFolder, 'en', $coreLayout . '.html']);
-            $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$outputFolder, 'en', $coreLayout . '.txt']);
+            $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, 'en', $coreLayout . '.html']);
+            $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, 'en', $coreLayout . '.txt']);
         }
         foreach ($themeInfos['modulesLayouts'] as $moduleName => $moduleLayouts) {
             foreach ($moduleLayouts as $moduleLayout) {
-                $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$outputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.html']);
-                $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$outputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.txt']);
+                $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.html']);
+                $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.txt']);
             }
         }
         $this->assertFilesExist($expectedFiles);
@@ -103,8 +106,8 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
     public function testGenerateTemplatesWithModulesFolder()
     {
         $outputFolder = $this->buildOutputFolder();
-        $coreOutputFolder = implode(DIRECTORY_SEPARATOR, [$outputFolder, MailTemplateInterface::CORE_CATEGORY]);
-        $modulesOutputFolder = implode(DIRECTORY_SEPARATOR, [$outputFolder, MailTemplateInterface::MODULES_CATEGORY]);
+        $coreOutputFolder = implode(\DIRECTORY_SEPARATOR, [$outputFolder, MailTemplateInterface::CORE_CATEGORY]);
+        $modulesOutputFolder = implode(\DIRECTORY_SEPARATOR, [$outputFolder, MailTemplateInterface::MODULES_CATEGORY]);
         $this->fileSystem->mkdir([$coreOutputFolder, $modulesOutputFolder]);
         $themeInfos = $this->getThemeInfos('classic');
 
@@ -130,25 +133,22 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
 
         $expectedFiles = [];
         foreach ($themeInfos['coreLayouts'] as $coreLayout) {
-            $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$coreOutputFolder, 'en', $coreLayout . '.html']);
-            $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$coreOutputFolder, 'en', $coreLayout . '.txt']);
+            $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$coreOutputFolder, 'en', $coreLayout . '.html']);
+            $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$coreOutputFolder, 'en', $coreLayout . '.txt']);
         }
         foreach ($themeInfos['modulesLayouts'] as $moduleName => $moduleLayouts) {
             foreach ($moduleLayouts as $moduleLayout) {
-                $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$modulesOutputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.html']);
-                $expectedFiles[] = implode(DIRECTORY_SEPARATOR, [$modulesOutputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.txt']);
+                $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$modulesOutputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.html']);
+                $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$modulesOutputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.txt']);
             }
         }
         $this->assertFilesExist($expectedFiles);
     }
 
-    /**
-     * @param array $files
-     */
     private function assertFilesExist(array $files)
     {
         foreach ($files as $file) {
-            $this->assertTrue(file_exists($file), sprintf('%s file not found', $file));
+            $this->assertTrue(file_exists($file), \sprintf('%s file not found', $file));
         }
     }
 
@@ -167,9 +167,9 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
         ];
         $container = static::$kernel->getContainer();
         $mailThemesFolder = (string) $container->getParameter('mail_themes_dir');
-        $themeFolder = implode(DIRECTORY_SEPARATOR, [$mailThemesFolder, $theme]);
-        $coreFolder = implode(DIRECTORY_SEPARATOR, [$themeFolder, MailTemplateInterface::CORE_CATEGORY]);
-        $modulesFolder = implode(DIRECTORY_SEPARATOR, [$themeFolder, MailTemplateInterface::MODULES_CATEGORY]);
+        $themeFolder = implode(\DIRECTORY_SEPARATOR, [$mailThemesFolder, $theme]);
+        $coreFolder = implode(\DIRECTORY_SEPARATOR, [$themeFolder, MailTemplateInterface::CORE_CATEGORY]);
+        $modulesFolder = implode(\DIRECTORY_SEPARATOR, [$themeFolder, MailTemplateInterface::MODULES_CATEGORY]);
 
         $finder = new Finder();
         $finder->in($coreFolder);
@@ -201,7 +201,7 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
      */
     private function buildOutputFolder()
     {
-        $outputFolder = implode(DIRECTORY_SEPARATOR, [sys_get_temp_dir(), 'mail_templates']);
+        $outputFolder = implode(\DIRECTORY_SEPARATOR, [sys_get_temp_dir(), 'mail_templates']);
 
         $this->fileSystem->remove($outputFolder);
         $this->fileSystem->mkdir($outputFolder);

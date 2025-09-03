@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,11 +43,6 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I update discount :discountReference with the condition of a minimum amount:
-     *
-     * @param string $discountReference
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function updateDiscountConditionMinimalAmount(string $discountReference, TableNode $tableNode): void
     {
@@ -63,11 +59,6 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update discount :discountReference with the condition it requires at least :quantity products
-     *
-     * @param string $discountReference
-     * @param int $quantity
-     *
-     * @return void
      */
     public function updateDiscountConditionMinimalProductQuantity(string $discountReference, int $quantity): void
     {
@@ -78,12 +69,6 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update discount :discountReference with following conditions matching at least :quantity products:
-     *
-     * @param string $discountReference
-     * @param int $quantity
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function updateDiscountProductConditions(string $discountReference, int $quantity, TableNode $tableNode): void
     {
@@ -114,11 +99,6 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update discount :discountReference with conditions based on carriers :carrierReferences
-     *
-     * @param string $discountReference
-     * @param string $carrierReferences
-     *
-     * @return void
      */
     public function updateDiscountCarrierConditions(string $discountReference, string $carrierReferences): void
     {
@@ -129,11 +109,6 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update discount :discountReference with conditions based on countries :countryReferences
-     *
-     * @param string $discountReference
-     * @param string $countryReferences
-     *
-     * @return void
      */
     public function updateDiscountCountryConditions(string $discountReference, string $countryReferences): void
     {
@@ -144,11 +119,6 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then discount :discountReference should have the following product conditions matching at least :quantity products:
-     *
-     * @param string $discountReference
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function assertProductConditions(string $discountReference, int $quantity, TableNode $tableNode): void
     {
@@ -159,13 +129,13 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 
         $conditionsData = $tableNode->getColumnsHash();
         $productConditions = $discountForEditing->getProductConditions();
-        Assert::assertEquals(1, count($productConditions), sprintf('We only handle ONE condition group for now, %d groups were found', count($productConditions)));
+        Assert::assertEquals(1, \count($productConditions), \sprintf('We only handle ONE condition group for now, %d groups were found', \count($productConditions)));
 
         $productRuleGroup = $productConditions[0];
-        Assert::assertEquals($quantity, $productRuleGroup->getQuantity(), sprintf('Expected at least %d product quantity but got %d instead', $quantity, $productRuleGroup->getQuantity()));
+        Assert::assertEquals($quantity, $productRuleGroup->getQuantity(), \sprintf('Expected at least %d product quantity but got %d instead', $quantity, $productRuleGroup->getQuantity()));
 
         $productRules = $productRuleGroup->getRules();
-        Assert::assertEquals(count($conditionsData), count($productRules), sprintf('Expected %d rules but got %d instead', count($conditionsData), count($productRules)));
+        Assert::assertEquals(\count($conditionsData), \count($productRules), \sprintf('Expected %d rules but got %d instead', \count($conditionsData), \count($productRules)));
 
         foreach ($conditionsData as $index => $conditionData) {
             $productRule = $productRules[$index];
@@ -177,10 +147,6 @@ class DiscountConditionsFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then discount :discountReference should have no product conditions
-     *
-     * @param string $discountReference
-     *
-     * @return void
      */
     public function assertNoProductConditions(string $discountReference): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,15 +62,11 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I Add new employee :employeeReference to shop :shopReference with the following details:
-     *
-     * @param string $employeeReference
-     * @param string $shopReference
-     * @param TableNode $table
      */
     public function addNewEmployeeToShopWithTheFollowingDetails(
         string $employeeReference,
         string $shopReference,
-        TableNode $table
+        TableNode $table,
     ) {
         $testCaseData = $table->getRowsHash();
 
@@ -101,9 +98,6 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I edit employee :employeeReference with the following details:
-     *
-     * @param string $employeeReference
-     * @param TableNode $table
      */
     public function editEmployeeToShopWithTheFollowingDetails(string $employeeReference, TableNode $table): void
     {
@@ -284,12 +278,6 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
         ));
     }
 
-    /**
-     * @param array $testCaseData
-     * @param ?string $shopReference
-     *
-     * @return array
-     */
     private function mapDataWithSelectedValues(array $testCaseData, ?string $shopReference = null): array
     {
         $data = [];
@@ -313,7 +301,7 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
             $availableDefaultPageChoices = $tabChoiceProvider->getChoices();
             $pageId = null;
             foreach ($availableDefaultPageChoices as $pageName => $page) {
-                if (is_array($page)) {
+                if (\is_array($page)) {
                     foreach ($page as $subPageName => $subPageId) {
                         if ($subPageName === $testCaseData['Default page']) {
                             $pageId = $subPageId;
@@ -344,7 +332,7 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
 
         if (isset($testCaseData['Shop association'])) {
             $data['shopAssociation'] = $this->referencesToIds($testCaseData['Shop association']);
-        } elseif (!empty($shopReference)) {
+        } elseif (! empty($shopReference)) {
             /** @var array $shopAssociation */
             $shopAssociation = [
                 SharedStorage::getStorage()->get($shopReference),

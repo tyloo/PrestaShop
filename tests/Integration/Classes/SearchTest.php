@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -121,7 +122,7 @@ class SearchTest extends TestCase
     public function testGetSearchParamFromWord(string $word, string $expectedKeyWord, bool $withStart, bool $withEnd): void
     {
         Configuration::set('PS_SEARCH_START', $withStart);
-        Configuration::set('PS_SEARCH_END', !$withEnd); // Opposite of the meaning of start equivalent :)
+        Configuration::set('PS_SEARCH_END', ! $withEnd); // Opposite of the meaning of start equivalent :)
         $actual = Search::getSearchParamFromWord($word);
         $this->assertEquals(
             $expectedKeyWord,

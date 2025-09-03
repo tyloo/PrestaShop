@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,8 @@ class ModuleCoreTest extends TestCase
 {
     protected function setUp(): void
     {
-        if (!defined('_PS_VERSION_')) {
-            define('_PS_VERSION_', '1.6.1.0');
+        if (! \defined('_PS_VERSION_')) {
+            \define('_PS_VERSION_', '1.6.1.0');
         }
     }
 
@@ -78,9 +79,6 @@ class ModuleCoreTest extends TestCase
         $this->assertCount(3, $crawler->filter('.module_error li'));
     }
 
-    /**
-     * @return void
-     */
     public function testGetDefaultMultistoreCompatibility(): void
     {
         $module = new FakeModule();

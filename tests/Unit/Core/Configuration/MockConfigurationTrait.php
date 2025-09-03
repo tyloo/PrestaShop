@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,11 +44,11 @@ trait MockConfigurationTrait
     {
         $configuration = $this->createMock($configurationClass ?? ShopConfigurationInterface::class);
 
-        if (!empty($configurationValues)) {
+        if (! empty($configurationValues)) {
             $configuration
                 ->method('get')
                 ->will($this->returnCallback(function ($configurationName, $default, $shopConstraint) use ($configurationValues, $expectedShopConstraint) {
-                    if (null !== $expectedShopConstraint) {
+                    if ($expectedShopConstraint !== null) {
                         self::assertEquals($shopConstraint, $expectedShopConstraint);
                     }
 

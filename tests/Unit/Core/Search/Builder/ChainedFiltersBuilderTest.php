@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -79,23 +80,21 @@ class ChainedFiltersBuilderTest extends TestCase
  */
 class ConfigurableFiltersBuilder extends AbstractFiltersBuilder
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $parameters;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $managedParameters;
 
-    /**
-     * @param array $managedParameters
-     */
     public function __construct(array $managedParameters)
     {
         $this->managedParameters = $managedParameters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config)
     {
         $this->parameters = [];
@@ -109,16 +108,13 @@ class ConfigurableFiltersBuilder extends AbstractFiltersBuilder
         return parent::setConfig($config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildFilters(?Filters $filters = null)
     {
         if (empty($this->parameters)) {
             return $filters;
         }
 
-        if (null === $filters) {
+        if ($filters === null) {
             $filters = new Filters($this->parameters);
         } else {
             $filters->add($this->parameters);

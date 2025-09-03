@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -108,17 +109,17 @@ class DatabaseDump
     {
         $host_and_maybe_port = explode(':', _DB_SERVER_);
 
-        if (count($host_and_maybe_port) === 1) {
+        if (\count($host_and_maybe_port) === 1) {
             $this->host = $host_and_maybe_port[0];
             $this->port = 3306;
-        } elseif (count($host_and_maybe_port) === 2) {
+        } elseif (\count($host_and_maybe_port) === 2) {
             $this->host = $host_and_maybe_port[0];
             $this->port = $host_and_maybe_port[1];
         }
 
         $this->databaseName = _DB_NAME_;
         if ($dumpFile === null) {
-            $this->dumpFile = sprintf('%s/ps_dump_%s_%s.sql', sys_get_temp_dir(), $this->databaseName, Version::VERSION);
+            $this->dumpFile = \sprintf('%s/ps_dump_%s_%s.sql', sys_get_temp_dir(), $this->databaseName, Version::VERSION);
         } else {
             $this->dumpFile = $dumpFile;
         }
@@ -145,8 +146,6 @@ class DatabaseDump
 
     /**
      * Restore a specific table in the database.
-     *
-     * @param string $table
      */
     public function restoreTable(string $table): void
     {
@@ -171,11 +170,11 @@ class DatabaseDump
     private function cleanClassCache(string $className): void
     {
         // Clean EntityManager cache
-        Cache::clean(sprintf('objectmodel_%s_*', $className));
+        Cache::clean(\sprintf('objectmodel_%s_*', $className));
         // Clear static cache of the ObjectModel class related to the table
-        $staticMethodCall = sprintf('%s::resetStaticCache', $className);
-        if (is_callable($staticMethodCall)) {
-            call_user_func($staticMethodCall);
+        $staticMethodCall = \sprintf('%s::resetStaticCache', $className);
+        if (\is_callable($staticMethodCall)) {
+            \call_user_func($staticMethodCall);
         }
     }
 
@@ -183,19 +182,26 @@ class DatabaseDump
     {
         if ($table === 'lang') {
             return Language::class;
-        } elseif ($table === 'cms_category') {
+        }
+        if ($table === 'cms_category') {
             return CMSCategory::class;
-        } elseif ($table === 'cms_role') {
+        }
+        if ($table === 'cms_role') {
             return CMSRole::class;
-        } elseif ($table === 'product_attribute') {
+        }
+        if ($table === 'product_attribute') {
             return Combination::class;
-        } elseif ($table === 'connections') {
+        }
+        if ($table === 'connections') {
             return Connection::class;
-        } elseif ($table === 'log') {
+        }
+        if ($table === 'log') {
             return PrestaShopLogger::class;
-        } elseif ($table === 'attribute') {
+        }
+        if ($table === 'attribute') {
             return ProductAttribute::class;
-        } elseif ($table === 'orders') {
+        }
+        if ($table === 'orders') {
             return Order::class;
         }
 
@@ -204,10 +210,6 @@ class DatabaseDump
 
     /**
      * Wrapper to easily build mysql commands: sets password, port, user.
-     *
-     * @param array $arguments
-     *
-     * @return string
      */
     private function buildMySQLCommand(array $arguments = []): string
     {
@@ -218,10 +220,6 @@ class DatabaseDump
 
     /**
      * Wrapper to easily build mysql commands: sets password, port, user.
-     *
-     * @param array $arguments
-     *
-     * @return string
      */
     private function buildMySQLCommandDumpFile(string $dumpfile, array $arguments = []): string
     {
@@ -256,8 +254,6 @@ class DatabaseDump
      *
      * @param string $command
      *
-     * @return array
-     *
      * @throws Exception
      */
     private function exec($command): array
@@ -267,7 +263,7 @@ class DatabaseDump
         exec($command, $output, $ret);
 
         if ($ret !== 0) {
-            throw new Exception(sprintf('Unable to exec command: `%s`, output : %s', $command, implode($output)));
+            throw new Exception(\sprintf('Unable to exec command: `%s`, output : %s', $command, implode($output)));
         }
 
         return $output;
@@ -306,7 +302,7 @@ class DatabaseDump
 
     private function getTableDumpPath(string $table): string
     {
-        return sprintf(
+        return \sprintf(
             '%s/ps_dump_%s_%s_%s.sql',
             sys_get_temp_dir(),
             $this->databaseName,
@@ -317,7 +313,7 @@ class DatabaseDump
 
     private function getTableChecksumPath(string $table): string
     {
-        return sprintf(
+        return \sprintf(
             '%s/ps_dump_%s_%s_%s.md5',
             sys_get_temp_dir(),
             $this->databaseName,
@@ -330,18 +326,14 @@ class DatabaseDump
      * Get checksum of the table to compare if the conent has been modified and needs to be restored. Since the checksum
      * doesn't take the auto increment index into consideration we fetch it manually and append it to the original
      * checksum, this allows to restore the index when needed as well.
-     *
-     * @param string $table
-     *
-     * @return string
      */
     private function getTableChecksum(string $table): string
     {
-        $checksum = $this->db->executeS(sprintf('CHECKSUM TABLE %s;', $table));
+        $checksum = $this->db->executeS(\sprintf('CHECKSUM TABLE %s;', $table));
         $checksum = $checksum[0]['Checksum'];
 
         // The content only is not enough we must make sure that the auto increment index is the same
-        $autoIncrement = $this->db->executeS(sprintf(
+        $autoIncrement = $this->db->executeS(\sprintf(
             'SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s";',
             $this->databaseName,
             $table
@@ -354,7 +346,7 @@ class DatabaseDump
 
     private function checkDumpFile(): void
     {
-        if (!file_exists($this->dumpFile)) {
+        if (! file_exists($this->dumpFile)) {
             throw new Exception('You need to run \'composer create-test-db\' to create the initial test database');
         }
     }
@@ -362,11 +354,8 @@ class DatabaseDump
     private function checkTableDumpFile(string $tableName): void
     {
         $dumpFile = $this->getTableDumpPath($tableName);
-        if (!file_exists($dumpFile)) {
-            throw new Exception(sprintf(
-                'Cannot find dump for table %s, you need to run \'composer create-test-db\' to create the initial test database',
-                $tableName
-            ));
+        if (! file_exists($dumpFile)) {
+            throw new Exception(\sprintf('Cannot find dump for table %s, you need to run \'composer create-test-db\' to create the initial test database', $tableName));
         }
     }
 
@@ -423,15 +412,13 @@ class DatabaseDump
         foreach ($tables as $table) {
             // $table is an array looking like this [Tables_in_database_name => 'ps_access']
             $tableName = reset($table);
-            $tableName = substr($tableName, strlen($dump->dbPrefix));
+            $tableName = substr($tableName, \strlen($dump->dbPrefix));
             $dump->restoreTable($tableName);
         }
     }
 
     /**
      * Restore a list of tables in the database
-     *
-     * @param array $tableNames
      */
     public static function restoreTables(array $tableNames): void
     {
@@ -444,8 +431,6 @@ class DatabaseDump
 
     /**
      * Restore a list of tables in the database which name match the regexp
-     *
-     * @param string $regexp
      */
     public static function restoreMatchingTables(string $regexp): void
     {
@@ -455,7 +440,7 @@ class DatabaseDump
         foreach ($tables as $table) {
             // $table is an array looking like this [Tables_in_database_name => 'ps_access']
             $tableName = reset($table);
-            $tableName = substr($tableName, strlen($dump->dbPrefix));
+            $tableName = substr($tableName, \strlen($dump->dbPrefix));
             if (preg_match($regexp, $tableName)) {
                 $dump->restoreTable($tableName);
             }

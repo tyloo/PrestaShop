@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,9 +62,6 @@ class LocaleDataSourceTest extends TestCase
      */
     protected $enStubLocaleData;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $this->frStubLocaleData = $this->getStubLocaleData('fr-FR');

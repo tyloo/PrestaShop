@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class UpdatePositionFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I update product position in category :categoryReference with following values:
-     *
-     * @param string $categoryReference
-     * @param TableNode $table
      */
     public function updateProductPosition(string $categoryReference, TableNode $table): void
     {
@@ -67,9 +65,6 @@ class UpdatePositionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then products in category :categoryReference should have the following positions:
-     *
-     * @param string $categoryReference
-     * @param TableNode $tableNode
      */
     public function assertPositionInformation(string $categoryReference, TableNode $tableNode): void
     {

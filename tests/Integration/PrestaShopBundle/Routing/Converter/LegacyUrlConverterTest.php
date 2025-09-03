@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,13 +44,15 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
 {
     use LoginTrait;
 
-    /** @var Link|null */
+    /**
+     * @var Link|null
+     */
     private $link;
 
     protected function setUp(): void
     {
         parent::setUp();
-        if (!$this->link) {
+        if (! $this->link) {
             $this->link = new Link();
         }
     }
@@ -274,19 +277,12 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
 
     /**
      * @dataProvider getMigratedControllers
-     *
-     * @param string $expectedUrl
-     * @param string $controller
-     * @param string|null $action
-     * @param array|null $params
-     *
-     * @return void
      */
     public function testConverterByParameters(
         string $expectedUrl,
         string $controller,
         ?string $action = null,
-        ?array $params = null
+        ?array $params = null,
     ): void {
         /** @var LegacyUrlConverter $converter */
         $converter = self::$kernel->getContainer()->get('prestashop.bundle.routing.converter.legacy_url_converter');
@@ -299,13 +295,13 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
                 'controller' => $controller,
                 'action' => $action,
             ];
-            if (null !== $params) {
+            if ($params !== null) {
                 $parameters = array_merge($parameters, $params);
             }
             $convertedUrl = $converter->convertByParameters($parameters);
         } catch (Exception $e) {
             $caughtException = $e;
-            $caughtExceptionMessage = sprintf('Unexpected exception %s: %s', get_class($e), $e->getMessage());
+            $caughtExceptionMessage = \sprintf('Unexpected exception %s: %s', \get_class($e), $e->getMessage());
             $convertedUrl = null;
         }
         $this->assertNull($caughtException, $caughtExceptionMessage);
@@ -347,29 +343,22 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
             $caughtException = $e;
         }
         $this->assertNotNull($caughtException);
-        $this->assertTrue($convertedUrl . ' is already a converted url' == $caughtException->getMessage());
+        $this->assertTrue($convertedUrl . ' is already a converted url' === $caughtException->getMessage());
     }
 
     /**
      * @dataProvider getMigratedControllers
-     *
-     * @param string $expectedUrl
-     * @param string $controller
-     * @param string|null $action
-     * @param array|null $params
-     *
-     * @return void
      */
     public function testLegacyLinkClass(
         string $expectedUrl,
         string $controller,
         ?string $action = null,
-        ?array $params = null
+        ?array $params = null,
     ): void {
         $parameters = [
             'action' => $action,
         ];
-        if (null !== $params) {
+        if ($params !== null) {
             $parameters = array_merge($parameters, $params);
         }
         $linkUrl = $this->link->getAdminLink($controller, true, [], $parameters);
@@ -383,10 +372,10 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         string $expectedUrl,
         string $controller,
         ?string $action = null,
-        ?array $params = null
+        ?array $params = null,
     ): void {
-        $parameters = null !== $params ? $params : [];
-        if (null != $action && !isset($parameters[$action])) {
+        $parameters = $params !== null ? $params : [];
+        if ($action !== null && ! isset($parameters[$action])) {
             $parameters[$action] = '';
         }
         $linkUrl = $this->link->getAdminLink($controller, true, [], $parameters);
@@ -398,18 +387,12 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
      *
      * @dataProvider getLegacyControllers
      *
-     * @param string $expectedUrl
-     * @param string $controller
-     * @param array|null $parameters
-     *
-     * @return void
-     *
      * @throws PrestaShopException
      * @throws ReflectionException
      */
     public function testLegacyControllers(string $expectedUrl, string $controller, ?array $parameters = null)
     {
-        $parameters = null === $parameters ? [] : $parameters;
+        $parameters = $parameters === null ? [] : $parameters;
         $linkUrl = $this->link->getAdminLink($controller, true, [], $parameters);
         $this->assertSameUrl($expectedUrl, $linkUrl);
     }
@@ -475,25 +458,16 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         $this->assertSameUrl('/improve/design/modules/positions/unhook?extra_get_param=test', $locationUrl);
     }
 
-    /**
-     * @param string $expectedUrl
-     * @param string $url
-     */
     private function assertSameUrl(string $expectedUrl, string $url)
     {
         $cleanUrl = $this->getCleanUrl($url);
-        $this->assertTrue($expectedUrl == $cleanUrl, sprintf(
+        $this->assertTrue($expectedUrl === $cleanUrl, \sprintf(
             'Expected url %s is different with generated one: %s',
             $expectedUrl,
             $cleanUrl
         ));
     }
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     private function getCleanUrl(string $url): string
     {
         $this->assertNotNull($url);

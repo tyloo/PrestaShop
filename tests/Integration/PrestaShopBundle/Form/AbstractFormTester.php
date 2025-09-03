@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,11 +45,7 @@ abstract class AbstractFormTester extends KernelTestCase
     }
 
     /**
-     * @param string $type
-     * @param array $options
      * @param null $data
-     *
-     * @return FormInterface
      */
     protected function createForm(string $type, array $options = [], $data = null): FormInterface
     {
@@ -56,11 +53,7 @@ abstract class AbstractFormTester extends KernelTestCase
     }
 
     /**
-     * @param string $type
-     * @param array $options
      * @param null $data
-     *
-     * @return FormBuilderInterface
      */
     protected function createFormBuilder(string $type, array $options = [], $data = null): FormBuilderInterface
     {
@@ -68,21 +61,13 @@ abstract class AbstractFormTester extends KernelTestCase
     }
 
     /**
-     * @param string $name
-     * @param string $type
-     * @param array $options
      * @param null $data
-     *
-     * @return FormBuilderInterface
      */
     protected function createNamedBuilder(string $name, string $type, array $options = [], $data = null): FormBuilderInterface
     {
         return $this->getFormFactory()->createNamedBuilder($name, $type, $data, $options);
     }
 
-    /**
-     * @return FormFactoryInterface
-     */
     protected function getFormFactory(): FormFactoryInterface
     {
         return self::getContainer()->get('form.factory');

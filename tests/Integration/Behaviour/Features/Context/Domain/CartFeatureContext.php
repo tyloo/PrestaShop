@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -86,7 +87,9 @@ class CartFeatureContext extends AbstractDomainFeatureContext
      */
     protected $productFeatureContext;
 
-    /** @BeforeScenario */
+    /**
+     * @BeforeScenario
+     */
     public function before(BeforeScenarioScope $scope)
     {
         /** @var InitializedContextEnvironment $environment */
@@ -123,9 +126,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
      * @When I create an empty cart :cartReference for customer :customerReference
      *
      * @Given customer :customerReference has an empty cart :cartReference
-     *
-     * @param string $cartReference
-     * @param string $customerReference
      */
     public function createEmptyCartForCustomer(string $cartReference, string $customerReference)
     {
@@ -147,9 +147,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update the cart :cartReference currency to :currencyReference
-     *
-     * @param string $cartReference
-     * @param string $currencyReference
      */
     public function updateCartCurrency(string $cartReference, string $currencyReference)
     {
@@ -168,10 +165,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I add (\d+) product(?:s)? "(.+)" to the cart "(.+)"$/
-     *
-     * @param int $quantity
-     * @param string $productName
-     * @param string $cartReference
      */
     public function addProductsToCart(int $quantity, string $productName, string $cartReference)
     {
@@ -196,11 +189,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I add (\d+) combination(?:s)? "(.+)" from product "(.+)" to the cart "(.+)"$/
-     *
-     * @param int $quantity
-     * @param string $combinationReference
-     * @param string $productReference
-     * @param string $cartReference
      */
     public function addCombinationsToCart(int $quantity, string $combinationReference, string $productReference, string $cartReference)
     {
@@ -223,10 +211,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update product :productName in the cart :cartReference to :price
-     *
-     * @param string $productName
-     * @param string $cartReference
-     * @param float $price
      */
     public function updateProductPriceInCart(string $productName, string $cartReference, float $price): void
     {
@@ -241,10 +225,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product :productName in cart :cartReference should have specific price :price
-     *
-     * @param string $productName
-     * @param string $cartReference
-     * @param float $price
      */
     public function checkCartProductSpecificPrice(string $productName, string $cartReference, float $price): void
     {
@@ -267,12 +247,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             $cartId
         );
 
-        if (!$specificPriceId) {
-            throw new RuntimeException(sprintf(
-                'Could not find specific price for product %s in car %s',
-                $productName,
-                $cartReference
-            ));
+        if (! $specificPriceId) {
+            throw new RuntimeException(\sprintf('Could not find specific price for product %s in car %s', $productName, $cartReference));
         }
 
         $specificPrice = new SpecificPrice($specificPriceId);
@@ -286,10 +262,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update quantity of product :productName in the cart :cartReference to :quantity
-     *
-     * @param int $quantity
-     * @param string $productName
-     * @param string $cartReference
      */
     public function updateProductQuantityInCart(int $quantity, string $productName, string $cartReference)
     {
@@ -321,7 +293,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         int $quantity,
         string $productReference,
         string $withCombinations,
-        string $reference
+        string $reference,
     ) {
         $hasCombinations = ($withCombinations === 'with');
         $cartId = (int) SharedStorage::getStorage()->get($reference);
@@ -337,7 +309,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             $customizations = [];
             foreach ($customizationFields as $customizationField) {
                 $customizationFieldId = (int) $customizationField['id_customization_field'];
-                if (Product::CUSTOMIZE_TEXTFIELD == $customizationField['type']) {
+                if ($customizationField['type'] === Product::CUSTOMIZE_TEXTFIELD) {
                     $customizations[$customizationFieldId] = 'Toto';
                 }
             }
@@ -381,7 +353,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         int $quantity,
         string $combinationName,
         string $productName,
-        string $cartReference
+        string $cartReference,
     ) {
         // Use product reference from shared storage if available, or from legacy context otherwise
         if ($this->getSharedStorage()->exists($productName)) {
@@ -417,10 +389,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
      * @When I select :countryIsoCode address as delivery and invoice address for customer :customerReference in cart :cartReference
      *
      * @Given cart :cartReference delivery and invoice address country for customer :customerReference is :countryIsoCode
-     *
-     * @param string $countryIsoCode
-     * @param string $customerReference
-     * @param string $cartReference
      */
     public function selectAddressAsDeliveryAndInvoiceAddress(string $countryIsoCode, string $customerReference, string $cartReference)
     {
@@ -438,7 +406,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
                 }
             }
 
-            throw new Exception(sprintf('Customer does not have address in "%s" country.', $isoCode));
+            throw new Exception(\sprintf('Customer does not have address in "%s" country.', $isoCode));
         };
 
         $addressId = $getAddressByCountryIsoCode($countryIsoCode);
@@ -454,17 +422,12 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given cart :cartReference delivery and invoice address for customer :customeReferenceis is in :stateName state of :countryIsoCode country
-     *
-     * @param string $cartReference
-     * @param string $customerReference
-     * @param string $countryIsoCode
-     * @param string $stateName
      */
     public function selectDeliveryAndInvoiceAddressWithState(
         string $cartReference,
         string $customerReference,
         string $countryIsoCode,
-        string $stateName
+        string $stateName,
     ) {
         $customerId = SharedStorage::getStorage()->get($customerReference);
         $customer = new Customer($customerId);
@@ -481,11 +444,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
                 }
             }
 
-            throw new RuntimeException(sprintf(
-                'Customer does not have address in "%s" state of "%s" country.',
-                $stateName,
-                $isoCode
-            ));
+            throw new RuntimeException(\sprintf('Customer does not have address in "%s" state of "%s" country.', $stateName, $isoCode));
         };
 
         $addressId = $getAddressByCountryIsoCode($countryIsoCode);
@@ -501,9 +460,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I select carrier :carrierReference for cart :cartReference
-     *
-     * @param string $cartReference
-     * @param string $carrierReference
      */
     public function selectCarrierForCart(string $cartReference, string $carrierReference)
     {
@@ -524,9 +480,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then cart :cartReference should have :carrierReference as a carrier
-     *
-     * @param string $cartReference
-     * @param string $carrierReference
      */
     public function checkCartCarrier(string $cartReference, string $carrierReference)
     {
@@ -536,26 +489,15 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $cart = new Cart($cartId);
 
         if ((int) $cart->id_carrier === 0) {
-            throw new RuntimeException(sprintf(
-                'Cart %s has no carrier defined',
-                $cartReference
-            ));
+            throw new RuntimeException(\sprintf('Cart %s has no carrier defined', $cartReference));
         }
         if ((int) $cart->id_carrier !== $carrierId) {
-            throw new RuntimeException(sprintf(
-                'Cart %s should have %s as a carrier, expected id_carrier to be %d but is %d instead',
-                $cartReference,
-                $carrierReference,
-                $carrierId,
-                (int) $cart->id_carrier
-            ));
+            throw new RuntimeException(\sprintf('Cart %s should have %s as a carrier, expected id_carrier to be %d but is %d instead', $cartReference, $carrierReference, $carrierId, (int) $cart->id_carrier));
         }
     }
 
     /**
      * @When I set Free shipping to the cart :cartReference
-     *
-     * @param string $cartReference
      */
     public function setFreeShippingToCart(string $cartReference)
     {
@@ -569,9 +511,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I declare cart :cartReference is a gift with message :message
-     *
-     * @param string $cartReference
-     * @param string $message
      */
     public function sendAsAGift(string $cartReference, string $message)
     {
@@ -590,10 +529,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I use a voucher :voucherCode for a discount of :discountAmount on the cart :cartReference
-     *
-     * @param string $voucherCode
-     * @param float $discountAmount
-     * @param string $cartReference
      *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
@@ -615,9 +550,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I use a voucher :voucherCode on the cart :cartReference
-     *
-     * @param string $voucherCode
-     * @param string $cartReference
      */
     public function useDiscountByCodeOnCart(string $voucherCode, string $cartReference)
     {
@@ -637,10 +569,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I use a voucher :voucherCode which provides a gift product :productName on the cart :cartReference
-     *
-     * @param string $voucherCode
-     * @param string $giftProductName
-     * @param string $cartReference
      */
     public function useGiftProductVoucherOnCart(string $voucherCode, string $giftProductName, string $cartReference)
     {
@@ -682,9 +610,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete voucher :voucherCode from cart :cartReference
-     *
-     * @param string $voucherCode
-     * @param string $cartReference
      */
     public function deleteGiftCartRule(string $voucherCode, string $cartReference)
     {
@@ -700,18 +625,12 @@ class CartFeatureContext extends AbstractDomainFeatureContext
     public function assertCartDoesNotContainProduct(string $cartReference, string $productName)
     {
         if ($this->productIsInCart($cartReference, $productName)) {
-            throw new RuntimeException(sprintf(
-                'Expected cart not to contain product %s, but it was found in cart',
-                $productName
-            ));
+            throw new RuntimeException(\sprintf('Expected cart not to contain product %s, but it was found in cart', $productName));
         }
     }
 
     /**
      * @Then cart :cartReference should not contain product :productName unless it is a gift
-     *
-     * @param string $cartReference
-     * @param string $productName
      */
     public function assertCartContainsOnlyGiftProduct(string $cartReference, string $productName)
     {
@@ -723,11 +642,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
                 continue;
             }
 
-            if (!$cartProduct->isGift()) {
-                throw new RuntimeException(sprintf(
-                    'Cart contains product "%s", but it is not a gift',
-                    $productName
-                ));
+            if (! $cartProduct->isGift()) {
+                throw new RuntimeException(\sprintf('Cart contains product "%s", but it is not a gift', $productName));
             }
         }
     }
@@ -742,10 +658,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
         foreach ($cartInfo->getCartRules() as $cartRule) {
             if ($cartRule->getCartRuleId() === $cartRuleId) {
-                throw new RuntimeException(sprintf(
-                    'Voucher %s is applied to cart',
-                    $voucherCode
-                ));
+                throw new RuntimeException(\sprintf('Voucher %s is applied to cart', $voucherCode));
             }
         }
     }
@@ -764,35 +677,22 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf(
-            'Voucher %s is not applied to cart',
-            $voucherCode
-        ));
+        throw new RuntimeException(\sprintf('Voucher %s is not applied to cart', $voucherCode));
     }
 
     /**
      * @Then cart :cartReference should contain product :productName
      * @Then cart :cartReference contains product :productName
-     *
-     * @param string $cartReference
-     * @param string $productName
      */
     public function assertCartContainsProduct(string $cartReference, string $productName)
     {
-        if (!$this->productIsInCart($cartReference, $productName)) {
-            throw new RuntimeException(sprintf(
-                'Expected cart to contain product %s, but it was not found',
-                $productName
-            ));
+        if (! $this->productIsInCart($cartReference, $productName)) {
+            throw new RuntimeException(\sprintf('Expected cart to contain product %s, but it was not found', $productName));
         }
     }
 
     /**
      * @Then product :productName quantity in cart :cartReference should be :quantity excluding gift products
-     *
-     * @param string $cartReference
-     * @param string $productName
-     * @param int $quantity
      */
     public function assertPaidProductQuantity(string $cartReference, string $productName, int $quantity)
     {
@@ -801,22 +701,12 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then gifted product :productName quantity in cart :cartReference should be :quantity
-     *
-     * @param string $cartReference
-     * @param string $productName
-     * @param int $quantity
      */
     public function assertGiftedProductQuantity(string $cartReference, string $productName, int $quantity)
     {
         $this->assertProductQuantity($cartReference, $productName, $quantity, true);
     }
 
-    /**
-     * @param string $cartReference
-     * @param string $productName
-     * @param int $quantity
-     * @param bool $isGift
-     */
     public function assertProductQuantity(string $cartReference, string $productName, int $quantity, bool $isGift)
     {
         $productId = $this->getProductIdByName($productName);
@@ -830,16 +720,13 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf('Product %s was not found in cart', $productName));
+        throw new RuntimeException(\sprintf('Product %s was not found in cart', $productName));
     }
 
     /**
      * @Then cart :cartReference should contain gift product :productName
      *
      * @Given cart :cartReference contains gift product :productName
-     *
-     * @param string $cartReference
-     * @param string $productName
      */
     public function assertCartContainsGiftProduct(string $cartReference, string $productName)
     {
@@ -856,7 +743,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             $matchingProducts[] = $cartProduct;
         }
 
-        if (!empty($matchingProducts)) {
+        if (! empty($matchingProducts)) {
             /** @var CartForOrderCreation\CartProduct $cartProduct */
             foreach ($matchingProducts as $cartProduct) {
                 if ($cartProduct->isGift()) {
@@ -865,19 +752,13 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf(
-            'Cart does not contain gift product "%s"',
-            $productName
-        ));
+        throw new RuntimeException(\sprintf('Cart does not contain gift product "%s"', $productName));
     }
 
     /**
      * @Then cart :cartReference should not contain gift product :productName
      *
      * @Given cart :cartReference does not contain gift product :productName
-     *
-     * @param string $cartReference
-     * @param string $productName
      */
     public function assertCartDoesNotContainGiftProduct(string $cartReference, string $productName)
     {
@@ -892,14 +773,11 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (!empty($matchingProducts)) {
+        if (! empty($matchingProducts)) {
             /** @var CartForOrderCreation\CartProduct $cartProduct */
             foreach ($matchingProducts as $cartProduct) {
                 if ($cartProduct->isGift()) {
-                    throw new RuntimeException(sprintf(
-                        'Cart contains gift product "%s"',
-                        $productName
-                    ));
+                    throw new RuntimeException(\sprintf('Cart contains gift product "%s"', $productName));
                 }
             }
         }
@@ -922,8 +800,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
     {
         $productId = $this->getProductIdByName($giftProductName);
 
-        if (!(new Product($productId))->id) {
-            throw new RuntimeException(sprintf('Product %d was not found', $productId));
+        if (! (new Product($productId))->id) {
+            throw new RuntimeException(\sprintf('Product %d was not found', $productId));
         }
         $cartRule = $this->createCommonCartRule($voucherCode);
         $cartRule->free_shipping = true;
@@ -949,7 +827,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
     public function assertReductionValueOfCartCartRule(
         string $voucherCode,
         string $cartReference,
-        string $value
+        string $value,
     ) {
         $cartInfo = $this->getCartForOrderCreationByReference($cartReference);
         $cartRuleId = $this->getSharedStorage()->get($voucherCode);
@@ -962,14 +840,11 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf('Voucher was %s not found in cart', $voucherCode));
+        throw new RuntimeException(\sprintf('Voucher was %s not found in cart', $voucherCode));
     }
 
     /**
      * @Then cart :cartReference should contain :quantity products
-     *
-     * @param string $cartReference
-     * @param int $quantity
      */
     public function assertCartNumberOfProducts(string $cartReference, int $quantity)
     {
@@ -978,19 +853,12 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $cartProductsQuantity = \count($cartInfo->getProducts());
 
         if ($quantity !== $cartProductsQuantity) {
-            throw new RuntimeException(sprintf(
-                'Cart contains %d products instead of %d',
-                $cartProductsQuantity,
-                $quantity
-            ));
+            throw new RuntimeException(\sprintf('Cart contains %d products instead of %d', $cartProductsQuantity, $quantity));
         }
     }
 
     /**
      * @Then cart :cartReference should contain :quantity products excluding gifts
-     *
-     * @param string $cartReference
-     * @param int $quantity
      */
     public function assertCartNumberOfProductsExcludingGifts(string $cartReference, int $quantity)
     {
@@ -998,17 +866,13 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
         $cartProductsQuantity = 0;
         foreach ($cartInfo->getProducts() as $product) {
-            if (false === (bool) $product->isGift()) {
+            if ((bool) $product->isGift() === false) {
                 ++$cartProductsQuantity;
             }
         }
 
         if ($quantity !== $cartProductsQuantity) {
-            throw new RuntimeException(sprintf(
-                'Cart contains %d products instead of %d',
-                $cartProductsQuantity,
-                $quantity
-            ));
+            throw new RuntimeException(\sprintf('Cart contains %d products instead of %d', $cartProductsQuantity, $quantity));
         }
     }
 
@@ -1031,12 +895,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $this->assertLastErrorIs(PackOutOfStockException::class);
     }
 
-    /**
-     * @param string $cartReference
-     * @param string $productName
-     *
-     * @return bool
-     */
     private function productIsInCart(string $cartReference, string $productName): bool
     {
         $productId = (int) $this->getSharedStorage()->get($productName);
@@ -1051,12 +909,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         return false;
     }
 
-    /**
-     * @param string $cartReference
-     * @param bool $hideDiscounts
-     *
-     * @return CartForOrderCreation
-     */
     private function getCartForOrderCreationByReference(string $cartReference, bool $hideDiscounts = true): CartForOrderCreation
     {
         $cartId = $this->getSharedStorage()->get($cartReference);
@@ -1067,11 +919,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         );
     }
 
-    /**
-     * @param string $voucherCode
-     *
-     * @return CartRule
-     */
     private function createCommonCartRule(string $voucherCode): CartRule
     {
         $cartRule = new CartRule();
@@ -1092,8 +939,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param string $productName
-     *
      * @return int
      */
     private function getProductIdByName(string $productName)
@@ -1107,7 +952,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         );
 
         if (empty($products)) {
-            throw new RuntimeException(sprintf('Product with name "%s" was not found', $productName));
+            throw new RuntimeException(\sprintf('Product with name "%s" was not found', $productName));
         }
 
         /** @var FoundProduct $product */
@@ -1116,20 +961,15 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         return $product->getProductId();
     }
 
-    /**
-     * @param CartRule $cartRule
-     */
     private function addCartRule(CartRule $cartRule): void
     {
-        if (!$cartRule->add()) {
+        if (! $cartRule->add()) {
             throw new RuntimeException('Cannot add cart rule to database');
         }
     }
 
     /**
      * @Then I should get error that minimum quantity of :minQuantity must be added to cart
-     *
-     * @param int $minQuantity
      */
     public function assertLastErrorIsMinimumQuantityWhichMustBeAddedToCart(int $minQuantity)
     {
@@ -1138,11 +978,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             MinimalQuantityException::class
         );
         if ($minQuantity !== $lastError->getMinimalQuantity()) {
-            throw new RuntimeException(sprintf(
-                'Minimal quantity in exception, expected %s but got %s',
-                $minQuantity,
-                $lastError->getMinimalQuantity()
-            ));
+            throw new RuntimeException(\sprintf('Minimal quantity in exception, expected %s but got %s', $minQuantity, $lastError->getMinimalQuantity()));
         }
     }
 
@@ -1154,16 +990,12 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $cartInfo = $this->getCartForOrderCreationByReference($cartReference);
         $cartTotal = $cartInfo->getSummary()->getTotalPriceWithTaxes();
         if ($cartTotal !== $expectedTotal) {
-            throw new RuntimeException(sprintf('Expects %s, got %s instead', $expectedTotal, $cartTotal));
+            throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedTotal, $cartTotal));
         }
     }
 
     /**
      * @Then my cart :cartReference should have the following details:
-     *
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function assertCartDetailsAfterDiscount(string $cartReference, TableNode $tableNode): void
     {
@@ -1186,10 +1018,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then my cart :cartReference should have the following details, without hiding auto discounts:
-     *
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function assertCartDetailsAfterDiscountWihoutHidingAutoDiscounts(string $cartReference, TableNode $tableNode): void
     {
@@ -1212,8 +1040,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I create an empty anonymous cart :cartReference
-     *
-     * @param string $cartReference
      */
     public function createEmptyAnonymousCart(string $cartReference)
     {
@@ -1226,9 +1052,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I assign customer :customerReference to cart :cartReference
-     *
-     * @param string $customerReference
-     * @param string $cartReference
      */
     public function assignCustomerToCart(string $customerReference, string $cartReference)
     {
@@ -1242,11 +1065,6 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         Context::getContext()->cart = $cart;
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return Currency
-     */
     private function getCurrency(string $reference): Currency
     {
         return new Currency(SharedStorage::getStorage()->get($reference));
@@ -1323,7 +1141,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         try {
             $repository->get(new CartId($cartId));
         } catch (CartException $e) {
-            throw new RuntimeException(sprintf('cart %s should exist', $cartReference));
+            throw new RuntimeException(\sprintf('cart %s should exist', $cartReference));
         }
     }
 }

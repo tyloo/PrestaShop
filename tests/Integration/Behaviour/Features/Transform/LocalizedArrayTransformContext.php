@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ class LocalizedArrayTransformContext implements Context
     /**
      * @Transform table:locale,value
      *
-     * @param TableNode $tableNode
-     *
      * @return array<int, string> [langId => value]
      */
     public function transformTableToLocalizedArray(TableNode $tableNode): array
@@ -57,17 +56,12 @@ class LocalizedArrayTransformContext implements Context
         return $localizedValues;
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return int
-     */
     private function getIdByLocale(string $locale): int
     {
         $id = (int) Language::getIdByLocale($locale, true);
 
-        if (!$id) {
-            throw new RuntimeException(sprintf('Language by locale "%s" does not exist', $locale));
+        if (! $id) {
+            throw new RuntimeException(\sprintf('Language by locale "%s" does not exist', $locale));
         }
 
         return $id;

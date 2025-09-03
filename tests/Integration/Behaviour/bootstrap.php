@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,7 @@ const _PS_IN_TEST_ = true;
 define('_PS_ROOT_DIR_', dirname(__DIR__, 3));
 const _PS_MODULE_DIR_ = _PS_ROOT_DIR_ . '/tests/Resources/modules/';
 const _PS_ALL_THEMES_DIR_ = _PS_ROOT_DIR_ . '/tests/Resources/themes/';
-if (!defined('_PS_ADMIN_DIR_')) {
+if (! defined('_PS_ADMIN_DIR_')) {
     define('_PS_ADMIN_DIR_', __DIR__);
 }
 require_once $rootDirectory . 'config/config.inc.php';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ class ModuleFeatureContext extends AbstractPrestaShopFeatureContext
     public function theModuleIsInstalled(string $module): void
     {
         // Enable the module if needed
-        if (!Module::isEnabled($module)) {
+        if (! Module::isEnabled($module)) {
             Module::getInstanceByName($module)->enable();
             Module::resetStaticCache();
         }

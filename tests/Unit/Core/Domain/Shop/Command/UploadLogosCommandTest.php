@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class UploadLogosCommandTest extends TestCase
      */
     private $validImagePath = '';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->validImagePath = _PS_ROOT_DIR_ . '/tests/Unit/Resources/assets/img/logo.jpg';
@@ -84,14 +85,12 @@ class UploadLogosCommandTest extends TestCase
         $this->expectExceptionMessage('The file "logo.jpg" could not be written on disk.');
 
         $uploadLogosCommand = new UploadLogosCommand();
-        $uploadedFile = new UploadedFile($this->validImagePath, basename($this->validImagePath), null, UPLOAD_ERR_CANT_WRITE);
+        $uploadedFile = new UploadedFile($this->validImagePath, basename($this->validImagePath), null, \UPLOAD_ERR_CANT_WRITE);
         $uploadLogosCommand->setUploadedHeaderLogo($uploadedFile);
     }
 
     /**
      * @dataProvider dataProviderSetUploadedHeaderLogo
-     *
-     * @param string $path
      */
     public function testSetUploadedHeaderLogo(string $path): void
     {
@@ -107,8 +106,6 @@ class UploadLogosCommandTest extends TestCase
 
     /**
      * @dataProvider dataProviderSetUploadedMailAndInvoiceLogo
-     *
-     * @param string $path
      */
     public function testSetUploadedMailLogo(string $path): void
     {
@@ -124,8 +121,6 @@ class UploadLogosCommandTest extends TestCase
 
     /**
      * @dataProvider dataProviderSetUploadedMailAndInvoiceLogo
-     *
-     * @param string $path
      */
     public function testSetUploadedInvoiceLogo(string $path): void
     {

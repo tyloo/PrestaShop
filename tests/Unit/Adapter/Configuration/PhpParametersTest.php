@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,12 +35,18 @@ use PrestaShop\PrestaShop\Adapter\Configuration\PhpParameters;
 
 class PhpParametersTest extends TestCase
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $parametersSampleFile;
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $parametersSampleFileContent;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $sampleParams = [
         'parameters' => [
             'a' => '127.0.0.1',
@@ -48,18 +55,12 @@ class PhpParametersTest extends TestCase
         ],
     ];
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
-        $this->parametersSampleFile = dirname(__DIR__, 2) . '/Resources/config/params.php';
+        $this->parametersSampleFile = \dirname(__DIR__, 2) . '/Resources/config/params.php';
         $this->parametersSampleFileContent = file_get_contents($this->parametersSampleFile);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function tearDown(): void
     {
         // restore parameters sample file content as it can be modified
@@ -88,7 +89,11 @@ class PhpParametersTest extends TestCase
         $parameterReader->setProperty('a.b.c', 'OSS');
         $parameterReader->setProperty('parameters.b', 'PrestaShop');
         $modifiedParams = $this->sampleParams;
-        $modifiedParams['a'] = ['b' => ['c' => 'OSS']];
+        $modifiedParams['a'] = [
+            'b' => [
+                'c' => 'OSS',
+            ],
+        ];
         $modifiedParams['parameters']['b'] = 'PrestaShop';
 
         $this->assertEquals($modifiedParams, $parameterReader->getConfiguration());
@@ -120,7 +125,7 @@ class PhpParametersTest extends TestCase
         $this->assertTrue($result);
 
         $parametersSampleFileContentModified = file_get_contents(
-            dirname(__DIR__, 2) . '/Resources/config/params_modified.php'
+            \dirname(__DIR__, 2) . '/Resources/config/params_modified.php'
         );
         $parametersSampleFileContentAfterSave = file_get_contents($this->parametersSampleFile);
 
@@ -138,9 +143,6 @@ class PhpParametersTest extends TestCase
      *            'a' => '127.0.0.1',\n
      *            'c_d' => '1234',\n
      *       ),\n
-     *
-     * @param string $fileContent1
-     * @param string $fileContent2
      */
     protected function assertParametersPhpFileContentAreEqual(string $fileContent1, string $fileContent2): void
     {

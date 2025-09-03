@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,12 @@ class CustomMoneyTypeExtensionTest extends TestCase
 
     /**
      * @dataProvider getDataForTestBuildViewAssignsCorrectMoneyPatternVariable
-     *
-     * @param string $currencyIso
-     * @param string $symbol
-     * @param string $cldrPattern
-     * @param string $expectedPattern
      */
     public function testBuildViewAssignsCorrectMoneyPatternVariable(
         string $currencyIso,
         string $symbol,
         string $cldrPattern,
-        string $expectedPattern
+        string $expectedPattern,
     ): void {
         $localeNumberTransformer = $this->createMock(LocaleNumberTransformer::class);
         $localeNumberTransformer->method('getLocaleForNumberInputs')->willReturn('en');
@@ -74,28 +70,16 @@ class CustomMoneyTypeExtensionTest extends TestCase
         $this->assertSame($expectedPattern, $formView->vars['money_pattern']);
     }
 
-    /**
-     * @return FormView
-     */
     private function mockFormView(): FormView
     {
         return $this->getMockBuilder(FormView::class)->getMock();
     }
 
-    /**
-     * @return FormInterface
-     */
     private function mockFormInterface(): FormInterface
     {
         return $this->getMockBuilder(FormInterface::class)->getMock();
     }
 
-    /**
-     * @param string $pattern
-     * @param string $symbol
-     *
-     * @return Locale
-     */
     private function mockLocale(string $pattern, string $symbol): Locale
     {
         $locale = $this->getMockBuilder(Locale::class)
@@ -109,12 +93,6 @@ class CustomMoneyTypeExtensionTest extends TestCase
         return $locale;
     }
 
-    /**
-     * @param string $pattern
-     * @param string $symbol
-     *
-     * @return Price
-     */
     private function mockPriceSpecification(string $pattern, string $symbol): Price
     {
         $price = $this->getMockBuilder(Price::class)
@@ -129,9 +107,6 @@ class CustomMoneyTypeExtensionTest extends TestCase
         return $price;
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataForTestBuildViewAssignsCorrectMoneyPatternVariable(): iterable
     {
         yield ['EUR', '€', "¤\u{00A0}#,##0.00", "€\u{00A0}{{ widget }}"];

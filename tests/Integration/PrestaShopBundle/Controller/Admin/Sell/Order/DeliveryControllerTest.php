@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,7 +69,7 @@ class DeliveryControllerTest extends WebTestCase
 
         $values = [
             ['_PS_MODE_DEMO_', null, null, true],
-            ['_PS_MODULE_DIR_', null, null, dirname(__DIR__, 3) . '/resources/modules/'],
+            ['_PS_MODULE_DIR_', null, null, \dirname(__DIR__, 3) . '/resources/modules/'],
         ];
 
         $configurationMock->method('get')

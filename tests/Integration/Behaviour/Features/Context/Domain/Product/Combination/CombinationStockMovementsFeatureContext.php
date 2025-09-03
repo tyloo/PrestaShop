@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class CombinationStockMovementsFeatureContext extends AbstractCombinationFeature
      */
     public function assertStockMovementsOfCombinationForDefaultShop(
         string $combinationReference,
-        TableNode $table
+        TableNode $table,
     ): void {
         $this->assertStockMovements(
             new GetCombinationStockMovements(
@@ -59,7 +60,7 @@ class CombinationStockMovementsFeatureContext extends AbstractCombinationFeature
         string $combinationReference,
         int $offset,
         int $limit,
-        TableNode $table
+        TableNode $table,
     ): void {
         $this->assertStockMovements(
             new GetCombinationStockMovements(
@@ -78,7 +79,7 @@ class CombinationStockMovementsFeatureContext extends AbstractCombinationFeature
         $tableRows = $table->getColumnsHash();
 
         Assert::assertCount(
-            count($tableRows),
+            \count($tableRows),
             $combinationStockMovements,
             'Unexpected history size'
         );
@@ -89,7 +90,7 @@ class CombinationStockMovementsFeatureContext extends AbstractCombinationFeature
             Assert::assertSame(
                 $tableRow['type'],
                 $stockMovement->getType(),
-                sprintf(
+                \sprintf(
                     'Invalid stock movement event type, expected "%s" instead of "%s"',
                     $tableRow['type'],
                     $stockMovement->getType()
@@ -98,7 +99,7 @@ class CombinationStockMovementsFeatureContext extends AbstractCombinationFeature
             Assert::assertEquals(
                 $tableRow['employee'],
                 $stockMovement->getEmployeeName(),
-                sprintf(
+                \sprintf(
                     'Invalid employee name of stock movement event, expected "%s" instead of "%s"',
                     $tableRow['employee'],
                     $stockMovement->getEmployeeName()
@@ -107,7 +108,7 @@ class CombinationStockMovementsFeatureContext extends AbstractCombinationFeature
             Assert::assertSame(
                 (int) $tableRow['delta_quantity'],
                 $stockMovement->getDeltaQuantity(),
-                sprintf(
+                \sprintf(
                     'Invalid delta quantity of stock movement event, expected "%d" instead of "%d"',
                     $tableRow['delta_quantity'],
                     $stockMovement->getDeltaQuantity()

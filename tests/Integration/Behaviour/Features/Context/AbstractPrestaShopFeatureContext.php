@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,31 +46,19 @@ abstract class AbstractPrestaShopFeatureContext implements BehatContext
     {
         $searchLength = 10;
 
-        if (!isset($fixtures[$fixtureIndex])) {
+        if (! isset($fixtures[$fixtureIndex])) {
             $fixtureNames = array_keys($fixtures);
             $firstFixtureNames = array_splice($fixtureNames, 0, $searchLength);
             $firstFixtureNamesStr = implode(',', $firstFixtureNames);
-            throw new RuntimeException(sprintf(
-                '%s named "%s" was not added in fixtures. First %d added are: %s',
-                $fixtureName,
-                $fixtureIndex,
-                $searchLength,
-                $firstFixtureNamesStr
-            ));
+            throw new RuntimeException(\sprintf('%s named "%s" was not added in fixtures. First %d added are: %s', $fixtureName, $fixtureIndex, $searchLength, $firstFixtureNamesStr));
         }
     }
 
-    /**
-     * @return int
-     */
     protected function getDefaultLangId(): int
     {
         return (int) $this->getConfiguration()->get('PS_LANG_DEFAULT');
     }
 
-    /**
-     * @return int
-     */
     protected function getDefaultShopId(): int
     {
         return (int) $this->getConfiguration()->get('PS_SHOP_DEFAULT');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Given I add a new order return state :orderReturnStateReference with the following details:
-     *
-     * @param string $orderReturnStateReference
-     * @param TableNode $table
      */
     public function addNewOrderReturnState(string $orderReturnStateReference, TableNode $table): void
     {
@@ -72,9 +70,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I update the order return state :orderReturnStateReference with the following details:
-     *
-     * @param string $orderReturnStateReference
-     * @param TableNode $table
      */
     public function updateOrderReturnState(string $orderReturnStateReference, TableNode $table): void
     {
@@ -101,8 +96,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete the order return state :orderReturnStateReference
-     *
-     * @param string $orderReturnStateReference
      */
     public function deleteOrderReturnState(string $orderReturnStateReference): void
     {
@@ -117,8 +110,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk delete order return states :orderReturnStateReferences
-     *
-     * @param string $orderReturnStateReferences
      */
     public function bulkDeleteOrderReturnState(string $orderReturnStateReferences): void
     {
@@ -137,9 +128,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order return state :orderReturnStateReference should have the following details:
-     *
-     * @param string $orderReturnStateReference
-     * @param TableNode $table
      */
     public function checkOrderReturnStateDetails(string $orderReturnStateReference, TableNode $table): void
     {
@@ -158,8 +146,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order return state :orderReturnStateReference should exist
-     *
-     * @param string $orderReturnStateReference
      */
     public function checkOrderReturnStateExists(string $orderReturnStateReference): void
     {
@@ -170,8 +156,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order return state :orderReturnStateReference shouldn't exist
-     *
-     * @param string $orderReturnStateReference
      */
     public function checkOrderReturnStateNotExists(string $orderReturnStateReference): void
     {
@@ -180,11 +164,6 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
         $this->assertLastErrorIs(OrderReturnStateNotFoundException::class);
     }
 
-    /**
-     * @param string $orderReturnStateReference
-     *
-     * @return EditableOrderReturnState|null
-     */
     private function getOrderReturnState(string $orderReturnStateReference): ?EditableOrderReturnState
     {
         try {

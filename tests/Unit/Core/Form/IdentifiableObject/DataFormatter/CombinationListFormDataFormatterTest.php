@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class CombinationListFormDataFormatterTest extends TestCase
 
     /**
      * @dataProvider getDataToFormat
-     *
-     * @param array $bulkFormData
-     * @param array $expectedFormattedData
      */
     public function testFormat(array $bulkFormData, array $expectedFormattedData): void
     {
@@ -48,9 +46,6 @@ class CombinationListFormDataFormatterTest extends TestCase
         $this->assertEquals($formData, $expectedFormattedData);
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToFormat(): iterable
     {
         yield 'empty data' => [

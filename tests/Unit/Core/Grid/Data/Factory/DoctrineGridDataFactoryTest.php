@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,19 +65,16 @@ class DoctrineGridDataFactoryTest extends TestCase
         $this->assertEquals(4, $data->getRecordsTotal());
         $this->assertCount(2, $data->getRecords());
         $this->assertEquals(
-            'SELECT' . PHP_EOL
-            . '  *' . PHP_EOL
-            . 'FROM' . PHP_EOL
-            . '  ps_test' . PHP_EOL
-            . 'WHERE' . PHP_EOL
+            'SELECT' . \PHP_EOL
+            . '  *' . \PHP_EOL
+            . 'FROM' . \PHP_EOL
+            . '  ps_test' . \PHP_EOL
+            . 'WHERE' . \PHP_EOL
             . '  id = 1',
             $data->getQuery()
         );
     }
 
-    /**
-     * @return DoctrineQueryBuilderInterface
-     */
     private function createDoctrineQueryBuilderMock(): DoctrineQueryBuilderInterface
     {
         $result = $this->createMock(Result::class);
@@ -113,9 +111,6 @@ class DoctrineGridDataFactoryTest extends TestCase
         return $doctrineQueryBuilder;
     }
 
-    /**
-     * @return HookDispatcherInterface
-     */
     private function createHookDispatcherMock(): HookDispatcherInterface
     {
         $hookDispatcher = $this->createMock(HookDispatcherInterface::class);
@@ -127,9 +122,6 @@ class DoctrineGridDataFactoryTest extends TestCase
         return $hookDispatcher;
     }
 
-    /**
-     * @return QueryParserInterface
-     */
     private function createQueryParserMock(): QueryParserInterface
     {
         $queryParser = $this->getMockBuilder(QueryParserInterface::class)

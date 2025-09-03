@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ class ThemeMailTemplatesFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I generate emails with the following details:
-     *
-     * @param TableNode $table
      */
     public function generateEmailsWithTheFollowingDetails(TableNode $table): void
     {
@@ -62,8 +61,6 @@ class ThemeMailTemplatesFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then mails folder with sub folder :subFolder exists
-     *
-     * @param string $subFolder
      */
     public function mailsFolderWithSubFolderExists(string $subFolder)
     {
@@ -71,12 +68,6 @@ class ThemeMailTemplatesFeatureContext extends AbstractDomainFeatureContext
         Assert::assertTrue(is_dir($mailsSubFolder));
     }
 
-    /**
-     * @param array $testCaseData
-     * @param array $data
-     *
-     * @return array
-     */
     private function mapGenerateThemeMailTemplatesData(array $testCaseData, array $data): array
     {
         $data['themeName'] = $testCaseData['Email theme'];

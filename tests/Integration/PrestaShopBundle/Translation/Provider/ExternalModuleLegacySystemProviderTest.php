@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -89,13 +90,12 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
 
     /**
      * @param string $locale
-     * @param array $expected
      *
      * @dataProvider provideTestCases
      */
     public function testTranslationsCatalogueIsBuiltFromKeysFoundInSourceAndTranslationsInLegacyFiles(
         $locale,
-        array $expected
+        array $expected,
     ) {
         $this->provider->setLocale($locale);
         $legacyCatalogue = $this->provider->getXliffCatalogue();

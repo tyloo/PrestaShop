@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,11 +52,6 @@ class RedirectTargetProviderTest extends TestCase
 
     /**
      * @dataProvider getRedirectTargetData
-     *
-     * @param array|null $mockOptions
-     * @param string $redirectType
-     * @param int $redirectTargetId
-     * @param RedirectTargetInformation|null $expectedTarget
      */
     public function testGetRedirectTarget(?array $mockOptions, string $redirectType, int $redirectTargetId, ?RedirectTargetInformation $expectedTarget): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -75,8 +76,6 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
     }
 
     /**
-     * @param string $references
-     *
      * @return int[]
      */
     protected function referencesToIds(string $references): array
@@ -89,8 +88,8 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
         foreach (explode(',', $references) as $reference) {
             $reference = trim($reference);
 
-            if (!$this->getSharedStorage()->exists($reference)) {
-                throw new RuntimeException(sprintf('Reference %s does not exist in shared storage', $reference));
+            if (! $this->getSharedStorage()->exists($reference)) {
+                throw new RuntimeException(\sprintf('Reference %s does not exist in shared storage', $reference));
             }
 
             $ids[] = $this->getSharedStorage()->get($reference);
@@ -99,35 +98,20 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
         return $ids;
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return int
-     */
     protected function referenceToId(string $reference): int
     {
-        if (!$this->getSharedStorage()->exists($reference)) {
-            throw new RuntimeException(sprintf('Reference %s does not exist in shared storage', $reference));
+        if (! $this->getSharedStorage()->exists($reference)) {
+            throw new RuntimeException(\sprintf('Reference %s does not exist in shared storage', $reference));
         }
 
         return $this->getSharedStorage()->get($reference);
     }
 
-    /**
-     * @param TableNode $tableNode
-     *
-     * @return array
-     */
     protected function localizeByRows(TableNode $tableNode): array
     {
         return $this->parseLocalizedRow($tableNode->getRowsHash());
     }
 
-    /**
-     * @param TableNode $table
-     *
-     * @return array
-     */
     protected function localizeByColumns(TableNode $table): array
     {
         $rows = [];
@@ -143,11 +127,6 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
         return $rows;
     }
 
-    /**
-     * @param string $localizedValue
-     *
-     * @return array
-     */
     protected function localizeByCell(string $localizedValue): array
     {
         $localizedValues = [];
@@ -171,18 +150,13 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
         return Currency::getIsoCodeById($this->getDefaultCurrencyId());
     }
 
-    /**
-     * @param array $row
-     *
-     * @return array
-     */
     private function parseLocalizedRow(array $row): array
     {
         $parsedRow = [];
         foreach ($row as $key => $value) {
             $localeMatch = preg_match('/\[.*?\]/', $key, $matches) ? reset($matches) : null;
 
-            if (!$localeMatch) {
+            if (! $localeMatch) {
                 $parsedRow[$key] = $value;
                 continue;
             }
@@ -192,8 +166,8 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
 
             $langId = (int) Language::getIdByLocale($locale, true);
 
-            if (!$langId) {
-                throw new RuntimeException(sprintf('Language by locale "%s" was not found', $locale));
+            if (! $langId) {
+                throw new RuntimeException(\sprintf('Language by locale "%s" was not found', $locale));
             }
 
             $parsedRow[$propertyName][$langId] = $value;
@@ -202,17 +176,10 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
         return $parsedRow;
     }
 
-    /**
-     * @param string $dirImage
-     * @param string $imageName
-     * @param int $objectId
-     *
-     * @return string
-     */
     protected function pretendImageUploaded(string $dirImage, string $imageName, int $objectId): string
     {
         // @todo: refactor CategoryCoverUploader. Move uploaded file in Form handler instead of Uploader and use the uploader here in tests
-        $im = imagecreatefromstring(base64_decode(self::JPG_IMAGE_STRING));
+        $im = imagecreatefromstring(base64_decode(self::JPG_IMAGE_STRING, true));
         if ($im !== false) {
             header('Content-Type: image/jpg');
             imagejpeg(

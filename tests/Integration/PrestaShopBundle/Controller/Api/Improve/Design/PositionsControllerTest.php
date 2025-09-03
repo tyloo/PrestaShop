@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -84,7 +85,7 @@ class PositionsControllerTest extends TestCase
         $this->loginUser($this->client);
 
         // Unregister all modules hooked on displayHome
-        Db::getInstance()->execute(sprintf(
+        Db::getInstance()->execute(\sprintf(
             'DELETE FROM `%shook_module` WHERE `id_hook` = %d',
             _DB_PREFIX_,
             (int) Hook::getIdByName('displayHome')
@@ -99,8 +100,8 @@ class PositionsControllerTest extends TestCase
             ->disableAutoload()
             ->getMock();
         $configurationMock->method('get')->will($this->returnValueMap([
-            ['_PS_MODULE_DIR_', null, null, dirname(__DIR__, 6) . '/Resources/modules/'],
-            ['_PS_ALL_THEMES_DIR_', null, null, dirname(__DIR__, 7) . '/themes/'],
+            ['_PS_MODULE_DIR_', null, null, \dirname(__DIR__, 6) . '/Resources/modules/'],
+            ['_PS_ALL_THEMES_DIR_', null, null, \dirname(__DIR__, 7) . '/themes/'],
         ]));
 
         self::$kernel->getContainer()->set('prestashop.adapter.legacy.configuration', $configurationMock);
@@ -110,7 +111,7 @@ class PositionsControllerTest extends TestCase
         $preparer = self::$kernel->getContainer()->get(ContextBuilderPreparer::class);
         $preparer->prepareLanguageId(1);
 
-        /** @var ModuleManager */
+        /** @var ModuleManager $moduleManager */
         $moduleManager = self::$kernel->getContainer()->get(ModuleManager::class);
         $moduleRepository = self::$kernel->getContainer()->get(ModuleRepository::class);
         // We use modules present in tests/resources/modules to be independent with the external API
@@ -253,8 +254,8 @@ class PositionsControllerTest extends TestCase
                 'hookId' => $this->hookId,
                 'way' => 0,
                 'positions' => [
-                    sprintf('%d_%d', $this->secondModuleId, $this->hookId),
-                    sprintf('%d_%d', $this->firstModuleId, $this->hookId),
+                    \sprintf('%d_%d', $this->secondModuleId, $this->hookId),
+                    \sprintf('%d_%d', $this->firstModuleId, $this->hookId),
                 ],
             ]
         );
@@ -287,8 +288,8 @@ class PositionsControllerTest extends TestCase
                 'hookId' => $this->hookId,
                 'way' => 0,
                 'positions' => [
-                    sprintf('%d_%d', $this->firstModuleId, $this->hookId),
-                    sprintf('%d_%d', $this->secondModuleId, $this->hookId),
+                    \sprintf('%d_%d', $this->firstModuleId, $this->hookId),
+                    \sprintf('%d_%d', $this->secondModuleId, $this->hookId),
                 ],
             ]
         );

@@ -30,6 +30,8 @@ use InvalidArgumentException;
 use PrestaShop\PrestaShop\Core\Util\ArrayFinder;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\VarExporter\Exception\ExceptionInterface;
+use Symfony\Component\VarExporter\VarExporter;
 
 /**
  * Class able to manage configuration stored in Php files.
@@ -85,12 +87,12 @@ class PhpParameters
     {
         try {
             $filesystem = new Filesystem();
-            $filesystem->dumpFile($this->filename, '<?php return ' . var_export($this->configuration->get(), true) . ';' . "\n");
+            $filesystem->dumpFile($this->filename, '<?php return ' . VarExporter::export($this->configuration->get()) . ';' . "\n");
 
             if (function_exists('opcache_invalidate')) {
                 @opcache_invalidate($this->filename);
             }
-        } catch (IOException) {
+        } catch (IOException|ExceptionInterface) {
             return false;
         }
 

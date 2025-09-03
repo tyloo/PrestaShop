@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,10 +78,10 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
         $carrierId = $this->referenceToId($reference);
 
         try {
-            if (null === $taxRulesGroupReference) {
+            if ($taxRulesGroupReference === null) {
                 $taxRulesGroupId = 0;
             } else {
-                $taxRulesGroupId = 'wrong-tax-rules' === $taxRulesGroupReference ? 4242 : $this->referenceToId($taxRulesGroupReference);
+                $taxRulesGroupId = $taxRulesGroupReference === 'wrong-tax-rules' ? 4242 : $this->referenceToId($taxRulesGroupReference);
             }
             $command = new SetCarrierTaxRuleGroupCommand(
                 $carrierId,

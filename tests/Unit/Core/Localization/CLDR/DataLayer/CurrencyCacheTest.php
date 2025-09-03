@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,15 +44,12 @@ class CurrencyCacheTest extends TestCase
      */
     protected $layer;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         // Let's use a real cache adapter (easier to setup, and a php array is always available in any environment)
         $cacheAdapter = new ArrayAdapter();
 
-        /* @var CacheAdapterInterface $cacheAdapter */
+        /** @var CacheAdapterInterface $cacheAdapter */
         $this->layer = new CldrCurrencyCacheDataLayer($cacheAdapter);
     }
 

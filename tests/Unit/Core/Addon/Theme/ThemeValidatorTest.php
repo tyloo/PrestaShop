@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,26 +70,26 @@ class ThemeValidatorTest extends TestCase
     public function testIsValidWithValidTheme(): void
     {
         $isValid = $this->validator->isValid($this->getTheme());
-        $this->assertTrue($isValid, self::NOTICE . sprintf('expected isValid to return true when theme is valid, got %s', gettype($isValid)));
+        $this->assertTrue($isValid, self::NOTICE . \sprintf('expected isValid to return true when theme is valid, got %s', \gettype($isValid)));
     }
 
     public function testIsValidWithInvalidThemeMissingFiles(): void
     {
         $isValid = $this->validator->isValid($this->getTheme('missfiles'));
-        $this->assertFalse($isValid, self::NOTICE . sprintf('expected isValid to return false when theme is invalid, got %s', gettype($isValid)));
+        $this->assertFalse($isValid, self::NOTICE . \sprintf('expected isValid to return false when theme is invalid, got %s', \gettype($isValid)));
     }
 
     public function testIsValidWithInvalidThemeMissingProperties()
     {
         $isValid = $this->validator->isValid($this->getTheme('missconfig'));
-        $this->assertFalse($isValid, self::NOTICE . sprintf('expected isValid to return false when theme is invalid, got %s', gettype($isValid)));
+        $this->assertFalse($isValid, self::NOTICE . \sprintf('expected isValid to return false when theme is invalid, got %s', \gettype($isValid)));
     }
 
     private function getTheme(string $name = 'valid'): Theme
     {
         $options = ['valid', 'missfiles', 'missconfig'];
 
-        if (!in_array($name, $options)) {
+        if (! \in_array($name, $options, true)) {
             throw new InvalidArgumentException(self::NOTICE . 'getTheme($name) only accepts specified arguments');
         }
         $themeDir = __DIR__ . '/../../../../Resources/themes/minimal-' . $name . '-theme/';
@@ -97,7 +98,7 @@ class ThemeValidatorTest extends TestCase
         try {
             $themeConfigContent = file_get_contents($themeConfigFile);
         } catch (Throwable $exception) {
-            throw new RuntimeException(sprintf('Unable to read theme config file %s', $themeConfigFile));
+            throw new RuntimeException(\sprintf('Unable to read theme config file %s', $themeConfigFile));
         }
 
         $config = (new Parser())->parse(file_get_contents($themeConfigFile));

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,13 +46,13 @@ class FileSystemTest extends TestCase
     protected function setUp(): void
     {
         $this->fs = new FileSystem();
-        $this->fixturesPath = __DIR__ . DIRECTORY_SEPARATOR . 'fixtures';
+        $this->fixturesPath = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures';
     }
 
     public function testJoinPathsTwoPaths()
     {
         $this->assertEquals(
-            'a' . DIRECTORY_SEPARATOR . 'b',
+            'a' . \DIRECTORY_SEPARATOR . 'b',
             $this->fs->joinPaths('a', 'b')
         );
     }
@@ -59,7 +60,7 @@ class FileSystemTest extends TestCase
     public function testJoinPathsThreePaths()
     {
         $this->assertEquals(
-            'a' . DIRECTORY_SEPARATOR . 'b' . DIRECTORY_SEPARATOR . 'c',
+            'a' . \DIRECTORY_SEPARATOR . 'b' . \DIRECTORY_SEPARATOR . 'c',
             $this->fs->joinPaths('a', 'b', 'c')
         );
     }
@@ -81,7 +82,7 @@ class FileSystemTest extends TestCase
     public function testJoinPathsNormalizesDirectorySeparators()
     {
         $this->assertEquals(
-            'a' . DIRECTORY_SEPARATOR . 'b' . DIRECTORY_SEPARATOR . 'c' . DIRECTORY_SEPARATOR . 'd',
+            'a' . \DIRECTORY_SEPARATOR . 'b' . \DIRECTORY_SEPARATOR . 'c' . \DIRECTORY_SEPARATOR . 'd',
             $this->fs->joinPaths('a\\', 'b///', 'c\\', 'd/')
         );
     }

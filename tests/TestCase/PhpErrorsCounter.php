@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,23 +41,23 @@ class PhpErrorsCounter
      */
     public function registerErrorHandler()
     {
-        set_error_handler([$this, 'errorHandler'], E_ALL);
+        set_error_handler([$this, 'errorHandler'], \E_ALL);
     }
 
     public function errorHandler(int $errorType): bool
     {
         switch ($errorType) {
-            case E_WARNING:
+            case \E_WARNING:
                 $this->warnings++;
                 break;
-            case E_DEPRECATED:
-            case E_USER_DEPRECATED:
+            case \E_DEPRECATED:
+            case \E_USER_DEPRECATED:
                 $this->deprecations++;
                 break;
-            case E_ERROR:
+            case \E_ERROR:
                 $this->errors++;
                 break;
-            case E_NOTICE:
+            case \E_NOTICE:
                 $this->notices++;
                 break;
             default:
@@ -108,7 +109,7 @@ class PhpErrorsCounter
      */
     public function displaySummary()
     {
-        return sprintf(
+        return \sprintf(
             'Errors: %d / Warnings: %d / Notices: %d / Deprecations: %d',
             $this->getErrors(),
             $this->getWarnings(),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @Then product :productReference should have no related products
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoRelatedProducts(string $productReference): void
     {
@@ -49,15 +48,12 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
 
         Assert::assertEmpty(
             $relatedProducts,
-            sprintf('Product %s expected to have no related products', $productReference)
+            \sprintf('Product %s expected to have no related products', $productReference)
         );
     }
 
     /**
      * @When I set following related products to product :productReference:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function setRelatedProducts(string $productReference, TableNode $tableNode): void
     {
@@ -74,9 +70,6 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following related products:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function assertRelatedProducts(string $productReference, TableNode $tableNode)
     {
@@ -85,7 +78,7 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
         $actualRelatedProducts = $this->getQueryBus()->handle(new GetRelatedProducts($productId, $this->getDefaultLangId()));
         $expectedRelatedProducts = $tableNode->getColumnsHash();
 
-        Assert::assertEquals(count($expectedRelatedProducts), count($actualRelatedProducts));
+        Assert::assertEquals(\count($expectedRelatedProducts), \count($actualRelatedProducts));
 
         $index = 0;
         foreach ($expectedRelatedProducts as $expectedRelatedProduct) {
@@ -96,7 +89,7 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedProductId,
                 $actualRelatedProduct->getProductId(),
-                sprintf(
+                \sprintf(
                     'Invalid product ID, expected %d but got %d instead.',
                     $expectedProductId,
                     $actualRelatedProduct->getProductId()
@@ -106,7 +99,7 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedProduct['name'],
                 $actualRelatedProduct->getName(),
-                sprintf(
+                \sprintf(
                     'Invalid product name, expected %s but got %s instead.',
                     $expectedRelatedProduct['name'],
                     $actualRelatedProduct->getName()
@@ -116,7 +109,7 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedProduct['reference'],
                 $actualRelatedProduct->getReference(),
-                sprintf(
+                \sprintf(
                     'Invalid product reference, expected %s but got %s instead.',
                     $expectedRelatedProduct['reference'],
                     $actualRelatedProduct->getReference()
@@ -127,7 +120,7 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $realImageUrl,
                 $actualRelatedProduct->getImageUrl(),
-                sprintf(
+                \sprintf(
                     'Invalid product image url, expected %s but got %s instead.',
                     $realImageUrl,
                     $actualRelatedProduct->getImageUrl()
@@ -140,8 +133,6 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I remove all related products from product :productReference
-     *
-     * @param string $productReference
      */
     public function removeAllRelatedProducts(string $productReference)
     {

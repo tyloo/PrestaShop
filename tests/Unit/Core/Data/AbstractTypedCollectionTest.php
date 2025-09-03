@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -263,9 +264,6 @@ class AbstractTypedCollectionTest extends TestCase
 
 class TestCollection extends AbstractTypedCollection
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getType()
     {
         return CollectionTestElement::class;

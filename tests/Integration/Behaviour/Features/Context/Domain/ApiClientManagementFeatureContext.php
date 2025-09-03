@@ -124,7 +124,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             }
         }
         if (isset($expectedData['enabled'])) {
-            if ($result->isEnabled() !== filter_var($expectedData['enabled'], FILTER_VALIDATE_BOOL)) {
+            if ($result->isEnabled() !== filter_var($expectedData['enabled'], \FILTER_VALIDATE_BOOL)) {
                 $errors[] = 'enabled';
             }
         }
@@ -147,8 +147,8 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (count($errors) > 0) {
-            throw new RuntimeException(sprintf('Fields %s are not identical', implode(', ', $errors)));
+        if (\count($errors) > 0) {
+            throw new RuntimeException(\sprintf('Fields %s are not identical', implode(', ', $errors)));
         }
     }
 
@@ -207,7 +207,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
         );
 
         try {
-            /* @var ApiClientId $id */
+            /** @var ApiClientId $id */
             $id = $this->getCommandBus()->handle($command);
             $this->getSharedStorage()->set($apiClientReference, $id->getValue());
         } catch (ApiClientConstraintException $e) {
@@ -265,7 +265,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
         } catch (ApiClientNotFoundException $e) {
             return;
         }
-        throw new RuntimeException(sprintf('API Client %s still exists', $apiClientReference));
+        throw new RuntimeException(\sprintf('API Client %s still exists', $apiClientReference));
     }
 
     /**
@@ -342,11 +342,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
 
         $passwordHasher = $this->getContainer()->get(PasswordHasherInterface::class);
         if ($expected !== $passwordHasher->verify($hashedSecret, $plainSecret)) {
-            throw new RuntimeException(sprintf(
-                'Secret %s was expected to be %s',
-                $plainSecret,
-                $expected ? 'valid' : 'invalid'
-            ));
+            throw new RuntimeException(\sprintf('Secret %s was expected to be %s', $plainSecret, $expected ? 'valid' : 'invalid'));
         }
     }
 
@@ -415,7 +411,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             $apiClient = $this->getCommandBus()->handle($command);
 
             $this->getSharedStorage()->set($apiClientReference, $apiClient->getApiClientId()->getValue());
-            if (!empty($secretReference)) {
+            if (! empty($secretReference)) {
                 $this->getSharedStorage()->set($secretReference, $apiClient->getSecret());
             }
         } catch (ApiClientConstraintException $e) {
@@ -425,12 +421,12 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
 
     private function fixDataType(array $data): array
     {
-        if (array_key_exists('enabled', $data) && !is_null($data['enabled'])) {
+        if (\array_key_exists('enabled', $data) && $data['enabled'] !== null) {
             $data['enabled'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']);
         }
 
-        if (array_key_exists('lifetime', $data) && !is_null($data['lifetime'])) {
-            $data['lifetime'] = intval($data['lifetime']);
+        if (\array_key_exists('lifetime', $data) && $data['lifetime'] !== null) {
+            $data['lifetime'] = \intval($data['lifetime']);
         }
 
         return $data;
@@ -443,8 +439,8 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             'clientName' => ApiClientConstraintException::CLIENT_NAME_ALREADY_USED,
         ];
 
-        if (!array_key_exists($fieldName, $constraintErrorFieldMap)) {
-            throw new RuntimeException(sprintf('"%s" is not mapped with constraint error code', $fieldName));
+        if (! \array_key_exists($fieldName, $constraintErrorFieldMap)) {
+            throw new RuntimeException(\sprintf('"%s" is not mapped with constraint error code', $fieldName));
         }
 
         return $constraintErrorFieldMap[$fieldName];
@@ -462,8 +458,8 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             'secret' => ApiClientConstraintException::INVALID_SECRET,
         ];
 
-        if (!array_key_exists($fieldName, $constraintErrorFieldMap)) {
-            throw new RuntimeException(sprintf('"%s" is not mapped with constraint error code', $fieldName));
+        if (! \array_key_exists($fieldName, $constraintErrorFieldMap)) {
+            throw new RuntimeException(\sprintf('"%s" is not mapped with constraint error code', $fieldName));
         }
 
         return $constraintErrorFieldMap[$fieldName];
@@ -477,8 +473,8 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             'description' => ApiClientConstraintException::DESCRIPTION_TOO_LARGE,
         ];
 
-        if (!array_key_exists($fieldName, $constraintErrorFieldMap)) {
-            throw new RuntimeException(sprintf('"%s" is not mapped with constraint error code', $fieldName));
+        if (! \array_key_exists($fieldName, $constraintErrorFieldMap)) {
+            throw new RuntimeException(\sprintf('"%s" is not mapped with constraint error code', $fieldName));
         }
 
         return $constraintErrorFieldMap[$fieldName];
@@ -489,7 +485,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
         $length = match ($fieldName) {
             'clientId', 'clientName' => 260,
             'description' => 21900,
-            default => throw new RuntimeException(sprintf('The field %s cannot have a max value generated', $fieldName)),
+            default => throw new RuntimeException(\sprintf('The field %s cannot have a max value generated', $fieldName)),
         };
 
         $data[$fieldName] = bin2hex(random_bytes($length));

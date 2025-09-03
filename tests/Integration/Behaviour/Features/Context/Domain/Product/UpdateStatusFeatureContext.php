@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When /^I bulk change status to be (enabled|disabled) for following products:$/
-     *
-     * @param bool $status
-     * @param TableNode $productsList
      */
     public function bulkUpdateStatusForDefaultShop(bool $status, TableNode $productsList): void
     {
@@ -55,10 +53,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When /^I bulk change status to be (enabled|disabled) for following products for shop "([^"]+)":$/
-     *
-     * @param bool $status
-     * @param string $shopReference
-     * @param TableNode $productsList
      */
     public function bulkUpdateStatusForSpecificShop(bool $status, string $shopReference, TableNode $productsList): void
     {
@@ -67,10 +61,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When /^I bulk change status to be (enabled|disabled) for following products for shops "([^"]+)":$/
-     *
-     * @param bool $status
-     * @param string $shopReferences
-     * @param TableNode $productsList
      */
     public function bulkUpdateStatusForSpecificShopCollection(bool $status, string $shopReferences, TableNode $productsList): void
     {
@@ -79,10 +69,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When /^I bulk change status to be (enabled|disabled) for following products for shop group "([^"]+)":$/
-     *
-     * @param bool $status
-     * @param string $shopGroupReference
-     * @param TableNode $productsList
      */
     public function bulkUpdateStatusForShopGroup(bool $status, string $shopGroupReference, TableNode $productsList): void
     {
@@ -91,9 +77,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When /^I bulk change status to be (enabled|disabled) for following products for all shops:$/
-     *
-     * @param bool $status
-     * @param TableNode $productsList
      */
     public function bulkUpdateStatusForAllShops(bool $status, TableNode $productsList): void
     {
@@ -104,9 +87,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
      * @When /^I (enable|disable) product "([^"]+)"$/
      *
      * status transformation handled by @see StringToBoolTransformContext
-     *
-     * @param bool $status
-     * @param string $productReference
      */
     public function updateStatusForDefaultShop(bool $status, string $productReference): void
     {
@@ -117,10 +97,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
      * @When /^I (enable|disable) product "([^"]+)" for shop "([^"]+)"$/
      *
      * status transformation handled by @see StringToBoolTransformContext
-     *
-     * @param bool $status
-     * @param string $productReference
-     * @param string $shopReference
      */
     public function updateStatusForSpecificShop(bool $status, string $productReference, string $shopReference): void
     {
@@ -131,9 +107,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
      * @When /^I (enable|disable) product "([^"]+)" for all shops$/
      *
      * status transformation handled by @see StringToBoolTransformContext
-     *
-     * @param bool $status
-     * @param string $productReference
      */
     public function updateStatusForAllShops(bool $status, string $productReference): void
     {
@@ -144,10 +117,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
      * @When /^I (enable|disable) product "([^"]+)" for shop group "([^"]+)"$/
      *
      * status transformation handled by @see StringToBoolTransformContext
-     *
-     * @param bool $status
-     * @param string $productReference
-     * @param string $shopGroupReference
      */
     public function updateStatusForShopGroup(bool $status, string $productReference, string $shopGroupReference): void
     {
@@ -158,9 +127,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
      * @Then /^product "(.*)" should be (enabled|disabled)$/
      *
      * status transformation handled by @see StringToBoolTransformContext
-     *
-     * @param string $productReference
-     * @param bool $expectedStatus
      */
     public function assertStatus(string $productReference, bool $expectedStatus): void
     {
@@ -172,10 +138,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
      * @Then /^product "(.*)" should be (enabled|disabled) for shops "(.*)"$/
      *
      * Status transformation handled by @see StringToBoolTransformContext
-     *
-     * @param string $productReference
-     * @param bool $expectedStatus
-     * @param string $shopReferences
      */
     public function assertStatusForShops(string $productReference, bool $expectedStatus, string $shopReferences): void
     {
@@ -183,7 +145,7 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
         foreach ($shopReferences as $shopReference) {
             $shopId = $this->getSharedStorage()->get($shopReference);
             $actualStatus = $this->extractValueFromProductForEditing($this->getProductForEditing($productReference, $shopId), 'active');
-            Assert::assertSame($expectedStatus, $actualStatus, sprintf('Unexpected product status for shop %s', $shopReference));
+            Assert::assertSame($expectedStatus, $actualStatus, \sprintf('Unexpected product status for shop %s', $shopReference));
         }
     }
 
@@ -197,8 +159,6 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then I should get an error that online data are invalid for products:
-     *
-     * @param TableNode $productsList
      */
     public function assertExceptionRoseForProducts(TableNode $productsList): void
     {
@@ -212,20 +172,12 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
 
         foreach ($bulkException->getBulkExceptions() as $productId => $productException) {
             Assert::assertContains($productId, $invalidProductIds);
-            if (!$productException instanceof ProductConstraintException) {
-                throw new RuntimeException(sprintf(
-                    'Product error should be "%s", but got "%s"',
-                    ProductConstraintException::class,
-                    get_class($productException)
-                ));
+            if (! $productException instanceof ProductConstraintException) {
+                throw new RuntimeException(\sprintf('Product error should be "%s", but got "%s"', ProductConstraintException::class, \get_class($productException)));
             }
 
             if ($productException->getCode() !== ProductConstraintException::INVALID_ONLINE_DATA) {
-                throw new RuntimeException(sprintf(
-                    'Last error should have code "%s", but has "%s"',
-                    ProductConstraintException::INVALID_ONLINE_DATA,
-                    $productException->getCode()
-                ));
+                throw new RuntimeException(\sprintf('Last error should have code "%s", but has "%s"', ProductConstraintException::INVALID_ONLINE_DATA, $productException->getCode()));
             }
         }
     }
@@ -240,7 +192,7 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
             $command->setActive($status);
             $this->getCommandBus()->handle($command);
         } catch (ProductConstraintException $e) {
-            if (ProductConstraintException::INVALID_ONLINE_DATA === $e->getCode()) {
+            if ($e->getCode() === ProductConstraintException::INVALID_ONLINE_DATA) {
                 $this->setLastException($e);
             } else {
                 throw $e;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,10 +45,6 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @Then product :productReference should have following prices information for shop(s) :shopReference:
-     *
-     * @param string $productReference
-     * @param string $shopReferences
-     * @param TableNode $tableNode
      */
     public function assertPriceFieldsForShops(string $productReference, string $shopReferences, TableNode $tableNode): void
     {
@@ -67,9 +64,6 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following prices information:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function assertPriceFields(string $productReference, TableNode $tableNode): void
     {
@@ -79,14 +73,9 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
         $this->assertPricesInfos($pricesInfo, $data);
     }
 
-    /**
-     * @param ProductPricesInformation $pricesInfo
-     * @param array $data
-     * @param string|null $shopReference
-     */
     protected function assertPricesInfos(ProductPricesInformation $pricesInfo, array $data, ?string $shopReference = null): void
     {
-        $shopErrorMessage = !empty($shopReference) ? sprintf(' for shop %s', $shopReference) : '';
+        $shopErrorMessage = ! empty($shopReference) ? \sprintf(' for shop %s', $shopReference) : '';
         if (isset($data['on_sale'])) {
             $expectedOnSale = PrimitiveUtils::castStringBooleanIntoBoolean($data['on_sale']);
             $onSaleInWords = $expectedOnSale ? 'to be on sale' : 'not to be on sale';
@@ -94,7 +83,7 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedOnSale,
                 $pricesInfo->isOnSale(),
-                sprintf('Expected product %s%s', $onSaleInWords, $shopErrorMessage)
+                \sprintf('Expected product %s%s', $onSaleInWords, $shopErrorMessage)
             );
 
             unset($data['on_sale']);
@@ -107,7 +96,7 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedUnity,
                 $actualUnity,
-                sprintf('Tax rules group expected to be "%s", but got "%s"%s', $expectedUnity, $actualUnity, $shopErrorMessage)
+                \sprintf('Tax rules group expected to be "%s", but got "%s"%s', $expectedUnity, $actualUnity, $shopErrorMessage)
             );
 
             unset($data['unity']);
@@ -116,23 +105,18 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
         $this->assertTaxRulesGroup($data, $pricesInfo, $shopErrorMessage);
         $this->assertNumberPriceFields($data, $pricesInfo, $shopErrorMessage);
 
-        Assert::assertEmpty($data, sprintf('Some provided product price fields haven\'t been asserted%s: %s', $shopErrorMessage, var_export($data, true)));
+        Assert::assertEmpty($data, \sprintf('Some provided product price fields haven\'t been asserted%s: %s', $shopErrorMessage, var_export($data, true)));
     }
 
-    /**
-     * @param array $data
-     * @param ProductPricesInformation $pricesInfo
-     * @param string $shopErrorMessage
-     */
     private function assertTaxRulesGroup(array &$data, ProductPricesInformation $pricesInfo, string $shopErrorMessage): void
     {
-        if (!isset($data['tax rules group'])) {
+        if (! isset($data['tax rules group'])) {
             return;
         }
 
         $expectedName = $data['tax rules group'];
 
-        if ('' === $expectedName) {
+        if ($expectedName === '') {
             $expectedId = 0;
         } else {
             $expectedId = (int) TaxRulesGroupFeatureContext::getTaxRulesGroupByName($expectedName)->id;
@@ -140,24 +124,12 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
         $actualId = $pricesInfo->getTaxRulesGroupId();
 
         if ($expectedId !== $actualId) {
-            throw new RuntimeException(
-                sprintf(
-                    'Expected tax rules group "%s", but got "%s"%s',
-                    $expectedName,
-                    (new TaxRulesGroup($actualId))->name,
-                    $shopErrorMessage
-                )
-            );
+            throw new RuntimeException(\sprintf('Expected tax rules group "%s", but got "%s"%s', $expectedName, (new TaxRulesGroup($actualId))->name, $shopErrorMessage));
         }
 
         unset($data['tax rules group']);
     }
 
-    /**
-     * @param array $expectedPrices
-     * @param ProductPricesInformation $actualPrices
-     * @param string $shopErrorMessage
-     */
     protected function assertNumberPriceFields(array &$expectedPrices, ProductPricesInformation $actualPrices, string $shopErrorMessage)
     {
         $numberPriceFields = [
@@ -178,10 +150,8 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
                 $expectedNumber = new DecimalNumber((string) $expectedPrices[$field]);
                 $actualNumber = $propertyAccessor->getValue($actualPrices, $field);
 
-                if (!$expectedNumber->equals($actualNumber)) {
-                    throw new RuntimeException(
-                        sprintf('Product %s expected to be "%s", but is "%s"%s', $field, $expectedNumber, $actualNumber, $shopErrorMessage)
-                    );
+                if (! $expectedNumber->equals($actualNumber)) {
+                    throw new RuntimeException(\sprintf('Product %s expected to be "%s", but is "%s"%s', $field, $expectedNumber, $actualNumber, $shopErrorMessage));
                 }
 
                 unset($expectedPrices[$field]);

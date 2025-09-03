@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class FloatParserTest extends TestCase
      * Then the string should be interpreted as a float by ImmutableFloat
      *
      * @param string $string
-     * @param float $expected
+     * @param float  $expected
      *
      * @dataProvider provideValidStrings
      */
@@ -55,8 +56,6 @@ class FloatParserTest extends TestCase
      * Given a value that is not a string
      * When constructing an ImmutableFloat from that value using ::fromString
      * Then an InvalidArgumentException should be thrown
-     *
-     * @param mixed $value
      *
      * @dataProvider provideInvalidValues
      */

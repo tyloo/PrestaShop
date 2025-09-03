@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,8 +52,6 @@ class EntityLinkBuilderFactoryTest extends TestCase
     }
 
     /**
-     * @param array $managedEntities
-     *
      * @return MockObject|EntityLinkBuilderInterface
      */
     private function getEntityLinkBuilderMock(array $managedEntities)
@@ -65,7 +64,7 @@ class EntityLinkBuilderFactoryTest extends TestCase
         $builderMock
             ->method('canBuild')
             ->willReturnCallback(function ($entity) use ($managedEntities) {
-                return in_array($entity, $managedEntities);
+                return \in_array($entity, $managedEntities, true);
             })
         ;
 

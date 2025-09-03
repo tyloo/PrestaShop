@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ class CurrencyTest extends TestCase
      */
     protected $currency;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $this->currency = new Currency(

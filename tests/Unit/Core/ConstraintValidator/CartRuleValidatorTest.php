@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,8 +57,6 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
      * @dataProvider getValidData
      *
      * @param array<string, mixed> $data
-     *
-     * @return void
      */
     public function testValidDataDoesNotViolateTheConstraint(array $data): void
     {
@@ -69,12 +68,6 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getDataViolatingTheConstraint
-     *
-     * @param $data
-     * @param string $expectedViolation
-     * @param string $expectedErrorPath
-     *
-     * @return void
      */
     public function testItBuildsViolation($data, string $expectedViolation, string $expectedErrorPath): void
     {
@@ -89,10 +82,6 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getUnsupportedConstraints
-     *
-     * @param Constraint $constraint
-     *
-     * @return void
      */
     public function testItThrowsExceptionWhenUnsupportedConstraintIsProvided(Constraint $constraint): void
     {
@@ -102,10 +91,6 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @dataProvider getInvalidValueForTypeCheck
-     *
-     * @param $value
-     *
-     * @return void
      */
     public function testItThrowsExceptionWhenInvalidValueTypeIsProvided($value): void
     {

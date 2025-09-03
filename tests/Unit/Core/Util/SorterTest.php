@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,21 +36,13 @@ class SorterTest extends TestCase
 {
     /**
      * @dataProvider dataProviderNatural
-     *
-     * @param array $expected
-     * @param array $array
-     * @param string $order
-     * @param string $criteria1
-     * @param string $criteria2
-     *
-     * @return void
      */
     public function testNatural(
         array $expected,
         array $array,
         string $order,
         string $criteria1 = '',
-        string $criteria2 = ''
+        string $criteria2 = '',
     ): void {
         $sorter = new Sorter();
         $this->assertEquals(

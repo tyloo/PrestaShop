@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2016 PrestaShop
  *
@@ -23,7 +24,7 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-if (!defined('_PS_VERSION_')) {
+if (! defined('_PS_VERSION_')) {
     exit;
 }
 
@@ -33,7 +34,7 @@ class CronJobsForms
 
     public static function init($module)
     {
-        if (self::$module == false) {
+        if (self::$module === false) {
             self::$module = $module;
         }
 
@@ -61,13 +62,13 @@ class CronJobsForms
         $currencies_cron_url = Tools::getShopDomain(true, true) . __PS_BASE_URI__ . basename(_PS_ADMIN_DIR_);
         $currencies_cron_url .= '/cron_currency_rates.php?secure_key=' . md5(_COOKIE_KEY_ . Configuration::get('PS_SHOP_NAME'));
 
-        if (($update == true) && Tools::isSubmit('id_cronjob')) {
+        if (($update === true) && Tools::isSubmit('id_cronjob')) {
             $id_cronjob = (int) Tools::getValue('id_cronjob');
             $id_module = (int) Db::getInstance()->getValue('SELECT `id_module` FROM `' . _DB_PREFIX_ . bqSQL(self::$module->name) . '`
                 WHERE `id_cronjob` = \'' . (int) $id_cronjob . '\'
                     AND `id_shop` = \'' . $id_shop . '\' AND `id_shop_group` = \'' . $id_shop_group . '\'');
 
-            if ((bool) $id_module == true) {
+            if ((bool) $id_module === true) {
                 $form[0]['form']['input'][] = [
                     'type' => 'free',
                     'name' => 'description',
@@ -181,7 +182,7 @@ class CronJobsForms
             ],
         ];
 
-        if (Configuration::get('CRONJOBS_MODE') == 'advanced') {
+        if (Configuration::get('CRONJOBS_MODE') === 'advanced') {
             $form['form']['input'][] = ['type' => 'free', 'name' => 'advanced_help', 'col' => 9, 'offset' => 0];
         }
 
@@ -192,7 +193,7 @@ class CronJobsForms
     {
         $token = Configuration::get('CRONJOBS_EXECUTION_TOKEN', null, 0, 0);
         $admin_folder = str_replace(_PS_ROOT_DIR_ . '/', null, basename(_PS_ADMIN_DIR_));
-        if (version_compare(_PS_VERSION_, '1.7', '<') == true) {
+        if (version_compare(_PS_VERSION_, '1.7', '<') === true) {
             $path = Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . $admin_folder . '/';
             $curl_url = $path . Context::getContext()->link->getAdminLink('AdminCronJobs', false);
             $curl_url .= '&token=' . $token;
@@ -254,7 +255,7 @@ class CronJobsForms
             WHERE `id_cronjob` = \'' . $id_cronjob . '\'
             AND `id_shop` = \'' . $id_shop . '\' AND `id_shop_group` = \'' . $id_shop_group . '\'');
 
-        if ((bool) $cron['id_module'] == false) {
+        if ((bool) $cron['id_module'] === false) {
             $description = Tools::safeOutput(Tools::getValue('description', $cron['description']));
             $task = urldecode(Tools::getValue('task', $cron['task']));
         } else {
@@ -282,10 +283,10 @@ class CronJobsForms
         $crons = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . bqSQL(self::$module->name) . '` WHERE `id_shop` = \'' . $id_shop . '\' AND `id_shop_group` = \'' . $id_shop_group . '\'');
 
         foreach ($crons as $key => &$cron) {
-            if (empty($cron['id_module']) == false) {
+            if (empty($cron['id_module']) === false) {
                 $module = Module::getInstanceById((int) $cron['id_module']);
 
-                if ($module == false) {
+                if ($module === false) {
                     Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . bqSQL(self::$module->name) . ' WHERE `id_cronjob` = \'' . (int) $cron['id_cronjob'] . '\'');
                     unset($crons[$key]);
 
@@ -301,11 +302,11 @@ class CronJobsForms
                 $cron['task'] = urldecode($cron['task']);
             }
 
-            $cron['hour'] = ($cron['hour'] == -1) ? self::$module->l('Every hour', 'CronJobsForms') : date('H:i', mktime((int) $cron['hour'], 0, 0, 0, 1));
-            $cron['day'] = ($cron['day'] == -1) ? self::$module->l('Every day', 'CronJobsForms') : (int) $cron['day'];
-            $cron['month'] = ($cron['month'] == -1) ? self::$module->l('Every month', 'CronJobsForms') : self::$module->l(date('F', mktime(0, 0, 0, (int) $cron['month'], 1)));
-            $cron['day_of_week'] = ($cron['day_of_week'] == -1) ? self::$module->l('Every day of the week', 'CronJobsForms') : self::$module->l(date('l', mktime(0, 0, 0, 0, (int) $cron['day_of_week'])));
-            $cron['updated_at'] = ($cron['updated_at'] == 0) ? self::$module->l('Never', 'CronJobsForms') : date('Y-m-d H:i:s', strtotime($cron['updated_at']));
+            $cron['hour'] = ($cron['hour'] === -1) ? self::$module->l('Every hour', 'CronJobsForms') : date('H:i', mktime((int) $cron['hour'], 0, 0, 0, 1));
+            $cron['day'] = ($cron['day'] === -1) ? self::$module->l('Every day', 'CronJobsForms') : (int) $cron['day'];
+            $cron['month'] = ($cron['month'] === -1) ? self::$module->l('Every month', 'CronJobsForms') : self::$module->l(date('F', mktime(0, 0, 0, (int) $cron['month'], 1)));
+            $cron['day_of_week'] = ($cron['day_of_week'] === -1) ? self::$module->l('Every day of the week', 'CronJobsForms') : self::$module->l(date('l', mktime(0, 0, 0, 0, (int) $cron['day_of_week'])));
+            $cron['updated_at'] = ($cron['updated_at'] === 0) ? self::$module->l('Never', 'CronJobsForms') : date('Y-m-d H:i:s', strtotime($cron['updated_at']));
             $cron['one_shot'] = (bool) $cron['one_shot'];
             $cron['active'] = (bool) $cron['active'];
         }

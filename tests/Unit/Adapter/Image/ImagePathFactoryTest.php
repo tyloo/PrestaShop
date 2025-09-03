@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ class ImagePathFactoryTest extends TestCase
 {
     /**
      * @dataProvider getArgumentsForSmokeTest
-     *
-     * @param string $pathToBaseDir
      */
     public function testConstructImagePathFactory(string $pathToBaseDir): void
     {
@@ -45,9 +44,6 @@ class ImagePathFactoryTest extends TestCase
         $this->assertInstanceOf(ImagePathFactory::class, $imagePathFactory);
     }
 
-    /**
-     * @return Generator
-     */
     public function getArgumentsForSmokeTest(): Generator
     {
         yield ['/img/p/'];
@@ -57,10 +53,6 @@ class ImagePathFactoryTest extends TestCase
 
     /**
      * @dataProvider getDataForBaseImagePathBuilding
-     *
-     * @param string $pathToBaseDir
-     * @param int $entityId
-     * @param string $expected
      */
     public function testGetPath(string $pathToBaseDir, int $entityId, string $expected): void
     {

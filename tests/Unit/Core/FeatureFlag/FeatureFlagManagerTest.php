@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,14 +69,14 @@ class FeatureFlagManagerTest extends TestCase
         $this->assertEquals($testsData['isEnabled'], $isEnabled);
 
         $isDisabled = $featureFlagManager->isDisabled($featureFlag->getName());
-        $this->assertEquals(!$testsData['isEnabled'], $isDisabled);
+        $this->assertEquals(! $testsData['isEnabled'], $isDisabled);
 
         $mockedLayerUsed = match ($testsData['layerUsed']) {
             'env' => $envLayer,
             'query' => $queryLayer,
             'dotenv' => $dotenvLayer,
             'db' => $dbLayer,
-            default => null
+            default => null,
         };
 
         $mockedLayerUsed->expects($this->once())
@@ -197,7 +198,7 @@ class FeatureFlagManagerTest extends TestCase
                 'query' => true,
                 'dotenv' => true,
                 'db' => true,
-                default => false
+                default => false,
             });
 
         $mock->expects($this->atLeastOnce())
@@ -207,7 +208,7 @@ class FeatureFlagManagerTest extends TestCase
                 'query' => $queryLayer,
                 'dotenv' => $dotenvLayer,
                 'db' => $dbLayer,
-                default => null
+                default => null,
             });
 
         return $mock;

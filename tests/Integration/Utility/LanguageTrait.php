@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ trait LanguageTrait
 
         // Copy resource assets into tmp folder to mimic an upload file path
         $flagImage = __DIR__ . '/../../Resources/assets/lang/' . $isoCode . '.jpg';
-        if (!file_exists($flagImage)) {
+        if (! file_exists($flagImage)) {
             $flagImage = __DIR__ . '/../../Resources/assets/lang/en.jpg';
         }
 

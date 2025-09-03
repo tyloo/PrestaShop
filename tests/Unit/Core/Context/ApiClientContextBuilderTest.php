@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -126,7 +127,7 @@ class ApiClientContextBuilderTest extends TestCase
             ->setScopes(['scope1', 'scope3'])
         ;
 
-        if (!empty($externalIssuer)) {
+        if (! empty($externalIssuer)) {
             $apiClient->setExternalIssuer($externalIssuer);
         }
 

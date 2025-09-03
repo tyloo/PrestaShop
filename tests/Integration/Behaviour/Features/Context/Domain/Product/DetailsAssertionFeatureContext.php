@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,10 +40,6 @@ class DetailsAssertionFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @Transform table:product detail,value
-     *
-     * @param TableNode $tableNode
-     *
-     * @return ProductDetails
      */
     public function transformDetails(TableNode $tableNode): ProductDetails
     {
@@ -59,9 +56,6 @@ class DetailsAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following details:
-     *
-     * @param string $productReference
-     * @param ProductDetails $expectedDetails
      */
     public function assertDetailsForDefaultShop(string $productReference, ProductDetails $expectedDetails): void
     {
@@ -70,10 +64,6 @@ class DetailsAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following details for shop(s) :shopReferences:
-     *
-     * @param string $productReference
-     * @param string $shopReferences
-     * @param ProductDetails $expectedDetails
      */
     public function assertDetailsForShops(string $productReference, string $shopReferences, ProductDetails $expectedDetails): void
     {
@@ -92,7 +82,7 @@ class DetailsAssertionFeatureContext extends AbstractProductFeatureContext
             Assert::assertSame(
                 $propertyAccessor->getValue($expectedDetails, $propertyName),
                 $propertyAccessor->getValue($actualDetails, $propertyName),
-                sprintf('Unexpected %s of "%s"', $propertyName, $productReference)
+                \sprintf('Unexpected %s of "%s"', $propertyName, $productReference)
             );
         }
     }

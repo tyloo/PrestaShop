@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,19 +44,20 @@ class StylesheetGeneratorTest extends TestCase
      */
     protected $filesystem;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $cssSamplesDirectory;
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $sandboxDirectory;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $this->filesystem = new Filesystem();
         $this->sandboxDirectory = sys_get_temp_dir() . '/StylesheetGeneratorTest';
-        $this->cssSamplesDirectory = dirname(__DIR__, 3) . '/Resources/assets/css';
+        $this->cssSamplesDirectory = \dirname(__DIR__, 3) . '/Resources/assets/css';
 
         $this->filesystem->mkdir($this->sandboxDirectory);
         $this->filesystem->copy(

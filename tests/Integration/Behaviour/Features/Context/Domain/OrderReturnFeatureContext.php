@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class OrderReturnFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I change order return :orderReturnReference state to :orderReturnStateReference
      *
-     * @param string $orderReturnReference
-     * @param string $orderReturnStateReference
-     *
      * @throws OrderReturnConstraintException
      */
     public function updateOrderReturnState(string $orderReturnReference, string $orderReturnStateReference): void
@@ -62,9 +60,6 @@ class OrderReturnFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given :orderReturnReference has state :orderReturnStateReference
      *
-     * @param string $orderReturnReference
-     * @param string $orderReturnStateReference
-     *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
@@ -75,7 +70,7 @@ class OrderReturnFeatureContext extends AbstractDomainFeatureContext
         $orderReturn = $this->getCommandBus()->handle(new GetOrderReturnForEditing((int) $orderReturnId));
         $orderReturnStateId = SharedStorage::getStorage()->get($orderReturnStateReference);
         if ($orderReturn->getOrderReturnStateId() !== $orderReturnStateId) {
-            $errorMessage = sprintf('Invalid order state for  %s, expected %s but got %s', $orderReturnReference, $orderReturnStateId, $orderReturn->getOrderReturnStateId());
+            $errorMessage = \sprintf('Invalid order state for  %s, expected %s but got %s', $orderReturnReference, $orderReturnStateId, $orderReturn->getOrderReturnStateId());
             throw new RuntimeException($errorMessage);
         }
     }

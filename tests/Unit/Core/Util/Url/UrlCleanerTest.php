@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ class UrlCleanerTest extends TestCase
 {
     /**
      * @dataProvider getUrlsToClean
-     *
-     * @param string $url
-     * @param array $removedParams
-     * @param string $expectedUrl
      */
     public function testCleanUrl(string $url, array $removedParams, string $expectedUrl): void
     {

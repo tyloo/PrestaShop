@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,23 +47,23 @@ class ToolsTest extends TestCase
         $_POST = $_GET = [];
         Tools::resetRequest();
 
-        if (!defined('PS_ROUND_UP')) {
-            define('PS_ROUND_UP', self::PS_ROUND_UP);
+        if (! \defined('PS_ROUND_UP')) {
+            \define('PS_ROUND_UP', self::PS_ROUND_UP);
         }
-        if (!defined('PS_ROUND_DOWN')) {
-            define('PS_ROUND_DOWN', self::PS_ROUND_DOWN);
+        if (! \defined('PS_ROUND_DOWN')) {
+            \define('PS_ROUND_DOWN', self::PS_ROUND_DOWN);
         }
-        if (!defined('PS_ROUND_HALF_UP')) {
-            define('PS_ROUND_HALF_UP', self::PS_ROUND_HALF_UP);
+        if (! \defined('PS_ROUND_HALF_UP')) {
+            \define('PS_ROUND_HALF_UP', self::PS_ROUND_HALF_UP);
         }
-        if (!defined('PS_ROUND_HALF_DOWN')) {
-            define('PS_ROUND_HALF_DOWN', self::PS_ROUND_HALF_DOWN);
+        if (! \defined('PS_ROUND_HALF_DOWN')) {
+            \define('PS_ROUND_HALF_DOWN', self::PS_ROUND_HALF_DOWN);
         }
-        if (!defined('PS_ROUND_HALF_EVEN')) {
-            define('PS_ROUND_HALF_EVEN', self::PS_ROUND_HALF_EVEN);
+        if (! \defined('PS_ROUND_HALF_EVEN')) {
+            \define('PS_ROUND_HALF_EVEN', self::PS_ROUND_HALF_EVEN);
         }
-        if (!defined('PS_ROUND_HALF_ODD')) {
-            define('PS_ROUND_HALF_ODD', self::PS_ROUND_HALF_ODD);
+        if (! \defined('PS_ROUND_HALF_ODD')) {
+            \define('PS_ROUND_HALF_ODD', self::PS_ROUND_HALF_ODD);
         }
     }
 
@@ -146,9 +147,6 @@ class ToolsTest extends TestCase
         $this->assertEquals($cleanedString, Tools::getValue('NON EXISTING KEY', $rawString));
     }
 
-    /**
-     * @return iterable
-     */
     public function providerDirectories(): iterable
     {
         yield [__DIR__, true];
@@ -407,9 +405,6 @@ class ToolsTest extends TestCase
     }
 
     /**
-     * @param string $url
-     * @param string $expectedDomain
-     *
      * @dataProvider providerExtractHost
      */
     public function testExtractUrlDomain(string $url, string $expectedDomain): void
@@ -520,9 +515,6 @@ class ToolsTest extends TestCase
     }
 
     /**
-     * @param string $expectedPassword
-     * @param mixed $passwordGenerated
-     *
      * @dataProvider passwordGenProvider
      */
     public function testPasswdGen(string $expectedPassword, $passwordGenerated): void
@@ -561,9 +553,6 @@ class ToolsTest extends TestCase
     }
 
     /**
-     * @param bool|null $useSsl
-     * @param string $expectedReturn
-     *
      * @dataProvider providerGetProtocol
      */
     public function testGetProtocol(?bool $useSsl, string $expectedReturn): void
@@ -581,7 +570,6 @@ class ToolsTest extends TestCase
     }
 
     /**
-     * @param int $expectedReturn
      * @param array{"price_tmp": float} $a
      * @param array{"price_tmp": float} $b
      *
@@ -600,7 +588,6 @@ class ToolsTest extends TestCase
     }
 
     /**
-     * @param int $expectedReturn
      * @param array{"price_tmp": float} $a
      * @param array{"price_tmp": float} $b
      *
@@ -619,9 +606,6 @@ class ToolsTest extends TestCase
     }
 
     /**
-     * @param string $expected
-     * @param string $chars
-     *
      * @dataProvider providerReplaceAccentedChars
      */
     public function testReplaceAccentedChars(string $expected, string $chars): void
@@ -745,11 +729,9 @@ class ToolsTest extends TestCase
     }
 
     /**
-     * @param array $expectedResult
-     * @param array $originalArray
-     * @param string $insertedArrayKey Key of the inserted array
-     * @param array $insertedArrayData Which data insert to new array?
-     * @param string $key Where to insert the new array?
+     * @param string $insertedArrayKey  Key of the inserted array
+     * @param array  $insertedArrayData Which data insert to new array?
+     * @param string $key               Where to insert the new array?
      *
      * @dataProvider providerArrayInsertElementAfterKey
      */

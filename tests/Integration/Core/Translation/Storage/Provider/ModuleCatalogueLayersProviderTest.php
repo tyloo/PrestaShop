@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,9 +61,6 @@ class ModuleCatalogueLayersProviderTest extends KernelTestCase
      */
     private $legacyFileLoader;
 
-    /**
-     * @var mixed
-     */
     private $modulesDir;
 
     /**
@@ -70,7 +68,7 @@ class ModuleCatalogueLayersProviderTest extends KernelTestCase
      */
     private $moduleExtractorExcludedDirs = ['vendor', 'lib', 'tests'];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         self::bootKernel();
         /*
@@ -390,12 +388,6 @@ class ModuleCatalogueLayersProviderTest extends KernelTestCase
         $this->assertResultIsAsExpected($expected, $catalogue);
     }
 
-    /**
-     * @param string $moduleName
-     * @param array $databaseContent
-     *
-     * @return ModuleCatalogueLayersProvider
-     */
     private function getProvider(string $moduleName, array $databaseContent = []): ModuleCatalogueLayersProvider
     {
         $providerDefinition = new ModuleProviderDefinition($moduleName);
@@ -416,10 +408,6 @@ class ModuleCatalogueLayersProviderTest extends KernelTestCase
         );
     }
 
-    /**
-     * @param array $expected
-     * @param MessageCatalogue $catalogue
-     */
     private function assertResultIsAsExpected(array $expected, MessageCatalogue $catalogue): void
     {
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);

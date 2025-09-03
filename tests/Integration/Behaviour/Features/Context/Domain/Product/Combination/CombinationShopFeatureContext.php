@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ class CombinationShopFeatureContext extends AbstractCombinationFeatureContext
 {
     /**
      * @Then combinations :combinationReferences are not associated to shop(s) :shopReferences
-     *
-     * @param string $combinationReferences
-     * @param string $shopReferences
      */
     public function checkNoShopAssociation(string $combinationReferences, string $shopReferences): void
     {
@@ -59,9 +57,6 @@ class CombinationShopFeatureContext extends AbstractCombinationFeatureContext
 
     /**
      * @Then /^combinations "(.*)" are associated to shop "(.*)"$/
-     *
-     * @param string $combinationReferences
-     * @param string $shopReference
      */
     public function checkShopAssociation(string $combinationReferences, string $shopReference): void
     {

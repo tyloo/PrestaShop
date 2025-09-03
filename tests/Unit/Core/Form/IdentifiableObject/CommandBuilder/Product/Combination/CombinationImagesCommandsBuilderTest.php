@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class CombinationImagesCommandsBuilderTest extends AbstractCombinationCommandBui
 {
     /**
      * @dataProvider getExpectedCommands
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
@@ -48,9 +46,6 @@ class CombinationImagesCommandsBuilderTest extends AbstractCombinationCommandBui
         $this->assertEquals($expectedCommands, $builtCommands);
     }
 
-    /**
-     * @return Generator
-     */
     public function getExpectedCommands(): Generator
     {
         yield [

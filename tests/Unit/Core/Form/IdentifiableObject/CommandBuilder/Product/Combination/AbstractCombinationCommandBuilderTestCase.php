@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,12 +42,9 @@ abstract class AbstractCombinationCommandBuilderTestCase extends AbstractMultiSh
      */
     private $combinationId;
 
-    /**
-     * @return CombinationId
-     */
     protected function getCombinationId(): CombinationId
     {
-        if (null === $this->combinationId) {
+        if ($this->combinationId === null) {
             $this->combinationId = new CombinationId(43);
         }
 

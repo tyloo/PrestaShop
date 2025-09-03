@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
      * @BeforeScenario @restore-cart-rules-before-scenario
      *
      * @AfterScenario @restore-cart-rules-after-scenario
-     *
-     * @return void
      */
     public static function restoreCartRules(): void
     {
@@ -54,34 +53,28 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @Then cart rule with reference :cartRuleReference is enabled
-     *
-     * @param string $cartRuleReference
      */
     public function assertCartRuleEnabled(string $cartRuleReference): void
     {
         Assert::assertTrue(
             $this->getCartRuleForEditing($cartRuleReference)->getInformation()->isEnabled(),
-            sprintf('Cart rule %s is not enabled', $cartRuleReference)
+            \sprintf('Cart rule %s is not enabled', $cartRuleReference)
         );
     }
 
     /**
      * @Then cart rule with reference :cartRuleReference is disabled
-     *
-     * @param string $cartRuleReference
      */
     public function assertCartRuleDisabled(string $cartRuleReference): void
     {
         Assert::assertFalse(
             $this->getCartRuleForEditing($cartRuleReference)->getInformation()->isEnabled(),
-            sprintf('Cart rule %s is not disabled', $cartRuleReference)
+            \sprintf('Cart rule %s is not disabled', $cartRuleReference)
         );
     }
 
     /**
      * @Then Cart rule with reference :cartRuleReference does not exist
-     *
-     * @param string $cartRuleReference
      *
      * @throws NoExceptionAlthoughExpectedException
      */
@@ -89,7 +82,7 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
     {
         try {
             $this->getCartRuleForEditing($cartRuleReference);
-            throw new NoExceptionAlthoughExpectedException(sprintf('Cart rule "%s" was found, but it was expected to be deleted', $cartRuleReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Cart rule "%s" was found, but it was expected to be deleted', $cartRuleReference));
         } catch (CartRuleNotFoundException $e) {
             $this->getSharedStorage()->clear($cartRuleReference);
         }
@@ -97,10 +90,6 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @Then I should get cart rule error about :error
-     *
-     * @param string $error
-     *
-     * @return void
      */
     public function assertCartRuleError(string $error): void
     {
@@ -135,8 +124,8 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
             ],
         ];
 
-        if (!isset($errorMap[$error])) {
-            throw new RuntimeException(sprintf('$error "%s" not set in error map for assertion', $error));
+        if (! isset($errorMap[$error])) {
+            throw new RuntimeException(\sprintf('$error "%s" not set in error map for assertion', $error));
         }
 
         $this->assertLastErrorIs(
@@ -147,9 +136,6 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @Then cart rule :cartRuleReference should have the following properties:
-     *
-     * @param string $cartRuleReference
-     * @param TableNode $tableNode
      */
     public function assertCartRule(string $cartRuleReference, TableNode $tableNode): void
     {
@@ -161,8 +147,6 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @Then cart rule :cartRuleReference should have no product restriction rules
-     *
-     * @return void
      */
     public function assertNoProductRestrictionRules(string $cartRuleReference): void
     {
@@ -174,8 +158,6 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @Then cart rule :cartRuleReference should have the following product restriction rule groups:
-     *
-     * @return void
      */
     public function assertProductRestrictionGroups(string $cartRuleReference, TableNode $tableNode): void
     {
@@ -185,7 +167,7 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
             ->getProductRestrictionRuleGroups()
         ;
         $expectedDataRows = $tableNode->getColumnsHash();
-        Assert::assertCount(count($expectedDataRows), $actualRestrictionGroups, 'Unexpected product restriction groups count');
+        Assert::assertCount(\count($expectedDataRows), $actualRestrictionGroups, 'Unexpected product restriction groups count');
 
         foreach ($expectedDataRows as $key => $expectedDataRow) {
             $actualGroup = $actualRestrictionGroups[$key];
@@ -197,7 +179,7 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
             Assert::assertCount(
                 (int) $expectedDataRow['rules count'],
                 $actualGroup->getRestrictionRules(),
-                sprintf('Unexpected rules count in restriction group referenced as "%s"', $expectedDataRow['groupReference'])
+                \sprintf('Unexpected rules count in restriction group referenced as "%s"', $expectedDataRow['groupReference'])
             );
 
             // set group into shared storage so that following steps can assert its values more in depth
@@ -207,19 +189,11 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @Then the cart rule restriction group :restrictionGroupReference should have the following rules:
-     *
-     * @param string $restrictionGroupReference
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function assertProductRestrictionRules(string $restrictionGroupReference, TableNode $tableNode): void
     {
-        if (!$this->getSharedStorage()->exists($restrictionGroupReference)) {
-            throw new RuntimeException(sprintf(
-                'Restriction group %s was not set in shared storage. You have to first call method assertProductRestrictionGroups"',
-                $restrictionGroupReference
-            ));
+        if (! $this->getSharedStorage()->exists($restrictionGroupReference)) {
+            throw new RuntimeException(\sprintf('Restriction group %s was not set in shared storage. You have to first call method assertProductRestrictionGroups"', $restrictionGroupReference));
         }
 
         $group = $this->getSharedStorage()->get($restrictionGroupReference);
@@ -228,7 +202,7 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
         $actualRules = $group->getRestrictionRules();
         $expectedDataRows = $tableNode->getColumnsHash();
 
-        Assert::assertCount(count($expectedDataRows), $actualRules, 'Unexpected product restriction rules count in group');
+        Assert::assertCount(\count($expectedDataRows), $actualRules, 'Unexpected product restriction rules count in group');
 
         foreach ($expectedDataRows as $key => $expectedRow) {
             /** @var RestrictionRule $actualRule */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,7 +67,7 @@ trait ContextMockerTrait
      */
     protected static function backupContext(): void
     {
-        if (!static::$contextMocker) {
+        if (! static::$contextMocker) {
             static::$contextMocker = new ContextMocker();
         }
         static::$contextMocker->backupContext();
@@ -78,7 +79,7 @@ trait ContextMockerTrait
      */
     protected static function mockContext(): void
     {
-        if (!static::$contextMocker) {
+        if (! static::$contextMocker) {
             static::$contextMocker = new ContextMocker();
         }
         static::$contextMocker->mockContext();
@@ -86,7 +87,7 @@ trait ContextMockerTrait
 
     protected static function getContext(): Context
     {
-        if (!static::$contextMocker) {
+        if (! static::$contextMocker) {
             throw new RuntimeException('No context mocker set, you cannot get a context that was never mocked or saved.');
         }
 
@@ -95,10 +96,10 @@ trait ContextMockerTrait
 
     protected static function getMockedContext(): Context
     {
-        if (!static::$contextMocker) {
+        if (! static::$contextMocker) {
             throw new RuntimeException('No context mocker set, you cannot get a mocked context that was never mocked.');
         }
-        if (null === static::$contextMocker->getMockedContext()) {
+        if (static::$contextMocker->getMockedContext() === null) {
             throw new RuntimeException('No context was mocked, to get a mocked context you need to first use ContextMockerTrait::mockContext method.');
         }
 
@@ -107,7 +108,7 @@ trait ContextMockerTrait
 
     protected static function resetContext(): void
     {
-        if (!static::$contextMocker) {
+        if (! static::$contextMocker) {
             throw new RuntimeException('No context mocker set, you cannot reset a context that was never mocked or saved.');
         }
         static::$contextMocker->resetContext();

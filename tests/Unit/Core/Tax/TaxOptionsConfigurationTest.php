@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,9 +55,6 @@ class TaxOptionsConfigurationTest extends AbstractConfigurationTestCase
         $this->mockProductEcotaxResetter = $this->createProductEcotaxResetterMock();
     }
 
-    /**
-     * @return ProductEcotaxResetterInterface
-     */
     protected function createProductEcotaxResetterMock(): ProductEcotaxResetterInterface
     {
         return $this->getMockBuilder(ProductEcotaxResetterInterface::class)
@@ -66,8 +64,6 @@ class TaxOptionsConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideShopConstraints
-     *
-     * @param ShopConstraint $shopConstraint
      */
     public function testGetConfiguration(ShopConstraint $shopConstraint): void
     {
@@ -104,9 +100,6 @@ class TaxOptionsConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideInvalidConfiguration
-     *
-     * @param string $exception
-     * @param array $values
      */
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {

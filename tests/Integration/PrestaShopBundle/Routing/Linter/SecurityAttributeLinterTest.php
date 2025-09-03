@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class SecurityAttributeLinterTest extends KernelTestCase
     public function testLinterPassesWhenRouteControllerHasConfiguredAdminSecurityAnnotation()
     {
         $route = new Route('/', [
-            '_controller' => sprintf('%s::%s', TestController::class, 'indexAction'),
+            '_controller' => \sprintf('%s::%s', TestController::class, 'indexAction'),
         ]);
 
         $this->securityAnnotationLinter->lint('route_name', $route);
@@ -61,7 +62,7 @@ class SecurityAttributeLinterTest extends KernelTestCase
     public function testLinterThrowsExceptionWhenRouteControllerDoesNotHaveConfiguredAdminSecutityAnnotation()
     {
         $route = new Route('/', [
-            '_controller' => sprintf('%s::%s', TestController::class, 'createAction'),
+            '_controller' => \sprintf('%s::%s', TestController::class, 'createAction'),
         ]);
 
         $this->expectException(LinterException::class);

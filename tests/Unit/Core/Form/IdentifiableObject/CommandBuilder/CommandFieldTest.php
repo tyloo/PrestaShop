@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,7 @@ class CommandFieldTest extends TestCase
     /**
      * @dataProvider getValidParameters
      *
-     * @param string $commandSetter
      * @param array<int, DataField> $dataFields
-     * @param bool $isMultiShopField
      */
     public function testValidConstructors(string $commandSetter, array $dataFields, bool $isMultiShopField): void
     {
@@ -76,9 +75,7 @@ class CommandFieldTest extends TestCase
     /**
      * @dataProvider getInvalidParameters
      *
-     * @param string $commandSetter
      * @param array<int, DataField> $dataFields
-     * @param string $expectedException
      */
     public function testInvalidConstructors(string $commandSetter, array $dataFields, string $expectedException): void
     {

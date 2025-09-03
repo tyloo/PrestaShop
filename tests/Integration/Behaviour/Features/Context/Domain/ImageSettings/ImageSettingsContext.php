@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -128,8 +129,8 @@ class ImageSettingsContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (count($errors) > 0) {
-            throw new RuntimeException(sprintf('Fields %s are not identical', implode(', ', $errors)));
+        if (\count($errors) > 0) {
+            throw new RuntimeException(\sprintf('Fields %s are not identical', implode(', ', $errors)));
         }
     }
 
@@ -139,7 +140,7 @@ class ImageSettingsContext extends AbstractDomainFeatureContext
     private function fixDataType(array $data): array
     {
         // Cast to array for formats
-        if (array_key_exists('formats', $data) && !is_null($data['formats'])) {
+        if (\array_key_exists('formats', $data) && $data['formats'] !== null) {
             $data['formats'] = explode(',', $data['formats']);
         }
 
@@ -155,8 +156,8 @@ class ImageSettingsContext extends AbstractDomainFeatureContext
                 'picture-max-width',
                 'picture-max-height',
             ] as $key) {
-            if (array_key_exists($key, $data) && !is_null($data[$key])) {
-                $data[$key] = intval($data[$key]);
+            if (\array_key_exists($key, $data) && $data[$key] !== null) {
+                $data[$key] = \intval($data[$key]);
             }
         }
 

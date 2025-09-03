@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,10 +38,12 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class NumberExtractorTest extends TestCase
 {
-    /** @var NumberExtractor */
+    /**
+     * @var NumberExtractor
+     */
     private $numberExtractor;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->numberExtractor = new NumberExtractor(PropertyAccess::createPropertyAccessor());
@@ -50,8 +53,6 @@ class NumberExtractorTest extends TestCase
      * @dataProvider getValidData
      *
      * @param array|FakeClass $resource
-     * @param string $path
-     * @param DecimalNumber $expectedResult
      */
     public function testItExtractsNumberFromArrayOrObject($resource, string $path, DecimalNumber $expectedResult)
     {
@@ -64,7 +65,6 @@ class NumberExtractorTest extends TestCase
      * @dataProvider getDataWithInvalidResourcePropertyType
      *
      * @param array|FakeClass3 $resource
-     * @param string $path
      */
     public function testItThrowsExceptionWhenNonNumericValueIsProvidedInAccessedProperty($resource, string $path)
     {
@@ -74,9 +74,6 @@ class NumberExtractorTest extends TestCase
         $this->numberExtractor->extract($resource, $path);
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidData(): Generator
     {
         $fakeClass = new FakeClass();
@@ -108,9 +105,6 @@ class NumberExtractorTest extends TestCase
         ];
     }
 
-    /**
-     * @return Generator
-     */
     public function getDataWithInvalidResourcePropertyType(): Generator
     {
         $obj = new FakeClass3();
@@ -148,17 +142,11 @@ class FakeClass
         return 50;
     }
 
-    /**
-     * @return FakeClass2
-     */
     public function getObj2(): FakeClass2
     {
         return $this->obj2;
     }
 
-    /**
-     * @return FakeClass3
-     */
     public function getObj3(): FakeClass3
     {
         return $this->obj3;

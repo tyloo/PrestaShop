@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,7 +34,7 @@ use Tests\Resources\ResourceResetter;
 
 function checkInstallationErrors(Install $install, SymfonyConsoleLogger $logger)
 {
-    if (!empty($install->getErrors())) {
+    if (! empty($install->getErrors())) {
         $logger->logError('Some errors were found during install:');
         foreach ($install->getErrors() as $error) {
             $logger->logError($error);
@@ -68,7 +69,7 @@ checkInstallationErrors($install, $logger);
 // updating the database
 Configuration::resetStaticCache();
 
-if (!$install->installDatabase(true)) {
+if (! $install->installDatabase(true)) {
     exit(1);
 }
 
@@ -87,7 +88,7 @@ checkInstallationErrors($install, $logger);
 $logger->log('Installing language');
 // Default language is forced as en, we need french translation package as well, we only need the catalog to
 // be available for the Translator component but we do not want the Language in the DB
-if (!Language::translationPackIsInCache('fr-FR')) {
+if (! Language::translationPackIsInCache('fr-FR')) {
     Language::downloadXLFLanguagePack('fr-FR');
 }
 Language::installSfLanguagePack('fr-FR');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,7 +60,7 @@ class LocaleReferenceTest extends TestCase
                 ['un-KNOWN', null], // Simulates an unknown locale
             ]);
 
-        /* @var ReaderInterface $fakeReader */
+        /** @var ReaderInterface $fakeReader */
         $this->layer = new CldrLocaleReferenceDataLayer($fakeReader);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ class StringModifierTest extends TestCase
      */
     private $stringModifier;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->stringModifier = new StringModifier();
     }
@@ -76,10 +77,6 @@ class StringModifierTest extends TestCase
 
     /**
      * @dataProvider getTooLongStringsForEndCutting
-     *
-     * @param string $string
-     * @param int $length
-     * @param string $expectedOutput
      */
     public function testItCutsStringEndIfItIsTooLong(string $string, int $length, string $expectedOutput): void
     {
@@ -89,9 +86,6 @@ class StringModifierTest extends TestCase
 
     /**
      * @dataProvider getNotTooLongStringsForEndCutting
-     *
-     * @param string $string
-     * @param int $length
      */
     public function testItDoesNotCutStringEndIfItsNotTooLong(string $string, int $length): void
     {
@@ -99,9 +93,6 @@ class StringModifierTest extends TestCase
         $this->assertEquals($string, $output);
     }
 
-    /**
-     * @return Generator
-     */
     public function getTooLongStringsForEndCutting(): Generator
     {
         yield ['test', 3, 'tes'];
@@ -109,9 +100,6 @@ class StringModifierTest extends TestCase
         yield ['hello world 899', 13, 'hello world 8'];
     }
 
-    /**
-     * @return Generator
-     */
     public function getNotTooLongStringsForEndCutting(): Generator
     {
         yield ['test', 4];

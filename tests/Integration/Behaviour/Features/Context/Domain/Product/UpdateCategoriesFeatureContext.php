@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I assign product :productReference to following categories:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function assignToCategoriesForDefaultShop(string $productReference, TableNode $table)
     {
@@ -53,10 +51,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I assign product :productReference to following categories for shop :shopReference:
-     *
-     * @param string $productReference
-     * @param TableNode $table
-     * @param string $shopReference
      */
     public function assignToCategoriesForSpecificShop(string $productReference, TableNode $table, string $shopReference)
     {
@@ -65,10 +59,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I assign product :productReference to following categories for shops :shopReferences:
-     *
-     * @param string $productReference
-     * @param TableNode $table
-     * @param string $shopReferences
      */
     public function assignToCategoriesForSpecificShopCollection(string $productReference, TableNode $table, string $shopReferences)
     {
@@ -77,9 +67,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I assign product :productReference to following categories for all shops:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function assignToCategoriesForAllShops(string $productReference, TableNode $table)
     {
@@ -88,9 +75,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should be assigned to following categories:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function assertProductCategoriesForDefaultShop(string $productReference, TableNode $table)
     {
@@ -99,10 +83,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should be assigned to following categories for shop(s) :shopReferences:
-     *
-     * @param string $productReference
-     * @param TableNode $table
-     * @param string $shopReferences
      */
     public function assertProductCategoriesForShops(string $productReference, TableNode $table, string $shopReferences)
     {
@@ -113,8 +93,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete all categories from product :productReference
-     *
-     * @param string $productReference
      */
     public function deleteAllProductCategoriesForDefaultShop(string $productReference)
     {
@@ -123,9 +101,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete all categories from product :productReference for shop :shopReference
-     *
-     * @param string $productReference
-     * @param string $shopReference
      */
     public function deleteAllProductCategoriesForShop(string $productReference, string $shopReference)
     {
@@ -134,8 +109,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete all categories from product :productReference for all shops
-     *
-     * @param string $productReference
      */
     public function deleteAllProductCategoriesForAllShops(string $productReference)
     {
@@ -204,9 +177,9 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
         $actualCategories = $categoriesInfo->getCategoriesInformation();
 
         Assert::assertCount(
-            count($expectedCategories),
+            \count($expectedCategories),
             $actualCategories,
-            sprintf('Expected and actual categories count doesn\'t match for shop %d', $shopId)
+            \sprintf('Expected and actual categories count doesn\'t match for shop %d', $shopId)
         );
 
         $expectedDefaultCategoryId = null;
@@ -218,7 +191,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
                 function (array $expectedCategory) use ($actualId) {
                     return $actualId === $this->getSharedStorage()->get($expectedCategory['id reference']);
                 });
-            Assert::assertNotEmpty($relativeExpectedCategories, sprintf(
+            Assert::assertNotEmpty($relativeExpectedCategories, \sprintf(
                 'Did not expect to find category %s in the list for shop %d',
                 $categoryInformation->getName(),
                 $shopId
@@ -249,11 +222,6 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
         );
     }
 
-    /**
-     * @param int $productId
-     * @param int $defaultCategoryId
-     * @param array $categoryIds
-     */
     private function assignProductToCategories(int $productId, int $defaultCategoryId, array $categoryIds, ShopConstraint $shopConstraint): void
     {
         try {

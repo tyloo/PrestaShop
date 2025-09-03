@@ -59,15 +59,12 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getCommandBus()->handle(new SwitchShipmentCarrierCommand($shipmentId, $carrierId));
         } catch (Exception $error) {
-            throw new RuntimeException(sprintf('Error while switching shipment "%s" to carrier "%s" : %s', $shipmentReference, $carrierReference, $error->getMessage()));
+            throw new RuntimeException(\sprintf('Error while switching shipment "%s" to carrier "%s" : %s', $shipmentReference, $carrierReference, $error->getMessage()));
         }
     }
 
     /**
      * @Then the order :orderReference should have the following shipments:
-     *
-     * @param string $orderReference
-     * @param TableNode $table
      *
      * @throws RuntimeException
      */
@@ -79,12 +76,12 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
             new GetOrderShipments($orderId)
         );
 
-        if (count($shipments) === 0) {
+        if (\count($shipments) === 0) {
             $msg = 'Order [' . $orderId . '] has no shipments';
             throw new RuntimeException($msg);
         }
 
-        for ($i = 0; $i < count($data); ++$i) {
+        for ($i = 0; $i < \count($data); ++$i) {
             $shipmentData = $data[$i];
             $shipment = $shipments[$i];
             $carrierReference = $data[$i]['carrier'];
@@ -106,9 +103,6 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the shipment :shipmentReference should have the following products:
-     *
-     * @param string $shipmentReference
-     * @param TableNode $table
      */
     public function verifyShipmentProducts(string $shipmentReference, TableNode $table)
     {
@@ -119,7 +113,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
             new GetShipmentProducts($shipmentId)
         );
 
-        for ($i = 0; $i < count($shipmentProducts); ++$i) {
+        for ($i = 0; $i < \count($shipmentProducts); ++$i) {
             Assert::assertEquals($shipmentProducts[$i]->getQuantity(), (int) $data[$i]['quantity']);
             Assert::assertEquals($shipmentProducts[$i]->getProductName(), $data[$i]['product_name']);
         }
@@ -127,8 +121,6 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the shipment :shipmentReference should be deleted
-     *
-     * @param string $shipmentReference
      */
     public function verifyIfShipmentIsDeleted(string $shipmentReference)
     {
@@ -143,10 +135,6 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I merge product from :sourceShipment into :targetShipment with following information:
-     *
-     * @param string $sourceShipmentReference
-     * @param string $targetShipmentReference
-     * @param TableNode $table
      */
     public function mergeProductsToShipment(string $sourceShipmentReference, string $targetShipmentReference, TableNode $table): void
     {
@@ -195,7 +183,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
             new ListAvailableShipments($orderId, $orderDetailsId)
         );
 
-        for ($i = 0; $i < count($testAvailableShipmentForProduct); ++$i) {
+        for ($i = 0; $i < \count($testAvailableShipmentForProduct); ++$i) {
             Assert::assertEquals($testAvailableShipmentForProduct[$i]->getShipmentName(), $data[$i]['shipment_name']);
             Assert::assertEquals($testAvailableShipmentForProduct[$i]->getHandleProduct(), (bool) $data[$i]['can_handle_merge']);
         }
@@ -228,9 +216,6 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I split the shipment :shipmentReference to create a new shipment with :carrierReference with following products:
-     *
-     * @param string $shipmentReference
-     * @param TableNode $table
      */
     public function splitShipment(string $shipmentReference, string $carrierReference, TableNode $table): void
     {
@@ -261,9 +246,6 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order :orderReference should have :shipmentNumberReference shipments:
-     *
-     * @param string $orderReference
-     * @param string $nbrShipment
      */
     public function assertShipmentForOrder(string $orderReference, string $nbrShipment): void
     {
@@ -272,7 +254,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
             new GetOrderShipments($orderId)
         );
 
-        Assert::assertEquals(count($shipments), (int) $nbrShipment);
+        Assert::assertEquals(\count($shipments), (int) $nbrShipment);
         $getLastShipment = end($shipments);
 
         SharedStorage::getStorage()->set('shipment' . $getLastShipment->getId(), $getLastShipment->getId());
@@ -280,9 +262,6 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I remove product from the shipment :shipmentReference with following properties:
-     *
-     * @param string $shipmentReference
-     * @param TableNode $table
      */
     public function deleteProductFromShipment(string $shipmentReference, TableNode $table)
     {

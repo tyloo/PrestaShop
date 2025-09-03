@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,9 +64,6 @@ class ThemeTranslationsFactoryTest extends TestCase
 
     /**
      * @dataProvider getThemeAndLocale
-     *
-     * @param string $theme
-     * @param string $locale
      */
     public function testCreateCatalogue(string $theme, string $locale): void
     {
@@ -88,9 +86,6 @@ class ThemeTranslationsFactoryTest extends TestCase
         $this->factory->createCatalogue($theme, $locale);
     }
 
-    /**
-     * @return array
-     */
     public function getThemeAndLocale(): array
     {
         return [
@@ -103,9 +98,6 @@ class ThemeTranslationsFactoryTest extends TestCase
 
     /**
      * @dataProvider getThemeAndLocale
-     *
-     * @param string $theme
-     * @param string $locale
      */
     public function testCreateTranslationsArray(string $theme, string $locale): void
     {
@@ -235,9 +227,6 @@ class ThemeTranslationsFactoryTest extends TestCase
         return $providerMock;
     }
 
-    /**
-     * @param string $locale
-     */
     protected function assertPropertiesTranslations(string $locale): void
     {
         $this->assertIsArray($this->translations);
@@ -249,9 +238,6 @@ class ThemeTranslationsFactoryTest extends TestCase
         $this->assertArrayHasKey('DefaultDomain', $this->translations);
     }
 
-    /**
-     * @param string $locale
-     */
     protected function assertTranslationsContainThemeMessages(string $locale): void
     {
         $this->assertSame(
@@ -273,9 +259,6 @@ class ThemeTranslationsFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @param string $locale
-     */
     protected function assertTranslationsContainCatalogueMessages(string $locale): void
     {
         $this->assertSame(
@@ -297,9 +280,6 @@ class ThemeTranslationsFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @param string $locale
-     */
     protected function assertTranslationsContainDefaultAndDatabaseMessages(string $locale): void
     {
         $this->assertSame(

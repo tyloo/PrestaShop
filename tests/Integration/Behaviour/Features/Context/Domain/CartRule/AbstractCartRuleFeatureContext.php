@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -79,7 +80,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
         if (isset($data['quantity_per_user'])) {
             $command->setQuantityPerUser((int) $data['quantity_per_user']);
         }
-        if (!empty($data['minimum_amount'])) {
+        if (! empty($data['minimum_amount'])) {
             $currencyId = $this->getSharedStorage()->get($data['minimum_amount_currency']);
             $command->setMinimumAmount(
                 $data['minimum_amount'],
@@ -90,7 +91,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
         }
 
         $command->setDescription($data['description'] ?? '');
-        if (!empty($data['code'])) {
+        if (! empty($data['code'])) {
             $command->setCode($data['code']);
         }
 
@@ -98,7 +99,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
         $cartRuleId = $this->getCommandBus()->handle($command);
         $this->getSharedStorage()->set($cartRuleReference, $cartRuleId->getValue());
 
-        if (!empty($data['code'])) {
+        if (! empty($data['code'])) {
             // set cart rule id by code when it is not empty
             $this->getSharedStorage()->set($data['code'], $cartRuleId->getValue());
         }
@@ -142,7 +143,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
         }
         if (isset($expectedData['customer'])) {
             Assert::assertSame(
-                !empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
+                ! empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
                 $conditions->getCustomerId()->getValue(),
                 'Unexpected customer id'
             );
@@ -210,7 +211,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
             );
 
             Assert::assertSame(
-                !empty($expectedData['discount_product']) ? $this->getSharedStorage()->get($expectedData['discount_product']) : null,
+                ! empty($expectedData['discount_product']) ? $this->getSharedStorage()->get($expectedData['discount_product']) : null,
                 $actions->getReduction()->getProductId(),
                 'Unexpected discount_product'
             );
@@ -279,7 +280,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
 
         if (isset($expectedData['gift_combination'])) {
             Assert::assertSame(
-                !empty($expectedData['gift_combination']) ? $this->getSharedStorage()->get($expectedData['gift_combination']) : null,
+                ! empty($expectedData['gift_combination']) ? $this->getSharedStorage()->get($expectedData['gift_combination']) : null,
                 $actions->getGiftCombinationId(),
                 'Unexpected gift_combination'
             );

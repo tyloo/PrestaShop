@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,12 +62,9 @@ class ThemeCatalogueLayersProviderTestCase extends AbstractCatalogueLayersProvid
      */
     private $filesystem;
 
-    /**
-     * @var mixed
-     */
     private $themesDir;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -80,7 +78,7 @@ class ThemeCatalogueLayersProviderTestCase extends AbstractCatalogueLayersProvid
                 'name' => 'fakeThemeForTranslations',
                 'directory' => rtrim($this->themesDir, '/') . '/fakeThemeForTranslations',
             ])); // doesn't really matter
-        /* @var ThemeRepository $themeRepository */
+        /** @var ThemeRepository $themeRepository */
         $this->themeRepository = $themeRepository;
 
         $this->filesystem = new Filesystem();
@@ -254,11 +252,6 @@ class ThemeCatalogueLayersProviderTestCase extends AbstractCatalogueLayersProvid
         $this->assertResultIsAsExpected($expected, $catalogue);
     }
 
-    /**
-     * @param array $databaseContent
-     *
-     * @return ThemeCatalogueLayersProvider
-     */
     protected function getProvider(array $databaseContent = []): ThemeCatalogueLayersProvider
     {
         $databaseTranslationLoader = new MockDatabaseTranslationLoader(

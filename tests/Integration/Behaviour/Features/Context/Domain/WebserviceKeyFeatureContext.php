@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -98,7 +99,7 @@ class WebserviceKeyFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['is_enabled'])) {
             $command->setStatus((bool) $data['is_enabled']);
         }
-        if (!empty($data['permissions'])) {
+        if (! empty($data['permissions'])) {
             $command->setPermissions($data['permissions']);
         }
 

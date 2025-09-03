@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,10 +64,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 {
     /**
      * @Transform table:specific price detail,value
-     *
-     * @param TableNode $tableNode
-     *
-     * @return SpecificPriceForEditing
      */
     public function transformSpecificPrice(TableNode $tableNode): SpecificPriceForEditing
     {
@@ -104,17 +101,12 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         );
     }
 
-    /**
-     * @param TableNode $tableNode
-     *
-     * @return SpecificPriceList
-     */
     private function transformSpecificPriceList(TableNode $tableNode): SpecificPriceList
     {
         $dataRows = $tableNode->getColumnsHash();
         $specificPrices = [];
         foreach ($dataRows as $dataRow) {
-            $specificPriceId = !empty($dataRow['price id']) ? $this->getSharedStorage()->get($dataRow['price id']) : 0;
+            $specificPriceId = ! empty($dataRow['price id']) ? $this->getSharedStorage()->get($dataRow['price id']) : 0;
             $fixedPrice = $dataRow['fixed price'];
             $specificPrices[] = new SpecificPriceForListing(
                 $specificPriceId,
@@ -135,15 +127,11 @@ class SpecificPriceContext extends AbstractProductFeatureContext
             );
         }
 
-        return new SpecificPriceList($specificPrices, count($dataRows));
+        return new SpecificPriceList($specificPrices, \count($dataRows));
     }
 
     /**
      * @When I add a specific price :specificPriceReference to product :productReference with following details:
-     *
-     * @param string $specificPriceReference
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function addSpecificPrice(string $specificPriceReference, string $productReference, TableNode $tableNode): void
     {
@@ -163,9 +151,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 
     /**
      * @When I edit specific price ":specificPriceReference" with following details:
-     *
-     * @param string $specificPriceReference
-     * @param TableNode $tableNode
      */
     public function editSpecificPrice(string $specificPriceReference, TableNode $tableNode): void
     {
@@ -180,8 +165,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete specific price ":specificPriceReference"
-     *
-     * @param string $specificPriceReference
      */
     public function deleteSpecificPrice(string $specificPriceReference): void
     {
@@ -195,9 +178,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have :expectedCount specific prices
-     *
-     * @param string $productReference
-     * @param int $expectedCount
      */
     public function countProductSpecificPrices(string $productReference, int $expectedCount): void
     {
@@ -209,14 +189,11 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         ));
 
         Assert::assertEquals($expectedCount, $productSpecificPrices->getTotalSpecificPricesCount());
-        Assert::assertEquals($expectedCount, count($productSpecificPrices->getSpecificPrices()));
+        Assert::assertEquals($expectedCount, \count($productSpecificPrices->getSpecificPrices()));
     }
 
     /**
      * @Then specific price :specificPriceReference should have following details:
-     *
-     * @param string $specificPriceReference
-     * @param SpecificPriceForEditing $expectedSpecificPrice
      *
      * @see transformSpecificPrice for TablenNode to SpecificPrice transformation
      */
@@ -236,7 +213,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
             Assert::assertSame(
                 $propertyAccessor->getValue($expectedSpecificPrice, $propertyName),
                 $propertyAccessor->getValue($productSpecificPrice, $propertyName),
-                sprintf('Unexpected %s of "%s"', $propertyName, $specificPriceReference)
+                \sprintf('Unexpected %s of "%s"', $propertyName, $specificPriceReference)
             );
         }
 
@@ -264,7 +241,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
             $productNumber = $propertyAccessor->getValue($productSpecificPrice, $decimalProperty);
             Assert::assertTrue(
                 $expectedNumber->equals($productNumber),
-                sprintf(
+                \sprintf(
                     'Unexpected number %s of "%s" expected %s but got %s instead',
                     $decimalProperty,
                     $specificPriceReference,
@@ -277,10 +254,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 
     /**
      * @Then product ":productReference" should have following list of specific prices in ":langIso" language:
-     *
-     * @param string $productReference
-     * @param string $langIso
-     * @param TableNode $tableNode
      */
     public function assertSpecificPriceList(string $productReference, string $langIso, TableNode $tableNode): void
     {
@@ -314,7 +287,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
                 Assert::assertSame(
                     $propertyAccessor->getValue($expectedItem, $propertyName),
                     $propertyAccessor->getValue($actualItem, $propertyName),
-                    sprintf('Unexpected specificPriceForListing "%s"', $propertyName)
+                    \sprintf('Unexpected specificPriceForListing "%s"', $propertyName)
                 );
             }
 
@@ -323,7 +296,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
                 Assert::assertSame($expectedItem->getSpecificPriceId(), $actualItem->getSpecificPriceId());
             }
             // If the reference column was specified we assign the reference ith the matching ID
-            if (!empty($dataRow['id reference'])) {
+            if (! empty($dataRow['id reference'])) {
                 $this->getSharedStorage()->set($dataRow['id reference'], $actualItem->getSpecificPriceId());
             }
 
@@ -336,7 +309,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 
                 Assert::assertTrue(
                     $expectedDecimal->equals($actualDecimal),
-                    sprintf('Unexpected specificPriceForListing "%s"', $decimalPropertyName)
+                    \sprintf('Unexpected specificPriceForListing "%s"', $decimalPropertyName)
                 );
             }
 
@@ -358,13 +331,11 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 
     /**
      * @Then I should get error that specific price :fieldName is invalid
-     *
-     * @param string $fieldName
      */
     public function assertConstraintError(string $fieldName): void
     {
         $exceptionClass = SpecificPriceConstraintException::class;
-        if (in_array($fieldName, ['reduction_type', 'reduction_amount', 'reduction_percentage'])) {
+        if (\in_array($fieldName, ['reduction_type', 'reduction_amount', 'reduction_percentage'], true)) {
             $exceptionClass = DomainConstraintException::class;
         }
         $this->assertLastErrorIs(
@@ -395,11 +366,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         );
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return int
-     */
     private function getConstraintErrorCode(string $fieldName): int
     {
         $constraintErrorFieldMap = [
@@ -414,19 +380,14 @@ class SpecificPriceContext extends AbstractProductFeatureContext
             'date range' => SpecificPriceConstraintException::INVALID_DATE_RANGE,
         ];
 
-        if (!array_key_exists($fieldName, $constraintErrorFieldMap)) {
-            throw new RuntimeException(sprintf('"%s" is not mapped with constraint error code', $fieldName));
+        if (! \array_key_exists($fieldName, $constraintErrorFieldMap)) {
+            throw new RuntimeException(\sprintf('"%s" is not mapped with constraint error code', $fieldName));
         }
 
         return $constraintErrorFieldMap[$fieldName];
     }
 
     /**
-     * @param int $productId
-     * @param TableNode $tableNode
-     *
-     * @return AddSpecificPriceCommand
-     *
      * @throws DomainConstraintException
      * @throws ProductConstraintException
      */
@@ -444,40 +405,34 @@ class SpecificPriceContext extends AbstractProductFeatureContext
             DateTimeUtil::buildNullableDateTime($dataRows['to'] ?? null)
         );
 
-        if (!empty($dataRows['combination'])) {
+        if (! empty($dataRows['combination'])) {
             $addCommand->setCombinationId($this->getStoredId($dataRows, 'combination'));
         }
-        if (!empty($dataRows['shop'])) {
+        if (! empty($dataRows['shop'])) {
             $addCommand->setShopId($this->getStoredId($dataRows, 'shop'));
         }
-        if (!empty($dataRows['currency'])) {
+        if (! empty($dataRows['currency'])) {
             $addCommand->setCurrencyId($this->getStoredId($dataRows, 'currency'));
         }
-        if (!empty($dataRows['country'])) {
+        if (! empty($dataRows['country'])) {
             $addCommand->setCountryId($this->getStoredId($dataRows, 'country'));
         }
-        if (!empty($dataRows['group'])) {
+        if (! empty($dataRows['group'])) {
             $addCommand->setGroupId($this->getStoredId($dataRows, 'group'));
         }
-        if (!empty($dataRows['customer'])) {
+        if (! empty($dataRows['customer'])) {
             $addCommand->setCustomerId($this->getStoredId($dataRows, 'customer'));
         }
-        if (!empty($dataRows['from'])) {
+        if (! empty($dataRows['from'])) {
             $addCommand->setDateTimeFrom(new DateTime($dataRows['from']));
         }
-        if (!empty($dataRows['to'])) {
+        if (! empty($dataRows['to'])) {
             $addCommand->setDateTimeTo(new DateTime($dataRows['to']));
         }
 
         return $addCommand;
     }
 
-    /**
-     * @param int $specificPriceId
-     * @param TableNode $tableNode
-     *
-     * @return EditSpecificPriceCommand
-     */
     private function createEditSpecificPriceCommand(int $specificPriceId, TableNode $tableNode): EditSpecificPriceCommand
     {
         $dataRows = $tableNode->getRowsHash();
@@ -523,11 +478,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         return $editCommand;
     }
 
-    /**
-     * @param string $input
-     *
-     * @return DateTimeInterface
-     */
     private function getDateTime(string $input): DateTimeInterface
     {
         return DateTimeUtil::buildNullableDateTime($input);
@@ -535,11 +485,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
 
     /**
      * When editing the id fields can be 0 (if we leave it empty it acts as reset action)
-     *
-     * @param array $dataRows
-     * @param string $fieldId
-     *
-     * @return int
      */
     private function getNullableIdForEdit(array $dataRows, string $fieldId): int
     {
@@ -550,12 +495,6 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         return $this->getStoredId($dataRows, $fieldId);
     }
 
-    /**
-     * @param array $dataRows
-     * @param string $fieldId
-     *
-     * @return int|null
-     */
     private function getStoredId(array $dataRows, string $fieldId): ?int
     {
         if (empty($dataRows[$fieldId])) {
@@ -566,8 +505,8 @@ class SpecificPriceContext extends AbstractProductFeatureContext
             return (int) $dataRows[$fieldId];
         }
 
-        if (!$this->getSharedStorage()->exists($dataRows[$fieldId])) {
-            throw new RuntimeException(sprintf('Trying to access a non saved id by key %s', $dataRows[$fieldId]));
+        if (! $this->getSharedStorage()->exists($dataRows[$fieldId])) {
+            throw new RuntimeException(\sprintf('Trying to access a non saved id by key %s', $dataRows[$fieldId]));
         }
 
         return (int) $this->getSharedStorage()->get($dataRows[$fieldId]);

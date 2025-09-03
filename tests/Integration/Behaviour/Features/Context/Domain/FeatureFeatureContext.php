@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,9 +67,6 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update product feature :feature with following details:
-     *
-     * @param string $featureReference
-     * @param TableNode $tableNode
      */
     public function updateFeature(string $featureReference, TableNode $tableNode): void
     {
@@ -92,8 +90,6 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete product feature :featureReference
-     *
-     * @param string $featureReference
      */
     public function deleteFeature(string $featureReference): void
     {
@@ -104,8 +100,6 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk delete product features :featureReferences
-     *
-     * @param string $featureReferences
      */
     public function bulkDeleteFeatures(string $featureReferences): void
     {
@@ -128,8 +122,6 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product feature :featureReference should not exist
-     *
-     * @param string $featureReference
      */
     public function assertFeatureDoesNotExist(string $featureReference): void
     {
@@ -141,19 +133,13 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
             $coughtException = $e;
         }
 
-        if (null === $coughtException) {
-            throw new RuntimeException(sprintf(
-                'Feature %s was expected not to be found',
-                $featureReference
-            ));
+        if ($coughtException === null) {
+            throw new RuntimeException(\sprintf('Feature %s was expected not to be found', $featureReference));
         }
     }
 
     /**
      * @Then product feature :featureReference should have following details:
-     *
-     * @param string $featureReference
-     * @param TableNode $expectedData
      */
     public function assertEditableFeatureDetails(string $featureReference, TableNode $expectedData): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -134,12 +135,6 @@ class ApiSecurityTest extends ApiTestCase
 
     /**
      * @dataProvider getValidScopeParameters
-     *
-     * @param string $scopeParameter
-     * @param string|array $scopes
-     * @param array $expectedScopes
-     *
-     * @return void
      */
     public function testAuthenticationWithDifferentScopesSuccess(string $scopeParameter, string|array $scopes, array $expectedScopes): void
     {

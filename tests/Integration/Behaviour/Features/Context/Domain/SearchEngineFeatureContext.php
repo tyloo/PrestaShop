@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I add a new search engine :searchEngineReference with following properties:
-     *
-     * @param string $searchEngineReference
-     * @param TableNode $table
      */
     public function createSearchEngine(string $searchEngineReference, TableNode $table): void
     {
@@ -64,9 +62,6 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit the search engine :searchEngineReference with following properties:
-     *
-     * @param string $searchEngineReference
-     * @param TableNode $table
      */
     public function editSearchEngine(string $searchEngineReference, TableNode $table): void
     {
@@ -91,8 +86,6 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete the search engine :searchEngineReference
-     *
-     * @param string $searchEngineReference
      */
     public function deleteSearchEngine(string $searchEngineReference): void
     {
@@ -104,8 +97,6 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete search engines: :searchEngineReferences using bulk action.
-     *
-     * @param string $searchEngineReferences
      */
     public function bulkDeleteSearchEngine(string $searchEngineReferences): void
     {
@@ -119,9 +110,6 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the search engine :searchEngineReference server value should be :server
-     *
-     * @param string $searchEngineReference
-     * @param string $server
      */
     public function assertSearchEngineServer(string $searchEngineReference, string $server): void
     {
@@ -129,15 +117,12 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
         $searchEngine = SharedStorage::getStorage()->get($searchEngineReference);
 
         if ($searchEngine->server !== $server) {
-            throw new RuntimeException(sprintf('Search engine "%s" has server field value "%s", but "%s" was expected.', $searchEngineReference, $searchEngine->server, $server));
+            throw new RuntimeException(\sprintf('Search engine "%s" has server field value "%s", but "%s" was expected.', $searchEngineReference, $searchEngine->server, $server));
         }
     }
 
     /**
      * @Then the search engine :searchEngineReference query key value should be :queryKey
-     *
-     * @param string $searchEngineReference
-     * @param string $queryKey
      */
     public function assertSearchEngineQueryKey(string $searchEngineReference, string $queryKey): void
     {
@@ -145,14 +130,12 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
         $searchEngine = SharedStorage::getStorage()->get($searchEngineReference);
 
         if ($searchEngine->getvar !== $queryKey) {
-            throw new RuntimeException(sprintf('Search engine "%s" has query key field value "%s", but "%s" was expected.', $searchEngineReference, $searchEngine->getvar, $queryKey));
+            throw new RuntimeException(\sprintf('Search engine "%s" has query key field value "%s", but "%s" was expected.', $searchEngineReference, $searchEngine->getvar, $queryKey));
         }
     }
 
     /**
      * @Then the search engine :searchEngineReference should be deleted
-     *
-     * @param string $searchEngineReference
      */
     public function assertSearchEngineIsDeleted(string $searchEngineReference): void
     {
@@ -163,7 +146,7 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
             $query = new GetSearchEngineForEditing((int) $searchEngine->id);
             $this->getQueryBus()->handle($query);
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Search engine "%s" exists, but it was expected to be deleted.', $searchEngineReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Search engine "%s" exists, but it was expected to be deleted.', $searchEngineReference));
         } catch (SearchEngineNotFoundException $e) {
             SharedStorage::getStorage()->clear($searchEngineReference);
         }
@@ -171,8 +154,6 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then search engines: :searchEngineReferences should be deleted.
-     *
-     * @param string $searchEngineReferences
      */
     public function assertSearchEnginesAreDeleted(string $searchEngineReferences): void
     {

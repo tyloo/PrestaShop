@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ abstract class AbstractCatalogueLayersProviderTestCase extends KernelTestCase
      */
     protected $translationsDir;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         self::bootKernel();
         $this->translationsDir = self::$kernel->getContainer()->getParameter('test_translations_dir');
@@ -63,10 +64,6 @@ abstract class AbstractCatalogueLayersProviderTestCase extends KernelTestCase
         return $this->getProvider($databaseContent)->getUserTranslatedCatalogue($locale);
     }
 
-    /**
-     * @param array $expected
-     * @param MessageCatalogue $catalogue
-     */
     protected function assertResultIsAsExpected(array $expected, MessageCatalogue $catalogue): void
     {
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
      * @dataProvider getExpectedCommands
      * @dataProvider getExpectedCommandsMultiShop
      * @dataProvider getExpectedCommandsForCombinationsTypeProduct
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommands(array $formData, array $expectedCommands)
     {
@@ -58,9 +56,6 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
         $this->assertEquals($expectedCommands, $builtCommands);
     }
 
-    /**
-     * @return iterable
-     */
     public function getExpectedCommands(): iterable
     {
         yield [
@@ -653,7 +648,7 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
             [
                 'stock' => [
                     'options' => [
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                     ],
                 ],
             ],
@@ -667,7 +662,7 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
             [
                 'stock' => [
                     'options' => [
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                         'low_stock_threshold' => 4,
                     ],
                 ],
@@ -682,7 +677,7 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
             [
                 'stock' => [
                     'options' => [
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
                         'low_stock_threshold' => 4,
                     ],
                 ],
@@ -735,9 +730,6 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public function getExpectedCommandsMultiShop(): iterable
     {
         $localizedNames = [
@@ -1223,7 +1215,7 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
                         ],
                     ],
                     'options' => [
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
                         'low_stock_threshold' => 10,
                     ],
                     'pack_stock_type' => PackStockType::STOCK_TYPE_PRODUCTS_ONLY,

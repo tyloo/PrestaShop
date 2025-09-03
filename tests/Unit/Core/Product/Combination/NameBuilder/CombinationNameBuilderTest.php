@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,6 @@ class CombinationNameBuilderTest extends TestCase
      * @dataProvider getDataForTestItBuildsCombinationName
      *
      * @param CombinationAttributeInformation[] $combinationAttributesInfo
-     * @param string $expected
      */
     public function testItBuildsCombinationName(array $combinationAttributesInfo, string $expected): void
     {
@@ -57,9 +57,6 @@ class CombinationNameBuilderTest extends TestCase
 
     /**
      * @dataProvider getDataForTestItBuildsCombinationFullName
-     *
-     * @param array $productNameAndCombinationAttributesInfo
-     * @param string $expected
      */
     public function testItBuildsCombinationFullName(array $productNameAndCombinationAttributesInfo, string $expected): void
     {
@@ -77,9 +74,6 @@ class CombinationNameBuilderTest extends TestCase
         Assert::assertSame($expected, $actual);
     }
 
-    /**
-     * @return Generator
-     */
     public function getDataForTestItBuildsCombinationName(): Generator
     {
         foreach ($this->getCombinationNameData() as $data) {
@@ -151,9 +145,6 @@ class CombinationNameBuilderTest extends TestCase
         ];
     }
 
-    /**
-     * @return Generator
-     */
     public function getDataForTestItBuildsCombinationFullName(): Generator
     {
         $productType = [

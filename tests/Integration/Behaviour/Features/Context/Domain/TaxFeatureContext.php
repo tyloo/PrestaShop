@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,7 +106,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
      */
     public function toggleStatus($action, $taxReference)
     {
-        $expectedStatus = 'enable' === $action;
+        $expectedStatus = $action === 'enable';
 
         /** @var Tax $tax */
         $tax = SharedStorage::getStorage()->get($taxReference);
@@ -121,7 +122,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     public function bulkToggleStatus($action, $taxReferences)
     {
         $taxReferences = PrimitiveUtils::castStringArrayIntoArray($taxReferences);
-        $expectedStatus = 'enable' === $action;
+        $expectedStatus = $action === 'enable';
 
         $idsByReference = [];
         foreach ($taxReferences as $reference) {
@@ -184,7 +185,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle(new GetTaxForEditing($taxId));
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Tax %s expected to be deleted, but it was found', $taxReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Tax %s expected to be deleted, but it was found', $taxReference));
         } catch (TaxNotFoundException $e) {
             SharedStorage::getStorage()->clear($taxReference);
         }
@@ -199,7 +200,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
         $tax = SharedStorage::getStorage()->get($taxReference);
 
         if ($tax->name[$this->getDefaultLangId()] !== $name) {
-            throw new RuntimeException(sprintf('Tax "%s" has "%s" name, but "%s" was expected.', $taxReference, $tax->name, $name));
+            throw new RuntimeException(\sprintf('Tax "%s" has "%s" name, but "%s" was expected.', $taxReference, $tax->name, $name));
         }
     }
 
@@ -212,7 +213,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
         $tax = SharedStorage::getStorage()->get($taxReference);
 
         if ($tax->rate !== $rate) {
-            throw new RuntimeException(sprintf('Tax "%s" has "%s" rate, but "%s" was expected.', $taxReference, $tax->rate, $rate));
+            throw new RuntimeException(\sprintf('Tax "%s" has "%s" rate, but "%s" was expected.', $taxReference, $tax->rate, $rate));
         }
     }
 
@@ -241,14 +242,10 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
         $actualStatus = (bool) $tax->active;
 
         if ($isEnabled !== $actualStatus) {
-            throw new RuntimeException(sprintf('Tax "%s" is %s, but it was expected to be %s', $taxReference, $actualStatus ? 'enabled' : 'disabled', $status));
+            throw new RuntimeException(\sprintf('Tax "%s" is %s, but it was expected to be %s', $taxReference, $actualStatus ? 'enabled' : 'disabled', $status));
         }
     }
 
-    /**
-     * @param string $taxReference
-     * @param array $data
-     */
     private function createTaxUsingCommand(string $taxReference, array $data): void
     {
         $command = new AddTaxCommand(

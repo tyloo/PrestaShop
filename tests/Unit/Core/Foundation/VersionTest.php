@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -100,9 +101,6 @@ class VersionTest extends TestCase
 
     /**
      * @dataProvider provideVersions
-     *
-     * @param string $string
-     * @param array $expected
      */
     public function testBuildFromString(string $string, array $expected): void
     {
@@ -123,14 +121,14 @@ class VersionTest extends TestCase
      * @dataProvider getCompareGreater
      *
      * @param string $version Version
-     * @param bool $result Result
+     * @param bool   $result  Result
      */
     public function testCompareGreaterVersion(string $version, bool $result): void
     {
         $this->assertEquals(
             $result,
             $this->version->isGreaterThan($version),
-            sprintf('Failed to assert that %s %s greater than %s', $this->version, $this->getVerb($result), $version)
+            \sprintf('Failed to assert that %s %s greater than %s', $this->version, $this->getVerb($result), $version)
         );
     }
 
@@ -138,14 +136,14 @@ class VersionTest extends TestCase
      * @dataProvider getCompareGreaterEqual
      *
      * @param string $version Version
-     * @param bool $result Result
+     * @param bool   $result  Result
      */
     public function testCompareGreaterEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
             $result,
             $this->version->isGreaterThanOrEqualTo($version),
-            sprintf(
+            \sprintf(
                 'Failed to assert that %s %s greater or equal to %s',
                 $this->version,
                 $this->getVerb($result),
@@ -158,14 +156,14 @@ class VersionTest extends TestCase
      * @dataProvider getCompareLess
      *
      * @param string $version Version
-     * @param bool $result Result
+     * @param bool   $result  Result
      */
     public function testCompareLessVersion(string $version, bool $result): void
     {
         $this->assertEquals(
             $result,
             $this->version->isLessThan($version),
-            sprintf(
+            \sprintf(
                 'Failed to assert that %s %s less than %s',
                 $this->version,
                 $this->getVerb($result),
@@ -178,14 +176,14 @@ class VersionTest extends TestCase
      * @dataProvider getAnotherCompareGreater
      *
      * @param string $version Version
-     * @param bool $result Result
+     * @param bool   $result  Result
      */
     public function testCompareGreaterAnotherVersion(string $version, bool $result): void
     {
         $this->assertEquals(
             $result,
             $this->anotherVersion->isGreaterThan($version),
-            sprintf(
+            \sprintf(
                 'Failed to assert that %s %s greater than %s',
                 $this->anotherVersion,
                 $this->getVerb($result),
@@ -198,14 +196,14 @@ class VersionTest extends TestCase
      * @dataProvider getCompareLessEqual
      *
      * @param string $version Version
-     * @param bool $result Result
+     * @param bool   $result  Result
      */
     public function testCompareLessEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
             $result,
             $this->version->isLessThanOrEqualTo($version),
-            sprintf(
+            \sprintf(
                 'Failed to assert that %s %s less or equal to %s',
                 $this->version,
                 $this->getVerb($result),
@@ -218,14 +216,14 @@ class VersionTest extends TestCase
      * @dataProvider getCompareEqual
      *
      * @param string $version Version
-     * @param bool $result Result
+     * @param bool   $result  Result
      */
     public function testCompareEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
             $result,
             $this->version->isEqualTo($version),
-            sprintf(
+            \sprintf(
                 'Failed to assert that %s %s equal to %s',
                 $this->version,
                 $this->getVerb($result),
@@ -238,17 +236,17 @@ class VersionTest extends TestCase
      * @dataProvider getCompareNotEqual
      *
      * @param string $version Version
-     * @param bool $result Result
+     * @param bool   $result  Result
      */
     public function testCompareNotEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
             $result,
             $this->version->isNotEqualTo($version),
-            sprintf(
+            \sprintf(
                 'Failed to assert that %s %s equal to %s',
                 $this->version,
-                $this->getVerb(!$result),
+                $this->getVerb(! $result),
                 $version
             )
         );
@@ -257,8 +255,8 @@ class VersionTest extends TestCase
     /**
      * @dataProvider getTwoVersionsToCompare
      *
-     * @param string $first Version
-     * @param string $second Version
+     * @param string $first              Version
+     * @param string $second             Version
      * @param string $expectedComparison Comparison character
      *
      * @throws InvalidVersionException
@@ -271,7 +269,7 @@ class VersionTest extends TestCase
         if ($expectedComparison === '<') {
             $this->assertTrue(
                 $firstVersion->isLessThan($secondVersion),
-                sprintf(
+                \sprintf(
                     'Failed to assert that %s is less than %s',
                     $firstVersion,
                     $secondVersion
@@ -280,7 +278,7 @@ class VersionTest extends TestCase
         } elseif ($expectedComparison === '>') {
             $this->assertTrue(
                 $firstVersion->isGreaterThan($secondVersion),
-                sprintf(
+                \sprintf(
                     'Failed to assert that %s is greater than %s',
                     $firstVersion,
                     $secondVersion
@@ -289,7 +287,7 @@ class VersionTest extends TestCase
         } else {
             $this->assertTrue(
                 $firstVersion->isEqualTo($secondVersion),
-                sprintf(
+                \sprintf(
                     'Failed to assert that %s is equal to %s',
                     $firstVersion,
                     $secondVersion
@@ -655,11 +653,6 @@ class VersionTest extends TestCase
         ];
     }
 
-    /**
-     * @param bool $result
-     *
-     * @return string
-     */
     private function getVerb(bool $result): string
     {
         return $result ? 'is' : 'is NOT';

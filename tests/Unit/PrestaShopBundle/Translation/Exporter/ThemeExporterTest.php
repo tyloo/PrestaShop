@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -110,7 +111,7 @@ class ThemeExporterTest extends TestCase
             new Filesystem()
         );
 
-        $cacheDir = dirname(__DIR__, 5) . '/var/cache/test';
+        $cacheDir = \dirname(__DIR__, 5) . '/var/cache/test';
         $this->themeExporter->exportDir = $cacheDir . '/export';
         $this->themeExporter->cacheDir = $cacheDir;
     }

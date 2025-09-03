@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class OrderMessageContext extends AbstractPrestaShopFeatureContext
         $actualValue = $orderMessage->{$propertyName}[$defaultLangId];
 
         if ($actualValue !== $propertyValue) {
-            throw new RuntimeException(sprintf('Order message "%d" property "%s" was expected to have value "%s", but has "%s" instead', $orderMessage->id, $propertyName, $propertyValue, $actualValue));
+            throw new RuntimeException(\sprintf('Order message "%d" property "%s" was expected to have value "%s", but has "%s" instead', $orderMessage->id, $propertyName, $propertyValue, $actualValue));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,7 +36,7 @@ trait ExtendedTestCaseMethodsTrait
         $success = false;
 
         // see https://github.com/sebastianbergmann/phpunit/issues/4966#issuecomment-1367081755
-        if (abs($expected - $actual) < 10 ** -ini_get('precision')) {
+        if (abs($expected - $actual) < 10 ** -\ini_get('precision')) {
             $success = true;
         }
 
@@ -44,13 +45,13 @@ trait ExtendedTestCaseMethodsTrait
 
     public function assertEqualsWithEpsilon($expected, $actual, $message = '')
     {
-        if (!is_array($expected)) {
+        if (! \is_array($expected)) {
             $expectedArray[]['a'] = $expected; // we recreate the structure of the array as in Tools::spreadAmount()
         } else {
             $expectedArray = $expected;
         }
 
-        if (!is_array($actual)) {
+        if (! \is_array($actual)) {
             $actualArray[]['a'] = $actual; // we recreate the structure of the array as in Tools::spreadAmount()
         } else {
             $actualArray = $actual;

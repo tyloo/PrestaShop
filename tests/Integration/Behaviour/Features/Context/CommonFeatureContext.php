@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -387,8 +388,6 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @Given I restore tables :tableNames
-     *
-     * @param string $tableNames
      */
     public function restoreTables(string $tableNames): void
     {
@@ -398,16 +397,13 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @Then :firstReference and :secondReference have different values
-     *
-     * @param string $firstReference
-     * @param string $secondReference
      */
     public function assertDifferentValues(string $firstReference, string $secondReference): void
     {
         Assert::assertNotEquals(
             SharedStorage::getStorage()->get($firstReference),
             SharedStorage::getStorage()->get($secondReference),
-            sprintf(
+            \sprintf(
                 '%s and %s are expected to be different but they have same value %s',
                 $firstReference,
                 $secondReference,
@@ -418,16 +414,13 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @Then :firstReference and :secondReference have same value
-     *
-     * @param string $firstReference
-     * @param string $secondReference
      */
     public function assertSameValue(string $firstReference, string $secondReference): void
     {
         Assert::assertEquals(
             SharedStorage::getStorage()->get($firstReference),
             SharedStorage::getStorage()->get($secondReference),
-            sprintf(
+            \sprintf(
                 '%s and %s are expected to be equals but they have different values %s != %s',
                 $firstReference,
                 $secondReference,
@@ -445,7 +438,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     public function checkLastExceptionAfterStep(AfterStepScope $scope): void
     {
         // If no exception nothing to do, if there is already an exception to handle we don't override it
-        if (null === $this->getLastException() || null !== $this->getExpectedException()) {
+        if ($this->getLastException() === null || $this->getExpectedException() !== null) {
             return;
         }
 
@@ -471,7 +464,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function checkExpectedExceptionAfterStep(AfterStepScope $scope): void
     {
-        if (null === $this->getExpectedException() || $scope->getStep() === $this->getExpectedExceptionStep()) {
+        if ($this->getExpectedException() === null || $scope->getStep() === $this->getExpectedExceptionStep()) {
             return;
         }
 
@@ -482,12 +475,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
         // We clean the expected exception so that it doesn't pollute the following scenarios
         $this->cleanExpectedException();
 
-        throw new RuntimeException(implode(PHP_EOL, [
-            'An unexpected exception was raised in previous step:',
-            sprintf('Line %d: %s', $exceptionStep->getLine(), $exceptionStep->getText()),
-            sprintf('%s: %s', get_class($unexpectedException), $unexpectedException->getMessage()),
-            'Either it was unexpected and an error occurred or you forgot to add an intermediate step to assert that exception using assertLastErrorIs',
-        ]), 0, $unexpectedException);
+        throw new RuntimeException(implode(\PHP_EOL, ['An unexpected exception was raised in previous step:', \sprintf('Line %d: %s', $exceptionStep->getLine(), $exceptionStep->getText()), \sprintf('%s: %s', \get_class($unexpectedException), $unexpectedException->getMessage()), 'Either it was unexpected and an error occurred or you forgot to add an intermediate step to assert that exception using assertLastErrorIs']), 0, $unexpectedException);
     }
 
     /**
@@ -523,9 +511,6 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * This method is private because expected exception should only be handled inside this abstract class, the expected
      * exception is automatically stored after each step.
-     *
-     * @param Exception $e
-     * @param StepNode $step
      */
     private function setExpectedException(Exception $e, StepNode $step): void
     {
@@ -536,12 +521,10 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * This method is private because last exception should only be accessed inside this abstract class, you can only
      * use setLastException from inherited classes.
-     *
-     * @return Exception|null
      */
     private function getLastException(): ?Exception
     {
-        if (!$this->getSharedStorage()->exists(self::LAST_EXCEPTION_STORAGE_KEY)) {
+        if (! $this->getSharedStorage()->exists(self::LAST_EXCEPTION_STORAGE_KEY)) {
             return null;
         }
 
@@ -551,12 +534,10 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * This method is private because expected exception should only be handled inside this abstract class, if you need
      * to assert it you should use the assertLastError function which returns the exception if you need more assertions.
-     *
-     * @return Exception|null
      */
     private function getExpectedException(): ?Exception
     {
-        if (!$this->getSharedStorage()->exists(self::EXPECTED_EXCEPTION_STORAGE_KEY)) {
+        if (! $this->getSharedStorage()->exists(self::EXPECTED_EXCEPTION_STORAGE_KEY)) {
             return null;
         }
 
@@ -566,12 +547,10 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * This method is private because expected exception step should only be handled inside this abstract class, it is
      * only necessary to throw the unexpected exception in the next step only.
-     *
-     * @return StepNode|null
      */
     private function getExpectedExceptionStep(): ?StepNode
     {
-        if (!$this->getSharedStorage()->exists(self::EXPECTED_EXCEPTION_STEP_STORAGE_KEY)) {
+        if (! $this->getSharedStorage()->exists(self::EXPECTED_EXCEPTION_STEP_STORAGE_KEY)) {
             return null;
         }
 
@@ -594,7 +573,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     private function getLastStepFromScope(StepScope $scope): StepNode
     {
         $scenario = $this->getScenarioFromScope($scope);
-        if (null !== $scenario) {
+        if ($scenario !== null) {
             $steps = $scenario->getSteps();
         } else {
             foreach ($scope->getFeature()->getBackground()->getSteps() as $step) {
@@ -606,11 +585,11 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
         }
 
         // The step was not found in any scenario nor the background
-        if (!isset($steps)) {
+        if (! isset($steps)) {
             throw new RuntimeException('Could not find step in the feature');
         }
 
-        return $steps[count($steps) - 1];
+        return $steps[\count($steps) - 1];
     }
 
     private static function mockContext(): void
@@ -643,7 +622,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     private static function rebootKernel(): void
     {
         $realCacheDir = self::$kernel->getContainer()->getParameter('kernel.cache_dir');
-        $warmupDir = substr($realCacheDir, 0, -1) . ('_' === substr($realCacheDir, -1) ? '-' : '_');
+        $warmupDir = substr($realCacheDir, 0, -1) . (substr($realCacheDir, -1) === '_' ? '-' : '_');
         self::$kernel->reboot($warmupDir);
     }
 

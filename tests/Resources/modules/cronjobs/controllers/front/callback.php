@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2016 PrestaShop
  *
@@ -28,6 +29,6 @@ class CronjobsCallbackModuleFrontController extends ModuleFrontController
     public function postProcess(): void
     {
         $this->module->sendCallback();
-        die;
+        exit;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,10 @@ class ThemeByNameWithEmailsChoiceProviderTest extends ChoiceProviderTestCase
 
     /**
      * @dataProvider getExpectedChoices
-     *
-     * @param ThemeCollection $themeCollection
-     * @param array $expectedChoices
      */
     public function testItProvidesChoicesAsExpected(
         ThemeCollection $themeCollection,
-        array $expectedChoices
+        array $expectedChoices,
     ): void {
         $choiceProvider = new ThemeByNameWithEmailsChoiceProvider(
             $themeCollection
@@ -53,9 +51,6 @@ class ThemeByNameWithEmailsChoiceProviderTest extends ChoiceProviderTestCase
         $this->assertEquals($expectedChoices, $choiceProvider->getChoices());
     }
 
-    /**
-     * @return Generator
-     */
     public function getExpectedChoices(): Generator
     {
         $themeDir = realpath(self::DIR_THEMES);

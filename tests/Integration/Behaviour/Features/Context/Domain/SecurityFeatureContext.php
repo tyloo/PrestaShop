@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -79,7 +80,7 @@ class SecurityFeatureContext extends AbstractDomainFeatureContext
         $data = $form->getData();
         $saveErrors = $formHandler->save($data);
 
-        if (0 !== count($saveErrors)) {
+        if (\count($saveErrors) !== 0) {
             $this->setLastException(new RuntimeException('Unable to save form: ' . print_r($saveErrors, true)));
         }
 
@@ -148,7 +149,7 @@ class SecurityFeatureContext extends AbstractDomainFeatureContext
      */
     public function createSession(string $name, string $hours): void
     {
-        if (!empty($name)) {
+        if (! empty($name)) {
             $customerId = SharedStorage::getStorage()->get($name);
 
             $session = new CustomerSession();

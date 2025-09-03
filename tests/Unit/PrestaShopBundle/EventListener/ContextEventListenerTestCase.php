@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,15 +50,10 @@ abstract class ContextEventListenerTestCase extends KernelTestCase
 
     /**
      * Since the listeners job is mostly to fill the builders's properties, that are private, this accessor method is convenient
-     *
-     * @param $object
-     * @param string $propertyName
-     *
-     * @return mixed
      */
     protected function getPrivateField($object, string $propertyName)
     {
-        $reflectionProperty = new ReflectionProperty(get_class($object), $propertyName);
+        $reflectionProperty = new ReflectionProperty(\get_class($object), $propertyName);
         $reflectionProperty->setAccessible(true);
 
         return $reflectionProperty->getValue($object);

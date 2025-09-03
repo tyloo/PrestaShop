@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class PackedProductsCommandsBuilderTest extends AbstractProductCommandBuilderTes
 {
     /**
      * @dataProvider getExpectedCommands
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommand(array $formData, array $expectedCommands)
     {

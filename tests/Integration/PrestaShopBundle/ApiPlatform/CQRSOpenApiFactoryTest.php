@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -86,7 +87,7 @@ class CQRSOpenApiFactoryTest extends KernelTestCase
         $this->assertNotNull($openApiPath);
         foreach ($expectedScopes as $httpMethod => $methodScopes) {
             $getterMethod = 'get' . ucfirst(strtolower($httpMethod));
-            $methodOperation = $openApiPath->$getterMethod($methodScopes);
+            $methodOperation = $openApiPath->{$getterMethod}($methodScopes);
             $this->assertInstanceOf(Operation::class, $methodOperation, 'Wrong operation for uri ' . $uriPath . ' method ' . $httpMethod);
             $this->assertEquals([['oauth' => $methodScopes]], $methodOperation->getSecurity());
         }
@@ -653,7 +654,7 @@ class CQRSOpenApiFactoryTest extends KernelTestCase
 
         $methodGetter = 'get' . ucfirst(strtolower($expectedMethod));
         /** @var Operation $operation */
-        $operation = $pathItem->$methodGetter();
+        $operation = $pathItem->{$methodGetter}();
         $this->assertNotNull($operation);
         $this->assertEquals($expectedTags, $operation->getTags());
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class ModuleRepositoryTest extends TestCase
      */
     private $moduleRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -58,9 +59,6 @@ class ModuleRepositoryTest extends TestCase
 
     /**
      * @dataProvider dataProviderNativeModules
-     *
-     * @param string $moduleName
-     * @param bool $isNative
      */
     public function testNativeModulesCheckModules(string $moduleName, bool $isNative): void
     {
@@ -73,8 +71,6 @@ class ModuleRepositoryTest extends TestCase
 
     /**
      * @dataProvider dataProviderOnlyNativeModules
-     *
-     * @param string $moduleName
      */
     public function testNonNativeModulesCheckModules(string $moduleName): void
     {

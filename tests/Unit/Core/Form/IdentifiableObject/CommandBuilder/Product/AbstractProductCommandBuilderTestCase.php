@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,12 +41,9 @@ abstract class AbstractProductCommandBuilderTestCase extends AbstractMultiShopCo
      */
     private $productId;
 
-    /**
-     * @return ProductId
-     */
     protected function getProductId(): ProductId
     {
-        if (null === $this->productId) {
+        if ($this->productId === null) {
             $this->productId = new ProductId(42);
         }
 

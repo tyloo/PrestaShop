@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,7 +71,7 @@ class ThemeRepositoryTest extends ContextStateTestCase
         $this->assertInstanceOf(
             'PrestaShop\PrestaShop\Core\Addon\Theme\Theme',
             $expectedTheme,
-            self::NOTICE . sprintf('expected `getInstanceByName to return Theme, get %s`', gettype($expectedTheme))
+            self::NOTICE . \sprintf('expected `getInstanceByName to return Theme, get %s`', \gettype($expectedTheme))
         );
     }
 
@@ -94,13 +95,13 @@ class ThemeRepositoryTest extends ContextStateTestCase
         $this->assertEquals(
             $themeListWithoutRestrictions,
             $this->repository->getList(),
-            self::NOTICE . sprintf('expected list excluding without args to return complete list of themes `see ThemeRepository::getListExcluding`')
+            self::NOTICE . \sprintf('expected list excluding without args to return complete list of themes `see ThemeRepository::getListExcluding`')
         );
 
         $this->assertCount(
-            count($themeListWithoutRestrictions) - 1,
+            \count($themeListWithoutRestrictions) - 1,
             $themeListWithoutClassic,
-            self::NOTICE . sprintf('expected list excluding with classic to list of themes without classic')
+            self::NOTICE . \sprintf('expected list excluding with classic to list of themes without classic')
         );
     }
 }

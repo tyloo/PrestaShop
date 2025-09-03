@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -75,8 +76,8 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
             $customer = new Customer($data[0]['id_customer']);
         }
 
-        if (empty($customer) || !Validate::isLoadedObject($customer)) {
-            throw new Exception(sprintf('Customer with email "%s" does not exist.', $customerEmail));
+        if (empty($customer) || ! Validate::isLoadedObject($customer)) {
+            throw new Exception(\sprintf('Customer with email "%s" does not exist.', $customerEmail));
         }
 
         SharedStorage::getStorage()->set($reference, (int) $customer->id);
@@ -98,7 +99,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf('Customer does not have address in "%s" country', $isoCode));
+        throw new RuntimeException(\sprintf('Customer does not have address in "%s" country', $isoCode));
     }
 
     /**
@@ -138,7 +139,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
         $customer = $this->getCustomerByReference($reference);
 
         if ($customer->note) {
-            throw new RuntimeException(sprintf('It was expected that customer "%s" should not have private note.', $reference));
+            throw new RuntimeException(\sprintf('It was expected that customer "%s" should not have private note.', $reference));
         }
     }
 
@@ -150,7 +151,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
         $customer = $this->getCustomerByReference($reference);
 
         if ($customer->note !== $privateNote) {
-            throw new RuntimeException(sprintf('It was expected that customer "%s" private note should be "%s", but actually is "%s".', $reference, $privateNote, $customer->note));
+            throw new RuntimeException(\sprintf('It was expected that customer "%s" private note should be "%s", but actually is "%s".', $reference, $privateNote, $customer->note));
         }
     }
 
@@ -165,25 +166,17 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
             throw new RuntimeException('Cannot find any cart rules for customer');
         }
 
-        $voucher = $cartRules[count($cartRules) - 1];
+        $voucher = $cartRules[\count($cartRules) - 1];
         if ($voucherAmount !== (float) $voucher['reduction_amount']) {
-            throw new RuntimeException(sprintf('Invalid voucher amount, expected %s but got %s instead', $voucherAmount, $voucher['reduction_amount']));
+            throw new RuntimeException(\sprintf('Invalid voucher amount, expected %s but got %s instead', $voucherAmount, $voucher['reduction_amount']));
         }
     }
 
-    /**
-     * @param string $customerName
-     */
     public function checkCustomerWithNameExists(string $customerName): void
     {
         $this->checkFixtureExists($this->customers, 'Customer', $customerName);
     }
 
-    /**
-     * @param string $customerName
-     *
-     * @return Customer
-     */
     public function getCustomerWithName(string $customerName): Customer
     {
         return $this->customers[$customerName];
@@ -200,11 +193,6 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
         $this->customers = [];
     }
 
-    /**
-     * @param string $customerReference
-     *
-     * @return Customer
-     */
     private function getCustomerByReference(string $customerReference): Customer
     {
         $customerId = SharedStorage::getStorage()->get($customerReference);

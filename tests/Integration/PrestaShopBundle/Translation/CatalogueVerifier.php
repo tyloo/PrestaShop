@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class CatalogueVerifier
      * Verifies that the provided catalogue contains all the strings and domains as defined in $expected
      *
      * @param MessageCatalogueInterface $messageCatalogue The catalogue to test
-     * @param array[] $expected An array of domainName => messages
+     * @param array[]                   $expected         An array of domainName => messages
      */
     public function assertCataloguesMatch(MessageCatalogueInterface $messageCatalogue, $expected)
     {
@@ -63,20 +64,20 @@ class CatalogueVerifier
             $this->test->assertContains(
                 $expectedDomain,
                 $domains,
-                sprintf('Domain "%s" is not defined in %s', $expectedDomain, print_r($domains, true))
+                \sprintf('Domain "%s" is not defined in %s', $expectedDomain, print_r($domains, true))
             );
 
             // all strings should be defined in the appropriate domain
             foreach ($expectedStrings as $key => $string) {
                 $this->test->assertTrue(
                     $messageCatalogue->defines($key, $expectedDomain),
-                    sprintf('"%s" not found in %s', $string, $expectedDomain)
+                    \sprintf('"%s" not found in %s', $string, $expectedDomain)
                 );
 
                 $this->test->assertSame(
                     $messageCatalogue->get($key, $expectedDomain),
                     $string,
-                    sprintf(
+                    \sprintf(
                         'The translation result for "%s" was expected to be "%s" but was "%s',
                         $key,
                         $string,

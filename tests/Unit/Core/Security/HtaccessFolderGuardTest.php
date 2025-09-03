@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,11 +71,11 @@ class HtaccessFolderGuardTest extends TestCase
 
     public function testProtectFolder()
     {
-        $testFolder = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'security_htaccess';
-        if (!file_exists($testFolder)) {
+        $testFolder = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'security_htaccess';
+        if (! file_exists($testFolder)) {
             mkdir($testFolder);
         }
-        $testHtaccessPath = $testFolder . DIRECTORY_SEPARATOR . '.htaccess';
+        $testHtaccessPath = $testFolder . \DIRECTORY_SEPARATOR . '.htaccess';
         if (file_exists($testHtaccessPath)) {
             unlink($testHtaccessPath);
         }
@@ -92,11 +93,11 @@ class HtaccessFolderGuardTest extends TestCase
 
     public function testExistingHtaccessFile()
     {
-        $testFolder = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'security_htaccess';
-        if (!file_exists($testFolder)) {
+        $testFolder = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'security_htaccess';
+        if (! file_exists($testFolder)) {
             mkdir($testFolder);
         }
-        $testHtaccessPath = $testFolder . DIRECTORY_SEPARATOR . '.htaccess';
+        $testHtaccessPath = $testFolder . \DIRECTORY_SEPARATOR . '.htaccess';
         if (file_exists($testHtaccessPath)) {
             unlink($testHtaccessPath);
         }

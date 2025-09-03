@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -99,8 +100,6 @@ class ObjectModelTest extends TestCase
 
     /**
      * Check if html in trans is not escaped by trans method but escaped with htmlspecialchars on parameters
-     *
-     * @return void
      *
      * @throws ReflectionException
      */
@@ -212,11 +211,6 @@ class ObjectModelTest extends TestCase
      * @depends testUpdate
      *
      * @dataProvider getPartialUpdates
-     *
-     * @param array $initialProperties
-     * @param array $updatedProperties
-     * @param array $fieldsToUpdate
-     * @param array $expectedProperties
      */
     public function testPartialUpdate(array $initialProperties, array $updatedProperties, array $fieldsToUpdate, array $expectedProperties): void
     {
@@ -370,11 +364,6 @@ class ObjectModelTest extends TestCase
      * @depends testPartialUpdate
      *
      * @dataProvider getMultiShopValues
-     *
-     * @param array $initialProperties
-     * @param array $initialShops
-     * @param array $multiShopValues
-     * @param array $expectedMultiShopValues
      */
     public function testMultiShopUpdate(array $initialProperties, array $initialShops, array $multiShopValues, array $expectedMultiShopValues): void
     {
@@ -383,10 +372,10 @@ class ObjectModelTest extends TestCase
 
         // Define the shop associated to the entity based on the parameter
         $initialShopIds = [];
-        if (in_array(self::DEFAULT_SHOP_PLACEHOLDER, $initialShops)) {
+        if (\in_array(self::DEFAULT_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->defaultShopId;
         }
-        if (in_array(self::SECOND_SHOP_PLACEHOLDER, $initialShops)) {
+        if (\in_array(self::SECOND_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->secondShopId;
         }
         $newObject->id_shop_list = $initialShopIds;
@@ -487,29 +476,23 @@ class ObjectModelTest extends TestCase
      * @depends testMultiShopUpdate
      *
      * @dataProvider getPartialMultiShopValues
-     *
-     * @param array $initialProperties
-     * @param array $initialShops
-     * @param array $multiShopValues
-     * @param array $multiShopFieldsToUpdate
-     * @param array $expectedMultiShopValues
      */
     public function testPartialMultiShopUpdate(
         array $initialProperties,
         array $initialShops,
         array $multiShopValues,
         array $multiShopFieldsToUpdate,
-        array $expectedMultiShopValues
+        array $expectedMultiShopValues,
     ): void {
         // First create the initial object
         $newObject = new TestableObjectModel();
 
         // Define the shop associated to the entity based on the parameter
         $initialShopIds = [];
-        if (in_array(self::DEFAULT_SHOP_PLACEHOLDER, $initialShops)) {
+        if (\in_array(self::DEFAULT_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->defaultShopId;
         }
-        if (in_array(self::SECOND_SHOP_PLACEHOLDER, $initialShops)) {
+        if (\in_array(self::SECOND_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->secondShopId;
         }
         $newObject->id_shop_list = $initialShopIds;
@@ -643,36 +626,23 @@ class ObjectModelTest extends TestCase
         ];
     }
 
-    /**
-     * @param TestableObjectModel $object
-     * @param array $expectedProperties
-     */
     private function checkObjectFields(TestableObjectModel $object, array $expectedProperties): void
     {
         foreach ($expectedProperties as $field => $expectedValue) {
-            if (is_array($expectedValue)) {
+            if (\is_array($expectedValue)) {
                 $expectedValue = $this->convertLocalizedValue($expectedValue);
             }
             $this->assertEquals($expectedValue, $object->{$field});
         }
     }
 
-    /**
-     * @param TestableObjectModel $object
-     * @param array $updatedProperties
-     */
     private function applyModifications(TestableObjectModel $object, array $updatedProperties): void
     {
         foreach ($updatedProperties as $field => $value) {
-            $object->{$field} = is_array($value) ? $this->convertLocalizedValue($value) : $value;
+            $object->{$field} = \is_array($value) ? $this->convertLocalizedValue($value) : $value;
         }
     }
 
-    /**
-     * @param array $value
-     *
-     * @return array
-     */
     private function convertLocalizedValue(array $value): array
     {
         $localizedValue = [];
@@ -693,9 +663,9 @@ class ObjectModelTest extends TestCase
     protected static function cleanDatabase(): void
     {
         $db = Db::getInstance();
-        $db->execute(sprintf('DROP TABLE IF EXISTS %stestable_object', _DB_PREFIX_));
-        $db->execute(sprintf('DROP TABLE IF EXISTS %stestable_object_lang', _DB_PREFIX_));
-        $db->execute(sprintf('DROP TABLE IF EXISTS %stestable_object_shop', _DB_PREFIX_));
+        $db->execute(\sprintf('DROP TABLE IF EXISTS %stestable_object', _DB_PREFIX_));
+        $db->execute(\sprintf('DROP TABLE IF EXISTS %stestable_object_lang', _DB_PREFIX_));
+        $db->execute(\sprintf('DROP TABLE IF EXISTS %stestable_object_shop', _DB_PREFIX_));
         DatabaseDump::restoreAllTables();
     }
 
@@ -707,9 +677,9 @@ class ObjectModelTest extends TestCase
         $sqlLoader->setMetaData([
             'PREFIX_' => _DB_PREFIX_,
             'ENGINE_TYPE' => _MYSQL_ENGINE_,
-            'COLLATION' => (empty($databaseCollation) || !in_array($databaseCollation, $allowedCollations)) ? '' : 'COLLATE ' . $databaseCollation,
+            'COLLATION' => (empty($databaseCollation) || ! \in_array($databaseCollation, $allowedCollations, true)) ? '' : 'COLLATE ' . $databaseCollation,
         ]);
-        $sqlLoader->parseFile(dirname(__DIR__, 2) . '/Resources/sql/install_testable_object.sql');
+        $sqlLoader->parseFile(\dirname(__DIR__, 2) . '/Resources/sql/install_testable_object.sql');
     }
 
     protected static function installLanguages(): void

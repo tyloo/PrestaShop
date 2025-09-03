@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -81,7 +82,7 @@ class CartRuleTest extends TestCase
             $this->dummyCustomer->id
         );
 
-        $this->assertEquals(1, count($customerCartRules));
+        $this->assertEquals(1, \count($customerCartRules));
     }
 
     public function testGetAllCartRulesForCustomerEvenDisabled(): void
@@ -98,7 +99,7 @@ class CartRuleTest extends TestCase
         // because of CartRule::isFeatureActive and one additional check
         // which doesn't not work if we have only 1 customer rule or all of them are disabled
         // see https://github.com/PrestaShop/PrestaShop/issues/21556 for more details
-        $this->assertEquals(0, count($customerCartRules));
+        $this->assertEquals(0, \count($customerCartRules));
     }
 
     public function testGetAllCartRulesForCustomerWithDedicatedMethod(): void
@@ -109,7 +110,7 @@ class CartRuleTest extends TestCase
             (int) $this->dummyCustomer->id
         );
 
-        $this->assertEquals(1, count($customerCartRules));
+        $this->assertEquals(1, \count($customerCartRules));
     }
 
     public function testGetAllCartRulesForCustomerWithDedicatedMethodEvenDisabled(): void
@@ -120,7 +121,7 @@ class CartRuleTest extends TestCase
             (int) $this->dummyCustomer->id
         );
 
-        $this->assertEquals(1, count($customerCartRules));
+        $this->assertEquals(1, \count($customerCartRules));
     }
 
     public function testGetAllCartRulesForCustomerWithDedicatedMethodBothEnabledAndDisabled(): void
@@ -133,7 +134,7 @@ class CartRuleTest extends TestCase
             (int) $this->dummyCustomer->id
         );
 
-        $this->assertEquals(3, count($customerCartRules));
+        $this->assertEquals(3, \count($customerCartRules));
     }
 
     public function testGetAllCartRulesForCustomerWithDedicatedMethodBothEnabledAndDisabledWithOtherCustomerCartRulesAvailable(): void
@@ -156,8 +157,8 @@ class CartRuleTest extends TestCase
             (int) $yetAnotherCustomer->id
         );
 
-        $this->assertEquals(2, count($customerCartRules));
-        $this->assertEquals(1, count($yetAnotherCustomerCartRules));
+        $this->assertEquals(2, \count($customerCartRules));
+        $this->assertEquals(1, \count($yetAnotherCustomerCartRules));
     }
 
     public function testGetAllCartRulesWithGlobalCartRulesAvailable(): void
@@ -169,7 +170,7 @@ class CartRuleTest extends TestCase
             (int) $this->dummyCustomer->id
         );
 
-        $this->assertEquals(2, count($customerCartRules));
+        $this->assertEquals(2, \count($customerCartRules));
     }
 
     /*
@@ -371,18 +372,11 @@ class CartRuleTest extends TestCase
         );
     }
 
-    /**
-     * @param bool $active
-     * @param int $customerId
-     * @param bool $code
-     *
-     * @return CartRule
-     */
     public function createDummyCartRule(
         bool $active,
         int $customerId,
         bool $code = true,
-        bool $highlight = false
+        bool $highlight = false,
     ): CartRule {
         $randomNumber = rand(999, 9999);
         $cart_rule = new CartRule();
@@ -405,9 +399,6 @@ class CartRuleTest extends TestCase
         return $cart_rule;
     }
 
-    /**
-     * @return Customer
-     */
     public function createDummyCustomer(): Customer
     {
         $customer = new Customer();

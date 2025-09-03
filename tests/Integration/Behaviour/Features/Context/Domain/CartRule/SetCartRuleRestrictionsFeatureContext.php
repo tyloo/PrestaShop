@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,11 +56,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I restrict following cart rules for cart rule :cartRuleReference:
-     *
-     * @param string $cartRuleReference
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function setRestrictedCartRules(string $cartRuleReference, TableNode $tableNode): void
     {
@@ -75,11 +71,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I restrict following carriers for cart rule :cartRuleReference:
-     *
-     * @param string $cartRuleReference
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function setRestrictedCarriers(string $cartRuleReference, TableNode $tableNode): void
     {
@@ -95,11 +86,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I restrict following groups for cart rule :cartRuleReference:
-     *
-     * @param string $cartRuleReference
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function setRestrictedGroups(string $cartRuleReference, TableNode $tableNode): void
     {
@@ -115,11 +101,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I restrict following countries for cart rule :cartRuleReference:
-     *
-     * @param string $cartRuleReference
-     * @param TableNode $tableNode
-     *
-     * @return void
      */
     public function setRestrictedCountries(string $cartRuleReference, TableNode $tableNode): void
     {
@@ -137,12 +118,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
      * @When I add a restriction for cart rule :cartRuleReference, which requires at least :quantity product(s) in cart matching one of these rules:
      * @When I add a restriction for cart rule :cartRuleReference, which requires any quantity of product(s) in cart matching one of these rules:
      * @When I add a restriction for cart rule :cartRuleReference, which requires at least :quantity product(s), but I provide empty list of rules
-     *
-     * @param string $cartRuleReference
-     * @param int $quantity
-     * @param TableNode|null $table
-     *
-     * @return void
      */
     public function addRestrictionRule(string $cartRuleReference, int $quantity = 0, ?TableNode $table = null): void
     {
@@ -169,10 +144,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I restrict cart rules for :cartRuleReference providing non-existing cart rules
-     *
-     * @param string $cartRuleReference
-     *
-     * @return void
      */
     public function restrictCartRulesProvidingNonExistingIds(string $cartRuleReference): void
     {
@@ -190,10 +161,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I clear all product restrictions for cart rule :cartRuleReference
-     *
-     * @param string $cartRuleReference
-     *
-     * @return void
      */
     public function clearProductRestrictionRules(string $cartRuleReference): void
     {
@@ -206,10 +173,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I clear cart rule combination restrictions for cart rule :cartRuleReference
-     *
-     * @param string $cartRuleReference
-     *
-     * @return void
      */
     public function clearCartRuleCombinationRestrictions(string $cartRuleReference): void
     {
@@ -221,10 +184,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I clear all carrier restrictions for cart rule :cartRuleReference
-     *
-     * @param string $cartRuleReference
-     *
-     * @return void
      */
     public function clearCartRuleCarrierRestrictions(string $cartRuleReference): void
     {
@@ -236,10 +195,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I clear all country restrictions for cart rule :cartRuleReference
-     *
-     * @param string $cartRuleReference
-     *
-     * @return void
      */
     public function clearCartRuleCountryRestrictions(string $cartRuleReference): void
     {
@@ -251,10 +206,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I clear all group restrictions for cart rule :cartRuleReference
-     *
-     * @param string $cartRuleReference
-     *
-     * @return void
      */
     public function clearCartRuleGroupRestrictions(string $cartRuleReference): void
     {
@@ -266,10 +217,6 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
     /**
      * @When I save all the restrictions for cart rule :cartRuleReference
-     *
-     * @param string $cartRuleReference
-     *
-     * @return void
      */
     public function saveRestrictionRules(string $cartRuleReference): void
     {
@@ -281,19 +228,13 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
             unset($this->productRestrictionGroupsByReference[$cartRuleReference]);
         }
 
-        if (null === $command->getRestrictedCartRuleIds()
-            && null === $command->getProductRestrictionRuleGroups()
-            && null === $command->getRestrictedCarrierIds()
-            && null === $command->getRestrictedCountryIds()
-            && null === $command->getRestrictedGroupIds()
+        if ($command->getRestrictedCartRuleIds() === null
+            && $command->getProductRestrictionRuleGroups() === null
+            && $command->getRestrictedCarrierIds() === null
+            && $command->getRestrictedCountryIds() === null
+            && $command->getRestrictedGroupIds() === null
         ) {
-            throw new RuntimeException(
-                sprintf(
-                    '%s is empty for cart rule referenced as "%s". Did you forget to fill the restrictions in other steps?',
-                    $command::class,
-                    $cartRuleReference
-                )
-            );
+            throw new RuntimeException(\sprintf('%s is empty for cart rule referenced as "%s". Did you forget to fill the restrictions in other steps?', $command::class, $cartRuleReference));
         }
 
         try {
@@ -309,8 +250,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
     {
         if (isset($this->restrictionCommandsByReference[$cartRuleReference])) {
             $command = $this->restrictionCommandsByReference[$cartRuleReference];
-            if (!($command instanceof SetCartRuleRestrictionsCommand)) {
-                throw new RuntimeException(sprintf('Expected "%s" got "%s', SetCartRuleRestrictionsCommand::class, var_export($command, true)));
+            if (! ($command instanceof SetCartRuleRestrictionsCommand)) {
+                throw new RuntimeException(\sprintf('Expected "%s" got "%s', SetCartRuleRestrictionsCommand::class, var_export($command, true)));
             }
         } else {
             $command = new SetCartRuleRestrictionsCommand($this->getSharedStorage()->get($cartRuleReference));

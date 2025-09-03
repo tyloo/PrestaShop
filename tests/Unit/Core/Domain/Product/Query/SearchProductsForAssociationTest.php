@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,11 +43,6 @@ class SearchProductsForAssociationTest extends TestCase
 
     /**
      * @dataProvider getValidParameters
-     *
-     * @param string $phrase
-     * @param int $languageId
-     * @param int $shopId
-     * @param int|null $limit
      */
     public function testValidQuery(string $phrase, int $languageId, int $shopId, ?int $limit): void
     {
@@ -84,12 +80,6 @@ class SearchProductsForAssociationTest extends TestCase
 
     /**
      * @dataProvider getInvalidParameters
-     *
-     * @param string $phrase
-     * @param int $languageId
-     * @param int $shopId
-     * @param int|null $limit
-     * @param int $errorCode
      */
     public function testInvalidQuery(string $phrase, int $languageId, int $shopId, ?int $limit, string $exceptionClass, int $errorCode): void
     {

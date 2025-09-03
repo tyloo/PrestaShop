@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,10 +51,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Then /^supplier "(.+)" should have following details for product "(.+)":$/
-     *
-     * @param string $supplierReference
-     * @param string $productName
-     * @param TableNode $expectedDataTable
      */
     public function assertViewableSupplierProduct(string $supplierReference, string $productName, TableNode $expectedDataTable): void
     {
@@ -67,8 +64,8 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (!$product) {
-            throw new RuntimeException(sprintf('Product by name "%s" not found in viewable supplier', $productName));
+        if (! $product) {
+            throw new RuntimeException(\sprintf('Product by name "%s" not found in viewable supplier', $productName));
         }
 
         $this->assertProductFromViewableSupplier($product, $expectedDataTable);
@@ -76,23 +73,17 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given /^supplier "(.+)" should have (\d+) products associated$/
-     *
-     * @param string $reference
-     * @param int $productsCount
      */
     public function assertSupplierProductsCount(string $reference, int $productsCount): void
     {
         $viewableSupplier = $this->getSupplierForViewing($reference);
         $products = $viewableSupplier->getSupplierProducts();
 
-        Assert::assertEquals($productsCount, count($products), 'Unexpected supplier products count');
+        Assert::assertEquals($productsCount, \count($products), 'Unexpected supplier products count');
     }
 
     /**
      * @When I add new supplier :supplierReference with the following properties:
-     *
-     * @param string $supplierReference
-     * @param TableNode $table
      */
     public function createSupplier(string $supplierReference, TableNode $table)
     {
@@ -125,9 +116,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given supplier :manufacturerReference named :name exists
-     *
-     * @param string $name
-     * @param string $supplierReference
      */
     public function assertSupplierExistsByName(string $name, string $supplierReference): void
     {
@@ -137,14 +125,11 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
             return;
         }
 
-        throw new RuntimeException(sprintf('Supplier %s named "%s" does not exist', $supplierReference, $name));
+        throw new RuntimeException(\sprintf('Supplier %s named "%s" does not exist', $supplierReference, $name));
     }
 
     /**
      * @When I edit supplier :supplierReference with the following properties:
-     *
-     * @param string $supplierReference
-     * @param TableNode $table
      */
     public function editSupplier(string $supplierReference, TableNode $table)
     {
@@ -211,8 +196,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given the supplier :supplierReference has a logo image
-     *
-     * @param string $supplierReference
      */
     public function assertSupplierHasLogoImage(string $supplierReference): void
     {
@@ -222,8 +205,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the supplier :supplierReference does not have a logo image
-     *
-     * @param string $supplierReference
      */
     public function assertSupplierHasNoLogoImage(string $supplierReference): void
     {
@@ -233,8 +214,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I toggle status for supplier :supplierReference
-     *
-     * @param string $supplierReference
      *
      * @throws SupplierException
      */
@@ -246,8 +225,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete supplier :supplierReference
      *
-     * @param string $supplierReference
-     *
      * @throws SupplierException
      */
     public function deleteSupplier(string $supplierReference): void
@@ -257,8 +234,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete the supplier :supplierReference logo image
-     *
-     * @param string $supplierReference
      */
     public function deleteCategoryLogoImage(string $supplierReference): void
     {
@@ -269,9 +244,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then supplier :supplierReference should have following properties:
-     *
-     * @param string $supplierReference
-     * @param TableNode $table
      *
      * @throws SupplierException
      */
@@ -292,7 +264,7 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
         Assert::assertEquals(
             $expectedEnabled,
             $editableSupplier->isEnabled(),
-            sprintf('Expected supplier to be %s', $expectedEnabled ? 'enabled' : 'disabled')
+            \sprintf('Expected supplier to be %s', $expectedEnabled ? 'enabled' : 'disabled')
         );
         Assert::assertEquals(
             $data['description'],
@@ -345,10 +317,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param string $supplierReference
-     *
-     * @return EditableSupplier
-     *
      * @throws SupplierException
      */
     private function getEditableSupplier(string $supplierReference): EditableSupplier
@@ -358,19 +326,12 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
         return $this->getQueryBus()->handle(new GetSupplierForEditing($supplierId));
     }
 
-    /**
-     * @param string $name
-     *
-     * @return int
-     */
     private function getCountryIdByName(string $name): int
     {
         return Country::getIdByName((int) Configuration::get('PS_LANG_DEFAULT'), $name);
     }
 
     /**
-     * @param string $shopReferencesAsString
-     *
      * @return int[]
      */
     private function getShopIdsByReferences(string $shopReferencesAsString): array
@@ -385,12 +346,6 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
         return $shopIds;
     }
 
-    /**
-     * @param string $reference
-     * @param int|null $langId
-     *
-     * @return ViewableSupplier
-     */
     private function getSupplierForViewing(string $reference, ?int $langId = null): ViewableSupplier
     {
         $langId = $langId ?? $this->getDefaultLangId();
@@ -404,16 +359,15 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param array<string, mixed> $productData
-     * @param TableNode $expectedDataTable
      */
     private function assertProductFromViewableSupplier(array $productData, TableNode $expectedDataTable): void
     {
         $expectedData = $expectedDataTable->getColumnsHash();
 
-        if (!empty($productData['combinations'])) {
+        if (! empty($productData['combinations'])) {
             // combinations are indexed by combinationId, but for cleaner assertion we need to have simple index here
             $combinations = array_values($productData['combinations']);
-            Assert::assertCount(count($expectedData), $combinations, 'Unexpected count of product combinations in viewable supplier');
+            Assert::assertCount(\count($expectedData), $combinations, 'Unexpected count of product combinations in viewable supplier');
 
             foreach ($expectedData as $key => $expectedRow) {
                 $actualData = $combinations[$key];

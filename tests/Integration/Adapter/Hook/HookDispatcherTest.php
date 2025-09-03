@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class HookDispatcherTest extends KernelTestCase
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $testedListenerCallbackCalled = false;
 
     private function getHookDispatcher(): HookDispatcher

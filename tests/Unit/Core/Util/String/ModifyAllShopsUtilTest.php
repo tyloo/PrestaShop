@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,10 +35,6 @@ class ModifyAllShopsUtilTest extends TestCase
 {
     /**
      * @dataProvider getTestPrefixFieldPathData
-     *
-     * @param string $fieldPath
-     * @param string $prefix
-     * @param string $expectedResult
      */
     public function testPrefixFieldPath(string $fieldPath, string $prefix, string $expectedResult): void
     {

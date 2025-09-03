@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,10 +38,10 @@ class DataTransfer
      *
      * @param object $subObject
      * @param object $object
-     * @param bool $throwException false: skip bad data / true: throws Exceptions
-     * @param array $blackList properties to ignore
+     * @param bool   $throwException false: skip bad data / true: throws Exceptions
+     * @param array  $blackList      properties to ignore
      *
-     * @return object $object
+     * @return object
      *
      * @throws Exception
      */
@@ -70,12 +71,12 @@ class DataTransfer
         foreach ($attributes as $attribute => $value) {
             $setter = 'set' . $attribute;
 
-            if (in_array($attribute, $blackList)) {
+            if (\in_array($attribute, $blackList, true)) {
                 continue;
             }
 
             if (method_exists($object, $setter)) {
-                $object->$setter($value);
+                $object->{$setter}($value);
             } elseif ($throwException) {
                 throw new Exception("No such setter : $setter");
             }
@@ -85,11 +86,10 @@ class DataTransfer
     }
 
     /**
-     * @param array $array
      * @param object $object
-     * @param bool $throwException false: skip bad data / true: throws Exceptions
+     * @param bool   $throwException false: skip bad data / true: throws Exceptions
      *
-     * @return object $object
+     * @return object
      */
     public static function transferAttributesFromArrayToObject(array $array, $object, $throwException = false)
     {
@@ -97,7 +97,7 @@ class DataTransfer
             $setter = 'set' . $attribute;
 
             if (method_exists($object, $setter)) {
-                $object->$setter($value);
+                $object->{$setter}($value);
             } elseif ($throwException) {
                 throw new Exception("No such setter : $setter");
             }
@@ -112,9 +112,9 @@ class DataTransfer
     private static function isGetMethod(ReflectionMethod $method)
     {
         return
-            0 === strpos($method->name, 'get')
-            && 3 < strlen($method->name)
-            && 0 === $method->getNumberOfRequiredParameters()
+            strpos($method->name, 'get') === 0
+            && \strlen($method->name) > 3
+            && $method->getNumberOfRequiredParameters() === 0
         ;
     }
 }

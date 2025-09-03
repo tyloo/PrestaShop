@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class ColorBrightnessCalculatorTest extends TestCase
      */
     private $colorBrightnessCalculator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->colorBrightnessCalculator = new ColorBrightnessCalculator();
     }

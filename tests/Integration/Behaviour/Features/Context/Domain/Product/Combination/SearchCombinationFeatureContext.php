@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,6 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I search for combinations with locale :localeReference matching :search I should get following results:
-     *
-     * @param string $localeReference
-     * @param string $search
-     * @param TableNode $tableNode
      */
     public function assertSearchCombinations(string $localeReference, string $search, TableNode $tableNode): void
     {
@@ -58,7 +55,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
         ));
         $expectedRelatedCombinations = $tableNode->getColumnsHash();
 
-        Assert::assertEquals(count($expectedRelatedCombinations), count($foundCombinations));
+        Assert::assertEquals(\count($expectedRelatedCombinations), \count($foundCombinations));
 
         $index = 0;
         foreach ($expectedRelatedCombinations as $expectedRelatedCombination) {
@@ -68,20 +65,20 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedProductId,
                 $foundCombinationForAssociation->getProductId(),
-                sprintf(
+                \sprintf(
                     'Invalid product ID, expected %d but got %d instead.',
                     $expectedProductId,
                     $foundCombinationForAssociation->getProductId()
                 )
             );
 
-            $expectedCombinationId = !empty($expectedRelatedCombination['combination']) ?
+            $expectedCombinationId = ! empty($expectedRelatedCombination['combination']) ?
                 $this->getSharedStorage()->get($expectedRelatedCombination['combination']) :
                 NoCombinationId::NO_COMBINATION_ID;
             Assert::assertEquals(
                 $expectedCombinationId,
                 $foundCombinationForAssociation->getCombinationId(),
-                sprintf(
+                \sprintf(
                     'Invalid combination ID, expected %d but got %d instead.',
                     $expectedCombinationId,
                     $foundCombinationForAssociation->getCombinationId()
@@ -91,7 +88,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedCombination['name'],
                 $foundCombinationForAssociation->getName(),
-                sprintf(
+                \sprintf(
                     'Invalid product name, expected %s but got %s instead.',
                     $expectedRelatedCombination['name'],
                     $foundCombinationForAssociation->getName()
@@ -101,7 +98,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedCombination['reference'],
                 $foundCombinationForAssociation->getReference(),
-                sprintf(
+                \sprintf(
                     'Invalid product reference, expected %s but got %s instead.',
                     $expectedRelatedCombination['reference'],
                     $foundCombinationForAssociation->getReference()
@@ -112,7 +109,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $realImageUrl,
                 $foundCombinationForAssociation->getImageUrl(),
-                sprintf(
+                \sprintf(
                     'Invalid product image url, expected %s but got %s instead.',
                     $realImageUrl,
                     $foundCombinationForAssociation->getImageUrl()
@@ -125,9 +122,6 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I search for combinations with locale :localeReference matching :search I should get no results
-     *
-     * @param string $localeReference
-     * @param string $search
      */
     public function assertNoProductsFound(string $localeReference, string $search): void
     {
@@ -144,10 +138,6 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I search for products with locale :localeReference matching :search for :packedProductReference I should get following results:
-     *
-     * @param string $localeReference
-     * @param string $search
-     * @param TableNode $tableNode
      */
     public function assertSearchProductsForPack(string $localeReference, string $search, string $packedProductReference, TableNode $tableNode): void
     {
@@ -167,7 +157,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
 
         $expectedRelatedProducts = $tableNode->getColumnsHash();
 
-        Assert::assertEquals(count($expectedRelatedProducts), count($foundProducts));
+        Assert::assertEquals(\count($expectedRelatedProducts), \count($foundProducts));
 
         $index = 0;
         foreach ($expectedRelatedProducts as $expectedRelatedProduct) {
@@ -177,7 +167,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedProductId,
                 $foundProductForAssociation->getProductId(),
-                sprintf(
+                \sprintf(
                     'Invalid product ID, expected %d but got %d instead.',
                     $expectedProductId,
                     $foundProductForAssociation->getProductId()
@@ -187,7 +177,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedProduct['name'],
                 $foundProductForAssociation->getName(),
-                sprintf(
+                \sprintf(
                     'Invalid product name, expected %s but got %s instead.',
                     $expectedRelatedProduct['name'],
                     $foundProductForAssociation->getName()
@@ -197,7 +187,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedRelatedProduct['reference'],
                 $foundProductForAssociation->getReference(),
-                sprintf(
+                \sprintf(
                     'Invalid product reference, expected %s but got %s instead.',
                     $expectedRelatedProduct['reference'],
                     $foundProductForAssociation->getReference()
@@ -208,7 +198,7 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $realImageUrl,
                 $foundProductForAssociation->getImageUrl(),
-                sprintf(
+                \sprintf(
                     'Invalid product image url, expected %s but got %s instead.',
                     $realImageUrl,
                     $foundProductForAssociation->getImageUrl()
@@ -221,9 +211,6 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I search for combinations with locale :localeReference matching :search for packs I should get no results
-     *
-     * @param string $localeReference
-     * @param string $search
      */
     public function assertSearchProductsForPackNoResults(string $localeReference, string $search): void
     {
@@ -241,6 +228,6 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
             20
         ));
 
-        Assert::assertEquals(0, count($foundProducts));
+        Assert::assertEquals(0, \count($foundProducts));
     }
 }

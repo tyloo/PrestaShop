@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -111,7 +112,7 @@ class ProductLazyArrayTest extends TestCase
     private const PRODUCT_DELIVERY_TIME_AVAILABLE = '1-2 weeks - product in stock';
     private const PRODUCT_DELIVERY_TIME_OOSBOA = '2-4 weeks - backorder';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -179,14 +180,11 @@ class ProductLazyArrayTest extends TestCase
     }
 
     /**
-     * @param array $product
-     * @param string $availabilityMessage
-     *
      * @dataProvider providerQuantityInformationCases
      */
     public function testQuantityInformations(
         array $product,
-        string $availabilityMessage
+        string $availabilityMessage,
     ): void {
         $language = $this->mockLanguage;
 
@@ -198,17 +196,17 @@ class ProductLazyArrayTest extends TestCase
         $this->mockConfiguration
             ->method('get')
             ->willReturnCallback(function (string $key) use ($language) {
-                if ('PS_LABEL_OOS_PRODUCTS_BOD' === $key) {
+                if ($key === 'PS_LABEL_OOS_PRODUCTS_BOD') {
                     return [
                         $language->id => self::CONFIGURATION_NOT_AVAILABLE_LABEL,
                     ];
                 }
-                if ('PS_LABEL_OOS_PRODUCTS_BOA' === $key) {
+                if ($key === 'PS_LABEL_OOS_PRODUCTS_BOA') {
                     return [
                         $language->id => self::CONFIGURATION_AVAILABLE_LATER_LABEL,
                     ];
                 }
-                if ('PS_LABEL_IN_STOCK_PRODUCTS' === $key) {
+                if ($key === 'PS_LABEL_IN_STOCK_PRODUCTS') {
                     return [
                         $language->id => self::CONFIGURATION_AVAILABLE_NOW_LABEL,
                     ];
@@ -240,27 +238,24 @@ class ProductLazyArrayTest extends TestCase
     }
 
     /**
-     * @param array $product
-     * @param string|null $deliveryInformationMessage
-     *
      * @dataProvider providerDeliveryInformationCases
      */
     public function testDeliveryInformation(
         array $product,
-        ?string $deliveryInformationMessage
+        ?string $deliveryInformationMessage,
     ): void {
         $language = $this->mockLanguage;
 
         $this->mockConfiguration
             ->method('get')
             ->willReturnCallback(function (string $key) use ($language) {
-                if ('PS_LABEL_DELIVERY_TIME_AVAILABLE' === $key) {
+                if ($key === 'PS_LABEL_DELIVERY_TIME_AVAILABLE') {
                     return [
                         $language->id => self::PRODUCT_DELIVERY_TIME_AVAILABLE,
                     ];
                 }
 
-                if ('PS_LABEL_DELIVERY_TIME_OOSBOA' === $key) {
+                if ($key === 'PS_LABEL_DELIVERY_TIME_OOSBOA') {
                     return [
                         $language->id => self::PRODUCT_DELIVERY_TIME_OOSBOA,
                     ];
@@ -767,9 +762,6 @@ class ProductLazyArrayTest extends TestCase
     }
 
     /**
-     * @param array $product
-     * @param array $expectedFlags
-     *
      * @dataProvider provideFlagsCases
      */
     public function testFlags(array $product, array $expectedFlags): void
@@ -819,16 +811,12 @@ class ProductLazyArrayTest extends TestCase
     }
 
     /**
-     * @param array $product
-     * @param array $expected
-     * @param bool $configOrderOutOfStock
-     *
      * @dataProvider provideFlagOutOfStockCases
      */
     public function testFlagsOutOfStock(
         array $product,
         array $expected,
-        bool $configOrderOutOfStock
+        bool $configOrderOutOfStock,
     ): void {
         $language = $this->mockLanguage;
 
@@ -918,16 +906,12 @@ class ProductLazyArrayTest extends TestCase
     }
 
     /**
-     * @param array $product
-     * @param array $expected
-     * @param bool $settingsCatalogMode
-     *
      * @dataProvider provideFlagPriceCases
      */
     public function testFlagsPrice(
         array $product,
         array $expected,
-        bool $settingsCatalogMode
+        bool $settingsCatalogMode,
     ): void {
         $this->mockProductPresentationSettings
             ->method('shouldShowPrice')
@@ -1030,24 +1014,23 @@ class ProductLazyArrayTest extends TestCase
 
         /*
          *
-        No testable because use of Legacy Tools::displayNumber
-
-        yield [array_merge($this->baseProduct, [
-            'show_price' => true,
-            'online_only' => false,
-            'on_sale' => false,
-            'reduction' => true,
-            'specific_prices' => [
-                'reduction_type' => 'percentage',
-                'reduction' => '50',
-            ],
-        ]), [
-            'discount' => [
-                'type' => 'discount',
-                'label' => 'Expected Value',
-            ]
-        ], true];
-        */
+         * No testable because use of Legacy Tools::displayNumber
+         * yield [array_merge($this->baseProduct, [
+         * 'show_price' => true,
+         * 'online_only' => false,
+         * 'on_sale' => false,
+         * 'reduction' => true,
+         * 'specific_prices' => [
+         * 'reduction_type' => 'percentage',
+         * 'reduction' => '50',
+         * ],
+         * ]), [
+         * 'discount' => [
+         * 'type' => 'discount',
+         * 'label' => 'Expected Value',
+         * ]
+         * ], true];
+         */
     }
 
     private function setDefaultConfiguration(): void

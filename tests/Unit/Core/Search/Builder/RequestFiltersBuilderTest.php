@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -178,9 +179,8 @@ class RequestFiltersBuilderTest extends TestCase
     }
 
     /**
-     * @param array $parameters
      * @param string $requestScope
-     * @param bool $postQuery
+     * @param bool   $postQuery
      *
      * @return MockObject|Request
      */
@@ -192,7 +192,7 @@ class RequestFiltersBuilderTest extends TestCase
 
         $parametersBagMock = new InputBag();
 
-        if (!empty($requestScope)) {
+        if (! empty($requestScope)) {
             $parameters = [
                 $requestScope => $parameters,
             ];

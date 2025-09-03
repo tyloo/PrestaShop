@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ class MovementReasonIdTest extends TestCase
 {
     /**
      * @dataProvider getValidValues
-     *
-     * @param int $value
      */
     public function testItIsSuccessfullyConstructed(int $value): void
     {
@@ -49,8 +48,6 @@ class MovementReasonIdTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param int $value
      */
     public function testItThrowsExceptionWhenInvalidValueIsProvided(int $value): void
     {

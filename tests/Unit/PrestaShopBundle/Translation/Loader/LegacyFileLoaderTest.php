@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -95,7 +96,6 @@ class LegacyFileLoaderTest extends TestCase
     }
 
     /**
-     * @param MessageCatalogue $messageCatalogue
      * @param array[] $expected
      */
     private function verifyCatalogue(MessageCatalogue $messageCatalogue, $expected)
@@ -107,20 +107,20 @@ class LegacyFileLoaderTest extends TestCase
             $this->assertContains(
                 $expectedDomain,
                 $domains,
-                sprintf('Domain "%s" is not defined in %s', $expectedDomain, print_r($domains, true))
+                \sprintf('Domain "%s" is not defined in %s', $expectedDomain, print_r($domains, true))
             );
 
             // all strings should be defined in the appropriate domain
             foreach ($expectedStrings as $key => $string) {
                 $this->assertTrue(
                     $messageCatalogue->defines($key, $expectedDomain),
-                    sprintf('"%s" not found in %s', $string, $expectedDomain)
+                    \sprintf('"%s" not found in %s', $string, $expectedDomain)
                 );
 
                 $this->assertSame(
                     $messageCatalogue->get($key, $expectedDomain),
                     $string,
-                    sprintf(
+                    \sprintf(
                         'The translation result for "%s" was expected to be "%s" but was "%s',
                         $key,
                         $string,

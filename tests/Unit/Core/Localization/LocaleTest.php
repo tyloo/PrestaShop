@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -106,9 +107,9 @@ class LocaleTest extends TestCase
      * Then the expected formatted number should be retrieved
      *
      * @param int|float $number
-     *                          The number to be formatted
-     * @param string $expected
-     *                         The formatted number
+     *                            The number to be formatted
+     * @param string    $expected
+     *                            The formatted number
      *
      * @dataProvider provideValidNumbers
      *
@@ -163,11 +164,11 @@ class LocaleTest extends TestCase
      * For more formatting cases, @see FormatterTest
      *
      * @param int|float|string $number
-     *                                 The number to be formatted
-     * @param string $currencyCode
-     *                             The currency code
-     * @param string $expected
-     *                         The formatted number
+     *                                       The number to be formatted
+     * @param string           $currencyCode
+     *                                       The currency code
+     * @param string           $expected
+     *                                       The formatted number
      *
      * @dataProvider provideValidPriceData
      *
@@ -203,7 +204,7 @@ class LocaleTest extends TestCase
      * Then an exception should be raised
      *
      * @param mixed $number
-     *                      Potentially invalid number
+     *                        Potentially invalid number
      * @param mixed $currency
      *                        Potentially invalid currency
      *

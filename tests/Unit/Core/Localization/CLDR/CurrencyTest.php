@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,16 +46,17 @@ class CurrencyTest extends TestCase
      */
     protected $cldrCurrency;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $currencyData = new CurrencyData();
         $currencyData->setIsoCode('PCE');
         $currencyData->setNumericIsoCode('333');
         $currencyData->setDecimalDigits(2);
-        $currencyData->setDisplayNames(['default' => 'PrestaShop Peace', 'one' => 'peace', 'other' => 'peaces']);
+        $currencyData->setDisplayNames([
+            'default' => 'PrestaShop Peace',
+            'one' => 'peace',
+            'other' => 'peaces',
+        ]);
         $currencyData->setSymbols([
             CurrencyInterface::SYMBOL_TYPE_DEFAULT => 'PS☮',
             CurrencyInterface::SYMBOL_TYPE_NARROW => '☮',

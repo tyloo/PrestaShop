@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
 {
     /**
      * @dataProvider provideForGetShopConstraint
-     *
-     * @param bool $isAllShopContext
-     * @param int $shopGroupId
-     * @param int $shopId
-     * @param bool $isExpectedResultNull
      */
     public function testGetShopConstraint(bool $isAllShopContext, int $shopGroupId, int $shopId, bool $isExpectedResultNull): void
     {
@@ -58,10 +54,10 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
 
         // check that result is of the right type
         $this->assertInstanceOf('PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint', $resultShopConstraint);
-        if (!empty($resultShopConstraint->getShopGroupId())) {
+        if (! empty($resultShopConstraint->getShopGroupId())) {
             $this->assertEquals($shopGroupId, $resultShopConstraint->getShopGroupId()->getValue());
         }
-        if (!empty($resultShopConstraint->getShopId())) {
+        if (! empty($resultShopConstraint->getShopId())) {
             $this->assertEquals($shopId, $resultShopConstraint->getShopId()->getValue());
         }
     }
@@ -80,11 +76,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideForUpdateConfigurationValue
-     *
-     * @param string $fieldName
-     * @param array $inputValues
-     * @param bool $isMultistoreUsed
-     * @param string|null $expectedMethodToBeCalled
      */
     public function testUpdateConfigurationValue(string $fieldName, array $inputValues, bool $isMultistoreUsed, ?string $expectedMethodToBeCalled): void
     {
@@ -108,21 +99,12 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         ];
     }
 
-    /**
-     * @param bool $isAllShopContext
-     * @param string|null $expectedCalledMethod
-     * @param bool $isMultistoreUsed
-     * @param int $shopGroupId
-     * @param int $shopId
-     *
-     * @return DummyMultistoreConfiguration
-     */
     private function getTestableClass(
         bool $isAllShopContext,
         ?string $expectedCalledMethod,
         bool $isMultistoreUsed = true,
         int $shopGroupId = 1,
-        int $shopId = 1
+        int $shopId = 1,
     ): DummyMultistoreConfiguration {
         return new DummyMultistoreConfiguration(
             $this->createShopConfigurationMock($expectedCalledMethod),
@@ -131,13 +113,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         );
     }
 
-    /**
-     * @param bool $isAllShopContext
-     * @param int $shopGroupId
-     * @param int $shopId
-     *
-     * @return ShopContext
-     */
     private function createMultistoreContextMock(bool $isAllShopContext, int $shopGroupId, int $shopId): ShopContext
     {
         $stub = $this->createMock(ShopContext::class);
@@ -148,11 +123,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         return $stub;
     }
 
-    /**
-     * @param string|null $expectedMethodCalled
-     *
-     * @return ShopConfiguration
-     */
     private function createShopConfigurationMock(?string $expectedMethodCalled): ShopConfiguration
     {
         $stub = $this->createMock(ShopConfiguration::class);
@@ -168,11 +138,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         return $stub;
     }
 
-    /**
-     * @param int $shopGroupId
-     *
-     * @return MockObject
-     */
     private function getShopGroupMock(int $shopGroupId): MockObject
     {
         $stub = $this->createMock(stdClass::class);
@@ -181,19 +146,11 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         return $stub;
     }
 
-    /**
-     * @return MockObject
-     */
     private function getShopConstraintMock(): MockObject
     {
         return $this->createMock(ShopConstraint::class);
     }
 
-    /**
-     * @param bool $isUsed
-     *
-     * @return FeatureInterface
-     */
     private function getMultistoreFeatureMock(bool $isUsed = true): FeatureInterface
     {
         $stub = $this->createMock(FeatureInterface::class);

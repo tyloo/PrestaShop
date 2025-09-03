@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,19 +44,11 @@ class FormHandlerChecker implements FormHandlerInterface
      */
     private $lastCreatedId;
 
-    /**
-     * AddressFormDataHandlerChecker constructor.
-     *
-     * @param FormHandlerInterface $formHandler
-     */
     public function __construct(FormHandlerInterface $formHandler)
     {
         $this->formHandler = $formHandler;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(FormInterface $form)
     {
         $result = $this->formHandler->handle($form);
@@ -64,17 +57,11 @@ class FormHandlerChecker implements FormHandlerInterface
         return $result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handleFor($id, FormInterface $form)
     {
         return $this->formHandler->handleFor($id, $form);
     }
 
-    /**
-     * @return int|null
-     */
     public function getLastCreatedId(): ?int
     {
         return $this->lastCreatedId;

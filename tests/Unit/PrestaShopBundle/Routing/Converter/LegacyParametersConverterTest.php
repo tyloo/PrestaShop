@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ class LegacyParametersConverterTest extends TestCase
 {
     /**
      * @dataProvider getExpectedLegacyParameters
-     *
-     * @param array $requestAttributes
-     * @param array $queryParameters
-     * @param array|null $expectedLegacyParameters
      */
     public function testGetParameters(array $requestAttributes, array $queryParameters, ?array $expectedLegacyParameters)
     {

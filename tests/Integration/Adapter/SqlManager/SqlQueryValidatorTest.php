@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ class SqlQueryValidatorTest extends TestCase
 {
     /**
      * @dataProvider dataProviderValidate
-     *
-     * @param string $sql
-     * @param array $errors
      */
     public function testValidate(string $sql, array $errors): void
     {

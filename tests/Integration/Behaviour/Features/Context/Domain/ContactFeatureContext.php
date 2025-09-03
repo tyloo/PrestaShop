@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ class ContactFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add new contact :reference with the following details:
-     *
-     * @param TableNode $table
-     * @param string $reference
      */
     public function addNewContactWithTheFollowingDetails(TableNode $table, string $reference)
     {
@@ -68,9 +66,6 @@ class ContactFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When contact :reference should have the following details:
-     *
-     * @param string $reference
-     * @param TableNode $table
      */
     public function contactShouldHaveTheFollowingDetails(string $reference, TableNode $table)
     {
@@ -89,9 +84,6 @@ class ContactFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I update contact :contactId with the following details:
-     *
-     * @param string $reference
-     * @param TableNode $table
      */
     public function updateContactWithTheFollowingDetails(string $reference, TableNode $table)
     {
@@ -113,12 +105,6 @@ class ContactFeatureContext extends AbstractDomainFeatureContext
         $this->getCommandBus()->handle($editContactCommand);
     }
 
-    /**
-     * @param int $contactId
-     * @param array $data
-     *
-     * @return EditableContact
-     */
     private function mapToEditableContact(int $contactId, array $data): EditableContact
     {
         return new EditableContact(

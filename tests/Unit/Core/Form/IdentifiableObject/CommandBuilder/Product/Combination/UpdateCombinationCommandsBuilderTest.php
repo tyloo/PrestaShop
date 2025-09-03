@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class UpdateCombinationCommandsBuilderTest extends AbstractCombinationCommandBui
     /**
      * @dataProvider getExpectedCommands
      * @dataProvider getExpectedCommandsMultiShop
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommands(array $formData, array $expectedCommands)
     {
@@ -251,7 +249,7 @@ class UpdateCombinationCommandsBuilderTest extends AbstractCombinationCommandBui
             [
                 'stock' => [
                     'options' => [
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                         'low_stock_threshold' => 7,
                     ],
                 ],
@@ -265,7 +263,7 @@ class UpdateCombinationCommandsBuilderTest extends AbstractCombinationCommandBui
             [
                 'stock' => [
                     'options' => [
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
                         'low_stock_threshold' => 8,
                     ],
                 ],

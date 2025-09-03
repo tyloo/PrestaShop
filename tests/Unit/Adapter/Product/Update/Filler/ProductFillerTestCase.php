@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,19 +44,12 @@ abstract class ProductFillerTestCase extends TestCase
     protected const DEFAULT_SHOP_ID = 2;
     protected const PRODUCT_ID = 3;
 
-    /**
-     * @param ProductFillerInterface $filler
-     * @param Product $product
-     * @param UpdateProductCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param Product $expectedProduct
-     */
     protected function fillUpdatableProperties(
         ProductFillerInterface $filler,
         Product $product,
         UpdateProductCommand $command,
         array $expectedUpdatableProperties,
-        Product $expectedProduct
+        Product $expectedProduct,
     ) {
         $this->assertSame(
             $expectedUpdatableProperties,
@@ -69,8 +63,6 @@ abstract class ProductFillerTestCase extends TestCase
     /**
      * This method mocks product into its default state.
      * Feel free to override it if needed for specific test cases.
-     *
-     * @return Product
      */
     protected function mockDefaultProduct(): Product
     {
@@ -102,9 +94,6 @@ abstract class ProductFillerTestCase extends TestCase
         return $product;
     }
 
-    /**
-     * @return UpdateProductCommand
-     */
     protected function getEmptyCommand(): UpdateProductCommand
     {
         return new UpdateProductCommand(self::PRODUCT_ID, ShopConstraint::shop(self::DEFAULT_SHOP_ID));

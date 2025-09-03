@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -142,16 +143,12 @@ class TranslationCatalogueBuilderTest extends TestCase
     /**
      * @dataProvider getDomainCatalogueStructureProvider
      *
-     * @param TranslationCatalogueBuilder $translationCatalogueBuilder
-     * @param array $parameters
-     * @param array $expectedArrayCatalogue
-     *
      * @throws Exception
      */
     public function testGetDomainCatalogueStructure(
         TranslationCatalogueBuilder $translationCatalogueBuilder,
         array $parameters,
-        array $expectedArrayCatalogue
+        array $expectedArrayCatalogue,
     ) {
         $catalogue = $translationCatalogueBuilder->getDomainCatalogue(
             $parameters['providerDefinition'],
@@ -422,7 +419,7 @@ class TranslationCatalogueBuilderTest extends TestCase
     private function buildCatalogueProviderFromCatalogues(
         array $defaultTranslations,
         array $fileTranslatedTranslations,
-        array $userTranslatedTranslations
+        array $userTranslatedTranslations,
     ): TranslationCatalogueBuilder {
         $provider = $this->createMock(CatalogueLayersProviderInterface::class);
 

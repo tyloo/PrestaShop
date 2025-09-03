@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ class ShowcaseCardFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When employee :employee closes showcase card :cardName
-     *
-     * @param string $cardName
-     * @param string $employeeReference
      */
     public function employeeClosesShowcaseCard(string $cardName, string $employeeReference)
     {
@@ -47,9 +45,6 @@ class ShowcaseCardFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then employee :employeeReference should not see showcase card :cardName
-     *
-     * @param string $employeeReference
-     * @param string $cardName
      */
     public function employeeShouldNotSeeShowcaseCard(string $employeeReference, string $cardName)
     {

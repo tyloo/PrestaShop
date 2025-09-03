@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,13 @@ class CombinationGeneratorTest extends TestCase
      */
     private $combinationGenerator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->combinationGenerator = new CombinationGenerator();
     }
 
     /**
      * @dataProvider getValidData
-     *
-     * @param array $valuesByGroup
-     * @param array $expectedCombinations
      */
     public function testGenerateCombinationsFromValidData(array $valuesByGroup, array $expectedCombinations)
     {
@@ -62,9 +60,6 @@ class CombinationGeneratorTest extends TestCase
         $this->assertEquals($expectedCombinations, $generatedCombinations);
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidData(): Generator
     {
         yield [

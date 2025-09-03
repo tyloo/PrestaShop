@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,12 +71,12 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
 
         $requiredFields = $this->getQueryBus()->handle(new GetRequiredFieldsForCustomer());
 
-        if ($isRequired && !in_array($requiredFieldName, $requiredFields, true)) {
-            throw new RuntimeException(sprintf('"%s" was expected to be required customer field.', $requiredField));
+        if ($isRequired && ! \in_array($requiredFieldName, $requiredFields, true)) {
+            throw new RuntimeException(\sprintf('"%s" was expected to be required customer field.', $requiredField));
         }
 
-        if (!$isRequired && in_array($requiredFieldName, $requiredFields, true)) {
-            throw new RuntimeException(sprintf('"%s" was not expected to be required customer field.', $requiredField));
+        if (! $isRequired && \in_array($requiredFieldName, $requiredFields, true)) {
+            throw new RuntimeException(\sprintf('"%s" was not expected to be required customer field.', $requiredField));
         }
     }
 
@@ -129,9 +130,6 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I create customer "(.+)" with following details:$/
      *
-     * @param string $customerReference
-     * @param TableNode $table
-     *
      * @throws Exception
      */
     public function createCustomerUsingCommand(string $customerReference, TableNode $table)
@@ -150,16 +148,16 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
             'email',
         ];
         foreach ($mandatoryFields as $mandatoryField) {
-            if (!array_key_exists($mandatoryField, $data)) {
-                throw new Exception(sprintf('Mandatory property %s for customer has not been provided', $mandatoryField));
+            if (! \array_key_exists($mandatoryField, $data)) {
+                throw new Exception(\sprintf('Mandatory property %s for customer has not been provided', $mandatoryField));
             }
         }
-        if (!array_key_exists('password', $data) && empty($data['isGuest'])) {
+        if (! \array_key_exists('password', $data) && empty($data['isGuest'])) {
             throw new Exception('Password must be provided, if creating a registered customer');
         }
 
         // Apply minor differences for guests
-        if (!empty($data['isGuest'])) {
+        if (! empty($data['isGuest'])) {
             $password = (new PasswordGenerator(new OpenSSL()))->generatePassword(16, 'RANDOM');
             $defaultGroupId = $defaultGroups->getGuestsGroup()->getId();
             $groupIds = [$defaultGroups->getGuestsGroup()->getId()];
@@ -195,13 +193,11 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given customer :reference does not exist
-     *
-     * @param string $reference
      */
     public function setNonExistingCustomerReference(string $reference): void
     {
         if ($this->getSharedStorage()->exists($reference) && $this->getSharedStorage()->get($reference)) {
-            throw new RuntimeException(sprintf('Expected that customer "%s" should not exist', $reference));
+            throw new RuntimeException(\sprintf('Expected that customer "%s" should not exist', $reference));
         }
 
         $this->getSharedStorage()->set($reference, self::NON_EXISTING_CUSTOMER_ID);
@@ -217,15 +213,12 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given group :groupReference named :name exists
-     *
-     * @param string $groupReference
-     * @param string $name
      */
     public function assertGroupExists(string $groupReference, string $name): void
     {
         $group = Group::searchByName($name);
-        if (!$group) {
-            throw new RuntimeException(sprintf('Group "%s" does not exist', $groupReference));
+        if (! $group) {
+            throw new RuntimeException(\sprintf('Group "%s" does not exist', $groupReference));
         }
 
         $this->getSharedStorage()->set($groupReference, (int) $group['id_group']);
@@ -233,13 +226,11 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given group :reference does not exist
-     *
-     * @param string $reference
      */
     public function setNonExistingGroupReference(string $reference): void
     {
         if ($this->getSharedStorage()->exists($reference) && $this->getSharedStorage()->get($reference)) {
-            throw new RuntimeException(sprintf('Expected that group "%s" should not exist', $reference));
+            throw new RuntimeException(\sprintf('Expected that group "%s" should not exist', $reference));
         }
 
         $this->getSharedStorage()->set($reference, self::NON_EXISTING_GROUP_ID);
@@ -256,10 +247,6 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Transform table:firstName,lastName,email,birthday
      * @Transform table:firstName,lastName,email,birthday,companyName
-     *
-     * @param TableNode $customersTable
-     *
-     * @return array
      */
     public function transformCustomers(TableNode $customersTable): array
     {
@@ -268,9 +255,6 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I search for the phrases :searchPhrases I should get the following results:
-     *
-     * @param string $searchPhrases
-     * @param array $expectedCustomers
      */
     public function assertFoundCustomers(string $searchPhrases, array $expectedCustomers): void
     {
@@ -286,7 +270,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                     Assert::assertEquals(
                         $currentExpectedCustomer['firstName'],
                         $currentFoundCustomer['firstname'],
-                        sprintf(
+                        \sprintf(
                             'Expected and found customers\'s first names don\'t match (%s and %s)',
                             $currentExpectedCustomer['firstName'],
                             $currentFoundCustomer['firstname']
@@ -296,7 +280,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                     Assert::assertEquals(
                         $currentExpectedCustomer['lastName'],
                         $currentFoundCustomer['lastname'],
-                        sprintf(
+                        \sprintf(
                             'Expected and found customers\'s last names don\'t match (%s and %s)',
                             $currentExpectedCustomer['lastName'],
                             $currentFoundCustomer['lastname']
@@ -306,26 +290,24 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                     Assert::assertEquals(
                         $currentExpectedCustomer['birthday'],
                         $currentFoundCustomer['birthday'],
-                        sprintf(
+                        \sprintf(
                             'Expected and found customers\'s birthdays don\'t match (%s and %s)',
                             $currentExpectedCustomer['birthday'],
                             $currentFoundCustomer['birthday']
                         )
                     );
 
-                    if (!$isB2BEnabled) {
+                    if (! $isB2BEnabled) {
                         if (isset($currentExpectedCustomer['companyName'])
                             || isset($currentFoundCustomer['company'])
                         ) {
-                            throw new RuntimeException(
-                                'Company name isn\'t expected when B2B mode is disabled'
-                            );
+                            throw new RuntimeException('Company name isn\'t expected when B2B mode is disabled');
                         }
                     } else {
                         Assert::assertEquals(
                             $currentExpectedCustomer['companyName'],
                             $currentFoundCustomer['company'],
-                            sprintf(
+                            \sprintf(
                                 'Expected and found customers\'s companies don\'t match (%s and %s)',
                                 $currentExpectedCustomer['companyName'],
                                 $currentFoundCustomer['company']
@@ -334,19 +316,14 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                     }
                 }
             }
-            if (!$wasCurrentExpectedCustomerFound) {
-                throw new RuntimeException(sprintf(
-                    'Expected customer with email %s was not found',
-                    $currentExpectedCustomer['email']
-                ));
+            if (! $wasCurrentExpectedCustomerFound) {
+                throw new RuntimeException(\sprintf('Expected customer with email %s was not found', $currentExpectedCustomer['email']));
             }
         }
     }
 
     /**
      * @When I search for the phrases :searchPhrases I should not get any results
-     *
-     * @param string $searchPhrases
      */
     public function assertNoCustomersWasFound(string $searchPhrases): void
     {

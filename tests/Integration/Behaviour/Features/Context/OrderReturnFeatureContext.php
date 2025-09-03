@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ class OrderReturnFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When I add order return state :orderReturnStateReference
      *
-     * @param string $orderReturnStateReference
-     *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
@@ -55,9 +54,6 @@ class OrderReturnFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @When I add order return :orderReturnReference from order :orderReference
-     *
-     * @param string $orderReturnReference
-     * @param string $orderReference
      *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException

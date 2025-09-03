@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Then /^the customer of the order "(.+)" has the APE Code "(.*)"$/
-     *
-     * @param string $orderReference
-     * @param string $ape
      */
     public function orderCustomerHasAPECode(string $orderReference, string $ape): void
     {
@@ -48,7 +46,7 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
         Assert::assertSame(
             $ape,
             $orderCustomerForViewing->getApe(),
-            sprintf(
+            \sprintf(
                 'Expected customer with id "%d" has APE code "%s" but received "%s"',
                 $orderCustomerForViewing->getId(),
                 $orderCustomerForViewing->getApe(),
@@ -59,9 +57,6 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^the customer of the order "(.+)" has the SIRET Code "(.*)"$/
-     *
-     * @param string $orderReference
-     * @param string $siret
      */
     public function orderCustomerHasSIRETCode(string $orderReference, string $siret): void
     {
@@ -70,7 +65,7 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
         Assert::assertSame(
             $siret,
             $orderCustomerForViewing->getSiret(),
-            sprintf(
+            \sprintf(
                 'Expected customer with id "%d" has SIRET code "%s" but received "%s"',
                 $orderCustomerForViewing->getId(),
                 $orderCustomerForViewing->getSiret(),
@@ -81,8 +76,6 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^the customer of the order "(.+)" has been deleted$/
-     *
-     * @param string $orderReference
      */
     public function orderCustomerIsDeleted(string $orderReference): void
     {
@@ -92,7 +85,7 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
 
         Assert::assertTrue(
             (bool) $customer->delete(),
-            sprintf(
+            \sprintf(
                 'Expected customer with id "%d" has been deleted',
                 $orderCustomerForViewing->getId()
             )
@@ -101,8 +94,6 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^the customer lastname of the order "(.*)" is "(.+)"$/
-     *
-     * @param string $orderReference
      */
     public function orderCustomerCheckLastName(string $orderReference, string $value): void
     {
@@ -111,7 +102,7 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
         Assert::assertSame(
             $value,
             $orderCustomerForViewing->getLastName(),
-            sprintf(
+            \sprintf(
                 'Expected customer lastname to be "%s"',
                 $value
             )
@@ -120,8 +111,6 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^the customer firstname of the order "(.*)" is "(.+)"$/
-     *
-     * @param string $orderReference
      */
     public function orderCustomerCheckFirstName(string $orderReference, string $value): void
     {
@@ -130,7 +119,7 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
         Assert::assertSame(
             $value,
             $orderCustomerForViewing->getFirstName(),
-            sprintf(
+            \sprintf(
                 'Expected customer firstname to be "%s"',
                 $value
             )
@@ -139,8 +128,6 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^the customer id of the order "(.*)" is "(.+)"$/
-     *
-     * @param string $orderReference
      */
     public function orderCustomerPropertyCheck(string $orderReference, string $value): void
     {
@@ -149,7 +136,7 @@ class OrderCustomerFeatureContext extends AbstractDomainFeatureContext
         Assert::assertSame(
             (int) $value,
             $orderCustomerForViewing->getId(),
-            sprintf(
+            \sprintf(
                 'Expected customer id to be "%d"',
                 $value
             )

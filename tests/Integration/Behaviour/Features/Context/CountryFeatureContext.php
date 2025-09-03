@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,16 +34,13 @@ class CountryFeatureContext extends AbstractPrestaShopFeatureContext
 {
     /**
      * @Given country :countryReference with iso code :isoCode exists
-     *
-     * @param string $countryReference
-     * @param string $isoCode
      */
     public function assertCountryExists(string $countryReference, string $isoCode): void
     {
         $countryId = (int) Country::getByIso($isoCode);
 
-        if (!$countryId) {
-            throw new RuntimeException(sprintf('Country "%s" does not exist', $countryReference));
+        if (! $countryId) {
+            throw new RuntimeException(\sprintf('Country "%s" does not exist', $countryReference));
         }
 
         SharedStorage::getStorage()->set($countryReference, $countryId);
@@ -77,30 +75,23 @@ class CountryFeatureContext extends AbstractPrestaShopFeatureContext
     }
 
     /**
-     * @param string $countryIsoCode
-     *
      * @throws RuntimeException
      */
     public function checkCountryWithIsoCodeExists(string $countryIsoCode)
     {
         $country = Country::getByIso($countryIsoCode);
 
-        if (false === $country) {
-            throw new RuntimeException(sprintf('No country with ISO Code "%s"', $countryIsoCode));
+        if ($country === false) {
+            throw new RuntimeException(\sprintf('No country with ISO Code "%s"', $countryIsoCode));
         }
     }
 
-    /**
-     * @param string $countryIsoCode
-     *
-     * @return int
-     */
     public function getCountryWithIsoCode(string $countryIsoCode): int
     {
         $country = Country::getByIso($countryIsoCode);
 
-        if (false === $country) {
-            throw new RuntimeException(sprintf('No country with ISO Code "%s"', $countryIsoCode));
+        if ($country === false) {
+            throw new RuntimeException(\sprintf('No country with ISO Code "%s"', $countryIsoCode));
         }
 
         return $country;

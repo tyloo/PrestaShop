@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -143,9 +144,6 @@ class ProductFormDataProviderTest extends TestCase
 
     /**
      * @dataProvider getExpectedData
-     *
-     * @param array $productData
-     * @param array $expectedData
      */
     public function testGetData(array $productData, array $expectedData)
     {
@@ -184,9 +182,6 @@ class ProductFormDataProviderTest extends TestCase
         }
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForVirtualProductFile(): array
     {
         $datasets = [];
@@ -249,9 +244,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForSeo(): array
     {
         $datasets = [];
@@ -278,9 +270,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForDescription(): array
     {
         $datasets = [];
@@ -323,9 +312,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForPrices(): array
     {
         $datasets = [];
@@ -390,9 +376,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForStock(): array
     {
         $datasets = [];
@@ -525,9 +508,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForCategories(): array
     {
         $datasets = [];
@@ -566,9 +546,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForPackedProducts(): array
     {
         $datasets = [];
@@ -624,9 +601,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForRelatedProducts(): array
     {
         $datasets = [];
@@ -670,9 +644,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForShipping(): array
     {
         $datasets = [];
@@ -719,9 +690,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForOptions(): array
     {
         $datasets = [];
@@ -799,9 +767,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForRedirectOption(): array
     {
         $datasets = [];
@@ -834,9 +799,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForProductSuppliers(): array
     {
         $datasets = [];
@@ -919,9 +881,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDataSetsForManufacturer(): array
     {
         $datasets = [];
@@ -941,9 +900,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDataSetsForFeatures(): array
     {
         $datasets = [];
@@ -1024,9 +980,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForCustomizations(): array
     {
         $datasets = [];
@@ -1081,9 +1034,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @return array
-     */
     private function getDatasetsForCombinations(): array
     {
         $datasets = [];
@@ -1125,11 +1075,6 @@ class ProductFormDataProviderTest extends TestCase
         return $datasets;
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductForEditing
-     */
     private function createProductForEditing(array $product): ProductForEditing
     {
         return new ProductForEditing(
@@ -1152,11 +1097,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $productData
-     *
-     * @return ProductSupplierOptions
-     */
     private function createProductSupplierOptions(array $productData): ProductSupplierOptions
     {
         if (empty($productData['suppliers'])) {
@@ -1164,7 +1104,7 @@ class ProductFormDataProviderTest extends TestCase
         }
 
         $productSuppliers = [];
-        if (!empty($productData['product_suppliers'])) {
+        if (! empty($productData['product_suppliers'])) {
             foreach ($productData['product_suppliers'] as $supplierInfo) {
                 $productSuppliers[] = new ProductSupplierForEditing(
                     $supplierInfo['product_supplier_id'],
@@ -1187,8 +1127,6 @@ class ProductFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $productData
-     *
      * @return ProductFeatureValue[]
      */
     private function createProductFeatureValueOptions(array $productData): array
@@ -1211,8 +1149,6 @@ class ProductFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $productData
-     *
      * @return PackedProductDetails[]
      */
     private function createPackedProductsDetails(array $productData): array
@@ -1237,8 +1173,6 @@ class ProductFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $productData
-     *
      * @return RelatedProduct[]
      */
     private function createRelatedProducts(array $productData): array
@@ -1261,13 +1195,11 @@ class ProductFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $productData
-     *
      * @return CustomizationField[]
      */
     private function createProductCustomizationFields(array $productData): array
     {
-        if (!isset($productData['customizations'])) {
+        if (! isset($productData['customizations'])) {
             return [];
         }
 
@@ -1286,15 +1218,13 @@ class ProductFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param array $productData
-     *
      * @return StockMovement[]
      */
     private function createStockMovementHistories(array $productData): array
     {
         return array_map(
             static function (array $historyData): StockMovement {
-                if (StockMovement::EDITION_TYPE === $historyData['type']) {
+                if ($historyData['type'] === StockMovement::EDITION_TYPE) {
                     return StockMovement::createEditionMovement(
                         $historyData['date_add'],
                         $historyData['stock_movement_id'],
@@ -1305,7 +1235,7 @@ class ProductFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
-                if (StockMovement::ORDERS_TYPE === $historyData['type']) {
+                if ($historyData['type'] === StockMovement::ORDERS_TYPE) {
                     return StockMovement::createOrdersMovement(
                         $historyData['from_date'],
                         $historyData['to_date'],
@@ -1316,22 +1246,15 @@ class ProductFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
-                throw new RuntimeException(
-                    sprintf('Unsupported stock movement event type "%s"', $historyData['type'])
-                );
+                throw new RuntimeException(\sprintf('Unsupported stock movement event type "%s"', $historyData['type']));
             },
             $productData['stock_movements'] ?? []
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return VirtualProductFileForEditing|null
-     */
     private function createVirtualProductFile(array $product): ?VirtualProductFileForEditing
     {
-        if (!isset($product['virtual_product_file'])) {
+        if (! isset($product['virtual_product_file'])) {
             return null;
         }
 
@@ -1345,11 +1268,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductStockInformation
-     */
     private function createProductStockInformation(array $product): ProductStockInformation
     {
         return new ProductStockInformation(
@@ -1366,11 +1284,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductSeoOptions
-     */
     private function createSeoOptions(array $product): ProductSeoOptions
     {
         return new ProductSeoOptions(
@@ -1382,11 +1295,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductShippingInformation
-     */
     private function createShippingInformation(array $product): ProductShippingInformation
     {
         return new ProductShippingInformation(
@@ -1402,11 +1310,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductDetails
-     */
     private function createDetails(array $product): ProductDetails
     {
         return new ProductDetails(
@@ -1418,11 +1321,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductOptions
-     */
     private function createOptions(array $product): ProductOptions
     {
         return new ProductOptions(
@@ -1436,11 +1334,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductPricesInformation
-     */
     private function createPricesInformation(array $product): ProductPricesInformation
     {
         return new ProductPricesInformation(
@@ -1459,11 +1352,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return CategoriesInformation
-     */
     private function createCategories(array $product): CategoriesInformation
     {
         $categoriesInfo = [];
@@ -1479,11 +1367,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param array $product
-     *
-     * @return ProductBasicInformation
-     */
     private function createBasic(array $product): ProductBasicInformation
     {
         return new ProductBasicInformation(
@@ -1494,11 +1377,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @param int $expectedShopId
-     *
-     * @return CommandBusInterface
-     */
     private function createQueryBusCheckingShopMock(int $expectedShopId): CommandBusInterface
     {
         $queryBusMock = $this->createMock(CommandBusInterface::class);
@@ -1518,11 +1396,6 @@ class ProductFormDataProviderTest extends TestCase
         return $queryBusMock;
     }
 
-    /**
-     * @param array $productData
-     *
-     * @return CommandBusInterface
-     */
     private function createQueryBusMock(array $productData): CommandBusInterface
     {
         $queryBusMock = $this->createMock(CommandBusInterface::class);
@@ -1538,9 +1411,6 @@ class ProductFormDataProviderTest extends TestCase
         return $queryBusMock;
     }
 
-    /**
-     * @return LogicalOr
-     */
     private function getHandledQueries(): LogicalOr
     {
         return $this->logicalOr(
@@ -1555,14 +1425,11 @@ class ProductFormDataProviderTest extends TestCase
     }
 
     /**
-     * @param mixed $query
-     * @param array $productData
-     *
      * @return ProductForEditing|ProductSupplierOptions|ProductFeatureValue[]|CustomizationField[]|StockMovement[]|RelatedProduct[]|PackedProductDetails[]
      */
     private function createResultBasedOnQuery($query, array $productData)
     {
-        switch ($queryClass = get_class($query)) {
+        switch ($queryClass = \get_class($query)) {
             case GetProductForEditing::class:
                 return $this->createProductForEditing($productData);
             case GetProductSupplierOptions::class:
@@ -1579,12 +1446,9 @@ class ProductFormDataProviderTest extends TestCase
                 return $this->createPackedProductsDetails($productData);
         }
 
-        throw new RuntimeException(sprintf('Query "%s" was not expected in query bus mock', $queryClass));
+        throw new RuntimeException(\sprintf('Query "%s" was not expected in query bus mock', $queryClass));
     }
 
-    /**
-     * @return array
-     */
     private function getDefaultOutputData(): array
     {
         return [
@@ -1707,11 +1571,6 @@ class ProductFormDataProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @param CommandBusInterface $queryBusMock
-     *
-     * @return ProductFormDataProvider
-     */
     private function buildProvider(CommandBusInterface $queryBusMock): ProductFormDataProvider
     {
         return new ProductFormDataProvider(
@@ -1724,9 +1583,6 @@ class ProductFormDataProviderTest extends TestCase
         );
     }
 
-    /**
-     * @return ConfigurationInterface
-     */
     private function getDefaultConfigurationMock(): ConfigurationInterface
     {
         $configurationMock = $this->getMockBuilder(ConfigurationInterface::class)->getMock();

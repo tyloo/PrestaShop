@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -140,8 +141,6 @@ class HookDispatcherTest extends TestCase
 
     /**
      * The event dispatcher puts every parameter dispatched in an array.
-     *
-     * @param array $parameters
      */
     private function createRenderingHookEvent(array $parameters = []): RenderingHookEvent
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,7 +70,7 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
         DatabaseDump::restoreTables(['admin_filter']);
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->loginUser($this->client);
@@ -80,10 +81,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
     /**
      * Calls the grid page and return the parsed entities it contains, based on the parseEntityFromRow that each
      * sub-class must implement.
-     *
-     * @param array $routeParams
-     *
-     * @return TestEntityDTOCollection
      */
     protected function getEntitiesFromGrid(array $routeParams = []): TestEntityDTOCollection
     {
@@ -96,19 +93,12 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
 
     /**
      * Parses all the entities' data from the grid table, based on the parseEntityFromRow that each subclass must implement.
-     *
-     * @param Crawler $crawler
-     *
-     * @return TestEntityDTOCollection
      */
     protected function parseEntitiesFromGridTable(Crawler $crawler): TestEntityDTOCollection
     {
         $grid = $crawler->filter($this->getGridSelector());
         if (empty($grid->count())) {
-            throw new InvalidArgumentException(sprintf(
-                'Could not find a grid matching CSS selector "%s"',
-                $this->getGridSelector()
-            ));
+            throw new InvalidArgumentException(\sprintf('Could not find a grid matching CSS selector "%s"', $this->getGridSelector()));
         }
 
         // Get rows but filter the one that is used to indicate there is no result
@@ -124,10 +114,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
 
     /**
      * Parses all the entities' data from the table rows, based on the parseEntityFromRow that each subclass must implement.
-     *
-     * @param Crawler $entitiesRows
-     *
-     * @return TestEntityDTOCollection
      */
     protected function parseEntitiesFromRows(Crawler $entitiesRows): TestEntityDTOCollection
     {
@@ -151,11 +137,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
     /**
      * Calls the grid page with specific filters and return the parsed entities it contains, based on the
      * parseEntityFromRow that each subclass must implement.
-     *
-     * @param array $testFilters
-     * @param array $routeParams
-     *
-     * @return TestEntityDTOCollection
      */
     protected function getFilteredEntitiesFromGrid(array $testFilters, array $routeParams = []): TestEntityDTOCollection
     {
@@ -190,12 +171,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
         DatabaseDump::restoreTables(['admin_filter']);
     }
 
-    /**
-     * @param Crawler $crawler
-     * @param array $formModifications
-     *
-     * @return Form
-     */
     protected function fillFiltersForm(Crawler $crawler, array $formModifications): Form
     {
         $filtersForm = $this->getFormByButton($crawler, $this->getFilterSearchButtonSelector());
@@ -204,22 +179,13 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
         return $filtersForm;
     }
 
-    /**
-     * @param Crawler $crawler
-     * @param string $formButtonSelector
-     *
-     * @return Form
-     */
     protected function getFormByButton(Crawler $crawler, string $formButtonSelector): Form
     {
         $submitButton = $crawler->selectButton($formButtonSelector);
         try {
             $form = $submitButton->form();
         } catch (InvalidArgumentException $e) {
-            throw new InvalidArgumentException(sprintf(
-                'Could not find form in the page, maybe the button selector "%s" is not adapted, usually you can use the button id (without the #) or its name',
-                $formButtonSelector
-            ), $e->getCode(), $e);
+            throw new InvalidArgumentException(\sprintf('Could not find form in the page, maybe the button selector "%s" is not adapted, usually you can use the button id (without the #) or its name', $formButtonSelector), $e->getCode(), $e);
         }
 
         return $form;
@@ -227,9 +193,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
 
     /**
      * Asserts collection contains the entity matching the provided ID
-     *
-     * @param TestEntityDTOCollection $entities
-     * @param int $searchEntityId
      */
     protected function assertCollectionContainsEntity(TestEntityDTOCollection $entities, int $searchEntityId): void
     {
@@ -240,10 +203,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
         $this->assertContains($searchEntityId, $ids);
     }
 
-    /**
-     * @param string $deleteRoute
-     * @param array $routeParams
-     */
     protected function deleteEntityFromPage(string $deleteRoute, array $routeParams): void
     {
         // performs the deletion and then redirects to the list
@@ -252,7 +211,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
     }
 
     /**
-     * @param string $route
      * @param array<string, mixed> $routeParams
      */
     protected function toggleStatus(string $route, array $routeParams): void
@@ -261,10 +219,6 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
         $this->assertResponseRedirects();
     }
 
-    /**
-     * @param string $route
-     * @param array $requestParams
-     */
     protected function bulkDeleteEntitiesFromPage(string $route, array $requestParams): void
     {
         // Delete url performs the deletion and then redirects to the list
@@ -274,33 +228,19 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
 
     /**
      * Returns the selector allowing to get the grid's search button.
-     *
-     * @return string
      */
     abstract protected function getFilterSearchButtonSelector(): string;
 
-    /**
-     * @param array $routeParams
-     *
-     * @return string
-     */
     abstract protected function generateGridUrl(array $routeParams = []): string;
 
     /**
      * Returns the selector of the tested grid, for example: #products_grid_table
-     *
-     * @return string
      */
     abstract protected function getGridSelector(): string;
 
     /**
      * This method parse a row from the grid and returns a TestEntityDTO which contains, at the minimum, the ID of the
      * entity plus additional variables that you could wish to test.
-     *
-     * @param Crawler $tr
-     * @param int $i
-     *
-     * @return TestEntityDTO
      */
     abstract protected function parseEntityFromRow(Crawler $tr, int $i): TestEntityDTO;
 }

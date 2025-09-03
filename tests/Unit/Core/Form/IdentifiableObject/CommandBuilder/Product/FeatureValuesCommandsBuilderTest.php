@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class FeatureValuesCommandsBuilderTest extends AbstractProductCommandBuilderTest
 {
     /**
      * @dataProvider getExpectedCommands
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
@@ -353,9 +351,6 @@ class FeatureValuesCommandsBuilderTest extends AbstractProductCommandBuilderTest
 
     /**
      * @dataProvider getInvalidCommands
-     *
-     * @param array $formData
-     * @param string $exceptionClass
      */
     public function testInvalidBuildCommand(array $formData, string $exceptionClass): void
     {

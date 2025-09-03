@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ class ShippingAssertionFeatureContext extends AbstractShippingFeatureContext
 {
     /**
      * @Then product :productReference should have no carriers assigned
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoCarriers(string $productReference): void
     {
@@ -49,15 +48,12 @@ class ShippingAssertionFeatureContext extends AbstractShippingFeatureContext
 
         Assert::assertEmpty(
             $productForEditing->getShippingInformation()->getCarrierReferences(),
-            sprintf('Expected product "%s" to have no carriers assigned', $productReference)
+            \sprintf('Expected product "%s" to have no carriers assigned', $productReference)
         );
     }
 
     /**
      * @Then product :productReference should have following shipping information:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function assertShippingInformationForDefaultShop(string $productReference, TableNode $tableNode): void
     {
@@ -66,10 +62,6 @@ class ShippingAssertionFeatureContext extends AbstractShippingFeatureContext
 
     /**
      * @Then product :productReference should have following shipping information for shop(s) :shopReferences:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
-     * @param string $shopReferences
      */
     public function assertShippingInfoForShops(string $productReference, TableNode $tableNode, string $shopReferences): void
     {
@@ -81,10 +73,6 @@ class ShippingAssertionFeatureContext extends AbstractShippingFeatureContext
         }
     }
 
-    /**
-     * @param array $expectedValues
-     * @param ProductShippingInformation $actualValues
-     */
     private function assertNumberShippingFields(array &$expectedValues, ProductShippingInformation $actualValues): void
     {
         $numberShippingFields = [
@@ -102,10 +90,8 @@ class ShippingAssertionFeatureContext extends AbstractShippingFeatureContext
                 $expectedNumber = new DecimalNumber((string) $expectedValues[$field]);
                 $actualNumber = $propertyAccessor->getValue($actualValues, $field);
 
-                if (!$expectedNumber->equals($actualNumber)) {
-                    throw new RuntimeException(
-                        sprintf('Product %s expected to be "%s", but is "%s"', $field, $expectedNumber, $actualNumber)
-                    );
+                if (! $expectedNumber->equals($actualNumber)) {
+                    throw new RuntimeException(\sprintf('Product %s expected to be "%s", but is "%s"', $field, $expectedNumber, $actualNumber));
                 }
 
                 unset($expectedValues[$field]);
@@ -113,11 +99,6 @@ class ShippingAssertionFeatureContext extends AbstractShippingFeatureContext
         }
     }
 
-    /**
-     * @param string $productReference
-     * @param TableNode $tableNode
-     * @param int|null $shopId
-     */
     private function assertShippingInfo(string $productReference, TableNode $tableNode, ?int $shopId = null): void
     {
         $data = $this->localizeByRows($tableNode);
@@ -145,13 +126,9 @@ class ShippingAssertionFeatureContext extends AbstractShippingFeatureContext
         // Assertions checking isset() can hide some errors if it doesn't find array key,
         // to make sure all provided fields were checked we need to unset every asserted field
         // and finally, if provided data is not empty, it means there are some unnasserted values left
-        Assert::assertEmpty($data, sprintf('Some provided product shipping fields haven\'t been asserted: %s', var_export($data, true)));
+        Assert::assertEmpty($data, \sprintf('Some provided product shipping fields haven\'t been asserted: %s', var_export($data, true)));
     }
 
-    /**
-     * @param array $data
-     * @param ProductShippingInformation $productShippingInformation
-     */
     private function assertDeliveryTimeNotes(array &$data, ProductShippingInformation $productShippingInformation): void
     {
         $notesTypeNamedValues = [

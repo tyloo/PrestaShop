@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,7 +64,9 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
      */
     protected $productFeatureContext;
 
-    /** @BeforeScenario */
+    /**
+     * @BeforeScenario
+     */
     public function before(BeforeScenarioScope $scope)
     {
         /** @var InitializedContextEnvironment $environment */
@@ -143,17 +146,11 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
         $this->taxRules[$taxRuleName] = $taxRule;
     }
 
-    /**
-     * @param string $name
-     */
     public function checkTaxWithNameExists(string $name): void
     {
         $this->checkFixtureExists($this->taxes, 'Tax', $name);
     }
 
-    /**
-     * @param string $name
-     */
     public function checkTaxRuleWithNameExists(string $name): void
     {
         $this->checkFixtureExists($this->taxRules, 'Tax rule', $name);

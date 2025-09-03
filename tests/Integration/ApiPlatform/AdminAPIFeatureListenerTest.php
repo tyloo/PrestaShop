@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -102,8 +103,6 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
 
     /**
      * @depends testAPIIsProtectedByDefault
-     *
-     * @return string
      */
     public function testGetBearerTokenWhenAdminAPIIsEnabled(): string
     {
@@ -121,10 +120,6 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
 
     /**
      * @depends testGetBearerTokenWhenAdminAPIIsEnabled
-     *
-     * @param string $bearerToken
-     *
-     * @return string
      */
     public function testAccessTokenNotFoundAfterDisablingAdminAPI(string $bearerToken): string
     {
@@ -151,10 +146,6 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
 
     /**
      * @depends testAccessTokenNotFoundAfterDisablingAdminAPI
-     *
-     * @param string $bearerToken
-     *
-     * @return string
      */
     public function testAdminAPIFeatureDisabled(string $bearerToken): string
     {
@@ -171,10 +162,6 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
 
     /**
      * @depends testAdminAPIFeatureDisabled
-     *
-     * @param string $bearerToken
-     *
-     * @return string
      */
     public function testAdminAPIFeatureMultistoreEnabled(string $bearerToken): string
     {
@@ -197,10 +184,6 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
 
     /**
      * @depends testAdminAPIFeatureMultistoreEnabled
-     *
-     * @param string $bearerToken
-     *
-     * @return string
      */
     public function testAdminAPIFeatureMultistoreSuccess(string $bearerToken): string
     {
@@ -221,10 +204,6 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
 
     /**
      * @depends testAdminAPIFeatureMultistoreSuccess
-     *
-     * @param string $bearerToken
-     *
-     * @return string
      */
     public function testAdminAPIWhenMultistoreEnabledButNotDedicatedFeatureFlag(string $bearerToken): string
     {

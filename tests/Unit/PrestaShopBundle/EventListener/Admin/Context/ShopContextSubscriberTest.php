@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,7 +69,10 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $listener = new ShopContextSubscriber(
             $shopContextBuilder,
             $this->mockEmployeeContext(),
-            $this->mockConfiguration(['PS_SHOP_DEFAULT' => self::DEFAULT_SHOP_ID, 'PS_SSL_ENABLED' => self::PS_SSL_ENABLED]),
+            $this->mockConfiguration([
+                'PS_SHOP_DEFAULT' => self::DEFAULT_SHOP_ID,
+                'PS_SSL_ENABLED' => self::PS_SSL_ENABLED,
+            ]),
             $this->mockMultistoreFeature(false),
             $this->mockRouter(),
             $this->mockSecurity(),
@@ -85,11 +89,6 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
 
     /**
      * @dataProvider getMultiShopValues
-     *
-     * @param ?ShopConstraint $tokenShopConstraint
-     * @param ?array $employeeData
-     * @param ShopConstraint $expectedShopConstraint
-     * @param int $expectedShopId
      */
     public function testMultiShop(?ShopConstraint $tokenShopConstraint, ?array $employeeData, ShopConstraint $expectedShopConstraint, int $expectedShopId): void
     {
@@ -104,7 +103,10 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $listener = new ShopContextSubscriber(
             $shopContextBuilder,
             $this->mockEmployeeContext($employeeData),
-            $this->mockConfiguration(['PS_SHOP_DEFAULT' => self::DEFAULT_SHOP_ID, 'PS_SSL_ENABLED' => self::PS_SSL_ENABLED]),
+            $this->mockConfiguration([
+                'PS_SHOP_DEFAULT' => self::DEFAULT_SHOP_ID,
+                'PS_SSL_ENABLED' => self::PS_SSL_ENABLED,
+            ]),
             $this->mockMultistoreFeature(true),
             $this->mockRouter(),
             $this->mockSecurity($expectedShopConstraint),
@@ -133,7 +135,10 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $listener = new ShopContextSubscriber(
             $shopContextBuilder,
             $this->mockEmployeeContext(),
-            $this->mockConfiguration(['PS_SHOP_DEFAULT' => self::DEFAULT_SHOP_ID, 'PS_SSL_ENABLED' => self::PS_SSL_ENABLED]),
+            $this->mockConfiguration([
+                'PS_SHOP_DEFAULT' => self::DEFAULT_SHOP_ID,
+                'PS_SSL_ENABLED' => self::PS_SSL_ENABLED,
+            ]),
             $this->mockMultistoreFeature(false),
             $this->mockRouter(),
             $this->mockSecurity(),
@@ -196,17 +201,10 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
 
     /**
      * @dataProvider getRedirectionValues
-     *
-     * @param string|null $switchParameterValue
-     * @param ShopConstraint|null $originalTokenShopConstraint
-     * @param bool $redirectionExpected
-     * @param string $expectedCookieValue
-     * @param ShopConstraint $expectedTokenShopConstraint
-     * @param array $employeeData
      */
     public function testMultiShopRedirection(?string $switchParameterValue, ?ShopConstraint $originalTokenShopConstraint, bool $redirectionExpected, string $expectedCookieValue, ShopConstraint $expectedTokenShopConstraint, array $employeeData = []): void
     {
-        $requestParameters = null !== $switchParameterValue ? ['setShopContext' => $switchParameterValue] : [];
+        $requestParameters = $switchParameterValue !== null ? ['setShopContext' => $switchParameterValue] : [];
         $request = new Request(
             $requestParameters,
             [], [], [], [],
@@ -239,7 +237,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         );
 
         // Check the initial state of the token attribute
-        if (null !== $originalTokenShopConstraint) {
+        if ($originalTokenShopConstraint !== null) {
             $this->assertEquals($originalTokenShopConstraint, $security->getToken()->getAttribute(TokenAttributes::SHOP_CONSTRAINT));
         } else {
             $this->assertFalse($security->getToken()->hasAttribute(TokenAttributes::SHOP_CONSTRAINT));
@@ -571,7 +569,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $securityMock = $this->createMock(Security::class);
         $userMock = $this->createMock(UserInterface::class);
         $token = new UsernamePasswordToken($userMock, 'main', []);
-        if (null !== $shopConstraint) {
+        if ($shopConstraint !== null) {
             $token->setAttribute(TokenAttributes::SHOP_CONSTRAINT, $shopConstraint);
         }
         $securityMock->method('getToken')->willReturn($token);
@@ -606,7 +604,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
                 $employeeContext
                     ->method('hasAuthorizationOnShopGroup')
                     ->will($this->returnCallback(function ($shopGroupId) use ($employeeData) {
-                        return in_array($shopGroupId, $employeeData['authorizedShopGroups']);
+                        return \in_array($shopGroupId, $employeeData['authorizedShopGroups'], true);
                     }))
                 ;
             } else {
@@ -620,7 +618,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
                 $employeeContext
                     ->method('hasAuthorizationOnShop')
                     ->will($this->returnCallback(function ($shopId) use ($employeeData) {
-                        return in_array($shopId, $employeeData['authorizedShops']);
+                        return \in_array($shopId, $employeeData['authorizedShops'], true);
                     }))
                 ;
             } else {

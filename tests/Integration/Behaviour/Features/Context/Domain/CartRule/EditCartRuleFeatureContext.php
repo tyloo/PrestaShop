@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
     /**
      * @When /^I (enable|disable) cart rule with reference "(.+)"$/
      *
-     * @param bool $enable
-     * @param string $cartRuleReference
-     *
      * @see StringToBoolTransformContext::transformTruthyStringToBoolean for $enable string to bool transformation
      */
     public function toggleCartRuleStatus(bool $enable, string $cartRuleReference): void
@@ -54,8 +52,6 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @When /^I bulk (enable|disable) cart rules "(.+)"$/
-     *
-     * @param string $cartRuleReferences
      */
     public function bulkEnableCartRules(bool $enable, string $cartRuleReferences): void
     {
@@ -66,8 +62,6 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @When I edit cart rule :cartRuleReference with following properties:
-     *
-     * @param TableNode $tableNode
      */
     public function editCartRule(string $cartRuleReference, TableNode $tableNode): void
     {
@@ -78,7 +72,7 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
             $this->fillEditCommand($command, $data);
             $this->getCommandBus()->handle($command);
 
-            if (!empty($data['code'])) {
+            if (! empty($data['code'])) {
                 // resets cart rule id by the code in storage if it was edited
                 $this->getSharedStorage()->set($data['code'], $cartRuleId);
             }
@@ -88,7 +82,6 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
     }
 
     /**
-     * @param EditCartRuleCommand $command
      * @param array<string, mixed> $data
      */
     private function fillEditCommand(EditCartRuleCommand $command, array $data): void
@@ -112,7 +105,7 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
             $command->setCode($data['code']);
         }
         if (isset($data['customer'])) {
-            $command->setCustomerId(!empty($data['customer']) ? $this->getSharedStorage()->get($data['customer']) : 0);
+            $command->setCustomerId(! empty($data['customer']) ? $this->getSharedStorage()->get($data['customer']) : 0);
         }
         if (isset($data['priority'])) {
             $command->setPriority((int) $data['priority']);

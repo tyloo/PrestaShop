@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ use PrestaShop\PrestaShop\Core\Domain\Contact\Command\EditContactCommand;
 use PrestaShop\PrestaShop\Core\Domain\Contact\Exception\ContactConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Contact\Exception\ContactException;
 
-/**
- * Class EditContactCommandTest
- */
 class EditContactCommandTest extends TestCase
 {
     public function testItThrowsAnExceptionOnIncorrectIdPassed()
@@ -45,8 +43,6 @@ class EditContactCommandTest extends TestCase
 
     /**
      * @dataProvider getIncorrectTitles
-     *
-     * @param array $incorrectTitle
      */
     public function testItThrowsAnExceptionOnIncorrectTitle(array $incorrectTitle): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -719,19 +720,12 @@ class FactoryTest extends TestCase
 
     /**
      * Create LocaleData
-     *
-     * @param string $code
-     * @param string $currencyPattern
-     * @param string $percentPattern
-     * @param string $decimalPattern
-     *
-     * @return Locale
      */
     private function createLocale(
         string $code,
         string $currencyPattern,
         string $percentPattern,
-        string $decimalPattern
+        string $decimalPattern,
     ): Locale {
         $localeData = new LocaleData();
         $localeData->setLocaleCode($code);

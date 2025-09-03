@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,6 @@ class ValueObjectNormalizerTest extends TestCase
 {
     /**
      * @dataProvider getSupportsNormalizationValues
-     *
-     * @param mixed $data
-     * @param bool $expectedSupport
-     *
-     * @return void
      */
     public function testSupportsNormalization(mixed $data, bool $expectedSupport): void
     {
@@ -61,12 +57,6 @@ class ValueObjectNormalizerTest extends TestCase
 
     /**
      * @dataProvider getNormalizationValues
-     *
-     * @param mixed $data
-     * @param mixed $expectedNormalization
-     * @param array $context
-     *
-     * @return void
      */
     public function testNormalize(mixed $data, mixed $expectedNormalization, array $context = []): void
     {
@@ -85,11 +75,6 @@ class ValueObjectNormalizerTest extends TestCase
 
     /**
      * @dataProvider getSupportsDenormalizationValues
-     *
-     * @param mixed $data
-     * @param bool $expectedSupport
-     *
-     * @return void
      */
     public function testSupportsDenormalization(mixed $data, string $type, bool $expectedSupport): void
     {
@@ -116,13 +101,6 @@ class ValueObjectNormalizerTest extends TestCase
 
     /**
      * @dataProvider getSupportsDenormalizeValues
-     *
-     * @param mixed $data
-     * @param string $type
-     * @param mixed $expectedDenormalize
-     * @param array $context
-     *
-     * @return void
      */
     public function testDenormalize(mixed $data, string $type, mixed $expectedDenormalize, array $context = []): void
     {

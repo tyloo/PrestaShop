@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,13 +50,13 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
 {
     private $previousErrorReportingLevel;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         self::bootKernel();
         global $kernel;
         $kernel = self::$kernel;
-        $this->previousErrorReportingLevel = error_reporting(E_WARNING);
+        $this->previousErrorReportingLevel = error_reporting(\E_WARNING);
     }
 
     public function testLoadLegacyCommandWithoutContextFails()
@@ -65,22 +66,19 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
                 restore_error_handler();
                 throw new Exception($errstr, $errno);
             },
-            E_WARNING
+            \E_WARNING
         );
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Attempt to read property "controller_type" on null');
 
         $application = new Application(static::$kernel);
-        $application->add(new class() extends Command {
+        $application->add(new class extends Command {
             protected function configure()
             {
                 $this->setName('prestashop-tests:load-legacy-classes');
             }
 
             /**
-             * @param InputInterface $input
-             * @param OutputInterface $output
-             *
              * @return int
              */
             protected function execute(InputInterface $input, OutputInterface $output)
@@ -103,16 +101,13 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
     public function testLoadLegacyCommandWithContextWorks()
     {
         $application = new Application(static::$kernel);
-        $application->add(new class() extends Command {
+        $application->add(new class extends Command {
             protected function configure()
             {
                 $this->setName('prestashop-tests:load-legacy-classes');
             }
 
             /**
-             * @param InputInterface $input
-             * @param OutputInterface $output
-             *
              * @return int
              */
             protected function execute(InputInterface $input, OutputInterface $output)

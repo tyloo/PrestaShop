@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,7 +40,7 @@ class CategoriesProviderTest extends TestCase
      */
     private $provider;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $yamlParser = new YamlParser(_PS_CACHE_DIR_);
         $prestashopAddonsConfig = $yamlParser->parse(__DIR__ . '/fixtures/categories.yml');

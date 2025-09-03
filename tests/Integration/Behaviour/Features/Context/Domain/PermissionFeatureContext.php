@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,9 +49,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then profile :profileReference should have the following permissions for tabs:
-     *
-     * @param string $profileReference
-     * @param TableNode $table
      */
     public function assertTabsPermissionForProfile(string $profileReference, TableNode $table): void
     {
@@ -64,14 +62,14 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
         $expectedTabsPermissions = $table->getRowsHash();
         foreach ($expectedTabsPermissions as $tabName => $serializedTabPermissions) {
             $tabId = Tab::getIdFromClassName($tabName);
-            Assert::assertNotFalse($tabId, sprintf('No tab found for %s', $tabName));
+            Assert::assertNotFalse($tabId, \sprintf('No tab found for %s', $tabName));
 
             $tabPermissions = $this->getPermissionsFromTabArray($profileTabsPermissions[$tabId]);
             $expectedTabPermissions = $this->unserializeTabPermissions($serializedTabPermissions);
             Assert::assertEquals(
                 $expectedTabPermissions,
                 $tabPermissions,
-                sprintf(
+                \sprintf(
                     'Incorrect permissions for profile %s for tab %s expected %s but got %s instead',
                     $profileReference,
                     $tabName,
@@ -84,10 +82,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I (disable|enable) (view|add|edit|delete|all) permission for tab (.*) for profile (.*)/
-     *
-     * @param string $action
-     * @param string $permission
-     * @param string $profileReference
      */
     public function updateTabPermission(string $action, string $permission, string $tabName, string $profileReference): void
     {
@@ -101,9 +95,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then profile :profileReference should have the following permissions for modules:
-     *
-     * @param string $profileReference
-     * @param TableNode $table
      */
     public function assertModulesPermissionForProfile(string $profileReference, TableNode $table): void
     {
@@ -121,7 +112,7 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
             Assert::assertEquals(
                 $expectedModulePermissions,
                 $modulePermissions,
-                sprintf(
+                \sprintf(
                     'Incorrect permissions for profile %s for module %s expected %s but got %s instead',
                     $profileReference,
                     $moduleName,
@@ -134,10 +125,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I (disable|enable) (view|configure|uninstall) permission for module (.*) for profile (.*)/
-     *
-     * @param string $action
-     * @param string $permission
-     * @param string $profileReference
      */
     public function updateModulePermission(string $action, string $permission, string $moduleName, string $profileReference): void
     {
@@ -150,8 +137,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param array $tab
-     *
      * @return array<string, bool>
      */
     private function getPermissionsFromModuleArray(array $tab): array
@@ -164,8 +149,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param array $tab
-     *
      * @return array<string, bool>
      */
     private function getPermissionsFromTabArray(array $tab): array
@@ -184,8 +167,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
      *    "view,add" => [view => true, add => true, edit => false, delete => false]
      *    "edit,delete" => [view => false, add => false, edit => true, delete => true]
      *
-     * @param string $serializedTabPermissions
-     *
      * @return array<string, bool>
      */
     private function unserializeTabPermissions(string $serializedTabPermissions): array
@@ -193,10 +174,10 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
         $permissions = explode(',', $serializedTabPermissions);
 
         return [
-            ControllerPermission::VIEW => in_array(ControllerPermission::VIEW, $permissions),
-            ControllerPermission::ADD => in_array(ControllerPermission::ADD, $permissions),
-            ControllerPermission::EDIT => in_array(ControllerPermission::EDIT, $permissions),
-            ControllerPermission::DELETE => in_array(ControllerPermission::DELETE, $permissions),
+            ControllerPermission::VIEW => \in_array(ControllerPermission::VIEW, $permissions, true),
+            ControllerPermission::ADD => \in_array(ControllerPermission::ADD, $permissions, true),
+            ControllerPermission::EDIT => \in_array(ControllerPermission::EDIT, $permissions, true),
+            ControllerPermission::DELETE => \in_array(ControllerPermission::DELETE, $permissions, true),
         ];
     }
 
@@ -206,8 +187,6 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
      *    "view,configure" => [view => true, configure => true, uninstall => false]
      *    "view,uninstall" => [view => true, configure => false, uninstall => true]
      *
-     * @param string $serializedTabPermissions
-     *
      * @return array<string, bool>
      */
     private function unserializeModulePermissions(string $serializedTabPermissions): array
@@ -215,17 +194,15 @@ class PermissionFeatureContext extends AbstractDomainFeatureContext
         $permissions = explode(',', $serializedTabPermissions);
 
         return [
-            ModulePermission::VIEW => in_array(ModulePermission::VIEW, $permissions),
-            ModulePermission::CONFIGURE => in_array(ModulePermission::CONFIGURE, $permissions),
-            ModulePermission::UNINSTALL => in_array(ModulePermission::UNINSTALL, $permissions),
+            ModulePermission::VIEW => \in_array(ModulePermission::VIEW, $permissions, true),
+            ModulePermission::CONFIGURE => \in_array(ModulePermission::CONFIGURE, $permissions, true),
+            ModulePermission::UNINSTALL => \in_array(ModulePermission::UNINSTALL, $permissions, true),
         ];
     }
 
     /**
      * Return big fat configuration object with all the data, the input employee has few impact since the object contains
      * everything anyway.
-     *
-     * @return ConfigurablePermissions
      */
     private function getConfigurablePermissions(): ConfigurablePermissions
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,10 +55,7 @@ class CombinationDetails
     private $price;
 
     /**
-     * @param string $reference
-     * @param int $quantity
      * @param string[] $attributes
-     * @param float|null $price
      */
     public function __construct(string $reference, int $quantity, array $attributes, ?float $price = null)
     {
@@ -67,33 +65,21 @@ class CombinationDetails
         $this->price = $price;
     }
 
-    /**
-     * @return string
-     */
     public function getReference(): string
     {
         return $this->reference;
     }
 
-    /**
-     * @return int
-     */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return array
-     */
     public function getAttributes(): array
     {
         return $this->attributes;
     }
 
-    /**
-     * @return float|null
-     */
     public function getPrice(): ?float
     {
         return $this->price;

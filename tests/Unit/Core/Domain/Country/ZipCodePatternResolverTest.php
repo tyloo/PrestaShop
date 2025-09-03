@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,10 +44,6 @@ class ZipCodePatternResolverTest extends TestCase
 
     /**
      * @dataProvider regexpPatternDataProvider
-     *
-     * @param string $format
-     * @param string $isoCode
-     * @param string $expectedResult
      */
     public function testGetRegexpPattern(string $format, string $isoCode, string $expectedResult)
     {
@@ -57,10 +54,6 @@ class ZipCodePatternResolverTest extends TestCase
 
     /**
      * @dataProvider humanReadablePatternDataProvider
-     *
-     * @param string $format
-     * @param string $isoCode
-     * @param string $expectedResult
      */
     public function testGetHumanReadablePattern(string $format, string $isoCode, string $expectedResult)
     {
@@ -69,9 +62,6 @@ class ZipCodePatternResolverTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    /**
-     * @return array
-     */
     public function regexpPatternDataProvider(): array
     {
         $expectedResults = [
@@ -99,9 +89,6 @@ class ZipCodePatternResolverTest extends TestCase
         }, $this->getPatterns(), $expectedResults);
     }
 
-    /**
-     * @return array
-     */
     public function humanReadablePatternDataProvider(): array
     {
         $expectedResults = [
@@ -129,9 +116,6 @@ class ZipCodePatternResolverTest extends TestCase
         }, $this->getPatterns(), $expectedResults);
     }
 
-    /**
-     * @return array
-     */
     public function getPatterns(): array
     {
         return [

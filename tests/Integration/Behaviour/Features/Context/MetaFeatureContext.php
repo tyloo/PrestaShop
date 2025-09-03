@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class MetaFeatureContext extends AbstractPrestaShopFeatureContext
         $meta = SharedStorage::getStorage()->get($reference);
 
         if ($meta->page !== $expectedPageName) {
-            throw new RuntimeException(sprintf('Expected page name "%s" did not matched given %s', $expectedPageName, $meta->page));
+            throw new RuntimeException(\sprintf('Expected page name "%s" did not matched given %s', $expectedPageName, $meta->page));
         }
     }
 
@@ -54,7 +55,7 @@ class MetaFeatureContext extends AbstractPrestaShopFeatureContext
         $meta = SharedStorage::getStorage()->get($reference);
 
         if ($meta->title[$defaultLanguageId] !== $expectedTitle) {
-            throw new RuntimeException(sprintf('Expected title "%s" did not matched given %s for language %s', $expectedTitle, $meta->title[$defaultLanguageId], $defaultLanguageId));
+            throw new RuntimeException(\sprintf('Expected title "%s" did not matched given %s for language %s', $expectedTitle, $meta->title[$defaultLanguageId], $defaultLanguageId));
         }
     }
 
@@ -67,8 +68,8 @@ class MetaFeatureContext extends AbstractPrestaShopFeatureContext
         /** @var Meta $meta */
         $meta = SharedStorage::getStorage()->get($reference);
 
-        if ($meta->{$field}[$defaultLanguageId] !== $expectedValue) {
-            throw new RuntimeException(sprintf('Expected value "%s" did not matched given "%s" for language %d', $expectedValue, $meta->{$field}[$defaultLanguageId], $defaultLanguageId));
+        if ($expectedValue !== $meta->{$field}[$defaultLanguageId]) {
+            throw new RuntimeException(\sprintf('Expected value "%s" did not matched given "%s" for language %d', $expectedValue, $meta->{$field}[$defaultLanguageId], $defaultLanguageId));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class UpdateCombinationStockFeatureContext extends AbstractCombinationFeatureCon
      */
     public function updateStockForDefaultShop(
         string $combinationReference,
-        TableNode $tableNode
+        TableNode $tableNode,
     ): void {
         $this->updateStockAvailable(
             $combinationReference,
@@ -55,7 +56,7 @@ class UpdateCombinationStockFeatureContext extends AbstractCombinationFeatureCon
     public function updateStockForShop(
         string $combinationReference,
         string $shopReference,
-        TableNode $tableNode
+        TableNode $tableNode,
     ): void {
         $this->updateStockAvailable(
             $combinationReference,
@@ -70,7 +71,7 @@ class UpdateCombinationStockFeatureContext extends AbstractCombinationFeatureCon
     public function updateStockForShopCollection(
         string $combinationReference,
         string $shopReferences,
-        TableNode $tableNode
+        TableNode $tableNode,
     ): void {
         $this->updateStockAvailable(
             $combinationReference,
@@ -84,7 +85,7 @@ class UpdateCombinationStockFeatureContext extends AbstractCombinationFeatureCon
      */
     public function updateStockForAllShops(
         string $combinationReference,
-        TableNode $tableNode
+        TableNode $tableNode,
     ): void {
         $this->updateStockAvailable(
             $combinationReference,
@@ -95,9 +96,9 @@ class UpdateCombinationStockFeatureContext extends AbstractCombinationFeatureCon
 
     private function updateStockAvailable(string $combinationReference, array $dataRows, ShopConstraint $shopConstraint): void
     {
-        if (!isset($dataRows['delta quantity'])
-            && !isset($dataRows['fixed quantity'])
-            && !isset($dataRows['location'])) {
+        if (! isset($dataRows['delta quantity'])
+            && ! isset($dataRows['fixed quantity'])
+            && ! isset($dataRows['location'])) {
             return;
         }
 

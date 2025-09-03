@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I update product ":productReference" for all shops with following values:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function updateProductForAllShops(string $productReference, TableNode $table): void
     {
@@ -58,9 +56,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I update product ":productReference" with following values:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function updateProductForDefaultShop(string $productReference, TableNode $table): void
     {
@@ -70,9 +65,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I update product ":productReference" for shop :shopReference with following values:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function updateProductForShop(string $productReference, string $shopReference, TableNode $table): void
     {
@@ -83,9 +75,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I update product ":productReference" for shops :shopReferences with following values:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function updateProductForShopCollection(string $productReference, string $shopReferences, TableNode $table): void
     {
@@ -94,8 +83,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I update product :productReference prices and apply non-existing tax rules group
-     *
-     * @param string $productReference
      */
     public function updateTaxRulesGroupWithNonExistingGroup(string $productReference): void
     {
@@ -114,8 +101,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I assign non existing manufacturer to product :productReference
-     *
-     * @param string $productReference
      */
     public function updateOptionsWithNonExistingManufacturer(string $productReference): void
     {
@@ -136,15 +121,11 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I update product :productReference localized SEO field :field with a value of :length symbols length
-     *
-     * @param string $productReference
-     * @param string $field
-     * @param int $length
      */
     public function updateLocalizedSeoFieldsTooLongValueForDefaultShop(
         string $productReference,
         string $field,
-        int $length
+        int $length,
     ): void {
         $this->updateLocalizedSeoFieldsTooLongValue(
             $productReference,
@@ -154,17 +135,11 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         );
     }
 
-    /**
-     * @param string $productReference
-     * @param string $field
-     * @param int $length
-     * @param ShopConstraint $shopConstraint
-     */
     private function updateLocalizedSeoFieldsTooLongValue(
         string $productReference,
         string $field,
         int $length,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): void {
         try {
             $command = new UpdateProductCommand(
@@ -188,7 +163,7 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
                     ]);
                     break;
                 default:
-                    throw new RuntimeException(sprintf('Invalid field "%s" provided to scenario', $field));
+                    throw new RuntimeException(\sprintf('Invalid field "%s" provided to scenario', $field));
             }
             $this->getCommandBus()->handle($command);
         } catch (ProductException $e) {
@@ -196,11 +171,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         }
     }
 
-    /**
-     * @param string $productReference
-     * @param TableNode $table
-     * @param ShopConstraint $shopConstraint
-     */
     private function updateProduct(string $productReference, TableNode $table, ShopConstraint $shopConstraint): void
     {
         try {
@@ -211,13 +181,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         }
     }
 
-    /**
-     * @param string $productReference
-     * @param TableNode $table
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return UpdateProductCommand
-     */
     private function buildUpdateProductCommand(string $productReference, TableNode $table, ShopConstraint $shopConstraint): UpdateProductCommand
     {
         $data = $this->localizeByRows($table);
@@ -239,7 +202,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
     }
 
     /**
-     * @param UpdateProductCommand $command
      * @param array<string, mixed> $data
      */
     private function fillBasicInformation(UpdateProductCommand $command, array $data): void
@@ -256,7 +218,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
     }
 
     /**
-     * @param UpdateProductCommand $command
      * @param array<string, mixed> $data
      */
     private function fillDetails(UpdateProductCommand $command, array $data): void
@@ -279,7 +240,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
     }
 
     /**
-     * @param UpdateProductCommand $command
      * @param array<string, mixed> $data
      */
     private function fillOptions(UpdateProductCommand $command, array $data): void
@@ -308,7 +268,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
     }
 
     /**
-     * @param UpdateProductCommand $command
      * @param array<string, mixed> $data
      */
     private function fillPrices(UpdateProductCommand $command, array $data): void
@@ -339,7 +298,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
     }
 
     /**
-     * @param UpdateProductCommand $command
      * @param array<string, mixed> $data
      */
     private function fillSeo(UpdateProductCommand $command, array $data): void
@@ -363,7 +321,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
     }
 
     /**
-     * @param UpdateProductCommand $command
      * @param array<string, mixed> $data
      */
     private function fillShipping(UpdateProductCommand $command, array $data): void
@@ -395,7 +352,6 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
     }
 
     /**
-     * @param UpdateProductCommand $command
      * @param array<string, mixed> $data
      */
     private function fillStock(UpdateProductCommand $command, array $data): void

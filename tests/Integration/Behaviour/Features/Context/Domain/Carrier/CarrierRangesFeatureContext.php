@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -104,7 +105,7 @@ class CarrierRangesFeatureContext extends AbstractDomainFeatureContext
                     $range['id_zone'] = $zone->id;
                 } catch (RuntimeException $e) {
                     $this->setLastException(new CarrierConstraintException(
-                        sprintf('Invalid zone id reference %d supplied. Zone id must be a positive integer.', $range['id_zone']),
+                        \sprintf('Invalid zone id reference %d supplied. Zone id must be a positive integer.', $range['id_zone']),
                         CarrierConstraintException::INVALID_ZONE_ID
                     ));
                 }

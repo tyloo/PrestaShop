@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\Command\EditMetaCommand;
 use PrestaShop\PrestaShop\Core\Domain\Meta\Exception\MetaConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Meta\Exception\MetaException;
 
-/**
- * Class EditMetaCommandTest
- */
 class EditMetaCommandTest extends TestCase
 {
     /**

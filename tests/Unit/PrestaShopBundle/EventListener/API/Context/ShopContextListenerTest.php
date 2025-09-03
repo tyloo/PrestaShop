@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,10 +71,6 @@ class ShopContextListenerTest extends ContextEventListenerTestCase
 
     /**
      * @dataProvider getMultishopRequests
-     *
-     * @param Request $request
-     * @param ShopConstraint $expectedShopConstraint
-     * @param int $expectedShopId
      */
     public function testListenRequestParametersWhenMultishopIsEnabled(Request $request, ShopConstraint $expectedShopConstraint, int $expectedShopId): void
     {

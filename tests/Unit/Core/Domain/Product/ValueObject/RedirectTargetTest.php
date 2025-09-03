@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ class RedirectTargetTest extends TestCase
     /**
      * @dataProvider getValidDataForCreation
      *
-     * @param int $targetValue
-     * @param bool $isNoTarget
-     *
      * @throws ProductConstraintException
      */
     public function testItSuccessfullyCreatesRedirectTarget(int $targetValue, bool $isNoTarget): void
@@ -52,9 +50,6 @@ class RedirectTargetTest extends TestCase
         Assert::assertSame($isNoTarget, $redirectTarget->isNoTarget());
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidDataForCreation(): Generator
     {
         yield [1, false];
@@ -63,8 +58,6 @@ class RedirectTargetTest extends TestCase
 
     /**
      * @dataProvider getInvalidDataForCreation
-     *
-     * @param int $targetValue
      *
      * @throws ProductConstraintException
      */
@@ -76,9 +69,6 @@ class RedirectTargetTest extends TestCase
         new RedirectTarget($targetValue);
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidDataForCreation(): Generator
     {
         yield [-1];

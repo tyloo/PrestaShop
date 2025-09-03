@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -137,7 +138,7 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle(new GetAttributeGroupForEditing($attributeGroupId));
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Attribute group %s exists, but it was expected to be deleted', $reference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Attribute group %s exists, but it was expected to be deleted', $reference));
         } catch (AttributeGroupNotFoundException $e) {
             $this->getSharedStorage()->clear($reference);
         }
@@ -145,9 +146,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then attribute group :reference should have the following properties:
-     *
-     * @param string $reference
-     * @param TableNode $tableNode
      */
     public function assertAttributeGroupProperties(string $reference, TableNode $tableNode): void
     {
@@ -170,8 +168,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given there is a list of following attribute groups:
-     *
-     * @param TableNode $tableNode
      */
     public function assertAllAttributeGroupsForDefaultShop(TableNode $tableNode): void
     {
@@ -180,9 +176,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given there is a list of following attribute groups for shops ":shopReferences":
-     *
-     * @param TableNode $tableNode
-     * @param string $shopReferences
      */
     public function assertAllAttributeGroupsForShops(TableNode $tableNode, string $shopReferences): void
     {
@@ -198,8 +191,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given there is a list of following attribute groups for all shops:
-     *
-     * @param TableNode $tableNode
      */
     public function assertAllAttributeGroupsForAllShops(TableNode $tableNode): void
     {
@@ -211,10 +202,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given there should be no attribute groups for shops ":shopReferences"
-     *
-     * @param string $shopReferences
-     *
-     * @return void
      */
     public function assertAllAttributeGroupsListForShopIsEmpty(string $shopReferences): void
     {
@@ -227,15 +214,13 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
             Assert::assertEmpty(
                 $attributeGroups,
-                sprintf('Expected no attribute groups to be found for shop id %d', $shopId)
+                \sprintf('Expected no attribute groups to be found for shop id %d', $shopId)
             );
         }
     }
 
     /**
      * @Then product ":productReference" should have the following list of attribute groups:
-     *
-     * @param TableNode $tableNode
      */
     public function assertProductAttributeGroupsForDefaultShop(string $productReference, TableNode $tableNode): void
     {
@@ -244,8 +229,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product ":productReference" should have the following list of attribute groups for shops ":shopReferences":
-     *
-     * @param TableNode $tableNode
      */
     public function assertProductAttributeGroupsForShops(string $productReference, TableNode $tableNode, string $shopReferences): void
     {
@@ -258,8 +241,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product ":productReference" should have the following list of attribute groups for all shops:
-     *
-     * @param TableNode $tableNode
      */
     public function assertProductAttributeGroupsForAllShops(string $productReference, TableNode $tableNode): void
     {
@@ -268,8 +249,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product :productReference should have no attribute groups
-     *
-     * @param string $productReference
      */
     public function assertNoProductAttributesForDefaultShop(string $productReference): void
     {
@@ -281,15 +260,12 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
         Assert::assertEmpty(
             $attributeGroups,
-            sprintf('Expected no attribute groups to be found for product "%s" and shop id %d', $productReference, $shopId)
+            \sprintf('Expected no attribute groups to be found for product "%s" and shop id %d', $productReference, $shopId)
         );
     }
 
     /**
      * @Given the attribute group :attributeGroupReference should have the following attributes:
-     *
-     * @param TableNode $tableNode
-     * @param string $attributeGroupReference
      */
     public function assertAttributesInGroupForDefaultShop(TableNode $tableNode, string $attributeGroupReference): void
     {
@@ -302,9 +278,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given the attribute group :attributeGroupReference should have the following attributes for all shops:
-     *
-     * @param TableNode $tableNode
-     * @param string $attributeGroupReference
      */
     public function assertAttributesInGroupForAllShops(TableNode $tableNode, string $attributeGroupReference): void
     {
@@ -317,15 +290,11 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given the attribute group :attributeGroupReference should have the following attributes for shops ":shopReferences":
-     *
-     * @param TableNode $tableNode
-     * @param string $attributeGroupReference
-     * @param string $shopReferences
      */
     public function assertAttributesInGroupForShops(
         TableNode $tableNode,
         string $attributeGroupReference,
-        string $shopReferences
+        string $shopReferences,
     ): void {
         $shopIds = $this->referencesToIds($shopReferences);
 
@@ -340,11 +309,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the attribute group ":attributeGroupReference" should have no attributes for shops ":shopReferences"
-     *
-     * @param string $attributeGroupReference
-     * @param string $shopReferences
-     *
-     * @return void
      */
     public function assertAttributesAreEmptyInGroupForShops(string $attributeGroupReference, string $shopReferences): void
     {
@@ -361,10 +325,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product ":productReference" should have the following list of attributes in attribute group ":attributeGroupReference":
-     *
-     * @param TableNode $tableNode
-     * @param string $productReference
-     * @param string $attributeGroupReference
      */
     public function assertProductAttributesInGroupForDefaultShop(TableNode $tableNode, string $productReference, string $attributeGroupReference): void
     {
@@ -378,17 +338,12 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product ":productReference" should have the following list of attributes in attribute group ":attributeGroupReference" for shops ":shopReferences":
-     *
-     * @param TableNode $tableNode
-     * @param string $productReference
-     * @param string $attributeGroupReference
-     * @param string $shopReferences
      */
     public function assertProductAttributesInGroupForShops(
         TableNode $tableNode,
         string $productReference,
         string $attributeGroupReference,
-        string $shopReferences
+        string $shopReferences,
     ): void {
         $shopIds = $this->referencesToIds($shopReferences);
 
@@ -404,15 +359,11 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then product ":productReference" should have the following list of attributes in attribute group ":attributeGroupReference" for all shops:
-     *
-     * @param TableNode $tableNode
-     * @param string $productReference
-     * @param string $attributeGroupReference
      */
     public function assertProductAttributesInGroupForAllShops(
         TableNode $tableNode,
         string $productReference,
-        string $attributeGroupReference
+        string $attributeGroupReference,
     ): void {
         $this->assertProductAttributesInGroup(
             $tableNode,
@@ -433,7 +384,7 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
         TableNode $tableNode,
         string $productReference,
         string $attributeGroupReference,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): void {
         $this->performAttributesInGroupAssertion(
             $tableNode,
@@ -464,17 +415,13 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
         );
     }
 
-    /**
-     * @param TableNode $tableNode
-     * @param array $actualAttributeGroups
-     */
     private function performAttributeGroupsAssertion(TableNode $tableNode, array $actualAttributeGroups): void
     {
         $expectedAttributeGroups = $this->localizeByColumns($tableNode);
 
         Assert::assertEquals(
-            count($expectedAttributeGroups),
-            count($actualAttributeGroups),
+            \count($expectedAttributeGroups),
+            \count($actualAttributeGroups),
             'Expected count of attribute groups doesn\'t match'
         );
         foreach ($expectedAttributeGroups as $index => $attributeGroupsDatum) {
@@ -503,8 +450,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param TableNode|null $tableNode when null is passed, it means we expect empty result
-     * @param array $attributeGroups
-     * @param string $attributeGroupReference
      */
     private function performAttributesInGroupAssertion(?TableNode $tableNode, array $attributeGroups, string $attributeGroupReference): void
     {
@@ -518,22 +463,22 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (null === $checkAttributeGroup) {
-            throw new RuntimeException(sprintf('Could no find attribute group %s', $attributeGroupReference));
+        if ($checkAttributeGroup === null) {
+            throw new RuntimeException(\sprintf('Could no find attribute group %s', $attributeGroupReference));
         }
 
-        if (!$tableNode) {
+        if (! $tableNode) {
             // if tableNode is null we expect that desired group attributes are empty
             Assert::assertEmpty(
                 $checkAttributeGroup->getAttributes(),
-                sprintf('Expected no attributes in group "%s"', $attributeGroupReference)
+                \sprintf('Expected no attributes in group "%s"', $attributeGroupReference)
             );
 
             return;
         }
 
         $expectedAttributesData = $this->localizeByColumns($tableNode);
-        Assert::assertEquals(count($expectedAttributesData), count($checkAttributeGroup->getAttributes()));
+        Assert::assertEquals(\count($expectedAttributesData), \count($checkAttributeGroup->getAttributes()));
         $attributes = $checkAttributeGroup->getAttributes();
         foreach ($expectedAttributesData as $index => $attributesDatum) {
             $attribute = $attributes[$index];
@@ -554,11 +499,6 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
         }
     }
 
-    /**
-     * @param string $reference
-     *
-     * @return EditableAttributeGroup
-     */
     private function getAttributeGroup(string $reference): EditableAttributeGroup
     {
         $id = $this->referenceToId($reference);

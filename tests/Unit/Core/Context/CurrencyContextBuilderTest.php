@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,11 +47,6 @@ class CurrencyContextBuilderTest extends ContextBuilderTestCase
 
     /**
      * @dataProvider getCurrencyValues
-     *
-     * @param int $languageId
-     * @param string $expectedName
-     * @param string $expectedSymbol
-     * @param string $expectedPattern
      */
     public function testBuild(int $languageId, string $expectedName, string $expectedSymbol, string $expectedPattern): void
     {

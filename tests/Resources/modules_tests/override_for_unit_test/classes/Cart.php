@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,11 +36,11 @@ class Cart extends CartCore
     public function updateAddressId($id_address, $id_address_new)
     {
         $to_update = false;
-        if (!isset($this->id_address_invoice) || $this->id_address_invoice == $id_address) {
+        if (! isset($this->id_address_invoice) || $this->id_address_invoice === $id_address) {
             $to_update = true;
             $this->id_address_invoice = $id_address_new;
         }
-        if (!isset($this->id_address_delivery) || $this->id_address_delivery == $id_address) {
+        if (! isset($this->id_address_delivery) || $this->id_address_delivery === $id_address) {
             $to_update = true;
             $this->id_address_delivery = $id_address_new;
         }
@@ -65,7 +66,7 @@ class Cart extends CartCore
     */
     public function delete()
     {
-        if ($this->OrderExists()) { //NOT delete a cart which is associated with an order
+        if ($this->OrderExists()) { // NOT delete a cart which is associated with an order
             return false;
         }
         $uploaded_files = Db::getInstance()->executeS(
@@ -93,8 +94,8 @@ class Cart extends CartCore
 			DELETE FROM `' . _DB_PREFIX_ . 'customization`
 			WHERE `id_cart` = ' . (int) $this->id
         );
-        if (!Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_rule` WHERE `id_cart` = ' . (int) $this->id)
-         || !Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_product` WHERE `id_cart` = ' . (int) $this->id)) {
+        if (! Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_rule` WHERE `id_cart` = ' . (int) $this->id)
+         || ! Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_product` WHERE `id_cart` = ' . (int) $this->id)) {
             return false;
         }
 
@@ -131,7 +132,7 @@ class Cart extends CartCore
     * date: 2018-12-26 14:14:06
     * version: 1
     */
-    protected $_products = null;
+    protected $_products;
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
@@ -149,13 +150,13 @@ class Cart extends CartCore
     * date: 2018-12-26 14:14:06
     * version: 1
     */
-    protected static $_carriers = null;
+    protected static $_carriers;
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
-    protected static $_taxes_rate = null;
+    protected static $_taxes_rate;
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
@@ -167,7 +168,7 @@ class Cart extends CartCore
     * date: 2018-12-26 14:14:06
     * version: 1
     */
-    protected static $_customer = null;
+    protected static $_customer;
 
     /*
     * module: pscsx3241
@@ -187,7 +188,7 @@ class Cart extends CartCore
             null,
             false
         );
-        if ($result == false) {
+        if ($result === false) {
             parent::deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0);
         }
     }
@@ -204,18 +205,17 @@ class Cart extends CartCore
             $params = Hook::exec('ppbsGetProducts', ['products' => $products], null, true);
             if (isset($params['productpricebysize']['products'])) {
                 return $params['productpricebysize']['products'];
-            } else {
-                return $products;
             }
-        } else {
-            $params = Hook::exec('ppbsGetProducts', ['products' => $products], null);
-            $params = json_decode($params, true);
-            if (isset($params['products'])) {
-                return $params['products'];
-            } else {
-                return $products;
-            }
+
+            return $products;
         }
+        $params = Hook::exec('ppbsGetProducts', ['products' => $products], null);
+        $params = json_decode($params, true);
+        if (isset($params['products'])) {
+            return $params['products'];
+        }
+
+        return $products;
     }
 
     /*

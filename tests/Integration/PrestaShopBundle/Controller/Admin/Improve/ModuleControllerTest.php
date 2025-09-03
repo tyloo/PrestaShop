@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -79,7 +80,7 @@ class ModuleControllerTest extends WebTestCase
             '_PS_MODE_DEMO_' => true,
             '_PS_ROOT_DIR_' => _PS_ROOT_DIR_,
             '_PS_MODULE_DIR_' => _PS_ROOT_DIR_ . '/tests/Resources/modules/',
-            '_PS_ALL_THEMES_DIR_' => dirname(__DIR__, 6) . '/themes/',
+            '_PS_ALL_THEMES_DIR_' => \dirname(__DIR__, 6) . '/themes/',
             'PS_SHOP_DEFAULT' => '1',
             'PS_COOKIE_CHECKIP' => '1',
             'PS_LANG_DEFAULT' => '1',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -75,7 +76,7 @@ class PaymentOptionFormDecoratorTest extends TestCase
     private function normalizeHTML($html)
     {
         $doc = new DOMDocument();
-        if (!$doc->loadHTML($html)) {
+        if (! $doc->loadHTML($html)) {
             throw new Exception('Invalid HTML.');
         }
         $doc->preserveWhiteSpace = false;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,6 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I create a customer group :customerGroupReference with the following details:
      *
-     * @param string $customerGroupReference
-     * @param TableNode $tableNode
-     *
      * @throws Exception
      */
     public function createCustomerGroupUsingCommand(string $customerGroupReference, TableNode $tableNode)
@@ -70,9 +68,6 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I update customer group :customerGroupReference with the following details:
      *
-     * @param string $customerGroupReference
-     * @param TableNode $tableNode
-     *
      * @throws Exception
      */
     public function updateCustomerGroupUsingCommand(string $customerGroupReference, TableNode $tableNode)
@@ -80,19 +75,19 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
         $data = $this->localizeByRows($tableNode);
 
         $command = new EditCustomerGroupCommand($this->referenceToId($customerGroupReference));
-        if (!empty($data['name'])) {
+        if (! empty($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
-        if (!empty($data['reduction'])) {
+        if (! empty($data['reduction'])) {
             $command->setReductionPercent(new DecimalNumber($data['reduction']));
         }
-        if (!empty($data['displayPriceTaxExcluded'])) {
+        if (! empty($data['displayPriceTaxExcluded'])) {
             $command->setDisplayPriceTaxExcluded(PrimitiveUtils::castStringBooleanIntoBoolean($data['displayPriceTaxExcluded']));
         }
-        if (!empty($data['showPrice'])) {
+        if (! empty($data['showPrice'])) {
             $command->setShowPrice(PrimitiveUtils::castStringBooleanIntoBoolean($data['showPrice']));
         }
-        if (!empty($data['shopIds'])) {
+        if (! empty($data['shopIds'])) {
             $command->setShopIds($this->referencesToIds($data['shopIds']));
         }
 
@@ -101,8 +96,6 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete customer group :customerGroupReference
-     *
-     * @param string $customerGroupReference
      */
     public function deleteCustomerGroupUsingCommand(string $customerGroupReference)
     {
@@ -123,7 +116,7 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
     public function assertCustomerGroupExists(string $customerGroupReference): void
     {
         $customerGroup = $this->getCustomerGroupForEditing($customerGroupReference);
-        Assert::assertNotNull($customerGroup, sprintf('Customer group %s as not found', $customerGroupReference));
+        Assert::assertNotNull($customerGroup, \sprintf('Customer group %s as not found', $customerGroupReference));
     }
 
     /**
@@ -137,15 +130,11 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
         } catch (GroupNotFoundException $e) {
             $caughtException = $e;
         }
-        Assert::assertNotNull($caughtException, sprintf('Customer group %s should not exist', $customerGroupReference));
+        Assert::assertNotNull($caughtException, \sprintf('Customer group %s should not exist', $customerGroupReference));
     }
 
     /**
      * @Transform table:customer group,value
-     *
-     * @param TableNode $tableNode
-     *
-     * @return EditableCustomerGroup
      */
     public function transformEditableCustomerGroup(TableNode $tableNode): EditableCustomerGroup
     {
@@ -161,11 +150,6 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
         );
     }
 
-    /**
-     * @param string $customerGroupReference
-     *
-     * @return EditableCustomerGroup
-     */
     private function getCustomerGroupForEditing(string $customerGroupReference): EditableCustomerGroup
     {
         return $this->getQueryBus()->handle(new GetCustomerGroupForEditing($this->getSharedStorage()->get($customerGroupReference)));

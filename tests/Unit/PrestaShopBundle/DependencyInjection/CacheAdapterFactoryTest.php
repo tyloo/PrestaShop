@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class CacheAdapterFactoryTest extends TestCase
      */
     private $cacheAdapterFactory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->cacheAdapterFactory = new CacheAdapterFactory();
     }
@@ -52,8 +53,8 @@ class CacheAdapterFactoryTest extends TestCase
     public function testReturnValue(string $driver, string $expectedClass): void
     {
         if (
-            $driver === 'apcu' && !ApcuAdapter::isSupported()
-            || $driver === 'memcached' && !MemcachedAdapter::isSupported()
+            $driver === 'apcu' && ! ApcuAdapter::isSupported()
+            || $driver === 'memcached' && ! MemcachedAdapter::isSupported()
         ) {
             $this->markTestSkipped('apcu is not supported');
         }

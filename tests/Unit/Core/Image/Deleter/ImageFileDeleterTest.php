@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,7 @@ class ImageFileDeleterTest extends TestCase
      */
     private $root;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fs = new Filesystem();
         $this->root = vfsStream::setup();
@@ -97,14 +98,14 @@ class ImageFileDeleterTest extends TestCase
         foreach ($deleteFiles as $filePath) {
             $this->assertFalse(
                 $this->fs->exists($filePath),
-                sprintf('Expected file "%s" to be deleted, but it exists.', $filePath)
+                \sprintf('Expected file "%s" to be deleted, but it exists.', $filePath)
             );
         }
 
         foreach ($keepFiles as $filePath) {
             $this->assertTrue(
                 $this->fs->exists($filePath),
-                sprintf('Expected file "%s" to exist, but it was deleted.', $filePath)
+                \sprintf('Expected file "%s" to exist, but it was deleted.', $filePath)
             );
         }
     }
@@ -128,7 +129,7 @@ class ImageFileDeleterTest extends TestCase
         foreach ($deleteFiles as $filePath) {
             $this->assertFalse(
                 $this->fs->exists($filePath),
-                sprintf('Expected file "%s" to be deleted, but it exists.', $filePath)
+                \sprintf('Expected file "%s" to be deleted, but it exists.', $filePath)
             );
         }
     }

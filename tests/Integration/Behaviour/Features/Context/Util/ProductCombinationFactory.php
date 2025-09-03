@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,6 @@ use StockAvailable;
 class ProductCombinationFactory
 {
     /**
-     * @param int $productId
      * @param CombinationDetails[] $combinationDetailsList
      *
      * @return Combination[]
@@ -68,7 +68,7 @@ class ProductCombinationFactory
             foreach ($combinationDetails->getAttributes() as $combinationAttribute) {
                 list($attributeGroup, $attributeName) = explode(':', $combinationAttribute);
                 foreach ($attributesList as $attributeDetail) {
-                    if ($attributeDetail['attribute_group'] == $attributeGroup && $attributeDetail['name'] == $attributeName) {
+                    if ($attributeDetail['attribute_group'] === $attributeGroup && $attributeDetail['name'] === $attributeName) {
                         $combinationAttributesIds[] = (int) $attributeDetail['id_attribute'];
                         continue 2;
                     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ class PageVoter extends BaseVoter
 {
     /**
      * @param string $attribute
-     * @param mixed $subject
-     * @param TokenInterface $token
-     *
-     * @return bool
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {

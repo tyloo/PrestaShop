@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ class ReferenceTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param string $value
      */
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
@@ -55,9 +54,6 @@ class ReferenceTest extends TestCase
         new Reference($value);
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidValues(): Generator
     {
         yield ['123456789012345678901234567890123456789012345678901234567890---65'];

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class ProfileTest extends TestCase
             )
             */
 
-            $this->assertTrue(is_array($tab));
+            $this->assertTrue(\is_array($tab));
 
             $this->assertArrayHasKey('id_tab', $tab);
             $this->assertFalse(empty($tab['class_name']));
@@ -64,7 +65,7 @@ class ProfileTest extends TestCase
                 'delete',
             ] as $type) {
                 $this->assertArrayHasKey($type, $tab);
-                $this->assertTrue(in_array($tab[$type], ['0', '1']));
+                $this->assertTrue(\in_array($tab[$type], ['0', '1'], true));
             }
         }
     }

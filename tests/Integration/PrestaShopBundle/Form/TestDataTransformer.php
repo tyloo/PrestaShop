@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,11 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class TestDataTransformer implements DataTransformerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function transform($value)
     {
         return $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function reverseTransform($value)
     {
         return $value;

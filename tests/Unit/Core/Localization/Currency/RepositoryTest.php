@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,9 +59,15 @@ class RepositoryTest extends TestCase
                             $data->setConversionRate(1);
                             $data->setIsoCode('EUR');
                             $data->setNumericIsoCode('978');
-                            $data->setSymbols(['fr-FR' => '€', 'en-US' => '€']);
+                            $data->setSymbols([
+                                'fr-FR' => '€',
+                                'en-US' => '€',
+                            ]);
                             $data->setPrecision(2);
-                            $data->setNames(['fr-FR' => 'euro', 'en-US' => 'euro']);
+                            $data->setNames([
+                                'fr-FR' => 'euro',
+                                'en-US' => 'euro',
+                            ]);
                             break;
 
                         case 'PCE':
@@ -68,9 +75,15 @@ class RepositoryTest extends TestCase
                             $data->setConversionRate(1);
                             $data->setIsoCode('PCE');
                             $data->setNumericIsoCode('999');
-                            $data->setSymbols(['fr-FR' => '☮', 'en-US' => '☮']);
+                            $data->setSymbols([
+                                'fr-FR' => '☮',
+                                'en-US' => '☮',
+                            ]);
                             $data->setPrecision(2);
-                            $data->setNames(['fr-FR' => 'paix', 'en-US' => 'peace']);
+                            $data->setNames([
+                                'fr-FR' => 'paix',
+                                'en-US' => 'peace',
+                            ]);
                             break;
 
                         default:
@@ -81,7 +94,7 @@ class RepositoryTest extends TestCase
                 }
             );
 
-        /* @var $dataSource CurrencyDataSourceInterface */
+        /** @var CurrencyDataSourceInterface $dataSource */
         $this->currencyRepository = new CurrencyRepository($dataSource);
     }
 
@@ -91,11 +104,11 @@ class RepositoryTest extends TestCase
      * Then the expected Currency instance should be returned
      *
      * @param string $currencyCode
-     *                             Alphabetic ISO 4217 currency code passed to retreive the wanted Currency instance
-     * @param array $expectedNames
-     *                             Expected currency names, indexed by locale code
-     * @param array $expectedSymbols
-     *                               Expected currency symbols, indexed by locale code
+     *                                Alphabetic ISO 4217 currency code passed to retreive the wanted Currency instance
+     * @param array  $expectedNames
+     *                                Expected currency names, indexed by locale code
+     * @param array  $expectedSymbols
+     *                                Expected currency symbols, indexed by locale code
      *
      * @throws LocalizationException
      *

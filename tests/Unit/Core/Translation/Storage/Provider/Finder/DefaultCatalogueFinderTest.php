@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,7 +67,7 @@ class DefaultCatalogueFinderTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$tempDir = implode(DIRECTORY_SEPARATOR, [sys_get_temp_dir(), 'DefaultCatalogueFinderTest']);
+        self::$tempDir = implode(\DIRECTORY_SEPARATOR, [sys_get_temp_dir(), 'DefaultCatalogueFinderTest']);
 
         $catalogue = new MessageCatalogue(CatalogueLayersProviderInterface::DEFAULT_LOCALE);
         foreach (self::$wordings as $domain => $messages) {

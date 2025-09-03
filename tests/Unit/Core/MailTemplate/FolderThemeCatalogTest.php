@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,10 +71,10 @@ class FolderThemeCatalogTest extends TestCase
      */
     private $moduleLayouts;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mail_layouts';
+        $this->tempDir = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'mail_layouts';
         $this->fs = new Filesystem();
         $this->fs->remove($this->tempDir);
         $this->createThemesFiles();
@@ -113,13 +114,13 @@ class FolderThemeCatalogTest extends TestCase
         /** @var LayoutInterface $layout */
         $layout = $coreLayouts[0];
         $this->assertInstanceOf(LayoutInterface::class, $layout);
-        $coreFolder = implode(DIRECTORY_SEPARATOR, [
+        $coreFolder = implode(\DIRECTORY_SEPARATOR, [
             '@MailThemes',
             'classic',
             MailTemplateInterface::CORE_CATEGORY,
         ]);
-        $this->assertEquals(implode(DIRECTORY_SEPARATOR, [$coreFolder, 'account.html.twig']), $layout->getHtmlPath());
-        $this->assertEquals(implode(DIRECTORY_SEPARATOR, [$coreFolder, 'account.txt.twig']), $layout->getTxtPath());
+        $this->assertEquals(implode(\DIRECTORY_SEPARATOR, [$coreFolder, 'account.html.twig']), $layout->getHtmlPath());
+        $this->assertEquals(implode(\DIRECTORY_SEPARATOR, [$coreFolder, 'account.txt.twig']), $layout->getTxtPath());
         $this->assertEquals('account', $layout->getName());
         $this->assertNotNull($layout->getModuleName());
         $this->assertEmpty($layout->getModuleName());
@@ -132,7 +133,7 @@ class FolderThemeCatalogTest extends TestCase
         /** @var LayoutInterface $moduleLayout */
         foreach ($modulesLayouts as $moduleLayout) {
             $this->assertNotEmpty($moduleLayout->getModuleName());
-            if (!isset($moduleLayoutsCount[$moduleLayout->getModuleName()])) {
+            if (! isset($moduleLayoutsCount[$moduleLayout->getModuleName()])) {
                 $moduleLayoutsCount[$moduleLayout->getModuleName()] = [$moduleLayout->getName()];
             } else {
                 $moduleLayoutsCount[$moduleLayout->getModuleName()][] = $moduleLayout->getName();
@@ -190,7 +191,7 @@ class FolderThemeCatalogTest extends TestCase
         ;
 
         $fakeFolder = implode(
-            DIRECTORY_SEPARATOR,
+            \DIRECTORY_SEPARATOR,
             [$this->tempDir, 'invisible']
         );
         $catalog = new FolderThemeCatalog($fakeFolder, new FolderThemeScanner(), $dispatcherMock);
@@ -211,7 +212,7 @@ class FolderThemeCatalogTest extends TestCase
     {
         $catalog = new FolderThemeCatalog($this->tempDir, new FolderThemeScanner(), $this->createHookDispatcherMock(4));
         // No bug occurs if the folder does not exist
-        $this->fs->remove(implode(DIRECTORY_SEPARATOR, [$this->tempDir, 'classic', MailTemplateInterface::CORE_CATEGORY]));
+        $this->fs->remove(implode(\DIRECTORY_SEPARATOR, [$this->tempDir, 'classic', MailTemplateInterface::CORE_CATEGORY]));
 
         /** @var ThemeCollectionInterface $themes */
         $themes = $catalog->listThemes();
@@ -225,7 +226,7 @@ class FolderThemeCatalogTest extends TestCase
     public function testListThemesWithoutModulesFolder()
     {
         $catalog = new FolderThemeCatalog($this->tempDir, new FolderThemeScanner(), $this->createHookDispatcherMock(4));
-        $this->fs->remove(implode(DIRECTORY_SEPARATOR, [$this->tempDir, 'classic', MailTemplateInterface::MODULES_CATEGORY]));
+        $this->fs->remove(implode(\DIRECTORY_SEPARATOR, [$this->tempDir, 'classic', MailTemplateInterface::MODULES_CATEGORY]));
         /** @var ThemeCollectionInterface $themes */
         $themes = $catalog->listThemes();
         /** @var ThemeInterface $theme */
@@ -236,8 +237,6 @@ class FolderThemeCatalogTest extends TestCase
     }
 
     /**
-     * @param LayoutCollectionInterface $collection
-     *
      * @return LayoutInterface[]
      */
     private function filterCoreLayouts(LayoutCollectionInterface $collection)
@@ -254,8 +253,6 @@ class FolderThemeCatalogTest extends TestCase
     }
 
     /**
-     * @param LayoutCollectionInterface $collection
-     *
      * @return LayoutInterface[]
      */
     private function filterModulesLayouts(LayoutCollectionInterface $collection)
@@ -263,7 +260,7 @@ class FolderThemeCatalogTest extends TestCase
         $layouts = [];
         /** @var LayoutInterface $layout */
         foreach ($collection as $layout) {
-            if (!empty($layout->getModuleName())) {
+            if (! empty($layout->getModuleName())) {
                 $layouts[] = $layout;
             }
         }
@@ -334,30 +331,30 @@ class FolderThemeCatalogTest extends TestCase
         /** @var ThemeInterface $theme */
         foreach ($this->expectedThemes as $theme) {
             // Insert core files
-            $themeFolder = $this->tempDir . DIRECTORY_SEPARATOR . $theme->getName();
-            $coreFolder = implode(DIRECTORY_SEPARATOR, [$themeFolder, MailTemplateInterface::CORE_CATEGORY]);
+            $themeFolder = $this->tempDir . \DIRECTORY_SEPARATOR . $theme->getName();
+            $coreFolder = implode(\DIRECTORY_SEPARATOR, [$themeFolder, MailTemplateInterface::CORE_CATEGORY]);
             $this->fs->mkdir($coreFolder);
             foreach ($this->coreLayouts as $layout) {
-                $this->fs->touch(implode(DIRECTORY_SEPARATOR, [$coreFolder, $layout]));
+                $this->fs->touch(implode(\DIRECTORY_SEPARATOR, [$coreFolder, $layout]));
             }
 
             // Insert modules files
-            $modulesFolder = $themeFolder . DIRECTORY_SEPARATOR . MailTemplateInterface::MODULES_CATEGORY;
+            $modulesFolder = $themeFolder . \DIRECTORY_SEPARATOR . MailTemplateInterface::MODULES_CATEGORY;
             foreach ($this->moduleLayouts as $moduleName => $moduleLayouts) {
-                $moduleFolder = $modulesFolder . DIRECTORY_SEPARATOR . $moduleName;
+                $moduleFolder = $modulesFolder . \DIRECTORY_SEPARATOR . $moduleName;
                 $this->fs->mkdir($moduleFolder);
                 foreach ($moduleLayouts as $layout) {
-                    $this->fs->touch(implode(DIRECTORY_SEPARATOR, [$moduleFolder, $layout]));
+                    $this->fs->touch(implode(\DIRECTORY_SEPARATOR, [$moduleFolder, $layout]));
                 }
             }
 
             // Insert components files used in layoutss
-            $componentsFolder = $themeFolder . DIRECTORY_SEPARATOR . 'components';
+            $componentsFolder = $themeFolder . \DIRECTORY_SEPARATOR . 'components';
             $this->fs->mkdir($componentsFolder);
-            $this->fs->touch($componentsFolder . DIRECTORY_SEPARATOR . 'title.twig');
-            $this->fs->touch($componentsFolder . DIRECTORY_SEPARATOR . 'image.twig');
+            $this->fs->touch($componentsFolder . \DIRECTORY_SEPARATOR . 'title.twig');
+            $this->fs->touch($componentsFolder . \DIRECTORY_SEPARATOR . 'image.twig');
         }
-        $this->fs->mkdir($this->tempDir . DIRECTORY_SEPARATOR . 'empty_dir');
-        $this->fs->touch($this->tempDir . DIRECTORY_SEPARATOR . 'useless_file');
+        $this->fs->mkdir($this->tempDir . \DIRECTORY_SEPARATOR . 'empty_dir');
+        $this->fs->touch($this->tempDir . \DIRECTORY_SEPARATOR . 'useless_file');
     }
 }

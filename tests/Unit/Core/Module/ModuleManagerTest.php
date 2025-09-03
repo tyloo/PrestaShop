@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,16 +50,22 @@ class ModuleManagerTest extends TestCase
     public const UNINSTALLED_MODULE_NAME = 'uninstalled';
     public const INSTALLED_THEN_UNINSTALLED_MODULE_NAME = 'installed_uninstalled';
 
-    /** @var ModuleManager */
+    /**
+     * @var ModuleManager
+     */
     private $moduleManager;
 
-    /** @var Module&MockObject */
+    /**
+     * @var Module&MockObject
+     */
     private $module;
 
-    /** @var LegacyModule&MockObject */
+    /**
+     * @var LegacyModule&MockObject
+     */
     private $legacyModule;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $translatorMock = $this->createMock(TranslatorInterface::class);
         $translatorMock->method('trans')->willReturnArgument(0);
@@ -227,7 +234,7 @@ class ModuleManagerTest extends TestCase
         // With the second way, we need to be sure that the module is installed before calling uninstall and uninstalled
         // before calling install. This callback returns true twice and then false to simulate the expected behavior
         // for the `INSTALLED_THEN_UNINSTALLED_MODULE_NAME` module name
-        $isInstalledCallback = new class() {
+        $isInstalledCallback = new class {
             private $count = 0;
 
             public function isInstalled($name)

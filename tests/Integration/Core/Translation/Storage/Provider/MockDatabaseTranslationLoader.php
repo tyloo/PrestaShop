@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,15 +51,12 @@ class MockDatabaseTranslationLoader extends DatabaseTranslationLoader
         parent::__construct($languageRepository, $translationRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(string $locale, string $domainSearch = 'messages', ?string $theme = null): MessageCatalogue
     {
         $catalogue = new MessageCatalogue($locale);
 
         foreach ($this->databaseContent as $item) {
-            $domainMatches = ('*' === $domainSearch) ?: (bool) preg_match("/$domainSearch/", $item['domain']);
+            $domainMatches = ($domainSearch === '*') ?: (bool) preg_match("/$domainSearch/", $item['domain']);
 
             if (
                 $item['lang'] === $locale

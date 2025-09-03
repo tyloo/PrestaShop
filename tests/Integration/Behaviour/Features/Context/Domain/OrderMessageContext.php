@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class OrderMessageContext extends AbstractDomainFeatureContext
      */
     public function specifyPropertyInDefaultLanguage(string $propertyName, string $propertyValue, string $reference): void
     {
-        $key = sprintf('order_message_%s_props', $reference);
+        $key = \sprintf('order_message_%s_props', $reference);
 
         $defaultLangId = $this->getContainer()->get('prestashop.adapter.legacy.configuration')->get('PS_LANG_DEFAULT');
 
@@ -60,11 +61,11 @@ class OrderMessageContext extends AbstractDomainFeatureContext
      */
     public function addWithSpecifiedProperties(string $reference): void
     {
-        $key = sprintf('order_message_%s_props', $reference);
+        $key = \sprintf('order_message_%s_props', $reference);
 
         $properties = $this->getSharedStorage()->get($key);
 
-        /* @var OrderMessageId $orderMessageId */
+        /** @var OrderMessageId $orderMessageId */
         try {
             $orderMessageId = $this->getCommandBus()->handle(
                 new AddOrderMessageCommand(
@@ -84,7 +85,7 @@ class OrderMessageContext extends AbstractDomainFeatureContext
      */
     public function editWithSpecifiedProperties(string $reference): void
     {
-        $key = sprintf('order_message_%s_props', $reference);
+        $key = \sprintf('order_message_%s_props', $reference);
 
         $properties = $this->getSharedStorage()->get($key);
 
@@ -107,8 +108,6 @@ class OrderMessageContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference must have no customer message
      *
-     * @param string $orderReference
-     *
      * @throws RuntimeException
      */
     public function orderMustHaveNoCustomerMessage(string $orderReference): void
@@ -118,16 +117,13 @@ class OrderMessageContext extends AbstractDomainFeatureContext
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing($orderId));
 
-        if (0 !== count($orderForViewing->getMessages()->getMessages())) {
-            throw new RuntimeException(sprintf('Order #%s do have messages', $orderId));
+        if (\count($orderForViewing->getMessages()->getMessages()) !== 0) {
+            throw new RuntimeException(\sprintf('Order #%s do have messages', $orderId));
         }
     }
 
     /**
      * @Then order :orderReference must have customer message with content :messageContent
-     *
-     * @param string $orderReference
-     * @param string $messageContent
      *
      * @throws RuntimeException
      */
@@ -140,12 +136,12 @@ class OrderMessageContext extends AbstractDomainFeatureContext
 
         $messageFound = false;
         foreach ($orderForViewing->getMessages()->getMessages() as $orderMessageForViewing) {
-            if (0 === strcmp($orderMessageForViewing->getMessage(), $messageContent)) {
+            if (strcmp($orderMessageForViewing->getMessage(), $messageContent) === 0) {
                 $messageFound = true;
             }
         }
-        if (!$messageFound) {
-            throw new RuntimeException(sprintf('Message "%s" not found in Order #%s messages', $messageContent, $orderId));
+        if (! $messageFound) {
+            throw new RuntimeException(\sprintf('Message "%s" not found in Order #%s messages', $messageContent, $orderId));
         }
     }
 

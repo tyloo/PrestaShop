@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -84,7 +85,9 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
      */
     protected $customerFeatureContext;
 
-    /** @BeforeScenario */
+    /**
+     * @BeforeScenario
+     */
     public function before(BeforeScenarioScope $scope)
     {
         /** @var InitializedContextEnvironment $environment */
@@ -101,7 +104,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     public function createCountry($countryName, $isoCode, $zoneName)
     {
         $countryId = Country::getByIso($isoCode, false);
-        if (!$countryId) {
+        if (! $countryId) {
             throw new Exception('Country not found with iso code = ' . $isoCode);
         }
         $country = new Country($countryId);
@@ -117,17 +120,12 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @param string $countryName
-     *
-     * @return Country
      */
     public function getCountryWithName($countryName): Country
     {
         return $this->countries[$countryName];
     }
 
-    /**
-     * @param string $countryName
-     */
     public function checkCountryWithNameExists(string $countryName): void
     {
         $this->checkFixtureExists($this->countries, 'Country', $countryName);
@@ -149,19 +147,11 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
         $this->getSharedStorage()->set($stateName, (int) $state->id);
     }
 
-    /**
-     * @param string $stateName
-     *
-     * @return State
-     */
     public function getStateWithName(string $stateName): State
     {
         return $this->states[$stateName];
     }
 
-    /**
-     * @param string $stateName
-     */
     public function checkStateWithNameExists(string $stateName): void
     {
         $this->checkFixtureExists($this->states, 'State', $stateName);
@@ -199,9 +189,6 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
         $this->addresses[$addressName]->update();
     }
 
-    /**
-     * @param string $addressName
-     */
     public function checkAddressWithNameExists(string $addressName): void
     {
         $this->checkFixtureExists($this->addresses, 'Address', $addressName);
@@ -266,9 +253,6 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @Given a carrier :carrierReference with name :carrierName exists
-     *
-     * @param string $carrierReference
-     * @param string $carrierName
      */
     public function checkExistingCarrier(string $carrierReference, string $carrierName)
     {
@@ -281,9 +265,6 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf(
-            'Could not find carrier with name %s',
-            $carrierName
-        ));
+        throw new RuntimeException(\sprintf('Could not find carrier with name %s', $carrierName));
     }
 }

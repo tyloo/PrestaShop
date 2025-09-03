@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -146,7 +147,7 @@ class QueryLayerTest extends TestCase
         $requestStack = new RequestStack();
         $request = new Request();
 
-        if (null !== $status) {
+        if ($status !== null) {
             $request->query->set(self::VAR_FEATURE_FLAG_TEST, $status);
         }
 

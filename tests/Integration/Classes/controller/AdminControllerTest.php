@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -95,10 +96,6 @@ class AdminControllerTest extends TestCase
      * Check if html in trans is not escaped by trans method but escaped with htmlspecialchars on parameters
      *
      * @dataProvider getControllersClasses
-     *
-     * @param string $controllerClass
-     *
-     * @return void
      */
     public function testTrans(string $controllerClass): void
     {
@@ -114,30 +111,24 @@ class AdminControllerTest extends TestCase
 
     /**
      * @dataProvider getControllersClasses
-     *
-     * @param string $controllerClass
-     *
-     * @return void
      */
     public function testItShouldRunTheTestedController(string $controllerClass): void
     {
-        /**
-         * @var Controller $testedController
-         */
+        /** @var Controller $testedController */
         $testedController = new $controllerClass();
         $refController = new ReflectionObject($testedController);
         $refProperty = $refController->getProperty('container');
         $refProperty->setAccessible(true);
         $refProperty->setValue($testedController, $this->getMockContainerBuilder());
 
-        if (!defined('_PS_BASE_URL_')) {
-            define('_PS_BASE_URL_', '');
-            define('__PS_BASE_URI__', '');
-            define('_PS_BASE_URL_SSL_', '');
+        if (! \defined('_PS_BASE_URL_')) {
+            \define('_PS_BASE_URL_', '');
+            \define('__PS_BASE_URI__', '');
+            \define('_PS_BASE_URL_SSL_', '');
         }
 
-        if (!defined('PS_INSTALLATION_IN_PROGRESS')) {
-            define('PS_INSTALLATION_IN_PROGRESS', true);
+        if (! \defined('PS_INSTALLATION_IN_PROGRESS')) {
+            \define('PS_INSTALLATION_IN_PROGRESS', true);
         }
 
         $this->assertNull($testedController->run());
@@ -171,37 +162,37 @@ class AdminControllerTest extends TestCase
     {
         $configuration = require_once _PS_CACHE_DIR_ . 'appParameters.php';
 
-        if (defined('_PS_BO_ALL_THEMES_DIR_')) {
+        if (\defined('_PS_BO_ALL_THEMES_DIR_')) {
             return;
         }
 
-        define('_PS_BO_ALL_THEMES_DIR_', '');
-        if (!defined('_PS_TAB_MODULE_LIST_URL_')) {
-            define('_PS_TAB_MODULE_LIST_URL_', '');
+        \define('_PS_BO_ALL_THEMES_DIR_', '');
+        if (! \defined('_PS_TAB_MODULE_LIST_URL_')) {
+            \define('_PS_TAB_MODULE_LIST_URL_', '');
         }
-        if (!defined('_DB_SERVER_')) {
-            define('_DB_SERVER_', 'localhost');
+        if (! \defined('_DB_SERVER_')) {
+            \define('_DB_SERVER_', 'localhost');
         }
-        if (!defined('_DB_USER_')) {
-            define('_DB_USER_', $configuration['parameters']['database_user']);
+        if (! \defined('_DB_USER_')) {
+            \define('_DB_USER_', $configuration['parameters']['database_user']);
         }
-        if (!defined('_DB_PASSWD_')) {
-            define('_DB_PASSWD_', $configuration['parameters']['database_password']);
+        if (! \defined('_DB_PASSWD_')) {
+            \define('_DB_PASSWD_', $configuration['parameters']['database_password']);
         }
-        if (!defined('_DB_NAME_')) {
-            define('_DB_NAME_', 'test_' . $configuration['parameters']['database_name']);
+        if (! \defined('_DB_NAME_')) {
+            \define('_DB_NAME_', 'test_' . $configuration['parameters']['database_name']);
         }
-        if (!defined('_DB_PREFIX_')) {
-            define('_DB_PREFIX_', $configuration['parameters']['database_prefix']);
+        if (! \defined('_DB_PREFIX_')) {
+            \define('_DB_PREFIX_', $configuration['parameters']['database_prefix']);
         }
-        if (!defined('_COOKIE_KEY_')) {
-            define('_COOKIE_KEY_', Tools::passwdGen(64));
+        if (! \defined('_COOKIE_KEY_')) {
+            \define('_COOKIE_KEY_', Tools::passwdGen(64));
         }
-        if (!defined('_PS_VERSION_')) {
-            define('_PS_VERSION_', '1.7');
+        if (! \defined('_PS_VERSION_')) {
+            \define('_PS_VERSION_', '1.7');
         }
-        if (!defined('_PS_ADMIN_DIR_')) {
-            define('_PS_ADMIN_DIR_', '');
+        if (! \defined('_PS_ADMIN_DIR_')) {
+            \define('_PS_ADMIN_DIR_', '');
         }
     }
 
@@ -231,7 +222,7 @@ class AdminControllerTest extends TestCase
 
     private static function requireAliasesFunctions(): void
     {
-        require_once dirname(__DIR__, 4) . '/config/alias.php';
+        require_once \dirname(__DIR__, 4) . '/config/alias.php';
     }
 
     private function getMockLanguage(): Language

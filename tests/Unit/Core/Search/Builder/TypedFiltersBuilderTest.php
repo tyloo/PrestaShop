@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -139,8 +140,6 @@ class TypedFiltersBuilderTest extends TestCase
     }
 
     /**
-     * @param Filters|null $filters
-     *
      * @return MockObject|FiltersBuilderInterface
      */
     private function createBuilderMock(?Filters $filters)
@@ -152,14 +151,14 @@ class TypedFiltersBuilderTest extends TestCase
         ;
 
         $builtFilters = null;
-        if (null !== $filters) {
+        if ($filters !== null) {
             $builtFilters = new SampleWithoutConstraintFilters(
                 array_replace(SampleWithoutConstraintFilters::getDefaults(), $filters->all())
             );
         }
 
         $builderMock
-            ->expects(null !== $filters ? $this->once() : $this->never())
+            ->expects($filters !== null ? $this->once() : $this->never())
             ->method('buildFilters')
             ->willReturn($builtFilters)
         ;
@@ -168,8 +167,6 @@ class TypedFiltersBuilderTest extends TestCase
     }
 
     /**
-     * @param array|null $expectedConfig
-     *
      * @return MockObject|TypedFiltersBuilderInterface
      */
     private function createTypeBuilderMock(?array $expectedConfig)
@@ -181,14 +178,14 @@ class TypedFiltersBuilderTest extends TestCase
         ;
 
         $builderMock
-            ->expects(null === $expectedConfig ? $this->never() : $this->once())
+            ->expects($expectedConfig === null ? $this->never() : $this->once())
             ->method('supports')
             ->with($this->equalTo(SampleWithoutConstraintFilters::class))
             ->willReturn(false)
         ;
 
         $builderMock
-            ->expects(null === $expectedConfig ? $this->never() : $this->once())
+            ->expects($expectedConfig === null ? $this->never() : $this->once())
             ->method('setConfig')
             ->willReturnCallback(function (array $config) use ($expectedConfig) {
                 $this->assertEquals($expectedConfig, $config);
@@ -201,9 +198,6 @@ class TypedFiltersBuilderTest extends TestCase
 
 class SampleWithoutConstraintFilters extends Filters
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [
@@ -218,9 +212,6 @@ class SampleWithoutConstraintFilters extends Filters
 
 class SampleWithConstraintFilters extends Filters
 {
-    /**
-     * {@inheritDoc}
-     */
     public function __construct(array $filters = [], $filterId = '')
     {
         if (empty($filterId)) {
@@ -229,9 +220,6 @@ class SampleWithConstraintFilters extends Filters
         parent::__construct($filters, $filterId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getDefaults()
     {
         return [
@@ -254,9 +242,6 @@ class SampleFiltersBuilder extends AbstractFiltersBuilder implements TypedFilter
      */
     private $filtersClass;
 
-    /**
-     * {@inheritDoc}
-     */
     public function setConfig(array $config)
     {
         $this->filtersClass = $config['filters_class'];
@@ -264,22 +249,16 @@ class SampleFiltersBuilder extends AbstractFiltersBuilder implements TypedFilter
         return parent::setConfig($config);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildFilters(?Filters $filters = null)
     {
         return new $this->filtersClass(['orderBy' => self::ORDER_BY], self::FILTER_ID);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function supports(string $filterClassName): bool
     {
         return
-            SampleWithConstraintFilters::class === $filterClassName
-            || SampleWithoutConstraintFilters::class === $filterClassName
+            $filterClassName === SampleWithConstraintFilters::class
+            || $filterClassName === SampleWithoutConstraintFilters::class
         ;
     }
 }

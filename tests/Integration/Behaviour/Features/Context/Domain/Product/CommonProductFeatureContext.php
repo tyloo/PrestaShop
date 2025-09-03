@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -80,10 +81,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
      * @Given product :productReference localized :fieldName is:
      *
      * localizedValues transformation handled by @see LocalizedArrayTransformContext
-     *
-     * @param string $productReference
-     * @param string $fieldName
-     * @param array $expectedLocalizedValues
      */
     public function assertLocalizedPropertyForDefaultShop(string $productReference, string $fieldName, array $expectedLocalizedValues): void
     {
@@ -95,10 +92,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
      * @Then product :productReference localized :fieldName for shop(s) :shopReferences should be:
      *
      * localizedValues transformation handled by @see LocalizedArrayTransformContext
-     *
-     * @param string $productReference
-     * @param string $fieldName
-     * @param array $expectedLocalizedValues
      */
     public function assertLocalizedPropertyForShops(string $productReference, string $fieldName, string $shopReferences, array $expectedLocalizedValues): void
     {
@@ -116,7 +109,7 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     private function assertLocalizedProperty(ProductForEditing $productForEditing, string $fieldName, array $expectedLocalizedValues): void
     {
-        if ('tags' === $fieldName) {
+        if ($fieldName === 'tags') {
             UpdateTagsFeatureContext::assertLocalizedTags(
                 $expectedLocalizedValues,
                 $this->extractValueFromProductForEditing($productForEditing, $fieldName)
@@ -131,37 +124,23 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
             $actualValues = $this->extractValueFromProductForEditing($productForEditing, $fieldName);
             $langIso = Language::getIsoById($langId);
 
-            if (!isset($actualValues[$langId])) {
-                throw new RuntimeException(sprintf(
-                    'Expected localized %s value is not set in %s language',
-                    $fieldName,
-                    $langIso
-                ));
+            if (! isset($actualValues[$langId])) {
+                throw new RuntimeException(\sprintf('Expected localized %s value is not set in %s language', $fieldName, $langIso));
             }
 
-            $actualValue = in_array($fieldName, $htmlEncodedProperties) ?
+            $actualValue = \in_array($fieldName, $htmlEncodedProperties, true) ?
                 html_entity_decode($actualValues[$langId]) :
                 $actualValues[$langId]
             ;
 
             if ($expectedValue !== $actualValue) {
-                throw new RuntimeException(
-                    sprintf(
-                        'Expected %s in "%s" language was "%s", but got "%s"',
-                        $fieldName,
-                        $langIso,
-                        var_export($expectedValue, true),
-                        var_export($actualValue, true)
-                    )
-                );
+                throw new RuntimeException(\sprintf('Expected %s in "%s" language was "%s", but got "%s"', $fieldName, $langIso, var_export($expectedValue, true), var_export($actualValue, true)));
             }
         }
     }
 
     /**
      * @Then product :reference should not exist anymore
-     *
-     * @param string $reference
      */
     public function assertProductDoesNotExistAnymore(string $reference): void
     {
@@ -176,9 +155,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference type should be :productType
-     *
-     * @param string $productReference
-     * @param string $productTypeName
      */
     public function assertProductTypeForDefaultShop(string $productReference, string $productTypeName): void
     {
@@ -187,9 +163,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference type should be :productType for shop(s) :shopReferences
-     *
-     * @param string $productReference
-     * @param string $productTypeName
      */
     public function assertProductTypeForShops(string $productReference, string $productTypeName, string $shopReferences): void
     {
@@ -200,13 +173,10 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference persisted type should be :productType
-     *
-     * @param string $productReference
-     * @param string $productTypeName
      */
     public function assertPersistedProductType(string $productReference, string $productTypeName): void
     {
-        if ('undefined' === $productTypeName) {
+        if ($productTypeName === 'undefined') {
             $productTypeName = ProductType::TYPE_UNDEFINED;
         }
         $productId = $this->getSharedStorage()->get($productReference);
@@ -216,13 +186,10 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference dynamic type should be :productType
-     *
-     * @param string $productReference
-     * @param string $productTypeName
      */
     public function assertDynamicProductType(string $productReference, string $productTypeName): void
     {
-        if ('undefined' === $productTypeName) {
+        if ($productTypeName === 'undefined') {
             $productTypeName = ProductType::TYPE_UNDEFINED;
         }
         $productId = $this->getSharedStorage()->get($productReference);
@@ -232,8 +199,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then I should get error that product :fieldName is invalid
-     *
-     * @param string $fieldName
      */
     public function assertConstraintError(string $fieldName): void
     {
@@ -243,11 +208,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
         );
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return int
-     */
     private function getConstraintErrorCode(string $fieldName): int
     {
         $constraintErrorFieldMap = [
@@ -287,8 +247,8 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
             'low_stock_alert' => ProductConstraintException::INVALID_LOW_STOCK_ALERT,
         ];
 
-        if (!array_key_exists($fieldName, $constraintErrorFieldMap)) {
-            throw new RuntimeException(sprintf('"%s" is not mapped with constraint error code', $fieldName));
+        if (! \array_key_exists($fieldName, $constraintErrorFieldMap)) {
+            throw new RuntimeException(\sprintf('"%s" is not mapped with constraint error code', $fieldName));
         }
 
         return $constraintErrorFieldMap[$fieldName];
@@ -296,8 +256,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should be indexed
-     *
-     * @param string $productReference
      */
     public function assertIsIndexed(string $productReference): void
     {
@@ -306,9 +264,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should be indexed for shops :shopReferences
-     *
-     * @param string $productReference
-     * @param string $shopReferences
      */
     public function assertProductIsIndexedForShops(string $productReference, string $shopReferences): void
     {
@@ -320,8 +275,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should not be indexed
-     *
-     * @param string $productReference
      */
     public function assertIsNotIndexed(string $productReference): void
     {
@@ -330,9 +283,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should not be indexed for shops :shopReferences
-     *
-     * @param string $productReference
-     * @param string $shopReferences
      */
     public function assertProductNotIndexedForShops(string $productReference, string $shopReferences): void
     {
@@ -342,11 +292,6 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
         }
     }
 
-    /**
-     * @param string $productReference
-     * @param bool $expectedIsIndexed
-     * @param string|null $shopReference
-     */
     private function assertIndexation(string $productReference, bool $expectedIsIndexed, ?string $shopReference = null): void
     {
         $productId = $this->getSharedStorage()->get($productReference);
@@ -355,11 +300,11 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
         Assert::assertSame(
             $expectedIsIndexed,
             (bool) $product->indexed,
-            sprintf(
+            \sprintf(
                 'Unexpected indexed field value %s for product "%s"%s',
                 $product->indexed,
                 $productReference,
-                $shopReference ? sprintf(' in shop %s', $shopReference) : ''
+                $shopReference ? \sprintf(' in shop %s', $shopReference) : ''
             )
         );
     }
@@ -370,7 +315,7 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
         Assert::assertEquals(
             $productTypeName,
             $editableProduct->getType(),
-            sprintf(
+            \sprintf(
                 'Product type is not as expected. Expected %s but got %s instead',
                 $productTypeName,
                 $editableProduct->getType()

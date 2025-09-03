@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,6 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
 {
     /**
      * @When I set to product :productReference the following feature values:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function setProductFeatureValues(string $productReference, TableNode $table): void
     {
@@ -55,10 +53,10 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
         $productFeatures = [];
         foreach ($featuresData as $featuresDatum) {
             $productFeature = ['feature_id' => $this->getSharedStorage()->get($featuresDatum['feature'])];
-            if (!empty($featuresDatum['feature_value'])) {
+            if (! empty($featuresDatum['feature_value'])) {
                 $productFeature['feature_value_id'] = $this->getSharedStorage()->get($featuresDatum['feature_value']);
             }
-            if (!empty($featuresDatum['custom_values'])) {
+            if (! empty($featuresDatum['custom_values'])) {
                 $productFeature['custom_values'] = $this->localizeByCell($featuresDatum['custom_values']);
             }
 
@@ -67,13 +65,8 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
         $command = new SetProductFeatureValuesCommand($this->getSharedStorage()->get($productReference), $productFeatures);
         try {
             $featureIds = $this->getCommandBus()->handle($command);
-            if (count($featureIds) !== count($productFeatures)) {
-                throw new RuntimeException(sprintf(
-                    'Incorrect number of feature ids returned for product %s, expected %d but got %d instead',
-                    $productReference,
-                    count($featureIds),
-                    count($productFeatures)
-                ));
+            if (\count($featureIds) !== \count($productFeatures)) {
+                throw new RuntimeException(\sprintf('Incorrect number of feature ids returned for product %s, expected %d but got %d instead', $productReference, \count($featureIds), \count($productFeatures)));
             }
             $this->storeCreatedFeatureValuesReferences($featureIds, $featuresData);
         } catch (ProductException $e) {
@@ -83,8 +76,6 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
 
     /**
      * @When I remove all feature values from product :productReference
-     *
-     * @param string $productReference
      */
     public function removeAllFeatureValuesFromProduct(string $productReference): void
     {
@@ -93,7 +84,6 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
 
     /**
      * @param FeatureValueId[] $featureValueIds
-     * @param array $featureValuesData
      */
     private function storeCreatedFeatureValuesReferences(array $featureValueIds, array $featureValuesData): void
     {
@@ -123,9 +113,6 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
 
     /**
      * @Then product :productReference should have following feature values:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function assertProductFeatureValues(string $productReference, TableNode $table): void
     {
@@ -134,18 +121,13 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
         $productFeatureValues = $this->getQueryBus()->handle($query);
 
         $expectedFeatureValues = $table->getColumnsHash();
-        if (count($productFeatureValues) !== count($expectedFeatureValues)) {
-            throw new RuntimeException(sprintf(
-                'Incorrect number of feature values for product %s, expected %d but got %d instead',
-                $productReference,
-                count($expectedFeatureValues),
-                count($productFeatureValues)
-            ));
+        if (\count($productFeatureValues) !== \count($expectedFeatureValues)) {
+            throw new RuntimeException(\sprintf('Incorrect number of feature values for product %s, expected %d but got %d instead', $productReference, \count($expectedFeatureValues), \count($productFeatureValues)));
         }
 
         foreach ($expectedFeatureValues as $key => $expectedFeatureValue) {
             // If new custom value is found set a new reference in storage, and set this new reference as the expected one for the second loop
-            if (!empty($expectedFeatureValue['new_feature_value']) && !empty($expectedFeatureValue['custom_values'])) {
+            if (! empty($expectedFeatureValue['new_feature_value']) && ! empty($expectedFeatureValue['custom_values'])) {
                 $localizedValues = $this->localizeByCell($expectedFeatureValue['custom_values']);
                 foreach ($productFeatureValues as $productFeatureValue) {
                     if ($localizedValues === $productFeatureValue->getLocalizedValues()) {
@@ -168,7 +150,7 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
                     continue;
                 }
                 $foundMatchingFeatureValue = true;
-                if (!empty($expectedFeatureValue['custom_values'])) {
+                if (! empty($expectedFeatureValue['custom_values'])) {
                     Assert::assertTrue($productFeatureValue->isCustom());
                     $localizedValues = $this->localizeByCell($expectedFeatureValue['custom_values']);
                     Assert::assertEquals($localizedValues, $productFeatureValue->getLocalizedValues());
@@ -176,21 +158,14 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
                     Assert::assertFalse($productFeatureValue->isCustom());
                 }
             }
-            if (!$foundMatchingFeatureValue) {
-                throw new RuntimeException(sprintf(
-                    'Could not find feature value %s from feature %s in product %s',
-                    $expectedFeatureValue['feature_value'],
-                    $expectedFeatureValue['feature'],
-                    $productReference
-                ));
+            if (! $foundMatchingFeatureValue) {
+                throw new RuntimeException(\sprintf('Could not find feature value %s from feature %s in product %s', $expectedFeatureValue['feature_value'], $expectedFeatureValue['feature'], $productReference));
             }
         }
     }
 
     /**
      * @Then product :productReference should have no feature values
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoFeatureValues(string $productReference): void
     {
@@ -198,12 +173,8 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
         /** @var ProductFeatureValue[] $productFeatureValues */
         $productFeatureValues = $this->getQueryBus()->handle($query);
 
-        if (!empty($productFeatureValues)) {
-            throw new RuntimeException(sprintf(
-                'Expected product %s to have no feature values but got %d instead',
-                $productReference,
-                count($productFeatureValues)
-            ));
+        if (! empty($productFeatureValues)) {
+            throw new RuntimeException(\sprintf('Expected product %s to have no feature values but got %d instead', $productReference, \count($productFeatureValues)));
         }
     }
 

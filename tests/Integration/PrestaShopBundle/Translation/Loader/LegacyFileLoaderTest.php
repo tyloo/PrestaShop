@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ class LegacyFileLoaderTest extends KernelTestCase
      */
     private $catalogueVerifier;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct($name = null)
     {
         parent::__construct($name);
@@ -58,7 +56,7 @@ class LegacyFileLoaderTest extends KernelTestCase
     }
 
     /**
-     * @param string $locale
+     * @param string  $locale
      * @param array[] $expected
      *
      * @dataProvider provideTestCases

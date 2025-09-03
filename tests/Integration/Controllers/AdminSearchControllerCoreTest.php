@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,11 +38,6 @@ class AdminSearchControllerCoreTest extends KernelTestCase
 {
     /**
      * @dataProvider dataProviderSearch
-     *
-     * @param string $query
-     * @param array $result
-     *
-     * @return void
      */
     public function testSearch(string $query, array $result): void
     {
@@ -103,18 +99,13 @@ class AdminSearchControllerCoreTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
     private function cleanDataToken(array $data): array
     {
         foreach ($data as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $data[$key] = preg_replace('#&token=[a-z0-9]+#', '', $value, 1);
             }
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $data[$key] = $this->cleanDataToken($value);
             }
         }

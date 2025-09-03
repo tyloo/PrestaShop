@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -137,9 +138,6 @@ class LayoutVariablesBuilderTest extends TestCase
     }
 
     /**
-     * @param array $expectedVariables
-     * @param LayoutInterface $mailLayout
-     *
      * @return MockObject|HookDispatcherInterface
      */
     private function createHookDispatcherMock(array $expectedVariables, LayoutInterface $mailLayout)
@@ -169,7 +167,7 @@ class LayoutVariablesBuilderTest extends TestCase
 
     /**
      * @param string $isoCode
-     * @param bool $isRTL
+     * @param bool   $isRTL
      *
      * @return MockObject|LanguageInterface
      */
@@ -188,7 +186,7 @@ class LayoutVariablesBuilderTest extends TestCase
         $languageMock
             ->expects($this->once())
             ->method('getLocale')
-            ->willReturn(sprintf('%s-%s', $isoCode, strtoupper($isoCode)))
+            ->willReturn(\sprintf('%s-%s', $isoCode, strtoupper($isoCode)))
         ;
         $languageMock
             ->expects($this->once())
@@ -200,8 +198,6 @@ class LayoutVariablesBuilderTest extends TestCase
     }
 
     /**
-     * @param array $expectedMethods
-     *
      * @return MockObject|LayoutInterface
      */
     private function buildLayoutMock(array $expectedMethods)
@@ -239,7 +235,7 @@ class LayoutVariablesBuilderTest extends TestCase
                 $this->isInstanceOf(LanguageInterface::class)
             )
             ->willReturnCallback(function (LanguageInterface $language) {
-                if (in_array($language->getIsoCode(), ['ar', 'fa'])) {
+                if (\in_array($language->getIsoCode(), ['ar', 'fa'], true)) {
                     return 'Tahoma';
                 }
 

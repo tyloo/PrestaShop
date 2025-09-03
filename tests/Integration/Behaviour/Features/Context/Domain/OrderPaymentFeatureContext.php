@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I pay order :orderReference with the following details:
-     *
-     * @param string $orderReference
-     * @param TableNode $table
      */
     public function addPaymentToOrderWithTheFollowingDetails(string $orderReference, TableNode $table)
     {
@@ -69,9 +67,6 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then order :orderReference has :numberOfPayments payments
-     *
-     * @param string $orderReference
-     * @param int $numberOfPayments
      */
     public function getOrderPayments(string $orderReference, int $numberOfPayments)
     {
@@ -84,16 +79,14 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
         /** @var OrderPaymentForViewing[] $orderPaymentForViewingArray */
         $orderPaymentForViewingArray = $orderPaymentsForViewing->getPayments();
 
-        $countOfOrderPaymentsFromDb = count($orderPaymentForViewingArray);
-        if (count($orderPaymentForViewingArray) !== $numberOfPayments) {
-            throw new RuntimeException(sprintf('Order "%s" number of payments  is "%s", but "%s" was expected', $orderReference, $countOfOrderPaymentsFromDb, $numberOfPayments));
+        $countOfOrderPaymentsFromDb = \count($orderPaymentForViewingArray);
+        if (\count($orderPaymentForViewingArray) !== $numberOfPayments) {
+            throw new RuntimeException(\sprintf('Order "%s" number of payments  is "%s", but "%s" was expected', $orderReference, $countOfOrderPaymentsFromDb, $numberOfPayments));
         }
     }
 
     /**
      * @Then order :orderReference payments should have invoice
-     *
-     * @param string $orderReference
      */
     public function queryOrderPaymentsToGetInvoice(string $orderReference)
     {
@@ -109,9 +102,6 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then order :orderReference payment in :position position should have the following details:
-     *
-     * @param string $orderReference
-     * @param TableNode $table
      */
     public function checkOrderPayment(string $orderReference, string $position, TableNode $table): void
     {
@@ -152,9 +142,6 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I pay order :orderReference with the invalid following details:
-     *
-     * @param string $orderReference
-     * @param TableNode $table
      */
     public function addPaymentToOrderWithTheInvalidFollowingProperties(string $orderReference, TableNode $table)
     {
@@ -202,8 +189,6 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param TableNode $table
-     *
      * @return array
      *
      * @throws RuntimeException
@@ -212,7 +197,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     {
         /** @var array $hash */
         $hash = $table->getHash();
-        if (count($hash) == 0) {
+        if (\count($hash) === 0) {
             throw new RuntimeException('Payment details are invalid');
         }
 
@@ -220,12 +205,6 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param int $orderId
-     * @param OrderForViewing $orderForViewing
-     * @param string $position
-     *
-     * @return OrderPaymentForViewing
-     *
      * @throws RuntimeException
      */
     private function getPaymentForViewing(int $orderId, OrderForViewing $orderForViewing, string $position): OrderPaymentForViewing
@@ -234,7 +213,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
         $orderPaymentsForViewing = $orderForViewing->getPayments();
         /** @var OrderPaymentForViewing[] $orderPaymentForViewingArray */
         $orderPaymentForViewingArray = $orderPaymentsForViewing->getPayments();
-        if (count($orderPaymentForViewingArray) == 0) {
+        if (\count($orderPaymentForViewingArray) === 0) {
             throw new RuntimeException('Order [' . $orderId . '] has no payments for viewing');
         }
 
@@ -243,7 +222,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
             'second' => 1,
             'third' => 2,
             'fourth' => 3,
-            'last' => count($orderPaymentForViewingArray) - 1,
+            'last' => \count($orderPaymentForViewingArray) - 1,
         ];
 
         return $orderPaymentForViewingArray[$indexes[$position] ?? $position];

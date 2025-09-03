@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,6 @@ class FormBuilderModifierTest extends AbstractFormTester
 {
     /**
      * @dataProvider getAddAfterData
-     *
-     * @param string $targetFieldName
-     * @param array $childOptions
-     * @param array $expectedChildren
      */
     public function testAddAfter(string $targetFieldName, array $childOptions, array $expectedChildren)
     {
@@ -60,7 +57,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         );
 
         $builderChildren = $formBuilder->all();
-        $this->assertEquals(count($expectedChildren), count($builderChildren));
+        $this->assertEquals(\count($expectedChildren), \count($builderChildren));
 
         $builderIndex = 0;
         foreach (array_keys($builderChildren) as $childName) {
@@ -72,10 +69,6 @@ class FormBuilderModifierTest extends AbstractFormTester
 
     /**
      * @dataProvider getAddAfterData
-     *
-     * @param string $targetFieldName
-     * @param array $childOptions
-     * @param array $expectedChildren
      */
     public function testAddAfterChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren)
     {
@@ -90,7 +83,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         );
 
         $builderChildren = $formBuilder->all();
-        $this->assertEquals(count($expectedChildren), count($builderChildren));
+        $this->assertEquals(\count($expectedChildren), \count($builderChildren));
 
         $builderIndex = 0;
         foreach (array_keys($builderChildren) as $childName) {
@@ -123,10 +116,6 @@ class FormBuilderModifierTest extends AbstractFormTester
 
     /**
      * @dataProvider getAddBeforeData
-     *
-     * @param string $targetFieldName
-     * @param array $childOptions
-     * @param array $expectedChildren
      */
     public function testAddBefore(string $targetFieldName, array $childOptions, array $expectedChildren)
     {
@@ -141,7 +130,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         );
 
         $builderChildren = $formBuilder->all();
-        $this->assertEquals(count($expectedChildren), count($builderChildren));
+        $this->assertEquals(\count($expectedChildren), \count($builderChildren));
 
         $builderIndex = 0;
         foreach (array_keys($builderChildren) as $childName) {
@@ -153,10 +142,6 @@ class FormBuilderModifierTest extends AbstractFormTester
 
     /**
      * @dataProvider getAddBeforeData
-     *
-     * @param string $targetFieldName
-     * @param array $childOptions
-     * @param array $expectedChildren
      */
     public function testAddBeforeChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren)
     {
@@ -171,7 +156,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         );
 
         $builderChildren = $formBuilder->all();
-        $this->assertEquals(count($expectedChildren), count($builderChildren));
+        $this->assertEquals(\count($expectedChildren), \count($builderChildren));
 
         $builderIndex = 0;
         foreach (array_keys($builderChildren) as $childName) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -222,10 +223,6 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
         return $this->getProvider($domain, $databaseContent)->getUserTranslatedCatalogue($locale);
     }
 
-    /**
-     * @param array $expected
-     * @param MessageCatalogue $catalogue
-     */
     private function assertResultIsAsExpected(array $expected, MessageCatalogue $catalogue): void
     {
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);
@@ -247,12 +244,6 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
         }
     }
 
-    /**
-     * @param string $domain
-     * @param array $databaseContent
-     *
-     * @return CoreCatalogueLayersProvider
-     */
     private function getProvider(string $domain, array $databaseContent = []): CoreCatalogueLayersProvider
     {
         $providerDefinition = new CoreDomainProviderDefinition($domain);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,12 +42,14 @@ class DoctrineFilterApplicatorTest extends TestCase
      */
     private $doctrineFilterApplicator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->doctrineFilterApplicator = new DoctrineFilterApplicator();
     }
 
-    /** Tests min max price filter when both min and max are used */
+    /**
+     * Tests min max price filter when both min and max are used
+     */
     public function testMinMaxFilterBoth(): void
     {
         $priceMinMaxFilters = new SqlFilters();
@@ -70,7 +73,9 @@ class DoctrineFilterApplicatorTest extends TestCase
         self::assertSame('ps.`price` >= :price_tax_excluded_min AND ps.`price` <= :price_tax_excluded_max', (string) $wherePart);
     }
 
-    /** Tests min max price filter when only min is present */
+    /**
+     * Tests min max price filter when only min is present
+     */
     public function testMinMaxPriceFilterMin(): void
     {
         $priceMinMaxFilters = new SqlFilters();
@@ -92,7 +97,9 @@ class DoctrineFilterApplicatorTest extends TestCase
         self::assertSame('ps.`price` >= :price_tax_excluded_min', (string) $wherePart);
     }
 
-    /** Tests min max price filter when only max is used */
+    /**
+     * Tests min max price filter when only max is used
+     */
     public function testMinMaxPriceFilterMax(): void
     {
         $priceMinMaxFilters = new SqlFilters();

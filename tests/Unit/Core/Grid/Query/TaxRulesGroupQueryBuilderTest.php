@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,13 +75,6 @@ class TaxRulesGroupQueryBuilderTest extends TestCase
 
     /**
      * @dataProvider dataProviderQueryBuilder
-     *
-     * @param Filters $filters
-     * @param array $qbQueryParts
-     * @param array $qbQueryPartsCount
-     * @param array $qbParameters
-     *
-     * @return void
      */
     public function testQueryBuild(Filters $filters, array $qbQueryParts, array $qbQueryPartsCount, array $qbParameters): void
     {
@@ -106,13 +100,6 @@ class TaxRulesGroupQueryBuilderTest extends TestCase
 
     /**
      * @dataProvider dataProviderQueryBuilder
-     *
-     * @param Filters $filters
-     * @param array $qbQueryParts
-     * @param array $qbQueryPartsCount
-     * @param array $qbParameters
-     *
-     * @return void
      */
     public function testCountQueryBuild(Filters $filters, array $qbQueryParts, array $qbQueryPartsCount, array $qbParameters): void
     {

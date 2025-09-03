@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,19 +40,12 @@ abstract class CombinationFillerTestCase extends TestCase
     protected const DEFAULT_SHOP_ID = 2;
     protected const COMBINATION_ID = 3;
 
-    /**
-     * @param CombinationFillerInterface $filler
-     * @param Combination $combination
-     * @param UpdateCombinationCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param Combination $expectedCombination
-     */
     protected function fillUpdatableProperties(
         CombinationFillerInterface $filler,
         Combination $combination,
         UpdateCombinationCommand $command,
         array $expectedUpdatableProperties,
-        Combination $expectedCombination
+        Combination $expectedCombination,
     ) {
         $this->assertSame(
             $expectedUpdatableProperties,
@@ -65,8 +59,6 @@ abstract class CombinationFillerTestCase extends TestCase
     /**
      * This method mocks combination into its default state.
      * Feel free to override it if needed for specific test cases.
-     *
-     * @return Combination
      */
     protected function mockDefaultCombination(): Combination
     {
@@ -77,9 +69,6 @@ abstract class CombinationFillerTestCase extends TestCase
         return $combination;
     }
 
-    /**
-     * @return UpdateCombinationCommand
-     */
     protected function getEmptyCommand(): UpdateCombinationCommand
     {
         return new UpdateCombinationCommand(self::COMBINATION_ID, ShopConstraint::shop(self::DEFAULT_SHOP_ID));

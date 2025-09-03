@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,7 +92,7 @@ class CartTest extends TestCase
                 $mode = PS_ROUND_HALF_ODD;
                 break;
             default:
-                throw new Exception(sprintf('Unknown rounding mode `%s`.', $modeStr));
+                throw new Exception(\sprintf('Unknown rounding mode `%s`.', $modeStr));
         }
 
         Configuration::set('PS_PRICE_ROUND_MODE', $mode);
@@ -112,7 +113,7 @@ class CartTest extends TestCase
                 $type = Order::ROUND_TOTAL;
                 break;
             default:
-                throw new Exception(sprintf('Unknown rounding type `%s`.', $typeStr));
+                throw new Exception(\sprintf('Unknown rounding type `%s`.', $typeStr));
         }
 
         Configuration::set('PS_ROUND_TYPE', $type);
@@ -130,7 +131,7 @@ class CartTest extends TestCase
 
         $name = $rate . '% TAX';
 
-        if (!array_key_exists($name, $taxes)) {
+        if (! \array_key_exists($name, $taxes)) {
             $tax = new Tax(null, (int) Configuration::get('PS_LANG_DEFAULT'));
             $tax->name = $name;
             $tax->rate = $rate;
@@ -151,7 +152,7 @@ class CartTest extends TestCase
 
         $name = $rate . '% TRG';
 
-        if (!array_key_exists($name, $groups)) {
+        if (! \array_key_exists($name, $groups)) {
             $taxRulesGroup = new TaxRulesGroup(null, (int) Configuration::get('PS_LANG_DEFAULT'));
             $taxRulesGroup->name = $name;
             $taxRulesGroup->active = true;
@@ -218,13 +219,13 @@ class CartTest extends TestCase
     {
         static $carriers = [];
 
-        if (!array_key_exists($name, $carriers)) {
+        if (! \array_key_exists($name, $carriers)) {
             $carrier = new Carrier(null, (int) Configuration::get('PS_LANG_DEFAULT'));
 
             $carrier->name = $name;
             $carrier->delay = '28 days later';
 
-            if (null === $shippingCost) {
+            if ($shippingCost === null) {
                 $carrier->is_free = true;
             } else {
                 $carrier->range_behavior = false; // take highest range
@@ -235,11 +236,11 @@ class CartTest extends TestCase
 
             self::assertTrue($carrier->save());
 
-            if (null !== $id_tax_rules_group) {
+            if ($id_tax_rules_group !== null) {
                 $carrier->setTaxRulesGroup($id_tax_rules_group);
             }
 
-            if (null !== $shippingCost) {
+            if ($shippingCost !== null) {
                 // Populate one range
                 Db::getInstance()->execute('INSERT INTO ' . _DB_PREFIX_ . 'range_price (id_carrier, delimiter1, delimiter2) VALUES (
                     ' . (int) $carrier->id . ',
@@ -295,7 +296,7 @@ class CartTest extends TestCase
         } elseif ($type === '%') {
             $cartRule->reduction_percent = $amount;
         } else {
-            throw new Exception(sprintf('Invalid CartRule type `%s`.', $type));
+            throw new Exception(\sprintf('Invalid CartRule type `%s`.', $type));
         }
 
         self::assertTrue($cartRule->save());

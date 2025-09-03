@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,7 @@ class GetCombinationStockMovementsTest extends TestCase
         int $combinationId,
         int $shopId,
         int $offset,
-        int $limit
+        int $limit,
     ): void {
         $query = new GetCombinationStockMovements(
             $combinationId,
@@ -81,7 +82,7 @@ class GetCombinationStockMovementsTest extends TestCase
         int $combinationId,
         int $shopId,
         int $offset,
-        int $limit
+        int $limit,
     ): void {
         $this->expectException($exceptionClass);
 

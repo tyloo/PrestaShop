@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,10 +38,6 @@ class StringToBoolTransformContext implements Context
 {
     /**
      * @Transform /^(enabled|enable|included|should|includes)$/
-     *
-     * @param string $string
-     *
-     * @return bool
      */
     public function transformTruthyStringToBoolean(string $string): bool
     {
@@ -49,10 +46,6 @@ class StringToBoolTransformContext implements Context
 
     /**
      * @Transform /^(disabled|disable|excluded|should not|excludes)$/
-     *
-     * @param string $string
-     *
-     * @return bool
      */
     public function transformFalsyStringToBoolean(string $string): bool
     {

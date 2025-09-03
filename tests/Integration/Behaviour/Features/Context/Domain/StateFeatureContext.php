@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,9 +57,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I add new state :stateReference with following properties:
-     *
-     * @param string $stateReference
-     * @param TableNode $table
      */
     public function createState(string $stateReference, TableNode $table): void
     {
@@ -82,9 +80,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit state :stateReference with following properties:
-     *
-     * @param string $stateReference
-     * @param TableNode $table
      */
     public function editState(string $stateReference, TableNode $table): void
     {
@@ -118,8 +113,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete state :stateReference
-     *
-     * @param string $stateReference
      */
     public function deleteState(string $stateReference): void
     {
@@ -134,8 +127,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete states :stateReferences using bulk action
-     *
-     * @param string $stateReferences
      */
     public function bulkDeleteStates(string $stateReferences): void
     {
@@ -153,8 +144,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I toggle status of state :stateReference
-     *
-     * @param string $stateReference
      */
     public function toggleStatus(string $stateReference): void
     {
@@ -166,13 +155,10 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I (enable|disable) multiple states "(.+)" using bulk action$/
-     *
-     * @param string $action
-     * @param string $stateReferences
      */
     public function bulkToggleStatus(string $action, string $stateReferences): void
     {
-        $expectedStatus = 'enable' === $action;
+        $expectedStatus = $action === 'enable';
         $stateIds = [];
 
         foreach (PrimitiveUtils::castStringArrayIntoArray($stateReferences) as $stateReference) {
@@ -188,24 +174,18 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then state :reference name should be :name
-     *
-     * @param string $stateReference
-     * @param string $name
      */
     public function assertStateName(string $stateReference, string $name): void
     {
         $state = new State((int) SharedStorage::getStorage()->get($stateReference));
 
         if ($state->name !== $name) {
-            throw new RuntimeException(sprintf('State "%s" has "%s" name, but "%s" was expected.', $stateReference, $state->name, $name));
+            throw new RuntimeException(\sprintf('State "%s" has "%s" name, but "%s" was expected.', $stateReference, $state->name, $name));
         }
     }
 
     /**
      * @Then state :reference country should be :name
-     *
-     * @param string $stateReference
-     * @param string $name
      */
     public function assertStateCountry(string $stateReference, string $name): void
     {
@@ -213,20 +193,12 @@ class StateFeatureContext extends AbstractDomainFeatureContext
         $country = new Country($state->id_country);
 
         if ($country->name[$this->getDefaultLangId()] !== $name) {
-            throw new RuntimeException(sprintf(
-                'Country "%s" has "%s" name, but "%s" was expected.',
-                $stateReference,
-                $country->name,
-                $name
-            ));
+            throw new RuntimeException(\sprintf('Country "%s" has "%s" name, but "%s" was expected.', $stateReference, $country->name, $name));
         }
     }
 
     /**
      * @Then state :reference zone should be :name
-     *
-     * @param string $stateReference
-     * @param string $name
      */
     public function assertStateZone(string $stateReference, string $name): void
     {
@@ -234,12 +206,7 @@ class StateFeatureContext extends AbstractDomainFeatureContext
         $zone = new Zone($state->id_zone);
 
         if ($zone->name !== $name) {
-            throw new RuntimeException(sprintf(
-                'Zone "%s" has "%s" name, but "%s" was expected.',
-                $stateReference,
-                $zone->name,
-                $name
-            ));
+            throw new RuntimeException(\sprintf('Zone "%s" has "%s" name, but "%s" was expected.', $stateReference, $zone->name, $name));
         }
     }
 
@@ -247,27 +214,21 @@ class StateFeatureContext extends AbstractDomainFeatureContext
      * @Given /^state "(.*)" is (enabled|disabled)?$/
      *
      * @Then /^state "(.*)" should be (enabled|disabled)?$/
-     *
-     * @param string $stateReference
-     * @param string $expectedStatus
      */
     public function assertStatus(string $stateReference, string $expectedStatus): void
     {
         $state = new State((int) SharedStorage::getStorage()->get($stateReference));
 
-        $isEnabled = 'enabled' === $expectedStatus;
+        $isEnabled = $expectedStatus === 'enabled';
         $actualStatus = (bool) $state->active;
 
         if ($actualStatus !== $isEnabled) {
-            throw new RuntimeException(sprintf('State "%s" is %s, but it was expected to be %s', $stateReference, $actualStatus ? 'enabled' : 'disabled', $expectedStatus));
+            throw new RuntimeException(\sprintf('State "%s" is %s, but it was expected to be %s', $stateReference, $actualStatus ? 'enabled' : 'disabled', $expectedStatus));
         }
     }
 
     /**
      * @Then /^states "(.+)" should be (enabled|disabled)$/
-     *
-     * @param string $stateReferences
-     * @param string $expectedStatus
      */
     public function assertMultipleStatesStatus(string $stateReferences, string $expectedStatus): void
     {
@@ -278,8 +239,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^state "(.+)" should be deleted$/
-     *
-     * @param string $stateReference
      */
     public function assertStateIsDeleted(string $stateReference): void
     {
@@ -287,7 +246,7 @@ class StateFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle($query);
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('State %s exists, but it was expected to be deleted', $stateReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('State %s exists, but it was expected to be deleted', $stateReference));
         } catch (StateNotFoundException $e) {
             SharedStorage::getStorage()->clear($stateReference);
         }
@@ -295,8 +254,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^state "(.+)" should not be deleted$/
-     *
-     * @param string $stateReference
      */
     public function assertStateIsNotDeleted(string $stateReference): void
     {
@@ -308,8 +265,6 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then states :stateReferences should be deleted
-     *
-     * @param string $stateReferences
      */
     public function assertStatesAreDeleted(string $stateReferences): void
     {

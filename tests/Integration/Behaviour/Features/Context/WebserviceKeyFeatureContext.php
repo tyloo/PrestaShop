@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class WebserviceKeyFeatureContext extends AbstractPrestaShopFeatureContext
         $webserviceKey = $this->getWebserviceKeyFromKey($reference);
 
         if ($webserviceKey->key !== $key) {
-            throw new RuntimeException(sprintf('Webservice key "%s" does not match "%s" key.', $webserviceKey->key, $key));
+            throw new RuntimeException(\sprintf('Webservice key "%s" does not match "%s" key.', $webserviceKey->key, $key));
         }
     }
 
@@ -54,7 +55,7 @@ class WebserviceKeyFeatureContext extends AbstractPrestaShopFeatureContext
         $webserviceKey = $this->getWebserviceKeyFromKey($reference);
 
         if ($webserviceKey->description !== $description) {
-            throw new RuntimeException(sprintf('Webservice key "%s" description is not "%s".', $webserviceKey->id, $description));
+            throw new RuntimeException(\sprintf('Webservice key "%s" description is not "%s".', $webserviceKey->id, $description));
         }
     }
 
@@ -65,10 +66,10 @@ class WebserviceKeyFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $webserviceKey = $this->getWebserviceKeyFromKey($reference);
 
-        $isEnabled = 'enabled' === $status;
+        $isEnabled = $status === 'enabled';
 
         if ((bool) $webserviceKey->active !== $isEnabled) {
-            throw new RuntimeException(sprintf('Webservice key "%s" is not "%s"', $webserviceKey->id, $status));
+            throw new RuntimeException(\sprintf('Webservice key "%s" is not "%s"', $webserviceKey->id, $status));
         }
     }
 
@@ -84,21 +85,16 @@ class WebserviceKeyFeatureContext extends AbstractPrestaShopFeatureContext
         $permissions = WebserviceKey::getPermissionForAccount($webserviceKey->key);
 
         foreach ($resources as $resource) {
-            if (!isset($permissions[$resource])) {
-                throw new RuntimeException(sprintf('Resource "%s" is not configured for "%s" key', $resource, $webserviceKey->key));
+            if (! isset($permissions[$resource])) {
+                throw new RuntimeException(\sprintf('Resource "%s" is not configured for "%s" key', $resource, $webserviceKey->key));
             }
 
-            if (!in_array($permission, $permissions[$resource], true)) {
-                throw new RuntimeException(sprintf('"%s" permission is not configured for resource "%s" for "%s" key', $permission, $resource, $webserviceKey->key));
+            if (! \in_array($permission, $permissions[$resource], true)) {
+                throw new RuntimeException(\sprintf('"%s" permission is not configured for resource "%s" for "%s" key', $permission, $resource, $webserviceKey->key));
             }
         }
     }
 
-    /**
-     * @param string $key
-     *
-     * @return WebserviceKey
-     */
     private function getWebserviceKeyFromKey(string $key): WebserviceKey
     {
         $webserviceKeyId = WebserviceKey::getIdFromKey($key);

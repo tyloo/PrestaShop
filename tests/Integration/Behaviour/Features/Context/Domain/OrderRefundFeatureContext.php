@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,23 +60,17 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I issue a partial refund on "(.*)" (with|without) restock (with|without) credit slip (with|without) voucher on following products:$/
-     *
-     * @param string $orderReference
-     * @param string $restockProducts
-     * @param string $generateCreditSlip
-     * @param string $generateVoucher
-     * @param TableNode $table
      */
     public function issuePartialRefundOrder(
         string $orderReference,
         string $restockProducts,
         string $generateCreditSlip,
         string $generateVoucher,
-        TableNode $table
+        TableNode $table,
     ) {
-        $restockProducts = 'with' === $restockProducts;
-        $generateCreditSlip = 'with' === $generateCreditSlip;
-        $generateVoucher = 'with' === $generateVoucher;
+        $restockProducts = $restockProducts === 'with';
+        $generateCreditSlip = $generateCreditSlip === 'with';
+        $generateVoucher = $generateVoucher === 'with';
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $refundData = $table->getColumnsHash();
 
@@ -96,20 +91,15 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I issue a standard refund on "(.*)" (with|without) credit slip (with|without) voucher on following products:$/
-     *
-     * @param string $orderReference
-     * @param string $generateCreditSlip
-     * @param string $generateVoucher
-     * @param TableNode $table
      */
     public function issueStandardRefundOrder(
         string $orderReference,
         string $generateCreditSlip,
         string $generateVoucher,
-        TableNode $table
+        TableNode $table,
     ) {
-        $generateCreditSlip = 'with' === $generateCreditSlip;
-        $generateVoucher = 'with' === $generateVoucher;
+        $generateCreditSlip = $generateCreditSlip === 'with';
+        $generateVoucher = $generateVoucher === 'with';
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $refundData = $table->getColumnsHash();
 
@@ -129,23 +119,17 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I issue a return product on "(.*)" (with|without) restock (with|without) credit slip (with|without) voucher on following products:$/
-     *
-     * @param string $orderReference
-     * @param string $restockProducts
-     * @param string $generateCreditSlip
-     * @param string $generateVoucher
-     * @param TableNode $table
      */
     public function issueReturnProductOrder(
         string $orderReference,
         string $restockProducts,
         string $generateCreditSlip,
         string $generateVoucher,
-        TableNode $table
+        TableNode $table,
     ) {
-        $restockProducts = 'with' === $restockProducts;
-        $generateCreditSlip = 'with' === $generateCreditSlip;
-        $generateVoucher = 'with' === $generateVoucher;
+        $restockProducts = $restockProducts === 'with';
+        $generateCreditSlip = $generateCreditSlip === 'with';
+        $generateVoucher = $generateVoucher === 'with';
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $refundData = $table->getColumnsHash();
 
@@ -166,9 +150,6 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given :orderReference has :creditSlipNumber credit slips
-     *
-     * @param string $orderReference
-     * @param int $creditSlipNumber
      */
     public function checkOrderRefundsNumber(string $orderReference, int $creditSlipNumber): void
     {
@@ -177,16 +158,13 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         $order = new Order($orderId);
         $orderSlips = $order->getOrderSlipsCollection();
         if ($creditSlipNumber !== $orderSlips->count()) {
-            $errorMessage = sprintf('Invalid number of credit slips on order %s, expected %s but got %s', $orderReference, $creditSlipNumber, $orderSlips->count());
+            $errorMessage = \sprintf('Invalid number of credit slips on order %s, expected %s but got %s', $orderReference, $creditSlipNumber, $orderSlips->count());
             throw new RuntimeException($errorMessage);
         }
     }
 
     /**
      * @Given :orderReference last credit slip is:
-     *
-     * @param string $orderReference
-     * @param TableNode $table
      */
     public function checkOrderRefunds(string $orderReference, TableNode $table): void
     {
@@ -201,7 +179,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
             Assert::assertEquals(
                 (float) $orderSlipValue,
                 $orderSlip->{$orderSlipField},
-                sprintf(
+                \sprintf(
                     'Invalid order slip field %s, expected %s instead of %s',
                     $orderSlipField,
                     $orderSlipValue,
@@ -240,7 +218,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
             InvalidCancelProductException::QUANTITY_TOO_HIGH
         );
         if ($maxRefund !== $lastError->getRefundableQuantity()) {
-            throw new RuntimeException(sprintf('Invalid refundable quantity in exception, expected %s but got %s', $maxRefund, $lastError->getRefundableQuantity()));
+            throw new RuntimeException(\sprintf('Invalid refundable quantity in exception, expected %s but got %s', $maxRefund, $lastError->getRefundableQuantity()));
         }
     }
 
@@ -321,16 +299,6 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param int $orderId
-     * @param array $refunds
-     * @param bool $restockRefundedProducts
-     * @param bool $generateCreditSlip
-     * @param bool $generateVoucher
-     * @param int $voucherRefundType
-     * @param string|null $voucherRefundAmount
-     *
-     * @return IssuePartialRefundCommand
-     *
      * @throws InvalidCancelProductException
      * @throws OrderException
      */
@@ -341,7 +309,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         bool $generateCreditSlip,
         bool $generateVoucher,
         int $voucherRefundType = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
-        ?string $voucherRefundAmount = null
+        ?string $voucherRefundAmount = null,
     ): IssuePartialRefundCommand {
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing((int) $orderId));
@@ -349,7 +317,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         $shippingCostRefund = 0;
         $orderDetailsRefunds = [];
         foreach ($refunds as $refund) {
-            if ('shipping_refund' === $refund['product_name']) {
+            if ($refund['product_name'] === 'shipping_refund') {
                 $shippingCostRefund = $refund['amount'];
                 continue;
             }
@@ -363,7 +331,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
                 }
             }
 
-            throw new RuntimeException(sprintf('Product %s not found in orders products', $refund['product_name']));
+            throw new RuntimeException(\sprintf('Product %s not found in orders products', $refund['product_name']));
         }
 
         return new IssuePartialRefundCommand(
@@ -379,14 +347,6 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param int $orderId
-     * @param array $refunds
-     * @param bool $generateCreditSlip
-     * @param bool $generateVoucher
-     * @param int $voucherRefundType
-     *
-     * @return IssueStandardRefundCommand
-     *
      * @throws InvalidCancelProductException
      * @throws OrderException
      */
@@ -395,7 +355,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         array $refunds,
         bool $generateCreditSlip,
         bool $generateVoucher,
-        int $voucherRefundType = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND
+        int $voucherRefundType = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
     ): IssueStandardRefundCommand {
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing((int) $orderId));
@@ -403,7 +363,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         $refundShippingCost = false;
         $orderDetailsRefunds = [];
         foreach ($refunds as $refund) {
-            if ('shipping_refund' === $refund['product_name']) {
+            if ($refund['product_name'] === 'shipping_refund') {
                 $refundShippingCost = (int) $refund['quantity'] > 0;
                 continue;
             }
@@ -416,7 +376,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
                 }
             }
 
-            throw new RuntimeException(sprintf('Product %s not found in orders products', $refund['product_name']));
+            throw new RuntimeException(\sprintf('Product %s not found in orders products', $refund['product_name']));
         }
 
         return new IssueStandardRefundCommand(
@@ -430,15 +390,6 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param int $orderId
-     * @param array $refunds
-     * @param bool $restockRefundedProducts
-     * @param bool $generateCreditSlip
-     * @param bool $generateVoucher
-     * @param int $voucherRefundType
-     *
-     * @return IssueReturnProductCommand
-     *
      * @throws InvalidCancelProductException
      * @throws OrderException
      */
@@ -448,7 +399,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         bool $restockRefundedProducts,
         bool $generateCreditSlip,
         bool $generateVoucher,
-        int $voucherRefundType = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND
+        int $voucherRefundType = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
     ): IssueReturnProductCommand {
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing((int) $orderId));
@@ -456,7 +407,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         $refundShippingCost = false;
         $orderDetailsRefunds = [];
         foreach ($refunds as $refund) {
-            if ('shipping_refund' === $refund['product_name']) {
+            if ($refund['product_name'] === 'shipping_refund') {
                 $refundShippingCost = (int) $refund['quantity'] > 0;
                 continue;
             }
@@ -469,7 +420,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
                 }
             }
 
-            throw new RuntimeException(sprintf('Product %s not found in orders products', $refund['product_name']));
+            throw new RuntimeException(\sprintf('Product %s not found in orders products', $refund['product_name']));
         }
 
         return new IssueReturnProductCommand(
@@ -485,9 +436,6 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I cancel the following products from order :orderReference:
-     *
-     * @param string $orderReference
-     * @param TableNode $table
      */
     public function cancelOrderProduct(string $orderReference, TableNode $table)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,10 +54,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
 
     /**
      * @dataProvider getFormTypeExpectationsBasedOnProductType
-     *
-     * @param string $productType
-     * @param string $formTypeName
-     * @param bool $shouldExist
      */
     public function testFormTypeExistsInFormDependingOnProductType(string $productType, string $formTypeName, bool $shouldExist): void
     {
@@ -121,9 +118,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
      * present any more
      *
      * @dataProvider getFormTypeSwitching
-     *
-     * @param string $initialProductType
-     * @param string $newProductType
      */
     public function testFormTypeSwitching(string $initialProductType, string $newProductType): void
     {
@@ -150,10 +144,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
 
     /**
      * @dataProvider getStockMovements
-     *
-     * @param string $productType
-     * @param array $movementsData
-     * @param bool $shouldExist
      */
     public function testStockMovementsRemovedBasedOnItsContent(string $productType, array $movementsData, bool $shouldExist): void
     {
@@ -197,9 +187,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
 
     /**
      * @dataProvider getVirtualData
-     *
-     * @param array $formData
-     * @param bool $ecotaxExpected
      */
     public function testEcotaxForVirtualProduct(array $formData, bool $ecotaxExpected): void
     {
@@ -256,11 +243,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
 
     /**
      * @dataProvider getExpectedSuppliers
-     *
-     * @param string $formType
-     * @param array $suppliers
-     * @param bool $suppliersExpected
-     * @param bool $productSuppliersExpected
      */
     public function testSuppliers(string $formType, array $suppliers, bool $suppliersExpected, bool $productSuppliersExpected): void
     {
@@ -288,8 +270,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
 
     /**
      * @dataProvider getProductTypes
-     *
-     * @param string $productType
      */
     public function testExtraModules(string $productType): void
     {
@@ -317,12 +297,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
         yield 'virtual product' => [ProductType::TYPE_VIRTUAL];
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $productType
-     * @param array $extraData
-     * @param array $registeredModules
-     */
     private function adaptProductFormBasedOnProductType(FormInterface $form, string $productType, array $extraData = [], array $registeredModules = []): void
     {
         $listener = new ProductTypeListener($this->buildHookInformationProvider($registeredModules));
@@ -335,8 +309,6 @@ class ProductTypeListenerTest extends FormListenerTestCase
     }
 
     /**
-     * @param array $registeredModules
-     *
      * @return mixed|MockObject|HookInformationProvider
      */
     private function buildHookInformationProvider(array $registeredModules = [])

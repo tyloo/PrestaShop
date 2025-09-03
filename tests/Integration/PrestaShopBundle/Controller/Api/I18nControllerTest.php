@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,17 +33,12 @@ class I18nControllerTest extends ApiTestCase
 {
     /**
      * @dataProvider getBadListTranslations
-     *
-     * @param array $params
      */
     public function testItShouldReturnBadResponseWhenRequestingListOfTranslations(array $params): void
     {
         $this->assertBadRequest('api_i18n_translations_list', $params);
     }
 
-    /**
-     * @return array
-     */
     public function getBadListTranslations(): array
     {
         return [
@@ -57,17 +53,12 @@ class I18nControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getGoodListTranslations
-     *
-     * @param array $params
      */
     public function testItShouldReturnOkResponseWhenRequestingListOfTranslations(array $params): void
     {
         $this->assertOkRequest('api_i18n_translations_list', $params);
     }
 
-    /**
-     * @return array
-     */
     public function getGoodListTranslations(): array
     {
         return [

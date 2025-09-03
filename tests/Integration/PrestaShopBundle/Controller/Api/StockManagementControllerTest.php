@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -96,18 +97,12 @@ class StockManagementControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getProductsStockParams
-     *
-     * @param array $params
-     * @param int $expectedTotalPages
      */
     public function testItShouldReturnOkResponseWhenRequestingProductsStock(array $params, int $expectedTotalPages): void
     {
         $this->assertOkResponseOnList('api_stock_list_products', $params, $expectedTotalPages);
     }
 
-    /**
-     * @return array
-     */
     public function getProductsStockParams(): array
     {
         return [
@@ -140,18 +135,12 @@ class StockManagementControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getProductsCombinationsParams
-     *
-     * @param array $params
-     * @param int $expectedTotalPages
      */
     public function testItShouldReturnOkResponseWhenRequestingProductsCombinationsStock(array $params, int $expectedTotalPages): void
     {
         $this->assertOkResponseOnList('api_stock_list_product_combinations', $params, $expectedTotalPages);
     }
 
-    /**
-     * @return array
-     */
     public function getProductsCombinationsParams(): array
     {
         return [
@@ -170,15 +159,10 @@ class StockManagementControllerTest extends ApiTestCase
         ];
     }
 
-    /**
-     * @param string $routeName
-     * @param array $parameters
-     * @param int|null $expectedTotalPages
-     */
     private function assertOkResponseOnList(
         string $routeName,
         array $parameters = [],
-        ?int $expectedTotalPages = null
+        ?int $expectedTotalPages = null,
     ): void {
         $route = $this->router->generate($routeName, $parameters);
         self::$client->request('GET', $route);
@@ -191,15 +175,11 @@ class StockManagementControllerTest extends ApiTestCase
         }
     }
 
-    /**
-     * @param array $parameters
-     * @param int $expectedTotalPages
-     */
     private function assertResponseHasTotalPages(array $parameters, int $expectedTotalPages): void
     {
         $QueryStockParamsCollection = new QueryStockParamsCollection();
         $pageSize = $QueryStockParamsCollection->getDefaultPageSize();
-        if (array_key_exists('page_size', $parameters)) {
+        if (\array_key_exists('page_size', $parameters)) {
             $pageSize = $parameters['page_size'];
         }
 
@@ -211,7 +191,7 @@ class StockManagementControllerTest extends ApiTestCase
         $this->assertEquals(
             $expectedTotalPages,
             $headers->get('Total-Pages'),
-            sprintf(
+            \sprintf(
                 'There should be %d page(s) counting %d elements at most.',
                 $expectedTotalPages,
                 $pageSize
@@ -335,10 +315,6 @@ class StockManagementControllerTest extends ApiTestCase
         $this->assertResponseBodyValidJson(200);
     }
 
-    /**
-     * @param array $expectedQuantities
-     * @param array $content
-     */
     private function assertProductQuantity(array $expectedQuantities, array $content): void
     {
         $this->assertSame(
@@ -490,9 +466,6 @@ class StockManagementControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getMovementsStockParams
-     *
-     * @param array $params
-     * @param int $expectedTotalPages
      */
     public function itShouldReturnOkResponseWhenRequestingMovementsStock(array $params, int $expectedTotalPages): void
     {
@@ -530,14 +503,14 @@ class StockManagementControllerTest extends ApiTestCase
 
     private function restoreMovements(): void
     {
-        $deleteMovements = sprintf('DELETE FROM %sstock_mvt', _DB_PREFIX_);
+        $deleteMovements = \sprintf('DELETE FROM %sstock_mvt', _DB_PREFIX_);
         $statement = $this->connection->prepare($deleteMovements);
         $statement->executeStatement();
     }
 
     private function restoreQuantityEditionFixtures(): void
     {
-        $updateProductQuantity = sprintf(
+        $updateProductQuantity = \sprintf(
             'UPDATE %sstock_available SET quantity = 8, physical_quantity = 10, reserved_quantity = 2 WHERE id_product = 1 AND id_product_attribute = 1',
             _DB_PREFIX_
         );

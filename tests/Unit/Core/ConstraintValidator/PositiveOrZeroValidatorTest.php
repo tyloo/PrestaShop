@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @return Generator
-     */
     public function getValidValues(): Generator
     {
         yield ['1'];
@@ -75,9 +73,6 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
         $this->buildViolation($constraint->message)->assertRaised();
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidValues(): Generator
     {
         yield ['-1'];
@@ -91,9 +86,6 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
         yield [[]];
     }
 
-    /**
-     * @return PositiveOrZeroValidator
-     */
     protected function createValidator(): PositiveOrZeroValidator
     {
         return new PositiveOrZeroValidator();

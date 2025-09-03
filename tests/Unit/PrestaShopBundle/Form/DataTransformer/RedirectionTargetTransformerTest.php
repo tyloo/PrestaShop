@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class RedirectionTargetTransformerTest extends TestCase
 {
     /**
      * @dataProvider getTransformValues
-     *
-     * @param array|null $input
-     * @param array|null $expectedResult
      */
     public function testTransform(?array $input, ?array $expectedResult): void
     {
@@ -165,9 +163,6 @@ class RedirectionTargetTransformerTest extends TestCase
 
     /**
      * @dataProvider getReverseTransformValues
-     *
-     * @param array|null $input
-     * @param array|null $expectedResult
      */
     public function testReverseTransform(?array $input, ?array $expectedResult): void
     {

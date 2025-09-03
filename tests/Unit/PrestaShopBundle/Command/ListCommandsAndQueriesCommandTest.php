@@ -42,7 +42,9 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class ListCommandsAndQueriesCommandTest extends TestCase
 {
-    /** @var CommandTester */
+    /**
+     * @var CommandTester
+     */
     private $commandTester;
 
     /**
@@ -55,7 +57,7 @@ class ListCommandsAndQueriesCommandTest extends TestCase
      */
     private $resourceMetadataCollectionMock;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->resourceNameCollectionMock = $this->createMock(ResourceNameCollectionFactoryInterface::class);
         $this->resourceMetadataCollectionMock = $this->createMock(ResourceMetadataCollectionFactoryInterface::class);

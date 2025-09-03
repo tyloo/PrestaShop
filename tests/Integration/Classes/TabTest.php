@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -211,8 +212,6 @@ class TabTest extends TestCase
     }
 
     /**
-     * @param array $expectedRoles
-     *
      * @throws PrestaShopDatabaseException
      */
     private function assertExpectedRoles(array $expectedRoles): void
@@ -241,8 +240,6 @@ class TabTest extends TestCase
     }
 
     /**
-     * @param array $unexpectedRoles
-     *
      * @throws PrestaShopDatabaseException
      */
     private function assertUnexpectedRoles(array $unexpectedRoles): void

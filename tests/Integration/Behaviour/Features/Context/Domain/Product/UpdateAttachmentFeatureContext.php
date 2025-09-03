@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,6 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then product :productReference should have following attachments associated:
      *
-     * @param string $productReference
      * @param AttachmentInformation[] $attachmentsInfo
      *
      * @see transformAttachmentsInfo()
@@ -50,8 +50,8 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
         $attachments = $this->getProductForEditing($productReference)->getAssociatedAttachments();
 
         Assert::assertEquals(
-            count($attachments),
-            count($attachmentsInfo),
+            \count($attachments),
+            \count($attachmentsInfo),
             'Unexpected associated product attachments count'
         );
 
@@ -66,8 +66,6 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Transform table:attachment reference,title,description,file name,type,size
-     *
-     * @param TableNode $tableNode
      *
      * @return AttachmentInformation[]
      */
@@ -92,8 +90,6 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have no attachments associated
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoAttachmentsAssociated(string $productReference)
     {
@@ -108,7 +104,6 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
      *
      * attachmentReferences transformation handled by @see StringToArrayTransformContext
      *
-     * @param string $productReference
      * @param string[] $attachmentReferences
      */
     public function setAssociatedProductAttachments(string $productReference, array $attachmentReferences): void
@@ -127,8 +122,6 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I remove product :productReference attachments association
-     *
-     * @param string $productReference
      */
     public function removeProductAttachmentsAssociation(string $productReference)
     {

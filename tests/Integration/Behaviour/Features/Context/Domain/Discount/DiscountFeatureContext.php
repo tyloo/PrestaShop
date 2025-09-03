@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -81,9 +82,6 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then discount :discountReference should have the following properties:
-     *
-     * @param string $discountReference
-     * @param TableNode $tableNode
      */
     public function assertDiscount(string $discountReference, TableNode $tableNode): void
     {
@@ -100,9 +98,6 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I create a :discountType discount :discountReference with following properties:
-     *
-     * @param string $discountReference
-     * @param TableNode $node
      *
      * @throws DiscountConstraintException
      * @throws Exception
@@ -145,7 +140,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         }
 
         $command->setDescription($data['description'] ?? '');
-        if (!empty($data['code'])) {
+        if (! empty($data['code'])) {
             $command->setCode($data['code']);
         }
 
@@ -153,11 +148,11 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
             || $command->getDiscountType()->getValue() === DiscountType::PRODUCT_LEVEL
             || $command->getDiscountType()->getValue() === DiscountType::ORDER_LEVEL
         ) {
-            if (!empty($data['reduction_percent'])) {
+            if (! empty($data['reduction_percent'])) {
                 $command->setPercentDiscount(new DecimalNumber($data['reduction_percent']));
             }
 
-            if (!empty($data['reduction_amount'])) {
+            if (! empty($data['reduction_amount'])) {
                 try {
                     $command->setAmountDiscount(
                         new DecimalNumber($data['reduction_amount']),
@@ -171,7 +166,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         }
 
         if ($command->getDiscountType()->getValue() === DiscountType::PRODUCT_LEVEL) {
-            if (!empty($data['reduction_product'])) {
+            if (! empty($data['reduction_product'])) {
                 if ((int) $data['reduction_product'] === -1 || (int) $data['reduction_product'] === -2) {
                     $command->setReductionProduct((int) $data['reduction_product']);
                 } else {
@@ -181,11 +176,11 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         }
 
         if ($command->getDiscountType()->getValue() === DiscountType::FREE_GIFT) {
-            if (!empty($data['gift_product'])) {
+            if (! empty($data['gift_product'])) {
                 $command->setProductId($this->referenceToId($data['gift_product']));
             }
 
-            if (!empty($data['gift_combination'])) {
+            if (! empty($data['gift_combination'])) {
                 $command->setCombinationId($this->referenceToId($data['gift_combination']));
             }
         }
@@ -238,15 +233,15 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         }
 
         $command->setDescription($data['description'] ?? '');
-        if (!empty($data['code'])) {
+        if (! empty($data['code'])) {
             $command->setCode($data['code']);
         }
 
-        if (!empty($data['reduction_percent'])) {
+        if (! empty($data['reduction_percent'])) {
             $command->setPercentDiscount(new DecimalNumber($data['reduction_percent']));
         }
 
-        if (!empty($data['reduction_amount'])) {
+        if (! empty($data['reduction_amount'])) {
             try {
                 $command->setAmountDiscount(
                     new DecimalNumber($data['reduction_amount']),
@@ -258,7 +253,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (!empty($data['reduction_product'])) {
+        if (! empty($data['reduction_product'])) {
             if ((int) $data['reduction_product'] === -1 || (int) $data['reduction_product'] === -2) {
                 $command->setReductionProduct((int) $data['reduction_product']);
             } else {
@@ -266,16 +261,16 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (!empty($data['gift_product'])) {
+        if (! empty($data['gift_product'])) {
             $command->setProductId($this->referenceToId($data['gift_product']));
         }
 
-        if (!empty($data['gift_combination'])) {
+        if (! empty($data['gift_combination'])) {
             $command->setCombinationId($this->referenceToId($data['gift_combination']));
         }
 
         try {
-            /* @var DiscountId $discountId */
+            /** @var DiscountId $discountId */
             $this->getCommandBus()->handle($command);
         } catch (DiscountConstraintException $e) {
             $this->setLastException($e);
@@ -300,7 +295,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getDiscountForEditing($discountReference);
-            throw new NoExceptionAlthoughExpectedException(sprintf('Discount "%s" was found, but it was expected to be deleted', $discountReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Discount "%s" was found, but it was expected to be deleted', $discountReference));
         } catch (DiscountNotFoundException $e) {
             $this->getSharedStorage()->clear($discountReference);
         }
@@ -337,7 +332,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         }
         if (isset($expectedData['customer'])) {
             Assert::assertSame(
-                !empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
+                ! empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
                 $discountForEditing->getCustomerId(),
                 'Unexpected customer id'
             );

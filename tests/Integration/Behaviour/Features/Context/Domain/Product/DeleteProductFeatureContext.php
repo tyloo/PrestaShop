@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I delete product :reference
-     *
-     * @param string $reference
      */
     public function deleteProductFromDefaultShop(string $reference): void
     {
@@ -49,8 +48,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I bulk delete following products:
-     *
-     * @param TableNode $productsList
      */
     public function bulkDeleteProductsFromDefaultShop(TableNode $productsList): void
     {
@@ -59,9 +56,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete product :productReference from shops :shopReferences
-     *
-     * @param string $productReference
-     * @param string $shopReferences
      */
     public function deleteProductFromShopCollection(string $productReference, string $shopReferences): void
     {
@@ -77,9 +71,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete product :productReference from shop :shopReference
-     *
-     * @param string $productReference
-     * @param string $shopReference
      */
     public function deleteProductFromShop(string $productReference, string $shopReference): void
     {
@@ -95,9 +86,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete product ":productReference" from shop group ":shopGroupReference"
-     *
-     * @param string $productReference
-     * @param string $shopGroupReference
      */
     public function deleteProductFromShopGroup(string $productReference, string $shopGroupReference): void
     {
@@ -109,8 +97,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I delete product ":productReference" from all shops
-     *
-     * @param string $productReference
      */
     public function deleteProductFromAllShops(string $productReference): void
     {
@@ -119,9 +105,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I bulk delete following products from shop :shopReference:
-     *
-     * @param TableNode $productsList
-     * @param string $shopReference
      */
     public function bulkDeleteProductsFromShop(TableNode $productsList, string $shopReference): void
     {
@@ -130,9 +113,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I bulk delete following products from shops :shopReferences:
-     *
-     * @param TableNode $productsList
-     * @param string $shopReferences
      */
     public function bulkDeleteProductsFromShopCollection(TableNode $productsList, string $shopReferences): void
     {
@@ -141,9 +121,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I bulk delete following products from shop group :shopGroupReference:
-     *
-     * @param TableNode $productsList
-     * @param string $shopGroupReference
      */
     public function bulkDeleteProductsFromShopGroup(TableNode $productsList, string $shopGroupReference): void
     {
@@ -152,8 +129,6 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I bulk delete following products from all shops:
-     *
-     * @param TableNode $productsList
      */
     public function bulkDeleteProductsFromAllShops(TableNode $productsList): void
     {

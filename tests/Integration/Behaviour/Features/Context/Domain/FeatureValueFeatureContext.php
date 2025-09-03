@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,10 +49,6 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I create feature value :featureValueReference for feature :featureReference with following properties:
-     *
-     * @param string $featureValueReference
-     * @param string $featureReference
-     * @param TableNode $table
      */
     public function createFeatureValue(string $featureValueReference, string $featureReference, TableNode $table): void
     {
@@ -70,9 +67,6 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit feature value :featureValueReference with following properties:
-     *
-     * @param string $featureValueReference
-     * @param TableNode $table
      */
     public function editFeatureValue(string $featureValueReference, TableNode $table): void
     {
@@ -91,10 +85,6 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete feature value :featureValueReference
-     *
-     * @param string $featureValueReference
-     *
-     * @return void
      */
     public function deleteFeatureValue(string $featureValueReference): void
     {
@@ -103,10 +93,6 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk delete feature values :featureValueReferences
-     *
-     * @param string $featureValueReferences
-     *
-     * @return void
      */
     public function bulkDeleteFeatureValues(string $featureValueReferences): void
     {
@@ -117,9 +103,6 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
      * @Then feature value :featureValueReference localized value should be:
      *
      * localizedValues transformation handled by @see LocalizedArrayTransformContext
-     *
-     * @param string $featureValueReference
-     * @param array $expectedLocalizedValues
      */
     public function assertFeatureValue(string $featureValueReference, array $expectedLocalizedValues): void
     {
@@ -131,32 +114,19 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
         foreach ($expectedLocalizedValues as $langId => $expectedValue) {
             $langIso = Language::getIsoById($langId);
 
-            if (!isset($actualValues[$langId])) {
-                throw new RuntimeException(sprintf(
-                    'Expected localized feature value is not set in %s language',
-                    $langIso
-                ));
+            if (! isset($actualValues[$langId])) {
+                throw new RuntimeException(\sprintf('Expected localized feature value is not set in %s language', $langIso));
             }
 
             $actualValue = $actualValues[$langId];
             if ($expectedValue !== $actualValue) {
-                throw new RuntimeException(
-                    sprintf(
-                        'Expected feature value in "%s" language was "%s", but got "%s"',
-                        $langIso,
-                        var_export($expectedValue, true),
-                        var_export($actualValue, true)
-                    )
-                );
+                throw new RuntimeException(\sprintf('Expected feature value in "%s" language was "%s", but got "%s"', $langIso, var_export($expectedValue, true), var_export($actualValue, true)));
             }
         }
     }
 
     /**
      * @When I associate feature value :featureValueReference to feature :featureReference
-     *
-     * @param string $featureValueReference
-     * @param string $featureReference
      */
     public function associateFeatureValueToFeature(string $featureValueReference, string $featureReference): void
     {
@@ -175,9 +145,6 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then feature value :featureValueReference should be associated to feature :featureReference
-     *
-     * @param string $featureValueReference
-     * @param string $featureReference
      */
     public function assertFeatureValueAssociation(string $featureValueReference, string $featureReference): void
     {
@@ -187,12 +154,7 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
         /** @var EditableFeatureValue $editableFeatureValue */
         $editableFeatureValue = $this->getQueryBus()->handle(new GetFeatureValueForEditing($featureValueId));
         if ($editableFeatureValue->getFeatureId()->getValue() !== $featureId) {
-            throw new RuntimeException(sprintf(
-                'Incorrect feature associated to %s, expected %d but got %d',
-                $featureReference,
-                $featureId,
-                $editableFeatureValue->getFeatureId()->getValue()
-            ));
+            throw new RuntimeException(\sprintf('Incorrect feature associated to %s, expected %d but got %d', $featureReference, $featureId, $editableFeatureValue->getFeatureId()->getValue()));
         }
     }
 
@@ -209,8 +171,6 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then feature value :featureValueReference should not exist
-     *
-     * @param string $featureValueReference
      */
     public function assertFeatureValueDoesNotExist(string $featureValueReference): void
     {
@@ -222,18 +182,13 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
             $caughtException = $e;
         }
 
-        if (null === $caughtException) {
-            throw new RuntimeException(sprintf(
-                'Feature value %s was expected not to be found',
-                $featureValueReference
-            ));
+        if ($caughtException === null) {
+            throw new RuntimeException(\sprintf('Feature value %s was expected not to be found', $featureValueReference));
         }
     }
 
     /**
      * @Then feature value :featureValueReference should exist
-     *
-     * @param string $featureValueReference
      */
     public function featureValueExists(string $featureValueReference): void
     {

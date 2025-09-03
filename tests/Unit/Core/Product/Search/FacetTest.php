@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,18 +38,12 @@ class FacetTest extends TestCase
      */
     private $facet;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->facet = new Facet();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->facet = null;
     }

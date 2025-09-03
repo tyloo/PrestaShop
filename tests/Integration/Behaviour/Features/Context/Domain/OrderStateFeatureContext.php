@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @Given I add a new order state :orderStateReference with the following details:
-     *
-     * @param string $orderStateReference
-     * @param TableNode $table
      */
     public function addNewOrderState(string $orderStateReference, TableNode $table): void
     {
@@ -82,9 +80,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given I update the order state :orderStateReference with the following details:
-     *
-     * @param string $orderStateReference
-     * @param TableNode $table
      */
     public function updateOrderState(string $orderStateReference, TableNode $table): void
     {
@@ -140,8 +135,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete the order state :orderStateReference
-     *
-     * @param string $orderStateReference
      */
     public function deleteOrderState(string $orderStateReference): void
     {
@@ -156,8 +149,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk delete order states :orderStateReferences
-     *
-     * @param string $orderStateReferences
      */
     public function bulkDeleteOrderState(string $orderStateReferences): void
     {
@@ -176,9 +167,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order state :orderStateReference should have the following details:
-     *
-     * @param string $orderStateReference
-     * @param TableNode $table
      */
     public function checkOrderStateDetails(string $orderStateReference, TableNode $table): void
     {
@@ -202,8 +190,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order state :orderStateReference should exist
-     *
-     * @param string $orderStateReference
      */
     public function checkOrderStateExists(string $orderStateReference): void
     {
@@ -214,8 +200,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order state :orderStateReference should be deleted
-     *
-     * @param string $orderStateReference
      */
     public function checkOrderStateIsDeleted(string $orderStateReference): void
     {
@@ -226,8 +210,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order state :orderStateReference shouldn't exist
-     *
-     * @param string $orderStateReference
      */
     public function checkOrderStateNotExists(string $orderStateReference): void
     {
@@ -238,8 +220,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the order state :orderStateReference shouldn't be deleted
-     *
-     * @param string $orderStateReference
      */
     public function checkOrderStateIsNotDeleted(string $orderStateReference): void
     {
@@ -248,11 +228,6 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
         Assert::assertFalse($orderState->isDeleted());
     }
 
-    /**
-     * @param string $orderStateReference
-     *
-     * @return EditableOrderState|null
-     */
     private function getOrderState(string $orderStateReference): ?EditableOrderState
     {
         try {

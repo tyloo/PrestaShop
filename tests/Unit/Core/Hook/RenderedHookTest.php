@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class RenderedHookTest extends TestCase
      */
     private $renderedHook;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->hookStub = $this->createMock(HookInterface::class);

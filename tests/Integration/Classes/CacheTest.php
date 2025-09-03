@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,14 +59,14 @@ class CacheTest extends TestCase
 
     public function getFromArray()
     {
-        $args = func_get_args();
+        $args = \func_get_args();
 
         return $this->cacheArray[$args[0]] ?? null;
     }
 
     public function deleteMultiFromArray(): void
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         foreach ($args[0] as $arg) {
             unset($this->cacheArray[$arg]);
         }
@@ -73,13 +74,13 @@ class CacheTest extends TestCase
 
     public function deleteFromArray(): void
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         unset($this->cacheArray[$args[0]]);
     }
 
     public function setIntoArray(): void
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         $this->cacheArray[$args[0]] = $args[1];
     }
 
@@ -164,7 +165,7 @@ class CacheTest extends TestCase
         $i = 0;
         foreach ($queries as $query) {
             Cache::getInstance()->setQuery($query, ['queryResult ' . $i]);
-            if ($i == 3) {
+            if ($i === 3) {
                 break;
             }
             ++$i;

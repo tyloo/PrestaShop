@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,7 +72,7 @@ class ThemeTest extends TestCase
                 'directory' => 'a/',
             ],
             sys_get_temp_dir() . '/ThemeTest',
-            dirname(__DIR__, 4) . '/Resources/themes/'
+            \dirname(__DIR__, 4) . '/Resources/themes/'
         );
 
         $this->assertSame('For testing purposes', $theme->get('display_name'));
@@ -83,7 +84,9 @@ class ThemeTest extends TestCase
             [
                 'name' => 'foo',
                 'directory' => 'a/',
-                'theme_settings' => ['layouts' => 'z'],
+                'theme_settings' => [
+                    'layouts' => 'z',
+                ],
             ],
             '',
             ''
@@ -98,7 +101,9 @@ class ThemeTest extends TestCase
             [
                 'name' => 'foo',
                 'directory' => 'a/',
-                'meta' => ['available_layouts' => 'z'],
+                'meta' => [
+                    'available_layouts' => 'z',
+                ],
             ],
             '',
             ''
@@ -115,7 +120,11 @@ class ThemeTest extends TestCase
                 'directory' => 'a/',
                 'theme_settings' => [
                     'default_layout' => 'm',
-                    'layouts' => ['homepage' => 'o', 'checkout_page' => 'p'], ],
+                    'layouts' => [
+                        'homepage' => 'o',
+                        'checkout_page' => 'p',
+                    ],
+                ],
             ],
             '',
             ''
@@ -132,18 +141,19 @@ class ThemeTest extends TestCase
             [
                 'name' => 'foo',
                 'directory' => 'a/',
-                'assets' => ['css' => [
-                    'all' => [[
-                        'id' => 'custom-lib-style',
-                        'path' => 'assets/css/custom-lib.css',
-                    ]],
-                    'a' => [[
-                        'id' => 'product-style',
-                        'path' => 'assets/css/product.css',
-                        'media' => 'all',
-                        'priority' => 200,
-                    ]],
-                ],
+                'assets' => [
+                    'css' => [
+                        'all' => [[
+                            'id' => 'custom-lib-style',
+                            'path' => 'assets/css/custom-lib.css',
+                        ]],
+                        'a' => [[
+                            'id' => 'product-style',
+                            'path' => 'assets/css/product.css',
+                            'media' => 'all',
+                            'priority' => 200,
+                        ]],
+                    ],
                 ],
             ],
             '',

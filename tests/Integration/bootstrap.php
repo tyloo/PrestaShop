@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,6 +36,6 @@ require_once dirname(__DIR__, 2) . '/admin-dev/bootstrap.php';
  * Else we get error : Class 'PHPUnit_Util_Configuration' not found
  * @see https://stackoverflow.com/questions/33299149/phpstorm-8-and-phpunit-problems-with-runinseparateprocess
  */
-if (!defined('PHPUNIT_COMPOSER_INSTALL')) {
+if (! defined('PHPUNIT_COMPOSER_INSTALL')) {
     define('PHPUNIT_COMPOSER_INSTALL', dirname(__DIR__, 2) . '/vendor/autoload.php');
 }

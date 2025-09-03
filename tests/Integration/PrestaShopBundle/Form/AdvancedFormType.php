@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AdvancedFormType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -88,14 +86,11 @@ class AdvancedFormType extends TranslatorAwareType
             $builder->addEventSubscriber($options['add_event_subscriber']);
         }
 
-        if (!empty($options['add_event_listener'])) {
+        if (! empty($options['add_event_listener'])) {
             $builder->addEventListener($options['add_event_listener']['event'], $options['add_event_listener']['callback']);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);

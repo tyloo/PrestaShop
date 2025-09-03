@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ class Ean13Test extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param string $value
      */
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
@@ -55,9 +54,6 @@ class Ean13Test extends TestCase
         new Ean13($value);
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidValues(): Generator
     {
         yield ['12345678901234'];

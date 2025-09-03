@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ class DateTimeTest extends TestCase
 
     /**
      * @dataProvider getNullableDates
-     *
-     * @param string|null $input
      */
     public function testBuildNullDateTime(?string $input): void
     {
@@ -51,8 +50,6 @@ class DateTimeTest extends TestCase
 
     /**
      * @dataProvider getNullableDates
-     *
-     * @param string|null $input
      */
     public function testBuildDateTimeOrNull(?string $input): void
     {
@@ -71,9 +68,6 @@ class DateTimeTest extends TestCase
 
     /**
      * @dataProvider getDates
-     *
-     * @param string|null $input
-     * @param DateTimeImmutable $expectedOutput
      */
     public function testBuildDateTime(?string $input, DateTimeImmutable $expectedOutput): void
     {
@@ -91,7 +85,6 @@ class DateTimeTest extends TestCase
      * @dataProvider getCheckedValues
      *
      * @param string|null $input
-     * @param bool $isNull
      */
     public function testIsNull($input, bool $isNull): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 {
     /**
      * @When I generate combinations for product :productReference using following attributes:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function generateCombinationsForDefaultShop(string $productReference, TableNode $table): void
     {
@@ -54,10 +52,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
     /**
      * @When I generate combinations in shop :shopReference for product :productReference using following attributes:
      * @When I generate combinations for product :productReference in shop :shopReference using following attributes:
-     *
-     * @param string $shopReference
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function generateCombinationsForShop(string $shopReference, string $productReference, TableNode $table): void
     {
@@ -70,10 +64,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 
     /**
      * @When I generate combinations for product :productReference in shops :shopReferences using following attributes:
-     *
-     * @param string $shopReferences
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function generateCombinationsForShopCollection(string $shopReferences, string $productReference, TableNode $table): void
     {
@@ -86,9 +76,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 
     /**
      * @When I generate combinations for product :productReference in all shops using following attributes:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function generateCombinationsForAllShops(string $productReference, TableNode $table): void
     {
@@ -101,9 +88,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 
     /**
      * @Then combination :combinationReference should be named :combinationName
-     *
-     * @param string $combinationReference
-     * @param string $combinationName
      */
     public function assertCombinationName(string $combinationReference, string $combinationName): void
     {
@@ -112,7 +96,7 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
         Assert::assertSame(
             $combinationName,
             $combinationForEditing->getName(),
-            sprintf(
+            \sprintf(
                 'Unexpected name %s, expected %s',
                 $combinationForEditing->getName(),
                 $combinationName
@@ -122,9 +106,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 
     /**
      * @Then product :productReference default combination should be :combinationReference
-     *
-     * @param string $productReference
-     * @param string $combinationReference
      */
     public function assertDefaultCombinationForDefaultShop(string $productReference, string $combinationReference): void
     {
@@ -133,15 +114,11 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 
     /**
      * @Then product :productReference default combination for shop :shopReference should be :combinationReference
-     *
-     * @param string $productReference
-     * @param string $shopReference
-     * @param string $combinationReference
      */
     public function assertDefaultCombinationForShop(
         string $productReference,
         string $shopReference,
-        string $combinationReference
+        string $combinationReference,
     ): void {
         $this->assertDefaultCombination(
             $productReference,
@@ -150,15 +127,10 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
         );
     }
 
-    /**
-     * @param string $productReference
-     * @param string $combinationReference
-     * @param int $shopId
-     */
     private function assertDefaultCombination(
         string $productReference,
         string $combinationReference,
-        int $shopId
+        int $shopId,
     ) {
         $combinationId = $this->getSharedStorage()->get($combinationReference);
 
@@ -170,15 +142,13 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 
         Assert::assertTrue(
             $this->getCombinationForEditing($combinationReference, $shopId)->isDefault(),
-            sprintf('Unexpected default combination in CombinationForEditing for "%s"', $combinationReference)
+            \sprintf('Unexpected default combination in CombinationForEditing for "%s"', $combinationReference)
         );
     }
 
     /**
      * @Given product :productReference should not have a default combination
      * @Given product :productReference does not have a default combination
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoCachedDefaultCombination(string $productReference): void
     {
@@ -187,8 +157,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
 
     /**
      * @Given product :productReference should not have a default combination for shop ":shopReference"
-     *
-     * @param string $productReference
      */
     public function assertProductHasNoCachedDefaultCombinationForShop(string $productReference, string $shopReference): void
     {
@@ -199,10 +167,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
         );
     }
 
-    /**
-     * @param string $productReference
-     * @param int $combinationId
-     */
     private function assertCachedDefaultCombinationId(string $productReference, int $combinationId, int $shopId): void
     {
         $product = new Product(
@@ -219,11 +183,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
         );
     }
 
-    /**
-     * @param array $groupedReferences
-     *
-     * @return array
-     */
     private function parseGroupedAttributeIds(array $groupedReferences): array
     {
         $groupedAttributeIds = [];
@@ -239,11 +198,6 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
         return $groupedAttributeIds;
     }
 
-    /**
-     * @param string $productReference
-     * @param TableNode $table
-     * @param ShopConstraint $shopConstraint
-     */
     private function generateCombinations(string $productReference, TableNode $table, ShopConstraint $shopConstraint): void
     {
         $tableData = $table->getRowsHash();

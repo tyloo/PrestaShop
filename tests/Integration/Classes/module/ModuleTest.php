@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -132,7 +133,7 @@ class ModuleTest extends TestCase
     }
 }
 
-define('_RESSOURCE_MODULE_DIR_', realpath(dirname(__FILE__, 4) . '/Resources/modules_tests/'));
+\define('_RESSOURCE_MODULE_DIR_', realpath(\dirname(__FILE__, 4) . '/Resources/modules_tests/'));
 
 class HelperModule
 {
@@ -180,7 +181,7 @@ class HelperModule
         @mkdir($dst);
         $file = readdir($dirp);
         while ($file !== false) {
-            if ($file != '.' && $file != '..') {
+            if ($file !== '.' && $file !== '..') {
                 if (is_dir($src . '/' . $file)) {
                     self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
                 } else {
@@ -202,7 +203,7 @@ class HelperModule
         $dirp = opendir($dir);
         $file = readdir($dirp);
         while ($file !== false) {
-            if ($file != '.' && $file != '..') {
+            if ($file !== '.' && $file !== '..') {
                 if (is_dir($dir . '/' . $file)) {
                     self::recurseDelete($dir . '/' . $file);
                 } else {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,12 +43,6 @@ class ToolsTest extends TestCase
 
     /**
      * @dataProvider getUrlsToSanitize
-     *
-     * @param string $url
-     * @param string $expected
-     * @param string $physicalUri
-     *
-     * @return void
      */
     public function testSanitizeAdminUrl(string $url, string $expected, string $physicalUri = ''): void
     {

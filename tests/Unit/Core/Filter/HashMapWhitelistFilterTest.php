@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ use PrestaShop\PrestaShop\Core\Filter\HashMapWhitelistFilter;
 class HashMapWhitelistFilterTest extends TestCase
 {
     /**
-     * @param array $subject
-     * @param array $whitelist
-     * @param array $expectedResult
-     *
      * @dataProvider provideTestCases
      */
     public function testItOnlyKeepsWhitelistedKeysWithoutLosingValues(array $subject, array $whitelist, array $expectedResult): void

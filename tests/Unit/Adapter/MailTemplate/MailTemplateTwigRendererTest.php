@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -217,7 +218,7 @@ class MailTemplateTwigRendererTest extends TestCase
 
     /**
      * @param string $initialTemplate
-     * @param array $expectedVariables
+     * @param array  $expectedVariables
      * @param string $templateType
      *
      * @return MockObject|TransformationInterface
@@ -258,7 +259,6 @@ class MailTemplateTwigRendererTest extends TestCase
 
     /**
      * @param string $expectedPath
-     * @param array $expectedVariables
      * @param string $generatedTemplate
      *
      * @return MockObject|Environment
@@ -284,9 +284,8 @@ class MailTemplateTwigRendererTest extends TestCase
     }
 
     /**
-     * @param LayoutInterface $mailLayout
      * @param string $templateType
-     * @param int $transformationsCount
+     * @param int    $transformationsCount
      *
      * @return MockObject|HookDispatcherInterface
      */
@@ -317,9 +316,6 @@ class MailTemplateTwigRendererTest extends TestCase
     }
 
     /**
-     * @param array $variables
-     * @param LanguageInterface $expectedLanguage
-     *
      * @return MockObject|LayoutVariablesBuilderInterface
      */
     private function createVariablesBuilderMock(array $variables, LanguageInterface $expectedLanguage)
@@ -355,8 +351,6 @@ class MailTemplateTwigRendererTest extends TestCase
     }
 
     /**
-     * @param array $expectedPaths
-     *
      * @return MockObject|LayoutInterface
      */
     private function createMailLayoutMock(array $expectedPaths)

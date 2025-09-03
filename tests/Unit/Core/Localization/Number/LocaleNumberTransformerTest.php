@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,10 +37,6 @@ class LocaleNumberTransformerTest extends TestCase
 {
     /**
      * Instantiate a LocaleNumberTransformer with custom locale.
-     *
-     * @param string $localeCode
-     *
-     * @return LocaleNumberTransformer
      */
     protected function createTransformer(string $localeCode): LocaleNumberTransformer
     {
@@ -50,13 +47,6 @@ class LocaleNumberTransformerTest extends TestCase
     }
 
     /**
-     * Test transformer
-     *
-     * @param string $localeCode
-     * @param string $expectedLocale
-     *
-     * @return void
-     *
      * @dataProvider provideTransformerTest
      */
     public function testTransformer(string $localeCode, string $expectedLocale): void

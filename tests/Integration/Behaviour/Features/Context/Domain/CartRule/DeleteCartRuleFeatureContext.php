@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ class DeleteCartRuleFeatureContext extends AbstractCartRuleFeatureContext
     /**
      * @When I delete Cart rule with reference :cartRuleReference
      *
-     * @param string $cartRuleReference
-     *
      * @throws CartRuleConstraintException
      */
     public function deleteCartRule(string $cartRuleReference): void
@@ -50,8 +49,6 @@ class DeleteCartRuleFeatureContext extends AbstractCartRuleFeatureContext
 
     /**
      * @When I bulk delete cart rules :cartRuleReferences
-     *
-     * @param string $cartRuleReferences
      *
      * @throws CartRuleConstraintException
      */

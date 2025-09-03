@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class TokenAuthenticatorTest extends TestCase
 {
     protected $tokenAuthenticator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->method('trans')->willReturnArgument(0);
@@ -81,7 +82,7 @@ class TokenAuthenticatorTest extends TestCase
             $key,
             static fn (
                 Builder $builder,
-                DateTimeImmutable $issuedAt
+                DateTimeImmutable $issuedAt,
             ): Builder => $builder
                 ->issuedBy('https://api.my-awesome-app.io')
                 ->permittedFor('https://client-app.io')

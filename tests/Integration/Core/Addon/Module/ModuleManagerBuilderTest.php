@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,7 +66,7 @@ class ModuleManagerBuilderTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        $dirResources = dirname(__DIR__, 4);
+        $dirResources = \dirname(__DIR__, 4);
 
         if (is_dir($dirResources . '/Resources/modules_tests/pscsx3241')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/pscsx3241', _PS_MODULE_DIR_ . '/pscsx3241');
@@ -171,7 +172,7 @@ class ModuleManagerBuilderTest extends TestCase
          * This tests first checks that the overrides installed in the previous step
          * resulted in the expected merged files.
          */
-        $resource_path = dirname(__DIR__, 4) . '/Resources/modules_tests/override/';
+        $resource_path = \dirname(__DIR__, 4) . '/Resources/modules_tests/override/';
 
         $actual_override_cart = $this->cleanup(file_get_contents(_PS_ROOT_DIR_ . '/override/classes/Cart.php'));
         $expected_override_cart = $this->cleanup(file_get_contents($resource_path . 'classes/Cart.php'));

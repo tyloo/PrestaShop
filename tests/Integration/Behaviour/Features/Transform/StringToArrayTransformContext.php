@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,10 +39,6 @@ class StringToArrayTransformContext implements Context
 {
     /**
      * @Transform /^\[.*?\]$/
-     *
-     * @param string $string
-     *
-     * @return array
      */
     public function transformStringArrayToArray(string $string): array
     {

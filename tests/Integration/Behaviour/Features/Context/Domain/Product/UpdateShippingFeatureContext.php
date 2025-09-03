@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ class UpdateShippingFeatureContext extends AbstractShippingFeatureContext
 {
     /**
      * @When I assign product :productReference with following carriers:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function setProductCarriersForDefaultShop(string $productReference, TableNode $table): void
     {
@@ -47,10 +45,6 @@ class UpdateShippingFeatureContext extends AbstractShippingFeatureContext
 
     /**
      * @When I assign product :productReference with following carriers for shop :shopReference:
-     *
-     * @param string $productReference
-     * @param string $shopReference
-     * @param TableNode $table
      */
     public function setProductCarriersForShop(string $productReference, string $shopReference, TableNode $table): void
     {
@@ -59,20 +53,12 @@ class UpdateShippingFeatureContext extends AbstractShippingFeatureContext
 
     /**
      * @When I assign product :productReference with following carriers for all shops:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function setProductCarriersForAllShops(string $productReference, TableNode $table): void
     {
         $this->setCarriers($productReference, $table, ShopConstraint::allShops());
     }
 
-    /**
-     * @param string $productReference
-     * @param TableNode $table
-     * @param ShopConstraint $shopConstraint
-     */
     private function setCarriers(string $productReference, TableNode $table, ShopConstraint $shopConstraint): void
     {
         $carrierReferences = $this->getCarrierReferenceIds(array_keys($table->getRowsHash()));

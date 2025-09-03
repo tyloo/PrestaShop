@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class ProductCombinationFiltersBuilderTest extends TestCase
 {
     /**
      * @dataProvider getSupportsValues
-     *
-     * @param string $filtersClass
-     * @param bool $expectedSupport
      */
     public function testSupports(string $filtersClass, bool $expectedSupport)
     {
@@ -103,11 +101,6 @@ class ProductCombinationFiltersBuilderTest extends TestCase
         ];
     }
 
-    /**
-     * @param int $productId
-     *
-     * @return Request
-     */
     private function buildRequestMock(int $productId, int $shopId): Request
     {
         $requestMock = $this->getMockBuilder(Request::class)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use Symfony\Component\Form\FormInterface;
 
 class FormListenerTestCase extends KernelTestCase
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,9 +44,6 @@ class FormListenerTestCase extends KernelTestCase
     }
 
     /**
-     * @param array $data
-     * @param FormInterface $form
-     *
      * @return MockObject|FormEvent
      */
     protected function createEventMock(array $data, FormInterface $form)
@@ -66,22 +61,13 @@ class FormListenerTestCase extends KernelTestCase
     }
 
     /**
-     * @param string $type
-     * @param array $options
      * @param mixed|null $data
-     *
-     * @return FormInterface
      */
     protected function createForm(string $type, array $options = [], $data = null): FormInterface
     {
         return self::getContainer()->get('form.factory')->create($type, $data, $options);
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $typeName
-     * @param bool $shouldExist
-     */
     protected function assertFormTypeExistsInForm(FormInterface $form, string $typeName, bool $shouldExist): void
     {
         if ($shouldExist) {
@@ -95,16 +81,11 @@ class FormListenerTestCase extends KernelTestCase
             }
             $this->assertNotNull(
                 $expectedException,
-                sprintf('Exception not triggered meaning the field %s is still present', $typeName)
+                \sprintf('Exception not triggered meaning the field %s is still present', $typeName)
             );
         }
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $typeName
-     * @param bool $shouldExist
-     */
     protected function assertDataExistsInForm(FormInterface $form, string $typeName, bool $shouldExist): void
     {
         $levels = explode('.', $typeName);
@@ -123,12 +104,6 @@ class FormListenerTestCase extends KernelTestCase
         }
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $typeName
-     *
-     * @return FormInterface
-     */
     protected function getFormChild(FormInterface $form, string $typeName): FormInterface
     {
         $typeNames = explode('.', $typeName);

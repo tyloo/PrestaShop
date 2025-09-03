@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class VirtualProductFileCommandsBuilderTest extends AbstractProductCommandBuilde
 {
     /**
      * @dataProvider getExpectedCommands
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommands(array $formData, array $expectedCommands): void
     {
@@ -51,9 +49,6 @@ class VirtualProductFileCommandsBuilderTest extends AbstractProductCommandBuilde
         $this->assertEquals($expectedCommands, $builtCommands);
     }
 
-    /**
-     * @return Generator
-     */
     public function getExpectedCommands(): Generator
     {
         yield [

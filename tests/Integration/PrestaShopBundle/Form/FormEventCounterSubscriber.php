@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,12 +77,9 @@ class FormEventCounterSubscriber implements EventSubscriberInterface
         $this->incrementEvent(FormEvents::SUBMIT);
     }
 
-    /**
-     * @param string $eventName
-     */
     private function incrementEvent(string $eventName): void
     {
-        if (!isset($this->eventCalls[$eventName])) {
+        if (! isset($this->eventCalls[$eventName])) {
             $this->eventCalls[$eventName] = 0;
         }
 

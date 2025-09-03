@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,9 +69,9 @@ class PositionsControllerTest extends WebTestCase
 
         $this->client = self::createClient();
         $this->loginUser($this->client);
-        /** @var ModuleManager */
+        /** @var ModuleManager $moduleManager */
         $moduleManager = self::$kernel->getContainer()->get(ModuleManager::class);
-        if (!$moduleManager->isInstalled('ps_emailsubscription')) {
+        if (! $moduleManager->isInstalled('ps_emailsubscription')) {
             $moduleManager->install('ps_emailsubscription');
         }
 
@@ -88,10 +89,10 @@ class PositionsControllerTest extends WebTestCase
             ),
             [
                 'unhooks' => [
-                    sprintf('%d_%d', $this->hookId, $this->moduleId),
-                    sprintf('%d_1000', $this->hookId),
-                    sprintf('10000_%d', $this->moduleId),
-                    sprintf(
+                    \sprintf('%d_%d', $this->hookId, $this->moduleId),
+                    \sprintf('%d_1000', $this->hookId),
+                    \sprintf('10000_%d', $this->moduleId),
+                    \sprintf(
                         '%d_%d',
                         $this->hookId,
                         $this->moduleId

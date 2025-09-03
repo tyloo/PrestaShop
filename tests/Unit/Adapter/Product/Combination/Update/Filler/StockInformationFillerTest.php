@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,12 @@ class StockInformationFillerTest extends CombinationFillerTestCase
 {
     /**
      * @dataProvider getDataToTestUpdatablePropertiesFilling
-     *
-     * @param Combination $combination
-     * @param UpdateCombinationCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param Combination $expectedProduct
      */
     public function testFillsUpdatableProperties(
         Combination $combination,
         UpdateCombinationCommand $command,
         array $expectedUpdatableProperties,
-        Combination $expectedProduct
+        Combination $expectedProduct,
     ): void {
         $this->fillUpdatableProperties(
             $this->getFiller(),
@@ -58,9 +54,6 @@ class StockInformationFillerTest extends CombinationFillerTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToTestUpdatablePropertiesFilling(): iterable
     {
         $combination = $this->mockDefaultCombination();
@@ -119,9 +112,6 @@ class StockInformationFillerTest extends CombinationFillerTestCase
         ];
     }
 
-    /**
-     * @return StockInformationFiller
-     */
     private function getFiller(): StockInformationFiller
     {
         return new StockInformationFiller();

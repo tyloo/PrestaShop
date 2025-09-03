@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,7 +75,7 @@ class CurrencyReferenceTest extends TestCase
                 ['fr-FR', $stubLocale],
             ]);
 
-        /* @var CldrLocaleRepository $cldrLocaleRepo */
+        /** @var CldrLocaleRepository $cldrLocaleRepo */
         $this->currencyReference = new CurrencyReferenceDataLayer($cldrLocaleRepo);
     }
 
@@ -88,7 +89,7 @@ class CurrencyReferenceTest extends TestCase
         /** @phpstan-ignore-next-line */
         $currencyData = $this->currencyReference->read(new LocalizedCurrencyId('PCE', 'fr-FR'));
 
-        /* @var CurrencyData $currencyData */
+        /** @var CurrencyData $currencyData */
         $this->assertInstanceOf(
             CurrencyData::class,
             $currencyData

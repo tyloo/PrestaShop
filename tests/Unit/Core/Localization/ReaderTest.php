@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class ReaderTest extends TestCase
      */
     protected $reader;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $this->reader = new Reader();
@@ -51,9 +49,6 @@ class ReaderTest extends TestCase
 
     /**
      * @dataProvider provideLocaleData
-     *
-     * @param string $localeCode
-     * @param array $expectedData
      */
     public function testReadLocaleData(string $localeCode, array $expectedData): void
     {

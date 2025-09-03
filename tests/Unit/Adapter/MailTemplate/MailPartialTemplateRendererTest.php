@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use Smarty;
 
 class MailPartialTemplateRendererTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -45,8 +43,8 @@ class MailPartialTemplateRendererTest extends TestCase
             '_PS_MAIL_DIR_' => _PS_CORE_DIR_ . '/mails/',
         ];
         foreach ($requiredConstants as $constant => $value) {
-            if (!defined($constant)) {
-                define($constant, $value);
+            if (! \defined($constant)) {
+                \define($constant, $value);
             }
         }
     }

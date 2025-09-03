@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,10 +35,6 @@ use PrestaShop\PrestaShop\Core\Filter\HashMapWhitelistFilter;
 class CollectionFilterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @param array $subject
-     * @param array $queue
-     * @param array $expectedResult
-     *
      * @dataProvider provideTestCases
      *
      * @throws \PrestaShop\PrestaShop\Core\Filter\FilterException

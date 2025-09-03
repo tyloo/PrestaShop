@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class UpdateCombinationStockAvailableCommandsBuilderTest extends AbstractCombina
     /**
      * @dataProvider getExpectedCommands
      * @dataProvider getExpectedCommandsMultiShop
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommands(array $formData, array $expectedCommands): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class TranslationControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getBadLocales
-     *
-     * @param array $params
      */
     public function testItShouldReturnBadResponseWhenRequestingInvalidLocales(array $params): void
     {
@@ -52,8 +51,6 @@ class TranslationControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getGoodLocales
-     *
-     * @param array $params
      */
     public function testItShouldReturnOkResponseWhenRequestingValidLocales(array $params): void
     {
@@ -92,8 +89,6 @@ class TranslationControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getBadDomainsCatalog
-     *
-     * @param array $params
      */
     public function testItShouldReturnBadResponseWhenRequestingDomainCatalog(array $params): void
     {
@@ -102,8 +97,6 @@ class TranslationControllerTest extends ApiTestCase
 
     /**
      * @dataProvider getGoodDomainsCatalog
-     *
-     * @param array $params
      */
     public function testItShouldReturnOkResponseWhenRequestingDomainCatalog(array $params): void
     {

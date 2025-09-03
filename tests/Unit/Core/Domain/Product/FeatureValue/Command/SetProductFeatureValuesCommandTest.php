@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class SetProductFeatureValuesCommandTest extends TestCase
 {
     /**
      * @dataProvider getValidInput
-     *
-     * @param int $productId
-     * @param array $featureValues
      */
     public function testValidInput(int $productId, array $featureValues)
     {
@@ -49,10 +47,6 @@ class SetProductFeatureValuesCommandTest extends TestCase
 
     /**
      * @dataProvider getInvalidInput
-     *
-     * @param int $productId
-     * @param array $featureValues
-     * @param string $expectedException
      */
     public function testInvalidInput(int $productId, array $featureValues, string $expectedException)
     {

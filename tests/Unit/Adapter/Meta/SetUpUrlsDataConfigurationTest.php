@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,9 +69,6 @@ class SetUpUrlsDataConfigurationTest extends AbstractConfigurationTestCase
         $this->mockTranslator = $this->createTranslatorMock();
     }
 
-    /**
-     * @return HtaccessFileGenerator
-     */
     protected function createHtaccessFileGeneratorMock(): HtaccessFileGenerator
     {
         $stub = $this->getMockBuilder(HtaccessFileGenerator::class)
@@ -83,9 +81,6 @@ class SetUpUrlsDataConfigurationTest extends AbstractConfigurationTestCase
         return $stub;
     }
 
-    /**
-     * @return TranslatorInterface
-     */
     protected function createTranslatorMock(): TranslatorInterface
     {
         return $this->getMockBuilder(TranslatorInterface::class)
@@ -95,8 +90,6 @@ class SetUpUrlsDataConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideShopConstraints
-     *
-     * @param ShopConstraint $shopConstraint
      */
     public function testGetConfiguration(ShopConstraint $shopConstraint): void
     {
@@ -131,9 +124,6 @@ class SetUpUrlsDataConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideInvalidConfiguration
-     *
-     * @param string $exception
-     * @param array $values
      */
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {

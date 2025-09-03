@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,7 +29,7 @@ class Cart extends CartCore
     /**
      * test for conflicting method detection with additional space
      */
-    public function   deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0)
+    public function deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0)
     {
         $result = Hook::exec(
             'ppbsDeleteCartProduct',
@@ -41,7 +42,7 @@ class Cart extends CartCore
             null,
             false
         );
-        if ($result == false) {
+        if ($result === false) {
             parent::deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0);
         }
     }

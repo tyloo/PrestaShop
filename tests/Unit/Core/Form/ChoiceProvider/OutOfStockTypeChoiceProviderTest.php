@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ class OutOfStockTypeChoiceProviderTest extends ChoiceProviderTestCase
 {
     /**
      * @dataProvider getExpectedChoices
-     *
-     * @param bool $outOfStockAvailable
-     * @param array $expectedChoices
      */
     public function testItProvidesChoicesAsExpected(bool $outOfStockAvailable, array $expectedChoices): void
     {
@@ -54,9 +52,6 @@ class OutOfStockTypeChoiceProviderTest extends ChoiceProviderTestCase
         $this->assertEquals($expectedChoices, $choiceProvider->getChoices());
     }
 
-    /**
-     * @return Generator
-     */
     public function getExpectedChoices(): Generator
     {
         yield [

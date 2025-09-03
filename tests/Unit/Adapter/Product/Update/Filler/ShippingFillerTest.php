@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,12 @@ class ShippingFillerTest extends ProductFillerTestCase
 {
     /**
      * @dataProvider getDataToTestUpdatablePropertiesFilling
-     *
-     * @param Product $product
-     * @param UpdateProductCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param Product $expectedProduct
      */
     public function testFillsUpdatableProperties(
         Product $product,
         UpdateProductCommand $command,
         array $expectedUpdatableProperties,
-        Product $expectedProduct
+        Product $expectedProduct,
     ): void {
         $this->fillUpdatableProperties(
             $this->getFiller(),
@@ -56,9 +52,6 @@ class ShippingFillerTest extends ProductFillerTestCase
         );
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToTestUpdatablePropertiesFilling(): iterable
     {
         $command = $this->getEmptyCommand()
@@ -123,9 +116,6 @@ class ShippingFillerTest extends ProductFillerTestCase
         ];
     }
 
-    /**
-     * @return ShippingFiller
-     */
     private function getFiller(): ShippingFiller
     {
         return new ShippingFiller();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I add new zone :zoneReference with following properties:
-     *
-     * @param string $zoneReference
-     * @param TableNode $table
      */
     public function createZone(string $zoneReference, TableNode $table): void
     {
@@ -68,9 +66,6 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit zone :zoneReference with following properties:
-     *
-     * @param string $zoneReference
-     * @param TableNode $table
      */
     public function editZone(string $zoneReference, TableNode $table): void
     {
@@ -97,8 +92,6 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete zone :zoneReference
-     *
-     * @param string $zoneReference
      */
     public function deleteZone(string $zoneReference): void
     {
@@ -110,8 +103,6 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete zones: :zoneReferences using bulk action
-     *
-     * @param string $zoneReferences
      */
     public function bulkDeleteZones(string $zoneReferences): void
     {
@@ -125,8 +116,6 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I toggle status of zone :zoneReference
-     *
-     * @param string $zoneReference
      */
     public function toggleStatus(string $zoneReference): void
     {
@@ -140,13 +129,10 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I (enable|disable) multiple zones: "(.+)" using bulk action$/
-     *
-     * @param string $action
-     * @param string $zoneReferences
      */
     public function bulkToggleStatus(string $action, string $zoneReferences): void
     {
-        $expectedStatus = 'enable' === $action;
+        $expectedStatus = $action === 'enable';
         $zoneIds = [];
 
         foreach (PrimitiveUtils::castStringArrayIntoArray($zoneReferences) as $zoneReference) {
@@ -163,30 +149,24 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then zone :reference name should be :name
-     *
-     * @param string $zoneReference
-     * @param string $name
      */
     public function assertZoneName(string $zoneReference, string $name): void
     {
         $zone = SharedStorage::getStorage()->get($zoneReference);
 
         if ($zone->name !== $name) {
-            throw new RuntimeException(sprintf('Zone "%s" has "%s" name, but "%s" was expected.', $zoneReference, $zone->name, $name));
+            throw new RuntimeException(\sprintf('Zone "%s" has "%s" name, but "%s" was expected.', $zoneReference, $zone->name, $name));
         }
     }
 
     /**
      * @Given there is a zone :reference named :name
-     *
-     * @param string $zoneReference
-     * @param string $name
      */
     public function assignZoneReference(string $zoneReference, string $name): void
     {
         $zoneId = Zone::getIdByName($name);
         if (empty($zoneId)) {
-            throw new RuntimeException(sprintf('Zone name %s not found', $name));
+            throw new RuntimeException(\sprintf('Zone name %s not found', $name));
         }
 
         SharedStorage::getStorage()->set($zoneReference, new Zone($zoneId));
@@ -196,28 +176,22 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
      * @Given /^zone "(.*)" is (enabled|disabled)?$/
      *
      * @Then /^zone "(.*)" should be (enabled|disabled)?$/
-     *
-     * @param string $zoneReference
-     * @param string $expectedStatus
      */
     public function assertStatus(string $zoneReference, string $expectedStatus): void
     {
         /** @var Zone $zone */
         $zone = SharedStorage::getStorage()->get($zoneReference);
 
-        $isEnabled = 'enabled' === $expectedStatus;
+        $isEnabled = $expectedStatus === 'enabled';
         $actualStatus = (bool) $zone->active;
 
         if ($actualStatus !== $isEnabled) {
-            throw new RuntimeException(sprintf('Zone "%s" is %s, but it was expected to be %s', $zoneReference, $actualStatus ? 'enabled' : 'disabled', $expectedStatus));
+            throw new RuntimeException(\sprintf('Zone "%s" is %s, but it was expected to be %s', $zoneReference, $actualStatus ? 'enabled' : 'disabled', $expectedStatus));
         }
     }
 
     /**
      * @Then /^zones: "(.+)" should be (enabled|disabled)$/
-     *
-     * @param string $zoneReferences
-     * @param string $expectedStatus
      */
     public function assertMultipleZonesStatus(string $zoneReferences, string $expectedStatus): void
     {
@@ -228,8 +202,6 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then zone :zoneReference should be deleted
-     *
-     * @param string $zoneReference
      */
     public function assertZoneIsDeleted(string $zoneReference): void
     {
@@ -240,7 +212,7 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
             $query = new GetZoneForEditing((int) $zone->id);
             $this->getQueryBus()->handle($query);
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Zone %s exists, but it was expected to be deleted', $zoneReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Zone %s exists, but it was expected to be deleted', $zoneReference));
         } catch (ZoneNotFoundException $e) {
             SharedStorage::getStorage()->clear($zoneReference);
         }
@@ -248,8 +220,6 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then zones: :zoneReferences should be deleted
-     *
-     * @param string $zoneReferences
      */
     public function assertZonesAreDeleted(string $zoneReferences): void
     {

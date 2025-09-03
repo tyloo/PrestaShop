@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,7 +69,7 @@ class ModuleSelfConfiguratorTest extends TestCase
         $this->connection = new ConnectionMock([], new Driver());
         $this->mockModuleRepository();
 
-        $this->defaultDir = dirname(__DIR__, 3) . '/Resources/module-self-config-files';
+        $this->defaultDir = \dirname(__DIR__, 3) . '/Resources/module-self-config-files';
 
         parent::setUp();
     }
@@ -77,7 +78,7 @@ class ModuleSelfConfiguratorTest extends TestCase
         ?ModuleRepository $moduleRepository = null,
         ?Configuration $configuration = null,
         ?Connection $connection = null,
-        ?Filesystem $filesystem = null
+        ?Filesystem $filesystem = null,
     ): ModuleSelfConfigurator {
         return new ModuleSelfConfigurator(
             $moduleRepository ?: $this->moduleRepository,
@@ -214,8 +215,8 @@ class ModuleSelfConfiguratorTest extends TestCase
         // Then clean
         $filesystem = new Filesystem();
         $filesystem->remove([
-            dirname(__DIR__, 3) . '/Resources/modules/ganalytics/ganalytics_copy.php',
-            dirname(__DIR__, 3) . '/Resources/modules/ganalytics/avatar.jpg',
+            \dirname(__DIR__, 3) . '/Resources/modules/ganalytics/ganalytics_copy.php',
+            \dirname(__DIR__, 3) . '/Resources/modules/ganalytics/avatar.jpg',
         ]);
     }
 
@@ -226,10 +227,10 @@ class ModuleSelfConfiguratorTest extends TestCase
 
         $this->assertTrue($this->getModuleSelfConfigurator()->module($name)->file($filepath)->configure());
         // Check files are equals
-        $this->assertTrue(in_array('TRUNCATE TABLE `ps_doge_army`', $this->connection->executedSql));
-        $this->assertTrue(in_array('UPDATE `ps_doge` SET `wow` = 1', $this->connection->executedSql));
-        $this->assertFalse(in_array('UPDATE `ps_doge` SET `wow` = 1;', $this->connection->executedSql));
-        $this->assertTrue(in_array('TRUNCATE TABLE `ps_lolcat_army`', $this->connection->executedSql));
+        $this->assertTrue(\in_array('TRUNCATE TABLE `ps_doge_army`', $this->connection->executedSql, true));
+        $this->assertTrue(\in_array('UPDATE `ps_doge` SET `wow` = 1', $this->connection->executedSql, true));
+        $this->assertFalse(\in_array('UPDATE `ps_doge` SET `wow` = 1;', $this->connection->executedSql, true));
+        $this->assertTrue(\in_array('TRUNCATE TABLE `ps_lolcat_army`', $this->connection->executedSql, true));
     }
 
     public function testSqlExceptionMissingFile(): void
@@ -374,7 +375,9 @@ class ConnectionMock extends Connection
 
 class StatementMock extends Statement
 {
-    /** @phpstan-ignore-next-line */
+    /**
+     * @phpstan-ignore-next-line
+     */
     public function __construct($sql, Connection $conn)
     {
     }

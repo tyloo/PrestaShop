@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,10 +41,7 @@ class AddressControllerTest extends FormGridControllerTestCase
 {
     private int $countryId;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -54,9 +52,6 @@ class AddressControllerTest extends FormGridControllerTestCase
         $configuration->set('PS_COUNTRY_DEFAULT', $this->countryId);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -73,10 +68,6 @@ class AddressControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testIndex
-     *
-     * @param int $initialEntityCount
-     *
-     * @return int
      */
     public function testCreate(int $initialEntityCount): int
     {
@@ -112,10 +103,6 @@ class AddressControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $addressId
-     *
-     * @return int
      */
     public function testEdit(int $addressId): int
     {
@@ -145,10 +132,6 @@ class AddressControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testEdit
-     *
-     * @param int $addressId
-     *
-     * @return int
      */
     public function testFilters(int $addressId): int
     {
@@ -164,7 +147,7 @@ class AddressControllerTest extends FormGridControllerTestCase
 
         foreach ($gridFilters as $testFilter) {
             $addresses = $this->getFilteredEntitiesFromGrid($testFilter);
-            $this->assertGreaterThanOrEqual(1, count($addresses), sprintf(
+            $this->assertGreaterThanOrEqual(1, \count($addresses), \sprintf(
                 'Expected at least one address with filters %s',
                 var_export($testFilter, true)
             ));
@@ -176,8 +159,6 @@ class AddressControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testFilters
-     *
-     * @param int $addressId
      */
     public function testDelete(int $addressId): void
     {
@@ -192,33 +173,21 @@ class AddressControllerTest extends FormGridControllerTestCase
         $this->assertCount($initialEntityCount - 1, $newAddresses);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateGridUrl(array $routeParams = []): string
     {
         return $this->router->generate('admin_addresses_index', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getGridSelector(): string
     {
         return '#address_grid_table';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFilterSearchButtonSelector(): string
     {
         return 'address[actions][search]';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function parseEntityFromRow(Crawler $tr, int $i): TestEntityDTO
     {
         return new TestEntityDTO(
@@ -234,25 +203,16 @@ class AddressControllerTest extends FormGridControllerTestCase
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateCreateUrl(): string
     {
         return $this->router->generate('admin_addresses_create');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getCreateSubmitButtonSelector(): string
     {
         return 'save-button';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFormHandlerChecker(): FormHandlerChecker
     {
         /** @var FormHandlerChecker $checker */
@@ -261,17 +221,11 @@ class AddressControllerTest extends FormGridControllerTestCase
         return $checker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateEditUrl(array $routeParams): string
     {
         return $this->router->generate('admin_addresses_edit', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getEditSubmitButtonSelector(): string
     {
         return 'save-button';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,13 +52,11 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given country :reference does not exist
-     *
-     * @param string $reference
      */
     public function setNonExistingCountryReference(string $reference): void
     {
         if ($this->getSharedStorage()->exists($reference) && $this->getSharedStorage()->get($reference)) {
-            throw new RuntimeException(sprintf('Expected that country "%s" should not exist', $reference));
+            throw new RuntimeException(\sprintf('Expected that country "%s" should not exist', $reference));
         }
 
         $this->getSharedStorage()->set($reference, self::NON_EXISTING_COUNTRY_ID);
@@ -73,9 +72,6 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add new country :countryReference with following properties:
-     *
-     * @param string $countryReference
-     * @param TableNode $table
      */
     public function createCountry(string $countryReference, TableNode $table): void
     {
@@ -105,9 +101,6 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit country :countryReference with following properties:
-     *
-     * @param string $countryReference
-     * @param TableNode $table
      */
     public function editCountry(string $countryReference, TableNode $table): void
     {
@@ -195,28 +188,28 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
 
     private function formatCountryDataIfNeeded(array $data)
     {
-        if (array_key_exists('callPrefix', $data)) {
+        if (\array_key_exists('callPrefix', $data)) {
             $data['callPrefix'] = (int) $data['callPrefix'];
         }
-        if (array_key_exists('defaultCurrency', $data)) {
+        if (\array_key_exists('defaultCurrency', $data)) {
             $data['defaultCurrency'] = (int) $data['defaultCurrency'];
         }
-        if (array_key_exists('zone', $data)) {
+        if (\array_key_exists('zone', $data)) {
             $data['zone'] = (int) $data['zone'];
         }
-        if (array_key_exists('needZipCode', $data)) {
+        if (\array_key_exists('needZipCode', $data)) {
             $data['needZipCode'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['needZipCode']);
         }
-        if (array_key_exists('enabled', $data)) {
+        if (\array_key_exists('enabled', $data)) {
             $data['enabled'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']);
         }
-        if (array_key_exists('containsStates', $data)) {
+        if (\array_key_exists('containsStates', $data)) {
             $data['containsStates'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['containsStates']);
         }
-        if (array_key_exists('needIdNumber', $data)) {
+        if (\array_key_exists('needIdNumber', $data)) {
             $data['needIdNumber'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['needIdNumber']);
         }
-        if (array_key_exists('displayTaxLabel', $data)) {
+        if (\array_key_exists('displayTaxLabel', $data)) {
             $data['displayTaxLabel'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['displayTaxLabel']);
         }
 
@@ -225,8 +218,6 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete country :countryReference
-     *
-     * @param string $countryReference
      */
     public function deleteCountry(string $countryReference): void
     {
@@ -237,8 +228,6 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then country :countryReference should be deleted
-     *
-     * @param string $countryReference
      */
     public function assertCountryIsDeleted(string $countryReference): void
     {
@@ -247,7 +236,7 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle(new GetCountryForEditing($countryId));
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Country %s exists, but it was expected to be deleted', $countryReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Country %s exists, but it was expected to be deleted', $countryReference));
         } catch (CountryNotFoundException $e) {
             SharedStorage::getStorage()->clear($countryReference);
         }

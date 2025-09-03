@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,8 +48,8 @@ class CurrencyTransformContext implements Context
     {
         $currency = new Currency(Currency::getIdByIsoCode($currencyIso, (int) Configuration::get('PS_SHOP_DEFAULT')));
 
-        if (!$currency->id) {
-            throw new InvalidArgumentException(sprintf('Currency not found by iso code "%s"', $currencyIso));
+        if (! $currency->id) {
+            throw new InvalidArgumentException(\sprintf('Currency not found by iso code "%s"', $currencyIso));
         }
 
         return $currency;

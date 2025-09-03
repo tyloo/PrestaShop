@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,11 +46,6 @@ class CustomizedConfigurationCheckerTest extends TestCase
         $this->assertFalse($customizedConfigurationChecker->isConfigurationCustomizedForThisShop('FAKE_CONFIG_KEY', $this->prophesizeShopEntity(), false));
     }
 
-    /**
-     * @param bool $hasConfig
-     *
-     * @return ShopConfigurationInterface
-     */
     private function mockShopConfiguration(bool $hasConfig): ShopConfigurationInterface
     {
         $shopConfigurationMock = $this->createMock(ShopConfigurationInterface::class);
@@ -58,9 +54,6 @@ class CustomizedConfigurationCheckerTest extends TestCase
         return $shopConfigurationMock;
     }
 
-    /**
-     * @return Shop
-     */
     private function prophesizeShopEntity(): Shop
     {
         $shopGroupMock = $this->createMock(ShopGroup::class);

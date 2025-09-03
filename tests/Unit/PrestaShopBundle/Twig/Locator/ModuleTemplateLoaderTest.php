@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class ModuleTemplateLoaderTest extends TestCase
      */
     private $loader;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $namespaces = [
@@ -50,17 +48,14 @@ class ModuleTemplateLoaderTest extends TestCase
         ];
 
         $paths = [
-            dirname(__DIR__, 3) . '/Resources/twig/module1',
-            dirname(__DIR__, 3) . '/Resources/twig/module2',
-            dirname(__DIR__, 3) . '/Resources/twig/module3',
+            \dirname(__DIR__, 3) . '/Resources/twig/module1',
+            \dirname(__DIR__, 3) . '/Resources/twig/module2',
+            \dirname(__DIR__, 3) . '/Resources/twig/module3',
         ];
 
         $this->loader = new ModuleTemplateLoader($namespaces, $paths);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
         $this->loader = null;
@@ -84,22 +79,19 @@ class ModuleTemplateLoaderTest extends TestCase
     /**
      * @dataProvider getSourceContextsProvider
      *
-     * @param string $sourceContent the template file content
-     * @param string $twigPathAsked the Twig path asked during Twig template rendering
+     * @param string $sourceContent  the template file content
+     * @param string $twigPathAsked  the Twig path asked during Twig template rendering
      * @param string $successMessage in case of failure, describe what is expected
      */
     public function testGetSourceContext(string $sourceContent, string $twigPathAsked, string $successMessage): void
     {
         $this->assertEquals(
-            $sourceContent . PHP_EOL,
+            $sourceContent . \PHP_EOL,
             $this->loader->getSourceContext($twigPathAsked)->getCode(),
             $successMessage
         );
     }
 
-    /**
-     * @return array
-     */
     public function getSourceContextsProvider(): array
     {
         return [

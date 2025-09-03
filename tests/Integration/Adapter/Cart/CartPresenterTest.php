@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,7 +68,7 @@ class CartPresenterTest extends TestCase
      * See https://regex101.com/r/wlRNtX/1 for examples used
      *
      * @param string $asString
-     * @param array $asArray
+     * @param array  $asArray
      *
      * @dataProvider providerProductAttributes
      */
@@ -160,9 +161,9 @@ class CartPresenterTest extends TestCase
     /**
      * Call protected/private method of a class.
      *
-     * @param object $object Instantiated object that we will run method on
+     * @param object $object     Instantiated object that we will run method on
      * @param string $methodName Method name to call
-     * @param array $parameters array of parameters to pass into method
+     * @param array  $parameters array of parameters to pass into method
      *
      * @return mixed method return
      *
@@ -170,7 +171,7 @@ class CartPresenterTest extends TestCase
      */
     protected function invokeMethod(&$object, string $methodName, array $parameters = [])
     {
-        $reflection = new ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass(\get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 

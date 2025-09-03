@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -128,10 +129,6 @@ class RedirectOptionListenerTest extends FormListenerTestCase
         ];
     }
 
-    /**
-     * @param FormInterface $form
-     * @param array $formData
-     */
     private function adaptRedirectOptions(FormInterface $form, array $formData): void
     {
         $listener = new RedirectOptionListener();

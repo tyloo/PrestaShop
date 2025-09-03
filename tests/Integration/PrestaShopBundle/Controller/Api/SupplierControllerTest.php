@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,10 +33,7 @@ namespace Tests\Integration\PrestaShopBundle\Controller\Api;
  */
 class SupplierControllerTest extends ApiTestCase
 {
-    /**
-     * @test
-     */
-    public function itShouldReturnOkResponseWhenRequestingSuppliers()
+    public function testItShouldReturnOkResponseWhenRequestingSuppliers()
     {
         $route = $this->router->generate('api_stock_list_suppliers');
         self::$client->request('GET', $route);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,15 +31,10 @@ use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Contact\Command\AddContactCommand;
 use PrestaShop\PrestaShop\Core\Domain\Contact\Exception\ContactConstraintException;
 
-/**
- * Class AddContactCommandTest
- */
 class AddContactCommandTest extends TestCase
 {
     /**
      * @dataProvider getIncorrectTitles
-     *
-     * @param array $incorrectTitle
      */
     public function testItThrowsAnExceptionOnIncorrectTitle(array $incorrectTitle): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,8 +89,6 @@ class ClassFiltersBuilderTest extends TestCase
 
     /**
      * @dataProvider getShopConstraints
-     *
-     * @param $shopConstraint
      */
     public function testCreateWithShopConstraint($shopConstraint, $expectedShopConstraint): void
     {
@@ -108,8 +107,6 @@ class ClassFiltersBuilderTest extends TestCase
 
     /**
      * @dataProvider getShopConstraints
-     *
-     * @param $shopConstraint
      */
     public function testUpdateWithShopConstraint($shopConstraint, $expectedShopConstraint): void
     {

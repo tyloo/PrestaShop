@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -153,7 +154,7 @@ class ModuleTabRegisterTest extends TestCase
         $filesystemMock
             ->method('exists')
             ->willReturnCallback(function ($filePath) use ($service) {
-                if (false !== strpos($filePath, 'undeclared_symfony/config/routes.yml')) {
+                if (strpos($filePath, 'undeclared_symfony/config/routes.yml') !== false) {
                     return true;
                 }
 
@@ -183,7 +184,7 @@ class ModuleTabRegisterTest extends TestCase
                 ]);
                 $routeCollection->add('not_detected_route', $simpleRoute);
 
-                if (false !== strpos($routingFile, 'symfony/config/routes.yml')) {
+                if (strpos($routingFile, 'symfony/config/routes.yml') !== false) {
                     $route = new Route('/hidden-url', [
                         '_controller' => 'PrestaShop\\Module\\Test\\SecuredSymfonyController::securedAction',
                         '_legacy_controller' => 'UndeclaredLegacyController',
@@ -204,7 +205,7 @@ class ModuleTabRegisterTest extends TestCase
     {
         foreach ($tabs as $tab) {
             // If exception exception, do not test it here
-            if (array_key_exists('exception', $tab)) {
+            if (\array_key_exists('exception', $tab)) {
                 continue;
             }
             $data = new ParameterBag($tab);
@@ -219,8 +220,8 @@ class ModuleTabRegisterTest extends TestCase
     {
         foreach ($tabs as $tab) {
             // If an exception is expected, test it here
-            if (!array_key_exists('exception', $tab)) {
-                $this->assertTrue(!array_key_exists('exception', $tab));
+            if (! \array_key_exists('exception', $tab)) {
+                $this->assertTrue(! \array_key_exists('exception', $tab));
                 continue;
             }
             $data = new ParameterBag($tab);
@@ -247,7 +248,7 @@ class ModuleTabRegisterTest extends TestCase
         // Be aware, it also include which can throw an exception later when being validated
         foreach ($tabs as $tab) {
             $this->assertTrue(
-                in_array($tab['class_name'], $this->expectedTabsToAdd[$moduleName]),
+                \in_array($tab['class_name'], $this->expectedTabsToAdd[$moduleName], true),
                 'Module ' . $moduleName . ' should not register ' . $tab['class_name']
             );
         }
@@ -330,9 +331,9 @@ class ModuleTabRegisterTest extends TestCase
     /**
      * Call protected/private method of a class.
      *
-     * @param object $object Instantiated object that we will run method on
+     * @param object $object     Instantiated object that we will run method on
      * @param string $methodName Method name to call
-     * @param array $parameters array of parameters to pass into method
+     * @param array  $parameters array of parameters to pass into method
      *
      * @return mixed method return
      *
@@ -340,7 +341,7 @@ class ModuleTabRegisterTest extends TestCase
      */
     protected function invokeMethod(object $object, string $methodName, array $parameters = [])
     {
-        $reflection = new ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass(\get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 

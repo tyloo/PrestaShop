@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,12 @@ class SeoFillerTest extends ProductFillerTestCase
 {
     /**
      * @dataProvider getDataToTestUpdatablePropertiesFilling
-     *
-     * @param Product $product
-     * @param UpdateProductCommand $command
-     * @param array $expectedUpdatableProperties
-     * @param Product $expectedProduct
      */
     public function testFillsUpdatableProperties(
         Product $product,
         UpdateProductCommand $command,
         array $expectedUpdatableProperties,
-        Product $expectedProduct
+        Product $expectedProduct,
     ): void {
         $this->fillUpdatableProperties(
             $this->getFiller(true, true),
@@ -197,12 +193,6 @@ class SeoFillerTest extends ProductFillerTestCase
         $seoFiller->fillUpdatableProperties($product, $command);
     }
 
-    /**
-     * @param bool $redirectProductExists
-     * @param bool $redirectCategoryExists
-     *
-     * @return SeoFiller
-     */
     private function getFiller(bool $redirectProductExists, bool $redirectCategoryExists): SeoFiller
     {
         return new SeoFiller(
@@ -212,15 +202,10 @@ class SeoFillerTest extends ProductFillerTestCase
         );
     }
 
-    /**
-     * @param bool $redirectProductExists
-     *
-     * @return ProductRepository
-     */
     private function mockProductRepository(bool $redirectProductExists): ProductRepository
     {
         $mock = $this->createMock(ProductRepository::class);
-        if (!$redirectProductExists) {
+        if (! $redirectProductExists) {
             $mock->method('assertProductExists')
                 ->willThrowException(new ProductNotFoundException())
             ;
@@ -229,15 +214,10 @@ class SeoFillerTest extends ProductFillerTestCase
         return $mock;
     }
 
-    /**
-     * @param bool $redirectCategoryExists
-     *
-     * @return CategoryRepository
-     */
     private function mockCategoryRepository(bool $redirectCategoryExists): CategoryRepository
     {
         $mock = $this->createMock(CategoryRepository::class);
-        if (!$redirectCategoryExists) {
+        if (! $redirectCategoryExists) {
             $mock->method('assertCategoryExists')
                 // we don't assert the internals of assertCategoryExists method, so categoryId and exception string is not important
                 ->willThrowException(new CategoryNotFoundException(new CategoryId(1)));
@@ -246,9 +226,6 @@ class SeoFillerTest extends ProductFillerTestCase
         return $mock;
     }
 
-    /**
-     * @return Tools
-     */
     private function mockTools(): Tools
     {
         $toolsMock = $this->getMockBuilder(Tools::class)

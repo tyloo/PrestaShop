@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,14 +92,14 @@ class ContainerTest extends TestCase
     {
         $this->container->bind('dummy', 'Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy');
 
-        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy', get_class(
+        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy', \get_class(
             $this->container->make('dummy')
         ));
     }
 
     public function testMakeWithoutBind()
     {
-        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy', get_class(
+        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy', \get_class(
             $this->container->make('Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy')
         ));
     }
@@ -107,7 +108,7 @@ class ContainerTest extends TestCase
     {
         $this->container->aliasNamespace('Fixtures', 'Tests\Unit\Core\Foundation\IoC\Fixtures');
 
-        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy', get_class(
+        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy', \get_class(
             $this->container->make('Fixtures:Dummy')
         ));
     }
@@ -122,14 +123,14 @@ class ContainerTest extends TestCase
 
     public function testDepsAreFetchedAutomagically()
     {
-        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\ClassWithDep', get_class(
+        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\ClassWithDep', \get_class(
             $this->container->make('Tests\Unit\Core\Foundation\IoC\Fixtures\ClassWithDep')
         ));
     }
 
     public function testDepsAreFetchedAutomagicallyWhenDependsOnThingWithADefaultValue()
     {
-        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\ClassWithDepAndDefault', get_class(
+        $this->assertEquals('Tests\Unit\Core\Foundation\IoC\Fixtures\ClassWithDepAndDefault', \get_class(
             $this->container->make('Tests\Unit\Core\Foundation\IoC\Fixtures\ClassWithDepAndDefault')
         ));
     }

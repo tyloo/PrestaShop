@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,11 +53,6 @@ abstract class ContextStateTestCase extends TestCase
      */
     use ContextMockerTrait;
 
-    /**
-     * @param array $contextFields
-     *
-     * @return Context
-     */
     protected function createContextMock(array $contextFields): Context
     {
         $contextMock = $this->getMockBuilder(Context::class)
@@ -71,7 +67,7 @@ abstract class ContextStateTestCase extends TestCase
         $contextMock->method('getTranslator')->willReturn($translator);
 
         foreach ($contextFields as $fieldName => $contextValue) {
-            $contextMock->$fieldName = $contextValue;
+            $contextMock->{$fieldName} = $contextValue;
             if ($fieldName === 'language' && $contextValue instanceof Language) {
                 $contextMock->getTranslator()->setLocale('test' . $contextValue->id);
             }
@@ -90,9 +86,6 @@ abstract class ContextStateTestCase extends TestCase
     }
 
     /**
-     * @param string $className
-     * @param int $objectId
-     *
      * @return MockObject|Cart|Country|Currency|Customer|Employee|Language|Shop
      */
     protected function createContextFieldMock(string $className, int $objectId)
@@ -104,7 +97,7 @@ abstract class ContextStateTestCase extends TestCase
 
         $contextField->id = $objectId;
 
-        if ($className == Language::class) {
+        if ($className === Language::class) {
             $contextField->locale = 'test' . $objectId;
         }
 

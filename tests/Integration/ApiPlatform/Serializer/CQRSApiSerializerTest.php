@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -141,8 +142,8 @@ class CQRSApiSerializerTest extends KernelTestCase
         foreach ($this->getExpectedDenormalizedData() as $useCase => $denormalizationData) {
             list($dataToDenormalize, $denormalizedObject, $normalizationMapping, $type, $extraContext) = array_pad($denormalizationData, 5, null);
             $context = [NormalizationMapper::NORMALIZATION_MAPPING => $normalizationMapping ?? []];
-            $type = $type ?: get_class($denormalizedObject);
-            if (!empty($extraContext)) {
+            $type = $type ?: \get_class($denormalizedObject);
+            if (! empty($extraContext)) {
                 $context = array_merge($context, $extraContext);
             }
 

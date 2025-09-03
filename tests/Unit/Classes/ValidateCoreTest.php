@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -131,7 +132,6 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isArrayWithIdsDataProvider
      *
-     * @param bool $expected
      * @param string|int|array<string|int|bool|array> $input
      */
     public function testIsArrayWithIds(bool $expected, $input)
@@ -141,9 +141,6 @@ class ValidateCoreTest extends TestCase
 
     /**
      * @dataProvider isUrlDataProvider
-     *
-     * @param bool $expected
-     * @param string $url
      */
     public function testIsUrl(bool $expected, string $url): void
     {

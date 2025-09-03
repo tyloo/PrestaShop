@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,9 +75,6 @@ abstract class AbstractConfigurationTestCase extends KernelTestCase
         $this->mockMultistoreFeature = $this->createMultistoreFeatureMock();
     }
 
-    /**
-     * @return Configuration
-     */
     protected function createConfigurationMock(): Configuration
     {
         return $this->getMockBuilder(Configuration::class)
@@ -95,19 +93,11 @@ abstract class AbstractConfigurationTestCase extends KernelTestCase
             ->getMock();
     }
 
-    /**
-     * @return FeatureInterface
-     */
     protected function createMultistoreFeatureMock(): FeatureInterface
     {
         return $this->getMockForAbstractClass(FeatureInterface::class);
     }
 
-    /**
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return DummyMultistoreConfiguration
-     */
     protected function getDummyMultistoreConfiguration(ShopConstraint $shopConstraint): DummyMultistoreConfiguration
     {
         // we mock the shop context so that its `getShopConstraint` method returns the ShopConstraint from our provider

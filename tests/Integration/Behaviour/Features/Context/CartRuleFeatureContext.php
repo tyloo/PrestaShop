@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,7 +77,9 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
      */
     protected $categoryFeatureContext;
 
-    /** @BeforeScenario */
+    /**
+     * @BeforeScenario
+     */
     public function before(BeforeScenarioScope $scope)
     {
         /** @var InitializedContextEnvironment $environment */
@@ -132,7 +135,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     public function cartRuleNamedIsRestrictedToProductNamed(
         string $cartRuleName,
         string $productName,
-        int $quantity = 1
+        int $quantity = 1,
     ): void {
         $cartRuleId = $this->getCartRuleId($cartRuleName);
         $this->productFeatureContext->checkProductWithNameExists($productName);
@@ -179,15 +182,13 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
         $cartRule = $this->loadCartRule($cartRuleName);
         $result = $cartRule->checkValidity(Context::getContext(), false, false);
 
-        if (!$result) {
-            throw new RuntimeException(sprintf('Expects true, got %s instead', $result));
+        if (! $result) {
+            throw new RuntimeException(\sprintf('Expects true, got %s instead', $result));
         }
     }
 
     /**
      * @When /^I use the discount "(.+)"$/
-     *
-     * @param string $cartRuleName
      */
     public function iAddCartRuleNamedToMyCart(string $cartRuleName): void
     {
@@ -197,17 +198,13 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @When /^I apply the voucher code "(.+)"$/
-     *
-     * @param string $code
-     *
-     * @return void
      */
     public function applyCartRuleByCode(string $code): void
     {
         $cartRule = $this->loadCartRule($code);
 
-        if (!Validate::isLoadedObject($cartRule)) {
-            throw new RuntimeException(sprintf('Failed to load cart rule %d', $cartRule->id));
+        if (! Validate::isLoadedObject($cartRule)) {
+            throw new RuntimeException(\sprintf('Failed to load cart rule %d', $cartRule->id));
         }
 
         if ($errorMessage = $cartRule->checkValidity(Context::getContext())) {
@@ -225,10 +222,6 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @Then I should get cart rule validation error saying :expectedMessage
-     *
-     * @param string $expectedMessage
-     *
-     * @return void
      */
     public function assertCartRuleValidationError(string $expectedMessage): void
     {
@@ -240,8 +233,6 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @Then I should get cart rule validation error
-     *
-     * @return void
      */
     public function assertGenericCartRuleValidationError(): void
     {
@@ -250,10 +241,6 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * @Given discount code :cartRuleReference is not applied to my cart
-     *
-     * @param string $code
-     *
-     * @return void
      */
     public function assertDiscountCodeIsNotAppliedToCurrentCart(string $code): void
     {
@@ -262,7 +249,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
         /** @var array<string, mixed> $cartRule */
         foreach ($this->getCurrentCart()->getCartRules() as $cartRule) {
             if ((int) $cartRule['id_cart_rule'] === $cartRuleId) {
-                throw new RuntimeException(sprintf('Cart rule with code "%s" is applied to current cart', $code));
+                throw new RuntimeException(\sprintf('Cart rule with code "%s" is applied to current cart', $code));
             }
         }
     }
@@ -270,10 +257,6 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given cart rule :referenceOrCode is applied to my cart
      * @Given discount :referenceOrCode is applied to my cart
-     *
-     * @param string $referenceOrCode
-     *
-     * @return void
      */
     public function assertCartRuleIsAppliedToCurrentCart(string $referenceOrCode): void
     {
@@ -288,7 +271,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf('Cart rule with code or reference "%s" is not applied to current cart', $referenceOrCode));
+        throw new RuntimeException(\sprintf('Cart rule with code or reference "%s" is not applied to current cart', $referenceOrCode));
     }
 
     /**
@@ -296,15 +279,12 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function cartRuleInCartCount($cartRuleCount)
     {
-        $result = count($this->getCurrentCart()->getCartRules());
-        if ($result != $cartRuleCount) {
-            throw new RuntimeException(sprintf('Expects %s, got %s instead', $cartRuleCount, $result));
+        $result = \count($this->getCurrentCart()->getCartRules());
+        if ($result !== $cartRuleCount) {
+            throw new RuntimeException(\sprintf('Expects %s, got %s instead', $cartRuleCount, $result));
         }
     }
 
-    /**
-     * @param string $cartRuleName
-     */
     public function checkCartRuleWithNameExists(string $cartRuleName): void
     {
         $this->checkFixtureExists($this->cartRules, 'Cart rule', $cartRuleName);
@@ -318,8 +298,8 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
         $this->customerFeatureContext->checkCustomerWithNameExists($customerName);
         $customer = $this->customerFeatureContext->getCustomerWithName($customerName);
         $cartRules = CartRule::getCustomerCartRules($customer->id_lang, $customer->id, true, false);
-        if ($expectedCount != count($cartRules)) {
-            throw new RuntimeException(sprintf('Expects %s, got %s instead', $expectedCount, count($cartRules)));
+        if ($expectedCount !== \count($cartRules)) {
+            throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedCount, \count($cartRules)));
         }
     }
 
@@ -331,39 +311,37 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
         $this->customerFeatureContext->checkCustomerWithNameExists($customerName);
         $customer = $this->customerFeatureContext->getCustomerWithName($customerName);
         $cartRules = CartRule::getCustomerCartRules($customer->id_lang, $customer->id, true, false);
-        if (!isset($cartRules[$position - 1]['id_cart_rule'])) {
-            throw new Exception(sprintf('Undefined cartRule on position #%s', $position - 1));
+        if (! isset($cartRules[$position - 1]['id_cart_rule'])) {
+            throw new Exception(\sprintf('Undefined cartRule on position #%s', $position - 1));
         }
         $cartRule = new CartRule($cartRules[$position - 1]['id_cart_rule']);
-        if ($expectedValue != $cartRule->reduction_amount) {
-            throw new RuntimeException(sprintf('Expects %s, got %s instead', $expectedValue, $cartRule->reduction_amount));
+        if ($expectedValue !== $cartRule->reduction_amount) {
+            throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedValue, $cartRule->reduction_amount));
         }
     }
 
     /**
      * @Then the current cart should have the following contextual reductions:
-     *
-     * @param TableNode $table
      */
     public function checkCartRuleContextualValue(TableNode $table)
     {
         $expectedCartRules = $table->getColumnsHash();
         $cartRuleRows = $this->getCurrentCart()->getCartRules();
 
-        Assert::assertCount(count($expectedCartRules), $cartRuleRows, 'Unexpected cart rules count in cart');
+        Assert::assertCount(\count($expectedCartRules), $cartRuleRows, 'Unexpected cart rules count in cart');
 
         foreach ($cartRuleRows as $key => $cartRuleRow) {
             $cartRuleReference = $expectedCartRules[$key]['reference'];
 
             Assert::assertTrue(
                 $this->getSharedStorage()->exists($cartRuleReference),
-                sprintf('cart rule by reference "%s" doesnt exist', $cartRuleReference)
+                \sprintf('cart rule by reference "%s" doesnt exist', $cartRuleReference)
             );
 
             Assert::assertSame(
                 (int) $cartRuleRow['id_cart_rule'],
                 $this->getSharedStorage()->get($cartRuleReference),
-                sprintf('Cart rule %s was not expected in cart (or the sequence is unexpected).', $cartRuleReference)
+                \sprintf('Cart rule %s was not expected in cart (or the sequence is unexpected).', $cartRuleReference)
             );
 
             $expectedReduction = new DecimalNumber($expectedCartRules[$key]['reduction']);
@@ -371,15 +349,13 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
 
             Assert::assertTrue(
                 $actualReduction->equals($expectedReduction),
-                sprintf('Unexpected contextual reduction. Expected %s, got %s', $expectedReduction, $actualReduction)
+                \sprintf('Unexpected contextual reduction. Expected %s, got %s', $expectedReduction, $actualReduction)
             );
         }
     }
 
     /**
      * @Then usage limit per user for cart rule :cartRuleReference is detected
-     *
-     * @param string $cartRuleReference
      */
     public function checkCartRuleUsageLimitIsDetected(string $cartRuleReference)
     {
@@ -390,8 +366,8 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
         $cartRuleId = (int) SharedStorage::getStorage()->get($cartRuleReference);
         $cartRule = new CartRule($cartRuleId);
         $result = $cartRule->checkValidity(Context::getContext(), true);
-        if ($result != $expectedErrorMessage) {
-            throw new RuntimeException(sprintf('Expects "usage limit reached" error message, got %s instead', $result));
+        if ($result !== $expectedErrorMessage) {
+            throw new RuntimeException(\sprintf('Expects "usage limit reached" error message, got %s instead', $result));
         }
     }
 
@@ -399,8 +375,6 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
      * Legacy cart rule validation returns errors as strings (CartRule::checkVBalidity()),
      * so to identify lastError in steps we will use this custom map,
      * which will eventually allow us to reuse LastExceptionTrait and assert exceptions by codes
-     *
-     * @return int
      */
     private function getCartRuleValidityCodeByMessage(string $message): int
     {
@@ -434,18 +408,11 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf(
-            'Invalid error-code mapping in test. Couldn\'t find the code for message "%s"',
-            $message
-        ));
+        throw new RuntimeException(\sprintf('Invalid error-code mapping in test. Couldn\'t find the code for message "%s"', $message));
     }
 
     /**
      * This method is temporary. We will get rid of it once all old cart rule creation/edition steps are cleaned up
-     *
-     * @param string $reference
-     *
-     * @return CartRule
      */
     private function loadCartRule(string $reference): CartRule
     {

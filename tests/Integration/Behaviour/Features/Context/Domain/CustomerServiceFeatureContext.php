@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I add new customer thread :threadReference with following properties:
-     *
-     * @param string $threadReference
-     * @param TableNode $table
      */
     public function createCustomerThread(string $threadReference, TableNode $table): void
     {
@@ -81,9 +79,6 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I respond to customer thread :threadReference with following properties:
-     *
-     * @param string $threadReference
-     * @param TableNode $table
      */
     public function respondToCustomerThread(string $threadReference, TableNode $table): void
     {
@@ -100,9 +95,6 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then customer thread :threadReference should have the latest message :message
-     *
-     * @param string $threadReference
-     * @param string $message
      */
     public function assertThreadLatestMessage(string $threadReference, string $message): void
     {
@@ -123,14 +115,12 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
         $lastMessage = end($messages);
 
         if ($lastMessage->getMessage() !== $message) {
-            throw new RuntimeException(sprintf('thread "%s" has "%s" latest message, but "%s" was expected.', $threadReference, $lastMessage->getMessage(), $message));
+            throw new RuntimeException(\sprintf('thread "%s" has "%s" latest message, but "%s" was expected.', $threadReference, $lastMessage->getMessage(), $message));
         }
     }
 
     /**
      * @When I update thread :threadReference status to open
-     *
-     * @param string $threadReference
      */
     public function updateThreadStatus(string $threadReference): void
     {
@@ -147,8 +137,6 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then /^customer thread "(.+)" should be (open|closed|pending1|pending2)$/
-     *
-     * @param string $threadReference
      */
     public function assertThreadStatus(string $threadReference, string $expectedStatus): void
     {
@@ -163,17 +151,15 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
         $actions = $customerThreadView->getActions();
         foreach ([CustomerThreadStatus::OPEN, CustomerThreadStatus::PENDING_1, CustomerThreadStatus::PENDING_2, CustomerThreadStatus::CLOSED] as $possibleAction) {
             if ($expectedStatus === $possibleAction) {
-                Assert::assertArrayNotHasKey($possibleAction, $actions, sprintf('thread "%s" should not have action "%s" possible.', $threadReference, CustomerThreadStatus::OPEN));
+                Assert::assertArrayNotHasKey($possibleAction, $actions, \sprintf('thread "%s" should not have action "%s" possible.', $threadReference, CustomerThreadStatus::OPEN));
             } else {
-                Assert::assertArrayHasKey($possibleAction, $actions, sprintf('thread "%s" should have action "%s" possible.', $threadReference, CustomerThreadStatus::OPEN));
+                Assert::assertArrayHasKey($possibleAction, $actions, \sprintf('thread "%s" should have action "%s" possible.', $threadReference, CustomerThreadStatus::OPEN));
             }
         }
     }
 
     /**
      * @When I delete thread :threadReference
-     *
-     * @param string $threadReference
      */
     public function deleteThread(string $threadReference): void
     {
@@ -185,8 +171,6 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then thread :threadReference should be deleted
-     *
-     * @param string $threadReference
      */
     public function assertThreadIsDeleted(string $threadReference): void
     {
@@ -197,7 +181,7 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
             $query = new GetCustomerThreadForViewing((int) $customerThread->id);
             $this->getQueryBus()->handle($query);
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Thread %s exists, but it was expected to be deleted', $threadReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Thread %s exists, but it was expected to be deleted', $threadReference));
         } catch (CustomerThreadNotFoundException $e) {
             SharedStorage::getStorage()->clear($threadReference);
         }

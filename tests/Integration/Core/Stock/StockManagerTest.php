@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ class StockManagerTest extends KernelTestCase
      */
     private $packItemsManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -87,7 +88,7 @@ class StockManagerTest extends KernelTestCase
         FakeProduct4759 $pack,
         array $products,
         int $delta,
-        array $expected
+        array $expected,
     ): void {
         $this->configuration->method('get')->willReturn($default_stock_type);
         $packItemsManager = new FakePackItemsManager4759();
@@ -180,7 +181,7 @@ class StockManagerTest extends KernelTestCase
         FakeProduct4759 $pack,
         array $products,
         int $delta,
-        array $expected
+        array $expected,
     ): void {
         $this->configuration->method('get')->willReturn($default_stock_type);
         $this->packItemsManager = new FakePackItemsManager4759();
@@ -278,7 +279,7 @@ class StockManagerTest extends KernelTestCase
         array $products,
         int $product_to_update,
         int $delta,
-        array $expected
+        array $expected,
     ): void {
         $this->configuration->method('get')->willReturn($default_stock_type);
         $this->packItemsManager = new FakePackItemsManager4759();
@@ -469,8 +470,6 @@ class FakeStockAvailable4759 extends StockAvailable
     }
 
     /**
-     * @param $null_values
-     *
      * @return bool|int|string|void
      */
     public function update($null_values = false)

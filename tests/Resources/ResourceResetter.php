@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,13 +55,9 @@ class ResourceResetter
      */
     private $backupRootDir;
 
-    /**
-     * @param Filesystem|null $filesystem
-     * @param string|null $backupRootDir
-     */
     public function __construct(
         ?Filesystem $filesystem = null,
-        ?string $backupRootDir = null
+        ?string $backupRootDir = null,
     ) {
         $this->filesystem = $filesystem ?: new Filesystem();
         $this->backupRootDir = $backupRootDir ?: sys_get_temp_dir();
@@ -122,31 +119,25 @@ class ResourceResetter
 
     /**
      * Provide test img directory path, in which initial dummy images state should be saved
-     *
-     * @return string
      */
     public function getBackupTestImgDir(): string
     {
-        return $this->backupRootDir . DIRECTORY_SEPARATOR . self::BACKUP_TEST_IMG_DIR;
+        return $this->backupRootDir . \DIRECTORY_SEPARATOR . self::BACKUP_TEST_IMG_DIR;
     }
 
     /**
      * Provide test downloads directory path, in which initial downloads state should be saved
-     *
-     * @return string
      */
     public function getBackupTestDownloadsDir(): string
     {
-        return $this->backupRootDir . DIRECTORY_SEPARATOR . self::BACKUP_TEST_DOWNLOADS_DIR;
+        return $this->backupRootDir . \DIRECTORY_SEPARATOR . self::BACKUP_TEST_DOWNLOADS_DIR;
     }
 
     /**
      * Provide test modules directory path, in which initial test modules state should be saved
-     *
-     * @return string
      */
     public function getBackupTestModulesDir(): string
     {
-        return $this->backupRootDir . DIRECTORY_SEPARATOR . self::BACKUP_TEST_MODULES_DIR;
+        return $this->backupRootDir . \DIRECTORY_SEPARATOR . self::BACKUP_TEST_MODULES_DIR;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class BulkCombinationFormDataFormatterTest extends TestCase
 
     /**
      * @dataProvider getDataToFormat
-     *
-     * @param array $bulkFormData
-     * @param array $expectedFormattedData
      */
     public function testFormat(array $bulkFormData, array $expectedFormattedData): void
     {
@@ -49,9 +47,6 @@ class BulkCombinationFormDataFormatterTest extends TestCase
         $this->assertEquals($formData, $expectedFormattedData);
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataToFormat(): iterable
     {
         yield 'empty data' => [
@@ -134,7 +129,7 @@ class BulkCombinationFormDataFormatterTest extends TestCase
                     'options' => [
                         'stock_location' => 'far',
                         'low_stock_threshold' => 5,
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
                     ],
                     'available_date' => '2022-01-15',
                 ],
@@ -172,8 +167,8 @@ class BulkCombinationFormDataFormatterTest extends TestCase
                         'stock_location' => 'far',
                         'low_stock_threshold' => 5,
                         self::MODIFY_ALL_SHOPS_PREFIX . 'low_stock_threshold' => true,
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
-                        sprintf(
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => true,
+                        \sprintf(
                             '%s%slow_stock_threshold',
                             self::MODIFY_ALL_SHOPS_PREFIX,
                             DisablingSwitchExtension::FIELD_PREFIX
@@ -204,7 +199,7 @@ class BulkCombinationFormDataFormatterTest extends TestCase
                     'options' => [
                         'stock_location' => 'close',
                         'low_stock_threshold' => 2,
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                     ],
                     'available_date' => '2022-02-15',
                 ],
@@ -221,7 +216,7 @@ class BulkCombinationFormDataFormatterTest extends TestCase
                         'threshold_value' => 2,
                         'low_stock_alert' => false,
                     ],
-                    sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                    \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                     'available_date' => '2022-02-15',
                 ],
             ],
@@ -234,7 +229,7 @@ class BulkCombinationFormDataFormatterTest extends TestCase
                     'options' => [
                         'stock_location' => 'close',
                         'low_stock_threshold' => 2,
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                     ],
                     'available_date' => '2022-02-15',
                 ],
@@ -275,7 +270,7 @@ class BulkCombinationFormDataFormatterTest extends TestCase
                 'stock' => [
                     'options' => [
                         'stock_location' => 'far',
-                        sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
+                        \sprintf('%slow_stock_threshold', DisablingSwitchExtension::FIELD_PREFIX) => false,
                     ],
                 ],
             ],

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,9 +31,6 @@ use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Currency\Exception\CurrencyConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\AlphaIsoCode;
 
-/**
- * Class CurrencyIsoCodeTest
- */
 class CurrencyIsoCodeTest extends TestCase
 {
     /**

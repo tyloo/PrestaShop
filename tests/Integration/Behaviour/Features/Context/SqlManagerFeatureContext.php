@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,8 +50,6 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * "When" steps perform actions, and some of them store the latest result
      * in this variable so that "Then" action can check its content
-     *
-     * @var mixed
      */
     protected $latestResult;
 
@@ -102,7 +101,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
         $realCount = current($realCountResults)['result'];
 
         if ((int) $realCount !== (int) $count) {
-            throw new RuntimeException(sprintf('Expects %d sql stored requests, got %d instead', (int) $count, (int) $realCount));
+            throw new RuntimeException(\sprintf('Expects %d sql stored requests, got %d instead', (int) $count, (int) $realCount));
         }
     }
 
@@ -127,13 +126,12 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
      */
     private function assertInstanceOf($expected, $subject)
     {
-        if (get_class($subject) !== $expected) {
-            throw new RuntimeException(sprintf('Expects %s, got %s instead', $expected, get_class($subject)));
+        if (\get_class($subject) !== $expected) {
+            throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expected, \get_class($subject)));
         }
     }
 
     /**
-     * @param DatabaseTableFields $fields
      * @param string $expected
      */
     private function assertDatabaseFieldsContain(DatabaseTableFields $fields, $expected)
@@ -145,7 +143,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf('Expected database field %s in given set', $expected));
+        throw new RuntimeException(\sprintf('Expected database field %s in given set', $expected));
     }
 
     /**
@@ -228,7 +226,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     {
         $lastError = $this->assertLastErrorIs(SqlRequestConstraintException::class);
         Assert::assertEquals(
-            sprintf('The "%s" table does not exist.', $tableName),
+            \sprintf('The "%s" table does not exist.', $tableName),
             $lastError->getMessage()
         );
     }

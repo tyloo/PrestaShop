@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -95,7 +96,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         Shop::resetContext();
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         self::bootKernel();
         $this->entityManager = self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
@@ -106,10 +107,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider updateDataProvider
-     *
-     * @param ShopConstraint $shopConstraint
-     * @param array $data
-     * @param array $checkList
      */
     public function testUpdate(ShopConstraint $shopConstraint, array $data, array $checkList): void
     {
@@ -129,8 +126,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideShopConstraints
-     *
-     * @param ShopConstraint $shopConstraint
      */
     public function testUndefinedOptionsException(ShopConstraint $shopConstraint): void
     {
@@ -149,8 +144,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
 
     /**
      * @dataProvider provideShopConstraints
-     *
-     * @param ShopConstraint $shopConstraint
      */
     public function testInvalidOptionsException(ShopConstraint $shopConstraint): void
     {
@@ -162,16 +155,13 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
             'test_conf_2' => true,
         ];
 
-        if (!$isAllShopContext) {
+        if (! $isAllShopContext) {
             $confValues[MultistoreCheckboxEnabler::MULTISTORE_FIELD_PREFIX . 'test_conf_1'] = true;
             $confValues[MultistoreCheckboxEnabler::MULTISTORE_FIELD_PREFIX . 'test_conf_2'] = true;
         }
         $testedObject->updateConfiguration($confValues);
     }
 
-    /**
-     * @return array
-     */
     public function provideShopConstraints(): array
     {
         return [
@@ -181,9 +171,6 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         ];
     }
 
-    /**
-     * @return iterable
-     */
     public function updateDataProvider(): iterable
     {
         // First test changes the config for all shops which impacts also shop and shopGroup

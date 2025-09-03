@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-/**
- * Class UniqueDiscountCodeValidatorTest
- */
 class UniqueDiscountCodeValidatorTest extends ConstraintValidatorTestCase
 {
     protected DiscountRepository|MockObject $discountRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        /* @var DiscountRepository|MockObject $discountRepository */
+        /** @var DiscountRepository|MockObject $discountRepository */
         $this->discountRepository = $this->createMock(DiscountRepository::class);
         parent::setUp();
     }

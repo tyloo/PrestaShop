@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,11 +34,6 @@ use PrestaShop\PrestaShop\Core\Util\File\YamlParser;
 
 class YamlParserTest extends TestCase
 {
-    /**
-     * @param string $yamlFiles
-     *
-     * @return string
-     */
     private function clearCacheFile(string $yamlFiles): string
     {
         $yamlParser = new YamlParser($this->getCacheDir(), false);

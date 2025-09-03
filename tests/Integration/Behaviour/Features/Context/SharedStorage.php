@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,7 +56,7 @@ class SharedStorage
      */
     public static function getStorage()
     {
-        if (!isset(self::$instance)) {
+        if (! isset(self::$instance)) {
             self::$instance = new self();
         }
 
@@ -64,13 +65,11 @@ class SharedStorage
 
     /**
      * @param string $key
-     *
-     * @return mixed
      */
     public function get($key)
     {
-        if (!$this->exists($key)) {
-            throw new RuntimeException(sprintf('Item with key "%s" does not exist', $key));
+        if (! $this->exists($key)) {
+            throw new RuntimeException(\sprintf('Item with key "%s" does not exist', $key));
         }
 
         return $this->storage[$key];
@@ -78,13 +77,10 @@ class SharedStorage
 
     /**
      * @param string $key
-     * @param mixed $default
-     *
-     * @return mixed
      */
     public function getWithDefault($key, $default)
     {
-        if (!isset($this->storage[$key])) {
+        if (! isset($this->storage[$key])) {
             return $default;
         }
 
@@ -93,7 +89,6 @@ class SharedStorage
 
     /**
      * @param string $key
-     * @param mixed $resource
      */
     public function set($key, $resource)
     {
@@ -101,11 +96,6 @@ class SharedStorage
         $this->latestKey = $key;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
     public function exists(string $key): bool
     {
         return isset($this->storage[$key]);
@@ -132,13 +122,11 @@ class SharedStorage
 
     /**
      * Get the resource that was the latest one to be set into the storage.
-     *
-     * @return mixed
      */
     public function getLatestResource()
     {
-        if (!array_key_exists($this->latestKey, $this->storage)) {
-            throw new RuntimeException(sprintf('Latest resource with key "%s" does not exist.', $this->latestKey));
+        if (! \array_key_exists($this->latestKey, $this->storage)) {
+            throw new RuntimeException(\sprintf('Latest resource with key "%s" does not exist.', $this->latestKey));
         }
 
         return $this->storage[$this->latestKey];

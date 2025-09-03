@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class LegacyControllerContextSubscriberTest extends ContextEventListenerTestCase
 {
     /**
      * @dataProvider getControllerNameValues
-     *
-     * @param Request $request
-     * @param string $expectedControllerName
      */
     public function testControllerName(Request $request, string $expectedControllerName): void
     {

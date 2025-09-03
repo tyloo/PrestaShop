@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,9 +75,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I should see following root categories in ":langIso" language:
-     *
-     * @param TableNode $tableNode
-     * @param string $langIso
      */
     public function assertRootCategoriesTree(TableNode $tableNode, string $langIso): void
     {
@@ -90,10 +88,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I should see following categories in ":parentReference" category in ":langIso" language:
-     *
-     * @param TableNode $tableNode
-     * @param string $langIso
-     * @param string $parentReference
      */
     public function assertCategoriesTree(TableNode $tableNode, string $langIso, string $parentReference): void
     {
@@ -111,9 +105,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add new category :categoryReference with following details:
-     *
-     * @param string $categoryReference
-     * @param TableNode $table
      */
     public function addCategory(string $categoryReference, TableNode $table): void
     {
@@ -122,9 +113,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I add new home category :categoryReference with following details:
-     *
-     * @param string $categoryReference
-     * @param TableNode $table
      */
     public function addHomeCategory(string $categoryReference, TableNode $table): void
     {
@@ -133,9 +121,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit category :categoryReference with following details:
-     *
-     * @param string $categoryReference
-     * @param TableNode $table
      */
     public function editCategory(string $categoryReference, TableNode $table)
     {
@@ -146,9 +131,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then category :categoryReference should have following details:
-     *
-     * @param string $categoryReference
-     * @param TableNode $table
      */
     public function assertEditableCategory(string $categoryReference, TableNode $table): void
     {
@@ -181,9 +163,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete category :categoryReference choosing mode :deleteMode
-     *
-     * @param string $categoryReference
-     * @param string $deleteMode
      */
     public function deleteCategory(string $categoryReference, string $deleteMode)
     {
@@ -193,9 +172,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I bulk delete categories :categoriesReferenceList choosing mode :deleteMode
-     *
-     * @param string $categoriesReferenceList
-     * @param string $deleteMode
      */
     public function bulkDeleteCategories(string $categoriesReferenceList, string $deleteMode)
     {
@@ -209,8 +185,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then category :categoryReference does not exist
-     *
-     * @param string $categoryReference
      */
     public function categoryDoesNotExist(string $categoryReference)
     {
@@ -220,13 +194,11 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         } catch (CategoryNotFoundException $e) {
             return;
         }
-        throw new RuntimeException(sprintf('Category %s still exists', $categoryReference));
+        throw new RuntimeException(\sprintf('Category %s still exists', $categoryReference));
     }
 
     /**
      * @When /^I move category "(.*)" (up|down) to a position "(.*)"$/
-     *
-     * @param string $categoryReference
      */
     public function updatePosition(string $categoryReference, string $way, int $newPosition)
     {
@@ -277,8 +249,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then category ":categoryReference" position should be ":expectedPosition"
-     *
-     * @param string $categoryReference
      */
     public function assertCurrentPosition(string $categoryReference, int $expectedPosition): void
     {
@@ -289,9 +259,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I edit home category :categoryReference with following details:
-     *
-     * @param string $categoryReference
-     * @param TableNode $table
      */
     public function editHomeCategory(string $categoryReference, TableNode $table)
     {
@@ -301,10 +268,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param string $categoryReference
-     * @param TableNode $table
-     * @param bool $isHome
-     *
      * @see AddRootCategoryCommand
      *
      * Technically both commands should be filled separately,
@@ -368,7 +331,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param EditCategoryCommand|EditRootCategoryCommand $command
-     * @param TableNode $tableNode
      *
      * @see EditCategoryCommand
      * @see EditRootCategoryCommand
@@ -383,7 +345,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     {
         $supportedCommands = [EditCategoryCommand::class, EditRootCategoryCommand::class];
 
-        if (!in_array(get_class($command), $supportedCommands, true)) {
+        if (! \in_array(\get_class($command), $supportedCommands, true)) {
             throw new RuntimeException('Unsupported command provided for filling the data in test');
         }
 
@@ -432,8 +394,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then image ":imageReference" should not exist
-     *
-     * @param string $imageReference
      */
     public function assertFileDoesNotExist(string $imageReference): void
     {
@@ -442,8 +402,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I delete cover image for category ":categoryReference"
-     *
-     * @param string $categoryReference
      */
     public function deleteCategoryCoverImage(string $categoryReference)
     {
@@ -453,8 +411,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then category ":categoryReference" should have a cover image
-     *
-     * @param string $categoryReference
      */
     public function categoryHasCoverImage(string $categoryReference)
     {
@@ -465,8 +421,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then category :categoryReference should not have a cover image
-     *
-     * @param string $categoryReference
      */
     public function assertCategoryHasNoCoverImage(string $categoryReference): void
     {
@@ -476,8 +430,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then category :categoryReference should not have a thumbnail image
-     *
-     * @param string $categoryReference
      */
     public function assertCategoryHasNoThumbnailImage(string $categoryReference)
     {
@@ -487,8 +439,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then category :categoryReference should have a thumbnail image
-     *
-     * @param string $categoryReference
      */
     public function assertCategoryHasThumbnailImage(string $categoryReference)
     {
@@ -500,9 +450,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
      * @Given /^category "(.*)" is (enabled|disabled)$/
      *
      * Status type "enabled|disabled" should be converted by transform context. @see StringToBoolTransformContext
-     *
-     * @param string $categoryReference
-     * @param bool $expectedStatus
      */
     public function assertCategoryStatus(string $categoryReference, bool $expectedStatus): void
     {
@@ -513,8 +460,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I enable category :categoryReference
-     *
-     * @param string $categoryReference
      */
     public function enableCategory(string $categoryReference)
     {
@@ -527,8 +472,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I disable category :categoryReference
-     *
-     * @param string $categoryReference
      */
     public function disableCategory(string $categoryReference)
     {
@@ -541,9 +484,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When /^I bulk (enable|disable) categories "(.*)"$/
-     *
-     * @param bool $enable
-     * @param string $categoryReferences
      */
     public function bulkUpdateCategoriesStatus(bool $enable, string $categoryReferences)
     {
@@ -554,20 +494,13 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given category :categoryReference in default language named :categoryName exists
-     *
-     * @param string $categoryReference
-     * @param string $categoryName
      */
     public function assertCategoryExistsByName(string $categoryReference, string $categoryName)
     {
         $foundCategory = Category::searchByName($this->getDefaultLangId(), $categoryName, true);
 
-        if (!isset($foundCategory['name']) || $foundCategory['name'] !== $categoryName) {
-            throw new RuntimeException(sprintf(
-                'Category "%s" named "%s" was not found',
-                $categoryReference,
-                $categoryName
-            ));
+        if (! isset($foundCategory['name']) || $foundCategory['name'] !== $categoryName) {
+            throw new RuntimeException(\sprintf('Category "%s" named "%s" was not found', $categoryReference, $categoryName));
         }
 
         $this->getSharedStorage()->set($categoryReference, (int) $foundCategory['id_category']);
@@ -588,15 +521,13 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getEditableCategory($categoryReference);
 
-            throw new RuntimeException(sprintf('%s exception was expected', CannotEditRootCategoryException::class));
+            throw new RuntimeException(\sprintf('%s exception was expected', CannotEditRootCategoryException::class));
         } catch (CannotEditRootCategoryException $e) {
             // this is expected. We want to make sure that root category cannot be edited.
         }
     }
 
     /**
-     * @param string $reference
-     *
      * @todo: should start naming "home" everywhere instead of "default".
      *
      * @Given category ":reference" is the default one
@@ -605,11 +536,8 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     {
         $defaultCategoryId = (int) Configuration::get('PS_HOME_CATEGORY');
 
-        if (!$this->getSharedStorage()->exists($reference)) {
-            throw new RuntimeException(sprintf(
-                'Category referenced as "%s" was not set in sharedStorage',
-                $reference
-            ));
+        if (! $this->getSharedStorage()->exists($reference)) {
+            throw new RuntimeException(\sprintf('Category referenced as "%s" was not set in sharedStorage', $reference));
         }
 
         Assert::assertEquals(
@@ -621,52 +549,39 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given category ":categoryReference" is set as the home category for shop ":shopReference"
-     *
-     * @param string $categoryReference
-     * @param string $shopReference
      */
     public function assertIsHomeCategoryForShop(string $categoryReference, string $shopReference): void
     {
-        if (!$this->getSharedStorage()->exists($shopReference)) {
-            throw new RuntimeException(sprintf(
-                'Shop referenced as "%s" was not set in sharedStorage',
-                $categoryReference
-            ));
+        if (! $this->getSharedStorage()->exists($shopReference)) {
+            throw new RuntimeException(\sprintf('Shop referenced as "%s" was not set in sharedStorage', $categoryReference));
         }
 
-        if (!$this->getSharedStorage()->exists($categoryReference)) {
-            throw new RuntimeException(sprintf(
-                'Category referenced as "%s" was not set in sharedStorage',
-                $categoryReference
-            ));
+        if (! $this->getSharedStorage()->exists($categoryReference)) {
+            throw new RuntimeException(\sprintf('Category referenced as "%s" was not set in sharedStorage', $categoryReference));
         }
 
         $shopId = (int) $this->getSharedStorage()->get($shopReference);
         $shop = new Shop($shopId);
         if ((int) $shop->id !== $shopId) {
-            throw new RuntimeException(sprintf(
-                'Failed to load shop with id %d, referenced as %s',
-                $shopId,
-                $shopReference
-            ));
+            throw new RuntimeException(\sprintf('Failed to load shop with id %d, referenced as %s', $shopId, $shopReference));
         }
 
         Assert::assertSame(
             (int) $shop->id_category,
             $this->getSharedStorage()->get($categoryReference),
-            sprintf('Unexpected default category for shop %s', $shopReference)
+            \sprintf('Unexpected default category for shop %s', $shopReference)
         );
     }
 
     /**
-     * @param CategoryForTree[] $actualCategories
+     * @param CategoryForTree[]                 $actualCategories
      * @param array<int, array<string, string>> $expectedCategories
      */
     private function assertCategoriesInTree(array $actualCategories, array $expectedCategories): void
     {
         Assert::assertEquals(
-            count($actualCategories),
-            count($expectedCategories),
+            \count($actualCategories),
+            \count($expectedCategories),
             'Unexpected categories count'
         );
 
@@ -679,8 +594,8 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
             $actualCategoryChildren = $category->getChildren();
             Assert::assertEquals(
-                count($actualCategoryChildren),
-                count($expectedChildrenCategoryIds),
+                \count($actualCategoryChildren),
+                \count($expectedChildrenCategoryIds),
                 'Unexpected children categories count'
             );
 
@@ -696,9 +611,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given category ":categoryReference" parent is category ":expectedParentReference"
-     *
-     * @param string $categoryReference
-     * @param string $expectedParentReference
      */
     public function assertCategoryParent(string $categoryReference, string $expectedParentReference): void
     {
@@ -714,7 +626,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param CategoryForTree[] $categoriesTree
-     * @param int $parentCategoryId
      *
      * @return CategoryForTree[]
      */
@@ -739,8 +650,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I upload cover image ":imageReference" named ":fileName" to category ":categoryReference"
-     *
-     * @return string
      */
     public function uploadCoverImage(string $imageReference, string $fileName, string $categoryReference): string
     {
@@ -755,8 +664,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @When I upload thumbnail image ":imageReference" named ":fileName" to category ":categoryReference"
-     *
-     * @return string
      */
     public function uploadThumbnailImage(string $imageReference, string $fileName, string $categoryReference): string
     {
@@ -775,18 +682,12 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
      *        Whole image upload is not easily testable due to these reasons:
      *          - image uploads depends on HTTP request (move_uploaded_file is used in uploader service)
      *          - EditableCategory images (all types) are regenerated thumbnails with timestamps, so it is complicated to assert their value
-     *
-     * @param string $imageReference
-     * @param string $fileName
-     * @param string $destinationPath
-     *
-     * @return string
      */
     private function uploadImage(string $imageReference, string $fileName, string $destinationPath): string
     {
         $sourcePath = DummyFileUploader::getDummyFilesPath() . $fileName;
 
-        if (!copy($sourcePath, $destinationPath) || !file_exists($destinationPath)) {
+        if (! copy($sourcePath, $destinationPath) || ! file_exists($destinationPath)) {
             throw new RuntimeException('Failed to upload category image file');
         }
 
@@ -795,11 +696,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         return $fileName;
     }
 
-    /**
-     * @param string $categoryReference
-     *
-     * @return EditableCategory
-     */
     private function getEditableCategory(string $categoryReference): EditableCategory
     {
         /** @var EditableCategory $editableCategory */
@@ -812,13 +708,10 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param array<string, mixed> $localizedData
-     * @param string $index
-     * @param $actualValue
-     * @param int $type
      */
     private function assertProperty(array $localizedData, string $index, $actualValue, int $type = self::PROPERTY_TYPE_BASIC): void
     {
-        if (!isset($localizedData[$index])) {
+        if (! isset($localizedData[$index])) {
             return;
         }
 
@@ -840,22 +733,17 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         Assert::assertSame(
             $expectedValue,
             $actualValue,
-            sprintf('Unexpected %s', $index)
+            \sprintf('Unexpected %s', $index)
         );
     }
 
-    /**
-     * @param int $categoryId
-     *
-     * @return Category
-     */
     private function getCategory(int $categoryId): Category
     {
         // There is no position in EditableCategory class, so we ensure it is correct by loading legacy ObjectModel
         $category = new Category($categoryId);
 
         if ((int) $category->id !== $categoryId) {
-            throw new RuntimeException(sprintf('Failed to load category with id %d', $categoryId));
+            throw new RuntimeException(\sprintf('Failed to load category with id %d', $categoryId));
         }
 
         return $category;

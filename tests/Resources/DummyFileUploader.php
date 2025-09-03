@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,15 +44,13 @@ class DummyFileUploader
     /**
      * Uploads dummy file to temporary dir to mimic http file upload
      *
-     * @param string $dummyFilename
-     *
      * @return string destination pathname
      */
     public static function upload(string $dummyFilename): string
     {
         $source = static::getDummyFilesPath() . $dummyFilename;
 
-        if (!is_file($source)) {
+        if (! is_file($source)) {
             throw new RuntimeException('file "%s" not found', $source);
         }
 
@@ -61,9 +60,6 @@ class DummyFileUploader
         return $destination;
     }
 
-    /**
-     * @return string
-     */
     public static function getDummyFilesPath(): string
     {
         return __DIR__ . '/dummyFile/';
@@ -74,9 +70,6 @@ class DummyFileUploader
         return static::getDummyFilesPath() . $dummyFilename;
     }
 
-    /**
-     * @return string
-     */
     private static function createTempFilename(): string
     {
         return tempnam(sys_get_temp_dir(), static::UPLOADED_TMP_FILE_PREFIX);

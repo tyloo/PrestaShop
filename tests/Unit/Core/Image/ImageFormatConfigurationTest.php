@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,6 @@ class ImageFormatConfigurationTest extends TestCase
      * Checks if format list given from configuration will be properly processed
      *
      * @dataProvider dataProviderGetGenerationFormats
-     *
-     * @param string $confData
-     * @param array $expectedResult
-     *
-     * @return void
      */
     public function testGetGenerationFormats(string $confData, array $expectedResult): void
     {
@@ -60,8 +56,6 @@ class ImageFormatConfigurationTest extends TestCase
 
     /**
      * Checks that wrong format throw right exception in addInvalidGenerationFormat method
-     *
-     * @return void
      *
      * @throws ImageFormatConfigurationException
      */
@@ -80,10 +74,6 @@ class ImageFormatConfigurationTest extends TestCase
      * Checks that wrong format throw right exception in setListOfGenerationFormats method
      *
      * @dataProvider setListOfGenerationFormatsProvider
-     *
-     * @param array $formatList
-     *
-     * @return void
      */
     public function testSetListOfGenerationFormats(array $formatList): void
     {
@@ -100,12 +90,6 @@ class ImageFormatConfigurationTest extends TestCase
      * Checks if single provided format will be in the final list of formats returned.
      *
      * @dataProvider isGenerationFormatSetProvider
-     *
-     * @param string $input
-     * @param string $confData
-     * @param bool $expectedResult
-     *
-     * @return void
      */
     public function testIsGenerationFormatSet(string $input, string $confData, bool $expectedResult): void
     {

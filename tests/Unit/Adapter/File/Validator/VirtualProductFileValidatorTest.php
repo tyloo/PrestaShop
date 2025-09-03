@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class VirtualProductFileValidatorTest extends TestCase
 {
     /**
      * @dataProvider getInvalidPaths
-     *
-     * @param string $filePath
      */
     public function testItThrowsExceptionWhenProvidedPathIsNotLeadingToAFile(string $filePath): void
     {
@@ -58,9 +57,6 @@ class VirtualProductFileValidatorTest extends TestCase
         $validator->validate(DummyFileUploader::getDummyFilesPath() . 'app_icon.png');
     }
 
-    /**
-     * @return Generator
-     */
     public function getInvalidPaths(): Generator
     {
         yield [__DIR__];

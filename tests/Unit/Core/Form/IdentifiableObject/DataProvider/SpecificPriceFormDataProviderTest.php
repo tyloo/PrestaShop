@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,9 +72,6 @@ class SpecificPriceFormDataProviderTest extends TestCase
 
     /**
      * @dataProvider getExpectedData
-     *
-     * @param SpecificPriceForEditing $specificPriceForEditing
-     * @param array $expectedData
      */
     public function testGetData(SpecificPriceForEditing $specificPriceForEditing, array $expectedData): void
     {
@@ -180,11 +178,6 @@ class SpecificPriceFormDataProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @param SpecificPriceForEditing $specificPriceForEditing
-     *
-     * @return CommandBusInterface
-     */
     private function createQueryBusMock(SpecificPriceForEditing $specificPriceForEditing): CommandBusInterface
     {
         $mock = $this->createMock(CommandBusInterface::class);

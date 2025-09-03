@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,10 +66,6 @@ abstract class ApiTestCase extends WebTestCase
         $this->router = self::getContainer()->get('router');
     }
 
-    /**
-     * @param string $route
-     * @param array $params
-     */
     protected function assertBadRequest(string $route, array $params): void
     {
         $route = $this->router->generate($route, $params);
@@ -78,10 +75,6 @@ abstract class ApiTestCase extends WebTestCase
         $this->assertEquals(400, $response->getStatusCode(), 'It should return a response with "Bad Request" Status.');
     }
 
-    /**
-     * @param string $route
-     * @param array $params
-     */
     protected function assertOkRequest(string $route, array $params): void
     {
         $route = $this->router->generate($route, $params);
@@ -91,11 +84,6 @@ abstract class ApiTestCase extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode(), 'It should return a response with "OK" Status.');
     }
 
-    /**
-     * @param int $expectedStatusCode
-     *
-     * @return array
-     */
     protected function assertResponseBodyValidJson(int $expectedStatusCode): array
     {
         $response = self::$client->getResponse();
@@ -125,7 +113,7 @@ abstract class ApiTestCase extends WebTestCase
         $content = json_decode($response->getContent(), true);
 
         $this->assertEquals(
-            JSON_ERROR_NONE,
+            \JSON_ERROR_NONE,
             json_last_error(),
             'The response body should be a valid json document.'
         );

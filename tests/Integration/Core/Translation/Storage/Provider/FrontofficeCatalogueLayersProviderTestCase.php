@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -164,9 +165,6 @@ class FrontofficeCatalogueLayersProviderTestCase extends AbstractCatalogueLayers
         $this->assertEmpty($messages);
     }
 
-    /**
-     * @param array $databaseContent
-     */
     protected function getProvider(array $databaseContent = []): CoreCatalogueLayersProvider
     {
         $providerDefinition = new FrontofficeProviderDefinition();

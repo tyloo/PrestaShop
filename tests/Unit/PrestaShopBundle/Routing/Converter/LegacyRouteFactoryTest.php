@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,7 +74,7 @@ class LegacyRouteFactoryTest extends TestCase
      * @dataProvider getRoutes
      */
     public function testRouteWithoutFeatureFlagShouldNeverCallRepository(
-        Route $route
+        Route $route,
     ): void {
         $factory = new LegacyRouteFactory(
             $featureFlagManager = $this->createMock(FeatureFlagManager::class)

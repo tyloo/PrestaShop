@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class StockMovementTest extends TestCase
         ?int $orderId,
         int $employeeId,
         ?string $employeeName,
-        int $deltaQuantity
+        int $deltaQuantity,
     ): void {
         $history = StockMovement::createEditionMovement(
             $dateAdd,
@@ -106,13 +107,10 @@ class StockMovementTest extends TestCase
     /**
      * @dataProvider getGroupHistoryValidValues
      *
-     * @param string $fromDate
-     * @param string $toDate
      * @param string[]|int[] $stockMovementIds
      * @param string[]|int[] $stockIds
      * @param string[]|int[] $orderIds
      * @param string[]|int[] $employeeIds
-     * @param int $deltaQuantity
      */
     public function testGroupHistoryIsSuccessfullyConstructed(
         string $fromDate,
@@ -121,7 +119,7 @@ class StockMovementTest extends TestCase
         array $stockIds,
         array $orderIds,
         array $employeeIds,
-        int $deltaQuantity
+        int $deltaQuantity,
     ): void {
         $history = StockMovement::createOrdersMovement(
             $fromDate,

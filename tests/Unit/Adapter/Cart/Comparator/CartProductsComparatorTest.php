@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,12 @@ class CartProductsComparatorTest extends TestCase
 {
     /**
      * @dataProvider getExpectedModifiedProducts
-     *
-     * @param array $initialProducts
-     * @param array $newProducts
-     * @param array $knownUpdatedProducts
-     * @param array $expectedModifiedProducts
      */
     public function testGetModifiedProducts(
         array $initialProducts,
         array $newProducts,
         array $knownUpdatedProducts,
-        array $expectedModifiedProducts
+        array $expectedModifiedProducts,
     ) {
         $cart = $this->mockCart($initialProducts, $newProducts);
         $comparator = new CartProductsComparator($cart);
@@ -252,17 +248,12 @@ class CartProductsComparatorTest extends TestCase
 
     /**
      * @dataProvider getExpectedAdditionalProducts
-     *
-     * @param array $initialProducts
-     * @param array $newProducts
-     * @param array $knownUpdatedProducts
-     * @param array $expectedModifiedProducts
      */
     public function testGetAdditionalProducts(
         array $initialProducts,
         array $newProducts,
         array $knownUpdatedProducts,
-        array $expectedModifiedProducts
+        array $expectedModifiedProducts,
     ) {
         $cart = $this->mockCart($initialProducts, $newProducts);
         $comparator = new CartProductsComparator($cart);
@@ -294,17 +285,12 @@ class CartProductsComparatorTest extends TestCase
 
     /**
      * @dataProvider getExpectedUpdatedProducts
-     *
-     * @param array $initialProducts
-     * @param array $newProducts
-     * @param array $knownUpdatedProducts
-     * @param array $expectedModifiedProducts
      */
     public function testGetUpdatedProducts(
         array $initialProducts,
         array $newProducts,
         array $knownUpdatedProducts,
-        array $expectedModifiedProducts
+        array $expectedModifiedProducts,
     ) {
         $cart = $this->mockCart($initialProducts, $newProducts);
         $comparator = new CartProductsComparator($cart);
@@ -324,7 +310,7 @@ class CartProductsComparatorTest extends TestCase
             $filteredExpectedUpdates = [];
             /** @var CartProductUpdate $expectedUpdate */
             foreach ($expectedUpdates as $expectedUpdate) {
-                if (!$expectedUpdate->isCreated()) {
+                if (! $expectedUpdate->isCreated()) {
                     $filteredExpectedUpdates[] = $expectedUpdate;
                 }
             }
@@ -335,9 +321,6 @@ class CartProductsComparatorTest extends TestCase
     }
 
     /**
-     * @param array $initialProducts
-     * @param array $newProducts
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|Cart
      */
     private function mockCart(array $initialProducts, array $newProducts)

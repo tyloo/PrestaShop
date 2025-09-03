@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,15 +41,6 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
     /**
      * @When I search product ":productReference" combinations by phrase ":searchPhrase" in language ":langIso" for shop ":shopReference" limited to ":limit" results I should see following results:
      *
-     * @param string $productReference
-     * @param string $searchPhrase
-     * @param string $langIso
-     * @param string $shopReference
-     * @param int $limit
-     * @param ProductCombinationsCollection $expectedResults
-     *
-     * @return void
-     *
      * @see transformProductCombinationsResult for $expectedResults type transformation
      */
     public function searchProductCombinationsForShop(
@@ -57,7 +49,7 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
         string $langIso,
         string $shopReference,
         int $limit,
-        ProductCombinationsCollection $expectedResults
+        ProductCombinationsCollection $expectedResults,
     ): void {
         $this->searchProductCombinations(
             $productReference,
@@ -72,14 +64,6 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
     /**
      * @When I search product ":productReference" combinations by phrase ":searchPhrase" in language ":langIso" for all shops limited to ":limit" results I should see following results:
      *
-     * @param string $productReference
-     * @param string $searchPhrase
-     * @param string $langIso
-     * @param int $limit
-     * @param ProductCombinationsCollection $expectedResults
-     *
-     * @return void
-     *
      * @see transformProductCombinationsResult for $expectedResults type transformation
      */
     public function searchProductCombinationsForAllShops(
@@ -87,7 +71,7 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
         string $searchPhrase,
         string $langIso,
         int $limit,
-        ProductCombinationsCollection $expectedResults
+        ProductCombinationsCollection $expectedResults,
     ): void {
         $this->searchProductCombinations(
             $productReference,
@@ -101,8 +85,6 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
 
     /**
      * @Transform table:id reference,combination name
-     *
-     * @return ProductCombinationsCollection
      */
     public function transformProductCombinationsResult(TableNode $tableNode): ProductCombinationsCollection
     {
@@ -122,14 +104,6 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
     /**
      * @When I list product ":productReference" combinations in language ":langIso" for shop ":shopReference" limited to ":limit" results I should see following results:
      *
-     * @param string $productReference
-     * @param string $langIso
-     * @param string $shopReference
-     * @param int $limit
-     * @param ProductCombinationsCollection $expectedResults
-     *
-     * @return void
-     *
      * @see transformProductCombinationsResult for $expectedResults type transformation
      */
     public function listProductCombinationsForShop(
@@ -137,7 +111,7 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
         string $langIso,
         string $shopReference,
         int $limit,
-        ProductCombinationsCollection $expectedResults
+        ProductCombinationsCollection $expectedResults,
     ): void {
         $this->searchProductCombinations(
             $productReference,
@@ -150,15 +124,6 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
     }
 
     /**
-     * @param string $productReference
-     * @param string $searchPhrase
-     * @param string $langIso
-     * @param ShopConstraint $shopConstraint
-     * @param int $limit
-     * @param ProductCombinationsCollection $expectedResults
-     *
-     * @return void
-     *
      * @see transformProductCombinationsResult for $expectedResults type transformation
      */
     private function searchProductCombinations(
@@ -167,7 +132,7 @@ class SearchProductCombinationFeatureContext extends AbstractCombinationFeatureC
         string $langIso,
         ShopConstraint $shopConstraint,
         int $limit,
-        ProductCombinationsCollection $expectedResults
+        ProductCombinationsCollection $expectedResults,
     ): void {
         /** @var ProductCombinationsCollection $productCombinationsResults */
         $productCombinationsResults = $this->getQueryBus()->handle(new SearchProductCombinations(

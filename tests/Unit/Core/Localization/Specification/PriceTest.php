@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,10 @@ class PriceTest extends NumberTest
         $this->latinNumberSpec = new PriceSpecification(
             '',
             '',
-            ['latin' => $this->latinSymbolList, 'arab' => $this->arabSymbolList],
+            [
+                'latin' => $this->latinSymbolList,
+                'arab' => $this->arabSymbolList,
+            ],
             3,
             0,
             true,

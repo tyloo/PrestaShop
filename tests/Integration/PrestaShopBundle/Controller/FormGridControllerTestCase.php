@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,10 +40,7 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
      */
     protected $formChecker;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->formChecker = new FormChecker();
@@ -54,8 +52,6 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
      * - generateCreateUrl: returns the creation form url
      * - getFormHandlerChecker: return the form handler service which has been encapsulated and allows to get the created ID
      * - getCreateSubmitButtonSelector: returns the selector of the button allowing to select the form
-     *
-     * @param array $formData
      *
      * @return int Created entity ID
      */
@@ -77,9 +73,6 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
      *
      * - generateEditUrl: returns the edit form url
      * - getEditSubmitButtonSelector: returns the selector of the button allowing to select the form
-     *
-     * @param array $routeParams
-     * @param array $formData
      */
     protected function editEntityFromPage(array $routeParams, array $formData): void
     {
@@ -94,9 +87,6 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
      *
      * - generateEditUrl: returns the edit form url
      * - getEditSubmitButtonSelector: returns the selector of the button allowing to select the form
-     *
-     * @param array $routeParams
-     * @param array $expectedFormData
      */
     protected function assertFormValuesFromPage(array $routeParams, array $expectedFormData): void
     {
@@ -105,11 +95,6 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
         $this->formChecker->checkForm($entityForm, $expectedFormData);
     }
 
-    /**
-     * @param string $formUrl
-     * @param array $formData
-     * @param string $formButtonSelector
-     */
     protected function fillAndSubmitEntityForm(string $formUrl, array $formData, string $formButtonSelector = 'submit'): void
     {
         $filledEntityForm = $this->formFiller->fillForm(
@@ -120,12 +105,6 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
         $this->client->submit($filledEntityForm);
     }
 
-    /**
-     * @param string $formUrl
-     * @param string $formButtonSelector
-     *
-     * @return Form
-     */
     protected function getFormFromPage(string $formUrl, string $formButtonSelector): Form
     {
         $crawler = $this->client->request('GET', $formUrl);
@@ -136,15 +115,11 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
 
     /**
      * Returns the url of the create page.
-     *
-     * @return string
      */
     abstract protected function generateCreateUrl(): string;
 
     /**
      * Returns the selector allowing to get the create form's submit button.
-     *
-     * @return string
      */
     abstract protected function getCreateSubmitButtonSelector(): string;
 
@@ -152,24 +127,16 @@ abstract class FormGridControllerTestCase extends GridControllerTestCase
      * In test environment all form handlers are decorated inside a FormHandlerChecker which allows us to get the
      * last created ID. This method must be implemented if you want to test your creation form, it returns the form
      * handler service used in your creation form.
-     *
-     * @return FormHandlerChecker
      */
     abstract protected function getFormHandlerChecker(): FormHandlerChecker;
 
     /**
      * Returns the url of the edit page.
-     *
-     * @param array $routeParams
-     *
-     * @return string
      */
     abstract protected function generateEditUrl(array $routeParams): string;
 
     /**
      * Returns the selector allowing to get the edit form's submit button.
-     *
-     * @return string
      */
     abstract protected function getEditSubmitButtonSelector(): string;
 }

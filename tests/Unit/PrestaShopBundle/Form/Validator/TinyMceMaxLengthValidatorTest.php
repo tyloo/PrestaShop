@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,12 +51,6 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
         );
     }
 
-    /**
-     * @param mixed $max
-     * @param string|null $message
-     *
-     * @return TinyMceMaxLength
-     */
     private function getConstraintInstance($max, ?string $message = null): TinyMceMaxLength
     {
         return new TinyMceMaxLength([
@@ -65,14 +60,11 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @param Exception $expectedException
-     * @param mixed $tinyMceMaxLength
-     *
      * @dataProvider exceptionsInvalidTinyMceMaxLengthProvider
      */
     public function testExceptionsInvalidTinyMceMaxLength(Exception $expectedException, $tinyMceMaxLength): void
     {
-        $expectedExceptionClassName = get_class($expectedException);
+        $expectedExceptionClassName = \get_class($expectedException);
         $this->expectException($expectedExceptionClassName);
         $this->validator->validate(
             'fakeTinyMceText',
@@ -95,9 +87,6 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @param string $tinyMceText
-     * @param int $tinyMceMaxLength
-     *
      * @dataProvider validTinyMceMaxLengthProvider
      */
     public function testValidTinyMceMaxLength(string $tinyMceText, int $tinyMceMaxLength): void
@@ -190,8 +179,6 @@ White Hot Ceramic Mug',
 
     /**
      * @param string $code error code
-     * @param string $tinyMceText
-     * @param int $tinyMceMaxLength
      *
      * @dataProvider invalidTinyMceMaxLengthProvider
      */
@@ -228,11 +215,6 @@ White Hot Ceramic Mug',
         ];
     }
 
-    /**
-     * @param int|null $length
-     *
-     * @return string
-     */
     protected function generateRandomTinyMceText(?int $length = null): string
     {
         $fakeTextFull = 'Contrary to popular belief, Lorem Ipsum is not simply random text.
@@ -248,7 +230,7 @@ White Hot Ceramic Mug',
             accompanied by English versions from the 1914 translation by H. Rackham.
         ';
 
-        if (null === $length) {
+        if ($length === null) {
             return $fakeTextFull;
         }
 

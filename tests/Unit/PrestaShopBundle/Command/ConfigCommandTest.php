@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,31 +42,71 @@ class ConfigCommandTest extends TestCase
     {
         $commandTester = $this->getCommandTester();
 
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'get', 'key' => 'CONFIG_TEST']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'CONFIG_TEST',
+        ]));
         $this->assertStringContainsString('CONFIG_TEST=', $commandTester->getDisplay());
 
         // language specific
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'get', 'key' => 'PS_INVOICE_PREFIX', '--lang' => 'en']));
-        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute(['action' => 'get', 'key' => 'PS_INVOICE_PREFIX', '--lang' => 'fr']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'PS_INVOICE_PREFIX',
+            '--lang' => 'en',
+        ]));
+        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'PS_INVOICE_PREFIX',
+            '--lang' => 'fr',
+        ]));
         $this->assertStringContainsString('Invalid language', $commandTester->getDisplay());
         // lang with shop
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'get', 'key' => 'PS_INVOICE_PREFIX', '--lang' => 'en', '--shopId' => '1']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'PS_INVOICE_PREFIX',
+            '--lang' => 'en',
+            '--shopId' => '1',
+        ]));
 
         // for one shop
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'get', 'key' => 'CONFIG_TEST', '--shopId' => '1']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'CONFIG_TEST',
+            '--shopId' => '1',
+        ]));
         $this->assertStringContainsString('CONFIG_TEST=', $commandTester->getDisplay());
 
         // for shop group
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'get', 'key' => 'CONFIG_TEST', '--shopGroupId' => '1']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'CONFIG_TEST',
+            '--shopGroupId' => '1',
+        ]));
         $this->assertStringContainsString('CONFIG_TEST=', $commandTester->getDisplay());
 
         // invalid shop / shopgroup / both set
-        $this->assertEquals(ConfigCommand::STATUS_FAILED_SHOPCONSTRAINT, $commandTester->execute(['action' => 'get', 'key' => 'CONFIG_TEST', '--shopId' => '-1']));
-        $this->assertEquals(ConfigCommand::STATUS_FAILED_SHOPCONSTRAINT, $commandTester->execute(['action' => 'get', 'key' => 'CONFIG_TEST', '--shopGroupId' => '-1']));
-        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute(['action' => 'get', 'key' => 'CONFIG_TEST', '--shopId' => '1', '--shopGroupId' => '1']));
+        $this->assertEquals(ConfigCommand::STATUS_FAILED_SHOPCONSTRAINT, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'CONFIG_TEST',
+            '--shopId' => '-1',
+        ]));
+        $this->assertEquals(ConfigCommand::STATUS_FAILED_SHOPCONSTRAINT, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'CONFIG_TEST',
+            '--shopGroupId' => '-1',
+        ]));
+        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'CONFIG_TEST',
+            '--shopId' => '1',
+            '--shopGroupId' => '1',
+        ]));
 
         // invalid key
-        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute(['action' => 'get', 'key' => 'INVALID KEY AS IT HAS SPACES']));
+        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute([
+            'action' => 'get',
+            'key' => 'INVALID KEY AS IT HAS SPACES',
+        ]));
         $this->assertStringContainsString('is not a valid configuration key', $commandTester->getDisplay());
     }
 
@@ -73,19 +114,34 @@ class ConfigCommandTest extends TestCase
     {
         $commandTester = $this->getCommandTester();
 
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'set', 'key' => 'CONFIG_TEST', '--value' => 'testing']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'set',
+            'key' => 'CONFIG_TEST',
+            '--value' => 'testing',
+        ]));
         $this->assertStringContainsString('CONFIG_TEST=', $commandTester->getDisplay());
 
         // with language
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'set', 'key' => 'CONFIG_TEST', '--value' => 'testing', '--lang' => 'en']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'set',
+            'key' => 'CONFIG_TEST',
+            '--value' => 'testing',
+            '--lang' => 'en',
+        ]));
         $this->assertStringContainsString('CONFIG_TEST=', $commandTester->getDisplay());
 
         // missing value
-        $this->assertEquals(ConfigCommand::STATUS_VALUE_REQUIRED, $commandTester->execute(['action' => 'set', 'key' => 'CONFIG_TEST']));
+        $this->assertEquals(ConfigCommand::STATUS_VALUE_REQUIRED, $commandTester->execute([
+            'action' => 'set',
+            'key' => 'CONFIG_TEST',
+        ]));
         $this->assertStringContainsString('Value required', $commandTester->getDisplay());
 
         // invalid key
-        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute(['action' => 'set', 'key' => 'INVALID KEY']));
+        $this->assertEquals(ConfigCommand::STATUS_INVALID_OPTIONS, $commandTester->execute([
+            'action' => 'set',
+            'key' => 'INVALID KEY',
+        ]));
         $this->assertStringContainsString('is not a valid configuration key', $commandTester->getDisplay());
     }
 
@@ -94,19 +150,32 @@ class ConfigCommandTest extends TestCase
         $commandTester = $this->getCommandTester();
 
         // remove before set
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'remove', 'key' => 'CONFIG_TEST_TO_BE_REMOVED']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'remove',
+            'key' => 'CONFIG_TEST_TO_BE_REMOVED',
+        ]));
 
         // set and remove
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'set', 'key' => 'CONFIG_TEST_TO_BE_REMOVED', '--value' => 'testing']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'set',
+            'key' => 'CONFIG_TEST_TO_BE_REMOVED',
+            '--value' => 'testing',
+        ]));
         $this->assertStringContainsString('CONFIG_TEST_TO_BE_REMOVED=', $commandTester->getDisplay());
-        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute(['action' => 'remove', 'key' => 'CONFIG_TEST_TO_BE_REMOVED']));
+        $this->assertEquals(ConfigCommand::STATUS_OK, $commandTester->execute([
+            'action' => 'remove',
+            'key' => 'CONFIG_TEST_TO_BE_REMOVED',
+        ]));
         $this->assertStringContainsString('OK', $commandTester->getDisplay());
     }
 
     public function testExceptionsInvalidAction(): void
     {
         $commandTester = $this->getCommandTester();
-        $this->assertEquals(ConfigCommand::STATUS_INVALID_ACTION, $commandTester->execute(['action' => 'invalidaction', 'key' => 'CONFIG_TEST']));
+        $this->assertEquals(ConfigCommand::STATUS_INVALID_ACTION, $commandTester->execute([
+            'action' => 'invalidaction',
+            'key' => 'CONFIG_TEST',
+        ]));
         $this->assertStringContainsString('Unknown configuration action', $commandTester->getDisplay());
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -150,9 +151,6 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then manufacturer :manufacturerReference should have the following properties:
-     *
-     * @param string $manufacturerReference
-     * @param TableNode $tableNode
      */
     public function assertManufacturerData(string $manufacturerReference, TableNode $tableNode): void
     {
@@ -184,7 +182,7 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
      */
     public function toggleStatus(string $action, string $reference): void
     {
-        $expectedStatus = 'enable' === $action;
+        $expectedStatus = $action === 'enable';
         $this->getCommandBus()->handle(new ToggleManufacturerStatusCommand($this->referenceToId($reference), $expectedStatus));
     }
 
@@ -193,7 +191,7 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
      */
     public function bulkToggleStatus(string $action, string $manufacturerReferences): void
     {
-        $expectedStatus = 'enable' === $action;
+        $expectedStatus = $action === 'enable';
         $this->getQueryBus()->handle(new BulkToggleManufacturerStatusCommand(
             $this->referencesToIds($manufacturerReferences),
             $expectedStatus
@@ -218,11 +216,11 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
     public function assertStatus(string $manufacturerReference, string $expectedStatus): void
     {
         $manufacturer = $this->getEditableManufacturer($this->referenceToId($manufacturerReference));
-        $isEnabled = 'enabled' === $expectedStatus;
+        $isEnabled = $expectedStatus === 'enabled';
         Assert::assertEquals(
             $manufacturer->isEnabled(),
             $isEnabled,
-            sprintf('Manufacturer "%s" is %s, but it was expected to be %s', $manufacturerReference, $manufacturer->isEnabled() ? 'enabled' : 'disabled', $expectedStatus)
+            \sprintf('Manufacturer "%s" is %s, but it was expected to be %s', $manufacturerReference, $manufacturer->isEnabled() ? 'enabled' : 'disabled', $expectedStatus)
         );
     }
 
@@ -234,7 +232,7 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getEditableManufacturer($this->getSharedStorage()->get($manufacturerReference));
 
-            throw new NoExceptionAlthoughExpectedException(sprintf('Manufacturer %s exists, but it was expected to be deleted', $manufacturerReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf('Manufacturer %s exists, but it was expected to be deleted', $manufacturerReference));
         } catch (ManufacturerNotFoundException $e) {
             $this->getSharedStorage()->clear($manufacturerReference);
         }
@@ -250,9 +248,6 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given manufacturer :manufacturerReference named :name exists
-     *
-     * @param string $name
-     * @param string $manufacturerReference
      */
     public function assertManufacturerExistsByName(string $name, string $manufacturerReference): void
     {
@@ -262,13 +257,11 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
             return;
         }
 
-        throw new RuntimeException(sprintf('Manufacturer %s named "%s" does not exist', $manufacturerReference, $name));
+        throw new RuntimeException(\sprintf('Manufacturer %s named "%s" does not exist', $manufacturerReference, $name));
     }
 
     /**
      * @When I delete the manufacturer :manufacturerReference logo image
-     *
-     * @param string $manufacturerReference
      */
     public function deleteCategoryLogoImage(string $manufacturerReference): void
     {
@@ -277,8 +270,6 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Given the manufacturer :manufacturerReference has a logo image
-     *
-     * @param string $manufacturerReference
      */
     public function assertManufacturerHasLogoImage(string $manufacturerReference): void
     {
@@ -288,8 +279,6 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then the manufacturer :manufacturerReference does not have a logo image
-     *
-     * @param string $manufacturerReference
      */
     public function assertManufacturerHasNotLogoImage(string $manufacturerReference): void
     {
@@ -299,10 +288,6 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @Then manufacturer :manufacturerReference should have :countOfAddresses addresses and :countOfProducts products
-     *
-     * @param string $manufacturerReference
-     * @param int $countOfAddresses
-     * @param int $countOfProducts
      */
     public function manufacturerShouldHaveAddedAddresses(
         string $manufacturerReference,
@@ -315,15 +300,10 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
             (int) $this->getContainer()->get('prestashop.adapter.legacy.configuration')->get('PS_LANG_DEFAULT')
         ));
 
-        Assert::assertSame($countOfAddresses, count($viewableManufacturer->getManufacturerAddresses()));
-        Assert::assertSame($countOfProducts, count($viewableManufacturer->getManufacturerProducts()));
+        Assert::assertSame($countOfAddresses, \count($viewableManufacturer->getManufacturerAddresses()));
+        Assert::assertSame($countOfProducts, \count($viewableManufacturer->getManufacturerProducts()));
     }
 
-    /**
-     * @param int $manufacturerId
-     *
-     * @return EditableManufacturer
-     */
     private function getEditableManufacturer(int $manufacturerId): EditableManufacturer
     {
         return $this->getQueryBus()->handle(new GetManufacturerForEditing($manufacturerId));

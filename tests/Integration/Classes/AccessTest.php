@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,24 @@ use Tab;
 
 class AccessTest extends TestCase
 {
-    /** @var Tab|null */
+    /**
+     * @var Tab|null
+     */
     private $classNameTab;
 
-    /** @var Tab|null */
+    /**
+     * @var Tab|null
+     */
     private $classNameTabChild;
 
-    /** @var Tab|null */
+    /**
+     * @var Tab|null
+     */
     private $routeNameTab;
 
-    /** @var Tab|null */
+    /**
+     * @var Tab|null
+     */
     private $routeNameTabChild;
 
     protected function setUp(): void

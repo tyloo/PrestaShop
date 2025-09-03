@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -147,49 +148,49 @@ class ImageTypeContext extends AbstractDomainFeatureContext
         }
 
         if (isset($expectedData['width'])) {
-            if ($imageType->getWidth() != $expectedData['width']) {
+            if ($imageType->getWidth() !== $expectedData['width']) {
                 $errors[] = 'width';
             }
         }
 
         if (isset($expectedData['height'])) {
-            if ($imageType->getHeight() != $expectedData['height']) {
+            if ($imageType->getHeight() !== $expectedData['height']) {
                 $errors[] = 'height';
             }
         }
 
         if (isset($expectedData['products'])) {
-            if ($imageType->isProducts() !== filter_var($expectedData['products'], FILTER_VALIDATE_BOOL)) {
+            if ($imageType->isProducts() !== filter_var($expectedData['products'], \FILTER_VALIDATE_BOOL)) {
                 $errors[] = 'products';
             }
         }
 
         if (isset($expectedData['categories'])) {
-            if ($imageType->isCategories() !== filter_var($expectedData['categories'], FILTER_VALIDATE_BOOL)) {
+            if ($imageType->isCategories() !== filter_var($expectedData['categories'], \FILTER_VALIDATE_BOOL)) {
                 $errors[] = 'categories';
             }
         }
 
         if (isset($expectedData['manufacturers'])) {
-            if ($imageType->isManufacturers() !== filter_var($expectedData['manufacturers'], FILTER_VALIDATE_BOOL)) {
+            if ($imageType->isManufacturers() !== filter_var($expectedData['manufacturers'], \FILTER_VALIDATE_BOOL)) {
                 $errors[] = 'manufacturers';
             }
         }
 
         if (isset($expectedData['suppliers'])) {
-            if ($imageType->isSuppliers() !== filter_var($expectedData['suppliers'], FILTER_VALIDATE_BOOL)) {
+            if ($imageType->isSuppliers() !== filter_var($expectedData['suppliers'], \FILTER_VALIDATE_BOOL)) {
                 $errors[] = 'suppliers';
             }
         }
 
         if (isset($expectedData['stores'])) {
-            if ($imageType->isStores() !== filter_var($expectedData['stores'], FILTER_VALIDATE_BOOL)) {
+            if ($imageType->isStores() !== filter_var($expectedData['stores'], \FILTER_VALIDATE_BOOL)) {
                 $errors[] = 'stores';
             }
         }
 
-        if (count($errors) > 0) {
-            throw new RuntimeException(sprintf('Fields %s are not identical', implode(', ', $errors)));
+        if (\count($errors) > 0) {
+            throw new RuntimeException(\sprintf('Fields %s are not identical', implode(', ', $errors)));
         }
     }
 
@@ -200,7 +201,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getQueryBus()->handle(new GetImageTypeForEditing($this->getSharedStorage()->get($imageTypeName)));
-            throw new RuntimeException(sprintf('Image type %s still exists', $imageTypeName));
+            throw new RuntimeException(\sprintf('Image type %s still exists', $imageTypeName));
         } catch (ImageTypeNotFoundException $ex) {
             return;
         }
@@ -213,14 +214,14 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     {
         // Cast to int
         foreach (['width', 'height'] as $key) {
-            if (array_key_exists($key, $data) && !is_null($data[$key])) {
-                $data[$key] = intval($data[$key]);
+            if (\array_key_exists($key, $data) && $data[$key] !== null) {
+                $data[$key] = \intval($data[$key]);
             }
         }
 
         // Cast to boolean
         foreach (['products', 'categories', 'manufacturers', 'suppliers', 'stores'] as $key) {
-            if (array_key_exists($key, $data) && !is_null($data[$key])) {
+            if (\array_key_exists($key, $data) && $data[$key] !== null) {
                 $data[$key] = PrimitiveUtils::castStringBooleanIntoBoolean($data[$key]);
             }
         }

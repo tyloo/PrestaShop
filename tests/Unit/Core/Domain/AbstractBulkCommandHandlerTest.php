@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -132,12 +133,11 @@ class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
      */
     private $handledIds = [];
 
-    /** @var mixed */
-    private $command = null;
+    private $command;
 
     public function __construct(
         array $failingIdsMock,
-        string $supportedIdType
+        string $supportedIdType,
     ) {
         $this->failingIdsMock = $failingIdsMock;
         $this->supportedIdType = $supportedIdType;
@@ -156,8 +156,6 @@ class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
 
     /**
      * Allows test case to check the commands that is drilled through method parameters.
-     *
-     * @return mixed
      */
     public function getCommand(): mixed
     {
@@ -166,7 +164,6 @@ class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
 
     /**
      * @param IdInterface[] $ids
-     * @param string $exceptionToCatch
      */
     public function handle(array $ids, string $exceptionToCatch, mixed $command = null): void
     {
@@ -178,9 +175,6 @@ class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
         return new BulkFeatureException($caughtExceptions, 'test bulk action failed');
     }
 
-    /**
-     * @param mixed $id
-     */
     protected function handleSingleAction(mixed $id, $command): void
     {
         foreach ($this->failingIdsMock as $failingId) {
@@ -208,7 +202,7 @@ class ExampleId implements IdInterface
     private $id;
 
     public function __construct(
-        int $id
+        int $id,
     ) {
         $this->id = $id;
     }
@@ -231,7 +225,7 @@ class FailingId implements IdInterface
 
     public function __construct(
         int $id,
-        Throwable $exceptionToThrow
+        Throwable $exceptionToThrow,
     ) {
         $this->id = $id;
         $this->exceptionToThrow = $exceptionToThrow;
@@ -250,7 +244,9 @@ class FailingId implements IdInterface
 
 class TestCommand
 {
-    public function __construct(public readonly array $ids, public readonly bool $enabled)
-    {
+    public function __construct(
+        public readonly array $ids,
+        public readonly bool $enabled,
+    ) {
     }
 }

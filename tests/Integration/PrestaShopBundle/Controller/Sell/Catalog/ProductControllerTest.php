@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,10 +70,6 @@ class ProductControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testIndex
-     *
-     * @param int $initialEntityCount
-     *
-     * @return int
      */
     public function testCreate(int $initialEntityCount): int
     {
@@ -103,10 +100,6 @@ class ProductControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $productId
-     *
-     * @return int
      */
     public function testEdit(int $productId): int
     {
@@ -228,10 +221,6 @@ class ProductControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testEdit
-     *
-     * @param int $productId
-     *
-     * @return int
      */
     public function testFilters(int $productId): int
     {
@@ -257,7 +246,7 @@ class ProductControllerTest extends FormGridControllerTestCase
 
         foreach ($gridFilters as $testFilter) {
             $products = $this->getFilteredEntitiesFromGrid($testFilter);
-            $this->assertGreaterThanOrEqual(1, count($products), sprintf(
+            $this->assertGreaterThanOrEqual(1, \count($products), \sprintf(
                 'Expected at least one product with filters %s',
                 var_export($testFilter, true)
             ));
@@ -269,8 +258,6 @@ class ProductControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testFilters
-     *
-     * @param int $productId
      */
     public function testDelete(int $productId): void
     {
@@ -285,49 +272,31 @@ class ProductControllerTest extends FormGridControllerTestCase
         $this->assertCount($initialEntityCount - 1, $newProducts);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFilterSearchButtonSelector(): string
     {
         return 'product[actions][search]';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getCreateSubmitButtonSelector(): string
     {
         return 'create_product_create';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getEditSubmitButtonSelector(): string
     {
         return 'product_footer_save';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateCreateUrl(): string
     {
         return $this->router->generate('admin_products_create');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateEditUrl(array $routeParams): string
     {
         return $this->router->generate('admin_products_edit', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFormHandlerChecker(): FormHandlerChecker
     {
         /** @var FormHandlerChecker $checker */
@@ -336,9 +305,6 @@ class ProductControllerTest extends FormGridControllerTestCase
         return $checker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function parseEntityFromRow(Crawler $tr, int $i): TestEntityDTO
     {
         return new TestEntityDTO(
@@ -348,9 +314,6 @@ class ProductControllerTest extends FormGridControllerTestCase
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateGridUrl(array $routeParams = []): string
     {
         if (empty($routeParams)) {
@@ -363,9 +326,6 @@ class ProductControllerTest extends FormGridControllerTestCase
         return $this->router->generate('admin_products_index', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getGridSelector(): string
     {
         return '#product_grid_table';

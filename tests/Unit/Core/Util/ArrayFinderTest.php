@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,10 +33,14 @@ use PrestaShop\PrestaShop\Core\Util\ArrayFinder;
 
 class ArrayFinderTest extends TestCase
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     private $sampleArray;
 
-    /** @var ArrayFinder */
+    /**
+     * @var ArrayFinder
+     */
     private $arrayFinder;
 
     /**
@@ -187,7 +192,7 @@ class ArrayFinderTest extends TestCase
 
     public function testCount(): void
     {
-        $this->assertEquals(4, count($this->arrayFinder));
+        $this->assertEquals(4, \count($this->arrayFinder));
     }
 
     public function testArrayAccessReference(): void

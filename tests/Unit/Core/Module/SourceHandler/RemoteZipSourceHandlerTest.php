@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,13 +45,17 @@ class RemoteZipSourceHandlerTest extends TestCase
     private const VALID_SOURCE_URL = 'http://valid-source.local/valid_module.zip';
     private const INVALID_SOURCE_URL = 'http://valid-source.local/not_a_zipfile.xml';
 
-    /** @var ZipSourceHandler */
+    /**
+     * @var ZipSourceHandler
+     */
     private $zipSourceHandler;
 
-    /** @var ResourceResetter responsible to reset resources used for tests */
+    /**
+     * @var ResourceResetter responsible to reset resources used for tests
+     */
     private $resourceResetter;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->resourceResetter = new ResourceResetter();
         $this->resourceResetter->backupTestModules();
@@ -71,7 +76,7 @@ class RemoteZipSourceHandlerTest extends TestCase
         );
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->resourceResetter->resetTestModules();
         $this->resourceResetter->resetDownloads();

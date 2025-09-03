@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,7 @@ class ImageValidatorTest extends TestCase
      */
     private $imageValidator;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         require_once __DIR__ . '/../../bootstrap.php';
         $iniConfiguration = new IniConfiguration();
@@ -53,9 +54,6 @@ class ImageValidatorTest extends TestCase
 
     /**
      * @dataProvider getInvalidMaxUploadSizesForFile
-     *
-     * @param string $filePath
-     * @param int $maxUploadSize
      */
     public function testItThrowsExceptionWhenFileSizeIsLargerThanMaxUploadSize(string $filePath, int $maxUploadSize)
     {
@@ -68,9 +66,6 @@ class ImageValidatorTest extends TestCase
 
     /**
      * @dataProvider getUnsupportedImageTypes
-     *
-     * @param string $filePath
-     * @param array|null $allowedTypes
      *
      * @throws UploadedImageConstraintException
      * @throws ImageUploadException
@@ -85,8 +80,6 @@ class ImageValidatorTest extends TestCase
 
     /**
      * @dataProvider getInvalidPathsToAFile
-     *
-     * @param string $filePath
      */
     public function testItThrowsExceptionWhenFileDoesNotExistByProvidedPath(string $filePath): void
     {

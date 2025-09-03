@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,17 +37,11 @@ class MoneyTest extends TestCase
 {
     /**
      * @dataProvider getValidDataForCreatingMoneyClass
-     *
-     * @param string $number
-     * @param int $currencyId
-     * @param bool $taxIncluded
-     *
-     * @return void
      */
     public function testItCreatesMoneyClass(
         string $number,
         int $currencyId,
-        bool $taxIncluded
+        bool $taxIncluded,
     ): void {
         $money = new Money(new DecimalNumber($number), new CurrencyId($currencyId), $taxIncluded);
 

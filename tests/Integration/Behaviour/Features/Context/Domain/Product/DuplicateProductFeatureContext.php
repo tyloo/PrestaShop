@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I duplicate product :productReference to a :newProductReference
-     *
-     * @param string $productReference
-     * @param string $newProductReference
      */
     public function duplicateForDefaultShop(string $productReference, string $newProductReference): void
     {
@@ -56,10 +54,6 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I duplicate product :productReference to a :newProductReference for shop :shopReference
-     *
-     * @param string $productReference
-     * @param string $newProductReference
-     * @param string $shopReference
      */
     public function duplicateForShop(string $productReference, string $newProductReference, string $shopReference): void
     {
@@ -73,10 +67,6 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I duplicate product :productReference to a :newProductReference for shops :shopReferences
-     *
-     * @param string $productReference
-     * @param string $newProductReference
-     * @param string $shopReferences
      */
     public function duplicateForShopCollection(string $productReference, string $newProductReference, string $shopReferences): void
     {
@@ -90,9 +80,6 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I duplicate product :productReference to a :newProductReference for all shops
-     *
-     * @param string $productReference
-     * @param string $newProductReference
      */
     public function duplicateForAllShops(string $productReference, string $newProductReference): void
     {
@@ -106,10 +93,6 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I duplicate product :productReference to a :newProductReference for shop group :shopGroupReference
-     *
-     * @param string $productReference
-     * @param string $newProductReference
-     * @param string $shopGroupReference
      */
     public function duplicateForShopGroup(string $productReference, string $newProductReference, string $shopGroupReference): void
     {
@@ -123,8 +106,6 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I bulk duplicate following products:
-     *
-     * @param TableNode $productsList
      */
     public function bulkDuplicate(TableNode $productsList): void
     {
@@ -142,7 +123,7 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
         }
 
         /**
-         * @var int $oldProductId
+         * @var int       $oldProductId
          * @var ProductId $newProductId
          */
         foreach ($newProductIds as $oldProductId => $newProductId) {

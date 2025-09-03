@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,9 +60,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
 {
     /**
      * @When I add catalog price rule :catalogPriceRuleReference with following details:
-     *
-     * @param string $catalogPriceRuleReference
-     * @param TableNode $tableNode
      */
     public function addCatalogPriceRule(string $catalogPriceRuleReference, TableNode $tableNode): void
     {
@@ -80,9 +78,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
     /**
      * @Then catalog price rule :catalogPriceRuleReference should have following details:
      *
-     * @param string $catalogPriceRuleReference
-     * @param EditableCatalogPriceRule $expectedItem
-     *
      * @see transformCatalogPriceRule
      */
     public function assertCatalogPriceRule(string $catalogPriceRuleReference, EditableCatalogPriceRule $expectedItem): void
@@ -98,7 +93,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
             Assert::assertSame(
                 $propertyAccessor->getValue($expectedItem, $propertyName),
                 $propertyAccessor->getValue($actualItem, $propertyName),
-                sprintf('Unexpected catalogPriceRuleForListing "%s"', $propertyName)
+                \sprintf('Unexpected catalogPriceRuleForListing "%s"', $propertyName)
             );
         }
 
@@ -111,7 +106,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
 
             Assert::assertTrue(
                 $expectedDecimal->equals($actualDecimal),
-                sprintf('Unexpected catalogPriceRuleForListing "%s"', $decimalPropertyName)
+                \sprintf('Unexpected catalogPriceRuleForListing "%s"', $decimalPropertyName)
             );
         }
 
@@ -139,13 +134,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
 
     /**
      * @Then I should be able to see following list of catalog price rules with language :langIso with limit :limit offset :offset and total :total and product :productReference:
-     *
-     * @param string $productReference
-     * @param string $langIso
-     * @param int $limit
-     * @param int $offset
-     * @param int $total
-     * @param TableNode $expectedList
      *
      * @throws PrestaShopException
      * @throws ProductConstraintException
@@ -175,8 +163,8 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
         );
         $actualCatalogPriceRules = $actualList->getCatalogPriceRules();
         foreach ($transformedList->getCatalogPriceRules() as $key => $expectedItem) {
-            if (!isset($actualCatalogPriceRules[$key])) {
-                throw new RuntimeException(sprintf('Catalog price rule "%s" not found', $propertyAccessor->getValue($expectedItem, 'catalogPriceRuleName')));
+            if (! isset($actualCatalogPriceRules[$key])) {
+                throw new RuntimeException(\sprintf('Catalog price rule "%s" not found', $propertyAccessor->getValue($expectedItem, 'catalogPriceRuleName')));
             }
             $actualItem = $actualCatalogPriceRules[$key];
 
@@ -186,7 +174,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
                 Assert::assertSame(
                     $propertyAccessor->getValue($expectedItem, $propertyName),
                     $propertyAccessor->getValue($actualItem, $propertyName),
-                    sprintf('Unexpected catalogPriceRuleForListing "%s"', $propertyName)
+                    \sprintf('Unexpected catalogPriceRuleForListing "%s"', $propertyName)
                 );
             }
 
@@ -199,7 +187,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
 
                 Assert::assertTrue(
                     $expectedDecimal->equals($actualDecimal),
-                    sprintf('Unexpected catalogPriceRuleForListing "%s"', $decimalPropertyName)
+                    \sprintf('Unexpected catalogPriceRuleForListing "%s"', $decimalPropertyName)
                 );
             }
 
@@ -222,9 +210,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
     /**
      * @Then :productReference should have no catalog price rules with language :langIso
      *
-     * @param string $productReference
-     * @param string $langIso
-     *
      * @throws PrestaShopException
      * @throws ProductConstraintException
      */
@@ -235,7 +220,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
         /**
          * Limit doesn't matter but offset should be 0
          *
-         * @var CatalogPriceRuleList $actualList
+         * @var CatalogPriceRuleList
          */
         $actualList = $this->getQueryBus()->handle(
             new GetCatalogPriceRuleListForProduct(
@@ -253,11 +238,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
         );
     }
 
-    /**
-     * @param TableNode $tableNode
-     *
-     * @return AddCatalogPriceRuleCommand
-     */
     private function createAddCatalogPriceRuleCommand(TableNode $tableNode): AddCatalogPriceRuleCommand
     {
         $dataRows = $tableNode->getRowsHash();
@@ -277,12 +257,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
         return $addCommand;
     }
 
-    /**
-     * @param array $dataRows
-     * @param string $fieldId
-     *
-     * @return int|null
-     */
     private function getStoredId(array $dataRows, string $fieldId): ?int
     {
         if (empty($dataRows[$fieldId])) {
@@ -293,8 +267,8 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
             return (int) $dataRows[$fieldId];
         }
 
-        if (!$this->getSharedStorage()->exists($dataRows[$fieldId])) {
-            throw new RuntimeException(sprintf('Trying to access a non saved id by key %s', $dataRows[$fieldId]));
+        if (! $this->getSharedStorage()->exists($dataRows[$fieldId])) {
+            throw new RuntimeException(\sprintf('Trying to access a non saved id by key %s', $dataRows[$fieldId]));
         }
 
         return (int) $this->getSharedStorage()->get($dataRows[$fieldId]);
@@ -302,10 +276,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
 
     /**
      * @Transform table:catalog price rule detail,value
-     *
-     * @param TableNode $tableNode
-     *
-     * @return EditableCatalogPriceRule
      */
     public function transformCatalogPriceRule(TableNode $tableNode): EditableCatalogPriceRule
     {
@@ -327,11 +297,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
         );
     }
 
-    /**
-     * @param TableNode $tableNode
-     *
-     * @return CatalogPriceRuleList
-     */
     public function transformCatalogPriceRuleList(TableNode $tableNode, int $languageId): CatalogPriceRuleList
     {
         $dataRows = $tableNode->getColumnsHash();
@@ -358,16 +323,13 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
             );
         }
 
-        return new CatalogPriceRuleList($catalogPriceRules, count($dataRows));
+        return new CatalogPriceRuleList($catalogPriceRules, \count($dataRows));
     }
 
     /**
      * @todo This uses legacy code, should be refactored once we have a CQRS command to get SpecificPriceRule
      *
      * @When I add following conditions to catalog price rule :catalogPriceRuleName:
-     *
-     * @param string $catalogPriceRuleReference
-     * @param TableNode $tableNode
      */
     public function addCatalogPriceRuleConditionGroup(string $catalogPriceRuleReference, TableNode $tableNode): void
     {

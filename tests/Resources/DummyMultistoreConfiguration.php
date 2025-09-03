@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DummyMultistoreConfiguration extends AbstractMultistoreConfiguration
 {
-    /**
-     * @return array
-     */
     public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
@@ -46,11 +44,6 @@ class DummyMultistoreConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * @param array $configurationInputValues
-     *
-     * @return array
-     */
     public function updateConfiguration(array $configurationInputValues): array
     {
         if ($this->validateConfiguration($configurationInputValues)) {
@@ -63,9 +56,6 @@ class DummyMultistoreConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     public function buildResolver(): OptionsResolver
     {
         $resolver = new OptionsResolver();

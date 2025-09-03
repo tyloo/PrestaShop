@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class ModuleGraphTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->object = new class() extends ModuleGraph {
+        $this->object = new class extends ModuleGraph {
             public function getData($layers)
             {
                 return ModuleGraphTest::$data;

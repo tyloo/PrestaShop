@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,9 +30,6 @@ namespace Tests\Unit\PrestaShopBundle\Form\DataTransformer;
 use PHPUnit\Framework\TestCase;
 use PrestaShopBundle\Form\DataTransformer\DefaultLanguageToFilledArrayDataTransformer;
 
-/**
- * Class SingleDefaultLanguageArrayToFilledArrayDataTransformerTest
- */
 class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
 {
     /**
@@ -39,7 +37,7 @@ class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
      */
     private $defaultLanguageId;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -109,7 +110,7 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getCommandBus()->handle(new BulkToggleModuleStatusCommand(
                 $modules,
-                'enable' === $action
+                $action === 'enable'
             ));
         } catch (ModuleException $e) {
             $this->setLastException($e);
@@ -143,7 +144,7 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
     public function uninstallModule(string $module, string $deleteFile): void
     {
         try {
-            $this->getCommandBus()->handle(new UninstallModuleCommand($module, $deleteFile == 'true'));
+            $this->getCommandBus()->handle(new UninstallModuleCommand($module, $deleteFile === 'true'));
         } catch (ModuleException $e) {
             $this->setLastException($e);
         }
@@ -163,7 +164,7 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
                 $modules[] = $modulesReference;
             }
 
-            $this->getCommandBus()->handle(new BulkUninstallModuleCommand($modules, $deleteFile == 'true'));
+            $this->getCommandBus()->handle(new BulkUninstallModuleCommand($modules, $deleteFile === 'true'));
         } catch (ModuleException $e) {
             $this->setLastException($e);
         }

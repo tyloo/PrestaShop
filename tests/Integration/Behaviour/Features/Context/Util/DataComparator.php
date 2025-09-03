@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,52 +32,50 @@ use Exception;
 class DataComparator
 {
     /**
-     * @param array $expectedData
-     * @param array $realData
-     *
      * @throws Exception
      */
     public static function assertDataSetsAreIdentical(array $expectedData, array $realData)
     {
         foreach ($expectedData as $key => $expectedElement) {
-            if (false === array_key_exists($key, $realData)) {
+            if (\array_key_exists($key, $realData) === false) {
                 $availableKeys = array_keys($realData);
                 throw new Exception("Expected data $key but no such data in real data ; available data is " . implode(',', $availableKeys));
             }
 
             $realElement = $realData[$key];
-            $realElementType = gettype($realElement);
+            $realElementType = \gettype($realElement);
 
-            if (($realElementType === 'array') && array_key_exists('value', $realElement)) {
+            if (($realElementType === 'array') && \array_key_exists('value', $realElement)) {
                 $realElement = $realElement['value'];
-                $realElementType = gettype($realElement);
+                $realElementType = \gettype($realElement);
             }
 
-            $isADateTime = (($realElementType === 'object') && (get_class($realElement) === 'DateTime'));
+            $isADateTime = (($realElementType === 'object') && (\get_class($realElement) === 'DateTime'));
             if ($isADateTime) {
                 $realElementType = 'datetime';
             }
 
             $castedExpectedElement = PrimitiveUtils::castElementInType($expectedElement, $realElementType);
 
-            if (false === PrimitiveUtils::isIdentical($castedExpectedElement, $realElement)) {
+            if (PrimitiveUtils::isIdentical($castedExpectedElement, $realElement) === false) {
                 if ($realElementType === 'boolean') {
                     $realAsString = ($realElement) ? 'true' : 'false';
                     $expectedAsString = ($castedExpectedElement) ? 'true' : 'false';
 
                     throw new Exception("Real $key is " . $realAsString . ' / expected ' . $expectedAsString);
-                } elseif ($realElementType === 'array') {
+                }
+                if ($realElementType === 'array') {
                     sort($realElement);
                     sort($castedExpectedElement);
 
                     $realAsString = implode('; ', $realElement);
                     $expectedAsString = implode('; ', $castedExpectedElement);
 
-                    if ('' === $realAsString) {
+                    if ($realAsString === '') {
                         $realAsString = 'empty';
                     }
 
-                    if ('' === $expectedAsString) {
+                    if ($expectedAsString === '') {
                         $expectedAsString = 'empty';
                     }
 

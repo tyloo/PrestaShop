@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,15 +40,11 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @Then product :productReference should have following seo options for shops :shopReferences:
-     *
-     * @param string $productReference
-     * @param string $shopReferences
-     * @param TableNode $tableNode
      */
     public function assertSeoOptionsForShops(
         string $productReference,
         string $shopReferences,
-        TableNode $tableNode
+        TableNode $tableNode,
     ): void {
         foreach (explode(',', $shopReferences) as $shopReference) {
             $this->assertSeoOptions(
@@ -60,9 +57,6 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should have following seo options:
-     *
-     * @param string $productReference
-     * @param TableNode $tableNode
      */
     public function assertSeoOptionsForDefaultShop(string $productReference, TableNode $tableNode): void
     {
@@ -75,8 +69,6 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then product :productReference should not have a redirect target
-     *
-     * @param string $productReference
      */
     public function assertHasNoRedirectTargetId(string $productReference)
     {
@@ -90,15 +82,10 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
         Assert::assertNull($productForEditing->getProductSeoOptions()->getRedirectTarget());
     }
 
-    /**
-     * @param string $productReference
-     * @param int|null $shopId
-     * @param TableNode $tableNode
-     */
     private function assertSeoOptions(
         string $productReference,
         ?int $shopId,
-        TableNode $tableNode
+        TableNode $tableNode,
     ): void {
         $productSeoOptions = $this
             ->getProductForEditing($productReference, $shopId)
@@ -116,7 +103,7 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
             unset($dataRows['redirect_type']);
         }
 
-        $expectedRedirectTarget = !empty($dataRows['redirect_target']) ?
+        $expectedRedirectTarget = ! empty($dataRows['redirect_target']) ?
             $this->getSharedStorage()->get($dataRows['redirect_target']) :
             RedirectTarget::NO_TARGET
         ;

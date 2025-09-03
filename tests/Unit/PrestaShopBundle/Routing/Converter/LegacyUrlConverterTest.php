@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -447,11 +448,9 @@ class LegacyUrlConverterTest extends TestCase
     }
 
     /**
-     * @param string $routeName
-     * @param string $routePath
+     * @param string       $routeName
+     * @param string       $routePath
      * @param string|array $legacyLink
-     * @param array|null $legacyParameters
-     * @param array|null $expectedParameters
      *
      * @return MockObject|RouterInterface
      */
@@ -462,7 +461,7 @@ class LegacyUrlConverterTest extends TestCase
         $routeDefaults = [
             '_legacy_link' => $legacyLink,
         ];
-        if (null !== $legacyParameters) {
+        if ($legacyParameters !== null) {
             $routeDefaults['_legacy_parameters'] = $legacyParameters;
         }
         $routeCollection->add($routeName, new Route(
@@ -479,7 +478,7 @@ class LegacyUrlConverterTest extends TestCase
             ->method('getRouteCollection')
             ->willReturn($routeCollection);
 
-        if (null !== $expectedParameters) {
+        if ($expectedParameters !== null) {
             $mockRouter
                 ->method('generate')
                 ->with(
@@ -501,8 +500,6 @@ class LegacyUrlConverterTest extends TestCase
     }
 
     /**
-     * @param array $routes
-     *
      * @return MockObject|RouterInterface
      */
     private function buildMultipleRouterMock(array $routes)
@@ -524,7 +521,7 @@ class LegacyUrlConverterTest extends TestCase
                 function ($routeName) use ($routeCollection) {
                     $route = $routeCollection->get($routeName);
 
-                    return null !== $route ? $route->getPath() : null;
+                    return $route !== null ? $route->getPath() : null;
                 }
             ));
 
@@ -532,8 +529,6 @@ class LegacyUrlConverterTest extends TestCase
     }
 
     /**
-     * @param array $routes
-     *
      * @return RouteCollection
      */
     private function buildRouteCollection(array $routes)
@@ -543,7 +538,7 @@ class LegacyUrlConverterTest extends TestCase
             $routeDefaults = [
                 '_legacy_link' => $route['_legacy_link'],
             ];
-            if (!empty($route['_legacy_parameters'])) {
+            if (! empty($route['_legacy_parameters'])) {
                 $routeDefaults['_legacy_parameters'] = $route['_legacy_parameters'];
             }
             $routeCollection->add($route['route_name'], new Route(

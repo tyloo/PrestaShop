@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,15 +44,11 @@ class CommandBuilderTest extends TestCase
 
     /**
      * @dataProvider getSingleCommandParameters
-     *
-     * @param CommandBuilderConfig $config
-     * @param array $data
-     * @param array $expectedCommands
      */
     public function testBuildSingleCommand(
         CommandBuilderConfig $config,
         array $data,
-        array $expectedCommands
+        array $expectedCommands,
     ): void {
         $builder = new CommandBuilder($config);
         $commands = $builder->buildCommands(
@@ -257,15 +254,11 @@ class CommandBuilderTest extends TestCase
 
     /**
      * @dataProvider getMultiShopCommandsParameters
-     *
-     * @param CommandBuilderConfig $config
-     * @param array $data
-     * @param array $expectedCommands
      */
     public function testBuildMultiShopCommands(
         CommandBuilderConfig $config,
         array $data,
-        array $expectedCommands
+        array $expectedCommands,
     ): void {
         $builder = new CommandBuilder($config);
         $commands = $builder->buildCommands(

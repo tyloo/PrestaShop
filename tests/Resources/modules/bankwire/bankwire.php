@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2020 PrestaShop and Contributors
  *
@@ -23,7 +24,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-if (!defined('_PS_VERSION_')) {
+if (! defined('_PS_VERSION_')) {
     exit;
 }
 
@@ -64,10 +65,10 @@ class bankwire extends PaymentModule
 
     public function install()
     {
-        if (!parent::install()
-            || !$this->registerHook('paymentReturn')
-            || !$this->registerHook('paymentOptions')
-            || !$this->registerHook('displayHome')
+        if (! parent::install()
+            || ! $this->registerHook('paymentReturn')
+            || ! $this->registerHook('paymentOptions')
+            || ! $this->registerHook('displayHome')
         ) {
             return false;
         }
@@ -77,10 +78,10 @@ class bankwire extends PaymentModule
 
     public function uninstall()
     {
-        if (!Configuration::deleteByName('BANK_WIRE_DETAILS')
-                || !Configuration::deleteByName('BANK_WIRE_OWNER')
-                || !Configuration::deleteByName('BANK_WIRE_ADDRESS')
-                || !parent::uninstall()) {
+        if (! Configuration::deleteByName('BANK_WIRE_DETAILS')
+                || ! Configuration::deleteByName('BANK_WIRE_OWNER')
+                || ! Configuration::deleteByName('BANK_WIRE_ADDRESS')
+                || ! parent::uninstall()) {
             return false;
         }
 

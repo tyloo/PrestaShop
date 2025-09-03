@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,7 +78,7 @@ class DbLayerTest extends TestCase
             ->method('isEnabled')
             ->willReturnCallback(fn ($featureFlagName) => match ($featureFlagName) {
                 self::FEATURE_FLAG_TEST => true,
-                default => false
+                default => false,
             });
         $this->assertTrue($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }
@@ -89,7 +90,7 @@ class DbLayerTest extends TestCase
             ->method('isEnabled')
             ->willReturnCallback(fn ($featureFlagName) => match ($featureFlagName) {
                 self::FEATURE_FLAG_TEST => false,
-                default => true
+                default => true,
             });
         $this->assertFalse($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }

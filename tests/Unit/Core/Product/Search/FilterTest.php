@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,18 +37,12 @@ class FilterTest extends TestCase
      */
     private $filter;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->filter = new Filter();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->filter = null;
     }

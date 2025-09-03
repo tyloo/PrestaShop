@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-/**
- * Class DefaultLanguageValidatorTest
- */
 class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
 {
     private const DEFAULT_LANG_ID = 1;
@@ -44,7 +42,7 @@ class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
 
     private LanguageContext $defaultLanguageContext;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->defaultLanguageContext = new LanguageContext(
             self::DEFAULT_LANG_ID,

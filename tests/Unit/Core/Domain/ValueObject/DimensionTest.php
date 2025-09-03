@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ class DimensionTest extends TestCase
 {
     /**
      * @dataProvider getDataForTestingItIsConstructedCorrectly
-     *
-     * @param string $rawValue
      */
     public function testItIsConstructedCorrectly(string $rawValue): void
     {
@@ -53,9 +52,6 @@ class DimensionTest extends TestCase
         new Dimension('-1');
     }
 
-    /**
-     * @return iterable
-     */
     public function getDataForTestingItIsConstructedCorrectly(): iterable
     {
         yield ['0'];

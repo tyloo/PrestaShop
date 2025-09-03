@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,14 +48,11 @@ class RoutingCacheKeyGeneratorTest extends KernelTestCase
      */
     private $module;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         self::bootKernel();
 
-        $dirResources = dirname(__DIR__, 4);
+        $dirResources = \dirname(__DIR__, 4);
         if (is_dir($dirResources . '/Resources/modules_tests/demo')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/demo', _PS_MODULE_DIR_ . '/demo');
         }
@@ -69,12 +67,9 @@ class RoutingCacheKeyGeneratorTest extends KernelTestCase
         self::$kernel->getContainer()->get('prestashop.core.cache.clearer.cache_clearer_chain')->clear();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function tearDown(): void
     {
-        $dirResources = dirname(__DIR__, 4);
+        $dirResources = \dirname(__DIR__, 4);
         if (is_dir($dirResources . '/Resources/modules_tests/demo')) {
             Tools::deleteDirectory($dirResources . '/Resources/modules_tests/demo');
         }

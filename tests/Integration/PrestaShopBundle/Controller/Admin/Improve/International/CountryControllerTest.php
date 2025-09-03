@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,6 @@ class CountryControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testIndex
-     *
-     * @param int $initialEntityCount
      */
     public function testCreate(int $initialEntityCount): int
     {
@@ -99,8 +98,6 @@ class CountryControllerTest extends FormGridControllerTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $countryId
      */
     public function testEdit(int $countryId): int
     {
@@ -149,10 +146,6 @@ phone';
 
     /**
      * @depends testEdit
-     *
-     * @param int $countryId
-     *
-     * @return int
      */
     public function testFilters(int $countryId): int
     {
@@ -167,7 +160,7 @@ phone';
 
         foreach ($gridFilters as $testFilter) {
             $countries = $this->getFilteredEntitiesFromGrid($testFilter);
-            $this->assertGreaterThanOrEqual(1, count($countries), sprintf(
+            $this->assertGreaterThanOrEqual(1, \count($countries), \sprintf(
                 'Expected at least one address with filters %s',
                 var_export($testFilter, true)
             ));
@@ -179,8 +172,6 @@ phone';
 
     /**
      * @depends testFilters
-     *
-     * @param int $countryId
      */
     public function testDelete(int $countryId): void
     {
@@ -195,62 +186,39 @@ phone';
         $this->assertCount($initialEntityCount - 1, $newCountries);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateCreateUrl(): string
     {
-        // TODO: Implement generateCreateUrl() method.
         return $this->router->generate('admin_countries_create');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getCreateSubmitButtonSelector(): string
     {
         return 'save-button';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFormHandlerChecker(): FormHandlerChecker
     {
-        // TODO: Implement getFormHandlerChecker() method.
         /** @var FormHandlerChecker $checker */
         $checker = $this->client->getContainer()->get('prestashop.core.form.identifiable_object.handler.country_form_handler');
 
         return $checker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateEditUrl(array $routeParams): string
     {
         return $this->router->generate('admin_countries_edit', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getEditSubmitButtonSelector(): string
     {
         return 'save-button';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFilterSearchButtonSelector(): string
     {
         return 'country[actions][search]';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function generateGridUrl(array $routeParams = []): string
     {
         if (empty($routeParams)) {
@@ -263,17 +231,11 @@ phone';
         return $this->router->generate('admin_countries_index', $routeParams);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getGridSelector(): string
     {
         return '#country_grid_table';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function parseEntityFromRow(Crawler $tr, int $i): TestEntityDTO
     {
         return new TestEntityDTO(

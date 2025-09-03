@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class ModuleCollectionTest extends TestCase
 {
     private $moduleCollection;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->moduleCollection = ModuleCollection::createFrom([
             $this->createMock(Module::class),
@@ -81,13 +82,13 @@ class ModuleCollectionTest extends TestCase
     public function testCount(): void
     {
         $moduleCollection = new ModuleCollection();
-        $this->assertSame(0, count($moduleCollection));
+        $this->assertSame(0, \count($moduleCollection));
 
         $moduleCollection = ModuleCollection::createFrom([
             $this->createMock(Module::class),
             $this->createMock(Module::class),
         ]);
-        $this->assertSame(2, count($moduleCollection));
+        $this->assertSame(2, \count($moduleCollection));
     }
 
     public function testArrayAccess(): void
@@ -102,7 +103,7 @@ class ModuleCollectionTest extends TestCase
         $this->assertFalse(isset($this->moduleCollection[1]));
 
         $this->moduleCollection[] = $this->createMock(Module::class);
-        $this->assertSame(2, count($this->moduleCollection));
+        $this->assertSame(2, \count($this->moduleCollection));
 
         $this->expectException(PrestaShopException::class);
         $this->moduleCollection[] = new stdClass();
@@ -119,7 +120,7 @@ class ModuleCollectionTest extends TestCase
 
     public function testFilter(): void
     {
-        $halfCallback = new class() {
+        $halfCallback = new class {
             private static $i = 0;
 
             public function __invoke()
@@ -128,6 +129,6 @@ class ModuleCollectionTest extends TestCase
             }
         };
         $halfCollection = $this->moduleCollection->filter($halfCallback);
-        $this->assertSame(1, count($halfCollection));
+        $this->assertSame(1, \count($halfCollection));
     }
 }

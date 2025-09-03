@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ class StoreFeatureContext extends AbstractPrestaShopFeatureContext
 {
     /**
      * @When I add new store :storeReference with following properties:
-     *
-     * @param string $storeReference
-     * @param TableNode $table
      */
     public function createStore(string $storeReference, TableNode $table): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ class LegacyModuleExtractorTest extends KernelTestCase
 
     /**
      * @param string $locale
-     * @param array $expected
+     * @param array  $expected
      *
      * @dataProvider provideTestCases
      */

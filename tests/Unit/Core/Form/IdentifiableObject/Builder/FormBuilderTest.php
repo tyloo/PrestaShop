@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -144,11 +145,6 @@ class FormBuilderTest extends TestCase
         return $mockFormRegistryInterface;
     }
 
-    /**
-     * @param SymfonyFormBuilderInterface $formBuilder
-     *
-     * @return FormFactoryInterface
-     */
     private function createFormFactoryMock(SymfonyFormBuilderInterface $formBuilder): FormFactoryInterface
     {
         $formFactoryMock = $this->createMock(FormFactoryInterface::class);
@@ -160,11 +156,6 @@ class FormBuilderTest extends TestCase
         return $formFactoryMock;
     }
 
-    /**
-     * @param FormInterface $form
-     *
-     * @return SymfonyFormBuilderInterface
-     */
     private function createSymfonyFormBuilderMock(FormInterface $form, string $formName): SymfonyFormBuilderInterface
     {
         $formBuilderMock = $this->createMock(SymfonyFormBuilderInterface::class);
@@ -178,19 +169,11 @@ class FormBuilderTest extends TestCase
         return $formBuilderMock;
     }
 
-    /**
-     * @param SymfonyFormBuilderInterface $formBuilder
-     * @param string $formName
-     * @param int|null $expectedId
-     * @param array $expectedOptions
-     *
-     * @return HookDispatcherInterface
-     */
     private function createHookDispatcherMock(
         SymfonyFormBuilderInterface $formBuilder,
         string $formName,
         ?int $expectedId = null,
-        array $expectedOptions = []
+        array $expectedOptions = [],
     ): HookDispatcherInterface {
         if ($expectedId) {
             $hookNameEnd = 'FormDataProviderData';
@@ -232,9 +215,6 @@ class FormBuilderTest extends TestCase
         return $hookDispatcherMock;
     }
 
-    /**
-     * @return FormDataProviderInterface
-     */
     private function createDataProviderMock(): FormDataProviderInterface
     {
         $dataProviderMock = $this->createMock(FormDataProviderInterface::class);
@@ -250,9 +230,6 @@ class FormBuilderTest extends TestCase
         return $dataProviderMock;
     }
 
-    /**
-     * @return FormDataProviderInterface
-     */
     private function createDefaultDataProviderMock(): FormDataProviderInterface
     {
         $dataProviderMock = $this->createMock(FormDataProviderInterface::class);
@@ -268,11 +245,6 @@ class FormBuilderTest extends TestCase
         return $dataProviderMock;
     }
 
-    /**
-     * @param array $options
-     *
-     * @return FormOptionsProviderInterface
-     */
     private function createDefaultOptionProviderMock(array $options): FormOptionsProviderInterface
     {
         $optionProviderMock = $this->createMock(FormOptionsProviderInterface::class);
@@ -288,11 +260,6 @@ class FormBuilderTest extends TestCase
         return $optionProviderMock;
     }
 
-    /**
-     * @param array $options
-     *
-     * @return FormOptionsProviderInterface
-     */
     private function createOptionProviderMock(array $options): FormOptionsProviderInterface
     {
         $optionProviderMock = $this->createMock(FormOptionsProviderInterface::class);

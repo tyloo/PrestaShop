@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,7 +91,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function whenRequestPut(string $webserviceKey, string $endpoint, string $reference, ?TableNode $rows = null): void
     {
-        if (!empty($rows)) {
+        if (! empty($rows)) {
             $rows = $rows->getHash();
             $rows[] = [
                 'key' => 'id',
@@ -112,7 +113,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
             Assert::assertEquals(
                 1,
                 $output->filter('prestashop ' . $hash['key'])->count(),
-                sprintf(
+                \sprintf(
                     'The key %s has not been found',
                     $hash['key']
                 )
@@ -120,7 +121,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
             Assert::assertEquals(
                 $hash['value'],
                 $output->filter('prestashop ' . $hash['key'])->getNode(0)->nodeValue,
-                sprintf(
+                \sprintf(
                     'The key %s has not the expected value %s : %s',
                     $hash['key'],
                     $hash['value'],
@@ -165,18 +166,18 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
             }
         }
 
-        throw new RuntimeException(sprintf('Error with code %d was not found', $errorCode));
+        throw new RuntimeException(\sprintf('Error with code %d was not found', $errorCode));
     }
 
     private function whenRequest(string $webserviceKey, string $method, string $endpoint, ?array $rows = null): Crawler
     {
         $postFields = '';
-        if (!empty($rows)) {
+        if (! empty($rows)) {
             $itemNode = $this->getItemFromEndpoint($endpoint);
 
             $postFields = '<prestashop xmlns:xlink="http://www.w3.org/1999/xlink"><' . $itemNode . '>';
             foreach ($rows as $hash) {
-                $postFields .= sprintf('<%s><![CDATA[%s]]></%s>',
+                $postFields .= \sprintf('<%s><![CDATA[%s]]></%s>',
                     $hash['key'],
                     $hash['value'],
                     $hash['key']
@@ -192,14 +193,14 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $resources = WebserviceRequest::getResources();
 
-        return array_key_exists($endpoint, $resources) ? strtolower($resources[$endpoint]['class']) : '';
+        return \array_key_exists($endpoint, $resources) ? strtolower($resources[$endpoint]['class']) : '';
     }
 
     private function requestWebserviceXML(
         string $wsKey,
         string $requestMethod,
         string $url,
-        string $postFields = ''
+        string $postFields = '',
     ): Crawler {
         $output = $this->requestWebservice('XML', $wsKey, $requestMethod, $url, $postFields);
 
@@ -212,21 +213,13 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * Request Webservice directly with a call to the dispatcher file
      * So we need to define some $_SERVER & $_GET variables.
-     *
-     * @param string $output
-     * @param string $wsKey
-     * @param string $requestMethod
-     * @param string $url
-     * @param string $postFields
-     *
-     * @return string
      */
     private function requestWebservice(
         string $output,
         string $wsKey,
         string $requestMethod,
         string $url,
-        string $postFields
+        string $postFields,
     ): string {
         // Define mandatory values directly used in webservice/dispatcher.php
         $_SERVER['REQUEST_METHOD'] = $requestMethod;
@@ -236,7 +229,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
         $_GET['url'] = $url;
         $_GET['output_format'] = $output;
 
-        if ($requestMethod == 'PUT' || $requestMethod == 'POST') {
+        if ($requestMethod === 'PUT' || $requestMethod === 'POST') {
             StreamWrapperPHP::register();
             file_put_contents('php://input', 'xml=' . $postFields);
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class ProductStockAvailableCommandsBuilderTest extends AbstractProductCommandBui
 {
     /**
      * @dataProvider getExpectedCommands
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
@@ -48,9 +46,6 @@ class ProductStockAvailableCommandsBuilderTest extends AbstractProductCommandBui
         $this->assertEquals($expectedCommands, $builtCommands);
     }
 
-    /**
-     * @return iterable
-     */
     public function getExpectedCommands(): iterable
     {
         yield [
@@ -130,9 +125,6 @@ class ProductStockAvailableCommandsBuilderTest extends AbstractProductCommandBui
 
     /**
      * @dataProvider getExpectedCommandsMultiShop
-     *
-     * @param array $formData
-     * @param array $expectedCommands
      */
     public function testBuildCommandMultiShop(array $formData, array $expectedCommands): void
     {

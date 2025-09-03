@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ use PrestaShop\PrestaShop\Core\Util\ArabicToLatinDigitConverter;
 use PrestaShopBundle\Form\DataTransformer\ArabicToLatinDigitDataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 
-/**
- * Class ArabicToLatinDigitDataTransformerTest
- */
 class ArabicToLatinDigitDataTransformerTest extends TestCase
 {
     /**
@@ -41,7 +39,7 @@ class ArabicToLatinDigitDataTransformerTest extends TestCase
      */
     private $dataTransformer;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

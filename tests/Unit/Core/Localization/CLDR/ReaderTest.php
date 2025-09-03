@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class ReaderTest extends TestCase
      */
     protected $reader;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $this->reader = new Reader();
@@ -56,9 +54,6 @@ class ReaderTest extends TestCase
      * Given a valid CLDR Reader
      * When asking for a specific locale to this reader
      * Then the expected Locale data should be retrieved
-     *
-     * @param string $localeCode
-     * @param array $expectedData
      *
      * @throws LocalizationException
      */
@@ -98,7 +93,7 @@ class ReaderTest extends TestCase
         $displayNames = $localeData->getCurrencies()['EUR']->getDisplayNames();
         $this->assertSame(
             $expectedData['euroName'],
-            is_array($displayNames) ? $displayNames['default'] : null,
+            \is_array($displayNames) ? $displayNames['default'] : null,
             'Wrong name for Euro'
         );
         $this->assertSame(
@@ -109,7 +104,7 @@ class ReaderTest extends TestCase
         $displayNames = $localeData->getCurrencies()['USD']->getDisplayNames();
         $this->assertSame(
             $expectedData['dollarName'],
-            is_array($displayNames) ? $displayNames['default'] : null,
+            \is_array($displayNames) ? $displayNames['default'] : null,
             'Wrong name for US Dollar'
         );
         $this->assertSame(

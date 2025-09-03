@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class AddProductFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I add product :productReference with following information:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function addProductToDefaultShop(string $productReference, TableNode $table): void
     {
@@ -49,9 +47,6 @@ class AddProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @When I add product :productReference to shop :shopReference with following information:
-     *
-     * @param string $productReference
-     * @param TableNode $table
      */
     public function addProductToShop(string $productReference, string $shopReference, TableNode $table): void
     {
@@ -61,8 +56,6 @@ class AddProductFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then I should get error that stock available quantity is invalid
-     *
-     * @return void
      */
     public function assertLastErrorIsInvalidStockAvailableQuantity(): void
     {
@@ -72,11 +65,6 @@ class AddProductFeatureContext extends AbstractProductFeatureContext
         );
     }
 
-    /**
-     * @param string $productReference
-     * @param int $shopId
-     * @param TableNode $table
-     */
     private function addProduct(string $productReference, int $shopId, TableNode $table): void
     {
         $data = $this->localizeByRows($table);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,10 +37,6 @@ class RowPositionTest extends TestCase
 {
     /**
      * @dataProvider getValidValues
-     *
-     * @param int $rowId
-     * @param int $oldPosition
-     * @param int $newPosition
      */
     public function testItIsSuccessfullyConstructed(int $rowId, int $oldPosition, int $newPosition): void
     {
@@ -59,11 +56,6 @@ class RowPositionTest extends TestCase
 
     /**
      * @dataProvider getInvalidValues
-     *
-     * @param int $rowId
-     * @param int $oldPosition
-     * @param int $newPosition
-     * @param int $expectedErrorCode
      */
     public function testItThrowsExceptionWhenInvalidValueIsProvided(int $rowId, int $oldPosition, int $newPosition, int $expectedErrorCode): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ class StockModificationTest extends TestCase
 {
     /**
      * @dataProvider getValidDeltaQuantityValues
-     *
-     * @param int $deltaQuantity
      */
     public function testItIsSuccessfullyConstructedUsingDeltaQuantity(int $deltaQuantity): void
     {
@@ -49,8 +48,6 @@ class StockModificationTest extends TestCase
 
     /**
      * @dataProvider getValidFixedQuantityValues
-     *
-     * @param int $fixedQuantity
      */
     public function testItIsSuccessfullyConstructedUsingFixedQuantity(int $fixedQuantity): void
     {
@@ -62,8 +59,6 @@ class StockModificationTest extends TestCase
 
     /**
      * @dataProvider getInvalidDeltaQuantityValues
-     *
-     * @param int $deltaQuantity
      */
     public function testItThrowsExceptionWhenInvalidDeltaQuantityIsProvided(int $deltaQuantity): void
     {

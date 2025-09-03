@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,7 +68,7 @@ class ModuleRepositoryTest extends TestCase
             $array_return,
             $check_exceptions,
             $use_push,
-            $id_shop
+            $id_shop,
         ) {
             // This mock represents a module that :
             // - overrides `dummy_payment` module `fullDescription` attributes
@@ -83,9 +84,9 @@ class ModuleRepositoryTest extends TestCase
                         ],
                     ],
                 ];
-            } else {
-                return [];
             }
+
+            return [];
         };
 
         $hookManager->method('exec')->willReturn(
@@ -100,7 +101,7 @@ class ModuleRepositoryTest extends TestCase
             $this->createMock(AdminModuleDataProvider::class),
             $cacheProvider,
             $hookManager,
-            dirname(__DIR__, 3) . '/Resources/modules/',
+            \dirname(__DIR__, 3) . '/Resources/modules/',
             new LanguageContext(
                 1,
                 'English',
@@ -120,9 +121,9 @@ class ModuleRepositoryTest extends TestCase
         $moduleList = iterator_to_array($this->moduleRepository->getList());
         $filteredModules = array_filter($moduleList, function ($module, $key) {
             return $module->get('name') === 'dummy_payment';
-        }, ARRAY_FILTER_USE_BOTH);
+        }, \ARRAY_FILTER_USE_BOTH);
 
-        $this->assertEquals(1, count($filteredModules), 'Returned module list may contain at least "dummy_payment" module.');
+        $this->assertEquals(1, \count($filteredModules), 'Returned module list may contain at least "dummy_payment" module.');
         $dummy_module = array_shift($filteredModules);
 
         $this->assertEquals('overridden full description', $dummy_module->get('fullDescription'));

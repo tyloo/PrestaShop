@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ class ProductTypeFeatureContext extends AbstractProductFeatureContext
 {
     /**
      * @When I update product :productReference type to :productType
-     *
-     * @param string $productReference
-     * @param string $productType
      */
     public function updateProductType(string $productReference, string $productType): void
     {
@@ -52,8 +50,6 @@ class ProductTypeFeatureContext extends AbstractProductFeatureContext
 
     /**
      * @Then I should get error that this action is allowed for :productType product only
-     *
-     * @param string $productType
      */
     public function assertLastErrorInvalidProductType(string $productType): void
     {

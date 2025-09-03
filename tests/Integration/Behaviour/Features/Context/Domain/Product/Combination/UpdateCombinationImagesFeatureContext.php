@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ class UpdateCombinationImagesFeatureContext extends AbstractCombinationFeatureCo
 {
     /**
      * @When I associate :imageReferences to combination :combinationReference
-     *
-     * @param array $imageReferences
-     * @param string $combinationReference
      */
     public function associateCombinationImages(array $imageReferences, string $combinationReference): void
     {
@@ -55,8 +53,6 @@ class UpdateCombinationImagesFeatureContext extends AbstractCombinationFeatureCo
 
     /**
      * @When I remove all images associated to combination :combinationReference
-     *
-     * @param string $combinationReference
      */
     public function removeCombinationImages(string $combinationReference): void
     {
@@ -68,30 +64,22 @@ class UpdateCombinationImagesFeatureContext extends AbstractCombinationFeatureCo
     /**
      * @Then combination :combinationReference should have following images :imageReferences
      *
-     * @param string $combinationReference
      * @param string[] $imageReferences
      */
     public function assertCombinationImages(string $combinationReference, array $imageReferences): void
     {
         $images = $this->getCombinationForEditing($combinationReference, $this->getDefaultShopId())->getImageIds();
-        Assert::assertEquals(count($images), count($imageReferences));
+        Assert::assertEquals(\count($images), \count($imageReferences));
         foreach ($imageReferences as $imageReference) {
             $imageId = $this->getSharedStorage()->get($imageReference);
-            if (!in_array($imageId, $images)) {
-                throw new RuntimeException(sprintf(
-                    'Could not find image %s for combination %s',
-                    $imageId,
-                    $combinationReference
-                ));
+            if (! \in_array($imageId, $images, true)) {
+                throw new RuntimeException(\sprintf('Could not find image %s for combination %s', $imageId, $combinationReference));
             }
         }
     }
 
     /**
      * @Then combination :combinationReference should have the following cover :coverUrl
-     *
-     * @param string $combinationReference
-     * @param string $coverUrl
      */
     public function assertCombinationCover(string $combinationReference, string $coverUrl): void
     {
@@ -106,8 +94,6 @@ class UpdateCombinationImagesFeatureContext extends AbstractCombinationFeatureCo
 
     /**
      * @Then combination :combinationReference should have no images
-     *
-     * @param string $combinationReference
      */
     public function assertNoImages(string $combinationReference): void
     {

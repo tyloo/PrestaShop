@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -158,10 +159,6 @@ HTML;
         $this->assertNotEquals($html, $transformedHtml);
     }
 
-    /**
-     * @param DOMNode $node
-     * @param array $expectedStyle
-     */
     private function assertStyle(DOMNode $node, array $expectedStyle)
     {
         $nodeStyle = $this->getNodeStyle($node);
@@ -169,13 +166,11 @@ HTML;
     }
 
     /**
-     * @param DOMNode $node
-     *
      * @return array
      */
     private function getNodeStyle(DOMNode $node)
     {
-        if (!($styleAttr = $node->attributes->getNamedItem('style'))) {
+        if (! ($styleAttr = $node->attributes->getNamedItem('style'))) {
             return [];
         }
         $style = [];

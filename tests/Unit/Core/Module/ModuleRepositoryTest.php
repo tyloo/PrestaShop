@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,10 +65,12 @@ class ModuleRepositoryTest extends TestCase
         'bankwire',
     ];
 
-    /** @var ModuleRepository */
+    /**
+     * @var ModuleRepository
+     */
     private $moduleRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->moduleRepository = $this->getMockBuilder(ModuleRepository::class)
             ->setConstructorArgs([
@@ -75,7 +78,7 @@ class ModuleRepositoryTest extends TestCase
                 $this->createMock(AdminModuleDataProvider::class),
                 $this->createMock(CacheProvider::class),
                 $this->createMock(HookManager::class),
-                dirname(__DIR__, 3) . '/Resources/modules',
+                \dirname(__DIR__, 3) . '/Resources/modules',
                 $this->createMock(LanguageContext::class),
             ])
             ->onlyMethods(['getModule'])
@@ -91,23 +94,23 @@ class ModuleRepositoryTest extends TestCase
 
     public function testGetInstalledModules(): void
     {
-        $this->assertCount(count(self::INSTALLED_MODULES), $this->moduleRepository->getInstalledModules());
+        $this->assertCount(\count(self::INSTALLED_MODULES), $this->moduleRepository->getInstalledModules());
     }
 
     public function testGetUpgradableModules(): void
     {
-        $this->assertCount(count(self::UPGRADABLE_MODULES), $this->moduleRepository->getUpgradableModules());
+        $this->assertCount(\count(self::UPGRADABLE_MODULES), $this->moduleRepository->getUpgradableModules());
     }
 
     public function testGetMustBeConfiguredModules(): void
     {
-        $this->assertCount(count(self::MUST_BE_CONFIGURED_MODULES), $this->moduleRepository->getMustBeConfiguredModules());
+        $this->assertCount(\count(self::MUST_BE_CONFIGURED_MODULES), $this->moduleRepository->getMustBeConfiguredModules());
     }
 
     public function testGetModulePath(): void
     {
         $this->assertEquals(
-            dirname(__DIR__, 3) . '/Resources/modules/bankwire',
+            \dirname(__DIR__, 3) . '/Resources/modules/bankwire',
             $this->moduleRepository->getModulePath('bankwire')
         );
         $this->assertNull($this->moduleRepository->getModulePath('no-existing-module'));
@@ -120,11 +123,11 @@ class ModuleRepositoryTest extends TestCase
         $moduleInstance->warning = 'Configurable warning';
 
         $module->method('getInstance')->willReturn($moduleInstance);
-        $module->method('isInstalled')->willReturn(in_array($moduleName, self::INSTALLED_MODULES));
-        $module->method('isActive')->willReturn(in_array($moduleName, self::ACTIVE_MODULES));
-        $module->method('isConfigurable')->willReturn(in_array($moduleName, self::CONFIGURABLE_MODULES));
-        $module->method('canBeUpgraded')->willReturn(in_array($moduleName, self::UPGRADABLE_MODULES));
-        $module->method('hasValidInstance')->willReturn(in_array($moduleName, self::CONFIGURABLE_MODULES));
+        $module->method('isInstalled')->willReturn(\in_array($moduleName, self::INSTALLED_MODULES, true));
+        $module->method('isActive')->willReturn(\in_array($moduleName, self::ACTIVE_MODULES, true));
+        $module->method('isConfigurable')->willReturn(\in_array($moduleName, self::CONFIGURABLE_MODULES, true));
+        $module->method('canBeUpgraded')->willReturn(\in_array($moduleName, self::UPGRADABLE_MODULES, true));
+        $module->method('hasValidInstance')->willReturn(\in_array($moduleName, self::CONFIGURABLE_MODULES, true));
 
         return $module;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,8 +106,8 @@ class RepositoryTest extends TestCase
             ->method('getAllInstalledCurrencies')
             ->willReturn([$currency]);
 
-        /* @var CldrLocaleRepository $cldrLocaleRepository */
-        /* @var CurrencyRepository $currencyRepository */
+        /** @var CldrLocaleRepository $cldrLocaleRepository */
+        /** @var CurrencyRepository $currencyRepository */
         $this->localeRepository = new LocaleRepository($cldrLocaleRepository, $currencyRepository);
     }
 

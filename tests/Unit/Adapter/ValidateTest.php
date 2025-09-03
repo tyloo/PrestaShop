@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -94,9 +95,6 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @param bool $expected
-     * @param mixed $value
-     *
      * @dataProvider isUnsignedIntProvider
      */
     public function testIsUnsignedInt(bool $expected, $value): void
@@ -123,9 +121,6 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @param bool $expected
-     * @param string $objectClassName
-     *
      * @dataProvider isValidObjectClassNameDataProvider
      */
     public function testisValidObjectClassName(bool $expected, string $objectClassName): void
@@ -134,13 +129,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @param string $html
-     * @param bool $allowFrame
-     * @param $expectedResult
-     *
      * @dataProvider isCleanHtmlDataProvider
-     *
-     * @return void
      */
     public function testIsCleanHtml(string $html, bool $allowFrame, $expectedResult): void
     {

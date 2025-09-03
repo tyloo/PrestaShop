@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -387,8 +388,6 @@ class RouterProviderTest extends TestCase
     }
 
     /**
-     * @param array $routes
-     *
      * @return MockObject|RouterInterface
      */
     private function buildMultipleRouterMock(array $routes)
@@ -411,7 +410,7 @@ class RouterProviderTest extends TestCase
                 function ($routeName) use ($routeCollection) {
                     $route = $routeCollection->get($routeName);
 
-                    return null !== $route ? $route->getPath() : null;
+                    return $route !== null ? $route->getPath() : null;
                 }
             ));
 
@@ -419,8 +418,6 @@ class RouterProviderTest extends TestCase
     }
 
     /**
-     * @param array $routes
-     *
      * @return RouteCollection
      */
     private function buildRouteCollection(array $routes)
@@ -430,7 +427,7 @@ class RouterProviderTest extends TestCase
             $routeDefaults = [
                 '_legacy_link' => $route['_legacy_link'],
             ];
-            if (!empty($route['_legacy_parameters'])) {
+            if (! empty($route['_legacy_parameters'])) {
                 $routeDefaults['_legacy_parameters'] = $route['_legacy_parameters'];
             }
             $routeCollection->add($route['route_name'], new Route(

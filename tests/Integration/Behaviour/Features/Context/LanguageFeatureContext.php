@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,8 +71,8 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $languageId = Language::getIdByIso($isoCode);
 
-        if (!$languageId) {
-            throw new RuntimeException(sprintf('Iso code %s does not exist', $isoCode));
+        if (! $languageId) {
+            throw new RuntimeException(\sprintf('Iso code %s does not exist', $isoCode));
         }
 
         Configuration::updateValue('PS_LANG_DEFAULT', (string) $languageId);
@@ -86,7 +87,7 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $languageId = Language::getIdByLocale($locale, true);
 
-        if (false === $languageId) {
+        if ($languageId === false) {
             $language = new Language();
             $language->locale = $locale;
             $language->active = true;
@@ -123,7 +124,7 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
         $language = SharedStorage::getStorage()->get($reference);
 
         if ($language->locale !== $locale) {
-            throw new RuntimeException(sprintf('Currency "%s" has "%s" iso code, but "%s" was expected.', $reference, $language->locale, $locale));
+            throw new RuntimeException(\sprintf('Currency "%s" has "%s" iso code, but "%s" was expected.', $reference, $language->locale, $locale));
         }
     }
 

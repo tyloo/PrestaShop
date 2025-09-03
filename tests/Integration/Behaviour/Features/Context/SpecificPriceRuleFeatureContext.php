@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -94,9 +95,6 @@ class SpecificPriceRuleFeatureContext extends AbstractPrestaShopFeatureContext
         $this->specificPriceRules[$priceRuleName]->apply();
     }
 
-    /**
-     * @param string $priceRuleName
-     */
     public function checkCartRuleWithNameExists(string $priceRuleName): void
     {
         $this->checkFixtureExists($this->specificPriceRules, 'Price rule', $priceRuleName);

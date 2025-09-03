@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,12 +45,6 @@ class SearchCombinationsForAssociationTest extends TestCase
 
     /**
      * @dataProvider getValidParameters
-     *
-     * @param string $phrase
-     * @param int $languageId
-     * @param int $shopId
-     * @param array $filters
-     * @param int|null $limit
      *
      * @throws ProductConstraintException
      * @throws ShopException
@@ -102,14 +97,6 @@ class SearchCombinationsForAssociationTest extends TestCase
 
     /**
      * @dataProvider getInvalidParameters
-     *
-     * @param string $phrase
-     * @param int $languageId
-     * @param int $shopId
-     * @param int|null $limit
-     * @param array $filters
-     * @param string $exceptionClass
-     * @param int $errorCode
      */
     public function testInvalidQuery(string $phrase, int $languageId, int $shopId, ?int $limit, ?array $filters, string $exceptionClass, int $errorCode): void
     {

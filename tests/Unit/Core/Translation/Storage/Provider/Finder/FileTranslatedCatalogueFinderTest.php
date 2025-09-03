@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class FileTranslatedCatalogueFinderTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         self::$tempDir = implode(
-            DIRECTORY_SEPARATOR,
+            \DIRECTORY_SEPARATOR,
             [sys_get_temp_dir(), 'FileTranslatedCatalogueFinderTest']
         );
         $wordings = [
@@ -63,7 +64,7 @@ class FileTranslatedCatalogueFinderTest extends TestCase
             $catalogue->add($messages, $domain);
         }
         (new XliffFileDumper())->dump($catalogue, [
-            'path' => self::$tempDir . DIRECTORY_SEPARATOR . CatalogueLayersProviderInterface::DEFAULT_LOCALE,
+            'path' => self::$tempDir . \DIRECTORY_SEPARATOR . CatalogueLayersProviderInterface::DEFAULT_LOCALE,
             'split_files' => false,
         ]);
     }
