@@ -41,9 +41,7 @@ class EditContactCommandTest extends TestCase
         new EditContactCommand('1');
     }
 
-    /**
-     * @dataProvider getIncorrectTitles
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTitles')]
     public function testItThrowsAnExceptionOnIncorrectTitle(array $incorrectTitle): void
     {
         $this->expectException(ContactConstraintException::class);
@@ -53,7 +51,7 @@ class EditContactCommandTest extends TestCase
         $command->setLocalisedTitles($incorrectTitle);
     }
 
-    public function getIncorrectTitles(): array
+    public static function getIncorrectTitles(): array
     {
         return [
             [
@@ -75,9 +73,7 @@ class EditContactCommandTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getIncorrectShopAssociations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectShopAssociations')]
     public function testItThrowsAnExceptionOnIncorrectShopAssociation(array $incorrectShopAssociation): void
     {
         $this->expectException(ContactConstraintException::class);
@@ -87,7 +83,7 @@ class EditContactCommandTest extends TestCase
         $command->setShopAssociation($incorrectShopAssociation);
     }
 
-    public function getIncorrectShopAssociations(): array
+    public static function getIncorrectShopAssociations(): array
     {
         return [
             [

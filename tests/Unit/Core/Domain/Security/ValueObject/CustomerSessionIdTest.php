@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Security\ValueObject\CustomerSessionId;
 
 class CustomerSessionIdTest extends TestCase
 {
-    /**
-     * @dataProvider createsSessionIdWithValidValuesData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('createsSessionIdWithValidValuesData')]
     public function testItCreatesSessionIdWithValidValues($idValue): void
     {
         $sessionId = new CustomerSessionId($idValue);
@@ -45,7 +43,7 @@ class CustomerSessionIdTest extends TestCase
         $this->assertEquals((int) $idValue, $sessionId->getValue());
     }
 
-    public function createsSessionIdWithValidValuesData(): array
+    public static function createsSessionIdWithValidValuesData(): array
     {
         return [
             [1],
@@ -53,16 +51,14 @@ class CustomerSessionIdTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider exceptionThrownWithInvalidValuesData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('exceptionThrownWithInvalidValuesData')]
     public function testItExceptionThrownWithInvalidValues($sessionId): void
     {
         $this->expectException(SessionException::class);
         new CustomerSessionId($sessionId);
     }
 
-    public function exceptionThrownWithInvalidValuesData(): array
+    public static function exceptionThrownWithInvalidValuesData(): array
     {
         return [
             [0],

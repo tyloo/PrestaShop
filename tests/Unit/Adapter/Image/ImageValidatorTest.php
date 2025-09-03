@@ -52,9 +52,7 @@ class ImageValidatorTest extends TestCase
         $this->imageValidator = new ImageValidator($iniConfiguration->getUploadMaxSizeInBytes());
     }
 
-    /**
-     * @dataProvider getInvalidMaxUploadSizesForFile
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidMaxUploadSizesForFile')]
     public function testItThrowsExceptionWhenFileSizeIsLargerThanMaxUploadSize(string $filePath, int $maxUploadSize): void
     {
         $imageValidator = new ImageValidator($maxUploadSize);
@@ -65,11 +63,10 @@ class ImageValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider getUnsupportedImageTypes
-     *
      * @throws UploadedImageConstraintException
      * @throws ImageUploadException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getUnsupportedImageTypes')]
     public function testItThrowsExceptionWhenUnsupportedImageTypeIsProvided(string $filePath, ?array $allowedTypes): void
     {
         $this->expectException(UploadedImageConstraintException::class);
@@ -78,16 +75,14 @@ class ImageValidatorTest extends TestCase
         $this->imageValidator->assertIsValidImageType($filePath, $allowedTypes);
     }
 
-    /**
-     * @dataProvider getInvalidPathsToAFile
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidPathsToAFile')]
     public function testItThrowsExceptionWhenFileDoesNotExistByProvidedPath(string $filePath): void
     {
         $this->expectException(ImageFileNotFoundException::class);
         $this->imageValidator->assertIsValidImageType($filePath);
     }
 
-    public function getInvalidMaxUploadSizesForFile(): Generator
+    public static function getInvalidMaxUploadSizesForFile(): Generator
     {
         $logoPath = DummyFileUploader::getDummyFilesPath() . 'logo.jpg';
         $appIconPath = DummyFileUploader::getDummyFilesPath() . 'app_icon.png';
@@ -98,7 +93,7 @@ class ImageValidatorTest extends TestCase
         yield [$appIconPath, 100];
     }
 
-    public function getUnsupportedImageTypes(): Generator
+    public static function getUnsupportedImageTypes(): Generator
     {
         // mime type of logo.jpg is "image/jpeg" (not image/jpg) that is why logo.jpg should not be allowed in following case
         yield [DummyFileUploader::getDummyFilesPath() . 'logo.jpg', ['image/jpg', 'image/png', 'image/gif']];
@@ -106,7 +101,7 @@ class ImageValidatorTest extends TestCase
         yield [DummyFileUploader::getDummyFilesPath() . 'test_text_file.txt', null];
     }
 
-    public function getInvalidPathsToAFile(): Generator
+    public static function getInvalidPathsToAFile(): Generator
     {
         yield ['its/definately/notafile', __DIR__];
     }

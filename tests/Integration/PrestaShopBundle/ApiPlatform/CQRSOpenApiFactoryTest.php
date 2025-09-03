@@ -74,9 +74,7 @@ class CQRSOpenApiFactoryTest extends KernelTestCase
         }
     }
 
-    /**
-     * @dataProvider provideEndpointScopes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEndpointScopes')]
     public function testEndpointScopes(string $uriPath, array $expectedScopes): void
     {
         /** @var OpenApiFactoryInterface $openApiFactory */
@@ -93,7 +91,7 @@ class CQRSOpenApiFactoryTest extends KernelTestCase
         }
     }
 
-    public function provideEndpointScopes(): iterable
+    public static function provideEndpointScopes(): iterable
     {
         yield 'API client entity' => [
             '/api-client/{apiClientId}',
@@ -142,9 +140,7 @@ class CQRSOpenApiFactoryTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideJsonSchemaFactoryCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideJsonSchemaFactoryCases')]
     public function testJsonSchemaFactory(string $schemaDefinitionName, ArrayObject $expectedDefinition): void
     {
         /** @var OpenApiFactoryInterface $openApiFactory */
@@ -640,9 +636,7 @@ class CQRSOpenApiFactoryTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider getExpectedTags
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedTags')]
     public function testPathTags(string $path, string $expectedMethod, array $expectedTags): void
     {
         /** @var OpenApiFactoryInterface $openApiFactory */
@@ -659,7 +653,7 @@ class CQRSOpenApiFactoryTest extends KernelTestCase
         $this->assertEquals($expectedTags, $operation->getTags());
     }
 
-    public function getExpectedTags(): iterable
+    public static function getExpectedTags(): iterable
     {
         yield 'product get endpoint keeps Product tag' => [
             '/product/{productId}',

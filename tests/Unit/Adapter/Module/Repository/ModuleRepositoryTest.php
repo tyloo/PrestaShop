@@ -57,9 +57,7 @@ class ModuleRepositoryTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider dataProviderNativeModules
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderNativeModules')]
     public function testNativeModulesCheckModules(string $moduleName, bool $isNative): void
     {
         if ($isNative) {
@@ -69,15 +67,13 @@ class ModuleRepositoryTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider dataProviderOnlyNativeModules
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderOnlyNativeModules')]
     public function testNonNativeModulesCheckModules(string $moduleName): void
     {
         self::assertNotContains($moduleName, $this->moduleRepository->getNonNativeModules());
     }
 
-    public function dataProviderNativeModules(): iterable
+    public static function dataProviderNativeModules(): iterable
     {
         // Native modules
         yield ['blockwishlist', true];
@@ -89,7 +85,7 @@ class ModuleRepositoryTest extends TestCase
         yield ['', false];
     }
 
-    public function dataProviderOnlyNativeModules(): iterable
+    public static function dataProviderOnlyNativeModules(): iterable
     {
         yield ['blockwishlist'];
         yield ['ps_banner'];

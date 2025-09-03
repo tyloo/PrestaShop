@@ -43,9 +43,7 @@ use Twig\Environment;
 
 class LegacyControllerContextSubscriberTest extends ContextEventListenerTestCase
 {
-    /**
-     * @dataProvider getControllerNameValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getControllerNameValues')]
     public function testControllerName(Request $request, string $expectedControllerName): void
     {
         $builder = $this->getBuilder();
@@ -55,7 +53,7 @@ class LegacyControllerContextSubscriberTest extends ContextEventListenerTestCase
         $this->assertEquals(null, $this->getPrivateField($builder, 'redirectionUrl'));
     }
 
-    public function getControllerNameValues(): iterable
+    public static function getControllerNameValues(): iterable
     {
         yield 'simple query controller' => [
             new Request(['controller' => 'AdminProducts']),

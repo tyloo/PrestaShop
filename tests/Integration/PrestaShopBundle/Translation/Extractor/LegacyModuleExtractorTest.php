@@ -61,9 +61,8 @@ class LegacyModuleExtractorTest extends KernelTestCase
     /**
      * @param string $locale
      * @param array  $expected
-     *
-     * @dataProvider provideTestCases
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
     public function testExtractedCatalogueContainsTheExpectedWordings($locale, $expected): void
     {
         self::bootKernel();
@@ -92,7 +91,7 @@ class LegacyModuleExtractorTest extends KernelTestCase
         return __DIR__ . '/../../../../Resources/modules';
     }
 
-    public function provideTestCases(): array
+    public static function provideTestCases(): array
     {
         return [
             'French' => [

@@ -43,9 +43,7 @@ use Tests\Unit\PrestaShopBundle\EventListener\ContextEventListenerTestCase;
 
 class ApiClientContextListenerTest extends ContextEventListenerTestCase
 {
-    /**
-     * @dataProvider getExpectedClients
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedClients')]
     public function testBuildBasedOnSecurityToken(int $apiId, string $clientId, array $scopes, ?string $externalIssuer = null): void
     {
         // Create request that mimic a call to external API
@@ -71,7 +69,7 @@ class ApiClientContextListenerTest extends ContextEventListenerTestCase
         $this->assertEquals(42, $apiClientContext->getApiClient()->getShopId());
     }
 
-    public function getExpectedClients(): iterable
+    public static function getExpectedClients(): iterable
     {
         yield 'client with scopes' => [
             42,

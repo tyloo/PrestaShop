@@ -81,10 +81,9 @@ class FormatterTest extends TestCase
      * @param string                       $expectedResult
      *                                                          The formatted number
      *
-     * @dataProvider provideValidNumberFormatSpecs
-     *
      * @throws LocalizationException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidNumberFormatSpecs')]
     public function testFormat($localeParams, $numberSpecification, $number, $expectedResult): void
     {
         $formatter = $this->buildFormatter($localeParams);
@@ -104,7 +103,7 @@ class FormatterTest extends TestCase
         );
     }
 
-    public function provideValidNumberFormatSpecs(): array
+    public static function provideValidNumberFormatSpecs(): array
     {
         return [
             'French positive number' => [

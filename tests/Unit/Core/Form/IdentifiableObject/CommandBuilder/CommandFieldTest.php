@@ -37,10 +37,9 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\DataField;
 class CommandFieldTest extends TestCase
 {
     /**
-     * @dataProvider getValidParameters
-     *
      * @param array<int, DataField> $dataFields
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidParameters')]
     public function testValidConstructors(string $commandSetter, array $dataFields, bool $isMultiShopField): void
     {
         if ($isMultiShopField) {
@@ -55,7 +54,7 @@ class CommandFieldTest extends TestCase
         $this->assertSame($isMultiShopField, $field->isMultiShopField());
     }
 
-    public function getValidParameters(): iterable
+    public static function getValidParameters(): iterable
     {
         $dataFields = [
             new DataField('foo', DataField::TYPE_STRING),
@@ -74,10 +73,9 @@ class CommandFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidParameters
-     *
      * @param array<int, DataField> $dataFields
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidParameters')]
     public function testInvalidConstructors(string $commandSetter, array $dataFields, string $expectedException): void
     {
         $this->expectException($expectedException);
@@ -85,7 +83,7 @@ class CommandFieldTest extends TestCase
         CommandField::createAsSingleShop($commandSetter, $dataFields);
     }
 
-    public function getInvalidParameters(): iterable
+    public static function getInvalidParameters(): iterable
     {
         yield 'no data fields' => [
             'setMyField',

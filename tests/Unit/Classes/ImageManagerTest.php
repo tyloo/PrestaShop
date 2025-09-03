@@ -34,9 +34,7 @@ use PHPUnit\Framework\TestCase;
 
 class ImageManagerTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderIsCorrectImageFileExt
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderIsCorrectImageFileExt')]
     public function testIsCorrectImageFileExt(
         string $filename,
         ?array $authorizedExtensions,
@@ -48,7 +46,7 @@ class ImageManagerTest extends TestCase
         );
     }
 
-    public function dataProviderIsCorrectImageFileExt(): array
+    public static function dataProviderIsCorrectImageFileExt(): array
     {
         return [
             ['name', null, false],
@@ -65,9 +63,7 @@ class ImageManagerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderGetMimeTypeByExtension
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderGetMimeTypeByExtension')]
     public function testGetMimeTypeByExtension(
         string $filename,
         string $getMimeTypeByExtension,
@@ -78,7 +74,7 @@ class ImageManagerTest extends TestCase
         );
     }
 
-    public function dataProviderGetMimeTypeByExtension(): array
+    public static function dataProviderGetMimeTypeByExtension(): array
     {
         return [
             ['file.gif', 'image/gif'],

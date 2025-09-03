@@ -46,9 +46,7 @@ class CustomizationFieldsCommandsBuilderTest extends AbstractProductCommandBuild
         $this->customizationFieldsCommandBuilder = new CustomizationFieldsCommandsBuilder();
     }
 
-    /**
-     * @dataProvider getExpectedCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
         $builtCommands = $this->customizationFieldsCommandBuilder->buildCommands($this->getProductId(), $formData, $this->getSingleShopConstraint());

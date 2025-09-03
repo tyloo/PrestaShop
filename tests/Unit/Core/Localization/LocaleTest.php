@@ -111,10 +111,9 @@ class LocaleTest extends TestCase
      * @param string    $expected
      *                            The formatted number
      *
-     * @dataProvider provideValidNumbers
-     *
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidNumbers')]
     public function testFormatNumber($number, $expected): void
     {
         $formattedNumber = $this->cldrLocale->formatNumber($number);
@@ -145,7 +144,7 @@ class LocaleTest extends TestCase
      *               [...],
      *               ]
      */
-    public function provideValidNumbers(): array
+    public static function provideValidNumbers(): array
     {
         return [
             [123456.789, '123 456,789'],
@@ -170,10 +169,9 @@ class LocaleTest extends TestCase
      * @param string           $expected
      *                                       The formatted number
      *
-     * @dataProvider provideValidPriceData
-     *
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidPriceData')]
     public function testFormatPrice($number, $currencyCode, $expected): void
     {
         $price = $this->cldrLocale->formatPrice($number, $currencyCode);
@@ -190,7 +188,7 @@ class LocaleTest extends TestCase
      *               [...],
      *               ]
      */
-    public function provideValidPriceData(): array
+    public static function provideValidPriceData(): array
     {
         return [
             [123456.789, 'EUR', '123 456,79 €'],
@@ -207,9 +205,8 @@ class LocaleTest extends TestCase
      *                        Potentially invalid number
      * @param mixed $currency
      *                        Potentially invalid currency
-     *
-     * @dataProvider provideInvalidPriceData
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidPriceData')]
     public function testFormatNumberWithInvalidPriceData($number, $currency): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException::class);
@@ -217,7 +214,7 @@ class LocaleTest extends TestCase
         $this->cldrLocale->formatPrice($number, $currency);
     }
 
-    public function provideInvalidPriceData(): array
+    public static function provideInvalidPriceData(): array
     {
         return [
             'Invalid number' => ['foobar', 'EUR'],

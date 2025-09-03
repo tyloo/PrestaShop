@@ -37,9 +37,7 @@ use RuntimeException;
 
 class StockMovementTest extends TestCase
 {
-    /**
-     * @dataProvider getSingleHistoryValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSingleHistoryValidValues')]
     public function testSingleHistoryIsSuccessfullyConstructed(
         string $dateAdd,
         int $stockMovementId,
@@ -73,7 +71,7 @@ class StockMovementTest extends TestCase
         Assert::assertSame($deltaQuantity, $history->getDeltaQuantity());
     }
 
-    public function getSingleHistoryValidValues(): Generator
+    public static function getSingleHistoryValidValues(): Generator
     {
         yield 'single history is order' => [
             'dateAdd' => '2022-01-13 18:21:33',
@@ -105,13 +103,12 @@ class StockMovementTest extends TestCase
     }
 
     /**
-     * @dataProvider getGroupHistoryValidValues
-     *
      * @param string[]|int[] $stockMovementIds
      * @param string[]|int[] $stockIds
      * @param string[]|int[] $orderIds
      * @param string[]|int[] $employeeIds
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getGroupHistoryValidValues')]
     public function testGroupHistoryIsSuccessfullyConstructed(
         string $fromDate,
         string $toDate,
@@ -142,7 +139,7 @@ class StockMovementTest extends TestCase
         Assert::assertEquals($deltaQuantity, $history->getDeltaQuantity());
     }
 
-    public function getGroupHistoryValidValues(): Generator
+    public static function getGroupHistoryValidValues(): Generator
     {
         yield 'group history is order' => [
             'fromDate' => '2022-01-13 18:20:58',
@@ -173,9 +170,7 @@ class StockMovementTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidDateKeyFromHistory
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidDateKeyFromHistory')]
     public function testHistoryFailsOnInvalidDateKey(StockMovement $history, string $key): void
     {
         $this->expectException(RuntimeException::class);
@@ -183,7 +178,7 @@ class StockMovementTest extends TestCase
         $history->getDate($key);
     }
 
-    public function getInvalidDateKeyFromHistory(): Generator
+    public static function getInvalidDateKeyFromHistory(): Generator
     {
         $singleHistory = StockMovement::createEditionMovement(
             '2022-01-13 18:21:33',

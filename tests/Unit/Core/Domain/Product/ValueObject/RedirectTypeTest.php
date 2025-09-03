@@ -38,10 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\RedirectType;
 class RedirectTypeTest extends TestCase
 {
     /**
-     * @dataProvider getValidDataForCreation
-     *
      * @throws ProductConstraintException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidDataForCreation')]
     public function testItSuccessfullyCreatesRedirectType(
         string $type,
         bool $isProductType,
@@ -58,7 +57,7 @@ class RedirectTypeTest extends TestCase
         Assert::assertEquals($isTypeGone, $redirectType->isTypeGone());
     }
 
-    public function getValidDataForCreation(): Generator
+    public static function getValidDataForCreation(): Generator
     {
         yield ['404', false, false, true, false];
         yield ['410', false, false, false, true];
@@ -69,10 +68,9 @@ class RedirectTypeTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidDataForCreation
-     *
      * @throws ProductConstraintException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidDataForCreation')]
     public function testItThrowsExceptionWhenInvalidTypeIsProvided(string $type): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -81,7 +79,7 @@ class RedirectTypeTest extends TestCase
         new RedirectType($type);
     }
 
-    public function getInvalidDataForCreation(): Generator
+    public static function getInvalidDataForCreation(): Generator
     {
         yield ['500'];
         yield ['303-category'];

@@ -34,9 +34,7 @@ use PrestaShop\PrestaShop\Core\Form\ChoiceProvider\OutOfStockTypeChoiceProvider;
 
 class OutOfStockTypeChoiceProviderTest extends ChoiceProviderTestCase
 {
-    /**
-     * @dataProvider getExpectedChoices
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedChoices')]
     public function testItProvidesChoicesAsExpected(bool $outOfStockAvailable, array $expectedChoices): void
     {
         $mock = $this->createMock(ShopConfigurationInterface::class);
@@ -52,7 +50,7 @@ class OutOfStockTypeChoiceProviderTest extends ChoiceProviderTestCase
         $this->assertEquals($expectedChoices, $choiceProvider->getChoices());
     }
 
-    public function getExpectedChoices(): Generator
+    public static function getExpectedChoices(): Generator
     {
         yield [
             false,

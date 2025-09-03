@@ -107,9 +107,7 @@ class VersionTest extends TestCase
         $this->assertSame(self::RELEASE_VERSION, $this->version->getPatchVersion());
     }
 
-    /**
-     * @dataProvider provideVersions
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideVersions')]
     public function testBuildFromString(string $string, array $expected): void
     {
         $version = Version::buildFromString($string);
@@ -126,11 +124,10 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getCompareGreater
-     *
      * @param string $version Version
      * @param bool   $result  Result
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCompareGreater')]
     public function testCompareGreaterVersion(string $version, bool $result): void
     {
         $this->assertEquals(
@@ -141,11 +138,10 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getCompareGreaterEqual
-     *
      * @param string $version Version
      * @param bool   $result  Result
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCompareGreaterEqual')]
     public function testCompareGreaterEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
@@ -161,11 +157,10 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getCompareLess
-     *
      * @param string $version Version
      * @param bool   $result  Result
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCompareLess')]
     public function testCompareLessVersion(string $version, bool $result): void
     {
         $this->assertEquals(
@@ -181,11 +176,10 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getAnotherCompareGreater
-     *
      * @param string $version Version
      * @param bool   $result  Result
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getAnotherCompareGreater')]
     public function testCompareGreaterAnotherVersion(string $version, bool $result): void
     {
         $this->assertEquals(
@@ -201,11 +195,10 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getCompareLessEqual
-     *
      * @param string $version Version
      * @param bool   $result  Result
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCompareLessEqual')]
     public function testCompareLessEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
@@ -221,11 +214,10 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getCompareEqual
-     *
      * @param string $version Version
      * @param bool   $result  Result
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCompareEqual')]
     public function testCompareEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
@@ -241,11 +233,10 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getCompareNotEqual
-     *
      * @param string $version Version
      * @param bool   $result  Result
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCompareNotEqual')]
     public function testCompareNotEqualVersion(string $version, bool $result): void
     {
         $this->assertEquals(
@@ -261,14 +252,13 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getTwoVersionsToCompare
-     *
      * @param string $first              Version
      * @param string $second             Version
      * @param string $expectedComparison Comparison character
      *
      * @throws InvalidVersionException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTwoVersionsToCompare')]
     public function testCompareTwoVersions(string $first, string $second, string $expectedComparison): void
     {
         $firstVersion = Version::buildFromString($first);
@@ -305,17 +295,16 @@ class VersionTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidVersions
-     *
      * @param string $version Version
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidVersions')]
     public function testCheckInvalidVersion($version): void
     {
         $this->expectException(InvalidVersionException::class);
         $this->version->isLessThan($version);
     }
 
-    public function provideVersions(): array
+    public static function provideVersions(): array
     {
         return [
             '1.7.5.0' => [
@@ -531,7 +520,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareGreater(): array
+    public static function getCompareGreater(): array
     {
         return [
             ['1.2.3.4', false],
@@ -549,7 +538,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareGreaterEqual(): array
+    public static function getCompareGreaterEqual(): array
     {
         return [
             ['1.2.3.4', true],
@@ -567,7 +556,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareLess(): array
+    public static function getCompareLess(): array
     {
         return [
             ['1.2.3.4', false],
@@ -585,14 +574,14 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getAnotherCompareGreater(): array
+    public static function getAnotherCompareGreater(): array
     {
         return [
             ['1.2.0', true],
         ];
     }
 
-    public function getCompareLessEqual(): array
+    public static function getCompareLessEqual(): array
     {
         return [
             ['1.2.3.4', true],
@@ -610,7 +599,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareEqual(): array
+    public static function getCompareEqual(): array
     {
         return [
             ['1.2.3.4', true],
@@ -628,7 +617,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareNotEqual(): array
+    public static function getCompareNotEqual(): array
     {
         return [
             ['1.2.3.4', false],
@@ -646,7 +635,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getInvalidVersions(): array
+    public static function getInvalidVersions(): array
     {
         return [
             ['1.2.3.1.x'],
@@ -666,7 +655,7 @@ class VersionTest extends TestCase
         return $result ? 'is' : 'is NOT';
     }
 
-    public function getTwoVersionsToCompare(): array
+    public static function getTwoVersionsToCompare(): array
     {
         return [
             // incremental build versions

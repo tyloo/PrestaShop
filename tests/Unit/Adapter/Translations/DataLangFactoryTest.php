@@ -34,9 +34,7 @@ use PrestaShopBundle\Translation\TranslatorInterface;
 
 class DataLangFactoryTest extends TestCase
 {
-    /**
-     * @dataProvider provideTableNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTableNames')]
     public function testItCreatesClassNamesFromTableNames(string $databasePrefix, string $tableName, string $expected): void
     {
         $factory = new DataLangFactory(
@@ -46,7 +44,7 @@ class DataLangFactoryTest extends TestCase
         $this->assertSame($expected, $factory->getClassNameFromTable($tableName));
     }
 
-    public function provideTableNames(): array
+    public static function provideTableNames(): array
     {
         return [
             ['ps_', 'ps_tab_lang', 'TabLang'],

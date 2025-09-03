@@ -38,9 +38,7 @@ use PrestaShop\PrestaShop\Core\Encoding\CharsetEncoding;
 
 class GetSqlRequestSettingsHandlerTest extends TestCase
 {
-    /**
-     * @dataProvider getInvalidConfiguration
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidConfiguration')]
     public function testItReturnsCorrectSettings(?int $configuredValue, string $configuredSeparatorValue, string $expectedValue): void
     {
         $configuration = $this->createMock(ConfigurationInterface::class);
@@ -55,7 +53,7 @@ class GetSqlRequestSettingsHandlerTest extends TestCase
         $this->assertEquals($expectedValue, $sqlRequestSettings->getFileEncoding());
     }
 
-    public function getInvalidConfiguration(): array
+    public static function getInvalidConfiguration(): array
     {
         return [
             [

@@ -160,7 +160,7 @@ class ContainerTest extends TestCase
     /**
      * data provider for test_container_can_bind_values_directly
      */
-    public function valuesToBind(): array
+    public static function valuesToBind(): array
     {
         return [
             [new Dummy()],
@@ -169,9 +169,7 @@ class ContainerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider valuesToBind
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('valuesToBind')]
     public function testContainerCanBindValuesDirectly($value): void
     {
         $this->container->bind('value', $value);

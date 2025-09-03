@@ -52,9 +52,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         $this->assertSame($expectedSubscribedEvents, array_keys($subscribedEvents));
     }
 
-    /**
-     * @dataProvider getFormTypeExpectationsBasedOnProductType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getFormTypeExpectationsBasedOnProductType')]
     public function testFormTypeExistsInFormDependingOnProductType(string $productType, string $formTypeName, bool $shouldExist): void
     {
         $form = $this->createForm(TestProductFormType::class);
@@ -63,7 +61,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         $this->assertFormTypeExistsInForm($form, $formTypeName, $shouldExist);
     }
 
-    public function getFormTypeExpectationsBasedOnProductType(): iterable
+    public static function getFormTypeExpectationsBasedOnProductType(): iterable
     {
         // Since data is empty all product types remove this field see testSuppliers for more details
         yield 'product_supplier in standard context' => [ProductType::TYPE_STANDARD, 'options.product_suppliers', false];
@@ -116,9 +114,8 @@ class ProductTypeListenerTest extends FormListenerTestCase
      * When type is switched, the removed fields are not the same but the adapt function is called twice in the same
      * request (PRE_SET_DATA and PRE_SUBMIT) so we must be sure that it doesn't create error because of fields no
      * present any more
-     *
-     * @dataProvider getFormTypeSwitching
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getFormTypeSwitching')]
     public function testFormTypeSwitching(string $initialProductType, string $newProductType): void
     {
         $form = $this->createForm(TestProductFormType::class);
@@ -126,7 +123,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         $this->adaptProductFormBasedOnProductType($form, $newProductType);
     }
 
-    public function getFormTypeSwitching(): iterable
+    public static function getFormTypeSwitching(): iterable
     {
         $productTypes = [
             ProductType::TYPE_STANDARD,
@@ -142,9 +139,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         }
     }
 
-    /**
-     * @dataProvider getStockMovements
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getStockMovements')]
     public function testStockMovementsRemovedBasedOnItsContent(string $productType, array $movementsData, bool $shouldExist): void
     {
         $formData = [
@@ -161,7 +156,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         $this->assertFormTypeExistsInForm($form, 'stock.quantities.stock_movements', $shouldExist);
     }
 
-    public function getStockMovements(): iterable
+    public static function getStockMovements(): iterable
     {
         yield [ProductType::TYPE_STANDARD, [], false];
         yield [ProductType::TYPE_COMBINATIONS, [], false];
@@ -185,9 +180,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         yield [ProductType::TYPE_VIRTUAL, $stockMovements, true];
     }
 
-    /**
-     * @dataProvider getVirtualData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getVirtualData')]
     public function testEcotaxForVirtualProduct(array $formData, bool $ecotaxExpected): void
     {
         $form = $this->createForm(TestProductFormType::class, [], $formData);
@@ -199,7 +192,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         $this->assertFormTypeExistsInForm($form, 'pricing.retail_price.ecotax_tax_included', $ecotaxExpected);
     }
 
-    public function getVirtualData(): iterable
+    public static function getVirtualData(): iterable
     {
         yield 'no initial type defined, virtual type defined, ecotax removed' => [
             [
@@ -241,9 +234,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         ];
     }
 
-    /**
-     * @dataProvider getExpectedSuppliers
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedSuppliers')]
     public function testSuppliers(string $formType, array $suppliers, bool $suppliersExpected, bool $productSuppliersExpected): void
     {
         $form = $this->createForm(TestProductFormType::class, ['suppliers' => $suppliers]);
@@ -255,7 +246,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         $this->assertFormTypeExistsInForm($form, 'options.product_suppliers', $productSuppliersExpected);
     }
 
-    public function getExpectedSuppliers(): iterable
+    public static function getExpectedSuppliers(): iterable
     {
         yield 'standard type with suppliers' => [ProductType::TYPE_STANDARD, [42, 69], true, true];
         yield 'virtual type with suppliers' => [ProductType::TYPE_VIRTUAL, [42, 69], true, true];
@@ -268,9 +259,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         yield 'combination type without suppliers' => [ProductType::TYPE_COMBINATIONS, [], false, false];
     }
 
-    /**
-     * @dataProvider getProductTypes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getProductTypes')]
     public function testExtraModules(string $productType): void
     {
         $form = $this->createForm(TestProductFormType::class);
@@ -289,7 +278,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
         $this->assertFormTypeExistsInForm($form, 'extra_modules', true);
     }
 
-    public function getProductTypes(): iterable
+    public static function getProductTypes(): iterable
     {
         yield 'combinations product' => [ProductType::TYPE_COMBINATIONS];
         yield 'standard product' => [ProductType::TYPE_STANDARD];

@@ -36,9 +36,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class AdminSearchControllerCoreTest extends KernelTestCase
 {
-    /**
-     * @dataProvider dataProviderSearch
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderSearch')]
     public function testSearch(string $query, array $result): void
     {
         $_POST['bo_search_type'] = '';
@@ -54,7 +52,7 @@ class AdminSearchControllerCoreTest extends KernelTestCase
         self::assertEquals($this->cleanDataToken($templateVars), $this->cleanDataToken($result));
     }
 
-    public function dataProviderSearch(): array
+    public static function dataProviderSearch(): array
     {
         return [
             [

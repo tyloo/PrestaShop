@@ -42,9 +42,7 @@ class FileSizeConverterTest extends TestCase
         $this->converter = new FileSizeConverter();
     }
 
-    /**
-     * @dataProvider sizeDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('sizeDataProvider')]
     public function testConvert(int $bytes, string $expectedResult): void
     {
         $result = $this->converter->convert($bytes);
@@ -52,7 +50,7 @@ class FileSizeConverterTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    public function sizeDataProvider(): array
+    public static function sizeDataProvider(): array
     {
         return [
             [0, '0B'],

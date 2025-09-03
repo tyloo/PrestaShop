@@ -36,9 +36,7 @@ use Product;
 
 class StockInformationFillerTest extends ProductFillerTestCase
 {
-    /**
-     * @dataProvider getDataToTestUpdatablePropertiesFilling
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataToTestUpdatablePropertiesFilling')]
     public function testFillsUpdatableProperties(
         Product $product,
         UpdateProductCommand $command,

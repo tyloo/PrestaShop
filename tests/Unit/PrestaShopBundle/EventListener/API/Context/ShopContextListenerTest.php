@@ -73,9 +73,7 @@ class ShopContextListenerTest extends ContextEventListenerTestCase
         $this->assertEquals($expectedShopConstraint, $event->getRequest()->attributes->get('shopConstraint'));
     }
 
-    /**
-     * @dataProvider getMultishopRequests
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMultishopRequests')]
     public function testListenRequestParametersWhenMultishopIsEnabled(Request $request, ShopConstraint $expectedShopConstraint, int $expectedShopId): void
     {
         // Create request that mimic a call to external API
@@ -98,7 +96,7 @@ class ShopContextListenerTest extends ContextEventListenerTestCase
         $this->assertEquals($expectedShopConstraint, $event->getRequest()->attributes->get('shopConstraint'));
     }
 
-    public function getMultishopRequests(): iterable
+    public static function getMultishopRequests(): iterable
     {
         yield 'access token endpoint uses default shop as fallback, even if no shop context parameter is specified' => [
             new Request([], [], ['_controller' => AccessTokenController::class]),

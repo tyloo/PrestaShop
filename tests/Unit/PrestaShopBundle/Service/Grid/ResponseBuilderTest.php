@@ -53,9 +53,7 @@ class ResponseBuilderTest extends TestCase
 
     private const ERROR_LABEL = 'Field label';
 
-    /**
-     * @dataProvider dataProviderBuildSearchResponse
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderBuildSearchResponse')]
     public function testBuildSearchResponse(array $data, array $redirectParams): void
     {
         $response = $this->buildResponse($data, true);
@@ -69,9 +67,7 @@ class ResponseBuilderTest extends TestCase
         self::assertEquals($redirectParams, $query);
     }
 
-    /**
-     * @dataProvider dataProviderBuildSearchResponse
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderBuildSearchResponse')]
     public function testInvalidBuildSearchResponse(array $data, array $redirectParams): void
     {
         // The error message are tested via the mocks
@@ -88,7 +84,7 @@ class ResponseBuilderTest extends TestCase
         self::assertEquals($redirectParams, $query);
     }
 
-    public function dataProviderBuildSearchResponse(): array
+    public static function dataProviderBuildSearchResponse(): array
     {
         return [
             [

@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Sp
 
 class SpecificPricePriorityCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
         $builder = new SpecificPricePriorityCommandsBuilder();

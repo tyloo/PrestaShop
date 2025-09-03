@@ -35,10 +35,9 @@ use PrestaShop\PrestaShop\Core\Filter\HashMapWhitelistFilter;
 class CollectionFilterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @dataProvider provideTestCases
-     *
      * @throws \PrestaShop\PrestaShop\Core\Filter\FilterException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
     public function testItProcessesAllItems(array $subject, array $queue, array $expectedResult): void
     {
         $filter = new CollectionFilter();
@@ -49,7 +48,7 @@ class CollectionFilterTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    public function provideTestCases(): array
+    public static function provideTestCases(): array
     {
         $subject = [
             [

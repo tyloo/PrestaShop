@@ -37,9 +37,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Fe
 
 class FeatureValuesCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
         $builder = new FeatureValuesCommandsBuilder();
@@ -349,9 +347,7 @@ class FeatureValuesCommandsBuilderTest extends AbstractProductCommandBuilderTest
         ];
     }
 
-    /**
-     * @dataProvider getInvalidCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCommands')]
     public function testInvalidBuildCommand(array $formData, string $exceptionClass): void
     {
         $this->expectException($exceptionClass);
@@ -359,7 +355,7 @@ class FeatureValuesCommandsBuilderTest extends AbstractProductCommandBuilderTest
         $builder->buildCommands($this->getProductId(), $formData, $this->getSingleShopConstraint());
     }
 
-    public function getInvalidCommands(): Generator
+    public static function getInvalidCommands(): Generator
     {
         yield 'feature collection without empty values' => [
             [

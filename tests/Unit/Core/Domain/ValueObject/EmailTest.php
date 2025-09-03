@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 
 class EmailTest extends TestCase
 {
-    /**
-     * @dataProvider getValidEmailValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidEmailValues')]
     public function testItCreatesEmailWithValidValues($validEmail): void
     {
         $email = new Email($validEmail);
@@ -43,9 +41,7 @@ class EmailTest extends TestCase
         $this->assertEquals($validEmail, $email->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidEmailValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidEmailValues')]
     public function testItThrowsExceptionWhenCreatingEmailWithInvalidValue($invalidEmail): void
     {
         $this->expectException(DomainConstraintException::class);
@@ -54,29 +50,27 @@ class EmailTest extends TestCase
         new Email($invalidEmail);
     }
 
-    /**
-     * @dataProvider getEmailCompareValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getEmailCompareValues')]
     public function testEmailComparesValuesCorrectly($firstEmail, $secondEmail, $expectedCompareResult): void
     {
         $this->assertEquals($expectedCompareResult, (new Email($firstEmail))->isEqualTo(new Email($secondEmail)));
     }
 
-    public function getValidEmailValues()
+    public static function getValidEmailValues()
     {
         yield ['demo.demo@prestashop.com'];
         yield ['12312321@123.com'];
         yield ['abc_123o@a.eu'];
     }
 
-    public function getInvalidEmailValues()
+    public static function getInvalidEmailValues()
     {
         yield [''];
         yield [123];
         yield [\sprintf('very_long_email_%s@demo.com', str_repeat('A', 231))];
     }
 
-    public function getEmailCompareValues()
+    public static function getEmailCompareValues()
     {
         yield ['demo@demo.com', 'demo@demo.com', true];
         yield ['demo@demo.com', 'no_the_same@demo.com', false];

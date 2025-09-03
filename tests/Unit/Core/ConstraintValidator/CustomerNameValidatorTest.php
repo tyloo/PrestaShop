@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class CustomerNameValidatorTest extends ConstraintValidatorTestCase
 {
-    public function getInvalidCharacters(): array
+    public static function getInvalidCharacters(): array
     {
         return [
             ['0'], ['1'], ['2'], ['3'], ['4'],
@@ -48,14 +48,14 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getValidCharactersWithSpaces(): array
+    public static function getValidCharactersWithSpaces(): array
     {
         return [
             ['. '], ['。 '],
         ];
     }
 
-    public function getValidCharacters(): array
+    public static function getValidCharacters(): array
     {
         return [
             ['.'], ['。'],
@@ -72,10 +72,9 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getInvalidCharacters
-     *
      * @param string $invalidChar
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharacters')]
     public function testIfFailsWhenBadCharactersAreGiven($invalidChar): void
     {
         $input = 'AZE' . $invalidChar . 'RTY';
@@ -87,10 +86,9 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getValidCharactersWithSpaces
-     *
      * @param string $invalidChar
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharactersWithSpaces')]
     public function testIfFailsWhenSpacedPointsAreFinal($invalidChar): void
     {
         $input = 'AZERTY' . $invalidChar;
@@ -102,10 +100,9 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getValidCharacters
-     *
      * @param string $invalidChar
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharacters')]
     public function testIfFailsWhenDoublePoints($invalidChar): void
     {
         $input = 'AZE' . $invalidChar . 'RTY' . $invalidChar;
@@ -125,10 +122,9 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getValidCharacters
-     *
      * @param string $validChar
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharacters')]
     public function testIfSucceedsWhenPointsAreFinal($validChar): void
     {
         $input = 'AZERTY' . $validChar;
@@ -138,10 +134,9 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getValidCharactersWithSpaces
-     *
      * @param string $validChar
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharactersWithSpaces')]
     public function testIfSucceedsWhenPointsWithSpacesAreGiven($validChar): void
     {
         $input = 'AZE' . $validChar . 'RTY';

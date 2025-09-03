@@ -37,10 +37,9 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
 {
     /**
-     * @dataProvider getValidValues
-     *
      * @param string|float $value
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItSucceedsWhenValidValueIsGiven($value): void
     {
         $this->validator->validate($value, new PositiveOrZero());
@@ -48,7 +47,7 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield ['1'];
         yield ['10.05'];
@@ -61,10 +60,9 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getInvalidValues
-     *
      * @param string|float|bool|array $value
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItFailsWhenInvalidValueIsProvided($value): void
     {
         $constraint = new PositiveOrZero();
@@ -73,7 +71,7 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
         $this->buildViolation($constraint->message)->assertRaised();
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield ['-1'];
         yield ['-10.05'];

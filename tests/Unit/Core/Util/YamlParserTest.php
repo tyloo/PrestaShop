@@ -53,9 +53,7 @@ class YamlParserTest extends TestCase
         return _PS_ROOT_DIR_ . '/var/cache/test/';
     }
 
-    /**
-     * @dataProvider getYamlFilesProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getYamlFilesProvider')]
     public function testParserNoCache(string $yamlFiles): void
     {
         $cacheFile = $this->clearCacheFile($yamlFiles);
@@ -67,9 +65,7 @@ class YamlParserTest extends TestCase
         $this->assertFileDoesNotExist($cacheFile);
     }
 
-    /**
-     * @dataProvider getYamlFilesProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getYamlFilesProvider')]
     public function testParserCache(string $yamlFiles): void
     {
         $cacheFile = $this->clearCacheFile($yamlFiles);
@@ -89,9 +85,7 @@ class YamlParserTest extends TestCase
         $this->assertEquals($cacheTime, filemtime($cacheFile));
     }
 
-    /**
-     * @dataProvider getYamlFilesProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getYamlFilesProvider')]
     public function testParserCacheRefreshedAfterChangingSourceFile(string $yamlFiles): void
     {
         $cacheFile = $this->clearCacheFile($yamlFiles);
@@ -113,9 +107,7 @@ class YamlParserTest extends TestCase
         $this->assertNotEquals($cacheTime, filemtime($cacheFile));
     }
 
-    /**
-     * @dataProvider getYamlFilesProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getYamlFilesProvider')]
     public function testParserCacheRefresh(string $yamlFiles): void
     {
         $cacheFile = $this->clearCacheFile($yamlFiles);

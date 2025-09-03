@@ -49,9 +49,7 @@ class ModuleOverrideCheckerTest extends TestCase
         $this->modulesTestsDir = \dirname(__DIR__, 3) . '/Resources/modules_tests';
     }
 
-    /**
-     * @dataProvider provideTestData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestData')]
     public function testHasOverrideConflict(string $moduleName, bool $expectedResult): void
     {
         $moduleOverrideChecker = $this->getModuleOverrideChecker();
@@ -69,7 +67,7 @@ class ModuleOverrideCheckerTest extends TestCase
         return new ModuleOverrideChecker($translatorMock, $this->psOverrideDir);
     }
 
-    public function provideTestData(): array
+    public static function provideTestData(): array
     {
         return [
             [

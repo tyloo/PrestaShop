@@ -41,7 +41,7 @@ class QueryLayerTest extends TestCase
 
     private const VAR_FEATURE_FLAG_TEST = 'PS_FF_FEATURE_FLAG_TEST';
 
-    public function provideEnabledValues(): Generator
+    public static function provideEnabledValues(): Generator
     {
         yield ['1'];
         yield ['true'];
@@ -50,7 +50,7 @@ class QueryLayerTest extends TestCase
         yield ['yes'];
     }
 
-    public function provideDisabledValues(): Generator
+    public static function provideDisabledValues(): Generator
     {
         yield ['0'];
         yield ['false'];
@@ -98,18 +98,14 @@ class QueryLayerTest extends TestCase
         $this->assertFalse($layer->canBeUsed(self::FEATURE_FLAG_TEST));
     }
 
-    /**
-     * @dataProvider provideEnabledValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEnabledValues')]
     public function testIsEnabled(string $enabledValue): void
     {
         $layer = $this->createLayer(true, $enabledValue);
         $this->assertTrue($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }
 
-    /**
-     * @dataProvider provideDisabledValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideDisabledValues')]
     public function testIsDisabled(string $disabledValue): void
     {
         $layer = $this->createLayer(true, $disabledValue);

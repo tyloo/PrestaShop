@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId;
 
 class ProductImagePathFactoryTest extends TestCase
 {
-    /**
-     * @dataProvider getArgumentsForSmokeTest
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getArgumentsForSmokeTest')]
     public function testConstructImagePathFactory(
         string $pathToBaseDir,
         string $temporaryImgDir,
@@ -52,9 +50,7 @@ class ProductImagePathFactoryTest extends TestCase
         Assert::assertInstanceOf(ProductImagePathFactory::class, $imagePathFactory);
     }
 
-    /**
-     * @dataProvider getDataForBaseImagePathBuilding
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForBaseImagePathBuilding')]
     public function testGetPath(string $pathToBaseDir, ImageId $imageId, string $expected): void
     {
         $imagePathFactory = $this->buildImagePathFactory($pathToBaseDir);
@@ -62,9 +58,7 @@ class ProductImagePathFactoryTest extends TestCase
         Assert::assertEquals($expected, $imagePathFactory->getPath($imageId));
     }
 
-    /**
-     * @dataProvider getDataForPathByType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForPathByType')]
     public function testGetPathByType(string $pathToBaseDir, ImageId $imageId, string $type, string $expected): void
     {
         $imagePathFactory = $this->buildImagePathFactory($pathToBaseDir);
@@ -72,9 +66,7 @@ class ProductImagePathFactoryTest extends TestCase
         Assert::assertEquals($expected, $imagePathFactory->getPathByType($imageId, $type));
     }
 
-    /**
-     * @dataProvider getDataForImageFolder
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForImageFolder')]
     public function testGetImageFolder(string $pathToBaseDir, ImageId $imageId, string $expected): void
     {
         $imagePathFactory = $this->buildImagePathFactory($pathToBaseDir);
@@ -82,9 +74,7 @@ class ProductImagePathFactoryTest extends TestCase
         Assert::assertEquals($expected, $imagePathFactory->getImageFolder($imageId));
     }
 
-    /**
-     * @dataProvider getDataForNoImagePath
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForNoImagePath')]
     public function testGetNoImagePath(string $pathToBaseDir, string $type, ?string $langIso, string $expected): void
     {
         $imagePathFactory = $this->buildImagePathFactory($pathToBaseDir);
@@ -92,21 +82,21 @@ class ProductImagePathFactoryTest extends TestCase
         Assert::assertEquals($expected, $imagePathFactory->getNoImagePath($type, $langIso));
     }
 
-    public function getArgumentsForSmokeTest(): Generator
+    public static function getArgumentsForSmokeTest(): Generator
     {
         yield ['/img/p/', 'img/tmp', 'en'];
         yield ['/img', 'img/tmp', 'en'];
         yield ['/img', 'img/tmp', 'lt'];
     }
 
-    public function getDataForBaseImagePathBuilding(): Generator
+    public static function getDataForBaseImagePathBuilding(): Generator
     {
         yield ['/img/p', new ImageId(10), '/img/p/1/0/10.jpg'];
         yield ['whatever/img/p', new ImageId(11), 'whatever/img/p/1/1/11.jpg'];
         yield ['img/p/', new ImageId(2504), 'img/p/2/5/0/4/2504.jpg'];
     }
 
-    public function getDataForPathByType(): Generator
+    public static function getDataForPathByType(): Generator
     {
         yield ['/img/p/', new ImageId(10), ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT, '/img/p/1/0/10-small_default.jpg'];
         yield ['/img/p', new ImageId(11), ProductImagePathFactory::IMAGE_TYPE_MEDIUM_DEFAULT, '/img/p/1/1/11-medium_default.jpg'];
@@ -115,7 +105,7 @@ class ProductImagePathFactoryTest extends TestCase
         yield ['/img/p/', new ImageId(2504), ProductImagePathFactory::IMAGE_TYPE_HOME_DEFAULT, '/img/p/2/5/0/4/2504-home_default.jpg'];
     }
 
-    public function getDataForImageFolder(): Generator
+    public static function getDataForImageFolder(): Generator
     {
         yield ['/img/p/', new ImageId(10), '/img/p/1/0'];
         yield ['/img/p', new ImageId(11), '/img/p/1/1'];
@@ -123,7 +113,7 @@ class ProductImagePathFactoryTest extends TestCase
         yield ['/img/p/', new ImageId(2504), '/img/p/2/5/0/4'];
     }
 
-    public function getDataForNoImagePath(): Generator
+    public static function getDataForNoImagePath(): Generator
     {
         yield ['/img/p', 'small_default', null, '/img/p/en-default-small_default.jpg'];
         yield ['/img/p', 'medium_default', 'lt', '/img/p/lt-default-medium_default.jpg'];

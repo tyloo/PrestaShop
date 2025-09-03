@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\ApeCode;
 
 class ApeCodeTest extends TestCase
 {
-    /**
-     * @dataProvider getValidApeCodes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidApeCodes')]
     public function testItCreatesApeCodeWithValidValue($code): void
     {
         $apeCode = new ApeCode($code);
@@ -43,9 +41,7 @@ class ApeCodeTest extends TestCase
         $this->assertEquals($code, $apeCode->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidApeCodes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidApeCodes')]
     public function testItThrowExceptionWhenCreatingApeCodeWithInvalidValue($code): void
     {
         $this->expectException(CustomerConstraintException::class);
@@ -54,14 +50,14 @@ class ApeCodeTest extends TestCase
         new ApeCode($code);
     }
 
-    public function getValidApeCodes()
+    public static function getValidApeCodes()
     {
         yield [''];
         yield ['001A'];
         yield ['1039B'];
     }
 
-    public function getInvalidApeCodes()
+    public static function getInvalidApeCodes()
     {
         yield ['not_valid'];
         yield ['1236'];

@@ -67,9 +67,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
         self::$clientSecret = null;
     }
 
-    /**
-     * @dataProvider getProtectedEndpoints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getProtectedEndpoints')]
     public function testProtectedEndpoints(string $method, string $uri, string $contentType = 'application/json', bool $scopeNeeded = true): void
     {
         $options['headers']['content-type'] = $contentType;
@@ -101,7 +99,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
      *      '/product/1',
      *  ];
      */
-    public function getProtectedEndpoints(): iterable
+    public static function getProtectedEndpoints(): iterable
     {
         // Before we could return a EmptyIterator but now PHPUnit forces at least one element in the iterable
         yield 'infos endpoint' => [

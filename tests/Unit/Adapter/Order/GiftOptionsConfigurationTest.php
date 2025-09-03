@@ -46,9 +46,7 @@ class GiftOptionsConfigurationTest extends AbstractConfigurationTestCase
         'offer_recyclable_pack' => true,
     ];
 
-    /**
-     * @dataProvider provideShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShopConstraints')]
     public function testGetConfiguration(ShopConstraint $shopConstraint): void
     {
         $giftOptionsConfiguration = new GiftOptionsConfiguration(
@@ -76,9 +74,7 @@ class GiftOptionsConfigurationTest extends AbstractConfigurationTestCase
         $this->assertSame(self::VALID_CONFIGURATION, $result);
     }
 
-    /**
-     * @dataProvider provideInvalidConfiguration
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidConfiguration')]
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {
         $giftOptionsConfiguration = new GiftOptionsConfiguration(
@@ -94,7 +90,7 @@ class GiftOptionsConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideInvalidConfiguration(): array
+    public static function provideInvalidConfiguration(): array
     {
         return [
             [UndefinedOptionsException::class, ['does_not_exist' => 'does_not_exist']],
@@ -121,7 +117,7 @@ class GiftOptionsConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideShopConstraints(): array
+    public static function provideShopConstraints(): array
     {
         return [
             [ShopConstraint::shop(self::SHOP_ID)],

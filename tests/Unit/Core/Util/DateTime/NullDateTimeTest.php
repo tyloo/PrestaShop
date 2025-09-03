@@ -38,19 +38,16 @@ use RuntimeException;
 class NullDateTimeTest extends TestCase
 {
     /**
-     * @dataProvider getSupportedDateFormats
-     *
      * @param array<string, string> $expected
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSupportedDateFormats')]
     public function testItReturnsSupportedFormats(array $expected): void
     {
         $actual = NullDateTime::getSupportedFormats();
         Assert::assertEquals($expected, $actual);
     }
 
-    /**
-     * @dataProvider getValidDataForDateFormatting
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidDataForDateFormatting')]
     public function testItFormatsDateTimeToString(string $format, string $expected): void
     {
         $nullDateTime = new NullDateTime();
@@ -58,9 +55,7 @@ class NullDateTimeTest extends TestCase
         Assert::assertEquals($expected, $nullDateTime->format($format));
     }
 
-    /**
-     * @dataProvider getUnsupportedDateFormats
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getUnsupportedDateFormats')]
     public function testItThrowsExceptionWhenUnsupportedFormatIsProvided(string $format): void
     {
         $this->expectException(RuntimeException::class);
@@ -179,13 +174,13 @@ class NullDateTimeTest extends TestCase
         NullDateTime::createFromInterface(new DateTime());
     }
 
-    public function getValidDataForDateFormatting(): iterable
+    public static function getValidDataForDateFormatting(): iterable
     {
         yield ['Y-m-d', '0000-00-00'];
         yield ['Y-m-d H:i:s', '0000-00-00 00:00:00'];
     }
 
-    public function getSupportedDateFormats(): iterable
+    public static function getSupportedDateFormats(): iterable
     {
         yield [
             [
@@ -195,7 +190,7 @@ class NullDateTimeTest extends TestCase
         ];
     }
 
-    public function getUnsupportedDateFormats(): iterable
+    public static function getUnsupportedDateFormats(): iterable
     {
         yield ['d-m-Y'];
         yield ['H:i:s'];

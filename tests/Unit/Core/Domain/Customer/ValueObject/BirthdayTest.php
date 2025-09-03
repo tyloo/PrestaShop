@@ -42,9 +42,7 @@ class BirthdayTest extends TestCase
         $this->assertEquals('2008-07-31', $birthday->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidBirthdays
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidBirthdays')]
     public function testItThrowsExceptionWhenCreatingBirthdayWithInvalidData($invalidBirthday): void
     {
         $this->expectException(CustomerConstraintException::class);
@@ -53,7 +51,7 @@ class BirthdayTest extends TestCase
         new Birthday($invalidBirthday);
     }
 
-    public function getInvalidBirthdays()
+    public static function getInvalidBirthdays()
     {
         yield ['2150-25-100'];
         yield [new stdClass()];

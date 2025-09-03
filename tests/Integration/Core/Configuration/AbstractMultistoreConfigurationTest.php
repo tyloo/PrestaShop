@@ -105,9 +105,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         $this->multistoreFeature = self::$kernel->getContainer()->get('prestashop.adapter.multistore_feature');
     }
 
-    /**
-     * @dataProvider updateDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('updateDataProvider')]
     public function testUpdate(ShopConstraint $shopConstraint, array $data, array $checkList): void
     {
         $testedObject = $this->getDummyMultistoreConfiguration($shopConstraint);
@@ -124,9 +122,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         }
     }
 
-    /**
-     * @dataProvider provideShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShopConstraints')]
     public function testUndefinedOptionsException(ShopConstraint $shopConstraint): void
     {
         $isAllShopContext = (! $shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId && ! $shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId);
@@ -142,9 +138,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         }
     }
 
-    /**
-     * @dataProvider provideShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShopConstraints')]
     public function testInvalidOptionsException(ShopConstraint $shopConstraint): void
     {
         $isAllShopContext = (! $shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId && ! $shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId);
@@ -163,7 +157,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         $testedObject->updateConfiguration($confValues);
     }
 
-    public function provideShopConstraints(): array
+    public static function provideShopConstraints(): array
     {
         return [
             [ShopConstraint::allShops()],
@@ -172,7 +166,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         ];
     }
 
-    public function updateDataProvider(): iterable
+    public static function updateDataProvider(): iterable
     {
         // First test changes the config for all shops which impacts also shop and shopGroup
         yield [

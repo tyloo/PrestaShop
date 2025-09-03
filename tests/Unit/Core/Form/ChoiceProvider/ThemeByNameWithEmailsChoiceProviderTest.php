@@ -37,9 +37,7 @@ class ThemeByNameWithEmailsChoiceProviderTest extends ChoiceProviderTestCase
 {
     private const DIR_THEMES = _PS_ROOT_DIR_ . '/themes';
 
-    /**
-     * @dataProvider getExpectedChoices
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedChoices')]
     public function testItProvidesChoicesAsExpected(
         ThemeCollection $themeCollection,
         array $expectedChoices,
@@ -51,7 +49,7 @@ class ThemeByNameWithEmailsChoiceProviderTest extends ChoiceProviderTestCase
         $this->assertEquals($expectedChoices, $choiceProvider->getChoices());
     }
 
-    public function getExpectedChoices(): Generator
+    public static function getExpectedChoices(): Generator
     {
         $themeDir = realpath(self::DIR_THEMES);
 

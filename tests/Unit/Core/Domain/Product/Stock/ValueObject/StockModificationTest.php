@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\StockModificatio
 
 class StockModificationTest extends TestCase
 {
-    /**
-     * @dataProvider getValidDeltaQuantityValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidDeltaQuantityValues')]
     public function testItIsSuccessfullyConstructedUsingDeltaQuantity(int $deltaQuantity): void
     {
         $stockModification = StockModification::buildDeltaQuantity($deltaQuantity);
@@ -46,9 +44,7 @@ class StockModificationTest extends TestCase
         Assert::assertNull($stockModification->getFixedQuantity());
     }
 
-    /**
-     * @dataProvider getValidFixedQuantityValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidFixedQuantityValues')]
     public function testItIsSuccessfullyConstructedUsingFixedQuantity(int $fixedQuantity): void
     {
         $stockModification = StockModification::buildFixedQuantity($fixedQuantity);
@@ -57,9 +53,7 @@ class StockModificationTest extends TestCase
         Assert::assertNull($stockModification->getDeltaQuantity());
     }
 
-    /**
-     * @dataProvider getInvalidDeltaQuantityValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidDeltaQuantityValues')]
     public function testItThrowsExceptionWhenInvalidDeltaQuantityIsProvided(int $deltaQuantity): void
     {
         $this->expectException(ProductStockConstraintException::class);
@@ -68,7 +62,7 @@ class StockModificationTest extends TestCase
         StockModification::buildDeltaQuantity($deltaQuantity);
     }
 
-    public function getValidDeltaQuantityValues(): iterable
+    public static function getValidDeltaQuantityValues(): iterable
     {
         yield [1];
         yield [10];
@@ -77,7 +71,7 @@ class StockModificationTest extends TestCase
         yield [-500];
     }
 
-    public function getValidFixedQuantityValues(): iterable
+    public static function getValidFixedQuantityValues(): iterable
     {
         yield [1];
         yield [10];
@@ -87,7 +81,7 @@ class StockModificationTest extends TestCase
         yield [0];
     }
 
-    public function getInvalidDeltaQuantityValues(): iterable
+    public static function getInvalidDeltaQuantityValues(): iterable
     {
         yield [0];
     }

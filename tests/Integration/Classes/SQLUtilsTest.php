@@ -34,16 +34,14 @@ use SQLUtils;
 
 class SQLUtilsTest extends TestCase
 {
-    /**
-     * @dataProvider providerSQLRetrieveFilter
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerSQLRetrieveFilter')]
     public function testSQLRetrieveFilter(array $input, string $expected): void
     {
         $actual = SQLUtils::getSQLRetrieveFilter($input[0], $input[1], $input[2] ?? null);
         $this->assertEquals($expected, $actual);
     }
 
-    public function providerSQLRetrieveFilter(): iterable
+    public static function providerSQLRetrieveFilter(): iterable
     {
         yield [
             ['name', 'a'],

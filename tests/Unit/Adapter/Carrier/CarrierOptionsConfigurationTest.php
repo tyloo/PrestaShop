@@ -40,9 +40,7 @@ class CarrierOptionsConfigurationTest extends AbstractConfigurationTestCase
 {
     private const SHOP_ID = 42;
 
-    /**
-     * @dataProvider provideShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShopConstraints')]
     public function testGetConfiguration(ShopConstraint $shopConstraint): void
     {
         $CarrierOptionsConfiguration = new CarrierOptionsConfiguration($this->mockConfiguration, $this->mockShopConfiguration, $this->mockMultistoreFeature);
@@ -72,9 +70,7 @@ class CarrierOptionsConfigurationTest extends AbstractConfigurationTestCase
         );
     }
 
-    /**
-     * @dataProvider provideInvalidConfiguration
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidConfiguration')]
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {
         $CarrierOptionsConfiguration = new CarrierOptionsConfiguration($this->mockConfiguration, $this->mockShopConfiguration, $this->mockMultistoreFeature);
@@ -86,7 +82,7 @@ class CarrierOptionsConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideInvalidConfiguration(): array
+    public static function provideInvalidConfiguration(): array
     {
         return [
             [UndefinedOptionsException::class, ['does_not_exist' => 'does_not_exist']],
@@ -112,7 +108,7 @@ class CarrierOptionsConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideShopConstraints(): array
+    public static function provideShopConstraints(): array
     {
         return [
             [ShopConstraint::shop(self::SHOP_ID)],

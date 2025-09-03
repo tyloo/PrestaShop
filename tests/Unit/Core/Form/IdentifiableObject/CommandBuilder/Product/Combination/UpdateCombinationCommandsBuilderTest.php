@@ -39,10 +39,8 @@ use PrestaShopBundle\Form\Extension\DisablingSwitchExtension;
 
 class UpdateCombinationCommandsBuilderTest extends AbstractCombinationCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedCommands
-     * @dataProvider getExpectedCommandsMultiShop
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommandsMultiShop')]
     public function testBuildCommands(array $formData, array $expectedCommands): void
     {
         $builder = new UpdateCombinationCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);

@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 
 class ApiClientConstraintExceptionTest extends TestCase
 {
-    /**
-     * @dataProvider exceptionParametersProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('exceptionParametersProvider')]
     public function testBuildFromPropertyPath(string $propertyPath, string $message, string $template, ApiClientConstraintException $expectedException): void
     {
         $exception = ApiClientConstraintException::buildFromPropertyPath($propertyPath, $message, $template);
@@ -50,7 +48,7 @@ class ApiClientConstraintExceptionTest extends TestCase
         ApiClientConstraintException::buildFromPropertyPath('unknownProperty', 'some message', 'some template');
     }
 
-    public function exceptionParametersProvider(): array
+    public static function exceptionParametersProvider(): array
     {
         return [
             [

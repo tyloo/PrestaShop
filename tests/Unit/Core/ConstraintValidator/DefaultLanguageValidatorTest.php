@@ -65,9 +65,7 @@ class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate([], new NotBlank());
     }
 
-    /**
-     * @dataProvider getIncorrectTypes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTypes')]
     public function testItDetectsIncorrectValueType($incorrectType): void
     {
         $this->expectException(UnexpectedTypeException::class);
@@ -90,9 +88,7 @@ class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testValidValues(?array $validValue, DefaultLanguage $constraint): void
     {
         $this->validator->validate($validValue, $constraint);
@@ -160,9 +156,7 @@ class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getIncorrectValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectValues')]
     public function testItRaisesViolationWhenDefaultLanguageIsNotPreserved(array $valueWithMissingDefaultLanguage, DefaultLanguage $constraint): void
     {
         $this->validator->validate($valueWithMissingDefaultLanguage, $constraint);

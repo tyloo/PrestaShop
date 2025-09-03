@@ -73,9 +73,7 @@ class TaxRulesGroupQueryBuilderTest extends TestCase
         return $mock;
     }
 
-    /**
-     * @dataProvider dataProviderQueryBuilder
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderQueryBuilder')]
     public function testQueryBuild(Filters $filters, array $qbQueryParts, array $qbQueryPartsCount, array $qbParameters): void
     {
         $queryBuilder = new TaxRulesGroupQueryBuilder(
@@ -98,9 +96,7 @@ class TaxRulesGroupQueryBuilderTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider dataProviderQueryBuilder
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderQueryBuilder')]
     public function testCountQueryBuild(Filters $filters, array $qbQueryParts, array $qbQueryPartsCount, array $qbParameters): void
     {
         $queryBuilder = new TaxRulesGroupQueryBuilder(

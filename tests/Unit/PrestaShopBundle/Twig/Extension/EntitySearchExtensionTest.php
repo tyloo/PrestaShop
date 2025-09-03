@@ -36,9 +36,7 @@ use Symfony\Component\Form\FormView;
 
 class EntitySearchExtensionTest extends TestCase
 {
-    /**
-     * @dataProvider getEntityFieldData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getEntityFieldData')]
     public function testGetEntityFieldValue(FormView $form, string $fieldName, string $expectedValue): void
     {
         $extension = new EntitySearchExtension();
@@ -46,7 +44,7 @@ class EntitySearchExtensionTest extends TestCase
         $this->assertEquals($expectedValue, $fieldValue);
     }
 
-    public function getEntityFieldData(): Generator
+    public static function getEntityFieldData(): Generator
     {
         $formView = new FormView();
         $formView->vars['value']['name'] = 'Test';

@@ -41,17 +41,13 @@ class TranslationControllerTest extends ApiTestCase
         $this->loginUser(self::$client);
     }
 
-    /**
-     * @dataProvider getBadLocales
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getBadLocales')]
     public function testItShouldReturnBadResponseWhenRequestingInvalidLocales(array $params): void
     {
         $this->assertBadRequest('api_translation_domain_catalog', $params);
     }
 
-    /**
-     * @dataProvider getGoodLocales
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getGoodLocales')]
     public function testItShouldReturnOkResponseWhenRequestingValidLocales(array $params): void
     {
         $this->assertOkRequest('api_translation_domain_catalog', $params);
@@ -60,7 +56,7 @@ class TranslationControllerTest extends ApiTestCase
     /**
      * @return array<array<string|int, array<string, string>>>
      */
-    public function getBadLocales(): array
+    public static function getBadLocales(): array
     {
         return [
             [
@@ -75,7 +71,7 @@ class TranslationControllerTest extends ApiTestCase
     /**
      * @return array<array<int, array<string, string>>>
      */
-    public function getGoodLocales(): array
+    public static function getGoodLocales(): array
     {
         return [
             [
@@ -87,17 +83,13 @@ class TranslationControllerTest extends ApiTestCase
         ];
     }
 
-    /**
-     * @dataProvider getBadDomainsCatalog
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getBadDomainsCatalog')]
     public function testItShouldReturnBadResponseWhenRequestingDomainCatalog(array $params): void
     {
         $this->assertBadRequest('api_translation_domains_tree', $params);
     }
 
-    /**
-     * @dataProvider getGoodDomainsCatalog
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getGoodDomainsCatalog')]
     public function testItShouldReturnOkResponseWhenRequestingDomainCatalog(array $params): void
     {
         $this->assertOkRequest('api_translation_domains_tree', $params);
@@ -106,7 +98,7 @@ class TranslationControllerTest extends ApiTestCase
     /**
      * @return array<array<int, array<string, string>>>
      */
-    public function getBadDomainsCatalog(): array
+    public static function getBadDomainsCatalog(): array
     {
         return [
             [
@@ -129,7 +121,7 @@ class TranslationControllerTest extends ApiTestCase
     /**
      * @return array<array<int, array<string, string>>>
      */
-    public function getGoodDomainsCatalog(): array
+    public static function getGoodDomainsCatalog(): array
     {
         return [
             [
@@ -159,9 +151,7 @@ class TranslationControllerTest extends ApiTestCase
         $this->assertErrorResponseOnTranslationEditionWithData();
     }
 
-    /**
-     * @dataProvider getGoodEditTranslations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getGoodEditTranslations')]
     public function testItShouldReturnValidResponseWhenRequestingTranslationsEdition(array $params): void
     {
         $this->assertOkResponseOnTranslationEdition($params);
@@ -170,7 +160,7 @@ class TranslationControllerTest extends ApiTestCase
     /**
      * @return array<array<int, array<string, string>>>
      */
-    public function getGoodEditTranslations(): array
+    public static function getGoodEditTranslations(): array
     {
         return [
             [
@@ -203,15 +193,13 @@ class TranslationControllerTest extends ApiTestCase
         $this->assertErrorResponseOnTranslationResetWithData();
     }
 
-    /**
-     * @dataProvider getGoodResetTranslations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getGoodResetTranslations')]
     public function testItShouldReturnValidResponseWhenRequestingTranslationsReset(array $params): void
     {
         $this->assertOkResponseOnTranslationReset($params);
     }
 
-    public function getGoodResetTranslations(): array
+    public static function getGoodResetTranslations(): array
     {
         return [
             [

@@ -98,9 +98,7 @@ class AccessTest extends TestCase
         $this->assertEquals('AdminClassNameTestChild', $routeSlugs[0]['class_name']);
     }
 
-    /**
-     * @dataProvider providerSluggifyTab
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerSluggifyTab')]
     public function testSluggifyTab(string $expected, array $tab, string $authorization): void
     {
         $this->assertEquals(
@@ -109,7 +107,7 @@ class AccessTest extends TestCase
         );
     }
 
-    public function providerSluggifyTab(): iterable
+    public static function providerSluggifyTab(): iterable
     {
         yield [
             'ROLE_MOD_TAB_ADMINCLASSNAMETEST_',

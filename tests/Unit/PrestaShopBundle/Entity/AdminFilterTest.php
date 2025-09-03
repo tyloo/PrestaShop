@@ -52,9 +52,7 @@ class AdminFilterTest extends TestCase
         $this->assertEmpty($this->emptyFilter['filter_column_active']);
     }
 
-    /**
-     * @dataProvider productFilterProviderByName
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('productFilterProviderByName')]
     public function testSetProductCatalogFilterByName(array $filter, string $expected): void
     {
         $setFilter = (new AdminFilter())
@@ -64,7 +62,7 @@ class AdminFilterTest extends TestCase
         $this->assertSame($expected, $setFilter['filter_column_name']);
     }
 
-    public function productFilterProviderByName(): array
+    public static function productFilterProviderByName(): array
     {
         return [
             'quote_in_name' => [['filter_column_name' => "t'est"], "t'est"],

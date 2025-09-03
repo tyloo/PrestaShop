@@ -66,25 +66,19 @@ class ConfigurationTest extends KernelTestCase
         $this->configuration = $container->get('prestashop.adapter.legacy.configuration');
     }
 
-    /**
-     * @dataProvider getProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getProvider')]
     public function testGet(array $setParams, array $getParams, string $expectedResult): void
     {
         $this->setAndGetValuesForTesting($setParams, $getParams, $expectedResult);
     }
 
-    /**
-     * @dataProvider getWithStrictParameterProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getWithStrictParameterProvider')]
     public function testGetWithSrictParameter(array $setParams, array $getParams, ?string $expectedResult): void
     {
         $this->setAndGetValuesForTesting($setParams, $getParams, $expectedResult);
     }
 
-    /**
-     * @dataProvider hasProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('hasProvider')]
     public function testHas(array $setParams, array $getParams, bool $expectedResult): void
     {
         if ($setParams !== []) {
@@ -96,7 +90,7 @@ class ConfigurationTest extends KernelTestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    public function hasProvider(): iterable
+    public static function hasProvider(): iterable
     {
         // simple test when value doesn't exist and we ask for it in all shop context
         yield [
@@ -218,7 +212,7 @@ class ConfigurationTest extends KernelTestCase
         ];
     }
 
-    public function getProvider(): iterable
+    public static function getProvider(): iterable
     {
         // simple case: get an all shop config value
         yield [
@@ -358,7 +352,7 @@ class ConfigurationTest extends KernelTestCase
         ];
     }
 
-    public function getWithStrictParameterProvider(): iterable
+    public static function getWithStrictParameterProvider(): iterable
     {
         // try getting a non existing value for a aingle shop, with is strict = true => should not inherit from parent group
         yield [

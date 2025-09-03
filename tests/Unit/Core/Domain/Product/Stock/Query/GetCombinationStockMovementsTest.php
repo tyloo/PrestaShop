@@ -38,9 +38,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 
 class GetCombinationStockMovementsTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItIsSuccessfullyConstructed(
         int $combinationId,
         int $shopId,
@@ -58,7 +56,7 @@ class GetCombinationStockMovementsTest extends TestCase
         Assert::assertSame($limit, $query->getLimit());
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield 'nominal case' => [
             'combinationId' => 1,
@@ -74,9 +72,7 @@ class GetCombinationStockMovementsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(
         string $exceptionClass,
         int $combinationId,
@@ -94,7 +90,7 @@ class GetCombinationStockMovementsTest extends TestCase
         );
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield 'combinationId is zero' => [
             'exceptionClass' => CombinationConstraintException::class,

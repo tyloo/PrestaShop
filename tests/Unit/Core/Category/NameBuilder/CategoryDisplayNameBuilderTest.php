@@ -37,9 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class CategoryDisplayNameBuilderTest extends TestCase
 {
-    /**
-     * @dataProvider getDataForTestBuildsDisplayNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestBuildsDisplayNames')]
     public function testBuildsDisplayNames(
         CategoryDisplayNameBuilder $builder,
         string $categoryName,

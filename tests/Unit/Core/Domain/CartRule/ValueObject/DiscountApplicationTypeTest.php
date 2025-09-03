@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\DiscountApplicationTy
 
 class DiscountApplicationTypeTest extends TestCase
 {
-    /**
-     * @dataProvider getDataToBuildDiscountApplicationType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataToBuildDiscountApplicationType')]
     public function testItBuildsDiscountApplicationType(string $type, ?int $productId = null): void
     {
         $discountApplicationType = new DiscountApplicationType($type, $productId);
@@ -50,9 +48,7 @@ class DiscountApplicationTypeTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getInvalidData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidData')]
     public function testItThrowsExceptionWhenInvalidDataIsProvided(
         string $type,
         ?int $productId,
@@ -65,7 +61,7 @@ class DiscountApplicationTypeTest extends TestCase
         new DiscountApplicationType($type, $productId);
     }
 
-    public function getDataToBuildDiscountApplicationType(): iterable
+    public static function getDataToBuildDiscountApplicationType(): iterable
     {
         yield [
             DiscountApplicationType::ORDER_WITHOUT_SHIPPING,
@@ -85,7 +81,7 @@ class DiscountApplicationTypeTest extends TestCase
         ];
     }
 
-    public function getInvalidData(): iterable
+    public static function getInvalidData(): iterable
     {
         yield [
             'random',

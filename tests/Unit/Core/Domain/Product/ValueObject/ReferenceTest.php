@@ -43,9 +43,7 @@ class ReferenceTest extends TestCase
         Assert::assertSame('ref5-01', $reference->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -54,7 +52,7 @@ class ReferenceTest extends TestCase
         new Reference($value);
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield ['123456789012345678901234567890123456789012345678901234567890---65'];
         yield ['='];

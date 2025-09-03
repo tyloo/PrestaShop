@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Command\UpdateCombinat
 
 class DetailsFillerTest extends CombinationFillerTestCase
 {
-    /**
-     * @dataProvider getDataToTestUpdatablePropertiesFilling
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataToTestUpdatablePropertiesFilling')]
     public function testFillsUpdatableProperties(
         Combination $combination,
         UpdateCombinationCommand $command,

@@ -50,9 +50,7 @@ class DbQueryTest extends TestCase
         return new DbQuery();
     }
 
-    /**
-     * @dataProvider providerType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerType')]
     public function testType($type, string $expectedType): void
     {
         $dbQuery = $this->getDbQueryInstance();
@@ -60,9 +58,7 @@ class DbQueryTest extends TestCase
         $this->assertSame($expectedType, $dbQuery->getQuery()['type']);
     }
 
-    /**
-     * @dataProvider providerSelect
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerSelect')]
     public function testSelect($fields, array $expectedSelect): void
     {
         $dbQuery = $this->getDbQueryInstance();
@@ -70,9 +66,7 @@ class DbQueryTest extends TestCase
         $this->assertSame($expectedSelect, $dbQuery->getQuery()['select']);
     }
 
-    /**
-     * @dataProvider providerFrom
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerFrom')]
     public function testFrom(string $table, ?string $alias, array $expectedValue): void
     {
         $dbQuery = $this->getDbQueryInstance();
@@ -80,9 +74,7 @@ class DbQueryTest extends TestCase
         $this->assertSame($expectedValue, $dbQuery->getQuery()['from']);
     }
 
-    /**
-     * @dataProvider providerFromWithDbQuery
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerFromWithDbQuery')]
     public function testFromWithDbQuery(DbQuery $table, ?string $alias, array $expectedValue): void
     {
         $dbQuery = $this->getDbQueryInstance();
@@ -90,15 +82,13 @@ class DbQueryTest extends TestCase
         $this->assertSame($expectedValue, $dbQuery->getQuery()['from']);
     }
 
-    /**
-     * @dataProvider providerBuild
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerBuild')]
     public function testBuild(DbQuery $dbQuery, string $expectedValue): void
     {
         $this->assertSame(trim($dbQuery->build()), trim($expectedValue));
     }
 
-    public function providerType(): array
+    public static function providerType(): array
     {
         return [
             ['SELECT', 'SELECT'],
@@ -112,7 +102,7 @@ class DbQueryTest extends TestCase
         ];
     }
 
-    public function providerSelect(): array
+    public static function providerSelect(): array
     {
         return [
             ['FIELD1', [
@@ -126,7 +116,7 @@ class DbQueryTest extends TestCase
         ];
     }
 
-    public function providerFrom(): array
+    public static function providerFrom(): array
     {
         return [
             ['table_name', 'alias', [
@@ -138,7 +128,7 @@ class DbQueryTest extends TestCase
         ];
     }
 
-    public function providerFromWithDbQuery(): array
+    public static function providerFromWithDbQuery(): array
     {
         return [
             [

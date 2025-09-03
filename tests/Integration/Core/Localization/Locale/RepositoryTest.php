@@ -90,10 +90,9 @@ class RepositoryTest extends KernelTestCase
      * When asking this Locale object to format a number according to its specific formatting rules
      * Then the correct formatted number should be retrieved
      *
-     * @dataProvider provideLocalizedNumbers
-     *
      * @throws LocalizationException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideLocalizedNumbers')]
     public function testItShouldFormatNumbers(string $localeCode, float $rawNumber, string $formattedNumber): void
     {
         $this->installLanguagesByLocaleCode($localeCode);
@@ -146,7 +145,7 @@ class RepositoryTest extends KernelTestCase
         $this->commandBus->handle($command);
     }
 
-    public function provideLocalizedNumbers(): array
+    public static function provideLocalizedNumbers(): array
     {
         return [
             'United States' => [
@@ -256,9 +255,8 @@ class RepositoryTest extends KernelTestCase
      * Given a valid Locale object and a valid currency code
      * When asking the locale to format a price of the said currency
      * Then the expected formatted price should be retrieved
-     *
-     * @dataProvider provideFormattedPrices
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideFormattedPrices')]
     public function testItShouldFormatPrices(string $localeCode, float $rawNumber, string $currencyCode, string $formattedPrice): void
     {
         $this->installLanguagesByLocaleCode($localeCode);
@@ -284,7 +282,7 @@ class RepositoryTest extends KernelTestCase
         */
     }
 
-    public function provideFormattedPrices(): array
+    public static function provideFormattedPrices(): array
     {
         return [
             'United States' => [

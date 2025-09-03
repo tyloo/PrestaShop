@@ -49,14 +49,9 @@ class ReaderTest extends TestCase
     }
 
     /**
-     * @dataProvider provideLocaleData
-     *
-     * Given a valid CLDR Reader
-     * When asking for a specific locale to this reader
-     * Then the expected Locale data should be retrieved
-     *
      * @throws LocalizationException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideLocaleData')]
     public function testReadLocaleData(string $localeCode, array $expectedData): void
     {
         $localeData = $this->reader->readLocaleData($localeCode);
@@ -119,7 +114,7 @@ class ReaderTest extends TestCase
         );
     }
 
-    public function provideLocaleData(): array
+    public static function provideLocaleData(): array
     {
         return [
             'root' => [

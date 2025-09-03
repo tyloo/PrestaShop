@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Filter\HashMapWhitelistFilter;
 
 class HashMapWhitelistFilterTest extends TestCase
 {
-    /**
-     * @dataProvider provideTestCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
     public function testItOnlyKeepsWhitelistedKeysWithoutLosingValues(array $subject, array $whitelist, array $expectedResult): void
     {
         $filter = new HashMapWhitelistFilter();
@@ -130,7 +128,7 @@ class HashMapWhitelistFilterTest extends TestCase
         );
     }
 
-    public function provideTestCases(): array
+    public static function provideTestCases(): array
     {
         $basicArray = [
             'foo' => 'something',

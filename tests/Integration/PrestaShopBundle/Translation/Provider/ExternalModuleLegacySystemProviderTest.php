@@ -90,9 +90,8 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
 
     /**
      * @param string $locale
-     *
-     * @dataProvider provideTestCases
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
     public function testTranslationsCatalogueIsBuiltFromKeysFoundInSourceAndTranslationsInLegacyFiles(
         $locale,
         array $expected,
@@ -105,7 +104,7 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
         $this->catalogueVerifier->assertCataloguesMatch($legacyCatalogue, $expected);
     }
 
-    public function provideTestCases(): array
+    public static function provideTestCases(): array
     {
         return [
             'French' => [

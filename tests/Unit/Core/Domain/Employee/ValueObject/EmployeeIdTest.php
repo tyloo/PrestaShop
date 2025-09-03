@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\EmployeeId;
 
 class EmployeeIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItCreatesEmployeeWithValidValues($employeId): void
     {
         $employeeId = new EmployeeId($employeId);
@@ -45,22 +43,20 @@ class EmployeeIdTest extends TestCase
         $this->assertEquals($employeId, $employeeId->getValue());
     }
 
-    public function getValidValues(): iterable
+    public static function getValidValues(): iterable
     {
         yield [0];
         yield [1];
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItExceptionThrownWithInvalidValues($employeId): void
     {
         $this->expectException(InvalidEmployeeIdException::class);
         new EmployeeId($employeId);
     }
 
-    public function getInvalidValues(): iterable
+    public static function getInvalidValues(): iterable
     {
         yield ['-1'];
         yield ['1.1'];

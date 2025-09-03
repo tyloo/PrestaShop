@@ -56,9 +56,7 @@ class ModuleGraphTest extends TestCase
         $this->object->draw();
     }
 
-    /**
-     * @dataProvider getEscapeCellValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getEscapeCellValues')]
     public function testEscapeCell($base, $expected): void
     {
         $this->assertEquals(
@@ -67,7 +65,7 @@ class ModuleGraphTest extends TestCase
         );
     }
 
-    public function getEscapeCellValues(): array
+    public static function getEscapeCellValues(): array
     {
         return [
             ['=CMD', '"\'=CMD"'],

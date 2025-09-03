@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 
 class MoneyTest extends TestCase
 {
-    /**
-     * @dataProvider getValidDataForCreatingMoneyClass
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidDataForCreatingMoneyClass')]
     public function testItCreatesMoneyClass(
         string $number,
         int $currencyId,
@@ -51,7 +49,7 @@ class MoneyTest extends TestCase
         $this->assertSame($taxIncluded, $money->isTaxIncluded());
     }
 
-    public function getValidDataForCreatingMoneyClass(): iterable
+    public static function getValidDataForCreatingMoneyClass(): iterable
     {
         yield ['100', 10, true];
         yield ['100.5', 5, false];

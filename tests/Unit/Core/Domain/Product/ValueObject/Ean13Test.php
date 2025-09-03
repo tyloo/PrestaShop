@@ -43,9 +43,7 @@ class Ean13Test extends TestCase
         Assert::assertSame('9780201379621', $ean13->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -54,7 +52,7 @@ class Ean13Test extends TestCase
         new Ean13($value);
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield ['12345678901234'];
         yield ['what'];

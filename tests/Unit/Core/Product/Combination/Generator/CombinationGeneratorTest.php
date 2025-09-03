@@ -45,9 +45,7 @@ class CombinationGeneratorTest extends TestCase
         $this->combinationGenerator = new CombinationGenerator();
     }
 
-    /**
-     * @dataProvider getValidData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidData')]
     public function testGenerateCombinationsFromValidData(array $valuesByGroup, array $expectedCombinations): void
     {
         $yieldedCombinations = $this->combinationGenerator->generate($valuesByGroup);
@@ -60,7 +58,7 @@ class CombinationGeneratorTest extends TestCase
         $this->assertEquals($expectedCombinations, $generatedCombinations);
     }
 
-    public function getValidData(): Generator
+    public static function getValidData(): Generator
     {
         yield [
             [

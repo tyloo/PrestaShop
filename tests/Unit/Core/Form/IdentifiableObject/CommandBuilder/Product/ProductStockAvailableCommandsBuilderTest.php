@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Pr
 
 class ProductStockAvailableCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
         $builder = new ProductStockAvailableCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);
@@ -123,9 +121,7 @@ class ProductStockAvailableCommandsBuilderTest extends AbstractProductCommandBui
         ];
     }
 
-    /**
-     * @dataProvider getExpectedCommandsMultiShop
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommandsMultiShop')]
     public function testBuildCommandMultiShop(array $formData, array $expectedCommands): void
     {
         $builder = new ProductStockAvailableCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);

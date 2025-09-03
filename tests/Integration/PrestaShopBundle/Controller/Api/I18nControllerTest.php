@@ -31,15 +31,13 @@ namespace Tests\Integration\PrestaShopBundle\Controller\Api;
 
 class I18nControllerTest extends ApiTestCase
 {
-    /**
-     * @dataProvider getBadListTranslations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getBadListTranslations')]
     public function testItShouldReturnBadResponseWhenRequestingListOfTranslations(array $params): void
     {
         $this->assertBadRequest('api_i18n_translations_list', $params);
     }
 
-    public function getBadListTranslations(): array
+    public static function getBadListTranslations(): array
     {
         return [
             [
@@ -51,15 +49,13 @@ class I18nControllerTest extends ApiTestCase
         ];
     }
 
-    /**
-     * @dataProvider getGoodListTranslations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getGoodListTranslations')]
     public function testItShouldReturnOkResponseWhenRequestingListOfTranslations(array $params): void
     {
         $this->assertOkRequest('api_i18n_translations_list', $params);
     }
 
-    public function getGoodListTranslations(): array
+    public static function getGoodListTranslations(): array
     {
         return [
             [

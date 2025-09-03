@@ -45,9 +45,7 @@ class LocaleDataTest extends TestCase
         $this->localeData = new LocaleData();
     }
 
-    /**
-     * @dataProvider providerDecimalPatterns
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerDecimalPatterns')]
     public function testOverrideWithDecimalPatterns(
         ?array $decimalPatternsInitial,
         ?array $decimalPatternsOverride,
@@ -68,7 +66,7 @@ class LocaleDataTest extends TestCase
         $this->assertEquals($decimalPatternsExpected, $result->getDecimalPatterns());
     }
 
-    public function providerDecimalPatterns(): array
+    public static function providerDecimalPatterns(): array
     {
         return [
             [
@@ -99,9 +97,7 @@ class LocaleDataTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerPercentPatterns
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerPercentPatterns')]
     public function testOverrideWithPercentPatterns(
         ?array $decimalPatternsInitial,
         ?array $decimalPatternsOverride,
@@ -122,7 +118,7 @@ class LocaleDataTest extends TestCase
         $this->assertEquals($decimalPatternsExpected, $result->getDecimalPatterns());
     }
 
-    public function providerPercentPatterns(): array
+    public static function providerPercentPatterns(): array
     {
         return [
             [

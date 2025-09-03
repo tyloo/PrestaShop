@@ -43,9 +43,7 @@ class AliasIdTest extends TestCase
         Assert::assertSame(123321, $aliasId->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(int $value): void
     {
         $this->expectException(AliasConstraintException::class);
@@ -54,7 +52,7 @@ class AliasIdTest extends TestCase
         new AliasId($value);
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield [0];
         yield [-1];

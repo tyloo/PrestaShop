@@ -58,9 +58,7 @@ class HtaccessFolderGuardTest extends TestCase
         new HtaccessFolderGuard($invalidPath);
     }
 
-    /**
-     * @dataProvider getInvalidFolders
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidFolders')]
     public function testProtectInvalidFolders($invalidFolder): void
     {
         $this->expectException(FileNotFoundException::class);
@@ -118,7 +116,7 @@ class HtaccessFolderGuardTest extends TestCase
         rmdir($testFolder);
     }
 
-    public function getInvalidFolders(): array
+    public static function getInvalidFolders(): array
     {
         return [
             [__DIR__ . '/../../Resources/security/not_found_folder'],

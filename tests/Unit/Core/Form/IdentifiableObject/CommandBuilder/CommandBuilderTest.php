@@ -43,9 +43,7 @@ class CommandBuilderTest extends TestCase
 
     private const SHOP_ID = 1;
 
-    /**
-     * @dataProvider getSingleCommandParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSingleCommandParameters')]
     public function testBuildSingleCommand(
         CommandBuilderConfig $config,
         array $data,
@@ -253,9 +251,7 @@ class CommandBuilderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getMultiShopCommandsParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMultiShopCommandsParameters')]
     public function testBuildMultiShopCommands(
         CommandBuilderConfig $config,
         array $data,

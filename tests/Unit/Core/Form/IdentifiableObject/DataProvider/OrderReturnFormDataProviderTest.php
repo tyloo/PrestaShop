@@ -41,9 +41,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrderReturnFormDataProviderTest extends TestCase
 {
-    /**
-     * @dataProvider getExpectedChoices
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedChoices')]
     public function testBuildOrderReturnInformation(OrderReturnForEditing $orderReturnForEditing, array $expectedResult): void
     {
         $formDataProvider = new OrderReturnFormDataProvider(
@@ -104,7 +102,7 @@ class OrderReturnFormDataProviderTest extends TestCase
         return $translatorMock;
     }
 
-    public function getExpectedChoices(): Generator
+    public static function getExpectedChoices(): Generator
     {
         yield [
             new OrderReturnForEditing(

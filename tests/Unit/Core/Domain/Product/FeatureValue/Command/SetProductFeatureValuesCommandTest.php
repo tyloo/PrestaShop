@@ -36,25 +36,21 @@ use PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\Exception\InvalidProd
 
 class SetProductFeatureValuesCommandTest extends TestCase
 {
-    /**
-     * @dataProvider getValidInput
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidInput')]
     public function testValidInput(int $productId, array $featureValues): void
     {
         $command = new SetProductFeatureValuesCommand($productId, $featureValues);
         $this->assertNotNull($command);
     }
 
-    /**
-     * @dataProvider getInvalidInput
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidInput')]
     public function testInvalidInput(int $productId, array $featureValues, string $expectedException): void
     {
         $this->expectException($expectedException);
         new SetProductFeatureValuesCommand($productId, $featureValues);
     }
 
-    public function getInvalidInput()
+    public static function getInvalidInput()
     {
         yield [
             42,
@@ -99,7 +95,7 @@ class SetProductFeatureValuesCommandTest extends TestCase
         ];
     }
 
-    public function getValidInput()
+    public static function getValidInput()
     {
         yield [
             42,

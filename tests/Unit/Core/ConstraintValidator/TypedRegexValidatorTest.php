@@ -52,9 +52,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForNameType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForNameType')]
     public function testItFailsForNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'name']), $invalidChar);
@@ -68,9 +66,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForCatalogNameType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForCatalogNameType')]
     public function testItFailsForCatalogNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'catalog_name']), $invalidChar);
@@ -84,9 +80,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForGenericNameType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForGenericNameType')]
     public function testItFailsForGenericNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'generic_name']), $invalidChar);
@@ -100,9 +94,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForCityNameType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForCityNameType')]
     public function testItFailsForCityNameTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'city_name']), $invalidChar);
@@ -116,9 +108,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForAddressType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForAddressType')]
     public function testItFailsForAddressTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'address']), $invalidChar);
@@ -132,9 +122,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForPostCodeType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForPostCodeType')]
     public function testItFailsForPostCodeTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'post_code']), $invalidChar);
@@ -148,9 +136,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForPhoneNumberType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForPhoneNumberType')]
     public function testItFailsForPhoneNumberTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'phone_number']), $invalidChar);
@@ -168,9 +154,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForMessageType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForMessageType')]
     public function testItFailsForMessageTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'message']), $invalidChar);
@@ -184,9 +168,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForLanguageIsoCodeType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForLanguageIsoCodeType')]
     public function testItFailsForLanguageIsoCodeTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'language_iso_code']), $invalidChar);
@@ -200,9 +182,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForLanguageCodeType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForLanguageCodeType')]
     public function testItFailsForLanguageCodeTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'language_code']), $invalidChar);
@@ -215,9 +195,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForUpc
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForUpc')]
     public function testItFailsForUpcTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex('upc'), $invalidChar);
@@ -230,9 +208,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForEan13
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForEan13')]
     public function testItFailsForEan13TypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex('ean_13'), $invalidChar);
@@ -245,17 +221,13 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForIsbn
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForIsbn')]
     public function testItFailsForIsbnTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex('isbn'), $invalidChar);
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForReference
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForReference')]
     public function testItFailsForReferenceTypeWhenInvalidCharacterGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex('reference'), $invalidChar);
@@ -275,9 +247,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForUrl
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForUrl')]
     public function testItFailsForUrlTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'url']), $invalidChar);
@@ -290,9 +260,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForModuleName
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForModuleName')]
     public function testItFailsForModuleNameTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'module_name']), $invalidChar);
@@ -305,9 +273,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForWebserviceKey
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForWebserviceKey')]
     public function testItFailsForWebserviceKeyTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => TypedRegex::TYPE_WEBSERVICE_KEY]), $invalidChar);
@@ -320,9 +286,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidZipCodeFormats
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidZipCodeFormats')]
     public function testItFailsForZipCodeFormatTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => TypedRegex::TYPE_ZIP_CODE_FORMAT]), $invalidChar);
@@ -335,25 +299,19 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForStateIsoCode
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForStateIsoCode')]
     public function testItFailsForStateIsoCodeTypeWhenInvalidCharactersGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => TypedRegex::TYPE_STATE_ISO_CODE]), $invalidChar);
     }
 
-    /**
-     * @dataProvider getInvalidCharactersForDiscountCode
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharactersForDiscountCode')]
     public function testItFailsForDiscountCodeWhenInvalidCharactersGiven(string $invalidChar): void
     {
         $this->assertViolationIsRaised(new TypedRegex(['type' => TypedRegex::TYPE_DISCOUNT_CODE]), $invalidChar);
     }
 
-    /**
-     * @dataProvider getDataForDiscountCodeTest
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForDiscountCodeTest')]
     public function testDiscountCode(string $value, bool $expectSuccess): void
     {
         $constraint = new TypedRegex(TypedRegex::TYPE_DISCOUNT_CODE);
@@ -368,9 +326,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    /**
-     * @dataProvider getDataForLinkRewriteTest
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForLinkRewriteTest')]
     public function testLinkRewriteType(string $value, string $allowAccentedChars, bool $expectSuccess): void
     {
         $this->configurationData[self::ALLOW_ACCENTED_CHARS_CONFIG_NAME] = $allowAccentedChars;
@@ -390,9 +346,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    /**
-     * @dataProvider getDataForTestHTMLType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestHTMLType')]
     public function testHTMLType(string $value, bool $allowIframe, bool $expectSuccess): void
     {
         if ($allowIframe) {
@@ -414,7 +368,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         }
     }
 
-    public function getDataForTestHTMLType(): iterable
+    public static function getDataForTestHTMLType(): iterable
     {
         yield ['whatever', false, true];
         yield ['whatever', true, true];
@@ -450,7 +404,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array[]
      */
-    public function getDataForLinkRewriteTest(): array
+    public static function getDataForLinkRewriteTest(): array
     {
         return [
             ['okay', '0', true],
@@ -465,7 +419,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForNameType(): array
+    public static function getInvalidCharactersForNameType(): array
     {
         return [
             ['0'], ['2'], ['<'], ['>'], ['?'], ['#'], ['%'], [','], [';'], ['+'], ['¤'], [':'], ['!'], ['='], ['#'],
@@ -476,7 +430,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForCatalogNameType(): array
+    public static function getInvalidCharactersForCatalogNameType(): array
     {
         return [
             ['<'], ['>'], ['{'], ['}'],
@@ -486,7 +440,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForGenericNameType(): array
+    public static function getInvalidCharactersForGenericNameType(): array
     {
         return [
             ['<'], ['>'], ['{'], ['}'],
@@ -496,7 +450,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForCityNameType(): array
+    public static function getInvalidCharactersForCityNameType(): array
     {
         return [
             ['!'], ['>'], ['<'], [';'], ['?'], ['='], ['+'], ['@'], ['#'], ['"'], ['°'], ['{'], ['}'], ['_'],
@@ -507,7 +461,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForAddressType(): array
+    public static function getInvalidCharactersForAddressType(): array
     {
         return [
             ['!'], ['>'], ['<'], ['?'], ['='], ['+'], ['@'], ['{'], ['}'], ['_'], ['$'], ['%'],
@@ -517,7 +471,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForPostCodeType(): array
+    public static function getInvalidCharactersForPostCodeType(): array
     {
         return [
             ['<'], ['>'], ['?'], ['#'], ['%'], [','], [';'], ['+'], ['¤'], [':'], ['!'], ['='], ['#'],
@@ -528,7 +482,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForPhoneNumberType(): array
+    public static function getInvalidCharactersForPhoneNumberType(): array
     {
         return [
             ['<'], ['>'], ['?'], ['#'], ['%'], [','], [';'], ['¤'], [':'], ['!'], ['='], ['#'],
@@ -539,7 +493,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForMessageType(): array
+    public static function getInvalidCharactersForMessageType(): array
     {
         return [
             ['<'], ['>'], ['{'], ['}'],
@@ -549,7 +503,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForLanguageIsoCodeType(): array
+    public static function getInvalidCharactersForLanguageIsoCodeType(): array
     {
         return [
             ['a'], ['ž'], ['abcd'], ['2'], ['26'], ['ABCE'],
@@ -559,14 +513,14 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return string[][]
      */
-    public function getInvalidCharactersForLanguageCodeType(): array
+    public static function getInvalidCharactersForLanguageCodeType(): array
     {
         return [
             ['az-acc'], ['1'], ['12-22'], ['ži-as'],
         ];
     }
 
-    public function getInvalidCharactersForUpc(): Generator
+    public static function getInvalidCharactersForUpc(): Generator
     {
         yield ['1234567890013'];
         yield ['what'];
@@ -598,7 +552,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    public function getInvalidCharactersForEan13(): Generator
+    public static function getInvalidCharactersForEan13(): Generator
     {
         yield ['10000000000014'];
         yield ['what'];
@@ -630,7 +584,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    public function getInvalidCharactersForIsbn(): Generator
+    public static function getInvalidCharactersForIsbn(): Generator
     {
         yield ['12345678901234567890123412345678901234-33'];
         yield ['what'];
@@ -661,7 +615,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    public function getInvalidCharactersForReference(): Generator
+    public static function getInvalidCharactersForReference(): Generator
     {
         yield ['='];
         yield ['{'];
@@ -671,7 +625,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [';'];
     }
 
-    public function getInvalidCharactersForUrl(): Generator
+    public static function getInvalidCharactersForUrl(): Generator
     {
         yield ['!'];
         yield ['"'];
@@ -686,7 +640,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [';'];
     }
 
-    public function getInvalidCharactersForModuleName(): Generator
+    public static function getInvalidCharactersForModuleName(): Generator
     {
         yield ['~'];
         yield ['ˇ'];
@@ -721,7 +675,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['|'];
     }
 
-    public function getInvalidCharactersForStateIsoCode(): Generator
+    public static function getInvalidCharactersForStateIsoCode(): Generator
     {
         yield ['FRANC'];
         yield ['~'];
@@ -757,7 +711,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['|'];
     }
 
-    public function getInvalidCharactersForWebServiceKey(): Generator
+    public static function getInvalidCharactersForWebServiceKey(): Generator
     {
         yield ['~'];
         yield ['ˇ'];
@@ -790,7 +744,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [' '];
     }
 
-    public function getInvalidZipCodeFormats(): Generator
+    public static function getInvalidZipCodeFormats(): Generator
     {
         yield ['A'];
         yield ['NNA'];
@@ -825,7 +779,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield [','];
     }
 
-    public function getInvalidCharactersForDiscountCode(): Generator
+    public static function getInvalidCharactersForDiscountCode(): Generator
     {
         yield ['!'];
         yield ['@'];
@@ -856,7 +810,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
     /**
      * @return array[]
      */
-    public function getDataForDiscountCodeTest(): array
+    public static function getDataForDiscountCodeTest(): array
     {
         return [
             ['CODE123', true],

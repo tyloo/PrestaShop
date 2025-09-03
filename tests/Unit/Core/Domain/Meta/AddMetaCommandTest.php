@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\Exception\MetaConstraintException;
 
 class AddMetaCommandTest extends TestCase
 {
-    /**
-     * @dataProvider getIncorrectPageNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectPageNames')]
     public function testItThrowsAnExceptionOnIncorrectOrMissingPageName($incorrectPageName): void
     {
         $this->expectException(MetaConstraintException::class);
@@ -44,9 +42,7 @@ class AddMetaCommandTest extends TestCase
         new AddMetaCommand($incorrectPageName);
     }
 
-    /**
-     * @dataProvider getIncorrectMultiLanguageNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectMultiLanguageNames')]
     public function testItThrowsAnExceptionOnIncorrectPageTitle($incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
@@ -57,9 +53,7 @@ class AddMetaCommandTest extends TestCase
         $command->setLocalisedPageTitle($incorrectNames);
     }
 
-    /**
-     * @dataProvider getIncorrectMultiLanguageNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectMultiLanguageNames')]
     public function testItThrowsAnExceptionOnIncorrectPageDescription($incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
@@ -70,7 +64,7 @@ class AddMetaCommandTest extends TestCase
         $command->setLocalisedMetaDescription($incorrectNames);
     }
 
-    public function getIncorrectPageNames(): array
+    public static function getIncorrectPageNames(): array
     {
         return [
             [
@@ -85,7 +79,7 @@ class AddMetaCommandTest extends TestCase
         ];
     }
 
-    public function getIncorrectMultiLanguageNames(): array
+    public static function getIncorrectMultiLanguageNames(): array
     {
         return [
             [

@@ -47,9 +47,7 @@ class CountryControllerTest extends FormGridControllerTestCase
         return $countries->count();
     }
 
-    /**
-     * @depends testIndex
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testIndex')]
     public function testCreate(int $initialEntityCount): int
     {
         $this->client->disableReboot();
@@ -96,9 +94,7 @@ class CountryControllerTest extends FormGridControllerTestCase
         return $countryId;
     }
 
-    /**
-     * @depends testCreate
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testCreate')]
     public function testEdit(int $countryId): int
     {
         $this->client->disableReboot();
@@ -136,9 +132,7 @@ class CountryControllerTest extends FormGridControllerTestCase
         return $countryId;
     }
 
-    /**
-     * @depends testEdit
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testEdit')]
     public function testFilters(int $countryId): int
     {
         $gridFilters = [
@@ -162,9 +156,7 @@ class CountryControllerTest extends FormGridControllerTestCase
         return $countryId;
     }
 
-    /**
-     * @depends testFilters
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testFilters')]
     public function testDelete(int $countryId): void
     {
         $this->client->disableReboot();

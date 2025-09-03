@@ -62,9 +62,7 @@ class ThemeTranslationsFactoryTest extends TestCase
         $this->factory->addProvider($this->mockThemeProvider());
     }
 
-    /**
-     * @dataProvider getThemeAndLocale
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getThemeAndLocale')]
     public function testCreateCatalogue(string $theme, string $locale): void
     {
         $this->themeProviderMock
@@ -86,7 +84,7 @@ class ThemeTranslationsFactoryTest extends TestCase
         $this->factory->createCatalogue($theme, $locale);
     }
 
-    public function getThemeAndLocale(): array
+    public static function getThemeAndLocale(): array
     {
         return [
             [
@@ -96,9 +94,7 @@ class ThemeTranslationsFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getThemeAndLocale
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getThemeAndLocale')]
     public function testCreateTranslationsArray(string $theme, string $locale): void
     {
         $this->themeProviderMock

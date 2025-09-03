@@ -36,9 +36,8 @@ use Tests\Integration\Utility\ContextMockerTrait;
 
 /**
  * These tests install and uninstalls modules causing the cache to be cleared. So it's better to run it isolated.
- *
- * @group isolatedProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('isolatedProcess')]
 class ModuleTest extends TestCase
 {
     use ContextMockerTrait;
@@ -52,7 +51,7 @@ class ModuleTest extends TestCase
     /**
      * @return array a list of modules to control override features
      */
-    public function providerModulesOnDisk(): array
+    public static function providerModulesOnDisk(): array
     {
         return [
             ['bankwire'],
@@ -66,10 +65,9 @@ class ModuleTest extends TestCase
     /**
      * Check if html in trans is not escaped by trans method but escaped with htmlspecialchars on parameters
      *
-     * @dataProvider providerModulesOnDisk
-     *
      * @param string $moduleName the module name
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerModulesOnDisk')]
     public function testTrans(string $moduleName): void
     {
         $module = Module::getInstanceByName($moduleName);
@@ -82,11 +80,9 @@ class ModuleTest extends TestCase
     }
 
     /**
-     * @dataProvider providerModulesOnDisk
-     * Note: improves module list fixtures in order to cancel any override.
-     *
      * @param string $moduleName the module name
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerModulesOnDisk')]
     public function testDummyGetOverride(string $moduleName): void
     {
         $module = Module::getInstanceByName($moduleName);

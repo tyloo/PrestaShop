@@ -46,9 +46,7 @@ class CountryContextBuilderTest extends ContextBuilderTestCase
 
     private const NON_EXISTENT_LANGUAGE_ID = 42;
 
-    /**
-     * @dataProvider getCountryValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCountryValues')]
     public function testBuild(int $languageId, string $expectedName): void
     {
         $country = $this->mockCountry();
@@ -73,7 +71,7 @@ class CountryContextBuilderTest extends ContextBuilderTestCase
         $this->assertEquals($country->display_tax_label, $countryContext->isTaxLabelDisplayed());
     }
 
-    public function getCountryValues(): iterable
+    public static function getCountryValues(): iterable
     {
         yield 'english name' => [
             self::EN_ID,

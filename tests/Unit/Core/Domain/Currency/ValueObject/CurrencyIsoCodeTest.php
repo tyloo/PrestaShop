@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\AlphaIsoCode;
 
 class CurrencyIsoCodeTest extends TestCase
 {
-    /**
-     * @dataProvider getIncorrectIsoCodes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectIsoCodes')]
     public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectIsoCode): void
     {
         $this->expectException(CurrencyConstraintException::class);
@@ -44,7 +42,7 @@ class CurrencyIsoCodeTest extends TestCase
         new AlphaIsoCode($incorrectIsoCode);
     }
 
-    public function getIncorrectIsoCodes(): array
+    public static function getIncorrectIsoCodes(): array
     {
         return [
             [

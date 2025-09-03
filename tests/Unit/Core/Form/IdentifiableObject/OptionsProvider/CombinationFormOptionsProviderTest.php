@@ -42,9 +42,7 @@ class CombinationFormOptionsProviderTest extends TestCase
         $this->assertEquals([], $defaultOptions);
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTestData')]
     public function testGetOptions(array $formData, array $expectedOptions): void
     {
         $provider = new CombinationFormOptionsProvider();
@@ -52,7 +50,7 @@ class CombinationFormOptionsProviderTest extends TestCase
         $this->assertEquals($expectedOptions, $options);
     }
 
-    public function getTestData(): Generator
+    public static function getTestData(): Generator
     {
         yield [[], ['product_id' => null]];
         yield [['product_id' => null], ['product_id' => null]];

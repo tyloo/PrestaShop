@@ -58,34 +58,28 @@ class ClientRepositoryTest extends TestCase
         parent::setUp();
     }
 
-    /**
-     * @dataProvider userDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('userDataProvider')]
     public function testGetClientEntity(string $username, ?string $clientSecret, bool $exists): void
     {
         $client = $this->clientRepository->getClientEntity($username);
         $this->assertSame($exists, $client instanceof ClientEntityInterface);
     }
 
-    /**
-     * @dataProvider userDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('userDataProvider')]
     public function testValidateClient(string $username, ?string $clientSecret, bool $exists, bool $valid): void
     {
         $response = $this->clientRepository->validateClient($username, $clientSecret, 'client_credentials');
         $this->assertSame($valid, $response);
     }
 
-    /**
-     * @dataProvider grantTypeProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('grantTypeProvider')]
     public function testValidateClientWrongGrant(?string $grantType, bool $valid): void
     {
         $response = $this->clientRepository->validateClient('myclientid', 'myclientsecret', $grantType);
         $this->assertSame($valid, $response);
     }
 
-    public function userDataProvider(): iterable
+    public static function userDataProvider(): iterable
     {
         yield ['myclientid', null, true, false];
         yield ['myclientid', 'myclientsecret', true, true];
@@ -93,7 +87,7 @@ class ClientRepositoryTest extends TestCase
         yield ['notexistingclientid', 'myclientsecret', false, false];
     }
 
-    public function grantTypeProvider(): iterable
+    public static function grantTypeProvider(): iterable
     {
         yield ['client_credentials', true];
         yield ['refresh_token', false];

@@ -36,10 +36,8 @@ use Product;
 
 class OptionsFillerTest extends ProductFillerTestCase
 {
-    /**
-     * @dataProvider getDataToTestUpdatablePropertiesFilling
-     * @dataProvider getDataToTestShowPriceAndAvailableForOrderPropertiesFilling
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataToTestUpdatablePropertiesFilling')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataToTestShowPriceAndAvailableForOrderPropertiesFilling')]
     public function testFillsUpdatableProperties(
         Product $product,
         UpdateProductCommand $command,

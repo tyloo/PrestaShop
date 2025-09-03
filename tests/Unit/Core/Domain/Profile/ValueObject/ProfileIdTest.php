@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\ValueObject\ProfileId;
 
 class ProfileIdTest extends TestCase
 {
-    /**
-     * @dataProvider createsProfileWithValidValuesData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('createsProfileWithValidValuesData')]
     public function testItCreatesProfileWithValidValues($idValue): void
     {
         $profileId = new ProfileId($idValue);
@@ -43,7 +41,7 @@ class ProfileIdTest extends TestCase
         $this->assertEquals((int) $idValue, $profileId->getValue());
     }
 
-    public function createsProfileWithValidValuesData(): array
+    public static function createsProfileWithValidValuesData(): array
     {
         return [
             [1],
@@ -51,16 +49,14 @@ class ProfileIdTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider exceptionThrownWithInvalidValuesData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('exceptionThrownWithInvalidValuesData')]
     public function testItExceptionThrownWithInvalidValues($profileId): void
     {
         $this->expectException(ProfileException::class);
         new ProfileId($profileId);
     }
 
-    public function exceptionThrownWithInvalidValuesData(): array
+    public static function exceptionThrownWithInvalidValuesData(): array
     {
         return [
             [-1],

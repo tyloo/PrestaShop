@@ -77,9 +77,7 @@ class CombinationFormDataProviderTest extends TestCase
         $this->assertEquals([], $provider->getDefaultData());
     }
 
-    /**
-     * @dataProvider getExpectedData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedData')]
     public function testGetData(array $combinationData, array $expectedData): void
     {
         $queryBusMock = $this->createQueryBusMock($combinationData);

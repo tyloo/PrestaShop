@@ -153,9 +153,7 @@ class UpdateSchemaCommandTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider getQueriesForClear
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getQueriesForClear')]
     public function testClearQueries(string $query, string $expected): void
     {
         $queries = [$query];
@@ -294,7 +292,7 @@ class UpdateSchemaCommandTest extends TestCase
         ];
     }
 
-    public function getQueriesForClear(): array
+    public static function getQueriesForClear(): array
     {
         return [
             [

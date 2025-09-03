@@ -34,16 +34,14 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceFormatter;
 
 class FormChoiceFormatterTest extends TestCase
 {
-    /**
-     * @dataProvider getFormOptionsToFormat
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getFormOptionsToFormat')]
     public function testFormatFormChoices(array $rawOptions, string $idKey, string $nameKey, bool $sortByName, array $expectedFormattedChoices): void
     {
         $returnedFormattedChoices = FormChoiceFormatter::formatFormChoices($rawOptions, $idKey, $nameKey, $sortByName);
         $this->assertEquals($expectedFormattedChoices, $returnedFormattedChoices);
     }
 
-    public function getFormOptionsToFormat(): iterable
+    public static function getFormOptionsToFormat(): iterable
     {
         yield 'manufacturer list with duplicates' => [
             [

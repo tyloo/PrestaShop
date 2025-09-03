@@ -51,7 +51,7 @@ class LanguageEndpointTest extends ApiTestCase
         LanguageResetter::resetLanguages();
     }
 
-    public function getProtectedEndpoints(): iterable
+    public static function getProtectedEndpoints(): iterable
     {
         // The endpoint doesn't require any scope but you still need to be logged (have a valid token)
         yield 'get endpoint' => [

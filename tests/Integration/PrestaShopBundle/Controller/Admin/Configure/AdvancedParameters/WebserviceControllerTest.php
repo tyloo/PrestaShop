@@ -80,7 +80,7 @@ class WebserviceControllerTest extends WebTestCase
     /**
      * @return array<array<bool>>
      */
-    public function dataProviderBoolean(): array
+    public static function dataProviderBoolean(): array
     {
         return [
             [
@@ -92,9 +92,7 @@ class WebserviceControllerTest extends WebTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderBoolean
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderBoolean')]
     public function testBulkEnable(bool $actual): void
     {
         $this->webserviceKey->active = $actual;
@@ -128,9 +126,7 @@ class WebserviceControllerTest extends WebTestCase
         $this->assertTrue((bool) $webserviceKey->active);
     }
 
-    /**
-     * @dataProvider dataProviderBoolean
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderBoolean')]
     public function testBulkDisable(bool $actual): void
     {
         $this->webserviceKey->active = $actual;

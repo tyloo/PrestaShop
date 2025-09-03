@@ -37,9 +37,7 @@ use PrestaShop\PrestaShop\Adapter\Cart\Comparator\CartProductUpdate;
 
 class CartProductsComparatorTest extends TestCase
 {
-    /**
-     * @dataProvider getExpectedModifiedProducts
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedModifiedProducts')]
     public function testGetModifiedProducts(
         array $initialProducts,
         array $newProducts,
@@ -54,7 +52,7 @@ class CartProductsComparatorTest extends TestCase
         Assert::assertEquals($expectedModifiedProducts, $modifiedProducts);
     }
 
-    public function getExpectedModifiedProducts()
+    public static function getExpectedModifiedProducts()
     {
         yield [
             // Previous products
@@ -246,9 +244,7 @@ class CartProductsComparatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getExpectedAdditionalProducts
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedAdditionalProducts')]
     public function testGetAdditionalProducts(
         array $initialProducts,
         array $newProducts,
@@ -284,9 +280,7 @@ class CartProductsComparatorTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getExpectedUpdatedProducts
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedUpdatedProducts')]
     public function testGetUpdatedProducts(
         array $initialProducts,
         array $newProducts,

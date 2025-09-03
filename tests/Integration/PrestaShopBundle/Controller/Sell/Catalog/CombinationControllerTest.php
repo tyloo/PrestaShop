@@ -76,10 +76,9 @@ class CombinationControllerTest extends FormGridControllerTestCase
     }
 
     /**
-     * @depends testCreate
-     *
      * @return int[]
      */
+    #[\PHPUnit\Framework\Attributes\Depends('testCreate')]
     public function testGenerateCombinations(int $productId): array
     {
         $this->client->disableReboot();
@@ -114,9 +113,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         return $generatedCombinations;
     }
 
-    /**
-     * @depends testGenerateCombinations
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testGenerateCombinations')]
     public function testEditDefaultCombination(array $generatedCombinations): array
     {
         $this->client->disableReboot();
@@ -174,9 +171,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         return $generatedCombinations;
     }
 
-    /**
-     * @depends testEditDefaultCombination
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testEditDefaultCombination')]
     public function testEditNotDefaultCombination(array $generatedCombinations): array
     {
         $this->client->disableReboot();
@@ -195,9 +190,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         return $generatedCombinations;
     }
 
-    /**
-     * @depends testEditNotDefaultCombination
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testEditNotDefaultCombination')]
     public function testEditFromList(array $generatedCombinations): array
     {
         $this->client->disableReboot();
@@ -239,9 +232,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         return $generatedCombinations;
     }
 
-    /**
-     * @depends testEditFromList
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testEditFromList')]
     public function testDefaultFromList(array $generatedCombinations): array
     {
         $this->client->disableReboot();

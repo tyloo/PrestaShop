@@ -38,9 +38,8 @@ class LegacyTranslationKeyTest extends TestCase
      * @param string $expectedTheme
      * @param string $expectedSource
      * @param string $expectedHash
-     *
-     * @dataProvider provideTestCases
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
     public function testItParsesKeys($key, $expectedModule, $expectedTheme, $expectedSource, $expectedHash): void
     {
         $parsed = LegacyTranslationKey::buildFromString($key);
@@ -51,7 +50,7 @@ class LegacyTranslationKeyTest extends TestCase
         $this->assertSame($expectedHash, $parsed->getHash());
     }
 
-    public function provideTestCases(): array
+    public static function provideTestCases(): array
     {
         return [
             [

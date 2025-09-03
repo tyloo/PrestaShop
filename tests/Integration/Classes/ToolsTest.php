@@ -41,9 +41,7 @@ class ToolsTest extends TestCase
         self::mockContext();
     }
 
-    /**
-     * @dataProvider getUrlsToSanitize
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getUrlsToSanitize')]
     public function testSanitizeAdminUrl(string $url, string $expected, string $physicalUri = ''): void
     {
         // Override the mocked shop in context
@@ -51,7 +49,7 @@ class ToolsTest extends TestCase
         $this->assertEquals($expected, Tools::sanitizeAdminUrl($url));
     }
 
-    public function getUrlsToSanitize(): iterable
+    public static function getUrlsToSanitize(): iterable
     {
         yield 'url starting with index.php' => [
             'index.php?controller=AdminModules',

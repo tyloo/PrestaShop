@@ -50,10 +50,9 @@ class NumberExtractorTest extends TestCase
     }
 
     /**
-     * @dataProvider getValidData
-     *
      * @param array|FakeClass $resource
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidData')]
     public function testItExtractsNumberFromArrayOrObject($resource, string $path, DecimalNumber $expectedResult): void
     {
         $actualResult = $this->numberExtractor->extract($resource, $path);
@@ -62,10 +61,9 @@ class NumberExtractorTest extends TestCase
     }
 
     /**
-     * @dataProvider getDataWithInvalidResourcePropertyType
-     *
      * @param array|FakeClass3 $resource
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataWithInvalidResourcePropertyType')]
     public function testItThrowsExceptionWhenNonNumericValueIsProvidedInAccessedProperty($resource, string $path): void
     {
         $this->expectException(NumberExtractorException::class);
@@ -74,7 +72,7 @@ class NumberExtractorTest extends TestCase
         $this->numberExtractor->extract($resource, $path);
     }
 
-    public function getValidData(): Generator
+    public static function getValidData(): Generator
     {
         $fakeClass = new FakeClass();
 
@@ -105,7 +103,7 @@ class NumberExtractorTest extends TestCase
         ];
     }
 
-    public function getDataWithInvalidResourcePropertyType(): Generator
+    public static function getDataWithInvalidResourcePropertyType(): Generator
     {
         $obj = new FakeClass3();
 

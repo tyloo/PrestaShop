@@ -55,9 +55,7 @@ class TaxComputerTest extends KernelTestCase
         $this->taxComputer = $container->get(TaxComputer::class);
     }
 
-    /**
-     * @dataProvider getComputePriceData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getComputePriceData')]
     public function testComputePriceWithTaxes(float $taxRate, int $countryId, array $stateIds, string $priceWithoutTaxes, string $priceWithTaxes, int $behavior): void
     {
         $taxRuleGroupId = $this->addTaxRuleGroup($taxRate, $countryId, $stateIds, $behavior);
@@ -70,9 +68,7 @@ class TaxComputerTest extends KernelTestCase
         $this->assertEquals(new DecimalNumber($priceWithTaxes), $computedPrice);
     }
 
-    /**
-     * @dataProvider getComputePriceData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getComputePriceData')]
     public function testComputePriceWithoutTaxes(float $taxRate, int $countryId, array $stateIds, string $priceWithoutTaxes, string $priceWithTaxes, int $behavior): void
     {
         $taxRuleGroupId = $this->addTaxRuleGroup($taxRate, $countryId, $stateIds, $behavior);
@@ -85,7 +81,7 @@ class TaxComputerTest extends KernelTestCase
         $this->assertEquals(new DecimalNumber($priceWithoutTaxes), $computedPrice);
     }
 
-    public function getComputePriceData()
+    public static function getComputePriceData()
     {
         $countryId = Country::getByIso('fr');
         $country = new Country($countryId);

@@ -42,15 +42,13 @@ class ColorBrightnessCalculatorTest extends TestCase
         $this->colorBrightnessCalculator = new ColorBrightnessCalculator();
     }
 
-    /**
-     * @dataProvider getColors
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getColors')]
     public function testColorBrightness($hexColor, $isBright): void
     {
         $this->assertEquals($isBright, $this->colorBrightnessCalculator->isBright($hexColor));
     }
 
-    public function getColors()
+    public static function getColors()
     {
         yield ['#8B0000', false];
         yield ['#FFD700', true];

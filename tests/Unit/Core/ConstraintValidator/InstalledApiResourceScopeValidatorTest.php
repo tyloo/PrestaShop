@@ -45,16 +45,14 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate([], new NotBlank());
     }
 
-    /**
-     * @dataProvider getIncorrectTypes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTypes')]
     public function testItDetectsIncorrectValueType($incorrectType): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate($incorrectType, new InstalledApiResourceScope());
     }
 
-    public function getIncorrectTypes(): iterable
+    public static function getIncorrectTypes(): iterable
     {
         yield 'string value' => ['scope'];
         yield 'integer value' => [1];
@@ -64,16 +62,14 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
         yield 'true value' => [true];
     }
 
-    /**
-     * @dataProvider getCorrectValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectValues')]
     public function testCorrectValues($correctValue): void
     {
         $this->validator->validate($correctValue, new InstalledApiResourceScope());
         $this->assertNoViolation();
     }
 
-    public function getCorrectValues(): iterable
+    public static function getCorrectValues(): iterable
     {
         yield 'empty array' => [[]];
         yield 'array of core scope' => [['core_scope']];
@@ -81,9 +77,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
         yield 'array of all scopes' => [['core_scope', 'module_scope']];
     }
 
-    /**
-     * @dataProvider getIncorrectValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectValues')]
     public function testIncorrectValues($incorrectValue, array $invalidScopes): void
     {
         $this->validator->validate($incorrectValue, new InstalledApiResourceScope());
@@ -93,7 +87,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function getIncorrectValues(): iterable
+    public static function getIncorrectValues(): iterable
     {
         yield 'only invalid value' => [['invalid_scope'], ['invalid_scope']];
         yield 'one valid then one invalid value' => [['core_scope', 'invalid_scope'], ['invalid_scope']];

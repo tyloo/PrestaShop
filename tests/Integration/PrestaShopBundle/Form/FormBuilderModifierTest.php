@@ -41,9 +41,7 @@ use Symfony\Component\Form\ResolvedFormTypeInterface;
  */
 class FormBuilderModifierTest extends AbstractFormTester
 {
-    /**
-     * @dataProvider getAddAfterData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getAddAfterData')]
     public function testAddAfter(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
@@ -67,9 +65,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         }
     }
 
-    /**
-     * @dataProvider getAddAfterData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getAddAfterData')]
     public function testAddAfterChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
@@ -93,7 +89,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         }
     }
 
-    public function getAddAfterData(): Generator
+    public static function getAddAfterData(): Generator
     {
         yield [
             'type',
@@ -114,9 +110,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         ];
     }
 
-    /**
-     * @dataProvider getAddBeforeData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getAddBeforeData')]
     public function testAddBefore(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
@@ -140,9 +134,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         }
     }
 
-    /**
-     * @dataProvider getAddBeforeData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getAddBeforeData')]
     public function testAddBeforeChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
@@ -166,7 +158,7 @@ class FormBuilderModifierTest extends AbstractFormTester
         }
     }
 
-    public function getAddBeforeData(): Generator
+    public static function getAddBeforeData(): Generator
     {
         yield [
             'type',

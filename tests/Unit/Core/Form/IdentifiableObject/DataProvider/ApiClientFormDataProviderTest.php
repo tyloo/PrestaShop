@@ -45,9 +45,7 @@ class ApiClientFormDataProviderTest extends TestCase
         $this->assertEquals(['lifetime' => 3600], $provider->getDefaultData());
     }
 
-    /**
-     * @dataProvider provideApiAccessData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideApiAccessData')]
     public function testGetData(EditableApiClient $apiAccess, array $expectedData): void
     {
         $queryBusMock = $this->createMock(CommandBusInterface::class);
@@ -61,7 +59,7 @@ class ApiClientFormDataProviderTest extends TestCase
         $this->assertEquals($expectedData, $provider->getData(42));
     }
 
-    public function provideApiAccessData(): iterable
+    public static function provideApiAccessData(): iterable
     {
         yield 'simple case with basic fields' => [
             new EditableApiClient(

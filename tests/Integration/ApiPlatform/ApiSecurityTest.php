@@ -133,9 +133,7 @@ class ApiSecurityTest extends ApiTestCase
         self::assertResponseStatusCodeSame(403);
     }
 
-    /**
-     * @dataProvider getValidScopeParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidScopeParameters')]
     public function testAuthenticationWithDifferentScopesSuccess(string $scopeParameter, string|array $scopes, array $expectedScopes): void
     {
         self::createApiClient(['product_read', 'product_write']);
@@ -169,7 +167,7 @@ class ApiSecurityTest extends ApiTestCase
         $this->assertEquals($expectedScopes, $tokenScopes);
     }
 
-    public function getValidScopeParameters(): iterable
+    public static function getValidScopeParameters(): iterable
     {
         yield 'empty string scope' => ['scope', '', ['is_authenticated']];
         yield 'single string scope' => ['scope', 'product_read', ['is_authenticated', 'product_read']];

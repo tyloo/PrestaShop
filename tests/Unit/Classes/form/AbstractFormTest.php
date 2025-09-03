@@ -38,9 +38,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AbstractFormTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderValidateMinLength
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderValidateMinLength')]
     public function testValidateMinLength(array $fields, array $values, bool $isValidated, array $errors): void
     {
         $form = $this->getMockAbstractForm($fields);
@@ -55,7 +53,7 @@ class AbstractFormTest extends TestCase
     /**
      * @return array[]
      */
-    public function dataProviderValidateMinLength(): array
+    public static function dataProviderValidateMinLength(): array
     {
         return [
             // Required field but empty

@@ -42,9 +42,8 @@ class FeatureFlagManagerTest extends TestCase
 {
     /**
      * Test FeatureFlagManager with some cases.
-     *
-     * @dataProvider provideLayersTestsData
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideLayersTestsData')]
     public function testManagerForDbFeatureFlag(array $testsData): void
     {
         $featureFlag = new FeatureFlag('test_ff');
@@ -90,7 +89,7 @@ class FeatureFlagManagerTest extends TestCase
         $featureFlagManager->disable($featureFlag->getName());
     }
 
-    public function provideLayersTestsData(): Generator
+    public static function provideLayersTestsData(): Generator
     {
         yield 'EnvLayer must be in used & feature flag is enabled' => [[
             'layers' => [

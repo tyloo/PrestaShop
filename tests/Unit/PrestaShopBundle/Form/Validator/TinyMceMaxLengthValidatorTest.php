@@ -59,9 +59,7 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
         ]);
     }
 
-    /**
-     * @dataProvider exceptionsInvalidTinyMceMaxLengthProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('exceptionsInvalidTinyMceMaxLengthProvider')]
     public function testExceptionsInvalidTinyMceMaxLength(Exception $expectedException, $tinyMceMaxLength): void
     {
         $expectedExceptionClassName = $expectedException::class;
@@ -72,7 +70,7 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
         );
     }
 
-    public function exceptionsInvalidTinyMceMaxLengthProvider(): array
+    public static function exceptionsInvalidTinyMceMaxLengthProvider(): array
     {
         return [
             [new InvalidArgumentException(), new stdClass()],
@@ -86,9 +84,7 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider validTinyMceMaxLengthProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('validTinyMceMaxLengthProvider')]
     public function testValidTinyMceMaxLength(string $tinyMceText, int $tinyMceMaxLength): void
     {
         $constraint = $this->getConstraintInstance($tinyMceMaxLength, 'fakeMessage');
@@ -179,9 +175,8 @@ White Hot Ceramic Mug',
 
     /**
      * @param string $code error code
-     *
-     * @dataProvider invalidTinyMceMaxLengthProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('invalidTinyMceMaxLengthProvider')]
     public function testInvalidTinyMceMaxLength(string $code, string $tinyMceText, int $tinyMceMaxLength): void
     {
         $fakeTestMessage = 'fakeMessage';

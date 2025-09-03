@@ -66,9 +66,7 @@ class AddressControllerTest extends FormGridControllerTestCase
         return $adresses->count();
     }
 
-    /**
-     * @depends testIndex
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testIndex')]
     public function testCreate(int $initialEntityCount): int
     {
         $this->client->disableReboot();
@@ -101,9 +99,7 @@ class AddressControllerTest extends FormGridControllerTestCase
         return $addressId;
     }
 
-    /**
-     * @depends testCreate
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testCreate')]
     public function testEdit(int $addressId): int
     {
         $this->client->disableReboot();
@@ -130,9 +126,7 @@ class AddressControllerTest extends FormGridControllerTestCase
         return $addressId;
     }
 
-    /**
-     * @depends testEdit
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testEdit')]
     public function testFilters(int $addressId): int
     {
         $gridFilters = [
@@ -157,9 +151,7 @@ class AddressControllerTest extends FormGridControllerTestCase
         return $addressId;
     }
 
-    /**
-     * @depends testFilters
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testFilters')]
     public function testDelete(int $addressId): void
     {
         $this->client->disableReboot();

@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Position\ValueObject\RowPosition;
 
 class RowPositionTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItIsSuccessfullyConstructed(int $rowId, int $oldPosition, int $newPosition): void
     {
         $rowPosition = new RowPosition($rowId, $oldPosition, $newPosition);
@@ -46,7 +44,7 @@ class RowPositionTest extends TestCase
         $this->assertEquals($newPosition, $rowPosition->getNewPosition());
     }
 
-    public function getValidValues(): iterable
+    public static function getValidValues(): iterable
     {
         yield [1, 1, 2];
         yield [1, 3, 2];
@@ -54,9 +52,7 @@ class RowPositionTest extends TestCase
         yield [45, 1, 0];
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(int $rowId, int $oldPosition, int $newPosition, int $expectedErrorCode): void
     {
         $this->expectException(PositionConstraintException::class);
@@ -65,7 +61,7 @@ class RowPositionTest extends TestCase
         new RowPosition($rowId, $oldPosition, $newPosition);
     }
 
-    public function getInvalidValues(): iterable
+    public static function getInvalidValues(): iterable
     {
         yield [0, 1, 2, PositionConstraintException::INVALID_ROW_ID];
         yield [-1, 1, 2, PositionConstraintException::INVALID_ROW_ID];

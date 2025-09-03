@@ -47,9 +47,7 @@ class CurrencyContextBuilderTest extends ContextBuilderTestCase
 
     private const NON_EXISTENT_LANGUAGE_ID = 42;
 
-    /**
-     * @dataProvider getCurrencyValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCurrencyValues')]
     public function testBuild(int $languageId, string $expectedName, string $expectedSymbol, string $expectedPattern): void
     {
         $currency = $this->mockCurrency();
@@ -74,7 +72,7 @@ class CurrencyContextBuilderTest extends ContextBuilderTestCase
         $this->assertEquals($currency->getLocalizedPatterns(), $currencyContext->getLocalizedPatterns());
     }
 
-    public function getCurrencyValues(): iterable
+    public static function getCurrencyValues(): iterable
     {
         yield 'english values' => [
             self::EN_ID,

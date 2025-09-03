@@ -44,9 +44,8 @@ class FloatParserTest extends TestCase
      *
      * @param string $string
      * @param float  $expected
-     *
-     * @dataProvider provideValidStrings
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidStrings')]
     public function testItParsesNumbersFromString($string, $expected): void
     {
         $this->assertSame($expected, (new FloatParser(new ArabicToLatinDigitConverter()))->fromString($string));
@@ -56,9 +55,8 @@ class FloatParserTest extends TestCase
      * Given a value that is not a string
      * When constructing an ImmutableFloat from that value using ::fromString
      * Then an InvalidArgumentException should be thrown
-     *
-     * @dataProvider provideInvalidValues
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidValues')]
     public function testItThrowsExceptionIfNotValid($value): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -66,7 +64,7 @@ class FloatParserTest extends TestCase
         (new FloatParser(new ArabicToLatinDigitConverter()))->fromString($value);
     }
 
-    public function provideValidStrings(): array
+    public static function provideValidStrings(): array
     {
         $expected = 1234567.89;
 
@@ -100,7 +98,7 @@ class FloatParserTest extends TestCase
         ];
     }
 
-    public function provideInvalidValues(): array
+    public static function provideInvalidValues(): array
     {
         return [
             ['1,'],

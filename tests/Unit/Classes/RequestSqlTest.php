@@ -122,9 +122,7 @@ namespace Tests\Unit\Classes {
 
     class RequestSqlTest extends TestCase
     {
-        /**
-         * @dataProvider provider
-         */
+        #[\PHPUnit\Framework\Attributes\DataProvider('provider')]
         public function testValidateSql(string $sql, bool $valid): void
         {
             $requestSql = $this->createRequestSqlMock();
@@ -132,7 +130,7 @@ namespace Tests\Unit\Classes {
             $this->assertSame($valid, $requestSql->validateParser($parser, false, $sql));
         }
 
-        public function provider(): iterable
+        public static function provider(): iterable
         {
             yield ['select * from ps_table', true];
             yield ['select * from ps_notexistingtable', false];

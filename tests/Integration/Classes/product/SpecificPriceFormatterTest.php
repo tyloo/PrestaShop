@@ -72,9 +72,7 @@ class SpecificPriceFormatterTest extends KernelTestCase
         }
     }
 
-    /**
-     * @dataProvider dataProviderSpecificPriceFormatter
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderSpecificPriceFormatter')]
     public function testSpecificPriceFormatter(
         float $price,
         float $taxRate,
@@ -120,7 +118,7 @@ class SpecificPriceFormatterTest extends KernelTestCase
         }
     }
 
-    public function dataProviderSpecificPriceFormatter(): array
+    public static function dataProviderSpecificPriceFormatter(): array
     {
         $specificPrices = [
             0 => [

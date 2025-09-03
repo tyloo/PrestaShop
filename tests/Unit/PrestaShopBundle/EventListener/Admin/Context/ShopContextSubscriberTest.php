@@ -89,9 +89,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $this->assertEquals($expectedShopConstraint, $event->getRequest()->attributes->get('shopConstraint'));
     }
 
-    /**
-     * @dataProvider getMultiShopValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMultiShopValues')]
     public function testMultiShop(?ShopConstraint $tokenShopConstraint, ?array $employeeData, ShopConstraint $expectedShopConstraint, int $expectedShopId): void
     {
         $event = $this->createRequestEvent(new Request());
@@ -202,9 +200,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         ];
     }
 
-    /**
-     * @dataProvider getRedirectionValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getRedirectionValues')]
     public function testMultiShopRedirection(?string $switchParameterValue, ?ShopConstraint $originalTokenShopConstraint, bool $redirectionExpected, string $expectedCookieValue, ShopConstraint $expectedTokenShopConstraint, array $employeeData = []): void
     {
         $requestParameters = $switchParameterValue !== null ? ['setShopContext' => $switchParameterValue] : [];
@@ -485,9 +481,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideLoginShopContext
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideLoginShopContext')]
     public function testInitShopContextOnLogin(array $employeeData, ?ShopConstraint $expectedShopConstraint): void
     {
         $token = $this->createMock(TokenInterface::class);

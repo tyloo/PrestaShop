@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Adapter\Shop\Url\ImageFolderProvider;
 
 class ImageFolderProviderTest extends TestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTestData')]
     public function testGetUrl(string $baseUrl, string $relativeImagePath, string $expectedUrl): void
     {
         $linkMock = $this->createMock(Link::class);
@@ -50,7 +48,7 @@ class ImageFolderProviderTest extends TestCase
         $this->assertEquals($expectedUrl, $generatedUrl);
     }
 
-    public function getTestData(): Generator
+    public static function getTestData(): Generator
     {
         yield ['http://superurl', 'img/p', 'http://superurl/img/p'];
         yield ['http://superurl/', 'img/p', 'http://superurl/img/p'];

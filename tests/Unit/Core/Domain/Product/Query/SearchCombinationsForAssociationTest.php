@@ -45,11 +45,10 @@ class SearchCombinationsForAssociationTest extends TestCase
     private const SHOP_ID = 51;
 
     /**
-     * @dataProvider getValidParameters
-     *
      * @throws ProductConstraintException
      * @throws ShopException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidParameters')]
     public function testValidQuery(string $phrase, int $languageId, int $shopId, array $filters, ?int $limit): void
     {
         $query = new SearchCombinationsForAssociation($phrase, $languageId, $shopId, $filters, $limit);
@@ -61,7 +60,7 @@ class SearchCombinationsForAssociationTest extends TestCase
         $this->assertEquals($limit, $query->getLimit());
     }
 
-    public function getValidParameters(): iterable
+    public static function getValidParameters(): iterable
     {
         yield 'mug_nofilter_nolimit' => [
             'mug',
@@ -96,9 +95,7 @@ class SearchCombinationsForAssociationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidParameters')]
     public function testInvalidQuery(string $phrase, int $languageId, int $shopId, ?int $limit, ?array $filters, string $exceptionClass, int $errorCode): void
     {
         $caughtException = null;
@@ -113,7 +110,7 @@ class SearchCombinationsForAssociationTest extends TestCase
         $this->assertEquals($errorCode, $caughtException->getCode());
     }
 
-    public function getInvalidParameters(): iterable
+    public static function getInvalidParameters(): iterable
     {
         yield [
             'mu',

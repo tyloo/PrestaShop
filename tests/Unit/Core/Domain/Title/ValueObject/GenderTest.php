@@ -42,17 +42,16 @@ class GenderTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderGender
-     *
      * @throws TitleConstraintException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderGender')]
     public function testGoodValues(int $gender): void
     {
         $genderId = new Gender($gender);
         $this->assertEquals($genderId->getValue(), $gender);
     }
 
-    public function dataProviderGender(): array
+    public static function dataProviderGender(): array
     {
         return [
             [

@@ -67,11 +67,10 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
     }
 
     /**
-     * @dataProvider getTestData
-     *
      * @param array<string, mixed>        $formData
      * @param array<string, Constraint[]> $expectedFieldConstraints
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTestData')]
     public function testUpdateFormConstraints(array $formData, array $expectedFieldConstraints): void
     {
         $form = $this->createForm(SimpleVirtualProductFileFormTest::class);

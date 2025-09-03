@@ -68,9 +68,7 @@ class EmployeeContextTest extends TestCase
         $this->assertEquals(42, $employeeContext->getDefaultShopId());
     }
 
-    /**
-     * @dataProvider provideShops
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShops')]
     public function testHasAuthorizationOnShop(bool $isSuperAdmin, array $shopIds, int $testedShopId, bool $expectedAuthorization): void
     {
         $employeeMock = $this->createMock(Employee::class);
@@ -118,9 +116,7 @@ class EmployeeContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideShopGroups
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShopGroups')]
     public function testHasAuthorizationOnShopGroup(bool $isSuperAdmin, array $groupIds, int $testedGroupId, bool $expectedAuthorization): void
     {
         $employeeMock = $this->createMock(Employee::class);
@@ -168,9 +164,7 @@ class EmployeeContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAllShops
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAllShops')]
     public function testHasAuthorizationForAllShops(bool $isSuperAdmin, array $associatedShopIds, array $allShopIds, bool $expectedAuthorization): void
     {
         $employeeMock = $this->createMock(Employee::class);

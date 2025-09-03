@@ -45,9 +45,7 @@ class IsbnTest extends TestCase
         Assert::assertSame('0-8044-2957-X', $isbn->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -56,7 +54,7 @@ class IsbnTest extends TestCase
         new Isbn($value);
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield ['123456789123456789123456789-33'];
         yield ['978-3-16-144100-X']; // X is not valid for ISBN 13

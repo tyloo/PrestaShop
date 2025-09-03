@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Ta
 
 class TagsCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
     public function testBuildCommands(array $formData, array $expectedCommands): void
     {
         $builder = new TagsCommandsBuilder();

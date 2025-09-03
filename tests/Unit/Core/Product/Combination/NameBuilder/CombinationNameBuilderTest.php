@@ -38,10 +38,9 @@ use Tests\Resources\Translator\DummyTranslator;
 class CombinationNameBuilderTest extends TestCase
 {
     /**
-     * @dataProvider getDataForTestItBuildsCombinationName
-     *
      * @param CombinationAttributeInformation[] $combinationAttributesInfo
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestItBuildsCombinationName')]
     public function testItBuildsCombinationName(array $combinationAttributesInfo, string $expected): void
     {
         $nameBuilder = new CombinationNameBuilder(
@@ -55,9 +54,7 @@ class CombinationNameBuilderTest extends TestCase
         Assert::assertSame($expected, $actual);
     }
 
-    /**
-     * @dataProvider getDataForTestItBuildsCombinationFullName
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestItBuildsCombinationFullName')]
     public function testItBuildsCombinationFullName(array $productNameAndCombinationAttributesInfo, string $expected): void
     {
         $nameBuilder = new CombinationNameBuilder(

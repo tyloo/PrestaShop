@@ -95,15 +95,13 @@ class StockManagementControllerTest extends ApiTestCase
         }
     }
 
-    /**
-     * @dataProvider getProductsStockParams
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getProductsStockParams')]
     public function testItShouldReturnOkResponseWhenRequestingProductsStock(array $params, int $expectedTotalPages): void
     {
         $this->assertOkResponseOnList('api_stock_list_products', $params, $expectedTotalPages);
     }
 
-    public function getProductsStockParams(): array
+    public static function getProductsStockParams(): array
     {
         return [
             [
@@ -133,15 +131,13 @@ class StockManagementControllerTest extends ApiTestCase
         ];
     }
 
-    /**
-     * @dataProvider getProductsCombinationsParams
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getProductsCombinationsParams')]
     public function testItShouldReturnOkResponseWhenRequestingProductsCombinationsStock(array $params, int $expectedTotalPages): void
     {
         $this->assertOkResponseOnList('api_stock_list_product_combinations', $params, $expectedTotalPages);
     }
 
-    public function getProductsCombinationsParams(): array
+    public static function getProductsCombinationsParams(): array
     {
         return [
             [
@@ -464,15 +460,13 @@ class StockManagementControllerTest extends ApiTestCase
         $this->assertResponseBodyValidJson(200);
     }
 
-    /**
-     * @dataProvider getMovementsStockParams
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMovementsStockParams')]
     public function itShouldReturnOkResponseWhenRequestingMovementsStock(array $params, int $expectedTotalPages): void
     {
         $this->assertOkResponseOnList('api_stock_list_movements', $params, $expectedTotalPages);
     }
 
-    public function getMovementsStockParams(): array
+    public static function getMovementsStockParams(): array
     {
         return [
             // @TODO when entity manager can save movements in db

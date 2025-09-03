@@ -105,7 +105,7 @@ class SortOrderTest extends TestCase
     /**
      * dataProvider for test_serialization
      */
-    public function serialization_examples(): array
+    public static function serialization_examples(): array
     {
         return [
             [['entity' => 'product',
@@ -114,9 +114,7 @@ class SortOrderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider serialization_examples
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('serialization_examples')]
     public function testSerialization($data): void
     {
         $opt = new SortOrder($data['entity'], $data['field'], $data['direction']);

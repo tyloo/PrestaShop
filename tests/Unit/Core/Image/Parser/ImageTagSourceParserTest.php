@@ -42,9 +42,7 @@ class ImageTagSourceParserTest extends TestCase
         $this->parser = new ImageTagSourceParser();
     }
 
-    /**
-     * @dataProvider getTestCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTestCases')]
     public function testItParsesSourceAsExpected($imageTag, $expectedSource): void
     {
         $parsedSource = $this->parser->parse($imageTag);
@@ -52,7 +50,7 @@ class ImageTagSourceParserTest extends TestCase
         $this->assertSame($expectedSource, $parsedSource);
     }
 
-    public function getTestCases(): array
+    public static function getTestCases(): array
     {
         return [
             [

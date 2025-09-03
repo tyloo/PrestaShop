@@ -34,16 +34,14 @@ use PrestaShop\PrestaShop\Adapter\SqlManager\SqlQueryValidator;
 
 class SqlQueryValidatorTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderValidate
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderValidate')]
     public function testValidate(string $sql, array $errors): void
     {
         $validator = new SqlQueryValidator();
         self::assertEquals($errors, $validator->validate($sql));
     }
 
-    public function dataProviderValidate(): iterable
+    public static function dataProviderValidate(): iterable
     {
         // Valid queries
         yield [

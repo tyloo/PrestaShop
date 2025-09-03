@@ -32,9 +32,7 @@ use PrestaShop\PrestaShop\Core\Localization\Currency\PatternTransformer;
 
 class PatternTransformerTest extends TestCase
 {
-    /**
-     * @dataProvider getDataForTestTransform
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestTransform')]
     public function testTransform(string $basePattern, array $transformations): void
     {
         $transformer = new PatternTransformer();
@@ -47,7 +45,7 @@ class PatternTransformerTest extends TestCase
     /**
      * @return array[]
      */
-    public function getDataForTestTransform(): array
+    public static function getDataForTestTransform(): array
     {
         return [
             'fr' => [
@@ -126,9 +124,7 @@ class PatternTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getDataForTestGetTransformationType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestGetTransformationType')]
     public function testGetTransformationType(string $expectedTransformationType, array $patterns): void
     {
         $transformer = new PatternTransformer();
@@ -142,7 +138,7 @@ class PatternTransformerTest extends TestCase
     /**
      * @return array[]
      */
-    public function getDataForTestGetTransformationType(): array
+    public static function getDataForTestGetTransformationType(): array
     {
         return [
             PatternTransformer::TYPE_LEFT_SYMBOL_WITH_SPACE => [

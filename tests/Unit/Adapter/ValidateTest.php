@@ -46,15 +46,13 @@ class ValidateTest extends TestCase
         $this->validate = new Validate();
     }
 
-    /**
-     * @dataProvider getIsOrderWay
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIsOrderWay')]
     public function testIsOrderWay(int $expected, $input): void
     {
         self::assertEquals($expected, $this->validate::isOrderWay($input));
     }
 
-    public function getIsOrderWay(): iterable
+    public static function getIsOrderWay(): iterable
     {
         yield [0, 'test'];
         yield [0, 1];
@@ -67,15 +65,13 @@ class ValidateTest extends TestCase
         yield [1, 'RANDOM'];
     }
 
-    /**
-     * @dataProvider isEmailDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isEmailDataProvider')]
     public function testIsEmail(bool $expected, string $email): void
     {
         $this->assertSame($expected, $this->validate->isEmail($email));
     }
 
-    public function isEmailDataProvider(): array
+    public static function isEmailDataProvider(): array
     {
         return [
             [true, 'john.doe@prestashop.com'],
@@ -94,15 +90,13 @@ class ValidateTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider isUnsignedIntProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isUnsignedIntProvider')]
     public function testIsUnsignedInt(bool $expected, $value): void
     {
         self::assertEquals($expected, $this->validate->isUnsignedInt($value));
     }
 
-    public function isUnsignedIntProvider(): array
+    public static function isUnsignedIntProvider(): array
     {
         return [
             [true, 1],
@@ -120,23 +114,19 @@ class ValidateTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider isValidObjectClassNameDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isValidObjectClassNameDataProvider')]
     public function testisValidObjectClassName(bool $expected, string $objectClassName): void
     {
         $this->assertSame($expected, $this->validate->isValidObjectClassName($objectClassName));
     }
 
-    /**
-     * @dataProvider isCleanHtmlDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isCleanHtmlDataProvider')]
     public function testIsCleanHtml(string $html, bool $allowFrame, $expectedResult): void
     {
         $this->assertSame($expectedResult, $this->validate->isCleanHtml($html, $allowFrame));
     }
 
-    public function isValidObjectClassNameDataProvider(): array
+    public static function isValidObjectClassNameDataProvider(): array
     {
         return [
             [true, 'MyClassName'],
@@ -152,7 +142,7 @@ class ValidateTest extends TestCase
         ];
     }
 
-    public function isCleanHtmlDataProvider(): array
+    public static function isCleanHtmlDataProvider(): array
     {
         return [
             [

@@ -39,9 +39,8 @@ use Tests\Resources\DatabaseDump;
 /**
  * These tests muste be executed independently because their variants have impact on the cache,
  * that is also hy the cache must be cleared before, after the tests and in between them.
- *
- * @group isolatedProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('isolatedProcess')]
 class DisabledEndpointsTest extends ApiTestCase
 {
     private FeatureFlagManager $featureFlagManager;
@@ -82,9 +81,7 @@ class DisabledEndpointsTest extends ApiTestCase
         }
     }
 
-    /**
-     * @dataProvider getConfigurations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getConfigurations')]
     public function testDisabledEndpoints(bool $isDebug, bool $forceExperimentalEndpoints, bool $expectedEndpointStatus): void
     {
         // Boot kernel with appropriate configuration, exceptionally we force the environment, so we have
@@ -130,7 +127,7 @@ class DisabledEndpointsTest extends ApiTestCase
         $this->assertEquals($expectedEndpointStatus, $foundScope);
     }
 
-    public function getConfigurations(): iterable
+    public static function getConfigurations(): iterable
     {
         yield 'debug mode on, force config is off (not relevant anyway), endpoint is enabled' => [
             true,
@@ -151,9 +148,7 @@ class DisabledEndpointsTest extends ApiTestCase
         ];
     }
 
-    /**
-     * @dataProvider getNotFoundEndpoints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getNotFoundEndpoints')]
     public function testEndpointWithCQRSNotFound(bool $isDebug, bool $forceExperimentalEndpoints, string $endpointMethod, string $endpointUrl, string $endpointScope): void
     {
         // Boot kernel with appropriate configuration, exceptionally we force the environment, so we have

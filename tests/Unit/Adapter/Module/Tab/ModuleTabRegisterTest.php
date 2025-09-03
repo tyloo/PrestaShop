@@ -198,9 +198,7 @@ class ModuleTabRegisterTest extends TestCase
         return $moduleRoutingLoader;
     }
 
-    /**
-     * @dataProvider providerTabs
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerTabs')]
     public function testWorkingTabsAreOk(string $moduleName, array $tabs): void
     {
         foreach ($tabs as $tab) {
@@ -214,9 +212,7 @@ class ModuleTabRegisterTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider providerTabs
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerTabs')]
     public function testNonWorkingTabsThrowException(string $moduleName, array $tabs): void
     {
         foreach ($tabs as $tab) {
@@ -240,9 +236,7 @@ class ModuleTabRegisterTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider providerTabs
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerTabs')]
     public function testTabsListToRegister(string $moduleName, array $data): void
     {
         $tabs = $this->invokeMethod($this->tabRegister, 'addUndeclaredTabs', [$moduleName, $data]);
@@ -286,7 +280,7 @@ class ModuleTabRegisterTest extends TestCase
         $this->assertEquals($expectedResult, $this->invokeMethod($this->tabRegister, 'getTabNames', [$names]));
     }
 
-    public function providerTabs(): iterable
+    public static function providerTabs(): iterable
     {
         yield [
             'gamification',

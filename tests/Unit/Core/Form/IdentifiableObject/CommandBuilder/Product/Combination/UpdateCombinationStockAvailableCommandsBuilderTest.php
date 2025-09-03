@@ -35,10 +35,8 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Co
 
 class UpdateCombinationStockAvailableCommandsBuilderTest extends AbstractCombinationCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedCommands
-     * @dataProvider getExpectedCommandsMultiShop
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommandsMultiShop')]
     public function testBuildCommands(array $formData, array $expectedCommands): void
     {
         $builder = new UpdateCombinationStockAvailableCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);

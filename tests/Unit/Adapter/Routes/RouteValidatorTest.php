@@ -53,9 +53,7 @@ class RouteValidatorTest extends TestCase
         $this->assertFalse((bool) $validator->doesRouteContainsRequiredKeywords('category_rule', 'category/{id}'));
     }
 
-    /**
-     * @dataProvider routeValidationProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('routeValidationProvider')]
     public function testIsRouteValid($routeId, $rule, $expected): void
     {
         $validator = new RouteValidator();
@@ -64,7 +62,7 @@ class RouteValidatorTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function routeValidationProvider(): array
+    public static function routeValidationProvider(): array
     {
         return [
             // Valid route

@@ -43,9 +43,7 @@ class ArrayFinderTest extends TestCase
      */
     private $arrayFinder;
 
-    /**
-     * @before
-     */
+    #[\PHPUnit\Framework\Attributes\Before]
     public function setupComplexArrayFinder(): void
     {
         $this->sampleArray = [

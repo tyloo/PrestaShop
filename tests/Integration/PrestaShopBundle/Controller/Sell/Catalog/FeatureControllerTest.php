@@ -58,9 +58,7 @@ class FeatureControllerTest extends FormGridControllerTestCase
         return $features->count();
     }
 
-    /**
-     * @depends testIndex
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testIndex')]
     public function testCreate(int $initialEntityCount): int
     {
         $this->client->disableReboot();
@@ -89,9 +87,7 @@ class FeatureControllerTest extends FormGridControllerTestCase
         return $createdFeatureId;
     }
 
-    /**
-     * @depends testCreate
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testCreate')]
     public function testEdit(int $featureId): int
     {
         $this->client->disableReboot();
@@ -110,10 +106,8 @@ class FeatureControllerTest extends FormGridControllerTestCase
         return $featureId;
     }
 
-    /**
-     * @depends testIndex
-     * @depends testEdit
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testIndex')]
+    #[\PHPUnit\Framework\Attributes\Depends('testEdit')]
     public function testFilters(int $initialEntityCount, int $featureId): int
     {
         // These are filters which are only supposed to match the created product, they might need to be updated

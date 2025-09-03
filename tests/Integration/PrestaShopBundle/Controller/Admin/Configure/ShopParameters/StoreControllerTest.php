@@ -67,11 +67,8 @@ class StoreControllerTest extends GridControllerTestCase
         $this->assertNotEmpty($stores);
     }
 
-    /**
-     * @depends testIndex
-     *
-     * Testing filters by using already existing entities from fixtures
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testIndex
+Testing filters by using already existing entities from fixtures')]
     public function testFilters(): void
     {
         $gridFilters = [
@@ -123,9 +120,7 @@ class StoreControllerTest extends GridControllerTestCase
         $this->resetGridFilters();
     }
 
-    /**
-     * @depends testFilters
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testFilters')]
     public function testToggleStatus(): void
     {
         $enabledStores = $this->getFilteredEntitiesFromGrid(['store[active]' => 1]);
@@ -152,9 +147,7 @@ class StoreControllerTest extends GridControllerTestCase
         $this->resetGridFilters();
     }
 
-    /**
-     * @depends testToggleStatus
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testToggleStatus')]
     public function testBulkStatusUpdate(): void
     {
         $allStores = $this->getEntitiesFromGrid();
@@ -209,9 +202,7 @@ class StoreControllerTest extends GridControllerTestCase
         $this->resetGridFilters();
     }
 
-    /**
-     * @depends testToggleStatus
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testToggleStatus')]
     public function testDelete(): int
     {
         $this->client->disableReboot();
@@ -225,9 +216,7 @@ class StoreControllerTest extends GridControllerTestCase
         return $entityCount;
     }
 
-    /**
-     * @depends testDelete
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testDelete')]
     public function testBulkDelete(): void
     {
         $this->client->disableReboot();

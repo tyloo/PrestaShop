@@ -51,24 +51,20 @@ class PasswordGeneratorTest extends TestCase
         $this->passwordGenerator = new PasswordGenerator($this->cryptographyMock);
     }
 
-    /**
-     * @dataProvider getInvalidLengthProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidLengthProvider')]
     public function testGeneratePasswordReturnsFalseIfLengthIsInvalid(int $length): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->passwordGenerator->generatePassword($length);
     }
 
-    public function getInvalidLengthProvider(): iterable
+    public static function getInvalidLengthProvider(): iterable
     {
         yield '0' => [0];
         yield '-10' => [-10];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTestData')]
     public function testGeneratePasswordGeneratesRandomPassword(int $length, string $flag, string $expected): void
     {
         $this->cryptographyMock
@@ -79,7 +75,7 @@ class PasswordGeneratorTest extends TestCase
         self::assertSame($this->passwordGenerator->generatePassword($length, $flag), $expected);
     }
 
-    public function getTestData(): iterable
+    public static function getTestData(): iterable
     {
         yield '16-random' => [16, PasswordGenerator::PASSWORDGEN_FLAG_RANDOM, 'cmFuZG9tYnl0ZXNy'];
         yield '8-random' => [8, PasswordGenerator::PASSWORDGEN_FLAG_RANDOM, 'cmFuZG9t'];

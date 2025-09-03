@@ -71,9 +71,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('valid-value', new NotBlank());
     }
 
-    /**
-     * @dataProvider getIncorrectTypeRewriteUrls
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTypeRewriteUrls')]
     public function testItThrowsUnexpectedTypeExceptionOnIncorrectValueTypeProvided($incorrectTypeRewriteUrl): void
     {
         $this->expectException(UnexpectedTypeException::class);
@@ -81,9 +79,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($incorrectTypeRewriteUrl, new IsUrlRewrite());
     }
 
-    /**
-     * @dataProvider getIncorrectRewriteUrls
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectRewriteUrls')]
     public function testItFindsIncorrectUrlRewritePattern($incorrectRewriteUrl): void
     {
         $this->validator->validate($incorrectRewriteUrl, new IsUrlRewrite());
@@ -94,9 +90,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    /**
-     * @dataProvider getCorrectRewriteUrls
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectRewriteUrls')]
     public function testItFindsCorrectUrlRewritePatterns($correctRewriteUrl): void
     {
         $this->validator->validate($correctRewriteUrl, new IsUrlRewrite());
@@ -104,9 +98,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getCorrectRewriteUlrUsingAscendingChars
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectRewriteUlrUsingAscendingChars')]
     public function testItFindsCorrectUrlRewritePatternUsingAscendedChars($correctRewriteUrl): void
     {
         $this->useAscendedChars = true;
@@ -119,7 +111,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function getIncorrectTypeRewriteUrls(): array
+    public static function getIncorrectTypeRewriteUrls(): array
     {
         return [
             [
@@ -131,7 +123,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getIncorrectRewriteUrls(): array
+    public static function getIncorrectRewriteUrls(): array
     {
         return [
             [
@@ -149,7 +141,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getCorrectRewriteUrls(): array
+    public static function getCorrectRewriteUrls(): array
     {
         return [
             [
@@ -164,7 +156,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getCorrectRewriteUlrUsingAscendingChars(): array
+    public static function getCorrectRewriteUlrUsingAscendingChars(): array
     {
         return [
             [

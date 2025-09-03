@@ -43,16 +43,14 @@ class ExceptionBuilderTest extends TestCase
 
     private const EXCEPTION_CODE = 51;
 
-    /**
-     * @dataProvider getExceptionValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExceptionValues')]
     public function testBuild(Throwable $expectedException, string $exceptionClass, string $message, int $errorCode = 0, ?Throwable $previousException = null, ?int $objectModelId = null): void
     {
         $builtException = ExceptionBuilder::buildException($exceptionClass, $message, $errorCode, $previousException, $objectModelId);
         $this->assertEquals($expectedException, $builtException);
     }
 
-    public function getExceptionValues(): iterable
+    public static function getExceptionValues(): iterable
     {
         $previousException = new Exception('test');
 

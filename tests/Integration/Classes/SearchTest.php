@@ -35,9 +35,7 @@ use Search;
 
 class SearchTest extends TestCase
 {
-    /**
-     * @dataProvider providerSearchString()
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerSearchString')]
     public function testSearchSanitizer(string $input, int $langId, array $expected): void
     {
         $result = Search::extractKeyWords($input, $langId);
@@ -45,7 +43,7 @@ class SearchTest extends TestCase
         $this->assertEquals($expected, array_values($result));
     }
 
-    public function providerSearchString(): array
+    public static function providerSearchString(): array
     {
         return [
             'simple' => [
@@ -116,9 +114,7 @@ class SearchTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetSearchParamFromWord
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerGetSearchParamFromWord')]
     public function testGetSearchParamFromWord(string $word, string $expectedKeyWord, bool $withStart, bool $withEnd): void
     {
         Configuration::set('PS_SEARCH_START', $withStart);
@@ -131,7 +127,7 @@ class SearchTest extends TestCase
         );
     }
 
-    public function providerGetSearchParamFromWord(): iterable
+    public static function providerGetSearchParamFromWord(): iterable
     {
         yield ['dress', 'dress%', false, true];
         yield ['dres', 'dres%', false, true];

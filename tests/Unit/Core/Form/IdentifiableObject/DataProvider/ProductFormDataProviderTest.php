@@ -150,9 +150,7 @@ class ProductFormDataProviderTest extends TestCase
         $this->assertNotNull($formData);
     }
 
-    /**
-     * @dataProvider getExpectedData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedData')]
     public function testGetData(array $productData, array $expectedData): void
     {
         $queryBusMock = $this->createQueryBusMock($productData);

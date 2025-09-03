@@ -45,9 +45,7 @@ class ApiClientContextBuilderTest extends TestCase
 
     private const API_CLIENT_ID = 51;
 
-    /**
-     * @dataProvider getExternalIssuers
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExternalIssuers')]
     public function testBuild(?string $externalIssuer): void
     {
         $apiClient = $this->getApiClientEntity($externalIssuer);
@@ -97,7 +95,7 @@ class ApiClientContextBuilderTest extends TestCase
         $this->assertNull($apiClientContext->getApiClient());
     }
 
-    public function getExternalIssuers(): iterable
+    public static function getExternalIssuers(): iterable
     {
         yield 'no external issuer' => [
             null,

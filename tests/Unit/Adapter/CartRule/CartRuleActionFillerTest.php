@@ -44,9 +44,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 
 class CartRuleActionFillerTest extends TestCase
 {
-    /**
-     * @dataProvider getDataToTestUpdatablePropertiesFilling
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataToTestUpdatablePropertiesFilling')]
     public function testFillsUpdatableProperties(
         CartRuleAction $cartRuleAction,
         array $expectedUpdatableProperties,

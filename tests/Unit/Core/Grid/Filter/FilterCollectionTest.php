@@ -44,9 +44,7 @@ class FilterCollectionTest extends TestCase
         return $filters;
     }
 
-    /**
-     * @depends testFilterCollectionIsEmptyByDefault
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testFilterCollectionIsEmptyByDefault')]
     public function testFilterCanBeAddedToCollection(FilterCollection $filters)
     {
         $filters->add($this->getFilterMock('first'));
@@ -58,9 +56,7 @@ class FilterCollectionTest extends TestCase
         return $filters;
     }
 
-    /**
-     * @depends testFilterCanBeAddedToCollection
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testFilterCanBeAddedToCollection')]
     public function testFilterCanBeRemovedFromCollection(FilterCollection $filters): void
     {
         $filters->remove('second');

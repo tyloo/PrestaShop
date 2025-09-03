@@ -33,15 +33,13 @@ use PrestaShop\PrestaShop\Core\Util\String\ModifyAllShopsUtil;
 
 class ModifyAllShopsUtilTest extends TestCase
 {
-    /**
-     * @dataProvider getTestPrefixFieldPathData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTestPrefixFieldPathData')]
     public function testPrefixFieldPath(string $fieldPath, string $prefix, string $expectedResult): void
     {
         self::assertSame($expectedResult, ModifyAllShopsUtil::prefixFieldPathWithAllShops($fieldPath, $prefix));
     }
 
-    public function getTestPrefixFieldPathData(): iterable
+    public static function getTestPrefixFieldPathData(): iterable
     {
         yield [
             '',

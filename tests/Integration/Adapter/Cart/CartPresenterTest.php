@@ -69,9 +69,8 @@ class CartPresenterTest extends TestCase
      *
      * @param string $asString
      * @param array  $asArray
-     *
-     * @dataProvider providerProductAttributes
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerProductAttributes')]
     public function testProductAttributesAreProperlyConverted($asString, $asArray): void
     {
         $this->assertSame(
@@ -84,7 +83,7 @@ class CartPresenterTest extends TestCase
         );
     }
 
-    public function providerProductAttributes(): iterable
+    public static function providerProductAttributes(): iterable
     {
         yield [
             'Taille : S- Couleur : Noir',

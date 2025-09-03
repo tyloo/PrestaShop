@@ -58,9 +58,8 @@ class LegacyFileLoaderTest extends KernelTestCase
     /**
      * @param string  $locale
      * @param array[] $expected
-     *
-     * @dataProvider provideTestCases
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
     public function testItExtractsTranslationsFromLegacyFiles($locale, $expected): void
     {
         self::bootKernel();
@@ -81,7 +80,7 @@ class LegacyFileLoaderTest extends KernelTestCase
         return $this->translationsFolder;
     }
 
-    public function provideTestCases(): array
+    public static function provideTestCases(): array
     {
         return [
             'French' => [

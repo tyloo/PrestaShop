@@ -77,12 +77,11 @@ class ModuleTemplateLoaderTest extends TestCase
     }
 
     /**
-     * @dataProvider getSourceContextsProvider
-     *
      * @param string $sourceContent  the template file content
      * @param string $twigPathAsked  the Twig path asked during Twig template rendering
      * @param string $successMessage in case of failure, describe what is expected
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSourceContextsProvider')]
     public function testGetSourceContext(string $sourceContent, string $twigPathAsked, string $successMessage): void
     {
         $this->assertEquals(
@@ -92,7 +91,7 @@ class ModuleTemplateLoaderTest extends TestCase
         );
     }
 
-    public function getSourceContextsProvider(): array
+    public static function getSourceContextsProvider(): array
     {
         return [
             ['module1', '@ShopParameters/test.html.twig', 'Module 1 wins as Module 3 is loaded after.'],

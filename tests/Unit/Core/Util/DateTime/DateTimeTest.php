@@ -40,25 +40,21 @@ class DateTimeTest extends TestCase
 
     private const DATE_TIME_SAMPLE = '1969-08-16 15:45:18';
 
-    /**
-     * @dataProvider getNullableDates
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getNullableDates')]
     public function testBuildNullDateTime(?string $input): void
     {
         $output = DateTime::buildNullableDateTime($input);
         $this->assertInstanceOf(NullDateTime::class, $output);
     }
 
-    /**
-     * @dataProvider getNullableDates
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getNullableDates')]
     public function testBuildDateTimeOrNull(?string $input): void
     {
         $output = DateTime::buildDateTimeOrNull($input);
         $this->assertNull($output);
     }
 
-    public function getNullableDates(): iterable
+    public static function getNullableDates(): iterable
     {
         yield [null];
         yield [''];
@@ -67,32 +63,29 @@ class DateTimeTest extends TestCase
         yield [DateTime::NULL_DATETIME];
     }
 
-    /**
-     * @dataProvider getDates
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDates')]
     public function testBuildDateTime(?string $input, DateTimeImmutable $expectedOutput): void
     {
         $output = DateTime::buildNullableDateTime($input);
         $this->assertEquals($expectedOutput, $output);
     }
 
-    public function getDates(): iterable
+    public static function getDates(): iterable
     {
         yield [self::DATE_SAMPLE, new DateTimeImmutable(self::DATE_SAMPLE)];
         yield [self::DATE_TIME_SAMPLE, new DateTimeImmutable(self::DATE_TIME_SAMPLE)];
     }
 
     /**
-     * @dataProvider getCheckedValues
-     *
      * @param string|null $input
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCheckedValues')]
     public function testIsNull($input, bool $isNull): void
     {
         $this->assertEquals($isNull, DateTime::isNull($input));
     }
 
-    public function getCheckedValues(): iterable
+    public static function getCheckedValues(): iterable
     {
         yield [null, true];
         yield ['', true];

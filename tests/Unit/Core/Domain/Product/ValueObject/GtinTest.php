@@ -43,9 +43,7 @@ class GtinTest extends TestCase
         Assert::assertSame('97802013796212', $gtin->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -54,7 +52,7 @@ class GtinTest extends TestCase
         new Gtin($value);
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield ['123456789012345'];
         yield ['what'];

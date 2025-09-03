@@ -35,9 +35,7 @@ use ReflectionClass;
 
 class DispatcherTest extends TestCase
 {
-    /**
-     * @dataProvider validateRouteProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('validateRouteProvider')]
     public function testValidateRoute($routeId, $rule, $defaultRoutes, $expectedResult, $expectedErrors): void
     {
         $dispatcher = DispatcherCore::getInstance();
@@ -54,7 +52,7 @@ class DispatcherTest extends TestCase
         $this->assertEquals($expectedErrors, $errors);
     }
 
-    public function validateRouteProvider(): array
+    public static function validateRouteProvider(): array
     {
         return [
             // Valid route: all keywords present, none unknown

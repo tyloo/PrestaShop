@@ -46,9 +46,7 @@ class LocaleNumberTransformerTest extends TestCase
         return new LocaleNumberTransformer($locale);
     }
 
-    /**
-     * @dataProvider provideTransformerTest
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTransformerTest')]
     public function testTransformer(string $localeCode, string $expectedLocale): void
     {
         $transformer = $this->createTransformer($localeCode);
@@ -60,7 +58,7 @@ class LocaleNumberTransformerTest extends TestCase
      *
      * @return array[]
      */
-    public function provideTransformerTest(): array
+    public static function provideTransformerTest(): array
     {
         return [
             ['ar_SA', 'en'],

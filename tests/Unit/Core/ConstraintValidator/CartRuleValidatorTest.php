@@ -54,10 +54,9 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getValidData
-     *
      * @param array<string, mixed> $data
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidData')]
     public function testValidDataDoesNotViolateTheConstraint(array $data): void
     {
         $this->validator->validate($data, new CartRule());
@@ -66,9 +65,7 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
         $this->context->getViolations();
     }
 
-    /**
-     * @dataProvider getDataViolatingTheConstraint
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataViolatingTheConstraint')]
     public function testItBuildsViolation($data, string $expectedViolation, string $expectedErrorPath): void
     {
         $constraint = new CartRule();
@@ -80,25 +77,21 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
         $violation->assertRaised();
     }
 
-    /**
-     * @dataProvider getUnsupportedConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getUnsupportedConstraints')]
     public function testItThrowsExceptionWhenUnsupportedConstraintIsProvided(Constraint $constraint): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate(['whatever, should still fail fast on constraint first'], $constraint);
     }
 
-    /**
-     * @dataProvider getInvalidValueForTypeCheck
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValueForTypeCheck')]
     public function testItThrowsExceptionWhenInvalidValueTypeIsProvided($value): void
     {
         $this->expectException(UnexpectedValueException::class);
         $this->validator->validate($value, new CartRule());
     }
 
-    public function getUnsupportedConstraints(): iterable
+    public static function getUnsupportedConstraints(): iterable
     {
         yield [new DefaultLanguage()];
         yield [new Length(['max' => 1])];
@@ -106,7 +99,7 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
         // there are only one constraint that is supported, no point listing all of not supported ones here
     }
 
-    public function getInvalidValueForTypeCheck(): iterable
+    public static function getInvalidValueForTypeCheck(): iterable
     {
         // only array is supported
         yield ['a'];
@@ -115,7 +108,7 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
         yield [false];
     }
 
-    public function getValidData(): iterable
+    public static function getValidData(): iterable
     {
         yield [
             [
@@ -238,7 +231,7 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getDataViolatingTheConstraint(): iterable
+    public static function getDataViolatingTheConstraint(): iterable
     {
         $constraint = new CartRule();
 

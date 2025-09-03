@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\ValueObject\CustomerThread
 
 class CustomerThreadStatusTest extends TestCase
 {
-    /**
-     * @dataProvider getValidCustomerThreadStatuses
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidCustomerThreadStatuses')]
     public function testCanBeCreatedWithValidStatus($customerThreadStatus): void
     {
         $status = new CustomerThreadStatus($customerThreadStatus);
@@ -43,9 +41,7 @@ class CustomerThreadStatusTest extends TestCase
         $this->assertEquals($customerThreadStatus, $status->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidCustomerThreadStatuses
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCustomerThreadStatuses')]
     public function testThrowsExceptionWhenCreatingWithInvalidStatus($invalidCustomerThreadStatus): void
     {
         $this->expectException(CustomerServiceException::class);
@@ -53,7 +49,7 @@ class CustomerThreadStatusTest extends TestCase
         new CustomerThreadStatus($invalidCustomerThreadStatus);
     }
 
-    public function getValidCustomerThreadStatuses()
+    public static function getValidCustomerThreadStatuses()
     {
         yield [CustomerThreadStatus::PENDING_1];
         yield [CustomerThreadStatus::PENDING_2];
@@ -61,7 +57,7 @@ class CustomerThreadStatusTest extends TestCase
         yield [CustomerThreadStatus::CLOSED];
     }
 
-    public function getInvalidCustomerThreadStatuses()
+    public static function getInvalidCustomerThreadStatuses()
     {
         yield [1];
         yield ['opened'];

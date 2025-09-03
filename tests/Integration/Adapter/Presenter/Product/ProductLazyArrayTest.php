@@ -196,9 +196,7 @@ class ProductLazyArrayTest extends TestCase
         $this->assertNotNull($productLazyArray);
     }
 
-    /**
-     * @dataProvider providerQuantityInformationCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerQuantityInformationCases')]
     public function testQuantityInformations(
         array $product,
         string $availabilityMessage,
@@ -256,9 +254,7 @@ class ProductLazyArrayTest extends TestCase
         $this->assertEquals($availabilityMessage, $productLazyArray->availability_message);
     }
 
-    /**
-     * @dataProvider providerDeliveryInformationCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerDeliveryInformationCases')]
     public function testDeliveryInformation(
         array $product,
         ?string $deliveryInformationMessage,
@@ -780,9 +776,7 @@ class ProductLazyArrayTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideFlagsCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideFlagsCases')]
     public function testFlags(array $product, array $expectedFlags): void
     {
         $this->setDefaultConfiguration();
@@ -829,9 +823,7 @@ class ProductLazyArrayTest extends TestCase
         ]];
     }
 
-    /**
-     * @dataProvider provideFlagOutOfStockCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideFlagOutOfStockCases')]
     public function testFlagsOutOfStock(
         array $product,
         array $expected,
@@ -924,9 +916,7 @@ class ProductLazyArrayTest extends TestCase
         ]), [], false];
     }
 
-    /**
-     * @dataProvider provideFlagPriceCases
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideFlagPriceCases')]
     public function testFlagsPrice(
         array $product,
         array $expected,

@@ -44,9 +44,7 @@ class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
         $this->defaultLanguageId = 1;
     }
 
-    /**
-     * @dataProvider getInvalidValuesForModification
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValuesForModification')]
     public function testReverseTransformationItReturnsSameValueAsPassed($item): void
     {
         $dataTransformer = new DefaultLanguageToFilledArrayDataTransformer($this->defaultLanguageId);

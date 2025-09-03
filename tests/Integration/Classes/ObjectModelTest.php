@@ -154,9 +154,7 @@ class ObjectModelTest extends TestCase
         $this->assertEquals($localizedNames[$this->secondLanguageId], $secondLangObject->name);
     }
 
-    /**
-     * @depends testAdd
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testAdd')]
     public function testUpdate(): void
     {
         $quantity = 42;
@@ -208,11 +206,8 @@ class ObjectModelTest extends TestCase
         $this->assertEquals($localizedNames[$this->secondLanguageId], $secondLangObject->name);
     }
 
-    /**
-     * @depends testUpdate
-     *
-     * @dataProvider getPartialUpdates
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testUpdate')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getPartialUpdates')]
     public function testPartialUpdate(array $initialProperties, array $updatedProperties, array $fieldsToUpdate, array $expectedProperties): void
     {
         // First create the initial object in DB
@@ -238,7 +233,7 @@ class ObjectModelTest extends TestCase
         $this->checkObjectFields($updatedObject, $expectedProperties);
     }
 
-    public function getPartialUpdates(): iterable
+    public static function getPartialUpdates(): iterable
     {
         $initQuantity = 42;
         $updatedQuantity = 51;
@@ -361,11 +356,8 @@ class ObjectModelTest extends TestCase
         ];
     }
 
-    /**
-     * @depends testPartialUpdate
-     *
-     * @dataProvider getMultiShopValues
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testPartialUpdate')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMultiShopValues')]
     public function testMultiShopUpdate(array $initialProperties, array $initialShops, array $multiShopValues, array $expectedMultiShopValues): void
     {
         // First create the initial object
@@ -408,7 +400,7 @@ class ObjectModelTest extends TestCase
         }
     }
 
-    public function getMultiShopValues(): iterable
+    public static function getMultiShopValues(): iterable
     {
         $initQuantity = 42;
         $localizedNames = [
@@ -475,11 +467,8 @@ class ObjectModelTest extends TestCase
         ];
     }
 
-    /**
-     * @depends testMultiShopUpdate
-     *
-     * @dataProvider getPartialMultiShopValues
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testMultiShopUpdate')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getPartialMultiShopValues')]
     public function testPartialMultiShopUpdate(
         array $initialProperties,
         array $initialShops,
@@ -536,7 +525,7 @@ class ObjectModelTest extends TestCase
         }
     }
 
-    public function getPartialMultiShopValues(): iterable
+    public static function getPartialMultiShopValues(): iterable
     {
         $initQuantity = 42;
         $localizedNames = [

@@ -156,9 +156,7 @@ class BackUrlRedirectResponseListenerTest extends TestCase
         $this->assertEquals($expectedUrl, $actual->getTargetUrl());
     }
 
-    /**
-     * @dataProvider getBackUrlsToTest
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getBackUrlsToTest')]
     public function testBackUrlUpdates(Request $currentRequest, string $redirectTarget, string $backUrl, string $expectedTarget): void
     {
         $legacyContextMock = $this->getLegacyContextMock();
@@ -189,7 +187,7 @@ class BackUrlRedirectResponseListenerTest extends TestCase
         $this->assertEquals($expectedTarget, $actual->getTargetUrl());
     }
 
-    public function getBackUrlsToTest(): iterable
+    public static function getBackUrlsToTest(): iterable
     {
         yield 'redirect to current url without back url, nothing changes' => [
             Request::create('http://localhost.org'),

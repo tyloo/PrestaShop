@@ -42,9 +42,7 @@ class SearchProductsForAssociationTest extends TestCase
 
     private const SHOP_ID = 51;
 
-    /**
-     * @dataProvider getValidParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidParameters')]
     public function testValidQuery(string $phrase, int $languageId, int $shopId, ?int $limit): void
     {
         $query = new SearchProductsForAssociation($phrase, $languageId, $shopId, $limit);
@@ -55,7 +53,7 @@ class SearchProductsForAssociationTest extends TestCase
         $this->assertEquals($limit, $query->getLimit());
     }
 
-    public function getValidParameters(): iterable
+    public static function getValidParameters(): iterable
     {
         yield [
             'mug',
@@ -79,9 +77,7 @@ class SearchProductsForAssociationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidParameters')]
     public function testInvalidQuery(string $phrase, int $languageId, int $shopId, ?int $limit, string $exceptionClass, int $errorCode): void
     {
         $caughtException = null;
@@ -96,7 +92,7 @@ class SearchProductsForAssociationTest extends TestCase
         $this->assertEquals($errorCode, $caughtException->getCode());
     }
 
-    public function getInvalidParameters(): iterable
+    public static function getInvalidParameters(): iterable
     {
         yield [
             'mu',

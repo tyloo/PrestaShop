@@ -27,10 +27,8 @@
 
 namespace Tests\Integration\PrestaShopBundle\Controller\Api;
 
-/**
- * @group api
- * @group supplier
- */
+#[\PHPUnit\Framework\Attributes\Group('api')]
+#[\PHPUnit\Framework\Attributes\Group('supplier')]
 class SupplierControllerTest extends ApiTestCase
 {
     public function testItShouldReturnOkResponseWhenRequestingSuppliers(): void

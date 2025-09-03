@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 
 class ProductIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItIsConstructedSuccessfully(int $value): void
     {
         $productId = new ProductId($value);
@@ -45,9 +43,7 @@ class ProductIdTest extends TestCase
         Assert::assertSame($value, $productId->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenBeingConstructedWithInvalidValue(int $value): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -56,14 +52,14 @@ class ProductIdTest extends TestCase
         new ProductId($value);
     }
 
-    public function getValidValues(): iterable
+    public static function getValidValues(): iterable
     {
         yield [1];
         yield [100];
         yield [999991];
     }
 
-    public function getInvalidValues(): iterable
+    public static function getInvalidValues(): iterable
     {
         yield [0];
         yield [-5];

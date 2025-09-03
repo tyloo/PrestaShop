@@ -49,7 +49,7 @@ class ApiAccessTokenEndpointTest extends ApiTestCase
         parent::tearDownAfterClass();
     }
 
-    public function getContentType(): iterable
+    public static function getContentType(): iterable
     {
         yield 'form-urlencoded' => [
             'application/x-www-form-urlencoded',
@@ -60,9 +60,7 @@ class ApiAccessTokenEndpointTest extends ApiTestCase
         ];
     }
 
-    /**
-     * @dataProvider getContentType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getContentType')]
     public function testApiAccessToken(string $contentType): void
     {
         $parameters = ['parameters' => [

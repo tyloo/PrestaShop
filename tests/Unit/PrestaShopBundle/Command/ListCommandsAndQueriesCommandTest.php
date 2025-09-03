@@ -74,9 +74,7 @@ class ListCommandsAndQueriesCommandTest extends TestCase
         parent::setUp();
     }
 
-    /**
-     * @dataProvider optionsProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('optionsProvider')]
     public function testExecute(array $options, string $result): void
     {
         $this->resourceNameCollectionMock->method('create')->willReturn(new ResourceNameCollection());
@@ -108,7 +106,7 @@ class ListCommandsAndQueriesCommandTest extends TestCase
         $commandTester->execute([]);
     }
 
-    public function optionsProvider(): array
+    public static function optionsProvider(): array
     {
         return [
             [

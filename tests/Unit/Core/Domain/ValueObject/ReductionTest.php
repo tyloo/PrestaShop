@@ -37,9 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Reduction;
 
 class ReductionTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValuesForClassCreation
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValuesForClassCreation')]
     public function testItCreatesClassWithValidValues(string $type, string $value): void
     {
         $reduction = new Reduction($type, $value);
@@ -48,9 +46,7 @@ class ReductionTest extends TestCase
         Assert::assertTrue($reduction->getValue()->equals(new DecimalNumber($value)));
     }
 
-    /**
-     * @dataProvider getInvalidTypes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidTypes')]
     public function testItThrowsExceptionWhenInvalidTypeIsProvided(string $type): void
     {
         $this->expectException(DomainConstraintException::class);
@@ -59,9 +55,7 @@ class ReductionTest extends TestCase
         new Reduction($type, '10');
     }
 
-    /**
-     * @dataProvider getInvalidPercentages
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidPercentages')]
     public function testItThrowsExceptionWhenInvalidPercentageIsProvided(string $value): void
     {
         $this->expectException(DomainConstraintException::class);
@@ -70,9 +64,7 @@ class ReductionTest extends TestCase
         new Reduction('percentage', $value);
     }
 
-    /**
-     * @dataProvider getInvalidAmounts
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidAmounts')]
     public function testItThrowsExceptionWhenInvalidAmountIsProvided(string $value): void
     {
         $this->expectException(DomainConstraintException::class);
@@ -81,7 +73,7 @@ class ReductionTest extends TestCase
         new Reduction('amount', $value);
     }
 
-    public function getInvalidTypes(): Generator
+    public static function getInvalidTypes(): Generator
     {
         yield ['random'];
         yield ['NOK'];
@@ -90,19 +82,19 @@ class ReductionTest extends TestCase
         yield ['percent'];
     }
 
-    public function getInvalidAmounts(): Generator
+    public static function getInvalidAmounts(): Generator
     {
         yield ['-10'];
         yield ['-0.33'];
     }
 
-    public function getInvalidPercentages(): Generator
+    public static function getInvalidPercentages(): Generator
     {
         yield ['-10'];
         yield ['200'];
     }
 
-    public function getValidValuesForClassCreation(): Generator
+    public static function getValidValuesForClassCreation(): Generator
     {
         yield ['amount', '10'];
         yield ['amount', '0.33'];

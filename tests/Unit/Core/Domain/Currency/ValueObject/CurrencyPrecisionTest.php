@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\Precision;
 
 class CurrencyPrecisionTest extends TestCase
 {
-    /**
-     * @dataProvider getIncorrectPrecision
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectPrecision')]
     public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectPrecision): void
     {
         $this->expectException(CurrencyConstraintException::class);
@@ -44,7 +42,7 @@ class CurrencyPrecisionTest extends TestCase
         new Precision($incorrectPrecision);
     }
 
-    public function getIncorrectPrecision(): array
+    public static function getIncorrectPrecision(): array
     {
         return [
             [
@@ -56,9 +54,7 @@ class CurrencyPrecisionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getCorrectPrecisions
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectPrecisions')]
     public function testItReturnsRightPrecision($correctNumericIsoCode, $expectedValue): void
     {
         $precision = new Precision($correctNumericIsoCode);
@@ -66,7 +62,7 @@ class CurrencyPrecisionTest extends TestCase
         $this->assertEquals($expectedValue, $precision->getValue());
     }
 
-    public function getCorrectPrecisions(): array
+    public static function getCorrectPrecisions(): array
     {
         return [
             [

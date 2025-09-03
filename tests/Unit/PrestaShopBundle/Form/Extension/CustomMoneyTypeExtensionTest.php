@@ -41,9 +41,7 @@ class CustomMoneyTypeExtensionTest extends TestCase
 {
     private const DEFAULT_CURRENCY_ID = 1;
 
-    /**
-     * @dataProvider getDataForTestBuildViewAssignsCorrectMoneyPatternVariable
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestBuildViewAssignsCorrectMoneyPatternVariable')]
     public function testBuildViewAssignsCorrectMoneyPatternVariable(
         string $currencyIso,
         string $symbol,
@@ -107,7 +105,7 @@ class CustomMoneyTypeExtensionTest extends TestCase
         return $price;
     }
 
-    public function getDataForTestBuildViewAssignsCorrectMoneyPatternVariable(): iterable
+    public static function getDataForTestBuildViewAssignsCorrectMoneyPatternVariable(): iterable
     {
         yield ['EUR', '€', "¤\u{00A0}#,##0.00", "€\u{00A0}{{ widget }}"];
         yield ['USD', '$', '¤#,##0.00', '${{ widget }}'];

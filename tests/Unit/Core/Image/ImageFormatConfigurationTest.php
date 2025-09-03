@@ -38,9 +38,8 @@ class ImageFormatConfigurationTest extends TestCase
 {
     /**
      * Checks if format list given from configuration will be properly processed
-     *
-     * @dataProvider dataProviderGetGenerationFormats
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderGetGenerationFormats')]
     public function testGetGenerationFormats(string $confData, array $expectedResult): void
     {
         $configuration = $this->getMockBuilder(Configuration::class)
@@ -72,9 +71,8 @@ class ImageFormatConfigurationTest extends TestCase
 
     /**
      * Checks that wrong format throw right exception in setListOfGenerationFormats method
-     *
-     * @dataProvider setListOfGenerationFormatsProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('setListOfGenerationFormatsProvider')]
     public function testSetListOfGenerationFormats(array $formatList): void
     {
         $configuration = $this->getMockBuilder(Configuration::class)
@@ -88,9 +86,8 @@ class ImageFormatConfigurationTest extends TestCase
 
     /**
      * Checks if single provided format will be in the final list of formats returned.
-     *
-     * @dataProvider isGenerationFormatSetProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isGenerationFormatSetProvider')]
     public function testIsGenerationFormatSet(string $input, string $confData, bool $expectedResult): void
     {
         $configuration = $this->getMockBuilder(Configuration::class)
@@ -104,7 +101,7 @@ class ImageFormatConfigurationTest extends TestCase
     /**
      * @return array[]
      */
-    public function dataProviderGetGenerationFormats(): array
+    public static function dataProviderGetGenerationFormats(): array
     {
         return [
             ['jpg,png,webp', ['jpg', 'png', 'webp']],
@@ -116,7 +113,7 @@ class ImageFormatConfigurationTest extends TestCase
     /**
      * @return array[]
      */
-    public function setListOfGenerationFormatsProvider(): array
+    public static function setListOfGenerationFormatsProvider(): array
     {
         return [
             [['jpg', 'png', 'fake']],
@@ -127,7 +124,7 @@ class ImageFormatConfigurationTest extends TestCase
     /**
      * @return array[]
      */
-    public function isGenerationFormatSetProvider(): array
+    public static function isGenerationFormatSetProvider(): array
     {
         return [
             ['jpg', 'png,avif,webp', true], // JPG is always added as a base format

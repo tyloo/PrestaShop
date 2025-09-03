@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\IsoCode;
 
 class IsoCodeTest extends TestCase
 {
-    /**
-     * @dataProvider getValidTwoLetterIsoCodes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidTwoLetterIsoCodes')]
     public function testIsoCodeCanBeCreatedWithValidTwoLetterIsoCode($twoLetterIsoCode, $expectedIsoCodeValue): void
     {
         $isoCode = new IsoCode($twoLetterIsoCode);
@@ -43,9 +41,7 @@ class IsoCodeTest extends TestCase
         $this->assertEquals($expectedIsoCodeValue, $isoCode->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidCodes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCodes')]
     public function testIsoCodeCannotBeCreatedWithInvalidValue($invalidIsoCode): void
     {
         $this->expectException(LanguageConstraintException::class);
@@ -53,7 +49,7 @@ class IsoCodeTest extends TestCase
         new IsoCode($invalidIsoCode);
     }
 
-    public function getValidTwoLetterIsoCodes()
+    public static function getValidTwoLetterIsoCodes()
     {
         yield ['lt', 'lt'];
         yield ['fr', 'fr'];
@@ -61,7 +57,7 @@ class IsoCodeTest extends TestCase
         yield ['SW', 'sw'];
     }
 
-    public function getInvalidCodes()
+    public static function getInvalidCodes()
     {
         yield [''];
         yield ['12'];

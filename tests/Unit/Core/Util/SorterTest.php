@@ -34,9 +34,7 @@ use PrestaShop\PrestaShop\Core\Util\Sorter;
 
 class SorterTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderNatural
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderNatural')]
     public function testNatural(
         array $expected,
         array $array,
@@ -51,7 +49,7 @@ class SorterTest extends TestCase
         );
     }
 
-    public function dataProviderNatural(): iterable
+    public static function dataProviderNatural(): iterable
     {
         yield [
             [],

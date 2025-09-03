@@ -157,9 +157,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         ShopResetter::resetShops();
     }
 
-    /**
-     * @dataProvider getMultiShopListParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMultiShopListParameters')]
     public function testMultiShopList(array $shopContext, array $listFilters, int $totalCount, array $productsValues): void
     {
         $this->updateShopConstraintTokenAttribute($shopContext);
@@ -182,7 +180,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         }
     }
 
-    public function getMultiShopListParameters(): iterable
+    public static function getMultiShopListParameters(): iterable
     {
         yield 'list for default shop context' => [
             'shop_context' => [
@@ -322,9 +320,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         ];
     }
 
-    /**
-     * @dataProvider getProductShopPreviewsParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getProductShopPreviewsParameters')]
     public function testProductShopPreviews(array $shopContext, array $listFilters, array $shopPreviews): void
     {
         $this->updateShopConstraintTokenAttribute($shopContext);
@@ -354,7 +350,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         }
     }
 
-    public function getProductShopPreviewsParameters(): iterable
+    public static function getProductShopPreviewsParameters(): iterable
     {
         yield 'test previews for product on all shops with all shops context' => [
             'shop_context' => [],

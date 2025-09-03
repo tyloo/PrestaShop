@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Dimension;
 
 class DimensionTest extends TestCase
 {
-    /**
-     * @dataProvider getDataForTestingItIsConstructedCorrectly
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForTestingItIsConstructedCorrectly')]
     public function testItIsConstructedCorrectly(string $rawValue): void
     {
         $dimension = new Dimension($rawValue);
@@ -52,7 +50,7 @@ class DimensionTest extends TestCase
         new Dimension('-1');
     }
 
-    public function getDataForTestingItIsConstructedCorrectly(): iterable
+    public static function getDataForTestingItIsConstructedCorrectly(): iterable
     {
         yield ['0'];
         yield ['1.5'];

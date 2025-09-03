@@ -32,25 +32,19 @@ use Validate;
 
 class ValidateCoreTest extends TestCase
 {
-    /**
-     * @dataProvider isIp2LongDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isIp2LongDataProvider')]
     public function testIsIp2Long($expected, $input): void
     {
         $this->assertEquals($expected, Validate::isIp2Long($input));
     }
 
-    /**
-     * @dataProvider isEmailDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isEmailDataProvider')]
     public function testIsEmail($expected, $input): void
     {
         $this->assertSame($expected, Validate::isEmail($input));
     }
 
-    /**
-     * @dataProvider isBirthDateProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isBirthDateProvider')]
     public function testIsBirthDate($expected, $input): void
     {
         // data from isBirthDateProvider provider are in UTC
@@ -63,91 +57,71 @@ class ValidateCoreTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider isDateOrNullProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isDateOrNullProvider')]
     public function testIsDateOrNull($expected, $input): void
     {
         $this->assertSame($expected, Validate::isDateOrNull($input));
     }
 
-    /**
-     * @dataProvider isMd5DataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isMd5DataProvider')]
     public function testIsMd5($expected, $input): void
     {
         $this->assertSame($expected, Validate::isMd5($input));
     }
 
-    /**
-     * @dataProvider isSha1DataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isSha1DataProvider')]
     public function testIsSha1($expected, $input): void
     {
         $this->assertSame($expected, Validate::isSha1($input));
     }
 
-    /**
-     * @dataProvider isNameDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isNameDataProvider')]
     public function testIsName($expected, $input): void
     {
         $this->assertSame($expected, Validate::isName($input));
     }
 
-    /**
-     * @dataProvider isCustomerNameDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isCustomerNameDataProvider')]
     public function testIsCustomerName($expected, $input): void
     {
         $this->assertSame($expected, Validate::isCustomerName($input));
     }
 
-    /**
-     * @dataProvider isFloatDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isFloatDataProvider')]
     public function testIsFloat($expected, $input): void
     {
         $this->assertSame($expected, Validate::isFloat($input));
     }
 
-    /**
-     * @dataProvider isUnsignedFloatDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isUnsignedFloatDataProvider')]
     public function testIsUnsignedFloat($expected, $input): void
     {
         $this->assertSame($expected, Validate::isUnsignedFloat($input));
     }
 
-    /**
-     * @depends testIsFloat
-     *
-     * @dataProvider isOptFloatDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testIsFloat')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('isOptFloatDataProvider')]
     public function testIsOptFloat($expected, $input): void
     {
         $this->assertSame($expected, Validate::isOptFloat($input));
     }
 
     /**
-     * @dataProvider isArrayWithIdsDataProvider
-     *
      * @param string|int|array<string|int|bool|array> $input
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isArrayWithIdsDataProvider')]
     public function testIsArrayWithIds(bool $expected, $input): void
     {
         $this->assertSame($expected, Validate::isArrayWithIds($input));
     }
 
-    /**
-     * @dataProvider isUrlDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('isUrlDataProvider')]
     public function testIsUrl(bool $expected, string $url): void
     {
         $this->assertEquals($expected, Validate::isUrl($url));
     }
 
-    public function isUrlDataProvider(): iterable
+    public static function isUrlDataProvider(): iterable
     {
         yield 'test quick access link' => [
             true,
@@ -155,7 +129,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isIp2LongDataProvider(): array
+    public static function isIp2LongDataProvider(): array
     {
         return [
             [false, 'toto'],
@@ -163,7 +137,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isMd5DataProvider(): array
+    public static function isMd5DataProvider(): array
     {
         return [
             [1, md5('SomeRandomString')],
@@ -175,7 +149,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isSha1DataProvider(): array
+    public static function isSha1DataProvider(): array
     {
         return [
             [1, sha1('SomeRandomString')],
@@ -187,7 +161,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isNameDataProvider(): array
+    public static function isNameDataProvider(): array
     {
         return [
             [1, 'Mathieu'],
@@ -220,7 +194,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isCustomerNameDataProvider(): array
+    public static function isCustomerNameDataProvider(): array
     {
         return [
             [true, 'Mathieu'],
@@ -253,7 +227,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isEmailDataProvider(): array
+    public static function isEmailDataProvider(): array
     {
         return [
             [true, 'john.doe@prestashop.com'],
@@ -274,7 +248,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isBirthDateProvider(): array
+    public static function isBirthDateProvider(): array
     {
         return [
             [true, '1991-04-19'],
@@ -316,7 +290,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isDateOrNullProvider(): array
+    public static function isDateOrNullProvider(): array
     {
         return [
             [true, '1991-04-19'],
@@ -386,7 +360,7 @@ class ValidateCoreTest extends TestCase
         );
     }
 
-    public function isArrayWithIdsDataProvider(): array
+    public static function isArrayWithIdsDataProvider(): array
     {
         return [
             [false, 'This is not an array'],

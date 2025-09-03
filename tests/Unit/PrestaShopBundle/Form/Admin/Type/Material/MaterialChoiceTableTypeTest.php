@@ -36,9 +36,7 @@ use Symfony\Component\Form\FormView;
 
 class MaterialChoiceTableTypeTest extends TestCase
 {
-    /**
-     * @dataProvider providerBuildView
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerBuildView')]
     public function testBuildView(array $viewData, array $choices, bool $displayTotalItems, array $expectedReturn): void
     {
         $mockForm = $this
@@ -66,7 +64,7 @@ class MaterialChoiceTableTypeTest extends TestCase
         $this->assertEquals($expectedReturn, [$formView->vars['isCheckSelectAll'], $formView->vars['displayTotalItems']]);
     }
 
-    public function providerBuildView(): array
+    public static function providerBuildView(): array
     {
         return [
             [

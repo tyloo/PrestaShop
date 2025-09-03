@@ -51,9 +51,7 @@ class GeneralConfigurationTest extends AbstractConfigurationTestCase
         'enable_backorder_status' => true,
     ];
 
-    /**
-     * @dataProvider provideShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShopConstraints')]
     public function testGetConfiguration(ShopConstraint $shopConstraint): void
     {
         $generalConfiguration = new GeneralConfiguration(
@@ -86,9 +84,7 @@ class GeneralConfigurationTest extends AbstractConfigurationTestCase
         $this->assertSame(self::VALID_CONFIGURATION, $result);
     }
 
-    /**
-     * @dataProvider provideInvalidConfiguration
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidConfiguration')]
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {
         $generalConfiguration = new GeneralConfiguration(
@@ -104,7 +100,7 @@ class GeneralConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideInvalidConfiguration(): array
+    public static function provideInvalidConfiguration(): array
     {
         return [
             [UndefinedOptionsException::class, ['does_not_exist' => 'does_not_exist']],
@@ -136,7 +132,7 @@ class GeneralConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideShopConstraints(): array
+    public static function provideShopConstraints(): array
     {
         return [
             [ShopConstraint::shop(self::SHOP_ID)],

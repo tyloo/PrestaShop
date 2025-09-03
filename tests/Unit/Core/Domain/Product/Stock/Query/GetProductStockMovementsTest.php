@@ -38,9 +38,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 
 class GetProductStockMovementsTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItIsSuccessfullyConstructed(
         int $productId,
         int $shopId,
@@ -58,7 +56,7 @@ class GetProductStockMovementsTest extends TestCase
         Assert::assertSame($limit, $query->getLimit());
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield 'nominal case' => [
             'productId' => 1,
@@ -74,9 +72,7 @@ class GetProductStockMovementsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(
         string $exceptionClass,
         int $productId,
@@ -94,7 +90,7 @@ class GetProductStockMovementsTest extends TestCase
         );
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield 'productId is negative' => [
             'exceptionClass' => ProductConstraintException::class,

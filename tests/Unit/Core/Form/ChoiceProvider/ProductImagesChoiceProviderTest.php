@@ -50,9 +50,7 @@ class ProductImagesChoiceProviderTest extends TestCase
         $this->assertEmpty($imageChoices);
     }
 
-    /**
-     * @dataProvider getChoicesProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getChoicesProvider')]
     public function testGetChoices(int $productId, int $defaultShopId, ?int $contextShopId, ShopConstraint $expectedShopConstraint): void
     {
         $queryBus = $this->getMockBuilder(CommandBusInterface::class)
@@ -82,7 +80,7 @@ class ProductImagesChoiceProviderTest extends TestCase
         $this->assertEquals($expectedChoices, $imageChoices);
     }
 
-    public function getChoicesProvider(): array
+    public static function getChoicesProvider(): array
     {
         return [
             [42, 1, 2, ShopConstraint::shop(2)],

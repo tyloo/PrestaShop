@@ -101,9 +101,7 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
         self::assertResponseStatusCodeSame(200);
     }
 
-    /**
-     * @depends testAPIIsProtectedByDefault
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testAPIIsProtectedByDefault')]
     public function testGetBearerTokenWhenAdminAPIIsEnabled(): string
     {
         $bearerToken = $this->getBearerToken();
@@ -118,9 +116,7 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
         return $bearerToken;
     }
 
-    /**
-     * @depends testGetBearerTokenWhenAdminAPIIsEnabled
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testGetBearerTokenWhenAdminAPIIsEnabled')]
     public function testAccessTokenNotFoundAfterDisablingAdminAPI(string $bearerToken): string
     {
         // Disable the Admin API feature, we can't even get a token now
@@ -144,9 +140,7 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
         return $bearerToken;
     }
 
-    /**
-     * @depends testAccessTokenNotFoundAfterDisablingAdminAPI
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testAccessTokenNotFoundAfterDisablingAdminAPI')]
     public function testAdminAPIFeatureDisabled(string $bearerToken): string
     {
         // Endpoint is also no longer accessible
@@ -160,9 +154,7 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
         return $bearerToken;
     }
 
-    /**
-     * @depends testAdminAPIFeatureDisabled
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testAdminAPIFeatureDisabled')]
     public function testAdminAPIFeatureMultistoreEnabled(string $bearerToken): string
     {
         // Multistore enabled but it is not enough
@@ -182,9 +174,7 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
         return $bearerToken;
     }
 
-    /**
-     * @depends testAdminAPIFeatureMultistoreEnabled
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testAdminAPIFeatureMultistoreEnabled')]
     public function testAdminAPIFeatureMultistoreSuccess(string $bearerToken): string
     {
         // Enabled feature flag dedicated for authorization in multistore along with Admin API configuration
@@ -202,9 +192,7 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
         return $bearerToken;
     }
 
-    /**
-     * @depends testAdminAPIFeatureMultistoreSuccess
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testAdminAPIFeatureMultistoreSuccess')]
     public function testAdminAPIWhenMultistoreEnabledButNotDedicatedFeatureFlag(string $bearerToken): string
     {
         // Admin API enabled, but not with multistore specific feature flag

@@ -89,9 +89,7 @@ class UploadLogosCommandTest extends TestCase
         $uploadLogosCommand->setUploadedHeaderLogo($uploadedFile);
     }
 
-    /**
-     * @dataProvider dataProviderSetUploadedHeaderLogo
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderSetUploadedHeaderLogo')]
     public function testSetUploadedHeaderLogo(string $path): void
     {
         $uploadLogosCommand = new UploadLogosCommand();
@@ -104,9 +102,7 @@ class UploadLogosCommandTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider dataProviderSetUploadedMailAndInvoiceLogo
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderSetUploadedMailAndInvoiceLogo')]
     public function testSetUploadedMailLogo(string $path): void
     {
         $uploadLogosCommand = new UploadLogosCommand();
@@ -119,9 +115,7 @@ class UploadLogosCommandTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider dataProviderSetUploadedMailAndInvoiceLogo
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderSetUploadedMailAndInvoiceLogo')]
     public function testSetUploadedInvoiceLogo(string $path): void
     {
         $uploadLogosCommand = new UploadLogosCommand();
@@ -137,7 +131,7 @@ class UploadLogosCommandTest extends TestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function dataProviderSetUploadedHeaderLogo(): array
+    public static function dataProviderSetUploadedHeaderLogo(): array
     {
         return [
             [_PS_ROOT_DIR_ . '/tests/Unit/Resources/assets/img/logo.gif'],
@@ -153,7 +147,7 @@ class UploadLogosCommandTest extends TestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function dataProviderSetUploadedMailAndInvoiceLogo(): array
+    public static function dataProviderSetUploadedMailAndInvoiceLogo(): array
     {
         return [
             [_PS_ROOT_DIR_ . '/tests/Unit/Resources/assets/img/logo.gif'],

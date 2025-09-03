@@ -38,9 +38,7 @@ use Tests\Resources\DummyFileUploader;
 
 class VirtualProductFileValidatorTest extends TestCase
 {
-    /**
-     * @dataProvider getInvalidPaths
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidPaths')]
     public function testItThrowsExceptionWhenProvidedPathIsNotLeadingToAFile(string $filePath): void
     {
         $this->expectException(FileNotFoundException::class);
@@ -57,7 +55,7 @@ class VirtualProductFileValidatorTest extends TestCase
         $validator->validate(DummyFileUploader::getDummyFilesPath() . 'app_icon.png');
     }
 
-    public function getInvalidPaths(): Generator
+    public static function getInvalidPaths(): Generator
     {
         yield [__DIR__];
         yield [__DIR__ . '/notexistingfile.csv'];

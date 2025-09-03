@@ -94,9 +94,8 @@ class AdminControllerTest extends TestCase
 
     /**
      * Check if html in trans is not escaped by trans method but escaped with htmlspecialchars on parameters
-     *
-     * @dataProvider getControllersClasses
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getControllersClasses')]
     public function testTrans(string $controllerClass): void
     {
         $testedController = new $controllerClass();
@@ -108,9 +107,7 @@ class AdminControllerTest extends TestCase
         $this->assertEquals('<a href="test">10 Succesful deletion "&lt;b&gt;stringTest&lt;/b&gt;"</a>', $trans);
     }
 
-    /**
-     * @dataProvider getControllersClasses
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getControllersClasses')]
     public function testItShouldRunTheTestedController(string $controllerClass): void
     {
         /** @var Controller $testedController */
@@ -136,7 +133,7 @@ class AdminControllerTest extends TestCase
      * @return array list of all legacy controllers (Back Office)
      *               If you have migrated a page on Symfony, please remove the related test
      */
-    public function getControllersClasses(): array
+    public static function getControllersClasses(): array
     {
         return [
             ['AdminCarriersController'],

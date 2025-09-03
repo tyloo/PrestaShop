@@ -36,9 +36,7 @@ class CombinationListFormDataFormatterTest extends TestCase
 {
     private const MODIFY_ALL_SHOPS_PREFIX = 'modify_all_shops_';
 
-    /**
-     * @dataProvider getDataToFormat
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataToFormat')]
     public function testFormat(array $bulkFormData, array $expectedFormattedData): void
     {
         $formatter = new CombinationListFormDataFormatter(self::MODIFY_ALL_SHOPS_PREFIX);
@@ -46,7 +44,7 @@ class CombinationListFormDataFormatterTest extends TestCase
         $this->assertEquals($formData, $expectedFormattedData);
     }
 
-    public function getDataToFormat(): iterable
+    public static function getDataToFormat(): iterable
     {
         yield 'empty data' => [
             [],

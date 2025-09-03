@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
 
 class CustomerIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testCreateWithPositiveValue(int $value): void
     {
         $customerId = new CustomerId($value);
@@ -45,9 +43,7 @@ class CustomerIdTest extends TestCase
         $this->assertEquals($value, $customerId->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenProvidingInvalidValue(int $value): void
     {
         $this->expectException(CustomerConstraintException::class);
@@ -56,7 +52,7 @@ class CustomerIdTest extends TestCase
         new CustomerId($value);
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield [
             1,
@@ -67,7 +63,7 @@ class CustomerIdTest extends TestCase
         ];
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield [
             0,

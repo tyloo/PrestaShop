@@ -60,9 +60,7 @@ class PrestaShopAdminControllerTest extends SymfonyIntegrationTestCase
         $this->translator = $this->client->getContainer()->get('translator');
     }
 
-    /**
-     * @dataProvider getDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataProvider')]
     public function testPagesAreAvailable(string $pageName, string $route): void
     {
         $uri = $this->router->generate($route);
@@ -96,7 +94,7 @@ class PrestaShopAdminControllerTest extends SymfonyIntegrationTestCase
      *               - with the pages content
      *               - and the route name for each page
      */
-    public function getDataProvider(): array
+    public static function getDataProvider(): array
     {
         return [
             // @todo: something is missing for Vuejs application in translations page.

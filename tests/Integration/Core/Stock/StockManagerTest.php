@@ -83,9 +83,7 @@ class StockManagerTest extends KernelTestCase
         ServiceLocator::setServiceContainerInstance($this->savedContainer);
     }
 
-    /**
-     * @dataProvider dataProviderUpdatePackQuantity
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderUpdatePackQuantity')]
     public function testUpdatePackQuantity(
         int $default_stock_type,
         FakeProduct4759 $pack,
@@ -111,7 +109,7 @@ class StockManagerTest extends KernelTestCase
         }
     }
 
-    public function dataProviderUpdatePackQuantity(): array
+    public static function dataProviderUpdatePackQuantity(): array
     {
         return [
             [ // nominal case
@@ -177,9 +175,7 @@ class StockManagerTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderUpdateProductQuantity
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderUpdateProductQuantity')]
     public function testUpdateProductQuantity(
         int $default_stock_type,
         FakeProduct4759 $pack,
@@ -209,7 +205,7 @@ class StockManagerTest extends KernelTestCase
         }
     }
 
-    public function dataProviderUpdateProductQuantity(): array
+    public static function dataProviderUpdateProductQuantity(): array
     {
         return [
             [ // nominal case: pack not decreased
@@ -275,9 +271,7 @@ class StockManagerTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderUpdateQuantity
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('dataProviderUpdateQuantity')]
     public function testUpdateQuantity(
         int $default_stock_type,
         FakeProduct4759 $pack,
@@ -307,7 +301,7 @@ class StockManagerTest extends KernelTestCase
         }
     }
 
-    public function dataProviderUpdateQuantity(): array
+    public static function dataProviderUpdateQuantity(): array
     {
         return [
             [ // nominal case: pack decreased with sub products

@@ -38,9 +38,7 @@ use Tests\TestCase\AbstractConfigurationTestCase;
 
 class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
 {
-    /**
-     * @dataProvider provideForGetShopConstraint
-     */
+    #[PHPUnit\Framework\Attributes\DataProvider('provideForGetShopConstraint')]
     public function testGetShopConstraint(bool $isAllShopContext, int $shopGroupId, int $shopId, bool $isExpectedResultNull): void
     {
         $abstractMultistoreConfiguration = $this->getTestableClass($isAllShopContext, null, true, $shopGroupId, $shopId);
@@ -66,7 +64,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideForGetShopConstraint(): array
+    public static function provideForGetShopConstraint(): array
     {
         return [
             [true, 1, 1, true],
@@ -75,9 +73,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideForUpdateConfigurationValue
-     */
+    #[PHPUnit\Framework\Attributes\DataProvider('provideForUpdateConfigurationValue')]
     public function testUpdateConfigurationValue(string $fieldName, array $inputValues, bool $isMultistoreUsed, ?string $expectedMethodToBeCalled): void
     {
         // this will test that inside the `UpdateConfigurationValue` method, the right update method will be called depending on situation
@@ -88,7 +84,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideForUpdateConfigurationValue(): array
+    public static function provideForUpdateConfigurationValue(): array
     {
         $multistorePrefix = MultistoreCheckboxEnabler::MULTISTORE_FIELD_PREFIX;
 

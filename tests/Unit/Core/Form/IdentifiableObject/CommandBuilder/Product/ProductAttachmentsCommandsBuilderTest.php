@@ -46,9 +46,7 @@ class ProductAttachmentsCommandsBuilderTest extends AbstractProductCommandBuilde
         $this->commandsBuilder = new ProductAttachmentsCommandsBuilder();
     }
 
-    /**
-     * @dataProvider getExpectedCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
     public function testBuildCommand(array $formData, array $expectedCommands): void
     {
         $builtCommands = $this->commandsBuilder->buildCommands($this->getProductId(), $formData, $this->getSingleShopConstraint());

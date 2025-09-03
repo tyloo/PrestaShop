@@ -55,9 +55,7 @@ class FiltersTest extends TestCase
         $this->assertEquals([], $filters->getFilters());
     }
 
-    /**
-     * @dataProvider getValidOrderBy
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidOrderBy')]
     public function testValidOrderBy(string $validOrderBy): void
     {
         $filters = new SampleFilters(['orderBy' => $validOrderBy]);
@@ -67,7 +65,7 @@ class FiltersTest extends TestCase
         $this->assertEquals($validOrderBy, $filters->getOrderBy());
     }
 
-    public function getValidOrderBy(): iterable
+    public static function getValidOrderBy(): iterable
     {
         yield ['test'];
         yield ['test_underscore'];
@@ -80,16 +78,14 @@ class FiltersTest extends TestCase
         yield ['`ca`.`test`'];
     }
 
-    /**
-     * @dataProvider getInvalidOrderBy
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidOrderBy')]
     public function testInvalidOrderByd(string $invalidOrderBy): void
     {
         $filters = new Filters(['orderBy' => $invalidOrderBy]);
         $this->assertNull($filters->getOrderBy());
     }
 
-    public function getInvalidOrderBy(): iterable
+    public static function getInvalidOrderBy(): iterable
     {
         // Special characters are not accepted
         yield ['test?'];
@@ -122,9 +118,7 @@ class FiltersTest extends TestCase
         yield ['ca.test`test`.'];
     }
 
-    /**
-     * @dataProvider getValidOrderWay
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidOrderWay')]
     public function testSampleFiltersWithValidOrderWay(string $orderWay): void
     {
         $filters = new SampleFilters(['sortOrder' => $orderWay]);
@@ -134,7 +128,7 @@ class FiltersTest extends TestCase
         $this->assertEquals($orderWay, $filters->getOrderWay());
     }
 
-    public function getValidOrderWay(): iterable
+    public static function getValidOrderWay(): iterable
     {
         yield ['ASC'];
         yield ['DESC'];
@@ -144,16 +138,14 @@ class FiltersTest extends TestCase
         yield ['AsC'];
     }
 
-    /**
-     * @dataProvider getInvalidOrderWay
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidOrderWay')]
     public function testSampleFiltersWithInvalidOrderWay(string $orderWay): void
     {
         $filters = new Filters(['sortOrder' => $orderWay]);
         $this->assertNull($filters->getOrderWay());
     }
 
-    public function getInvalidOrderWay(): iterable
+    public static function getInvalidOrderWay(): iterable
     {
         yield ['test'];
         yield ['RAND()'];

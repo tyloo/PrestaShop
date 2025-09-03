@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\TagIETF;
 
 class TagIETFTest extends TestCase
 {
-    /**
-     * @dataProvider getValidTagIETFValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidTagIETFValues')]
     public function testTagIETFCanBeCreatedWithValidValues($validTagIETFValue): void
     {
         $tagIETF = new TagIETF($validTagIETFValue);
@@ -43,9 +41,7 @@ class TagIETFTest extends TestCase
         $this->assertEquals($validTagIETFValue, $tagIETF->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidTagIETFValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidTagIETFValues')]
     public function testTagIETFCanBeCreatedWithInvalidValues($invalidTagIETFValue): void
     {
         $this->expectException(LanguageConstraintException::class);
@@ -53,7 +49,7 @@ class TagIETFTest extends TestCase
         new TagIETF($invalidTagIETFValue);
     }
 
-    public function getValidTagIETFValues()
+    public static function getValidTagIETFValues()
     {
         yield ['fr'];
         yield ['lt-LT'];
@@ -62,7 +58,7 @@ class TagIETFTest extends TestCase
         yield ['EN-AU'];
     }
 
-    public function getInvalidTagIETFValues()
+    public static function getInvalidTagIETFValues()
     {
         yield ['enUS'];
         yield ['ENGB'];

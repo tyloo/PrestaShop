@@ -37,9 +37,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DetailsTypeTest extends TestCase
 {
-    /**
-     * @dataProvider providerBuildForm
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerBuildForm')]
     public function testBuildForm(bool $isFeatureEnabled, array $expectedChildren): void
     {
         $mockTranslatorInterface = $this
@@ -74,7 +72,7 @@ class DetailsTypeTest extends TestCase
     /**
      * @return array<array<bool|array<string>>>
      */
-    public function providerBuildForm(): array
+    public static function providerBuildForm(): array
     {
         return [
             [

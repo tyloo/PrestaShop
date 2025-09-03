@@ -50,9 +50,7 @@ class FormHandlerFactoryTest extends TestCase
         return $factory;
     }
 
-    /**
-     * @depends testCanBeConstructed
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testCanBeConstructed')]
     public function testItCreatesFormHandler(FormHandlerFactoryInterface $factory): void
     {
         $formHandler = $factory->create(

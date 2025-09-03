@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Adapter\Database;
 
 class DatabaseTest extends TestCase
 {
-    public function providerEscape(): iterable
+    public static function providerEscape(): iterable
     {
         yield ['hello', 'hello'];
         yield ['\\\'inject', "'inject"];
@@ -44,9 +44,7 @@ class DatabaseTest extends TestCase
         yield ['4\\\'200', "4'200"];
     }
 
-    /**
-     * @dataProvider providerEscape
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerEscape')]
     public function testValuesAreEscaped($expected, $actual): void
     {
         $db = new Database();

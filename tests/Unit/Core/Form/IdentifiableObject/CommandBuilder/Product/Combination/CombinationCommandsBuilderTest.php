@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Co
 
 class CombinationCommandsBuilderTest extends AbstractCombinationCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedCommands')]
     public function testBuildCommands(array $formData, array $commandBuilders, array $expectedCommands): void
     {
         $builder = new CombinationCommandsBuilder($commandBuilders);

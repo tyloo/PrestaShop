@@ -38,10 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\RedirectTarget;
 class RedirectTargetTest extends TestCase
 {
     /**
-     * @dataProvider getValidDataForCreation
-     *
      * @throws ProductConstraintException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidDataForCreation')]
     public function testItSuccessfullyCreatesRedirectTarget(int $targetValue, bool $isNoTarget): void
     {
         $redirectTarget = new RedirectTarget($targetValue);
@@ -50,17 +49,16 @@ class RedirectTargetTest extends TestCase
         Assert::assertSame($isNoTarget, $redirectTarget->isNoTarget());
     }
 
-    public function getValidDataForCreation(): Generator
+    public static function getValidDataForCreation(): Generator
     {
         yield [1, false];
         yield [0, true];
     }
 
     /**
-     * @dataProvider getInvalidDataForCreation
-     *
      * @throws ProductConstraintException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidDataForCreation')]
     public function testItThrowsExceptionWhenInvalidRedirectTargetIsProvided(int $targetValue): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -69,7 +67,7 @@ class RedirectTargetTest extends TestCase
         new RedirectTarget($targetValue);
     }
 
-    public function getInvalidDataForCreation(): Generator
+    public static function getInvalidDataForCreation(): Generator
     {
         yield [-1];
         yield [-500];

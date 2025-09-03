@@ -52,9 +52,7 @@ class RedirectTargetProviderTest extends TestCase
 
     private const LANGUAGE_ID = 69;
 
-    /**
-     * @dataProvider getRedirectTargetData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getRedirectTargetData')]
     public function testGetRedirectTarget(?array $mockOptions, string $redirectType, int $redirectTargetId, ?RedirectTargetInformation $expectedTarget): void
     {
         $provider = new RedirectTargetProvider(
@@ -67,7 +65,7 @@ class RedirectTargetProviderTest extends TestCase
         $this->assertEquals($expectedTarget, $redirectTarget);
     }
 
-    public function getRedirectTargetData(): Generator
+    public static function getRedirectTargetData(): Generator
     {
         $breadcrumb = 'Category > Path';
         $categoryImage = 'path/to/c/1.jpg';

@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\MovementReasonId
 
 class MovementReasonIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItIsSuccessfullyConstructed(int $value): void
     {
         $specificPriceId = new MovementReasonId($value);
@@ -46,9 +44,7 @@ class MovementReasonIdTest extends TestCase
         Assert::assertSame($value, $specificPriceId->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(int $value): void
     {
         $this->expectException(MovementReasonConstraintException::class);
@@ -56,14 +52,14 @@ class MovementReasonIdTest extends TestCase
         new MovementReasonId($value);
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield [1];
         yield [10];
         yield [5000000001];
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield [0];
         yield [-1];

@@ -62,9 +62,7 @@ class HookDispatcherTest extends TestCase
         ;
     }
 
-    /**
-     * @dataProvider getHookEventNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getHookEventNames')]
     public function testItCallsHookDispatcherWithCaseInsensitiveEventNames(string $eventName): void
     {
         $lowerCasedEventName = strtolower($eventName);
@@ -84,7 +82,7 @@ class HookDispatcherTest extends TestCase
         $this->hookDispatcherMock->dispatch($this->hookEventMock, $eventName);
     }
 
-    public function getHookEventNames()
+    public static function getHookEventNames()
     {
         yield [
             'normalHook',

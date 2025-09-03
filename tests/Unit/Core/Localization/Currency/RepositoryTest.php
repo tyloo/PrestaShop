@@ -111,9 +111,8 @@ class RepositoryTest extends TestCase
      *                                Expected currency symbols, indexed by locale code
      *
      * @throws LocalizationException
-     *
-     * @dataProvider provideValidCurrencyCodes
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidCurrencyCodes')]
     public function testGetCurrency($currencyCode, $expectedNames, $expectedSymbols): void
     {
         $currency = $this->currencyRepository->getCurrency($currencyCode, 'fr-FR');
@@ -136,7 +135,7 @@ class RepositoryTest extends TestCase
      *      [<Expected symbols to receive>]
      *  ]
      */
-    public function provideValidCurrencyCodes(): array
+    public static function provideValidCurrencyCodes(): array
     {
         return [
             'French euro' => [

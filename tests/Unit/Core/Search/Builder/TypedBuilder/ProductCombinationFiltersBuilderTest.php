@@ -39,9 +39,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProductCombinationFiltersBuilderTest extends TestCase
 {
-    /**
-     * @dataProvider getSupportsValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSupportsValues')]
     public function testSupports(string $filtersClass, bool $expectedSupport): void
     {
         $builder = new ProductCombinationFiltersBuilder();
@@ -83,7 +81,7 @@ class ProductCombinationFiltersBuilderTest extends TestCase
         $this->assertEquals(45, $filters['category_id']);
     }
 
-    public function getSupportsValues(): Generator
+    public static function getSupportsValues(): Generator
     {
         yield [
             ProductCombinationFilters::class,

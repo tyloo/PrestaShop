@@ -70,9 +70,7 @@ class SpecificPriceFormDataProviderTest extends TestCase
         $this->assertEquals($expectedDefaultData, $provider->getDefaultData());
     }
 
-    /**
-     * @dataProvider getExpectedData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedData')]
     public function testGetData(SpecificPriceForEditing $specificPriceForEditing, array $expectedData): void
     {
         $queryBusMock = $this->createQueryBusMock($specificPriceForEditing);
@@ -83,7 +81,7 @@ class SpecificPriceFormDataProviderTest extends TestCase
         $this->assertSame($expectedData, $formData);
     }
 
-    public function getExpectedData(): Generator
+    public static function getExpectedData(): Generator
     {
         yield [
             new SpecificPriceForEditing(

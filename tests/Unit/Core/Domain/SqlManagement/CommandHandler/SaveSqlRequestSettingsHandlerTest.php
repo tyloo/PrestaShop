@@ -37,9 +37,7 @@ use PrestaShop\PrestaShop\Core\Encoding\CharsetEncoding;
 
 class SaveSqlRequestSettingsHandlerTest extends TestCase
 {
-    /**
-     * @dataProvider getSettings
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSettings')]
     public function testItSavesSettingsInCorrectFormat(string $configuredValue, string $separator, int $expectedValueFormat): void
     {
         $configuration = $this->createMock(ConfigurationInterface::class);
@@ -50,7 +48,7 @@ class SaveSqlRequestSettingsHandlerTest extends TestCase
         $this->assertNull($handler->handle(new SaveSqlRequestSettingsCommand($configuredValue, $separator)));
     }
 
-    public function getSettings(): array
+    public static function getSettings(): array
     {
         return [
             [

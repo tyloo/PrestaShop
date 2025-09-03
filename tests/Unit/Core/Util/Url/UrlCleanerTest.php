@@ -34,16 +34,14 @@ use PrestaShop\PrestaShop\Core\Util\Url\UrlCleaner;
 
 class UrlCleanerTest extends TestCase
 {
-    /**
-     * @dataProvider getUrlsToClean
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getUrlsToClean')]
     public function testCleanUrl(string $url, array $removedParams, string $expectedUrl): void
     {
         $cleanUrl = UrlCleaner::cleanUrl($url, $removedParams);
         $this->assertEquals($expectedUrl, $cleanUrl);
     }
 
-    public function getUrlsToClean(): iterable
+    public static function getUrlsToClean(): iterable
     {
         yield 'clean absolute url _token' => [
             'http://localhost/admin-dev/product/page?_token=sdfgsdfgsdfgsdfg',

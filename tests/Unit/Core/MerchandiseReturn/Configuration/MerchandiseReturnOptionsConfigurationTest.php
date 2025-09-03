@@ -46,9 +46,7 @@ class MerchandiseReturnOptionsConfigurationTest extends AbstractConfigurationTes
         MerchandiseReturnOptionsType::FIELD_ORDER_RETURN_PREFIX => ['#RE'],
     ];
 
-    /**
-     * @dataProvider provideShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideShopConstraints')]
     public function testGetConfiguration(ShopConstraint $shopConstraint): void
     {
         $merchandiseReturnOptionsConfiguration = new MerchandiseReturnOptionsConfiguration(
@@ -93,9 +91,7 @@ class MerchandiseReturnOptionsConfigurationTest extends AbstractConfigurationTes
         );
     }
 
-    /**
-     * @dataProvider provideInvalidConfiguration
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidConfiguration')]
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {
         $merchandiseReturnOptionsConfiguration = new MerchandiseReturnOptionsConfiguration(
@@ -111,7 +107,7 @@ class MerchandiseReturnOptionsConfigurationTest extends AbstractConfigurationTes
     /**
      * @return array[]
      */
-    public function provideInvalidConfiguration(): array
+    public static function provideInvalidConfiguration(): array
     {
         return [
             [
@@ -158,7 +154,7 @@ class MerchandiseReturnOptionsConfigurationTest extends AbstractConfigurationTes
     /**
      * @return array[]
      */
-    public function provideShopConstraints(): array
+    public static function provideShopConstraints(): array
     {
         return [
             [ShopConstraint::shop(self::SHOP_ID)],

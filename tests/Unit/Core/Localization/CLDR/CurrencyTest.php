@@ -151,9 +151,7 @@ class CurrencyTest extends TestCase
         $this->cldrCurrency->getSymbol('foobar');
     }
 
-    /**
-     * @dataProvider getEmptyDisplayNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getEmptyDisplayNames')]
     public function testFallbackWhenEmptyDisplayNames($displayNamesData): void
     {
         $currencyData = new CurrencyData();
@@ -185,7 +183,7 @@ class CurrencyTest extends TestCase
         );
     }
 
-    public function getEmptyDisplayNames(): iterable
+    public static function getEmptyDisplayNames(): iterable
     {
         yield 'empty array' => [[]];
         yield 'null values' => [null];

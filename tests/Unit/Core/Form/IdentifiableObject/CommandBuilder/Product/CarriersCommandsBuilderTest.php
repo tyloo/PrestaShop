@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Ca
 
 class CarriersCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
-    /**
-     * @dataProvider getExpectedSingleShopCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedSingleShopCommands')]
     public function testBuildSingleShopCommands(array $formData, array $expectedCommands): void
     {
         $builder = new CarriersCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);
@@ -45,9 +43,7 @@ class CarriersCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
         $this->assertEquals($expectedCommands, $builtCommands);
     }
 
-    /**
-     * @dataProvider getExpectedMultiShopCommands
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedMultiShopCommands')]
     public function testBuildMultiShopCommands(array $formData, array $expectedCommands): void
     {
         $builder = new CarriersCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);

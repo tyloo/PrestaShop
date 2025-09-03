@@ -34,9 +34,7 @@ use PrestaShopBundle\Form\DataTransformer\DefaultEmptyDataTransformer;
 
 class DefaultEmptyDataTransformerTest extends TestCase
 {
-    /**
-     * @dataProvider getTransformValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTransformValues')]
     public function testTransform($emptyData, $inputValue, $expectedValue): void
     {
         $transformer = new DefaultEmptyDataTransformer($emptyData);
@@ -47,9 +45,7 @@ class DefaultEmptyDataTransformerTest extends TestCase
         $this->assertTrue($expectedValue === $transformedValue);
     }
 
-    /**
-     * @dataProvider getTransformValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTransformValues')]
     public function testReverseTransform($emptyData, $inputValue, $expectedValue): void
     {
         $transformer = new DefaultEmptyDataTransformer($emptyData);
@@ -82,7 +78,7 @@ class DefaultEmptyDataTransformerTest extends TestCase
         $this->assertTrue($reverseTransformedValue === 0);
     }
 
-    public function getTransformValues()
+    public static function getTransformValues()
     {
         yield [0, null, 0];
         yield [1, null, 1];

@@ -38,9 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\RedirectTarget;
 
 class RedirectOptionTest extends TestCase
 {
-    /**
-     * @dataProvider getValidDataForCreation
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidDataForCreation')]
     public function testItSuccessfullyCreatesRedirectOption(string $redirectType, int $redirectTarget): void
     {
         $redirectOption = new RedirectOption($redirectType, $redirectTarget);
@@ -57,7 +55,7 @@ class RedirectOptionTest extends TestCase
         Assert::assertTrue($redirectOption->getRedirectTarget()->isNoTarget());
     }
 
-    public function getValidDataForCreation(): Generator
+    public static function getValidDataForCreation(): Generator
     {
         yield ['404', 0];
         yield ['301-category', 0];
@@ -66,9 +64,7 @@ class RedirectOptionTest extends TestCase
         yield ['302-product', 50];
     }
 
-    /**
-     * @dataProvider getInvalidDataForCreation
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidDataForCreation')]
     public function testItThrowsExceptionWhenRedirectTargetIsInvalidForSpecifiedRedirectType(string $redirectType, int $redirectTarget): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -77,7 +73,7 @@ class RedirectOptionTest extends TestCase
         new RedirectOption($redirectType, $redirectTarget);
     }
 
-    public function getInvalidDataForCreation(): Generator
+    public static function getInvalidDataForCreation(): Generator
     {
         yield ['301-product', 0];
         yield ['302-product', 0];

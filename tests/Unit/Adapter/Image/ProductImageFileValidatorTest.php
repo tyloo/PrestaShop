@@ -40,11 +40,10 @@ use Throwable;
 class ProductImageFileValidatorTest extends TestCase
 {
     /**
-     * @dataProvider getInvalidMaxUploadSizesForFile
-     *
      * @throws UploadedImageConstraintException
      * @throws ImageUploadException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidMaxUploadSizesForFile')]
     public function testItThrowsExceptionWhenFileSizeIsLargerThanMaxUploadSize(
         string $filePath,
         int $maxPhpIniUploadSize,
@@ -57,9 +56,7 @@ class ProductImageFileValidatorTest extends TestCase
         $imageValidator->assertFileUploadLimits($filePath);
     }
 
-    /**
-     * @dataProvider getValidMaxUploadSizesForFile
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidMaxUploadSizesForFile')]
     public function testItValidatesImageFileSuccessfully(
         string $filePath,
         int $maxPhpIniUploadSize,
@@ -82,7 +79,7 @@ class ProductImageFileValidatorTest extends TestCase
         $this->assertNull($exception);
     }
 
-    public function getValidMaxUploadSizesForFile(): iterable
+    public static function getValidMaxUploadSizesForFile(): iterable
     {
         // logo size is 2.76kb
         $logoPath = DummyFileUploader::getDummyFilesPath() . 'logo.jpg';
@@ -95,7 +92,7 @@ class ProductImageFileValidatorTest extends TestCase
         yield [$appIconPath, 21000, 20000];
     }
 
-    public function getInvalidMaxUploadSizesForFile(): iterable
+    public static function getInvalidMaxUploadSizesForFile(): iterable
     {
         $logoPath = DummyFileUploader::getDummyFilesPath() . 'logo.jpg';
         $appIconPath = DummyFileUploader::getDummyFilesPath() . 'app_icon.png';

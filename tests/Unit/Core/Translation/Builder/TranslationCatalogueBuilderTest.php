@@ -146,10 +146,9 @@ class TranslationCatalogueBuilderTest extends TestCase
     }
 
     /**
-     * @dataProvider getDomainCatalogueStructureProvider
-     *
      * @throws Exception
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDomainCatalogueStructureProvider')]
     public function testGetDomainCatalogueStructure(
         TranslationCatalogueBuilder $translationCatalogueBuilder,
         array $parameters,

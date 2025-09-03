@@ -127,7 +127,7 @@ class ToolsTest extends TestCase
         $this->assertFalse(Tools::getValue(null, true));
     }
 
-    public function providerValueStripsNullCharsFromReturnedStrings(): iterable
+    public static function providerValueStripsNullCharsFromReturnedStrings(): iterable
     {
         yield ["\0", ''];
         yield ["haxx\0r", 'haxxr'];
@@ -135,9 +135,7 @@ class ToolsTest extends TestCase
         yield ['1234\5678', '1234\5678'];
     }
 
-    /**
-     * @dataProvider providerValueStripsNullCharsFromReturnedStrings
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerValueStripsNullCharsFromReturnedStrings')]
     public function testGetValueStripsNullCharsFromReturnedStrings(string $rawString, string $cleanedString): void
     {
         /*
@@ -159,16 +157,14 @@ class ToolsTest extends TestCase
         $this->assertEquals($cleanedString, Tools::getValue('NON EXISTING KEY', $rawString));
     }
 
-    public function providerDirectories(): iterable
+    public static function providerDirectories(): iterable
     {
         yield [__DIR__, true];
         yield [__FILE__, false];
         yield ['dontexists', false];
     }
 
-    /**
-     * @dataProvider providerDirectories
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerDirectories')]
     public function testGetDirectories(string $path, bool $haveFiles): void
     {
         $res1 = Tools::getDirectoriesWithGlob($path);
@@ -186,7 +182,7 @@ class ToolsTest extends TestCase
         $this->assertEquals($haveFiles, $haveFilesTest);
     }
 
-    public function providerSpreadAmount(): array
+    public static function providerSpreadAmount(): array
     {
         return [
             [
@@ -268,9 +264,7 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerSpreadAmount
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerSpreadAmount')]
     public function testSpreadAmount(array $expectedRows, float $amount, int $precision, array $rows, string $column): void
     {
         Tools::spreadAmount($amount, $precision, $rows, $column);
@@ -280,7 +274,7 @@ class ToolsTest extends TestCase
     /**
      * @return array of example taken from the installation of PrestaShop
      */
-    public function providerToCamelCase(): array
+    public static function providerToCamelCase(): array
     {
         return [
             ['address_format', 'addressFormat', false],
@@ -359,16 +353,14 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerToCamelCase
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerToCamelCase')]
     public function testToCamelCase(string $source, string $expected, bool $firstCharUpperCase): void
     {
         $actual = Tools::toCamelCase($source, $firstCharUpperCase);
         $this->assertEquals($expected, $actual, \sprintf('Expected %s to be %s in camel case, got %s instead.', $source, $expected, $actual));
     }
 
-    public function providerStrReplaceFirst(): iterable
+    public static function providerStrReplaceFirst(): iterable
     {
         yield ['s', 'f', 'seed', 0, 'feed'];
         yield ['s', 'f', 'seed', 1, 'seed'];
@@ -377,15 +369,13 @@ class ToolsTest extends TestCase
         yield ['e', 'o', 'feed', 2, 'feod'];
     }
 
-    /**
-     * @dataProvider providerStrReplaceFirst
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerStrReplaceFirst')]
     public function testStrReplaceFirst(string $search, string $replace, string $subject, int $cur, string $expected): void
     {
         $this->assertEquals($expected, Tools::StrReplaceFirst($search, $replace, $subject, $cur));
     }
 
-    public function providerExtractHost(): array
+    public static function providerExtractHost(): array
     {
         return [
             ['http://example.com:80#@google.com/', 'example.com'],
@@ -416,15 +406,13 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerExtractHost
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerExtractHost')]
     public function testExtractUrlDomain(string $url, string $expectedDomain): void
     {
         $this->assertSame($expectedDomain, Tools::extractHost($url));
     }
 
-    public function providerRoundHelper(): array
+    public static function providerRoundHelper(): array
     {
         return [
             [25, 25.32, self::PS_ROUND_UP],
@@ -440,15 +428,13 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerRoundHelper
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerRoundHelper')]
     public function testRoundHelper(float $expectedResult, float $value, int $mode): void
     {
         $this->assertSame($expectedResult, Tools::round_helper($value, $mode));
     }
 
-    public function providerPsRound(): array
+    public static function providerPsRound(): array
     {
         return [
             // 0 precision
@@ -480,9 +466,7 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerPsRound
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerPsRound')]
     public function testPsRound(float $expectedResult, float $value, int $precision, int $mode): void
     {
         $this->assertSame($expectedResult, Tools::ps_round($value, $precision, $mode));
@@ -491,7 +475,7 @@ class ToolsTest extends TestCase
         $this->assertSame($expectedResult, Tools::math_round($value, $precision, $mode));
     }
 
-    public function providerFloorF(): array
+    public static function providerFloorF(): array
     {
         return [
             [25, 25.32, 0],
@@ -500,15 +484,13 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerFloorF
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerFloorF')]
     public function testFloorf(float $expectedResult, float $value, int $precision): void
     {
         $this->assertSame($expectedResult, Tools::floorf($value, $precision));
     }
 
-    public function providerCeilF(): array
+    public static function providerCeilF(): array
     {
         return [
             [26, 25.32, 0],
@@ -518,17 +500,13 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerCeilF
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerCeilF')]
     public function testCeilf(float $expectedResult, float $value, int $precision): void
     {
         $this->assertSame($expectedResult, Tools::ceilf($value, $precision));
     }
 
-    /**
-     * @dataProvider passwordGenProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('passwordGenProvider')]
     public function testPasswdGen(string $expectedPassword, $passwordGenerated): void
     {
         $message = 'The password generated ' . $passwordGenerated . ' no match with ' . $expectedPassword;
@@ -536,7 +514,7 @@ class ToolsTest extends TestCase
         $this->assertMatchesRegularExpression($expectedPassword, $passwordGenerated, $message);
     }
 
-    public function passwordGenProvider(): array
+    public static function passwordGenProvider(): array
     {
         $invalidPasswordLenghtGiven = '//';
         $alphaNumericPasswordWithTencharacters = '/^(\w){10}$/';
@@ -564,15 +542,13 @@ class ToolsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetProtocol
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerGetProtocol')]
     public function testGetProtocol(?bool $useSsl, string $expectedReturn): void
     {
         $this->assertSame(Tools::getProtocol($useSsl), $expectedReturn);
     }
 
-    public function providerGetProtocol(): array
+    public static function providerGetProtocol(): array
     {
         return [
             [true, 'https://'],
@@ -584,15 +560,14 @@ class ToolsTest extends TestCase
     /**
      * @param array{"price_tmp": float} $a
      * @param array{"price_tmp": float} $b
-     *
-     * @dataProvider providerCmpPriceAsc
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerCmpPriceAsc')]
     public function testCmpPriceAsc(int $expectedReturn, $a, $b): void
     {
         $this->assertSame($expectedReturn, cmpPriceAsc($a, $b));
     }
 
-    public function providerCmpPriceAsc(): iterable
+    public static function providerCmpPriceAsc(): iterable
     {
         yield [-1, ['price_tmp' => -0.001], ['price_tmp' => 0]];
         yield [0, ['price_tmp' => 0], ['price_tmp' => 0]];
@@ -602,30 +577,27 @@ class ToolsTest extends TestCase
     /**
      * @param array{"price_tmp": float} $a
      * @param array{"price_tmp": float} $b
-     *
-     * @dataProvider providerCmpPriceDesc
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerCmpPriceDesc')]
     public function testCmpPriceDesc(int $expectedReturn, $a, $b): void
     {
         $this->assertSame($expectedReturn, cmpPriceDesc($a, $b));
     }
 
-    public function providerCmpPriceDesc(): iterable
+    public static function providerCmpPriceDesc(): iterable
     {
         yield [1, ['price_tmp' => -0.001], ['price_tmp' => 0]];
         yield [0, ['price_tmp' => 0], ['price_tmp' => 0]];
         yield [-1, ['price_tmp' => 0.001], ['price_tmp' => 0]];
     }
 
-    /**
-     * @dataProvider providerReplaceAccentedChars
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerReplaceAccentedChars')]
     public function testReplaceAccentedChars(string $expected, string $chars): void
     {
         $this->assertSame(str_repeat($expected, mb_strlen($chars)), Tools::replaceAccentedChars($chars));
     }
 
-    public function providerReplaceAccentedChars(): array
+    public static function providerReplaceAccentedChars(): array
     {
         return [
             ['(C)', '©'],
@@ -744,15 +716,14 @@ class ToolsTest extends TestCase
      * @param string $insertedArrayKey  Key of the inserted array
      * @param array  $insertedArrayData Which data insert to new array?
      * @param string $key               Where to insert the new array?
-     *
-     * @dataProvider providerArrayInsertElementAfterKey
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerArrayInsertElementAfterKey')]
     public function testArrayInsertElementAfterKey(array $expectedResult, array $originalArray, string $insertedArrayKey, array $insertedArrayData, string $key): void
     {
         $this->assertSame($expectedResult, Tools::arrayInsertElementAfterKey($originalArray, $key, $insertedArrayKey, $insertedArrayData));
     }
 
-    public function providerArrayInsertElementAfterKey(): iterable
+    public static function providerArrayInsertElementAfterKey(): iterable
     {
         $originalArray = [
             'field1' => [
@@ -827,9 +798,8 @@ class ToolsTest extends TestCase
      * This test verifies the rewrite rules to be written in the .htaccess file against the expected url segments
      *
      * @see Tools::generateHtaccess
-     *
-     * @dataProvider provideHtaccessRules
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideHtaccessRules')]
     public function testHtaccessRewriteRules(string $rule, string $replacement, array $testCases): void
     {
         $rule = \sprintf('~%s~', $rule);
@@ -847,7 +817,7 @@ class ToolsTest extends TestCase
         }
     }
 
-    public function provideHtaccessRules(): array
+    public static function provideHtaccessRules(): array
     {
         return [
             'legacy product images 1' => [

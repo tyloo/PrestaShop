@@ -47,9 +47,7 @@ class ReaderTest extends TestCase
         $this->reader = new Reader();
     }
 
-    /**
-     * @dataProvider provideLocaleData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideLocaleData')]
     public function testReadLocaleData(string $localeCode, array $expectedData): void
     {
         $localeData = $this->reader->readLocaleData($localeCode);
@@ -85,7 +83,7 @@ class ReaderTest extends TestCase
         );
     }
 
-    public function provideLocaleData(): array
+    public static function provideLocaleData(): array
     {
         return [
             'root' => [

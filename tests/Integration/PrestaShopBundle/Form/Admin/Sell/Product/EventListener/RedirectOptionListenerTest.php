@@ -53,9 +53,7 @@ class RedirectOptionListenerTest extends FormListenerTestCase
         $this->assertSame($expectedSubscribedEvents, array_keys($subscribedEvents));
     }
 
-    /**
-     * @dataProvider getExpectedOptionsBasedOnData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedOptionsBasedOnData')]
     public function testTargetOptionsBasedOnData(string $redirectionType, array $expectedOptions): void
     {
         $form = $this->createForm(SimpleTargetFormTest::class);
@@ -67,7 +65,7 @@ class RedirectOptionListenerTest extends FormListenerTestCase
         }
     }
 
-    public function getExpectedOptionsBasedOnData(): Generator
+    public static function getExpectedOptionsBasedOnData(): Generator
     {
         yield [
             RedirectType::TYPE_CATEGORY_PERMANENT,

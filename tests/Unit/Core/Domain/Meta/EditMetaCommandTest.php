@@ -34,18 +34,14 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\Exception\MetaException;
 
 class EditMetaCommandTest extends TestCase
 {
-    /**
-     * @dataProvider getIncorrectIds
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectIds')]
     public function testItThrowsAnExceptionOnIncorrectMetaIdPassed($incorrectId): void
     {
         $this->expectException(MetaException::class);
         new EditMetaCommand($incorrectId);
     }
 
-    /**
-     * @dataProvider getIncorrectPageNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectPageNames')]
     public function testItThrowsAnExceptionOnIncorrectOrMissingPageName($incorrectPageName): void
     {
         $this->expectException(MetaConstraintException::class);
@@ -55,9 +51,7 @@ class EditMetaCommandTest extends TestCase
         $command->setPageName($incorrectPageName);
     }
 
-    /**
-     * @dataProvider getIncorrectMultiLanguageNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectMultiLanguageNames')]
     public function testItThrowsAnExceptionOnIncorrectPageTitle($incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
@@ -68,9 +62,7 @@ class EditMetaCommandTest extends TestCase
         $command->setLocalisedPageTitles($incorrectNames);
     }
 
-    /**
-     * @dataProvider getIncorrectMultiLanguageNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectMultiLanguageNames')]
     public function testItThrowsAnExceptionOnIncorrectPageDescription($incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
@@ -81,7 +73,7 @@ class EditMetaCommandTest extends TestCase
         $command->setLocalisedMetaDescriptions($incorrectNames);
     }
 
-    public function getIncorrectPageNames(): array
+    public static function getIncorrectPageNames(): array
     {
         return [
             [
@@ -96,7 +88,7 @@ class EditMetaCommandTest extends TestCase
         ];
     }
 
-    public function getIncorrectMultiLanguageNames(): array
+    public static function getIncorrectMultiLanguageNames(): array
     {
         return [
             [
@@ -107,7 +99,7 @@ class EditMetaCommandTest extends TestCase
         ];
     }
 
-    public function getIncorrectIds(): array
+    public static function getIncorrectIds(): array
     {
         return [
             [

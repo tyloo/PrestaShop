@@ -42,9 +42,7 @@ class ZipCodePatternResolverTest extends TestCase
         $this->resolver = new ZipCodePatternResolver();
     }
 
-    /**
-     * @dataProvider regexpPatternDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('regexpPatternDataProvider')]
     public function testGetRegexpPattern(string $format, string $isoCode, string $expectedResult): void
     {
         $result = $this->resolver->getRegexPattern($format, $isoCode);
@@ -52,9 +50,7 @@ class ZipCodePatternResolverTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    /**
-     * @dataProvider humanReadablePatternDataProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('humanReadablePatternDataProvider')]
     public function testGetHumanReadablePattern(string $format, string $isoCode, string $expectedResult): void
     {
         $result = $this->resolver->getHumanReadablePattern($format, $isoCode);

@@ -35,9 +35,7 @@ use StylesheetManager;
 
 class StylesheetManagerTest extends TestCase
 {
-    /**
-     * @dataProvider providerIsAssets
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerIsAssets')]
     public function testIsAssets(string $id, bool $toBeFound, $expectedPath): void
     {
         $testsPath = '/tests/Resources/assets_manager/';
@@ -70,7 +68,7 @@ class StylesheetManagerTest extends TestCase
         }
     }
 
-    public function providerIsAssets(): iterable
+    public static function providerIsAssets(): iterable
     {
         yield ['theme-ok-1', true, 'theme.css'];
         yield ['theme-fail-1', false, false];

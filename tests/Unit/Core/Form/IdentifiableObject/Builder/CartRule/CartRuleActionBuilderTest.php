@@ -47,32 +47,29 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\CartRule\CartRule
 class CartRuleActionBuilderTest extends TestCase
 {
     /**
-     * @dataProvider getSupportedData
-     *
      * @param array<string, mixed> $data
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSupportedData')]
     public function testItSupportsData(array $data): void
     {
         Assert::assertTrue($this->getCartRuleActionBuilder()->supports($data));
     }
 
     /**
-     * @dataProvider getUnsupportedData
-     *
      * @param array<string, mixed> $data
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getUnsupportedData')]
     public function testItDoesNotSupportData(array $data): void
     {
         Assert::assertFalse($this->getCartRuleActionBuilder()->supports($data));
     }
 
     /**
-     * @dataProvider getInvalidData
-     *
      * @param array<string, mixed> $data
      *
      * @throws CartRuleConstraintException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidData')]
     public function testItThrowsExceptionWhenDataIsInvalidToBuildAction(array $data, string $expectedException, int $expectedCode = 0): void
     {
         $this->expectException($expectedException);
@@ -82,13 +79,12 @@ class CartRuleActionBuilderTest extends TestCase
     }
 
     /**
-     * @dataProvider getDataForFreeShippingAction
-     * @dataProvider getDataForAmountDiscountAction
-     * @dataProvider getDataForPercentageDiscountAction
-     * @dataProvider getDataForMixedAction
-     *
      * @param array<string, mixed> $data
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForFreeShippingAction')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForAmountDiscountAction')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForPercentageDiscountAction')]
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForMixedAction')]
     public function testItBuildsAction(
         array $data,
         CartRuleAction $expectedAction,
@@ -98,7 +94,7 @@ class CartRuleActionBuilderTest extends TestCase
         Assert::assertEquals($expectedAction, $action);
     }
 
-    public function getSupportedData(): iterable
+    public static function getSupportedData(): iterable
     {
         yield [
             ['free_shipping' => true],
@@ -166,7 +162,7 @@ class CartRuleActionBuilderTest extends TestCase
         ];
     }
 
-    public function getUnsupportedData(): iterable
+    public static function getUnsupportedData(): iterable
     {
         yield [
             [[]],
@@ -199,7 +195,7 @@ class CartRuleActionBuilderTest extends TestCase
         ];
     }
 
-    public function getInvalidData(): iterable
+    public static function getInvalidData(): iterable
     {
         yield [
             [
@@ -336,7 +332,7 @@ class CartRuleActionBuilderTest extends TestCase
         ];
     }
 
-    public function getDataForFreeShippingAction(): iterable
+    public static function getDataForFreeShippingAction(): iterable
     {
         yield [
             ['free_shipping' => true],
@@ -368,7 +364,7 @@ class CartRuleActionBuilderTest extends TestCase
         ];
     }
 
-    public function getDataForAmountDiscountAction(): iterable
+    public static function getDataForAmountDiscountAction(): iterable
     {
         yield 'amount action' => [
             [
@@ -416,7 +412,7 @@ class CartRuleActionBuilderTest extends TestCase
         ];
     }
 
-    public function getDataForPercentageDiscountAction(): iterable
+    public static function getDataForPercentageDiscountAction(): iterable
     {
         yield 'percent action with free_shipping not set' => [
             [
@@ -464,7 +460,7 @@ class CartRuleActionBuilderTest extends TestCase
         ];
     }
 
-    public function getDataForMixedAction(): iterable
+    public static function getDataForMixedAction(): iterable
     {
         yield 'free shipping with gift product' => [
             [

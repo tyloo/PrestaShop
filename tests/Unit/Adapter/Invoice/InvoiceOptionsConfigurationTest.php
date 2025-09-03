@@ -87,9 +87,7 @@ class InvoiceOptionsConfigurationTest extends AbstractConfigurationTestCase
         ;
     }
 
-    /**
-     * @dataProvider provideInvalidConfiguration
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidConfiguration')]
     public function testUpdateConfigurationWithInvalidConfiguration(string $exception, array $values): void
     {
         $invoiceOptionsConfiguration = new InvoiceOptionsConfiguration($this->mockConfiguration, $this->mockShopConfiguration, $this->mockMultistoreFeature, $this->invoiceModelChoiceProvider);
@@ -101,7 +99,7 @@ class InvoiceOptionsConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideInvalidConfiguration(): array
+    public static function provideInvalidConfiguration(): array
     {
         return [
             [UndefinedOptionsException::class, ['does_not_exist' => 'does_not_exist']],
@@ -124,9 +122,7 @@ class InvoiceOptionsConfigurationTest extends AbstractConfigurationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideValidConfiguration
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideValidConfiguration')]
     public function testSuccessfulUpdate(array $values): void
     {
         $invoiceOptionsConfiguration = new InvoiceOptionsConfiguration($this->mockConfiguration, $this->mockShopConfiguration, $this->mockMultistoreFeature, $this->invoiceModelChoiceProvider);
@@ -138,7 +134,7 @@ class InvoiceOptionsConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return array[]
      */
-    public function provideValidConfiguration(): array
+    public static function provideValidConfiguration(): array
     {
         return [
             [self::VALID_CONFIGURATION],

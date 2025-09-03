@@ -38,9 +38,7 @@ use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 
 class ValueObjectNormalizerTest extends TestCase
 {
-    /**
-     * @dataProvider getSupportsNormalizationValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSupportsNormalizationValues')]
     public function testSupportsNormalization(mixed $data, bool $expectedSupport): void
     {
         $normalizer = new ValueObjectNormalizer(new ClassMetadataFactory(new AttributeLoader()));
@@ -55,9 +53,7 @@ class ValueObjectNormalizerTest extends TestCase
         yield 'object without getValue method' => [new ContactTypeChoiceProvider(1), false];
     }
 
-    /**
-     * @dataProvider getNormalizationValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getNormalizationValues')]
     public function testNormalize(mixed $data, mixed $expectedNormalization, array $context = []): void
     {
         $normalizer = new ValueObjectNormalizer(new ClassMetadataFactory(new AttributeLoader()));
@@ -73,16 +69,14 @@ class ValueObjectNormalizerTest extends TestCase
         yield 'VO string as scalar' => [new ProductType(ProductType::TYPE_STANDARD), ProductType::TYPE_STANDARD, [ValueObjectNormalizer::VALUE_OBJECT_RETURNED_AS_SCALAR => true]];
     }
 
-    /**
-     * @dataProvider getSupportsDenormalizationValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSupportsDenormalizationValues')]
     public function testSupportsDenormalization(mixed $data, string $type, bool $expectedSupport): void
     {
         $normalizer = new ValueObjectNormalizer(new ClassMetadataFactory(new AttributeLoader()));
         $this->assertEquals($expectedSupport, $normalizer->supportsDenormalization($data, $type));
     }
 
-    public function getSupportsDenormalizationValues(): iterable
+    public static function getSupportsDenormalizationValues(): iterable
     {
         yield 'class with single parameter but not a ValueObject' => [1, EditCartRuleCommand::class, false];
 
@@ -99,16 +93,14 @@ class ValueObjectNormalizerTest extends TestCase
         yield 'product type integer' => [42, ProductType::class, false];
     }
 
-    /**
-     * @dataProvider getSupportsDenormalizeValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSupportsDenormalizeValues')]
     public function testDenormalize(mixed $data, string $type, mixed $expectedDenormalize, array $context = []): void
     {
         $normalizer = new ValueObjectNormalizer(new ClassMetadataFactory(new AttributeLoader()));
         $this->assertEquals($expectedDenormalize, $normalizer->denormalize($data, $type, null, $context));
     }
 
-    public function getSupportsDenormalizeValues(): iterable
+    public static function getSupportsDenormalizeValues(): iterable
     {
         yield 'product ID' => [['productId' => 42], ProductId::class, new ProductId(42)];
         yield 'product ID snake case' => [['product_id' => 42], ProductId::class, new ProductId(42)];

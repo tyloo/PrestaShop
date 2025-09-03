@@ -35,25 +35,21 @@ use PrestaShop\PrestaShop\Adapter\Image\ImagePathFactory;
 
 class ImagePathFactoryTest extends TestCase
 {
-    /**
-     * @dataProvider getArgumentsForSmokeTest
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getArgumentsForSmokeTest')]
     public function testConstructImagePathFactory(string $pathToBaseDir): void
     {
         $imagePathFactory = new ImagePathFactory($pathToBaseDir);
         $this->assertInstanceOf(ImagePathFactory::class, $imagePathFactory);
     }
 
-    public function getArgumentsForSmokeTest(): Generator
+    public static function getArgumentsForSmokeTest(): Generator
     {
         yield ['/img/p/'];
         yield ['/img/c'];
         yield ['/img'];
     }
 
-    /**
-     * @dataProvider getDataForBaseImagePathBuilding
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDataForBaseImagePathBuilding')]
     public function testGetPath(string $pathToBaseDir, int $entityId, string $expected): void
     {
         $imagePathFactory = new ImagePathFactory($pathToBaseDir);
@@ -61,7 +57,7 @@ class ImagePathFactoryTest extends TestCase
         $this->assertEquals($expected, $imagePathFactory->getPath($entityId));
     }
 
-    public function getDataForBaseImagePathBuilding(): Generator
+    public static function getDataForBaseImagePathBuilding(): Generator
     {
         yield ['/img/p', 42, '/img/p/42.jpg'];
         yield ['/img/p', 51, '/img/p/51.jpg'];

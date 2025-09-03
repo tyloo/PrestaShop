@@ -47,9 +47,7 @@ class CombinationListenerTest extends FormListenerTestCase
         $this->assertSame($expectedSubscribedEvents, array_keys($subscribedEvents));
     }
 
-    /**
-     * @dataProvider getStockMovements
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getStockMovements')]
     public function testStockMovementsRemovedBasedOnItsContent(array $movementsData, bool $shouldExist): void
     {
         $formData = [
@@ -70,7 +68,7 @@ class CombinationListenerTest extends FormListenerTestCase
         $this->assertFormTypeExistsInForm($form, 'stock.quantities.stock_movements', $shouldExist);
     }
 
-    public function getStockMovements(): iterable
+    public static function getStockMovements(): iterable
     {
         yield [[], false];
 

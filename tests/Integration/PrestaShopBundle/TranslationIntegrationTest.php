@@ -46,15 +46,13 @@ class TranslationIntegrationTest extends KernelTestCase
         $this->translator = self::$kernel->getContainer()->get('translator');
     }
 
-    /**
-     * @dataProvider getExpectedTranslations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedTranslations')]
     public function testTranslator(string $expectedTranslatedMessage, string $message, string $domain, array $parameters, ?string $locale = null): void
     {
         self::assertEquals($expectedTranslatedMessage, $this->translator->trans($message, $parameters, $domain, $locale));
     }
 
-    public function getExpectedTranslations(): iterable
+    public static function getExpectedTranslations(): iterable
     {
         yield 'simple translation' => [
             'A new order has been placed on your shop',
@@ -107,15 +105,13 @@ class TranslationIntegrationTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider getExpectedTransChoices
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedTransChoices')]
     public function testTranslatorChoice(string $expectedTranslatedMessage, string $message, int $number, string $domain, array $parameters): void
     {
         self::assertEquals($expectedTranslatedMessage, $this->translator->transChoice($message, $number, $parameters, $domain));
     }
 
-    public function getExpectedTransChoices(): iterable
+    public static function getExpectedTransChoices(): iterable
     {
         yield 'translation with plural format' => [
             'This value is too short. It should have 3 characters or more.',

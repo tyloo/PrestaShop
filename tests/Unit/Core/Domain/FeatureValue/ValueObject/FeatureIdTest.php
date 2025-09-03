@@ -35,24 +35,20 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 
 class FeatureIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidInput
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidInput')]
     public function testValidInput(int $featureValueId): void
     {
         $vo = new FeatureId($featureValueId);
         $this->assertEquals($featureValueId, $vo->getValue());
     }
 
-    public function getValidInput(): iterable
+    public static function getValidInput(): iterable
     {
         yield [1000];
         yield [1];
     }
 
-    /**
-     * @dataProvider getInvalidInput
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidInput')]
     public function testInvalidInput($featureValueId): void
     {
         $this->expectException(FeatureConstraintException::class);
@@ -60,7 +56,7 @@ class FeatureIdTest extends TestCase
         new FeatureId($featureValueId);
     }
 
-    public function getInvalidInput(): iterable
+    public static function getInvalidInput(): iterable
     {
         yield [0];
         yield [-1];

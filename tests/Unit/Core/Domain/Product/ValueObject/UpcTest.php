@@ -43,9 +43,7 @@ class UpcTest extends TestCase
         Assert::assertSame('12345678901', $reference->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(string $value): void
     {
         $this->expectException(ProductConstraintException::class);
@@ -54,7 +52,7 @@ class UpcTest extends TestCase
         new Upc($value);
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield ['1234567890013'];
         yield ['what'];

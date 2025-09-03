@@ -41,16 +41,14 @@ class FeatureValueIdTest extends TestCase
         $this->assertNotNull($vo);
     }
 
-    /**
-     * @dataProvider getInvalidInput
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidInput')]
     public function testInvalidInput(int $featureValueId): void
     {
         $this->expectException(InvalidFeatureValueIdException::class);
         new FeatureValueId($featureValueId);
     }
 
-    public function getInvalidInput()
+    public static function getInvalidInput()
     {
         yield [
             0,

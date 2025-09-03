@@ -37,10 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\Priority
 class PriorityListTest extends TestCase
 {
     /**
-     * @dataProvider getValidPriorities
-     *
      * @param string[] $priorities
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidPriorities')]
     public function testCreatesObjectWithValidPriorities(array $priorities): void
     {
         $priorityList = new PriorityList($priorities);
@@ -49,10 +48,9 @@ class PriorityListTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidPriorities
-     *
      * @param string[] $priorities
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidPriorities')]
     public function testThrowsExceptionWhenInvalidAreProvided(array $priorities): void
     {
         $this->expectException(SpecificPriceConstraintException::class);
@@ -62,10 +60,9 @@ class PriorityListTest extends TestCase
     }
 
     /**
-     * @dataProvider getDuplicatePriorities
-     *
      * @param string[] $priorities
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getDuplicatePriorities')]
     public function testThrowsExceptionWhenDuplicatePrioritiesAreProvided(array $priorities): void
     {
         $this->expectException(SpecificPriceConstraintException::class);
@@ -74,7 +71,7 @@ class PriorityListTest extends TestCase
         new PriorityList($priorities);
     }
 
-    public function getValidPriorities(): Generator
+    public static function getValidPriorities(): Generator
     {
         yield [
             ['id_country', 'id_currency', 'id_group', 'id_shop'],
@@ -85,7 +82,7 @@ class PriorityListTest extends TestCase
         ];
     }
 
-    public function getInvalidPriorities(): Generator
+    public static function getInvalidPriorities(): Generator
     {
         yield [
             ['id_random', 'id_currency', 'id_group', 'id_shop'],
@@ -93,7 +90,7 @@ class PriorityListTest extends TestCase
         ];
     }
 
-    public function getDuplicatePriorities(): Generator
+    public static function getDuplicatePriorities(): Generator
     {
         yield [
             ['id_currency', 'id_currency', 'id_group', 'id_shop'],

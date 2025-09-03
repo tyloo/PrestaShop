@@ -75,47 +75,41 @@ class StringModifierTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider getTooLongStringsForEndCutting
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTooLongStringsForEndCutting')]
     public function testItCutsStringEndIfItIsTooLong(string $string, int $length, string $expectedOutput): void
     {
         $output = $this->stringModifier->cutEnd($string, $length);
         $this->assertEquals($expectedOutput, $output);
     }
 
-    /**
-     * @dataProvider getNotTooLongStringsForEndCutting
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getNotTooLongStringsForEndCutting')]
     public function testItDoesNotCutStringEndIfItsNotTooLong(string $string, int $length): void
     {
         $output = $this->stringModifier->cutEnd($string, $length);
         $this->assertEquals($string, $output);
     }
 
-    public function getTooLongStringsForEndCutting(): Generator
+    public static function getTooLongStringsForEndCutting(): Generator
     {
         yield ['test', 3, 'tes'];
         yield ['testable', 7, 'testabl'];
         yield ['hello world 899', 13, 'hello world 8'];
     }
 
-    public function getNotTooLongStringsForEndCutting(): Generator
+    public static function getNotTooLongStringsForEndCutting(): Generator
     {
         yield ['test', 4];
         yield ['testable', 20];
         yield ['good bye cruel world 10.99', 128];
     }
 
-    /**
-     * @dataProvider str2UrlProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('str2UrlProvider')]
     public function testStr2url(string $input, string $expected, bool $allow_accented_chars): void
     {
         self::assertSame($expected, $this->stringModifier->str2url($input, $allow_accented_chars));
     }
 
-    public function str2UrlProvider(): Generator
+    public static function str2UrlProvider(): Generator
     {
         yield ['!@#$%^&*()_+-={}[]|:;"<>,.?/', '-', false];
         yield ['Some !@#$%^&*()_+-={}[]|:;"<>,.?/ text', 'some-text', false];
@@ -128,15 +122,13 @@ class StringModifierTest extends TestCase
         yield ['Some text 123 with unicode characters: áéíóú', 'some-text-123-with-unicode-characters-áéíóú', true];
     }
 
-    /**
-     * @dataProvider getTestReplaceAccentedCharactersData
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTestReplaceAccentedCharactersData')]
     public function testReplaceAccentedCharacters(string $input, string $expected): void
     {
         self::assertSame($expected, $this->stringModifier->replaceAccentedChars($input));
     }
 
-    public function getTestReplaceAccentedCharactersData(): Generator
+    public static function getTestReplaceAccentedCharactersData(): Generator
     {
         yield 'empty string' => ['', ''];
         yield 'Test a variations' => ['aaâæaa', 'aaaaeaa'];

@@ -36,9 +36,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class LegacyRouteFactoryTest extends TestCase
 {
-    /**
-     * @dataProvider getRouteDataProviderFeatureFlag
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getRouteDataProviderFeatureFlag')]
     public function testRouteEnabledWithEnabledFeatureFlags(Route $route): void
     {
         $factory = new LegacyRouteFactory(
@@ -63,7 +61,7 @@ class LegacyRouteFactoryTest extends TestCase
         self::assertContainsOnlyInstancesOf(LegacyRoute::class, $routes);
     }
 
-    public function getRouteDataProviderFeatureFlag(): iterable
+    public static function getRouteDataProviderFeatureFlag(): iterable
     {
         yield [new Route('/', [
             '_legacy_link' => 'AdminController',
@@ -71,9 +69,7 @@ class LegacyRouteFactoryTest extends TestCase
         ])];
     }
 
-    /**
-     * @dataProvider getRoutes
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getRoutes')]
     public function testRouteWithoutFeatureFlagShouldNeverCallRepository(
         Route $route,
     ): void {
@@ -95,7 +91,7 @@ class LegacyRouteFactoryTest extends TestCase
         self::assertContainsOnlyInstancesOf(LegacyRoute::class, $routes);
     }
 
-    public function getRoutes(): iterable
+    public static function getRoutes(): iterable
     {
         yield [new Route('/')];
         yield [new Route('/', [

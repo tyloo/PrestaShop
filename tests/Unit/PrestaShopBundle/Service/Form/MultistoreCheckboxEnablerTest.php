@@ -49,9 +49,7 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
         parent::setUp();
     }
 
-    /**
-     * @dataProvider provideShouldAddMultistoreElements
-     */
+    #[PHPUnit\Framework\Attributes\DataProvider('provideShouldAddMultistoreElements')]
     public function testShouldAddMultistoreElements(bool $isMultistoreUsed, bool $isAllShopContext, bool $expectedValue): void
     {
         $checkboxEnabler = new MultistoreCheckboxEnabler(
@@ -64,7 +62,7 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
         $this->assertEquals($expectedValue, $checkboxEnabler->shouldAddMultistoreElements());
     }
 
-    public function provideShouldAddMultistoreElements(): array
+    public static function provideShouldAddMultistoreElements(): array
     {
         return [
             [true, false, true],

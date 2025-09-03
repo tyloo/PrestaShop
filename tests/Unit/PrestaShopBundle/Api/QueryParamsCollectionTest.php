@@ -36,9 +36,7 @@ use PrestaShopBundle\Api\QueryStockParamsCollection;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @group api
- */
+#[\PHPUnit\Framework\Attributes\Group('api')]
 class QueryParamsCollectionTest extends TestCase
 {
     /**
@@ -51,9 +49,7 @@ class QueryParamsCollectionTest extends TestCase
         $this->queryParams = new QueryStockParamsCollection();
     }
 
-    /**
-     * @dataProvider getInvalidPaginationParams
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidPaginationParams')]
     public function testItShouldRaiseAnExceptionOnInvalidPaginationParams(int $pageIndex, int $pageSize): void
     {
         try {
@@ -74,7 +70,7 @@ class QueryParamsCollectionTest extends TestCase
         }
     }
 
-    public function getInvalidPaginationParams(): array
+    public static function getInvalidPaginationParams(): array
     {
         return [
             [
@@ -89,11 +85,10 @@ class QueryParamsCollectionTest extends TestCase
     }
 
     /**
-     * @dataProvider getQueryParams
-     *
      * @param int|string|null $pageIndex
      * @param int|string|null $pageSize
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getQueryParams')]
     public function testItShouldMakeQueryParamsFromARequest(
         string $order,
         $pageIndex,
@@ -125,11 +120,10 @@ class QueryParamsCollectionTest extends TestCase
     }
 
     /**
-     * @dataProvider getQueryParams
-     *
      * @param int|string|null $pageIndex
      * @param int|string|null $pageSize
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getQueryParams')]
     public function testItShouldMakeQueryParamsWithProductFilterFromARequest(
         string $order,
         $pageIndex,
@@ -161,7 +155,7 @@ class QueryParamsCollectionTest extends TestCase
         $this->assertEquals($expectedSqlClauses, $sqlParts);
     }
 
-    public function getQueryParams(): array
+    public static function getQueryParams(): array
     {
         return [
             ['product', null, '1', [
@@ -209,9 +203,7 @@ class QueryParamsCollectionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getFilterParams
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getFilterParams')]
     public function testItShouldMakeQueryParamsWithFilterFromARequest(
         array $params,
         array $expectedSql,
@@ -229,7 +221,7 @@ class QueryParamsCollectionTest extends TestCase
         );
     }
 
-    public function getFilterParams(): array
+    public static function getFilterParams(): array
     {
         $supplierFilterMessage = 'It should provide with a SQL condition clause on supplier';
         $categoryFilterMessage = 'It should provide with a SQL condition clause on category';

@@ -35,31 +35,27 @@ use PrestaShop\PrestaShop\Core\Domain\ImageSettings\ValueObject\ImageTypeId;
 
 class ImageTypeIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidInput
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidInput')]
     public function testValidInput(int $imageTypeId): void
     {
         $vo = new ImageTypeId($imageTypeId);
         $this->assertEquals($imageTypeId, $vo->getValue());
     }
 
-    public function getValidInput(): iterable
+    public static function getValidInput(): iterable
     {
         yield [1000];
         yield [1];
     }
 
-    /**
-     * @dataProvider getInvalidInput
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidInput')]
     public function testInvalidInput($imageTypeId): void
     {
         $this->expectException(ImageTypeException::class);
         new ImageTypeId($imageTypeId);
     }
 
-    public function getInvalidInput(): iterable
+    public static function getInvalidInput(): iterable
     {
         yield [0];
         yield [-1];

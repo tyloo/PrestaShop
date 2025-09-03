@@ -36,9 +36,7 @@ use PrestaShopBundle\Form\Admin\Sell\Product\DataTransformer\RedirectionTargetTr
 
 class RedirectionTargetTransformerTest extends TestCase
 {
-    /**
-     * @dataProvider getTransformValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTransformValues')]
     public function testTransform(?array $input, ?array $expectedResult): void
     {
         $transformer = new RedirectionTargetTransformer();
@@ -46,7 +44,7 @@ class RedirectionTargetTransformerTest extends TestCase
         $this->assertEquals($expectedResult, $transformed);
     }
 
-    public function getTransformValues(): Generator
+    public static function getTransformValues(): Generator
     {
         yield [
             [
@@ -161,9 +159,7 @@ class RedirectionTargetTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getReverseTransformValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getReverseTransformValues')]
     public function testReverseTransform(?array $input, ?array $expectedResult): void
     {
         $transformer = new RedirectionTargetTransformer();
@@ -171,7 +167,7 @@ class RedirectionTargetTransformerTest extends TestCase
         $this->assertEquals($expectedResult, $transformed);
     }
 
-    public function getReverseTransformValues(): Generator
+    public static function getReverseTransformValues(): Generator
     {
         yield [
             [

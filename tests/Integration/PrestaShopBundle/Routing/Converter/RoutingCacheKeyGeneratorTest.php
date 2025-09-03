@@ -38,9 +38,8 @@ use Tools;
 
 /**
  * These tests clear the cache manually, so it's better to run it isolated.
- *
- * @group isolatedProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('isolatedProcess')]
 class RoutingCacheKeyGeneratorTest extends KernelTestCase
 {
     /**

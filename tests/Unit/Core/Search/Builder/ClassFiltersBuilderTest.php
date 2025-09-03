@@ -90,9 +90,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertInstanceOf(SampleFilters::class, $builtFilters);
     }
 
-    /**
-     * @dataProvider getShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getShopConstraints')]
     public function testCreateWithShopConstraint($shopConstraint, $expectedShopConstraint): void
     {
         $builder = new ClassFiltersBuilder();
@@ -106,9 +104,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertEquals($expectedShopConstraint, $builtFilters->getShopConstraint());
     }
 
-    /**
-     * @dataProvider getShopConstraints
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getShopConstraints')]
     public function testUpdateWithShopConstraint($shopConstraint, $expectedShopConstraint): void
     {
         $builder = new ClassFiltersBuilder();
@@ -123,7 +119,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertEquals($expectedShopConstraint, $builtFilters->getShopConstraint());
     }
 
-    public function getShopConstraints(): iterable
+    public static function getShopConstraints(): iterable
     {
         $constraint = ShopConstraint::shop(42);
         yield 'single shop constraint' => [$constraint, $constraint];

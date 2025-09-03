@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId;
 
 class CurrencyIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testCreateWithPositiveValue(int $value): void
     {
         $currencyId = new CurrencyId($value);
@@ -45,9 +43,7 @@ class CurrencyIdTest extends TestCase
         $this->assertEquals($value, $currencyId->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenProvidingInvalidValue(int $value): void
     {
         $this->expectException(CurrencyConstraintException::class);
@@ -56,7 +52,7 @@ class CurrencyIdTest extends TestCase
         new CurrencyId($value);
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield [
             10,
@@ -67,7 +63,7 @@ class CurrencyIdTest extends TestCase
         ];
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield [
             0,

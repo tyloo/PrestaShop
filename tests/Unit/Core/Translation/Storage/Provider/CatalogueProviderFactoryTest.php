@@ -95,17 +95,16 @@ class CatalogueProviderFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider getProviderData
-     *
      * @throws UnexpectedTranslationTypeException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getProviderData')]
     public function testGetProvider($providerDefinition, $providerClass): void
     {
         $provider = $this->factory->getProvider($providerDefinition);
         $this->assertInstanceOf($providerClass, $provider);
     }
 
-    public function getProviderData(): iterable
+    public static function getProviderData(): iterable
     {
         yield [
             new BackofficeProviderDefinition(),

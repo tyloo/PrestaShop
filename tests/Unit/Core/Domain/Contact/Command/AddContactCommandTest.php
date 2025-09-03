@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Contact\Exception\ContactConstraintExcepti
 
 class AddContactCommandTest extends TestCase
 {
-    /**
-     * @dataProvider getIncorrectTitles
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTitles')]
     public function testItThrowsAnExceptionOnIncorrectTitle(array $incorrectTitle): void
     {
         $this->expectException(ContactConstraintException::class);
@@ -44,7 +42,7 @@ class AddContactCommandTest extends TestCase
         new AddContactCommand($incorrectTitle, false);
     }
 
-    public function getIncorrectTitles(): array
+    public static function getIncorrectTitles(): array
     {
         return [
             [
@@ -66,9 +64,7 @@ class AddContactCommandTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getIncorrectShopAssociations
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectShopAssociations')]
     public function testItThrowsAnExceptionOnIncorrectShopAssociation(array $incorrectShopAssociation): void
     {
         $this->expectException(ContactConstraintException::class);
@@ -84,7 +80,7 @@ class AddContactCommandTest extends TestCase
         $command->setShopAssociation($incorrectShopAssociation);
     }
 
-    public function getIncorrectShopAssociations(): array
+    public static function getIncorrectShopAssociations(): array
     {
         return [
             [

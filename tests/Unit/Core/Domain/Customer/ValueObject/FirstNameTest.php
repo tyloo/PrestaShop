@@ -43,9 +43,7 @@ class FirstNameTest extends TestCase
         new FirstName($veryLongFirstName);
     }
 
-    /**
-     * @dataProvider getInvalidFirstNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidFirstNames')]
     public function testItThrowsExceptionWhenInvalidFirstNameIsSupplied($invalidFirstName): void
     {
         $this->expectException(CustomerConstraintException::class);
@@ -54,9 +52,7 @@ class FirstNameTest extends TestCase
         new FirstName($invalidFirstName);
     }
 
-    /**
-     * @dataProvider getValidFirstNames
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidFirstNames')]
     public function testItCreatesFirstNameWithValid($validFirstName): void
     {
         $firstName = new FirstName($validFirstName);
@@ -64,7 +60,7 @@ class FirstNameTest extends TestCase
         $this->assertEquals($validFirstName, $firstName->getValue());
     }
 
-    public function getInvalidFirstNames()
+    public static function getInvalidFirstNames()
     {
         yield ['First123Name'];
         yield ['My !@# name'];
@@ -73,7 +69,7 @@ class FirstNameTest extends TestCase
         yield ['@My@first%name'];
     }
 
-    public function getValidFirstNames()
+    public static function getValidFirstNames()
     {
         yield ['Demo Demo'];
         yield ['MyNameIsPrettyLong'];

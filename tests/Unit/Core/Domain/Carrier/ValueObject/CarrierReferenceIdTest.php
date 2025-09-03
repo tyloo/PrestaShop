@@ -41,9 +41,7 @@ class CarrierReferenceIdTest extends TestCase
         Assert::assertSame(500, $carrierReferenceId->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenInvalidValueIsProvided(int $invalidValue): void
     {
         $this->expectException(CarrierConstraintException::class);
@@ -52,7 +50,7 @@ class CarrierReferenceIdTest extends TestCase
         new CarrierReferenceId($invalidValue);
     }
 
-    public function getInvalidValues(): iterable
+    public static function getInvalidValues(): iterable
     {
         yield [0];
         yield [-5];

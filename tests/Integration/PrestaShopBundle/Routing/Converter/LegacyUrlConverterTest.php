@@ -275,9 +275,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         $this->assertInstanceOf(LegacyUrlConverter::class, $converter);
     }
 
-    /**
-     * @dataProvider getMigratedControllers
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMigratedControllers')]
     public function testConverterByParameters(
         string $expectedUrl,
         string $controller,
@@ -349,9 +347,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         $this->assertTrue($convertedUrl . ' is already a converted url' === $caughtException->getMessage());
     }
 
-    /**
-     * @dataProvider getMigratedControllers
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMigratedControllers')]
     public function testLegacyLinkClass(
         string $expectedUrl,
         string $controller,
@@ -369,9 +365,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         $this->assertSameUrl($expectedUrl, $linkUrl);
     }
 
-    /**
-     * @dataProvider getMigratedControllers
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getMigratedControllers')]
     public function testLegacyClassParameterAction(
         string $expectedUrl,
         string $controller,
@@ -390,11 +384,10 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
     /**
      * Mainly used to ensure the legacy links are not broken.
      *
-     * @dataProvider getLegacyControllers
-     *
      * @throws PrestaShopException
      * @throws ReflectionException
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getLegacyControllers')]
     public function testLegacyControllers(string $expectedUrl, string $controller, ?array $parameters = null): void
     {
         $parameters ??= [];

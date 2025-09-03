@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\ExchangeRate;
 
 class CurrencyExchangeRateTest extends TestCase
 {
-    /**
-     * @dataProvider getIncorrectExchangeRates
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectExchangeRates')]
     public function testItThrowsAnExceptionOnIncorrectExchangeRate($incorrectExchangeRate): void
     {
         $this->expectException(CurrencyConstraintException::class);
@@ -44,7 +42,7 @@ class CurrencyExchangeRateTest extends TestCase
         new ExchangeRate($incorrectExchangeRate);
     }
 
-    public function getIncorrectExchangeRates(): array
+    public static function getIncorrectExchangeRates(): array
     {
         return [
             [
@@ -59,9 +57,7 @@ class CurrencyExchangeRateTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getCorrectExchangeRates
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectExchangeRates')]
     public function testItGetsExpectedExchangeRate($correctRate): void
     {
         $exchangeRate = new ExchangeRate($correctRate);
@@ -69,7 +65,7 @@ class CurrencyExchangeRateTest extends TestCase
         $this->assertEquals($correctRate, $exchangeRate->getValue());
     }
 
-    public function getCorrectExchangeRates()
+    public static function getCorrectExchangeRates()
     {
         yield [1.55];
         yield [1];

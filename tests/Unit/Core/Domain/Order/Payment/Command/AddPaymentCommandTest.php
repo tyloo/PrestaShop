@@ -48,9 +48,7 @@ class AddPaymentCommandTest extends TestCase
         new AddPaymentCommand(1, date('Y-m-d'), '', '0', 2, 3);
     }
 
-    /**
-     * @dataProvider getInvalidChars
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidChars')]
     public function testPaymentMethodWithInvalidCharacters(string $invalidChar): void
     {
         $this->expectException(OrderConstraintException::class);
@@ -58,7 +56,7 @@ class AddPaymentCommandTest extends TestCase
         new AddPaymentCommand(1, date('Y-m-d'), $invalidChar . 'Check', '0', 2, 3);
     }
 
-    public function getInvalidChars(): iterable
+    public static function getInvalidChars(): iterable
     {
         foreach (str_split(AddPaymentCommand::INVALID_CHARACTERS_NAME) as $invalidChar) {
             yield [$invalidChar];

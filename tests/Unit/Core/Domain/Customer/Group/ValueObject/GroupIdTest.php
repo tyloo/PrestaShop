@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\GroupId;
 
 class GroupIdTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testCreateWithPositiveValue(int $value): void
     {
         $groupId = new GroupId($value);
@@ -45,9 +43,7 @@ class GroupIdTest extends TestCase
         $this->assertEquals($value, $groupId->getValue());
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenProvidingInvalidValue(int $value): void
     {
         $this->expectException(GroupConstraintException::class);
@@ -56,7 +52,7 @@ class GroupIdTest extends TestCase
         new GroupId($value);
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield [
             1,
@@ -67,7 +63,7 @@ class GroupIdTest extends TestCase
         ];
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield [
             0,

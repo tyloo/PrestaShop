@@ -47,9 +47,8 @@ use Tests\Integration\Utility\LoginTrait;
 
 /**
  * The controller installs and uninstalls modules so it needs to clear the cache, that's why it's better isolated
- *
- * @group isolatedProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('isolatedProcess')]
 class PositionsControllerTest extends TestCase
 {
     use LoginTrait;

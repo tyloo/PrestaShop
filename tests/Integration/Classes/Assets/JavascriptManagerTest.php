@@ -35,9 +35,7 @@ use PrestaShop\PrestaShop\Adapter\Configuration;
 
 class JavascriptManagerTest extends TestCase
 {
-    /**
-     * @dataProvider providerIsAssets
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('providerIsAssets')]
     public function testIsAssets(string $id, bool $toBeFound, $expectedPath): void
     {
         $expectedAsset = false;
@@ -69,7 +67,7 @@ class JavascriptManagerTest extends TestCase
         }
     }
 
-    public function providerIsAssets(): iterable
+    public static function providerIsAssets(): iterable
     {
         yield ['corejs-ok-1', true, 'core.js'];
         yield ['corejs-fail-1', false, false];

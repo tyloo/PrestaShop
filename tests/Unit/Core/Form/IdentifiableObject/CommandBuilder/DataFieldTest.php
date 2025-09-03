@@ -37,9 +37,7 @@ use Symfony\Component\PropertyAccess\Exception\InvalidPropertyPathException;
 
 class DataFieldTest extends TestCase
 {
-    /**
-     * @dataProvider getValidParametersWithoutDefaultValue
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidParametersWithoutDefaultValue')]
     public function testValidConstructorsWithoutDefaultValue(string $path, string $type): void
     {
         $dataField = new DataField($path, $type);
@@ -50,7 +48,7 @@ class DataFieldTest extends TestCase
         $this->assertFalse($dataField->hasDefaultValue());
     }
 
-    public function getValidParametersWithoutDefaultValue(): iterable
+    public static function getValidParametersWithoutDefaultValue(): iterable
     {
         yield 'array path' => [
             '[child][field]',
@@ -82,9 +80,7 @@ class DataFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getValidParametersWithDefaultValue
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidParametersWithDefaultValue')]
     public function testValidConstructorsWithDefaultValue(string $path, string $type, $defaultValue): void
     {
         $dataField = new DataField($path, $type, $defaultValue);
@@ -95,7 +91,7 @@ class DataFieldTest extends TestCase
         $this->assertSame($defaultValue, $dataField->getDefaultValue());
     }
 
-    public function getValidParametersWithDefaultValue(): iterable
+    public static function getValidParametersWithDefaultValue(): iterable
     {
         yield 'null default value' => [
             'field',
@@ -119,9 +115,7 @@ class DataFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidParameters')]
     public function testInvalidConstructors(string $path, string $type, string $expectedException): void
     {
         $this->expectException($expectedException);
@@ -129,7 +123,7 @@ class DataFieldTest extends TestCase
         new DataField($path, $type);
     }
 
-    public function getInvalidParameters(): iterable
+    public static function getInvalidParameters(): iterable
     {
         yield 'empty path' => [
             '',

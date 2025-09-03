@@ -52,9 +52,7 @@ class ColumnCollectionTest extends TestCase
         return $columns;
     }
 
-    /**
-     * @depends testItAddsColumnsToCollection
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testItAddsColumnsToCollection')]
     public function testItAddsColumnsBeforeGivenColumn(ColumnCollection $columns): ColumnCollection
     {
         $columns
@@ -74,9 +72,7 @@ class ColumnCollectionTest extends TestCase
         return $columns;
     }
 
-    /**
-     * @depends testItAddsColumnsBeforeGivenColumn
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testItAddsColumnsBeforeGivenColumn')]
     public function testItAddsColumnsAfterGivenColumn(ColumnCollection $columns): ColumnCollection
     {
         $columns
@@ -99,9 +95,7 @@ class ColumnCollectionTest extends TestCase
         return $columns;
     }
 
-    /**
-     * @depends testItAddsColumnsAfterGivenColumn
-     */
+    #[\PHPUnit\Framework\Attributes\Depends('testItAddsColumnsAfterGivenColumn')]
     public function testItRemovesColumnById(ColumnCollection $columns): void
     {
         $columns->remove('first');

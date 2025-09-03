@@ -36,9 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\Exception\GroupConstraintEx
 
 class AddCustomerGroupCommandTest extends TestCase
 {
-    /**
-     * @dataProvider getValidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
     public function testItWorksWhenProvidingValidReduction(DecimalNumber $reductionPercent): void
     {
         new AddCustomerGroupCommand(
@@ -51,9 +49,7 @@ class AddCustomerGroupCommandTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @dataProvider getInvalidValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
     public function testItThrowsExceptionWhenProvidingInvalidReduction(DecimalNumber $reductionPercent): void
     {
         $this->expectException(GroupConstraintException::class);
@@ -67,7 +63,7 @@ class AddCustomerGroupCommandTest extends TestCase
         );
     }
 
-    public function getValidValues(): Generator
+    public static function getValidValues(): Generator
     {
         yield [new DecimalNumber('-0.00')];
         yield [new DecimalNumber('-0')];
@@ -83,7 +79,7 @@ class AddCustomerGroupCommandTest extends TestCase
         yield [new DecimalNumber('100.00')];
     }
 
-    public function getInvalidValues(): Generator
+    public static function getInvalidValues(): Generator
     {
         yield [new DecimalNumber('-0.001')];
         yield [new DecimalNumber('-0.01')];

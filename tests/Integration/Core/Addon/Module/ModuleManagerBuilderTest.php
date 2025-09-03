@@ -40,9 +40,8 @@ use Tools;
 
 /**
  * These tests install and uninstalls modules causing the cache to be cleared. So it's better to run it isolated.
- *
- * @group isolatedProcess
  */
+#[\PHPUnit\Framework\Attributes\Group('isolatedProcess')]
 class ModuleManagerBuilderTest extends TestCase
 {
     /**

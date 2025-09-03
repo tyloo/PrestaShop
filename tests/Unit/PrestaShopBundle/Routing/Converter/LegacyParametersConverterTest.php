@@ -34,9 +34,7 @@ use PrestaShopBundle\Routing\Converter\LegacyParametersConverter;
 
 class LegacyParametersConverterTest extends TestCase
 {
-    /**
-     * @dataProvider getExpectedLegacyParameters
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getExpectedLegacyParameters')]
     public function testGetParameters(array $requestAttributes, array $queryParameters, ?array $expectedLegacyParameters): void
     {
         $converter = new LegacyParametersConverter();
@@ -44,7 +42,7 @@ class LegacyParametersConverterTest extends TestCase
         $this->assertEquals($expectedLegacyParameters, $legacyParameters);
     }
 
-    public function getExpectedLegacyParameters(): array
+    public static function getExpectedLegacyParameters(): array
     {
         return [
             [

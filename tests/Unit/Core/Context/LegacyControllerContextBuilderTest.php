@@ -49,9 +49,7 @@ class LegacyControllerContextBuilderTest extends TestCase
 {
     use MockConfigurationTrait;
 
-    /**
-     * @dataProvider getControllerValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getControllerValues')]
     public function testBuild(string $controllerName, string $expectedControllerName, ?string $className, int $multishopContext, string $expectedCurrentIndex, string $expectedTable, ?string $redirectionUrl = null): void
     {
         $builder = new LegacyControllerContextBuilder(
@@ -86,7 +84,7 @@ class LegacyControllerContextBuilderTest extends TestCase
         $this->assertTrue($legacyController->ajax);
     }
 
-    public function getControllerValues(): iterable
+    public static function getControllerValues(): iterable
     {
         yield 'AdminCarts default generic behaviour for all controllers' => [
             'AdminCarts',

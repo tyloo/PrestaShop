@@ -55,9 +55,8 @@ class FactoryTest extends TestCase
      * Given a Max Fractions digts to display in a number's decimal
      * Given a boolean to define if we should group digits in a number's integer part
      * Then calling buildNumberSpecification() should return an NumberSpecification
-     *
-     * @dataProvider getNumberData
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getNumberData')]
     public function testBuildNumberSpecification(array $data, array $expected): void
     {
         $specification = $this->factory->buildNumberSpecification(
@@ -73,7 +72,7 @@ class FactoryTest extends TestCase
         );
     }
 
-    public function getNumberData(): array
+    public static function getNumberData(): array
     {
         return [
             [
@@ -144,9 +143,8 @@ class FactoryTest extends TestCase
      * Given a Max Fractions digts to display in a number's decimal
      * Given a boolean to define if we should group digits in a number's integer part
      * Then calling buildPriceSpecification() should return an NumberSpecification
-     *
-     * @dataProvider getPriceDataWithPrecisions
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getPriceDataWithPrecisions')]
     public function testBuildPriceSpecification(array $data, array $expected): void
     {
         $specification = $this->factory->buildPriceSpecification(
@@ -183,9 +181,8 @@ class FactoryTest extends TestCase
      * Given a boolean to define if we should group digits in a number's integer part
      * Given an integer to specify max fraction digits
      * Then calling buildPriceSpecification() should return an NumberSpecification
-     *
-     * @dataProvider getPriceDataWithPrecisions
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getPriceDataWithPrecisions')]
     public function testBuildPriceSpecificationWithMax(array $data, array $expected): void
     {
         $maxFractionDigits = 3;
@@ -225,9 +222,8 @@ class FactoryTest extends TestCase
      * Given a boolean to define if we should group digits in a number's integer part
      * Given an integer to specify max fraction digits
      * Then calling buildPriceSpecification() should return an NumberSpecification
-     *
-     * @dataProvider getPriceDataWithPrecisions
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getPriceDataWithPrecisions')]
     public function testBuildPriceSpecificationWithPrecisionFallback(array $data, array $expected): void
     {
         $currencyPrecision = $data[4]['currencyPrecision'];
@@ -265,7 +261,7 @@ class FactoryTest extends TestCase
         self::assertEquals($specification->getMaxFractionDigits(), $maxFractionDigits);
     }
 
-    public function getPriceDataWithPrecisions(): array
+    public static function getPriceDataWithPrecisions(): array
     {
         // if maxFractionDigits < minFractionDigits, minFractionDigits = maxFractionDigits
         // see PrestaShop\PrestaShop\Core\Localization\Specification\Number

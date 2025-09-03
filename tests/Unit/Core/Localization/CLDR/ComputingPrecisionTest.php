@@ -45,16 +45,14 @@ class ComputingPrecisionTest extends TestCase
         $this->computingPrecision = new ComputingPrecision();
     }
 
-    /**
-     * @dataProvider provider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provider')]
     public function testGetPrecision($input, $expected): void
     {
         $result = $this->computingPrecision->getPrecision($input);
         $this->assertEquals($expected, $result);
     }
 
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             [1, 1],

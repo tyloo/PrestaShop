@@ -47,9 +47,7 @@ class CacheAdapterFactoryTest extends TestCase
         $this->cacheAdapterFactory = new CacheAdapterFactory();
     }
 
-    /**
-     * @dataProvider getAdapterClassesForDriver
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getAdapterClassesForDriver')]
     public function testReturnValue(string $driver, string $expectedClass): void
     {
         if (
@@ -62,7 +60,7 @@ class CacheAdapterFactoryTest extends TestCase
         $this->assertTrue($this->cacheAdapterFactory->getCacheAdapter($driver) instanceof $expectedClass);
     }
 
-    public function getAdapterClassesForDriver(): array
+    public static function getAdapterClassesForDriver(): array
     {
         return [
             ['apcu', ApcuAdapter::class],

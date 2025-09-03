@@ -48,7 +48,7 @@ class EnvLayerTest extends TestCase
         $this->resetEnv();
     }
 
-    public function provideEnabledValues(): Generator
+    public static function provideEnabledValues(): Generator
     {
         yield ['1'];
         yield ['true'];
@@ -57,7 +57,7 @@ class EnvLayerTest extends TestCase
         yield ['yes'];
     }
 
-    public function provideDisabledValues(): Generator
+    public static function provideDisabledValues(): Generator
     {
         yield ['0'];
         yield ['false'];
@@ -100,9 +100,7 @@ class EnvLayerTest extends TestCase
         $this->assertFalse($layer->canBeUsed(self::FEATURE_FLAG_TEST));
     }
 
-    /**
-     * @dataProvider provideEnabledValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideEnabledValues')]
     public function testIsEnabled(string $enabledValue): void
     {
         $this->setEnv($enabledValue);
@@ -110,9 +108,7 @@ class EnvLayerTest extends TestCase
         $this->assertTrue($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }
 
-    /**
-     * @dataProvider provideDisabledValues
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideDisabledValues')]
     public function testIsDisabled(string $disabledValue): void
     {
         $this->setEnv($disabledValue);

@@ -54,9 +54,8 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
 
     /**
      * Test it loads a XLIFF catalogue from the locale's `translations` directory
-     *
-     * @dataProvider getValuesForLoadCatalogueFromXliff
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValuesForLoadCatalogueFromXliff')]
     public function testItLoadsCatalogueFromXliffFilesInLocaleDirectory(string $domain, array $expectedCatalogue): void
     {
         // load catalogue from translations/fr-FR
@@ -66,7 +65,7 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
         $this->assertResultIsAsExpected($expectedCatalogue, $catalogue);
     }
 
-    public function getValuesForLoadCatalogueFromXliff(): Generator
+    public static function getValuesForLoadCatalogueFromXliff(): Generator
     {
         yield [
             // domain
@@ -101,9 +100,8 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
 
     /**
      * Test it loads a default catalogue from the `translations` default directory
-     *
-     * @dataProvider getValuesForExtractDefaultCatalogue
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValuesForExtractDefaultCatalogue')]
     public function testItExtractsDefaultCatalogueFromTranslationsDefaultFiles(string $domain, array $expectedCatalogue): void
     {
         // load catalogue from translations/default
@@ -113,7 +111,7 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
         $this->assertResultIsAsExpected($expectedCatalogue, $catalogue);
     }
 
-    public function getValuesForExtractDefaultCatalogue(): Generator
+    public static function getValuesForExtractDefaultCatalogue(): Generator
     {
         yield [
             // domain
@@ -146,9 +144,7 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider getValuesForLoadCatalogueFromDatabase
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValuesForLoadCatalogueFromDatabase')]
     public function testItLoadsCustomizedTranslationsFromDatabase(string $domain, array $expectedCatalogue): void
     {
         $databaseContent = [
@@ -175,7 +171,7 @@ class CoreDomainCatalogueLayersProviderTest extends KernelTestCase
         $this->assertResultIsAsExpected($expectedCatalogue, $catalogue);
     }
 
-    public function getValuesForLoadCatalogueFromDatabase(): Generator
+    public static function getValuesForLoadCatalogueFromDatabase(): Generator
     {
         yield [
             // domain

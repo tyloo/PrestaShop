@@ -33,9 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\Password;
 
 class PasswordTest extends TestCase
 {
-    /**
-     * @dataProvider getTooShortOrTooLongPasswords
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getTooShortOrTooLongPasswords')]
     public function testItThrowsExceptionWhenCreatingTooShortOrTooLongPassword($password): void
     {
         $this->expectException(CustomerConstraintException::class);
@@ -44,9 +42,7 @@ class PasswordTest extends TestCase
         new Password($password);
     }
 
-    /**
-     * @dataProvider getValidPasswords
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getValidPasswords')]
     public function testItCreatesNewPassword($passwordValue): void
     {
         $password = new Password($passwordValue);
@@ -54,7 +50,7 @@ class PasswordTest extends TestCase
         $this->assertEquals($passwordValue, $password->getValue());
     }
 
-    public function getTooShortOrTooLongPasswords()
+    public static function getTooShortOrTooLongPasswords()
     {
         yield [''];
         yield ['p'];
@@ -65,7 +61,7 @@ class PasswordTest extends TestCase
         yield ['very_long_and_super_secret_password_which_is_one_char_longer_than_allowed'];
     }
 
-    public function getValidPasswords()
+    public static function getValidPasswords()
     {
         yield ['short'];
         yield [12345];
