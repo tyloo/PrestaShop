@@ -191,7 +191,7 @@ class ModuleCommand extends Command
         );
     }
 
-    protected function displayMessage($message, $type = 'info')
+    protected function displayMessage(string|array $message, string $type = 'info')
     {
         /** @var FormatterHelper $formatter */
         $formatter = $this->getHelper('formatter');

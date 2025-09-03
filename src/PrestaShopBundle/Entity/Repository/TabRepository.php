@@ -115,9 +115,8 @@ class TabRepository extends EntityRepository
 
     /**
      * @param string $moduleName
-     * @param bool   $enabled
      */
-    public function changeEnabledByModuleName($moduleName, $enabled): void
+    public function changeEnabledByModuleName($moduleName, bool $enabled): void
     {
         $tabs = $this->findByModule($moduleName);
         /** @var Tab $tab */

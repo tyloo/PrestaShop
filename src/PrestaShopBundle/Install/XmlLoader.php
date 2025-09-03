@@ -1498,10 +1498,8 @@ class XmlLoader
 
     /**
      * Check fields related to an other entity, and replace their values by the ID created by the other entity.
-     *
-     * @param string $entity
      */
-    protected function rewriteRelationedData($entity, array $data): array
+    protected function rewriteRelationedData(string $entity, array $data): array
     {
         $xml = $this->fileLoader->load($entity);
         foreach ($xml->fields->field as $field) {

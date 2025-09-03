@@ -94,12 +94,11 @@ class ThemeExtractor
     }
 
     /**
-     * @param string $locale
-     * @param bool   $rootDir
+     * @param bool $rootDir
      *
      * @throws Exception
      */
-    public function extract(Theme $theme, $locale = 'en-US', $rootDir = false): ?MessageCatalogue
+    public function extract(Theme $theme, string $locale = 'en-US', $rootDir = false): ?MessageCatalogue
     {
         $this->catalog = new MessageCatalogue($locale);
         // remove the last "/"
@@ -221,10 +220,8 @@ class ThemeExtractor
 
     /**
      * Add default catalogue in this &$catalogue when the translation exists.
-     *
-     * @param string $locale
      */
-    private function overrideFromDefaultCatalog($locale, MessageCatalogue &$catalogue): void
+    private function overrideFromDefaultCatalog(string $locale, MessageCatalogue &$catalogue): void
     {
         $defaultCatalogue = $this->themeProvider
             ->setLocale($locale)
@@ -263,12 +260,11 @@ class ThemeExtractor
      * Add database catalogue in this &$catalogue.
      *
      * @param string           $themeName
-     * @param string           $locale
      * @param MessageCatalogue $catalogue
      *
      * @throws Exception
      */
-    private function overrideFromDatabase($themeName, $locale, &$catalogue): void
+    private function overrideFromDatabase($themeName, string $locale, &$catalogue): void
     {
         if ($this->themeProvider === null) {
             throw new Exception('Theme provider is required.');

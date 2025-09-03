@@ -74,7 +74,7 @@ class NavBar
         return $this->tabs;
     }
 
-    protected function buildTabs($parentId = 0, $level = 0): array
+    protected function buildTabs($parentId = 0, int $level = 0): array
     {
         $tabs = Tab::getTabs($this->context->getContext()->language->id, $parentId);
         $currentId = (int) Tab::getCurrentParentId();

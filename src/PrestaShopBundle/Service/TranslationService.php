@@ -165,15 +165,12 @@ class TranslationService
     /**
      * Save a translation in database.
      *
-     * @param Lang        $lang
-     * @param string      $domain
      * @param string      $key
-     * @param string      $translationValue
      * @param string|null $theme
      *
      * @return bool
      */
-    public function saveTranslationMessage($lang, $domain, $key, $translationValue, $theme = null)
+    public function saveTranslationMessage(Lang $lang, string $domain, $key, string $translationValue, $theme = null)
     {
         $doctrine = $this->container->get('doctrine');
         $entityManager = $doctrine->getManager();

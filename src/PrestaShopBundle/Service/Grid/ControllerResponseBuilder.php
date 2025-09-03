@@ -51,13 +51,10 @@ class ControllerResponseBuilder
     ) {
     }
 
-    /**
-     * @param string $redirectRoute
-     */
     public function buildSearchResponse(
         GridDefinitionFactoryInterface $definitionFactory,
         Request $request,
-        $redirectRoute,
+        string $redirectRoute,
         array $queryParamsToKeep = [],
     ): RedirectResponse {
         /** @var GridDefinitionInterface $definition */

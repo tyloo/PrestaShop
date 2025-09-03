@@ -54,7 +54,7 @@ abstract class TranslatorAwareType extends CommonAbstractType
      *
      * @returns string
      */
-    protected function trans($key, $domain, $parameters = [])
+    protected function trans(string $key, ?string $domain, array $parameters = [])
     {
         return $this->translator->trans($key, $parameters, $domain);
     }

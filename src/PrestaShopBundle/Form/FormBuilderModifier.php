@@ -37,7 +37,7 @@ class FormBuilderModifier
     /**
      * @param string|FormBuilderInterface $newChild
      */
-    public function addAfter(FormBuilderInterface $formBuilder, string $targetFieldName, $newChild, ?string $type = null, array $options = []): void
+    public function addAfter(FormBuilderInterface $formBuilder, string $targetFieldName, string|self $newChild, ?string $type = null, array $options = []): void
     {
         $this->assertFieldExists($formBuilder, $targetFieldName);
         $formChildren = $this->cleanAllChildren($formBuilder);
@@ -53,7 +53,7 @@ class FormBuilderModifier
     /**
      * @param string|FormBuilderInterface $newChild
      */
-    public function addBefore(FormBuilderInterface $formBuilder, string $targetFieldName, $newChild, ?string $type = null, array $options = []): void
+    public function addBefore(FormBuilderInterface $formBuilder, string $targetFieldName, string|self $newChild, ?string $type = null, array $options = []): void
     {
         $this->assertFieldExists($formBuilder, $targetFieldName);
         $formChildren = $this->cleanAllChildren($formBuilder);

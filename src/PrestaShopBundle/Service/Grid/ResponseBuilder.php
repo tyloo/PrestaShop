@@ -50,15 +50,11 @@ class ResponseBuilder
     ) {
     }
 
-    /**
-     * @param string $filterId
-     * @param string $redirectRoute
-     */
     public function buildSearchResponse(
         GridDefinitionFactoryInterface $definitionFactory,
         Request $request,
-        $filterId,
-        $redirectRoute,
+        string $filterId,
+        string $redirectRoute,
         array $queryParamsToKeep = [],
     ): RedirectResponse {
         /** @var GridDefinitionInterface $definition */

@@ -276,14 +276,11 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @param string $translationKey
-     * @param string $domain
-     * @param string $locale
-     * @param array  $translationValue
+     * @param array $translationValue
      *
      * @return array
      */
-    protected function getDefaultTranslationValue($translationKey, $domain, $locale, $translationValue)
+    protected function getDefaultTranslationValue(string $translationKey, ?string $domain, ?string $locale, $translationValue)
     {
         $defaultTranslationValue = $this->translator->trans($translationKey, [], $domain, $locale);
 

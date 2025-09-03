@@ -97,7 +97,7 @@ class HookExtension extends AbstractExtension
      *
      * @throws Exception if the hookName is missing
      */
-    public function renderHooksArray($hookName, $hookParameters = []): array
+    public function renderHooksArray($hookName, array $hookParameters = []): array
     {
         if ($hookName === '') {
             throw new Exception('Hook name missing');

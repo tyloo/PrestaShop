@@ -299,13 +299,10 @@ class ThemeExporter
         }
     }
 
-    /**
-     * @param string $domain
-     */
     protected function ensureCatalogueHasRequiredMetadata(
         MessageCatalogue $catalogue,
         array $messages,
-        $domain,
+        string $domain,
     ) {
         foreach (array_keys($messages) as $id) {
             $metadata = $catalogue->getMetadata($id, $domain);

@@ -88,7 +88,7 @@ class ClientRepository implements ClientRepositoryInterface
         return $this->passwordEncoder->isPasswordValid($client, $clientSecret);
     }
 
-    private function getUser($clientIdentifier): ?UserInterface
+    private function getUser(string $clientIdentifier): ?UserInterface
     {
         try {
             return $this->userProvider->loadUserByIdentifier($clientIdentifier);

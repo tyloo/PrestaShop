@@ -68,10 +68,8 @@ class ConfigYamlLoader extends FileLoader
 
     /**
      * Parses all imports.
-     *
-     * @param string $file
      */
-    private function parseImports(array $content, $file): void
+    private function parseImports(array $content, ?string $file): void
     {
         if (! isset($content['imports'])) {
             return;
@@ -81,7 +79,7 @@ class ConfigYamlLoader extends FileLoader
             throw new InvalidArgumentException(\sprintf('The "imports" key should contain an array in %s. Check your YAML syntax.', $file));
         }
 
-        $defaultDirectory = \dirname($file);
+        $defaultDirectory = \dirname((string) $file);
         foreach ($content['imports'] as $import) {
             if (! \is_array($import)) {
                 $import = ['resource' => $import];

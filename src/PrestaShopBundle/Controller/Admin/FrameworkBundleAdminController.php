@@ -381,7 +381,7 @@ class FrameworkBundleAdminController extends AbstractController
      * @param string $domain     the domain to be selected
      * @param array  $parameters Optional, pass parameters if needed (uncommon)
      */
-    protected function trans($key, $domain, array $parameters = []): string
+    protected function trans(string $key, ?string $domain, array $parameters = []): string
     {
         return $this->getTranslator()->trans($key, $parameters, $domain);
     }
@@ -533,10 +533,7 @@ class FrameworkBundleAdminController extends AbstractController
         return $this->get('prestashop.core.query_bus');
     }
 
-    /**
-     * @param int $httpStatusCode
-     */
-    protected function returnErrorJsonResponse(array $errors, $httpStatusCode): JsonResponse
+    protected function returnErrorJsonResponse(array $errors, int $httpStatusCode): JsonResponse
     {
         $response = new JsonResponse();
         $response->setStatusCode($httpStatusCode);

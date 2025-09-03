@@ -220,7 +220,7 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
      *
      * @throws TranslationFilesNotFoundException
      */
-    public function getCatalogueFromPaths($paths, $locale, $pattern = null)
+    public function getCatalogueFromPaths(array $paths, string $locale, ?string $pattern = null)
     {
         return (new TranslationFinder())->getCatalogueFromPaths($paths, $locale, $pattern);
     }
