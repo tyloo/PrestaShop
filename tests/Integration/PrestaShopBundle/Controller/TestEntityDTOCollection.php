@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
 
 class TestEntityDTOCollection extends AbstractTypedCollection
 {
-    /**
-     * @var int
-     */
-    private $totalCount = 0;
+    private int $totalCount = 0;
 
     public function getTotalCount(): int
     {

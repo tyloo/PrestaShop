@@ -40,40 +40,19 @@ class EditCatalogPriceRuleCommand
 {
     private readonly CatalogPriceRuleId $catalogPriceRuleId;
 
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var int|null
-     */
-    private $shopId;
+    private ?int $shopId = null;
 
-    /**
-     * @var int|null
-     */
-    private $currencyId;
+    private ?int $currencyId = null;
 
-    /**
-     * @var int|null
-     */
-    private $countryId;
+    private ?int $countryId = null;
 
-    /**
-     * @var int|null
-     */
-    private $groupId;
+    private ?int $groupId = null;
 
-    /**
-     * @var int|null
-     */
-    private $fromQuantity;
+    private ?int $fromQuantity = null;
 
-    /**
-     * @var float|null
-     */
-    private $price;
+    private ?float $price = null;
 
     /**
      * @var DateTime|null
@@ -85,10 +64,7 @@ class EditCatalogPriceRuleCommand
      */
     private $dateTimeTo;
 
-    /**
-     * @var bool|null
-     */
-    private $includeTax;
+    private ?bool $includeTax = null;
 
     /**
      * @var Reduction

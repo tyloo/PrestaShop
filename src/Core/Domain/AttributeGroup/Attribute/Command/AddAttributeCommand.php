@@ -41,10 +41,7 @@ class AddAttributeCommand
 
     private readonly array $localizedNames;
 
-    /**
-     * @var string|null
-     */
-    private $pathName;
+    private ?string $pathName = null;
 
     /**
      * @param int[] $associatedShopIds

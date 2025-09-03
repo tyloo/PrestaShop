@@ -87,15 +87,9 @@ class EditRootCategoryCommand
      */
     private $associatedShopIds;
 
-    /**
-     * @var UploadedFile|null
-     */
-    private $coverImage;
+    private ?UploadedFile $coverImage = null;
 
-    /**
-     * @var UploadedFile|null
-     */
-    private $thumbnailImage;
+    private ?UploadedFile $thumbnailImage = null;
 
     private ?RedirectOption $redirectOption = null;
 

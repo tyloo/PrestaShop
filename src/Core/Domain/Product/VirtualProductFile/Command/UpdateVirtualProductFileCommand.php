@@ -35,30 +35,15 @@ class UpdateVirtualProductFileCommand
 {
     private readonly VirtualProductFileId $virtualProductFileId;
 
-    /**
-     * @var string|null
-     */
-    private $filePath;
+    private ?string $filePath = null;
 
-    /**
-     * @var string|null
-     */
-    private $displayName;
+    private ?string $displayName = null;
 
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $expirationDate;
+    private ?DateTimeInterface $expirationDate = null;
 
-    /**
-     * @var int|null
-     */
-    private $accessDays;
+    private ?int $accessDays = null;
 
-    /**
-     * @var int|null
-     */
-    private $downloadTimesLimit;
+    private ?int $downloadTimesLimit = null;
 
     public function __construct(
         int $virtualProductFileId,
