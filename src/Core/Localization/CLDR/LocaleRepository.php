@@ -53,7 +53,7 @@ class LocaleRepository
      *
      * @return CldrLocale|null A CldrLocale object. Null if not found
      */
-    public function getLocale($localeCode)
+    public function getLocale($localeCode): ?CldrLocale
     {
         $localeData = $this->dataSource->getLocaleData($localeCode);
 

@@ -171,10 +171,7 @@ final class GridPresenter implements GridPresenterInterface
         return $filterForm->createView();
     }
 
-    /**
-     * @return PositionColumn|null
-     */
-    private function getPositionColumn(GridInterface $grid)
+    private function getPositionColumn(GridInterface $grid): ?PositionColumn
     {
         /** @var ColumnInterface $column */
         foreach ($grid->getDefinition()->getColumns() as $column) {

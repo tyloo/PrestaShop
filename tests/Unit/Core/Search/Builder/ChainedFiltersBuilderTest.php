@@ -106,7 +106,7 @@ class ConfigurableFiltersBuilder extends AbstractFiltersBuilder
         return parent::setConfig($config);
     }
 
-    public function buildFilters(?Filters $filters = null)
+    public function buildFilters(?Filters $filters = null): ?Filters
     {
         if (empty($this->parameters)) {
             return $filters;

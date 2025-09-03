@@ -103,7 +103,7 @@ final class HookDispatcher implements HookDispatcherInterface
         return $this->hookDispatcherAdapter->getListeners($eventName);
     }
 
-    public function getListenerPriority($eventName, $listener)
+    public function getListenerPriority($eventName, $listener): ?int
     {
         return $this->hookDispatcherAdapter->getListenerPriority($eventName, $listener);
     }

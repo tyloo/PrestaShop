@@ -88,7 +88,7 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
      *
      * @throws LocalizationException When $currencyDataId is invalid
      */
-    protected function doRead($currencyDataId)
+    protected function doRead($currencyDataId): ?CurrencyData
     {
         if (! $currencyDataId instanceof LocalizedCurrencyId) {
             throw new LocalizationException('First parameter must be an instance of ' . LocalizedCurrencyId::class);

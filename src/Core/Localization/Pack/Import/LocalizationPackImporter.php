@@ -96,7 +96,7 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
             return [$error];
         }
 
-        if (empty($config->getContentToImport())) {
+        if ($config->getContentToImport() === []) {
             $error = $this->trans('Please select at least one item to import.', 'Admin.International.Notification');
 
             return [$error];

@@ -132,10 +132,8 @@ class Version implements Stringable
      * Returns the current version in legacy format (eg. "1.7.6.0")
      *
      * @param bool $full [default=false] If true, include pre-release and build metadata (eg. "1.7.6.0-dev+build.1")
-     *
-     * @return string
      */
-    public function getVersion($full = false)
+    public function getVersion($full = false): ?string
     {
         $version = '1.' . $this->version;
 

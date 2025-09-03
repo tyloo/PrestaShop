@@ -73,11 +73,9 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
     }
 
     /**
-     * @return KpiRow|null
-     *
      * @throws InvalidArgumentException
      */
-    public function build()
+    public function build(): ?KpiRow
     {
         $kpiRow = new KpiRow($this->options);
 

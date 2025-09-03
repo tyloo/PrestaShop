@@ -20,7 +20,7 @@ class ComposerStaticInit77be78716c0a12958e9a5ba226453e15
         ],
     ];
 
-    public static function getInitializer(ClassLoader $loader)
+    public static function getInitializer(ClassLoader $loader): ?\Closure
     {
         return \Closure::bind(function () use ($loader): void {
             $loader->prefixLengthsPsr4 = ComposerStaticInit77be78716c0a12958e9a5ba226453e15::$prefixLengthsPsr4;

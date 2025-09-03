@@ -89,7 +89,7 @@ class LocaleDataSourceTest extends TestCase
         $this->assertNull($this->localeDataSource->getLocaleData('foobar'));
     }
 
-    protected function getStubLocaleData($localeCode)
+    protected function getStubLocaleData($localeCode): ?LocaleData
     {
         // Common data
         $localeData = new LocaleData();

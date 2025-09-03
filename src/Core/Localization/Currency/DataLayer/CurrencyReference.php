@@ -80,7 +80,7 @@ class CurrencyReference extends AbstractDataLayer implements CurrencyDataLayerIn
      *                               In case of invalid $currencyDataId
      *                               Also in case of invalid type asked for symbol (but use a constant, so it is very unlikely...)
      */
-    protected function doRead($currencyDataId)
+    protected function doRead($currencyDataId): ?CurrencyData
     {
         if (! $currencyDataId instanceof LocalizedCurrencyId) {
             throw new LocalizationException('$currencyDataId must be a CurrencyDataIdentifier object');

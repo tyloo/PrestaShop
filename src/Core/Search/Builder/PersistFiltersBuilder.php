@@ -36,11 +36,9 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
 final class PersistFiltersBuilder extends AbstractRepositoryFiltersBuilder
 {
     /**
-     * @return Filters
-     *
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function buildFilters(?Filters $filters = null)
+    public function buildFilters(?Filters $filters = null): ?Filters
     {
         if (! $filters instanceof Filters || ! $this->employeeProvider->getId() || ! $this->shopId || ! $filters->needsToBePersisted()) {
             return $filters;

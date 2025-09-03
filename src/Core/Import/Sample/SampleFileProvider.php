@@ -41,7 +41,7 @@ final class SampleFileProvider implements SampleFileProviderInterface
     ) {
     }
 
-    public function getFile($sampleFileName)
+    public function getFile($sampleFileName): ?File
     {
         $path = $this->configuration->get('_PS_ROOT_DIR_') .
               \DIRECTORY_SEPARATOR .

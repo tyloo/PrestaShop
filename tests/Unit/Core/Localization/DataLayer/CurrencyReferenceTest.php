@@ -58,13 +58,20 @@ class CurrencyReferenceTest extends TestCase
         ;
         $stubCldrCurrency = new CldrCurrency($stubCurrencyData);
 
-        $stubLocale = $this->createMock(CldrLocaleInterface::class);
-        $stubLocale
-            ->method('getCurrency')
-            ->willReturnMap([
-                ['PCE', $stubCldrCurrency],
-                ['unknown', null],
-            ]);
+        // Create proper LocaleData instead of mocking CldrLocaleInterface
+        $stubLocaleData = new \PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleData();
+        $stubLocaleData
+            ->setLocaleCode('fr-FR')
+            ->setNumberingSystems(['latn'])
+            ->setDefaultNumberingSystem('latn')
+            ->setMinimumGroupingDigits(1)
+            ->setNumberSymbols([])
+            ->setDecimalPatterns(['latn' => '#,##0.###'])
+            ->setPercentPatterns(['latn' => '#,##0%'])
+            ->setCurrencyPatterns(['latn' => '#,##0.00 ¤'])
+            ->setCurrencies(['PCE' => $stubCurrencyData])
+        ;
+        $stubLocale = new \PrestaShop\PrestaShop\Core\Localization\CLDR\Locale($stubLocaleData);
 
         $cldrLocaleRepo = $this->getMockBuilder(CldrLocaleRepository::class)
             ->disableOriginalConstructor()

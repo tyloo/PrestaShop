@@ -212,7 +212,7 @@ class ImportController extends PrestaShopAdminController
     ): RedirectResponse|BinaryFileResponse {
         $sampleFile = $sampleFileProvider->getFile($sampleName);
 
-        if ($sampleFile === null) {
+        if (! $sampleFile instanceof \Symfony\Component\HttpFoundation\File\File) {
             return $this->redirectToRoute('admin_import');
         }
 

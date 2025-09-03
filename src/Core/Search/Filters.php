@@ -93,12 +93,12 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         return $orderWay;
     }
 
-    public function getOffset()
+    public function getOffset(): ?int
     {
         return $this->getInt('offset') ?: null;
     }
 
-    public function getLimit()
+    public function getLimit(): ?int
     {
         return $this->getInt('limit') ?: null;
     }

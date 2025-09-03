@@ -270,7 +270,7 @@ final class Locale implements LocaleInterface
      *
      * @return CurrencyInterface|null The wanted CLDR Currency. Null if this currency is not available for this locale.
      */
-    public function getCurrency($currencyCode)
+    public function getCurrency($currencyCode): ?Currency
     {
         $currencyData = $this->getCurrencyData($currencyCode);
         if (! empty($currencyData)) {

@@ -292,10 +292,8 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
      * Replaces URLs with <a> tags in string.
      *
      * @param string $text
-     *
-     * @return string
      */
-    private function replaceUrlsWithTags($text)
+    private function replaceUrlsWithTags($text): ?string
     {
         return preg_replace(
             '/(https?:\/\/[a-z0-9#%&_=\(\)\.\? \+\-@\/]{6,1000})([\s\n<])/Uui',

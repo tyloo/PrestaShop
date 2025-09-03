@@ -92,7 +92,7 @@ class TermsAndConditions
      *
      * @return string formatted text, which now contains HTML <a> tags
      */
-    public function format()
+    public function format(): ?string
     {
         $index = 0;
 

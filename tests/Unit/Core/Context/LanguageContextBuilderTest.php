@@ -37,7 +37,8 @@ use PrestaShop\PrestaShop\Adapter\Language\Repository\LanguageRepository as Obje
 use PrestaShop\PrestaShop\Core\Context\LanguageContextBuilder;
 use PrestaShop\PrestaShop\Core\Language\LanguageInterface;
 use PrestaShop\PrestaShop\Core\Language\LanguageRepositoryInterface;
-use PrestaShop\PrestaShop\Core\Localization\Locale\Repository;
+use PrestaShop\PrestaShop\Core\Localization\Locale\RepositoryInterface;
+use PrestaShop\PrestaShop\Core\Localization\Locale;
 use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 use PrestaShop\PrestaShop\Core\Localization\Specification\Number;
 use PrestaShop\PrestaShop\Core\Localization\Specification\NumberSymbolList;
@@ -127,9 +128,9 @@ class LanguageContextBuilderTest extends TestCase
         return $repository;
     }
 
-    private function mockLocaleRepository(LocaleInterface $locale): Repository|MockObject
+    private function mockLocaleRepository(LocaleInterface $locale): RepositoryInterface|MockObject
     {
-        $repository = $this->createMock(Repository::class);
+        $repository = $this->createMock(RepositoryInterface::class);
         $repository
             ->method('getLocale')
             ->willReturn($locale)
@@ -138,9 +139,9 @@ class LanguageContextBuilderTest extends TestCase
         return $repository;
     }
 
-    private function mockLocale(): LocaleInterface|MockObject
+    private function mockLocale(): Locale
     {
-        $locale = $this->createMock(LocaleInterface::class);
+        $locale = $this->createMock(Locale::class);
         $locale
             ->method('getCode')
             ->willReturn('fr-FR')

@@ -151,11 +151,11 @@ class ExchangeRateProvider
         }
 
         $xmlFeed = $this->parseAndSaveXMLFeed($remoteFeedData);
-        if ($xmlFeed === null) {
+        if (! $xmlFeed instanceof SimpleXMLElement) {
             $xmlFeed = $this->parseAndSaveXMLFeed($cachedFeedData);
         }
 
-        if ($xmlFeed === null) {
+        if (! $xmlFeed instanceof SimpleXMLElement) {
             throw new CurrencyFeedException('Invalid currency XML feed');
         }
 
@@ -164,10 +164,8 @@ class ExchangeRateProvider
 
     /**
      * @param string $feedContent
-     *
-     * @return SimpleXMLElement|null
      */
-    private function parseAndSaveXMLFeed($feedContent)
+    private function parseAndSaveXMLFeed($feedContent): ?SimpleXMLElement
     {
         $xmlFeed = @simplexml_load_string($feedContent);
         if (! $xmlFeed || ! $this->isValidXMLFeed($xmlFeed)) {

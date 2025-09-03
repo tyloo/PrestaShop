@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
  */
 final class RepositoryFiltersBuilder extends AbstractRepositoryFiltersBuilder
 {
-    public function buildFilters(?Filters $filters = null)
+    public function buildFilters(?Filters $filters = null): ?Filters
     {
         if (! $this->employeeProvider->getId() || ! $this->shopId) {
             return $filters;

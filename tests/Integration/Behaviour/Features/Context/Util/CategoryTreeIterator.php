@@ -50,10 +50,7 @@ class CategoryTreeIterator
         return $this->getCategoryNodeId($categoryName, $categoryTreeChoicesArray);
     }
 
-    /**
-     * @return int|null
-     */
-    private function getCategoryNodeId(string $categoryName, array $nodes)
+    private function getCategoryNodeId(string $categoryName, array $nodes): ?int
     {
         $i = 0;
         foreach ($nodes as $node) {

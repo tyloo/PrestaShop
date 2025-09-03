@@ -24,7 +24,7 @@ class ComposerStaticInit6ff0e5a705530539c3f4f03f48949f68
         'Ps_Banner' => __DIR__ . '/../..' . '/ps_banner.php',
     ];
 
-    public static function getInitializer(ClassLoader $loader)
+    public static function getInitializer(ClassLoader $loader): ?\Closure
     {
         return \Closure::bind(function () use ($loader): void {
             $loader->prefixLengthsPsr4 = ComposerStaticInit6ff0e5a705530539c3f4f03f48949f68::$prefixLengthsPsr4;

@@ -66,16 +66,19 @@ class RepositoryTest extends TestCase
         $symbolsDataStub->setNan('NaN');
 
         /** CLDR Locale data object */
-        $cldrLocale = $this->createMock(CldrLocaleInterface::class);
-        $cldrLocale
-            ->method('getAllNumberSymbols')
-            ->willReturn(['latn' => $symbolsDataStub]);
-        $cldrLocale
-            ->method('getDecimalPattern')
-            ->willReturn('');
-        $cldrLocale
-            ->method('getCurrencyPattern')
-            ->willReturn('');
+        $cldrLocaleData = new \PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleData();
+        $cldrLocaleData
+            ->setLocaleCode('fr-FR')
+            ->setNumberingSystems(['latn'])
+            ->setDefaultNumberingSystem('latn')
+            ->setMinimumGroupingDigits(1)
+            ->setNumberSymbols(['latn' => $symbolsDataStub])
+            ->setDecimalPatterns(['latn' => ''])
+            ->setPercentPatterns(['latn' => ''])
+            ->setCurrencyPatterns(['latn' => ''])
+            ->setCurrencies([])
+        ;
+        $cldrLocale = new \PrestaShop\PrestaShop\Core\Localization\CLDR\Locale($cldrLocaleData);
 
         /** CLDR LocaleRepository (returning the data object) */
         $cldrLocaleRepository = $this->getMockBuilder(CldrLocaleRepository::class)

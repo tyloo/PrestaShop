@@ -54,7 +54,7 @@ final class RequestFiltersBuilder extends AbstractFiltersBuilder
         return parent::setConfig($config);
     }
 
-    public function buildFilters(?Filters $filters = null)
+    public function buildFilters(?Filters $filters = null): ?Filters
     {
         if ($this->request === null) {
             return $filters;
