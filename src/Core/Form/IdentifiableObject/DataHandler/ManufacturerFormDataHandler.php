@@ -69,9 +69,7 @@ final class ManufacturerFormDataHandler implements FormDataHandlerInterface
             $data['shop_association']
         ));
 
-        if ($uploadedLogo instanceof UploadedFile) {
-            $this->imageUploader->upload($manufacturerId->getValue(), $uploadedLogo);
-        }
+        $this->imageUploader->upload($manufacturerId->getValue(), $uploadedLogo);
 
         return $manufacturerId->getValue();
     }

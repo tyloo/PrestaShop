@@ -114,12 +114,8 @@ final class OrderReturnStatesQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ($filterName === 'name') {
-                $qb->andWhere('orsl.`' . $filterName . '` LIKE :' . $filterName);
-                $qb->setParameter($filterName, '%' . $filterValue . '%');
-
-                continue;
-            }
+            $qb->andWhere('orsl.`' . $filterName . '` LIKE :' . $filterName);
+            $qb->setParameter($filterName, '%' . $filterValue . '%');
         }
     }
 

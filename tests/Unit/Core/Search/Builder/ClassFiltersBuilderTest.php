@@ -103,9 +103,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertNotNull($builtFilters);
         $this->assertEquals(SampleShopFilters::getDefaults(), $builtFilters->all());
         $this->assertInstanceOf(SampleShopFilters::class, $builtFilters);
-        if ($builtFilters instanceof SampleShopFilters) {
-            $this->assertEquals($expectedShopConstraint, $builtFilters->getShopConstraint());
-        }
+        $this->assertEquals($expectedShopConstraint, $builtFilters->getShopConstraint());
     }
 
     /**
@@ -122,9 +120,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertNotNull($builtFilters);
         $this->assertEquals(SampleShopFilters::getDefaults(), $builtFilters->all());
         $this->assertInstanceOf(SampleShopFilters::class, $builtFilters);
-        if ($builtFilters instanceof SampleShopFilters) {
-            $this->assertEquals($expectedShopConstraint, $builtFilters->getShopConstraint());
-        }
+        $this->assertEquals($expectedShopConstraint, $builtFilters->getShopConstraint());
     }
 
     public function getShopConstraints(): iterable

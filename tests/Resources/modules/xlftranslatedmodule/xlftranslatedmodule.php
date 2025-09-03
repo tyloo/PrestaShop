@@ -34,8 +34,6 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 class xlftranslatedmodule extends Module
 {
-    private $adminControllerName;
-
     public function __construct()
     {
         $this->name = 'xlftranslatedmodule';
@@ -53,8 +51,6 @@ class xlftranslatedmodule extends Module
             'min' => '1.7.5.0',
             'max' => _PS_VERSION_,
         ];
-
-        $this->adminControllerName = 'AdminXlftranslatedmoduleFoo';
         $this->controllers = ['bar']; // this is a front controller
     }
 

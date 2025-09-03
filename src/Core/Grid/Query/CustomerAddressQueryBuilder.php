@@ -143,10 +143,8 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ($filterName === 'id_customer') {
-                $qb->andWhere('a.`id_customer` = :' . $filterName);
-                $qb->setParameter($filterName, $value);
-            }
+            $qb->andWhere('a.`id_customer` = :' . $filterName);
+            $qb->setParameter($filterName, $value);
         }
     }
 }

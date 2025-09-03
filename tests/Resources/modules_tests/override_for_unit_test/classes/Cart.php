@@ -226,11 +226,4 @@ class Cart extends CartCore
 
         return $params['products'] ?? $products;
     }
-
-    /*
-    * module: testtypedpropertyoverride
-    * date: 2018-12-26 14:14:06
-    * version: 1
-    */
-    private readonly string $testTypedProperty;
 }

@@ -100,10 +100,8 @@ final class CustomerBoughtProductQueryBuilder extends AbstractDoctrineQueryBuild
                 continue;
             }
 
-            if ($filterName === 'id_customer') {
-                $qb->andWhere('o.`id_customer` = :' . $filterName);
-                $qb->setParameter($filterName, $value);
-            }
+            $qb->andWhere('o.`id_customer` = :' . $filterName);
+            $qb->setParameter($filterName, $value);
         }
     }
 }

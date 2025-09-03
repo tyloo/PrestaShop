@@ -242,16 +242,13 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ($filterName === 'customer_online') {
-                if ($filterValue) {
-                    $qb->andWhere('co.id_guest > 0');
-                } else {
-                    $qb->andWhere('co.id_guest is null');
-                }
-
-                continue;
+            if ($filterValue) {
+                $qb->andWhere('co.id_guest > 0');
+            } else {
+                $qb->andWhere('co.id_guest is null');
             }
 
+            continue;
             $qb->andWhere('c.' . $filterName . ' = :' . $filterName);
             $qb->setParameter($filterName, $filterValue);
         }

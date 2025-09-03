@@ -140,10 +140,8 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ($filterName === 'active') {
-                $qb->andWhere('p.active = :' . $filterName);
-                $qb->setParameter($filterName, $filterValue);
-            }
+            $qb->andWhere('p.active = :' . $filterName);
+            $qb->setParameter($filterName, $filterValue);
         }
     }
 }

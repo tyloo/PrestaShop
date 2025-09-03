@@ -42,6 +42,16 @@ use Tools;
  */
 class CartOld extends Cart
 {
+    public $configuration;
+
+    public $id;
+
+    public $id_customer;
+
+    public $id_address_delivery;
+
+    public $shouldExcludeGiftsDiscount;
+
     /**
      * This function returns the total cart amount
      *

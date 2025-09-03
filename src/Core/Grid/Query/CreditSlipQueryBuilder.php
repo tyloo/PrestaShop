@@ -115,18 +115,14 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            if ($filterName === 'date_issued') {
-                if (isset($value['from'])) {
-                    $qb->andWhere($availableFiltersMap[$filterName] . ' >= :date_from');
-                    $qb->setParameter('date_from', \sprintf('%s 0:0:0', $value['from']));
-                }
+            if (isset($value['from'])) {
+                $qb->andWhere($availableFiltersMap[$filterName] . ' >= :date_from');
+                $qb->setParameter('date_from', \sprintf('%s 0:0:0', $value['from']));
+            }
 
-                if (isset($value['to'])) {
-                    $qb->andWhere($availableFiltersMap[$filterName] . ' <= :date_to');
-                    $qb->setParameter('date_to', \sprintf('%s 23:59:59', $value['to']));
-                }
-
-                continue;
+            if (isset($value['to'])) {
+                $qb->andWhere($availableFiltersMap[$filterName] . ' <= :date_to');
+                $qb->setParameter('date_to', \sprintf('%s 23:59:59', $value['to']));
             }
         }
     }

@@ -26,8 +26,4 @@
  */
 class Cart extends CartCore
 {
-    /**
-     * test for typed property override
-     */
-    private readonly string $testTypedProperty;
 }
