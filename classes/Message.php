@@ -219,11 +219,9 @@ class MessageCore extends ObjectModel
             throw new PrestaShopException('Employee ID is invalid.');
         }
 
-        $result = Db::getInstance()->execute('
+        return Db::getInstance()->execute('
 			INSERT INTO ' . _DB_PREFIX_ . 'message_readed (id_message , id_employee , date_add) VALUES
 			(' . (int) $idMessage . ', ' . (int) $idEmployee . ', NOW());
 		');
-
-        return $result;
     }
 }

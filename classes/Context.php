@@ -377,6 +377,7 @@ class ContextCore
         $this->cookie->customer_firstname = $customer->firstname;
         $this->cookie->passwd = $customer->passwd;
         $this->cookie->logged = true;
+
         $customer->logged = true;
         $this->cookie->email = $customer->email;
 

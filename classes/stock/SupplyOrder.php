@@ -549,15 +549,14 @@ class SupplyOrderCore extends ObjectModel
         $query->select('id_supply_order');
         $query->from('supply_order', 'so');
         $query->where('so.reference = "' . pSQL($reference) . '"');
+
         $id_supply_order = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
 
         if (! $id_supply_order) {
             return false;
         }
 
-        $supply_order = new SupplyOrder($id_supply_order);
-
-        return $supply_order;
+        return new SupplyOrder($id_supply_order);
     }
 
     /**
@@ -600,6 +599,7 @@ class SupplyOrderCore extends ObjectModel
         $query->select('so.reference');
         $query->from('supply_order', 'so');
         $query->where('so.id_supply_order = ' . (int) $id_supply_order);
+
         $ref = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
 
         return pSQL($ref);

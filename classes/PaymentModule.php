@@ -434,11 +434,7 @@ abstract class PaymentModuleCore extends Module
             // $order is the last order loop in the foreach
             // The method addOrderPayment of the class Order make a create a paymentOrder
             // linked to the order reference and not to the order id
-            if (isset($extra_vars['transaction_id'])) {
-                $transaction_id = $extra_vars['transaction_id'];
-            } else {
-                $transaction_id = null;
-            }
+            $transaction_id = $extra_vars['transaction_id'] ?? null;
 
             if (! isset($order) || ! $order->addOrderPayment($amount_paid, null, $transaction_id)) {
                 PrestaShopLogger::addLog('PaymentModule::validateOrder - Cannot save Order Payment', 3, null, 'Cart', (int) $id_cart, true);
@@ -556,7 +552,7 @@ abstract class PaymentModuleCore extends Module
 
             $product_list_txt = '';
             $product_list_html = '';
-            if (count($product_var_tpl_list) > 0) {
+            if ($product_var_tpl_list !== []) {
                 $product_list_txt = $this->getEmailTemplateContent('order_conf_product_list.txt', Mail::TYPE_TEXT, $product_var_tpl_list);
                 $product_list_html = $this->getEmailTemplateContent('order_conf_product_list.tpl', Mail::TYPE_HTML, $product_var_tpl_list);
             }
@@ -843,9 +839,7 @@ abstract class PaymentModuleCore extends Module
             $r_values[] = implode(' ', $tmp_values);
         }
 
-        $out = implode(AddressFormat::FORMAT_NEW_LINE, $r_values);
-
-        return $out;
+        return implode(AddressFormat::FORMAT_NEW_LINE, $r_values);
     }
 
     /**
@@ -908,7 +902,7 @@ abstract class PaymentModuleCore extends Module
     public static function addCurrencyPermissions($id_currency, array $id_module_list = [])
     {
         $values = '';
-        if (count($id_module_list) === 0) {
+        if ($id_module_list === []) {
             // fetch all installed module ids
             $modules = static::getInstalledPaymentModules();
             foreach ($modules as $module) {
@@ -1068,6 +1062,7 @@ abstract class PaymentModuleCore extends Module
         $order->gift = (bool) $cart->gift;
         $order->gift_message = $cart->gift_message;
         $order->conversion_rate = $currency->conversion_rate;
+
         $amount_paid = ! $dont_touch_amount ? Tools::ps_round((float) $amount_paid, $computingPrecision) : $amount_paid;
         $order->total_paid_real = 0;
 
@@ -1219,6 +1214,7 @@ abstract class PaymentModuleCore extends Module
         // prepare cart calculator to correctly get the value of each cart rule
         $calculator = $cart->newCalculator($order->product_list, $cart->getCartRules(), $order->id_carrier, $computingPrecision);
         $calculator->processCalculation();
+
         $cartRulesData = $calculator->getCartRulesData();
 
         $cart_rules_list = [];
@@ -1282,11 +1278,7 @@ abstract class PaymentModuleCore extends Module
                     continue;
                 }
 
-                if ($this->context->customer->isGuest()) {
-                    $voucher->id_customer = 0;
-                } else {
-                    $voucher->id_customer = $order->id_customer;
-                }
+                $voucher->id_customer = $this->context->customer->isGuest() ? 0 : $order->id_customer;
 
                 $voucher->quantity = 1;
                 $voucher->reduction_currency = $order->id_currency;

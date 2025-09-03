@@ -674,7 +674,7 @@ class ManufacturerCore extends ObjectModel
         );
 
         $result2 = true;
-        if (count($ids)) {
+        if ($ids !== []) {
             $result2 = (
                 Db::getInstance()->execute('
 				UPDATE `' . _DB_PREFIX_ . 'address`

@@ -394,9 +394,7 @@ class WebserviceRequestCore
             $parameters[$name]['object_id'] = $entity_object->id;
         }
 
-        $arr_return = $this->specificPriceCalculation($parameters);
-
-        return $arr_return;
+        return $this->specificPriceCalculation($parameters);
     }
 
     public function specificPriceCalculation($parameters)
@@ -456,9 +454,7 @@ class WebserviceRequestCore
             $parameters[$name]['product_attribute'] = $entity_object->id;
         }
 
-        $arr_return = $this->specificPriceCalculation($parameters);
-
-        return $arr_return;
+        return $this->specificPriceCalculation($parameters);
     }
 
     /**
@@ -533,11 +529,7 @@ class WebserviceRequestCore
                 $this->setError(500, $e->getMessage(), $e->getCode());
             }
 
-            if (isset($this->urlFragments['language'])) {
-                $this->_available_languages = $this->filterLanguage();
-            } else {
-                $this->_available_languages = Language::getIDs();
-            }
+            $this->_available_languages = isset($this->urlFragments['language']) ? $this->filterLanguage() : Language::getIDs();
 
             if (empty($this->_available_languages)) {
                 $this->setError(400, 'language is not available', 81);
@@ -1035,12 +1027,7 @@ class WebserviceRequestCore
 
             if (str_contains($str, '[')) {
                 $sub_fields = substr($str, strpos($str, '[') + 1, strlen($str) - strpos($str, '[') - 2);
-                $tmp_array = [];
-                if (str_contains($sub_fields, ',')) {
-                    $tmp_array = explode(',', $sub_fields);
-                } else {
-                    $tmp_array = [$sub_fields];
-                }
+                $tmp_array = str_contains($sub_fields, ',') ? explode(',', $sub_fields) : [$sub_fields];
 
                 $fields[$field_name] = (is_array($fields[$field_name])) ? array_merge($fields[$field_name], $tmp_array) : $tmp_array;
             }
@@ -1056,7 +1043,7 @@ class WebserviceRequestCore
             $this->fieldsToDisplay = $this->urlFragments['display'];
             if ($this->fieldsToDisplay !== 'full' && $this->fieldsToDisplay !== 'minimum') {
                 preg_match('#^\[(.*)\]$#Ui', (string) $this->fieldsToDisplay, $matches);
-                if (count($matches)) {
+                if ($matches !== []) {
                     $error = false;
                     $fieldsToTest = $this->parseDisplayFields($matches[1]);
                     foreach ($fieldsToTest as $field_name => $part) {
@@ -1236,11 +1223,7 @@ class WebserviceRequestCore
         $sql_sort = '';
         if (isset($this->urlFragments['sort'])) {
             preg_match('#^\[(.*)\]$#Ui', $this->urlFragments['sort'], $matches);
-            if (count($matches) > 1) {
-                $sorts = explode(',', $matches[1]);
-            } else {
-                $sorts = [$this->urlFragments['sort']];
-            }
+            $sorts = count($matches) > 1 ? explode(',', $matches[1]) : [$this->urlFragments['sort']];
 
             $sql_sort .= ' ORDER BY ';
 
@@ -1560,7 +1543,7 @@ class WebserviceRequestCore
 
                 return false;
             }
-        } elseif ($this->method === 'POST' && count($ids) > 0) {
+        } elseif ($this->method === 'POST' && $ids !== []) {
             $this->setError(400, 'id is forbidden when adding a new resource', 91);
 
             return false;

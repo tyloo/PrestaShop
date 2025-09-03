@@ -78,11 +78,7 @@ class ShopUrlCore extends ObjectModel
         $this->domain_ssl = trim((string) $this->domain_ssl);
         $this->physical_uri = trim(str_replace(' ', '', $this->physical_uri), '/');
 
-        if ($this->physical_uri) {
-            $this->physical_uri = preg_replace('#/+#', '/', '/' . $this->physical_uri . '/');
-        } else {
-            $this->physical_uri = '/';
-        }
+        $this->physical_uri = $this->physical_uri ? preg_replace('#/+#', '/', '/' . $this->physical_uri . '/') : '/';
 
         $this->virtual_uri = trim(str_replace(' ', '', $this->virtual_uri ?? ''), '/');
         if ($this->virtual_uri) {
@@ -150,11 +146,7 @@ class ShopUrlCore extends ObjectModel
     {
         $physical_uri = trim((string) $physical_uri, '/');
 
-        if ($physical_uri) {
-            $physical_uri = preg_replace('#/+#', '/', '/' . $physical_uri . '/');
-        } else {
-            $physical_uri = '/';
-        }
+        $physical_uri = $physical_uri ? preg_replace('#/+#', '/', '/' . $physical_uri . '/') : '/';
 
         $virtual_uri = trim((string) $virtual_uri, '/');
         if ($virtual_uri) {

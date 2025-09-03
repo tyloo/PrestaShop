@@ -400,6 +400,7 @@ class HelperTreeCategoriesCore extends TreeCore
             'icon-collapse-alt'
         );
         $collapse_all->setAttribute('id', 'collapse-all-' . $this->getId());
+
         $expand_all = new TreeToolbarLink(
             $this->translator->trans('Expand all', [], 'Admin.Actions'),
             '#',

@@ -151,11 +151,7 @@ class ImageCore extends ObjectModel
             $this->position = Image::getHighestPosition($this->id_product) + 1;
         }
 
-        if ($this->cover) {
-            $this->cover = true;
-        } else {
-            $this->cover = null;
-        }
+        $this->cover = $this->cover ? true : null;
 
         return parent::add($autoDate, $nullValues);
     }
@@ -211,11 +207,7 @@ class ImageCore extends ObjectModel
      */
     public function update($nullValues = false)
     {
-        if ($this->cover) {
-            $this->cover = true;
-        } else {
-            $this->cover = null;
-        }
+        $this->cover = $this->cover ? true : null;
 
         return parent::update($nullValues);
     }
@@ -938,11 +930,7 @@ class ImageCore extends ObjectModel
         @rmdir($testFolder);
         @rmdir($folder1);
 
-        if (file_exists($folder1)) {
-            return false;
-        }
-
-        return true;
+        return ! file_exists($folder1);
     }
 
     /**

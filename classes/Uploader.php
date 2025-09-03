@@ -273,11 +273,7 @@ class UploaderCore
     public function upload($file, $dest = null)
     {
         if ($this->validate($file)) {
-            if (isset($dest) && is_dir($dest)) {
-                $filePath = $dest;
-            } else {
-                $filePath = $this->getFilePath($dest ?? $file['name']);
-            }
+            $filePath = isset($dest) && is_dir($dest) ? $dest : $this->getFilePath($dest ?? $file['name']);
 
             if ($file['tmp_name'] && is_uploaded_file($file['tmp_name'])) {
                 move_uploaded_file($file['tmp_name'], $filePath);
@@ -425,8 +421,6 @@ class UploaderCore
             return $directory;
         }
 
-        $directory .= \DIRECTORY_SEPARATOR;
-
-        return $directory;
+        return $directory . \DIRECTORY_SEPARATOR;
     }
 }

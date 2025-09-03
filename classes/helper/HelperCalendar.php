@@ -237,6 +237,7 @@ class HelperCalendarCore extends Helper
         $context = Context::getContext();
         $admin_webpath = str_ireplace(_PS_CORE_DIR_, '', _PS_ADMIN_DIR_);
         $admin_webpath = preg_replace('/^' . preg_quote(\DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
+
         $bo_theme = ((Validate::isLoadedObject($context->employee)
             && $context->employee->bo_theme) ? $context->employee->bo_theme : 'default');
 
@@ -271,9 +272,7 @@ class HelperCalendarCore extends Helper
             'is_rtl' => $this->isRTL(),
         ]);
 
-        $html .= parent::generate();
-
-        return $html;
+        return $html . parent::generate();
     }
 
     public function isRTL()

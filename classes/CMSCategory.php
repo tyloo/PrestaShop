@@ -485,7 +485,7 @@ class CMSCategoryCore extends ObjectModel
         // remove id of current CMSCategory because we want only ids of children
         unset($toDelete[0]);
 
-        if (count($toDelete)) {
+        if ($toDelete !== []) {
             $children = new PrestaShopCollection('CMSCategory');
             $children->where('id_cms_category', 'in', $toDelete);
 

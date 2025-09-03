@@ -209,11 +209,7 @@ class SearchCore
         // Now, our string looks something like "prestashop test a-1000".
 
         if ($indexation) {
-            if (! $keepHyphens) {
-                $string = str_replace(['.', '_', '-'], ' ', $string);
-            } else {
-                $string = str_replace(['.', '_'], ' ', $string);
-            }
+            $string = ! $keepHyphens ? str_replace(['.', '_', '-'], ' ', $string) : str_replace(['.', '_'], ' ', $string);
         } else {
             /*
              * Now, we will search for all aliases, that are contained in our query.
@@ -449,7 +445,7 @@ class SearchCore
 
         // If we didn't end up anything now, we can immediately return empty response.
         // No sense in calculating weights of nothing.
-        if (! $wordCnt || ! count($foundProductIds)) {
+        if (! $wordCnt || $foundProductIds === []) {
             return $ajax ? [] : ['total' => 0, 'result' => []];
         }
 
@@ -506,7 +502,7 @@ class SearchCore
 
         // If we didn't end up anything now, we can immediately return empty response.
         // No sense in getting more data for nothing.
-        if (! count($eligibleProducts)) {
+        if ($eligibleProducts === []) {
             return $ajax ? [] : ['total' => 0, 'result' => []];
         }
 
@@ -1077,11 +1073,7 @@ class SearchCore
         }
 
         // Only use cookie if id_customer is not present
-        if ($useCookie) {
-            $id_customer = (int) $context->customer->id;
-        } else {
-            $id_customer = 0;
-        }
+        $id_customer = $useCookie ? (int) $context->customer->id : 0;
 
         if (! is_numeric($pageNumber) || ! is_numeric($pageSize) || ! Validate::isValidSearch($tag)
             || $orderBy && ! $orderWay || ($orderBy && ! Validate::isOrderBy($orderBy)) || ($orderWay && ! Validate::isOrderBy($orderWay))

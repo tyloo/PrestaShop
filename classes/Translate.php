@@ -50,11 +50,7 @@ class TranslateCore
         $string = preg_replace("/\\\*'/", "\'", $string);
         $key = $class . '_' . md5((string) $string);
 
-        if (isset($_LANG[$key])) {
-            $str = $_LANG[$key];
-        } else {
-            $str = $string;
-        }
+        $str = $_LANG[$key] ?? $string;
 
         if ($htmlentities) {
             $str = htmlspecialchars((string) $str, \ENT_QUOTES, 'utf-8');

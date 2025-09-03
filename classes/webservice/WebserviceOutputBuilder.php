@@ -365,9 +365,8 @@ class WebserviceOutputBuilderCore
         }
 
         $output .= $this->objectRender->renderNodeFooter('api', []);
-        $output = $this->objectRender->overrideContent($output);
 
-        return $output;
+        return $this->objectRender->overrideContent($output);
     }
 
     public function registerOverrideWSParameters($wsrObject, $method)
@@ -469,9 +468,8 @@ class WebserviceOutputBuilderCore
 
         $more_attr['id'] = $object->id;
         $more_attr['xlink_resource'] = $this->wsUrl . $ws_params['objectsNodeName'] . '/' . $object->id;
-        $output = $this->setIndent($depth) . $this->objectRender->renderNodeHeader($ws_params['objectNodeName'], $ws_params, $more_attr, false);
 
-        return $output;
+        return $this->setIndent($depth) . $this->objectRender->renderNodeHeader($ws_params['objectNodeName'], $ws_params, $more_attr, false);
     }
 
     /**
@@ -494,9 +492,7 @@ class WebserviceOutputBuilderCore
             $output .= $this->renderAssociations($object, 0, $ws_params['associations'], $ws_params);
         }
 
-        $output .= $this->objectRender->renderNodeFooter($ws_params['objectNodeName'], $ws_params);
-
-        return $output;
+        return $output . $this->objectRender->renderNodeFooter($ws_params['objectNodeName'], $ws_params);
     }
 
     /**
@@ -557,9 +553,7 @@ class WebserviceOutputBuilderCore
             $output .= $this->renderAssociations($object, $depth, $ws_params['associations'], $ws_params);
         }
 
-        $output .= $this->setIndent($depth) . $this->objectRender->renderNodeFooter($ws_params['objectNodeName'], $ws_params);
-
-        return $output;
+        return $output . ($this->setIndent($depth) . $this->objectRender->renderNodeFooter($ws_params['objectNodeName'], $ws_params));
     }
 
     /**
@@ -720,9 +714,7 @@ class WebserviceOutputBuilderCore
             }
         }
 
-        $output .= $this->objectRender->renderAssociationWrapperFooter();
-
-        return $output;
+        return $output . $this->objectRender->renderAssociationWrapperFooter();
     }
 
     protected function renderFlatAssociation($object, $depth, $assoc_name, $resource_name, $fields_assoc, $object_assoc, $parent_details)
@@ -765,9 +757,7 @@ class WebserviceOutputBuilderCore
             }
         }
 
-        $output .= $this->setIndent($depth - 1) . $this->objectRender->renderNodeFooter($resource_name, []);
-
-        return $output;
+        return $output . ($this->setIndent($depth - 1) . $this->objectRender->renderNodeFooter($resource_name, []));
     }
 
     public function setIndent($depth)

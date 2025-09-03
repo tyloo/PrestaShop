@@ -1412,11 +1412,7 @@ class CarrierCore extends ObjectModel
             throw new PrestaShopException('Parameter "id_tax_rules_group" is invalid.');
         }
 
-        if (! $all_shops) {
-            $shops = Shop::getContextListShopID();
-        } else {
-            $shops = Shop::getShops(true, null, true);
-        }
+        $shops = ! $all_shops ? Shop::getContextListShopID() : Shop::getShops(true, null, true);
 
         $this->deleteTaxRulesGroup($shops);
 
@@ -1509,7 +1505,7 @@ class CarrierCore extends ObjectModel
                     AND d2.id_shop IS NULL) OR (d2.id_shop_group IS NULL AND d2.id_shop IS NULL))';
         }
 
-        $sql = 'AND ' . $alias . '.id_delivery = (
+        return 'AND ' . $alias . '.id_delivery = (
                     SELECT d2.id_delivery
                     FROM ' . _DB_PREFIX_ . 'delivery d2
                     WHERE d2.id_carrier = `' . bqSQL($alias) . '`.id_carrier
@@ -1519,8 +1515,6 @@ class CarrierCore extends ObjectModel
                     ORDER BY d2.id_shop DESC, d2.id_shop_group DESC
                     LIMIT 1
                 )';
-
-        return $sql;
     }
 
     /**
@@ -1708,11 +1702,7 @@ class CarrierCore extends ObjectModel
             $available_carrier_list[$carrier['id_carrier']] = $carrier['id_carrier'];
         }
 
-        if ($carrier_list) {
-            $carrier_list = array_intersect($available_carrier_list, $carrier_list);
-        } else {
-            $carrier_list = $available_carrier_list;
-        }
+        $carrier_list = $carrier_list ? array_intersect($available_carrier_list, $carrier_list) : $available_carrier_list;
 
         $cart_quantity = 0;
         $cart_weight = 0;
@@ -1787,7 +1777,7 @@ class CarrierCore extends ObjectModel
         $carrier_list = Db::getInstance()->executeS('
             SELECT id_carrier FROM `' . _DB_PREFIX_ . 'carrier`
             WHERE deleted = 0
-            ' . (is_array($exception) && count($exception) > 0 ? 'AND id_carrier NOT IN (' . implode(',', $exception) . ')' : ''));
+            ' . (is_array($exception) && $exception !== [] ? 'AND id_carrier NOT IN (' . implode(',', $exception) . ')' : ''));
 
         if ($carrier_list) {
             $data = [];
@@ -1821,7 +1811,7 @@ class CarrierCore extends ObjectModel
             Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . 'carrier_group WHERE id_carrier = ' . (int) $this->id);
         }
 
-        if (! is_array($groups) || ! count($groups)) {
+        if (! is_array($groups) || $groups === []) {
             return true;
         }
 

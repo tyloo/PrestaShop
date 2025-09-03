@@ -203,7 +203,7 @@ class OrderCarrierCore extends ObjectModel
             '{meta_products}' => $metadata,
         ];
 
-        if (@Mail::Send(
+        return (bool) @Mail::Send(
             $orderLanguageId,
             'in_transit',
             $this->trans(
@@ -222,11 +222,7 @@ class OrderCarrierCore extends ObjectModel
             _PS_MAIL_DIR_,
             true,
             (int) $order->id_shop
-        )) {
-            return true;
-        }
-
-        return false;
+        );
     }
 
     public function updateWs()

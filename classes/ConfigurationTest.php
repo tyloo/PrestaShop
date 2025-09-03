@@ -140,7 +140,7 @@ class ConfigurationTestCore
 
     public static function test_phpversion()
     {
-        return version_compare(\PHP_VERSION, '7.1.3', '>=');
+        return \PHP_VERSION_ID >= 70100;
     }
 
     public static function test_apache_mod_rewrite()
@@ -413,11 +413,7 @@ class ConfigurationTestCore
             'private_key_type' => \OPENSSL_KEYTYPE_RSA,
         ]);
 
-        if ($privateKey === false) {
-            return false;
-        }
-
-        return true;
+        return $privateKey !== false;
     }
 
     public static function test_sessions()

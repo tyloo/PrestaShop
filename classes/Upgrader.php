@@ -109,11 +109,8 @@ class UpgraderCore
         }
 
         $destPath = realpath($dest) . \DIRECTORY_SEPARATOR . $filename;
-        if (@copy($this->link, $destPath)) {
-            return true;
-        }
 
-        return false;
+        return @copy($this->link, $destPath);
     }
 
     /**
@@ -133,11 +130,7 @@ class UpgraderCore
      */
     public function checkPSVersion($force = false)
     {
-        if (class_exists('Configuration')) {
-            $lastCheck = Configuration::get('PS_LAST_VERSION_CHECK');
-        } else {
-            $lastCheck = 0;
-        }
+        $lastCheck = class_exists('Configuration') ? Configuration::get('PS_LAST_VERSION_CHECK') : 0;
 
         // if we use the autoupgrade process, we will never refresh it
         // except if no check has been done before
@@ -248,7 +241,7 @@ class UpgraderCore
      */
     public function getChangedFilesList()
     {
-        if (is_array($this->changed_files) && count($this->changed_files) === 0) {
+        if (is_array($this->changed_files) && $this->changed_files === []) {
             libxml_set_streams_context(@stream_context_create(['http' => ['timeout' => 3]]));
             $checksum = @simplexml_load_file($this->rss_md5file_link_dir . _PS_VERSION_ . '.xml');
             if ($checksum === false) {
@@ -344,11 +337,7 @@ class UpgraderCore
      */
     protected function compareChecksum($path, $originalSum)
     {
-        if (md5_file($path) === $originalSum) {
-            return true;
-        }
-
-        return false;
+        return md5_file($path) === $originalSum;
     }
 
     /**

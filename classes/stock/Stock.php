@@ -241,9 +241,8 @@ class StockCore extends ObjectModel
     public function getWsRealQuantity()
     {
         $manager = StockManagerFactory::getManager();
-        $quantity = $manager->getProductRealQuantities($this->id_product, $this->id_product_attribute, $this->id_warehouse, true);
 
-        return $quantity;
+        return $manager->getProductRealQuantities($this->id_product, $this->id_product_attribute, $this->id_warehouse, true);
     }
 
     public static function deleteStockByIds($id_product = null, $id_product_attribute = null)
@@ -264,6 +263,6 @@ class StockCore extends ObjectModel
         $result = Db::getInstance()->executeS('SELECT `id_stock` FROM ' . _DB_PREFIX_ . 'stock
 			WHERE `id_warehouse` = ' . (int) $id_warehouse . ' AND `id_product` = ' . (int) $id_product . ((int) $id_product_attribute ? ' AND `id_product_attribute` = ' . $id_product_attribute : ''));
 
-        return is_array($result) && ! empty($result) ? true : false;
+        return is_array($result) && ! empty($result);
     }
 }

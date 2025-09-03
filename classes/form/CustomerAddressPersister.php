@@ -51,12 +51,8 @@ class CustomerAddressPersisterCore
             return false;
         }
 
-        if ($token !== $this->token) {
-            // XSS?
-            return false;
-        }
-
-        return true;
+        // XSS?
+        return $token === $this->token;
     }
 
     public function save(Address $address, $token)

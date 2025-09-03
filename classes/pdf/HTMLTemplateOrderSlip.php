@@ -134,11 +134,13 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
 
         $tax = new Tax();
         $tax->rate = $this->order->carrier_tax_rate;
+
         $tax_calculator = new TaxCalculator([$tax]);
         $tax_excluded_display = Group::getPriceDisplayMethod((int) $customer->id_default_group);
 
         $this->order->total_shipping_tax_incl = $this->order_slip->total_shipping_tax_incl;
         $this->order->total_shipping_tax_excl = $this->order_slip->total_shipping_tax_excl;
+
         $this->order_slip->shipping_cost_amount = $tax_excluded_display ? $this->order_slip->total_shipping_tax_excl : $this->order_slip->total_shipping_tax_incl;
 
         $this->order->total_paid_tax_incl += $this->order->total_shipping_tax_incl;
@@ -165,7 +167,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
             'order_slip' => $this->order_slip,
             'order_details' => $order_details,
             'cart_rules' => $this->order_slip->order_slip_type === 1 ? $this->order->getCartRules() : false,
-            'amount_choosen' => $this->order_slip->order_slip_type === 2 ? true : false,
+            'amount_choosen' => $this->order_slip->order_slip_type === 2,
             'delivery_address' => $formatted_delivery_address,
             'invoice_address' => $formatted_invoice_address,
             'addresses' => ['invoice' => $invoice_address, 'delivery' => $delivery_address],
@@ -319,6 +321,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
         $taxes_breakdown = [];
         $tax = new Tax();
         $tax->rate = $this->order->carrier_tax_rate;
+
         $tax_calculator = new TaxCalculator([$tax]);
         $customer = new Customer((int) $this->order->id_customer);
         $tax_excluded_display = Group::getPriceDisplayMethod((int) $customer->id_default_group);

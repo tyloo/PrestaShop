@@ -142,11 +142,7 @@ class CacheMemcachedCore extends Cache
      */
     protected function _writeKeys()
     {
-        if (! $this->isConnected()) {
-            return false;
-        }
-
-        return true;
+        return (bool) $this->isConnected();
     }
 
     public function flush()

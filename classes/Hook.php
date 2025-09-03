@@ -1039,11 +1039,7 @@ class HookCore extends ObjectModel
                 );
 
                 $controller_obj = Context::getContext()->controller;
-                if ($controller_obj === null) {
-                    $controller = null;
-                } else {
-                    $controller = $controller_obj->controller_name ?? $controller_obj->php_self;
-                }
+                $controller = $controller_obj === null ? null : $controller_obj->controller_name ?? $controller_obj->php_self;
 
                 // Check if current controller is a module controller and prefix it's name if needed
                 // to standardized format

@@ -494,9 +494,7 @@ class SupplierCore extends ObjectModel
 			' . ($front ? ' WHERE product_shop.`visibility` IN ("both", "catalog")' : '') . '
 			GROUP BY p.`id_product`';
 
-        $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
-
-        return $res;
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
     }
 
     /**
@@ -512,6 +510,7 @@ class SupplierCore extends ObjectModel
         $query->select('id_supplier');
         $query->from('supplier');
         $query->where('id_supplier = ' . (int) $idSupplier);
+
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query, false);
 
         return $res > 0;
@@ -549,6 +548,7 @@ class SupplierCore extends ObjectModel
         $query->where('id_supplier = ' . (int) $idSupplier);
         $query->where('id_product = ' . (int) $idProduct);
         $query->where('id_product_attribute = ' . (int) $idProductAttribute);
+
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
         return count($res) ? $res[0] : [];

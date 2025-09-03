@@ -408,11 +408,7 @@ class OrderHistoryCore extends ObjectModel
 
         Order::cleanHistoryCache();
 
-        if (! $this->sendEmail($order, $template_vars)) {
-            return false;
-        }
-
-        return true;
+        return $this->sendEmail($order, $template_vars);
     }
 
     /**

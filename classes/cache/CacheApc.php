@@ -63,11 +63,7 @@ class CacheApcCore extends Cache
 
             $cache_info = (($this->apcu) ? apcu_cache_info() : apc_cache_info(''));
             foreach ($cache_info['cache_list'] as $entry) {
-                if (isset($entry['key'])) {
-                    $key = $entry['key'];
-                } else {
-                    $key = $entry['info'];
-                }
+                $key = $entry['key'] ?? $entry['info'];
 
                 if (preg_match('#^' . $pattern . '$#', (string) $key)) {
                     $this->_delete($key);

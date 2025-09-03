@@ -1706,7 +1706,7 @@ class FrontControllerCore extends Controller
         $urls = $this->getTemplateVarUrls();
         $psImageUrl = $urls['img_ps_url'] ?? _PS_IMG_;
 
-        $shop = [
+        return [
             'id' => $this->context->shop->id,
             'group_id' => $this->context->shop->id_shop_group,
             'name' => Configuration::get('PS_SHOP_NAME'),
@@ -1734,8 +1734,6 @@ class FrontControllerCore extends Controller
             'phone' => Configuration::get('PS_SHOP_PHONE'),
             'fax' => Configuration::get('PS_SHOP_FAX'),
         ];
-
-        return $shop;
     }
 
     private static function configuredImageUrl(string $configKey, $psImageUrl)
@@ -2168,9 +2166,8 @@ class FrontControllerCore extends Controller
 
         // Build back the query
         $str_params = http_build_query($params, '', '&');
-        $sanitizedUrl = preg_replace('/^([^?]*)?.*$/', '$1', $url) . (! empty($str_params) ? '?' . $str_params : '');
 
-        return $sanitizedUrl;
+        return preg_replace('/^([^?]*)?.*$/', '$1', $url) . (! empty($str_params) ? '?' . $str_params : '');
     }
 
     /**
@@ -2182,11 +2179,7 @@ class FrontControllerCore extends Controller
     {
         $params = [];
         foreach ($query as $key => $value) {
-            if (is_array($value)) {
-                $params[Tools::safeOutput($key)] = $this->sanitizeQueryOutput($value);
-            } else {
-                $params[Tools::safeOutput($key)] = Tools::safeOutput($value);
-            }
+            $params[Tools::safeOutput($key)] = is_array($value) ? $this->sanitizeQueryOutput($value) : Tools::safeOutput($value);
         }
 
         return $params;

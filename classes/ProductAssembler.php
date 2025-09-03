@@ -152,12 +152,10 @@ class ProductAssemblerCore
 			        AND sa.id_shop = {$idShop} ";
         }
 
-        $sql .= "LEFT JOIN {$prefix}product_shop ps
+        return $sql . ("LEFT JOIN {$prefix}product_shop ps
 			        ON ps.id_product = p.id_product
 			        AND ps.id_shop = {$idShop}
-                WHERE p.id_product IN (" . implode(',', $productIds) . ')';
-
-        return $sql;
+                WHERE p.id_product IN (" . implode(',', $productIds) . ')');
     }
 
     /**

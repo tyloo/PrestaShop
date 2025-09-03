@@ -238,9 +238,7 @@ class ToolsCore
      */
     public static function getShopProtocol()
     {
-        $protocol = (Configuration::get('PS_SSL_ENABLED') || Tools::usingSecureMode()) ? 'https://' : 'http://';
-
-        return $protocol;
+        return (Configuration::get('PS_SSL_ENABLED') || Tools::usingSecureMode()) ? 'https://' : 'http://';
     }
 
     /**
@@ -361,11 +359,7 @@ class ToolsCore
      */
     public static function getRemoteAddr()
     {
-        if (function_exists('apache_request_headers')) {
-            $headers = apache_request_headers();
-        } else {
-            $headers = $_SERVER;
-        }
+        $headers = function_exists('apache_request_headers') ? apache_request_headers() : $_SERVER;
 
         if (array_key_exists('X-Forwarded-For', $headers)) {
             $_SERVER['HTTP_X_FORWARDED_FOR'] = $headers['X-Forwarded-For'];
@@ -739,11 +733,10 @@ class ToolsCore
 
         /** @var LocaleRepository $localeRepository */
         $localeRepository = $container->get(self::SERVICE_LOCALE_REPOSITORY);
-        $locale = $localeRepository->getLocale(
+
+        return $localeRepository->getLocale(
             $context->language->getLocale()
         );
-
-        return $locale;
     }
 
     public static function displayPriceSmarty($params, &$smarty)
@@ -886,9 +879,8 @@ class ToolsCore
             Context::getContext()->getTranslator()->trans('MM', [], 'Shop.Forms.Help'),
             Context::getContext()->getTranslator()->trans('YYYY', [], 'Shop.Forms.Help'),
         ];
-        $format = str_replace($search, $replace, $format);
 
-        return $format;
+        return str_replace($search, $replace, $format);
     }
 
     /**
@@ -904,9 +896,8 @@ class ToolsCore
         $time = strtotime($date_str);
         $context = Context::getContext();
         $date_format = ($full ? $context->language->date_format_full : $context->language->date_format_lite);
-        $date = date($date_format, $time);
 
-        return $date;
+        return date($date_format, $time);
     }
 
     /**
@@ -2684,9 +2675,7 @@ exit;
             return [];
         }
 
-        $directoryList = array_map(fn ($path) => substr($path, strrpos($path, '/') + 1), $directoryList);
-
-        return $directoryList;
+        return array_map(fn ($path) => substr($path, strrpos($path, '/') + 1), $directoryList);
     }
 
     /**
@@ -2841,11 +2830,7 @@ exit;
      */
     public static function checkPhpVersion()
     {
-        if (defined('PHP_VERSION')) {
-            $version = \PHP_VERSION;
-        } else {
-            $version = phpversion('');
-        }
+        $version = defined('PHP_VERSION') ? \PHP_VERSION : phpversion('');
 
         // Specific ubuntu usecase: php version returns 5.2.4-2ubuntu5.2
         if (str_contains($version, '-')) {
@@ -2884,11 +2869,8 @@ exit;
         }
 
         $zip = new ZipArchive();
-        if ($zip->open($from_file) === true && $zip->extractTo($to_dir) && $zip->close()) {
-            return true;
-        }
 
-        return false;
+        return $zip->open($from_file) === true && $zip->extractTo($to_dir) && $zip->close();
     }
 
     /**
@@ -2922,11 +2904,8 @@ exit;
         }
 
         closedir($dh);
-        if (@chmod($path, $filemode)) {
-            return true;
-        }
 
-        return false;
+        return @chmod($path, $filemode);
     }
 
     /**
@@ -3216,7 +3195,7 @@ exit;
 
         // get the first argument and parse it like a query string
         parse_str((string) $argv[1], $args);
-        if (! is_array($args) || ! count($args)) {
+        if (! is_array($args) || $args === []) {
             return;
         }
 
@@ -3454,11 +3433,7 @@ exit;
             return true;
         }
 
-        if ((isset($_SERVER['HTTP_MOD_REWRITE']) && Tools::strtolower($_SERVER['HTTP_MOD_REWRITE']) === 'on') || Tools::strtolower(getenv('HTTP_MOD_REWRITE')) === 'on') {
-            return true;
-        }
-
-        return false;
+        return (isset($_SERVER['HTTP_MOD_REWRITE']) && Tools::strtolower($_SERVER['HTTP_MOD_REWRITE']) === 'on') || Tools::strtolower(getenv('HTTP_MOD_REWRITE')) === 'on';
     }
 
     /**
@@ -3780,7 +3755,7 @@ exit;
             $adjustment_factor = $amount_to_spread;
 
             if ($position < abs($remainder)) {
-                $adjustment_factor += $sign * 1 / $unit;
+                $adjustment_factor += $sign / $unit;
             }
 
             $row[$column] += $adjustment_factor;
@@ -4015,11 +3990,8 @@ exit;
         }
 
         $allowed_ips = array_map('trim', explode(',', Configuration::get('PS_MAINTENANCE_IP')));
-        if (IpUtils::checkIp(Tools::getRemoteAddr(), $allowed_ips)) {
-            return true;
-        }
 
-        return false;
+        return IpUtils::checkIp(Tools::getRemoteAddr(), $allowed_ips);
     }
 }
 

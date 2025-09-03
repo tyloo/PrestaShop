@@ -425,8 +425,7 @@ abstract class ModuleGraphCore extends Module
         }
 
         $escaped .= str_replace('"', '""', $content);
-        $escaped .= '"';
 
-        return $escaped;
+        return $escaped . '"';
     }
 }

@@ -516,11 +516,7 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
                 return false;
             }
 
-            if ($page['type'] === 'next' && $pagination->getPagesCount() === $pagination->getPage()) {
-                return false;
-            }
-
-            return true;
+            return ! ($page['type'] === 'next' && $pagination->getPagesCount() === $pagination->getPage());
         });
 
         return [

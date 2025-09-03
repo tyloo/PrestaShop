@@ -1108,7 +1108,7 @@ class DispatcherCore
             }
 
             $url = preg_replace('#\{([^{}]*:)?[a-z0-9_]+?(:[^{}]*)?\}#', '', (string) $url);
-            if (count($add_param)) {
+            if ($add_param !== []) {
                 $url .= '?' . http_build_query($add_param, '', '&');
             }
         } else {

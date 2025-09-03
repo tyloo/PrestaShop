@@ -518,6 +518,6 @@ class DbPDOCore extends Db
         $result = $link->exec('SET NAMES utf8mb4');
         unset($link);
 
-        return ($result === false) ? false : true;
+        return $result !== false;
     }
 }

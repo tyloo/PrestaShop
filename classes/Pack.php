@@ -246,11 +246,7 @@ class PackCore extends Product
             return true;
         }
 
-        if ($wantedQuantity > $packQuantity) {
-            return false;
-        }
-
-        return true;
+        return $wantedQuantity <= $packQuantity;
     }
 
     /**

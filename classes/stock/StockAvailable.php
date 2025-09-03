@@ -628,11 +628,7 @@ class StockAvailableCore extends ObjectModel
     {
         $id_product = (int) $id_product;
 
-        if ($id_product_attribute === null) {
-            $id_product_attribute = 0;
-        } else {
-            $id_product_attribute = (int) $id_product_attribute;
-        }
+        $id_product_attribute = $id_product_attribute === null ? 0 : (int) $id_product_attribute;
 
         $query = new DbQuery();
         $query->select('location');
@@ -665,11 +661,7 @@ class StockAvailableCore extends ObjectModel
         // if there is no $id_shop, gets the context one
         // get shop group too
         if ($shop === null || $shop === $context->shop->id) {
-            if (Shop::getContext() === Shop::CONTEXT_GROUP) {
-                $shop_group = Shop::getContextShopGroup();
-            } else {
-                $shop_group = $context->shop->getGroup();
-            }
+            $shop_group = Shop::getContext() === Shop::CONTEXT_GROUP ? Shop::getContextShopGroup() : $context->shop->getGroup();
 
             $shop = $context->shop;
         } elseif (is_object($shop)) {

@@ -93,9 +93,8 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
         }
 
         $str_output .= '<message><![CDATA[' . $message . ']]></message>' . "\n";
-        $str_output .= '</error>' . "\n";
 
-        return $str_output;
+        return $str_output . ('</error>' . "\n");
     }
 
     public function renderField($field)
@@ -159,9 +158,8 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
 
         $ret .= '>';
         $ret .= $node_content;
-        $ret .= '</' . $field['sqlId'] . '>' . "\n";
 
-        return $ret;
+        return $ret . ('</' . $field['sqlId'] . '>' . "\n");
     }
 
     public function renderNodeHeader($node_name, $params, $more_attr = null, $has_child = true)
@@ -202,9 +200,8 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $xml .= '<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">' . "\n";
         $xml .= $content;
-        $xml .= '</prestashop>' . "\n";
 
-        return $xml;
+        return $xml . ('</prestashop>' . "\n");
     }
 
     public function renderAssociationWrapperHeader()

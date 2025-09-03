@@ -498,11 +498,11 @@ class CountryCore extends ObjectModel
      */
     public static function addModuleRestrictions(array $shops = [], array $countries = [], array $modules = [])
     {
-        if (! count($shops)) {
+        if ($shops === []) {
             $shops = Shop::getShops(true, null, true);
         }
 
-        if (! count($countries)) {
+        if ($countries === []) {
             if (Context::getContext()->cookie !== null) {
                 $id_lang = (int) Context::getContext()->cookie->id_lang;
             } else {
@@ -512,7 +512,7 @@ class CountryCore extends ObjectModel
             $countries = Country::getCountries($id_lang);
         }
 
-        if (! count($modules)) {
+        if ($modules === []) {
             $modules = Module::getPaymentModules();
         }
 
@@ -547,8 +547,6 @@ class CountryCore extends ObjectModel
      */
     public function add($autoDate = true, $nullValues = false)
     {
-        $return = parent::add($autoDate, $nullValues) && self::addModuleRestrictions([], [['id_country' => $this->id]], []);
-
-        return $return;
+        return parent::add($autoDate, $nullValues) && self::addModuleRestrictions([], [['id_country' => $this->id]], []);
     }
 }

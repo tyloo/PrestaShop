@@ -544,11 +544,7 @@ class CategoryCore extends ObjectModel
 
         $parentCategory = new Category((int) $this->id_parent);
         if (! Validate::isLoadedObject($parentCategory)) {
-            if (is_array($this->name)) {
-                $name = $this->name[Context::getContext()->language->id];
-            } else {
-                $name = $this->name;
-            }
+            $name = is_array($this->name) ? $this->name[Context::getContext()->language->id] : $this->name;
 
             throw new PrestaShopException('Parent category ' . $this->id_parent . ' does not exist. Current category: ' . $name);
         }
@@ -568,6 +564,7 @@ class CategoryCore extends ObjectModel
         $sql->from('category', 'c');
         $sql->leftJoin('category_shop', 'cs', 'c.`id_category` = cs.`id_category` AND cs.`id_shop` = ' . (int) $idShop);
         $sql->orderBy('c.`id_parent`, cs.`position` ASC');
+
         $categories = Db::getInstance()->executeS($sql);
         $categoriesArray = [];
         foreach ($categories as $category) {
@@ -663,12 +660,14 @@ class CategoryCore extends ObjectModel
         $sql->select('c.`id_category`, c.`id_parent`, c.`level_depth`');
         $sql->from('category', 'c');
         $sql->where('c.`id_parent` = ' . (int) $idParentCategory);
+
         $categories = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
         /* Gets level_depth */
         $sql = new DbQuery();
         $sql->select('c.`level_depth`');
         $sql->from('category', 'c');
         $sql->where('c.`id_category` = ' . (int) $idParentCategory);
+
         $level = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
         /* Updates level_depth for all children */
         foreach ($categories as $subCategory) {
@@ -709,7 +708,7 @@ class CategoryCore extends ObjectModel
 			' . ($active ? 'AND `active` = 1' : '') . '
 			' . (! $idLang ? 'GROUP BY c.id_category' : '') . '
 			' . ($orderBy !== '' ? $orderBy : 'ORDER BY c.`level_depth` ASC, category_shop.`position` ASC') . '
-			' . ($limit !== '' ? $limit : '')
+			' . $limit
         );
 
         if (! $order) {
@@ -796,7 +795,7 @@ class CategoryCore extends ObjectModel
 				' . (! $idLang || (isset($groups) && Group::isFeatureActive()) ? ' GROUP BY c.`id_category`' : '') . '
 				' . ($orderBy !== '' ? $orderBy : ' ORDER BY c.`level_depth` ASC') . '
 				' . ($orderBy === '' && $useShopRestriction ? ', category_shop.`position` ASC' : '') . '
-				' . ($limit !== '' ? $limit : '')
+				' . $limit
             );
 
             Cache::store($cacheId, $result);
@@ -867,7 +866,7 @@ class CategoryCore extends ObjectModel
 				' . (! $idLang || (isset($groups) && Group::isFeatureActive()) ? ' GROUP BY c.`id_category`' : '') . '
 				' . ($orderBy !== '' ? $orderBy : ' ORDER BY c.`level_depth` ASC') . '
 				' . ($orderBy === '' && $useShopRestriction ? ', category_shop.`position` ASC' : '') . '
-				' . ($limit !== '' ? $limit : '')
+				' . $limit
             );
 
             $categories = [];
@@ -2078,6 +2077,7 @@ class CategoryCore extends ObjectModel
         $sql->select('c.`nleft`, c.`nright`');
         $sql->from('category', 'c');
         $sql->where('c.`id_category` = ' . (int) $idCategory);
+
         $row = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
 
         // If it doesn't exist, we can end up right here
@@ -2194,7 +2194,7 @@ class CategoryCore extends ObjectModel
             $idLang = Context::getContext()->language->id;
         }
 
-        if (! is_array($idsCategory) || ! count($idsCategory)) {
+        if (! is_array($idsCategory) || $idsCategory === []) {
             return false;
         }
 
@@ -2385,7 +2385,7 @@ class CategoryCore extends ObjectModel
             );
         }
 
-        $return = $return && Db::getInstance()->execute(
+        return $return && Db::getInstance()->execute(
             sprintf(
                 'UPDATE `%scategory` c SET c.`position`= %d WHERE c.id_category = %d',
                 _DB_PREFIX_,
@@ -2393,8 +2393,6 @@ class CategoryCore extends ObjectModel
                 (int) $this->id
             )
         );
-
-        return $return;
     }
 
     /**
@@ -2424,7 +2422,7 @@ class CategoryCore extends ObjectModel
     {
         $shop = new Shop((int) $idShop);
         // if array is empty or if the default category is not selected, return false
-        if (! is_array($categories) || ! count($categories) || ! in_array($shop->id_category, $categories, true)) {
+        if (! is_array($categories) || $categories === [] || ! in_array($shop->id_category, $categories, true)) {
             return false;
         }
 

@@ -275,6 +275,7 @@ abstract class ControllerCore
 
         $this->context = Context::getContext();
         $this->context->controller = $this;
+
         $this->translator = Context::getContext()->getTranslator();
         $this->ajax = $this->isAjax();
 
@@ -459,17 +460,9 @@ abstract class ControllerCore
 
         foreach ($css_uri as $css_file => $media) {
             if (is_string($css_file) && strlen($css_file) > 1) {
-                if ($check_path) {
-                    $css_path = Media::getCSSPath($css_file, $media);
-                } else {
-                    $css_path = [$css_file => $media];
-                }
+                $css_path = $check_path ? Media::getCSSPath($css_file, $media) : [$css_file => $media];
             } else {
-                if ($check_path) {
-                    $css_path = Media::getCSSPath($media, $css_media_type);
-                } else {
-                    $css_path = [$media => $css_media_type];
-                }
+                $css_path = $check_path ? Media::getCSSPath($media, $css_media_type) : [$media => $css_media_type];
             }
 
             $key = is_array($css_path) ? key($css_path) : $css_path;
@@ -499,17 +492,9 @@ abstract class ControllerCore
 
         foreach ($css_uri as $css_file => $media) {
             if (is_string($css_file) && strlen($css_file) > 1) {
-                if ($check_path) {
-                    $css_path = Media::getCSSPath($css_file, $media);
-                } else {
-                    $css_path = [$css_file => $media];
-                }
+                $css_path = $check_path ? Media::getCSSPath($css_file, $media) : [$css_file => $media];
             } else {
-                if ($check_path) {
-                    $css_path = Media::getCSSPath($media, $css_media_type);
-                } else {
-                    $css_path = [$media => $css_media_type];
-                }
+                $css_path = $check_path ? Media::getCSSPath($media, $css_media_type) : [$media => $css_media_type];
             }
 
             if (

@@ -132,11 +132,7 @@ class CacheMemcacheCore extends Cache
      */
     protected function _writeKeys()
     {
-        if (! $this->is_connected) {
-            return false;
-        }
-
-        return true;
+        return $this->is_connected;
     }
 
     /**
@@ -204,7 +200,7 @@ class CacheMemcacheCore extends Cache
             // Get keys (this code comes from Doctrine 2 project)
             $pattern = str_replace('\\*', '.*', preg_quote($key));
             $servers = static::getMemcachedServers();
-            if (is_array($servers) && count($servers) > 0 && method_exists('Memcache', 'getStats')) {
+            if (is_array($servers) && $servers !== [] && method_exists('Memcache', 'getStats')) {
                 $all_slabs = $this->memcache->getStats('slabs');
             }
 

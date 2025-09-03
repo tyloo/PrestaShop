@@ -144,8 +144,8 @@ class TranslatedConfigurationCore extends Configuration
 		(	SELECT id_configuration
 			FROM ' . _DB_PREFIX_ . $this->def['table'] . '_lang
 		) ' . $sqlFilter . '
-		' . ($sqlSort !== '' ? $sqlSort : '') . '
-		' . ($sqlLimit !== '' ? $sqlLimit : '') . '
+		' . $sqlSort . '
+		' . $sqlLimit . '
 		';
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);

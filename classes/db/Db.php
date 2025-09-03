@@ -677,11 +677,7 @@ abstract class DbCore
         }
 
         $this->result = $this->query($sql);
-        if (! $this->result) {
-            $result = false;
-        } else {
-            $result = $this->nextRow($this->result);
-        }
+        $result = ! $this->result ? false : $this->nextRow($this->result);
 
         $this->last_cached = false;
 

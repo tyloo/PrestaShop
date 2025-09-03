@@ -100,11 +100,7 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
                 $tmp[] = ['id' => $id_lang, 'value' => $field['value'][$id_lang]];
             }
 
-            if (count($tmp) === 1) {
-                $field['value'] = $tmp[0]['value'];
-            } else {
-                $field['value'] = $tmp;
-            }
+            $field['value'] = count($tmp) === 1 ? $tmp[0]['value'] : $tmp;
         }
 
         // Case 1 : fields of the current entity (not an association)

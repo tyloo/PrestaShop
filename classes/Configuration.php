@@ -571,7 +571,7 @@ class ConfigurationCore extends ObjectModel
                         ]
                     );
                     $results = Db::getInstance()->getRow($selectConfiguration);
-                    $configurationExists = is_array($results) && count($results) > 0;
+                    $configurationExists = is_array($results) && $results !== [];
                     $now = date('Y-m-d H:i:s');
                     $sanitizedValue = pSQL($value, $html);
 
@@ -716,8 +716,8 @@ class ConfigurationCore extends ObjectModel
                 }
             }
         } else {
-            $testContext = ((Shop::getContext() === Shop::CONTEXT_SHOP && Configuration::hasContext($key, null, Shop::CONTEXT_SHOP))
-                            || (Shop::getContext() === Shop::CONTEXT_GROUP && Configuration::hasContext($key, null, Shop::CONTEXT_GROUP))) ? true : false;
+            $testContext = (Shop::getContext() === Shop::CONTEXT_SHOP && Configuration::hasContext($key, null, Shop::CONTEXT_SHOP))
+                            || (Shop::getContext() === Shop::CONTEXT_GROUP && Configuration::hasContext($key, null, Shop::CONTEXT_GROUP));
         }
 
         return Shop::isFeatureActive() && Shop::getContext() !== Shop::CONTEXT_ALL && $testContext;
@@ -797,8 +797,8 @@ class ConfigurationCore extends ObjectModel
             SELECT id_configuration
             FROM `' . _DB_PREFIX_ . bqSQL($this->def['table']) . '_lang`
         ) ' . $sqlFilter . '
-        ' . ($sqlSort !== '' ? $sqlSort : '') . '
-        ' . ($sqlLimit !== '' ? $sqlLimit : '');
+        ' . $sqlSort . '
+        ' . $sqlLimit;
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
     }

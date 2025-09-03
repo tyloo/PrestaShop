@@ -225,11 +225,7 @@ class PDFCore
                 continue;
             }
 
-            if ($bulk) {
-                $this->filename = $template->getBulkFilename();
-            } else {
-                $this->filename = $template->getFilename();
-            }
+            $this->filename = $bulk ? $template->getBulkFilename() : $template->getFilename();
 
             if (! empty($this->filename)) {
                 break;

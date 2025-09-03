@@ -37,11 +37,7 @@ abstract class AbstractLoggerCore implements PrestaShopLoggerInterface
 
     public function __construct($level = self::INFO)
     {
-        if (array_key_exists((int) $level, $this->level_value)) {
-            $this->level = $level;
-        } else {
-            $this->level = self::INFO;
-        }
+        $this->level = array_key_exists((int) $level, $this->level_value) ? $level : self::INFO;
     }
 
     /**

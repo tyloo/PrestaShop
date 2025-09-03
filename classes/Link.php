@@ -895,11 +895,7 @@ class LinkCore
             }
 
             // Use the matching shop if present, or fallback on the default one
-            if ($idShop !== null) {
-                $shop = new Shop($idShop);
-            } else {
-                $shop = new Shop((int) Configuration::get('PS_SHOP_DEFAULT'));
-            }
+            $shop = $idShop !== null ? new Shop($idShop) : new Shop((int) Configuration::get('PS_SHOP_DEFAULT'));
         } else {
             $shop = Context::getContext()->shop;
         }
@@ -1344,7 +1340,7 @@ class LinkCore
         }
 
         if (! $array) {
-            if (count($vars)) {
+            if ($vars !== []) {
                 return $url . (! strstr((string) $url, '?') && ($this->allow || $url === $this->url) ? '?' : '&') . http_build_query($vars, '', '&');
             }
 

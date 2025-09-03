@@ -92,11 +92,7 @@ class DbQueryCore implements Stringable
     public function from($table, $alias = null)
     {
         if (! empty($table)) {
-            if ($table instanceof DbQuery) {
-                $query = '(' . $table->build() . ')';
-            } else {
-                $query = '`' . _DB_PREFIX_ . $table . '`';
-            }
+            $query = $table instanceof DbQuery ? '(' . $table->build() . ')' : '`' . _DB_PREFIX_ . $table . '`';
 
             $this->query['from'][] = $query . ($alias ? ' ' . $alias : '');
         }

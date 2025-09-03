@@ -386,6 +386,7 @@ class OrderSlipCore extends ObjectModel
         $order_slip->amount = 0;
         $order_slip->{'total_products_tax_' . $inc_or_ex_1} = 0;
         $order_slip->{'total_products_tax_' . $inc_or_ex_2} = 0;
+
         $total_products = [];
         foreach ($product_list as &$product) {
             $order_detail = new OrderDetail((int) $product['id_order_detail']);
@@ -618,9 +619,8 @@ class OrderSlipCore extends ObjectModel
         $query = 'SELECT id_order_slip as id, id_order_detail, product_quantity, amount_tax_excl, amount_tax_incl
         FROM `' . _DB_PREFIX_ . 'order_slip_detail`
         WHERE id_order_slip = ' . (int) $this->id;
-        $result = Db::getInstance()->executeS($query);
 
-        return $result;
+        return Db::getInstance()->executeS($query);
     }
 
     public function setWsOrderSlipDetails($values)

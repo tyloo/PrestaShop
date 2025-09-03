@@ -46,11 +46,7 @@ class SmartyDevTemplateCore extends Smarty_Internal_Template
     // @phpstan-ignore-next-line
     public function fetch($template = null, $cache_id = null, $compile_id = null, $parent = null, $display = false, $merge_tpl_vars = true, $no_output_filter = false)
     {
-        if ($template !== null) {
-            $tpl = $template->template_resource;
-        } else {
-            $tpl = $this->template_resource;
-        }
+        $tpl = $template !== null ? $template->template_resource : $this->template_resource;
 
         // @phpstan-ignore-next-line
         $fetch = parent::fetch($template, $cache_id, $compile_id, $parent);

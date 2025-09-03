@@ -247,7 +247,7 @@ class AddressFormatCore extends ObjectModel
 
         $this->checkRequiredFields($usedKeyList);
 
-        return ! count($this->_errorFormatList);
+        return $this->_errorFormatList === [];
     }
 
     /**
@@ -475,9 +475,8 @@ class AddressFormatCore extends ObjectModel
         }
 
         $addressText = preg_replace('/' . preg_quote($newLine, '/') . '$/i', '', $addressText);
-        $addressText = rtrim((string) $addressText, $separator);
 
-        return $addressText;
+        return rtrim((string) $addressText, $separator);
     }
 
     /**
@@ -633,6 +632,7 @@ class AddressFormatCore extends ObjectModel
 
         $tmpObj = new AddressFormat();
         $tmpObj->id_country = $idCountry;
+
         $out = $tmpObj->getFormat($tmpObj->id_country);
         unset($tmpObj);
 

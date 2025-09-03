@@ -730,7 +730,7 @@ class CustomerCore extends ObjectModel
     public function getAddresses($idLang)
     {
         $group = Context::getContext()->shop->getGroup();
-        $shareOrder = isset($group->share_order) ? (bool) $group->share_order : false;
+        $shareOrder = isset($group->share_order) && (bool) $group->share_order;
         $cacheId = 'Customer::getAddresses'
             . '-' . (int) $this->id
             . '-' . (int) $idLang
@@ -876,9 +876,7 @@ class CustomerCore extends ObjectModel
             $sql .= ' AND a.`id_address` = ' . (int) $idAddress;
         }
 
-        $sql .= ' ORDER BY a.`alias`';
-
-        return $sql;
+        return $sql . ' ORDER BY a.`alias`';
     }
 
     /**
@@ -1525,6 +1523,7 @@ class CustomerCore extends ObjectModel
         $query->leftJoin('orders', 'o', 'oi.id_order = o.id_order');
         $query->groupBy('o.id_customer');
         $query->where('o.id_customer = ' . (int) $this->id);
+
         $totalPaid = (float) Db::getInstance()->getValue($query->build());
 
         $query = new DbQuery();
@@ -1534,6 +1533,7 @@ class CustomerCore extends ObjectModel
         $query->leftJoin('orders', 'o', 'oip.id_order = o.id_order');
         $query->groupBy('o.id_customer');
         $query->where('o.id_customer = ' . (int) $this->id);
+
         $totalRest = (float) Db::getInstance()->getValue($query->build());
 
         return $totalPaid - $totalRest;
@@ -1608,11 +1608,7 @@ class CustomerCore extends ObjectModel
         }
 
         // TODO maybe use another 'recent' value for this test. For instance, equals password validity value.
-        if (! $this->reset_password_validity || strtotime($this->reset_password_validity) < time()) {
-            return false;
-        }
-
-        return true;
+        return $this->reset_password_validity && strtotime($this->reset_password_validity) >= time();
     }
 
     /**

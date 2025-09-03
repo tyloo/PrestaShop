@@ -152,7 +152,7 @@ class ChartCore
             $jsCurves[] = $curve->getValues($this->timeMode);
         }
 
-        if (count($jsCurves)) {
+        if ($jsCurves !== []) {
             return '
 			<div id="flot' . self::$poolId . '" style="width:' . $this->width . 'px;height:' . $this->height . 'px"></div>
 			<script type="text/javascript">

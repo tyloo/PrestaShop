@@ -1060,11 +1060,8 @@ class OrderCore extends ObjectModel
     public function isPaidAndShipped()
     {
         $order_state = $this->getCurrentOrderState();
-        if ($order_state && $order_state->paid && $order_state->shipped) {
-            return true;
-        }
 
-        return false;
+        return $order_state && $order_state->paid && $order_state->shipped;
     }
 
     /**
@@ -1313,11 +1310,8 @@ class OrderCore extends ObjectModel
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
         SELECT TO_DAYS("' . date('Y-m-d') . ' 00:00:00") - TO_DAYS(`delivery_date`)  AS days FROM `' . _DB_PREFIX_ . 'orders`
         WHERE `id_order` = ' . (int) $this->id);
-        if ($result['days'] <= $nb_return_days) {
-            return true;
-        }
 
-        return false;
+        return $result['days'] <= $nb_return_days;
     }
 
     /**
@@ -1393,12 +1387,8 @@ class OrderCore extends ObjectModel
     public function setInvoice($use_existing_payment = false)
     {
         if (! $this->hasInvoice()) {
-            if ($id = (int) $this->getOrderInvoiceIdIfHasDelivery()) {
-                $order_invoice = new OrderInvoice($id);
-            } else {
-                $order_invoice = new OrderInvoice();
-            }
-
+            $order_invoice = (int) $this->getOrderInvoiceIdIfHasDelivery() ? new OrderInvoice($id) : new OrderInvoice();
+            $id = (int) $this->getOrderInvoiceIdIfHasDelivery() ? new OrderInvoice($id) : new OrderInvoice();
             $order_invoice->id_order = $this->id;
             if (! $id) {
                 $order_invoice->number = 0;
@@ -1728,9 +1718,8 @@ class OrderCore extends ObjectModel
             `unit_price_tax_excl`
             FROM `' . _DB_PREFIX_ . 'order_detail`
             WHERE id_order = ' . (int) $this->id;
-        $result = Db::getInstance()->executeS($query);
 
-        return $result;
+        return Db::getInstance()->executeS($query);
     }
 
     /** Set current order status
@@ -1746,6 +1735,7 @@ class OrderCore extends ObjectModel
         $history = new OrderHistory();
         $history->id_order = (int) $this->id;
         $history->id_employee = (int) $id_employee;
+
         $use_existings_payment = ! $this->hasInvoice();
         $history->changeIdOrderState((int) $id_order_state, $this, $use_existings_payment);
         $res = Db::getInstance()->getRow('
@@ -2268,9 +2258,7 @@ class OrderCore extends ObjectModel
      */
     public function getWrappingTaxesBreakdown()
     {
-        $taxes_breakdown = [];
-
-        return $taxes_breakdown;
+        return [];
     }
 
     /**

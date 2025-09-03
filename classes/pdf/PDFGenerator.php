@@ -158,11 +158,7 @@ class PDFGeneratorCore extends TCPDF
      */
     public function setFontForLang($iso_lang)
     {
-        if (array_key_exists($iso_lang, $this->font_by_lang)) {
-            $this->font = $this->font_by_lang[$iso_lang];
-        } else {
-            $this->font = self::DEFAULT_FONT;
-        }
+        $this->font = array_key_exists($iso_lang, $this->font_by_lang) ? $this->font_by_lang[$iso_lang] : self::DEFAULT_FONT;
 
         $this->setHeaderFont([$this->font, '', PDF_FONT_SIZE_MAIN, '', false]);
         $this->setFooterFont([$this->font, '', PDF_FONT_SIZE_MAIN, '', false]);
@@ -286,8 +282,7 @@ class PDFGeneratorCore extends TCPDF
 
         $seed .= mt_rand(0, mt_getrandmax());
         $seed .= uniqid('', true);
-        $seed .= microtime();
 
-        return $seed;
+        return $seed . microtime();
     }
 }

@@ -161,11 +161,7 @@ class CustomerThreadCore extends ObjectModel
         if (count($result)) {
             foreach ($result as $res) {
                 $message = new CustomerMessage((int) $res['id_customer_message']);
-                if (! Validate::isLoadedObject($message)) {
-                    $return = false;
-                } else {
-                    $return = $return && $message->delete();
-                }
+                $return = ! Validate::isLoadedObject($message) ? false : $return && $message->delete();
             }
         }
 

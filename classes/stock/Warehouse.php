@@ -175,9 +175,7 @@ class WarehouseCore extends ObjectModel
         $query->leftJoin('shop', 's', 's.id_shop = ws.id_shop');
         $query->where($this->def['primary'] . ' = ' . (int) $this->id);
 
-        $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
-
-        return $res;
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
     }
 
     /**
@@ -200,6 +198,7 @@ class WarehouseCore extends ObjectModel
         $query->innerJoin('carrier', 'c', 'c.id_reference = wc.id_carrier');
         $query->where($this->def['primary'] . ' = ' . (int) $this->id);
         $query->where('c.deleted = 0');
+
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
         if (! is_array($res)) {
@@ -377,11 +376,7 @@ class WarehouseCore extends ObjectModel
             $shop_group_id = (int) $shop_group['id'];
         }
 
-        if ($share_stock && $shop_group_id) {
-            $ids_shop = Shop::getShops(true, $shop_group_id, true);
-        } else {
-            $ids_shop = [(int) $id_shop];
-        }
+        $ids_shop = $share_stock && $shop_group_id ? Shop::getShops(true, $shop_group_id, true) : [(int) $id_shop];
 
         $query = new DbQuery();
         $query->select('wpl.id_warehouse, CONCAT(w.reference, " - ", w.name) as name');
@@ -593,7 +588,7 @@ class WarehouseCore extends ObjectModel
         $res = false;
         // returns final list
         if (! empty($list)) {
-            $res = call_user_func_array('array_intersect', $list);
+            $res = array_intersect(...$list);
         }
 
         return $res;
@@ -656,9 +651,7 @@ class WarehouseCore extends ObjectModel
         $query->leftJoin('shop', 's', 's.id_shop = ws.id_shop');
         $query->where($this->def['primary'] . ' = ' . (int) $this->id);
 
-        $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
-
-        return $res;
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
     }
 
     /**

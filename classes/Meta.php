@@ -359,9 +359,8 @@ class MetaCore extends ObjectModel
         $metas = Meta::getMetaByPage($pageName, $idLang);
         $ret['meta_title'] = (isset($metas['title']) && $metas['title']) ? $metas['title'] : Configuration::get('PS_SHOP_NAME');
         $ret['meta_description'] = (isset($metas['description']) && $metas['description']) ? $metas['description'] : '';
-        $ret = Meta::completeMetaTags($ret, $ret['meta_title']);
 
-        return $ret;
+        return Meta::completeMetaTags($ret, $ret['meta_title']);
     }
 
     /**

@@ -400,19 +400,19 @@ class LanguageCore extends ObjectModel implements LanguageInterface
 
         $copy = ($iso_to && $theme_to);
 
-        $lPath_from = _PS_TRANSLATIONS_DIR_ . (string) $iso_from . '/';
-        $tPath_from = _PS_ROOT_DIR_ . '/themes/' . (string) $theme_from . '/';
-        $pPath_from = _PS_ROOT_DIR_ . '/themes/' . (string) $theme_from . '/pdf/';
-        $mPath_from = _PS_MAIL_DIR_ . (string) $iso_from . '/';
+        $lPath_from = _PS_TRANSLATIONS_DIR_ . $iso_from . '/';
+        $tPath_from = _PS_ROOT_DIR_ . '/themes/' . $theme_from . '/';
+        $pPath_from = _PS_ROOT_DIR_ . '/themes/' . $theme_from . '/pdf/';
+        $mPath_from = _PS_MAIL_DIR_ . $iso_from . '/';
         $lPath_to = '';
         $tPath_to = '';
         $pPath_to = '';
         $mPath_to = '';
         if ($copy) {
-            $lPath_to = _PS_TRANSLATIONS_DIR_ . (string) $iso_to . '/';
-            $tPath_to = _PS_ROOT_DIR_ . '/themes/' . (string) $theme_to . '/';
-            $pPath_to = _PS_ROOT_DIR_ . '/themes/' . (string) $theme_to . '/pdf/';
-            $mPath_to = _PS_MAIL_DIR_ . (string) $iso_to . '/';
+            $lPath_to = _PS_TRANSLATIONS_DIR_ . $iso_to . '/';
+            $tPath_to = _PS_ROOT_DIR_ . '/themes/' . $theme_to . '/';
+            $pPath_to = _PS_ROOT_DIR_ . '/themes/' . $theme_to . '/pdf/';
+            $mPath_to = _PS_MAIL_DIR_ . $iso_to . '/';
         }
 
         $lFiles = ['admin.php', 'errors.php', 'pdf.php', 'tabs.php'];
@@ -501,15 +501,15 @@ class LanguageCore extends ObjectModel implements LanguageInterface
                 foreach ($modList as $mod) {
                     $modDir = _PS_MODULE_DIR_ . $mod;
                     // Lang file
-                    if (file_exists($modDir . '/translations/' . (string) $iso_from . '.php')) {
-                        $files_modules[$modDir . '/translations/' . (string) $iso_from . '.php'] = ($copy ? $modDir . '/translations/' . (string) $iso_to . '.php' : ++$number);
-                    } elseif (file_exists($modDir . '/' . (string) $iso_from . '.php')) {
-                        $files_modules[$modDir . '/' . (string) $iso_from . '.php'] = ($copy ? $modDir . '/' . (string) $iso_to . '.php' : ++$number);
+                    if (file_exists($modDir . '/translations/' . $iso_from . '.php')) {
+                        $files_modules[$modDir . '/translations/' . $iso_from . '.php'] = ($copy ? $modDir . '/translations/' . $iso_to . '.php' : ++$number);
+                    } elseif (file_exists($modDir . '/' . $iso_from . '.php')) {
+                        $files_modules[$modDir . '/' . $iso_from . '.php'] = ($copy ? $modDir . '/' . $iso_to . '.php' : ++$number);
                     }
 
                     // Mails files
-                    $modMailDirFrom = $modDir . '/mails/' . (string) $iso_from;
-                    $modMailDirTo = $modDir . '/mails/' . (string) $iso_to;
+                    $modMailDirFrom = $modDir . '/mails/' . $iso_from;
+                    $modMailDirTo = $modDir . '/mails/' . $iso_to;
                     if (file_exists($modMailDirFrom)) {
                         $dirFiles = scandir($modMailDirFrom, \SCANDIR_SORT_NONE);
                         foreach ($dirFiles as $file) {
@@ -532,17 +532,17 @@ class LanguageCore extends ObjectModel implements LanguageInterface
 
         // Theme files
         if (! $check || ((string) $iso_from) !== 'en') {
-            $files_theme[$tPath_from . 'lang/' . (string) $iso_from . '.php'] = ($copy ? $tPath_to . 'lang/' . (string) $iso_to . '.php' : ++$number);
+            $files_theme[$tPath_from . 'lang/' . $iso_from . '.php'] = ($copy ? $tPath_to . 'lang/' . $iso_to . '.php' : ++$number);
 
             // Override for pdf files in the theme
-            if (file_exists($pPath_from . 'lang/' . (string) $iso_from . '.php')) {
-                $files_theme[$pPath_from . 'lang/' . (string) $iso_from . '.php'] = ($copy ? $pPath_to . 'lang/' . (string) $iso_to . '.php' : ++$number);
+            if (file_exists($pPath_from . 'lang/' . $iso_from . '.php')) {
+                $files_theme[$pPath_from . 'lang/' . $iso_from . '.php'] = ($copy ? $pPath_to . 'lang/' . $iso_to . '.php' : ++$number);
             }
 
             $module_theme_files = (file_exists($tPath_from . 'modules/') ? scandir($tPath_from . 'modules/', \SCANDIR_SORT_NONE) : []);
             foreach ($module_theme_files as $module) {
-                if ($module !== '.' && $module !== '..' && $module !== '.svn' && file_exists($tPath_from . 'modules/' . $module . '/translations/' . (string) $iso_from . '.php')) {
-                    $files_theme[$tPath_from . 'modules/' . $module . '/translations/' . (string) $iso_from . '.php'] = ($copy ? $tPath_to . 'modules/' . $module . '/translations/' . (string) $iso_to . '.php' : ++$number);
+                if ($module !== '.' && $module !== '..' && $module !== '.svn' && file_exists($tPath_from . 'modules/' . $module . '/translations/' . $iso_from . '.php')) {
+                    $files_theme[$tPath_from . 'modules/' . $module . '/translations/' . $iso_from . '.php'] = ($copy ? $tPath_to . 'modules/' . $module . '/translations/' . $iso_to . '.php' : ++$number);
                 }
             }
         }
@@ -551,10 +551,8 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             return $files_theme;
         }
 
-        $files = array_merge($files, $files_theme);
-
         // Return
-        return $files;
+        return array_merge($files, $files_theme);
     }
 
     /**
@@ -647,11 +645,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
          */
         $selectFields = [];
         foreach ($columnNames as $columnName) {
-            if ($columnName === 'id_lang') {
-                $selectFields[] = 'l.`id_lang`';
-            } else {
-                $selectFields[] = 'tl.`' . $columnName . '`';
-            }
+            $selectFields[] = $columnName === 'id_lang' ? 'l.`id_lang`' : 'tl.`' . $columnName . '`';
         }
 
         // Format the SQL query and run it
@@ -749,11 +743,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             (new LanguageImageManager())->deleteImages($this->id, $this->iso_code);
         }
 
-        if (! parent::delete()) {
-            return false;
-        }
-
-        return true;
+        return (bool) parent::delete();
     }
 
     public function deleteSelection(array $selection)
@@ -1841,8 +1831,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     {
         Locale::setDefault($locale);
         $countries = Countries::getNames();
-        $countries = array_change_key_case($countries, \CASE_LOWER);
 
-        return $countries;
+        return array_change_key_case($countries, \CASE_LOWER);
     }
 }

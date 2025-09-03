@@ -259,11 +259,7 @@ class StockManagerCore implements StockManagerInterface
             $usable_quantity_in_stock = (int) $this->getProductPhysicalQuantities($id_product, $id_product_attribute, [$warehouse->id], true);
 
             // check quantity if we want to decrement unusable quantity
-            if (! $is_usable) {
-                $quantity_in_stock = $physical_quantity_in_stock - $usable_quantity_in_stock;
-            } else {
-                $quantity_in_stock = $usable_quantity_in_stock;
-            }
+            $quantity_in_stock = ! $is_usable ? $physical_quantity_in_stock - $usable_quantity_in_stock : $usable_quantity_in_stock;
 
             // checks if it's possible to remove the given quantity
             if ($quantity_in_stock < $quantity) {
@@ -492,7 +488,7 @@ class StockManagerCore implements StockManagerInterface
 
             // casts for security reason
             $ids_warehouse = array_map('intval', $ids_warehouse);
-            if (! count($ids_warehouse)) {
+            if ($ids_warehouse === []) {
                 return 0;
             }
         } else {
@@ -507,7 +503,7 @@ class StockManagerCore implements StockManagerInterface
             $query->where('s.id_product_attribute = ' . (int) $id_product_attribute);
         }
 
-        if (count($ids_warehouse)) {
+        if ($ids_warehouse !== []) {
             $query->where('s.id_warehouse IN(' . implode(', ', $ids_warehouse) . ')');
         }
 
@@ -757,9 +753,8 @@ class StockManagerCore implements StockManagerInterface
             $id_warehouse ? [$id_warehouse] : null,
             true
         );
-        $time_left = ($quantity_per_day === 0) ? (-1) : Tools::ps_round($physical_quantity / $quantity_per_day);
 
-        return $time_left;
+        return ($quantity_per_day === 0) ? (-1) : Tools::ps_round($physical_quantity / $quantity_per_day);
     }
 
     /**

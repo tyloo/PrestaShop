@@ -79,11 +79,7 @@ class CheckoutPaymentStepCore extends AbstractCheckoutStep
         $deliveryOptions = $this->getCheckoutSession()->getDeliveryOptions();
         $deliveryOptionKey = $this->getCheckoutSession()->getSelectedDeliveryOption();
 
-        if (isset($deliveryOptions[$deliveryOptionKey])) {
-            $selectedDeliveryOption = $deliveryOptions[$deliveryOptionKey];
-        } else {
-            $selectedDeliveryOption = 0;
-        }
+        $selectedDeliveryOption = $deliveryOptions[$deliveryOptionKey] ?? 0;
 
         if (is_array($selectedDeliveryOption) === true && isset($selectedDeliveryOption['product_list'])) {
             unset($selectedDeliveryOption['product_list']);

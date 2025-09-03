@@ -168,7 +168,7 @@ class GuestCore extends ObjectModel
         // $langsArray is filled with all the languages accepted, ordered by priority
         $langsArray = [];
         preg_match_all('/([a-z]{2}(-[a-z]{2})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/', $acceptLanguage, $array);
-        if (count($array[1])) {
+        if ($array[1] !== []) {
             $langsArray = array_combine($array[1], $array[4]);
             foreach ($langsArray as $lang => $val) {
                 if ($val === '') {
@@ -318,6 +318,7 @@ class GuestCore extends ObjectModel
         $guest = new Guest(isset($cookie->id_customer) ? (int) Guest::getFromCustomer((int) $cookie->id_customer) : null);
         $guest->userAgent();
         $guest->save();
+
         $cookie->id_guest = (int) $guest->id;
     }
 }

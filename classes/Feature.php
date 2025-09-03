@@ -278,11 +278,7 @@ class FeatureCore extends ObjectModel
             // Feature doesn't exist, create it
             $feature = new Feature();
             $feature->name = array_fill_keys(Language::getIDs(), (string) $name);
-            if ($position) {
-                $feature->position = (int) $position;
-            } else {
-                $feature->position = Feature::getHigherPosition() + 1;
-            }
+            $feature->position = $position ? (int) $position : Feature::getHigherPosition() + 1;
 
             $feature->add();
 

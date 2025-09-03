@@ -359,7 +359,7 @@ class GroupCore extends ObjectModel
      */
     public static function addModulesRestrictions($id_group, $modules, $shops = [1])
     {
-        if (! is_array($modules) || ! count($modules) || ! is_array($shops) || ! count($shops)) {
+        if (! is_array($modules) || $modules === [] || ! is_array($shops) || $shops === []) {
             return false;
         }
 
@@ -395,7 +395,7 @@ class GroupCore extends ObjectModel
      */
     public static function addRestrictionsForModule($id_module, $shops = [1])
     {
-        if (! is_array($shops) || ! count($shops)) {
+        if (! is_array($shops) || $shops === []) {
             return false;
         }
 

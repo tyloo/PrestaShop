@@ -111,11 +111,7 @@ class ValidateCore
             }
         }
 
-        if (! count($errors)) {
-            return true;
-        }
-
-        return false;
+        return ! count($errors);
     }
 
     /**
@@ -206,6 +202,7 @@ class ValidateCore
     {
         $validatorBuilder = Validation::createValidatorBuilder();
         $validatorBuilder->setConstraintValidatorFactory(new CustomerNameValidatorFactory());
+
         $validator = $validatorBuilder->getValidator();
         $violations = $validator->validate($name, [
             new CustomerName(),
@@ -525,12 +522,8 @@ class ValidateCore
         $rloCharacters = "\xE2\x80\xAE";
 
         // Check if the RLO character is in the string
-        if (str_contains($html, $rloCharacters)) {
-            // RLO character found, potential RLO attack
-            return false;
-        }
-
-        return true;
+        // RLO character found, potential RLO attack
+        return ! str_contains($html, $rloCharacters);
     }
 
     /**
@@ -1270,11 +1263,7 @@ class ValidateCore
      */
     public static function isStockManagement($stock_management)
     {
-        if (! in_array($stock_management, ['WA', 'FIFO', 'LIFO'], true)) {
-            return false;
-        }
-
-        return true;
+        return in_array($stock_management, ['WA', 'FIFO', 'LIFO'], true);
     }
 
     /**

@@ -238,7 +238,7 @@ class AttributeGroupCore extends ObjectModel
             }
 
             /* Also delete related attributes */
-            if (count($toRemove)) {
+            if ($toRemove !== []) {
                 if (! Db::getInstance()->execute('
 				DELETE FROM `' . _DB_PREFIX_ . 'attribute_lang`
 				WHERE `id_attribute`	IN (' . implode(',', $toRemove) . ')')
@@ -375,15 +375,13 @@ class AttributeGroupCore extends ObjectModel
      */
     public function getWsProductOptionValues()
     {
-        $result = Db::getInstance()->executeS(
+        return Db::getInstance()->executeS(
             '
 			SELECT a.id_attribute AS id
 			FROM `' . _DB_PREFIX_ . 'attribute` a
 			' . Shop::addSqlAssociation('attribute', 'a') . '
 			WHERE a.id_attribute_group = ' . (int) $this->id
         );
-
-        return $result;
     }
 
     /**
@@ -442,14 +440,13 @@ class AttributeGroupCore extends ObjectModel
     {
         $return = true;
         Db::getInstance()->execute('SET @i = -1', false);
-        $return = Db::getInstance()->execute(
+
+        return Db::getInstance()->execute(
             '
 				UPDATE `' . _DB_PREFIX_ . 'attribute_group`
 				SET `position` = @i:=@i+1
 				ORDER BY `position`'
         );
-
-        return $return;
     }
 
     /**

@@ -161,6 +161,7 @@ class AttachmentCore extends ObjectModel
         $sql->select('pa.`id_product`');
         $sql->from('product_attachment', 'pa');
         $sql->where('pa.`id_attachment` = ' . (int) $this->id);
+
         $products = Db::getInstance()->executeS($sql);
 
         Db::getInstance()->delete(

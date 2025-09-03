@@ -1006,7 +1006,7 @@ class AdminControllerCore extends Controller
                 }
             }
 
-            if (count($filters)) {
+            if ($filters !== []) {
                 return $this->trans('filter by %s', [implode(', ', $filters)]);
             }
         }
@@ -1748,7 +1748,7 @@ class AdminControllerCore extends Controller
 
         $languages = Language::getLanguages(false);
 
-        $hide_multishop_checkbox = (Shop::getTotalShops(false, null) < 2) ? true : false;
+        $hide_multishop_checkbox = Shop::getTotalShops(false, null) < 2;
         foreach ($this->fields_options as $category_data) {
             if (! isset($category_data['fields'])) {
                 continue;
@@ -1852,7 +1852,7 @@ class AdminControllerCore extends Controller
                             }
                         }
 
-                        Configuration::updateValue($key, $list, isset($options['validation']) && $options['validation'] === 'isCleanHtml' ? true : false);
+                        Configuration::updateValue($key, $list, isset($options['validation']) && $options['validation'] === 'isCleanHtml');
                     } else {
                         $val = (isset($options['cast']) ? $options['cast'](Tools::getValue($key)) : Tools::getValue($key));
                         if ($this->validateField($val, $options)) {
@@ -2695,9 +2695,8 @@ class AdminControllerCore extends Controller
         $helper->is_cms = $this->is_cms;
         /* @phpstan-ignore-next-line */
         $helper->sql = $this->_listsql;
-        $list = $helper->generateList($this->_list, $this->fields_list);
 
-        return $list;
+        return $helper->generateList($this->_list, $this->fields_list);
     }
 
     public function getTemplateListVars()
@@ -2815,9 +2814,7 @@ class AdminControllerCore extends Controller
                 }
             }
 
-            $form = $helper->generateForm($this->fields_form);
-
-            return $form;
+            return $helper->generateForm($this->fields_form);
         }
 
         return '';
@@ -2857,9 +2854,8 @@ class AdminControllerCore extends Controller
             $this->setHelperDisplay($helper);
             $helper->id = $this->id;
             $helper->tpl_vars = $this->tpl_option_vars;
-            $options = $helper->generateOptions($this->fields_options);
 
-            return $options;
+            return $helper->generateOptions($this->fields_options);
         }
 
         return '';
@@ -3236,11 +3232,7 @@ class AdminControllerCore extends Controller
             if ($this->id_object) {
                 if ($this->access('edit')) {
                     $this->action = 'save';
-                    if (Tools::isSubmit('submitAdd' . $this->table . 'AndStay')) {
-                        $this->display = 'edit';
-                    } else {
-                        $this->display = 'list';
-                    }
+                    $this->display = Tools::isSubmit('submitAdd' . $this->table . 'AndStay') ? 'edit' : 'list';
                 } else {
                     $this->errors[] = $this->trans('You do not have permission to edit this.', [], 'Admin.Notifications.Error');
                 }
@@ -3248,11 +3240,7 @@ class AdminControllerCore extends Controller
                 // case 2: creating new entry
                 if ($this->access('add')) {
                     $this->action = 'save';
-                    if (Tools::isSubmit('submitAdd' . $this->table . 'AndStay')) {
-                        $this->display = 'edit';
-                    } else {
-                        $this->display = 'list';
-                    }
+                    $this->display = Tools::isSubmit('submitAdd' . $this->table . 'AndStay') ? 'edit' : 'list';
                 } else {
                     $this->errors[] = $this->trans('You do not have permission to add this.', [], 'Admin.Notifications.Error');
                 }
@@ -3608,13 +3596,11 @@ class AdminControllerCore extends Controller
             $whereShop = Shop::addSqlRestriction($this->shopShareDatas, 'a');
         }
 
-        $whereClause = ' WHERE 1 ' . (isset($this->_where) ? $this->_where . ' ' : '') .
+        return ' WHERE 1 ' . (isset($this->_where) ? $this->_where . ' ' : '') .
             ($this->deleted ? 'AND a.`deleted` = 0 ' : '') .
             ($this->_filter ?? '') . $whereShop . "\n" .
             (isset($this->_group) ? $this->_group . ' ' : '') . "\n" .
             $this->getHavingClause();
-
-        return $whereClause;
     }
 
     /**
@@ -4168,7 +4154,7 @@ class AdminControllerCore extends Controller
             }
         }
 
-        return ! count($this->errors) ? true : false;
+        return ! count($this->errors);
     }
 
     /**

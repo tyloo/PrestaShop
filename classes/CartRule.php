@@ -1407,7 +1407,7 @@ class CartRuleCore extends ObjectModel
             return $selected_products;
         }
 
-        return (! $displayError) ? true : false;
+        return ! $displayError;
     }
 
     /**
@@ -1526,9 +1526,8 @@ class CartRuleCore extends ObjectModel
                     $order_products_total = $context->cart->getOrderTotal($use_tax, Cart::ONLY_PRODUCTS, $package_products);
                     $order_shipping_total = $context->cart->getOrderTotal($use_tax, Cart::ONLY_SHIPPING, $package_products);
                     $order_total = $order_products_total + $order_shipping_total;
-                    $reduction_value += $order_total * $this->reduction_percent / 100;
 
-                    return $reduction_value;
+                    return $reduction_value + $order_total * $this->reduction_percent / 100;
                 }
             }
 
@@ -1585,13 +1584,7 @@ class CartRuleCore extends ObjectModel
                 $minPrice = false;
                 $cheapest_product = null;
                 foreach ($all_products as $product) {
-                    $price = $product['price'];
-                    if ($use_tax) {
-                        $price = $product['price_wt'];
-                    } else {
-                        $price = $product['price'];
-                    }
-
+                    $price = $use_tax ? $product['price_wt'] : $product['price'];
                     if ($price > 0 && ($minPrice === false || $minPrice > $price) && (($this->reduction_exclude_special && ! $product['reduction_applies']) || ! $this->reduction_exclude_special)) {
                         $minPrice = $price;
                         $cheapest_product = $product['id_product'] . '-' . $product['id_product_attribute'];
@@ -1692,11 +1685,7 @@ class CartRuleCore extends ObjectModel
                                 $product_price_te = $product['price'];
                                 $product_vat_amount = $product_price_ti - $product_price_te;
 
-                                if ($product_vat_amount === 0 || $product_price_te === 0) {
-                                    $product_vat_rate = 0;
-                                } else {
-                                    $product_vat_rate = $product_vat_amount / $product_price_te;
-                                }
+                                $product_vat_rate = $product_vat_amount === 0 || $product_price_te === 0 ? 0 : $product_vat_amount / $product_price_te;
 
                                 if ($this->reduction_tax && ! $use_tax) {
                                     $reduction_value += $prorata * $reduction_amount / (1 + $product_vat_rate);
@@ -1843,11 +1832,7 @@ class CartRuleCore extends ObjectModel
     protected function getCartRuleCombinations($offset = null, $limit = null, $search = '')
     {
         $array = [];
-        if ($offset !== null && $limit !== null) {
-            $sql_limit = ' LIMIT ' . (int) $offset . ', ' . (int) ($limit + 1);
-        } else {
-            $sql_limit = '';
-        }
+        $sql_limit = $offset !== null && $limit !== null ? ' LIMIT ' . (int) $offset . ', ' . (int) ($limit + 1) : '';
 
         $array['selected'] = Db::getInstance()->executeS('
 		SELECT cr.*, crl.*, 1 as selected
@@ -1924,11 +1909,7 @@ class CartRuleCore extends ObjectModel
             }
         }
 
-        if ($offset !== null && $limit !== null) {
-            $sql_limit = ' LIMIT ' . (int) $offset . ', ' . (int) ($limit + 1);
-        } else {
-            $sql_limit = '';
-        }
+        $sql_limit = $offset !== null && $limit !== null ? ' LIMIT ' . (int) $offset . ', ' . (int) ($limit + 1) : '';
 
         if (! Validate::isLoadedObject($this) || $this->{$type . '_restriction'} === 0) {
             $array['selected'] = Db::getInstance()->executeS('
@@ -2082,9 +2063,7 @@ class CartRuleCore extends ObjectModel
      */
     public static function isFeatureActive()
     {
-        $is_feature_active = (bool) Configuration::get('PS_CART_RULE_FEATURE_ACTIVE');
-
-        return $is_feature_active;
+        return (bool) Configuration::get('PS_CART_RULE_FEATURE_ACTIVE');
     }
 
     /**

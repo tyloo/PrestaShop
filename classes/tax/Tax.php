@@ -124,11 +124,7 @@ class TaxCore extends ObjectModel
             return $res;
         }
 
-        if (parent::update($null_values)) {
-            return true;
-        }
-
-        return false;
+        return (bool) parent::update($null_values);
     }
 
     /**

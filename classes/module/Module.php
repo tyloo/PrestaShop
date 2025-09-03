@@ -627,11 +627,7 @@ abstract class ModuleCore implements ModuleInterface
 
     public function checkCompliancy()
     {
-        if (version_compare(_PS_VERSION_, $this->ps_versions_compliancy['min'], '<') || version_compare(_PS_VERSION_, $this->ps_versions_compliancy['max'], '>')) {
-            return false;
-        }
-
-        return true;
+        return ! version_compare(_PS_VERSION_, $this->ps_versions_compliancy['min'], '<') && ! version_compare(_PS_VERSION_, $this->ps_versions_compliancy['max'], '>');
     }
 
     public static function updateTranslationsAfterInstall($update = true)
@@ -939,7 +935,7 @@ abstract class ModuleCore implements ModuleInterface
         }
 
         // No files upgrade, then upgrade succeed
-        if (count($list) === 0) {
+        if ($list === []) {
             static::$modules_cache[$module_name]['upgrade']['success'] = true;
             Module::upgradeModuleVersion($module_name, $module_version);
         }
@@ -1679,7 +1675,7 @@ abstract class ModuleCore implements ModuleInterface
                 libxml_clear_errors();
 
                 // If no errors in Xml, no need instand and no need new config.xml file, we load only translations
-                if (! count($module_errors) && (int) $xml_module->need_instance === 0) {
+                if ($module_errors === [] && (int) $xml_module->need_instance === 0) {
                     $file = _PS_MODULE_DIR_ . $module . '/' . Context::getContext()->language->iso_code . '.php';
                     if (Tools::file_exists_cache($file) && include_once ($file)) {
                         /* @phpstan-ignore-next-line Defined variable in translation file */
@@ -1773,7 +1769,7 @@ abstract class ModuleCore implements ModuleInterface
                         $item->avg_rate = isset($tmp_module->avg_rate) ? (array) $tmp_module->avg_rate : null;
                         $item->badges = isset($tmp_module->badges) ? (array) $tmp_module->badges : null;
                         $item->url = $tmp_module->url ?? null;
-                        $item->onclick_option = method_exists($module, 'onclickOption') ? true : false;
+                        $item->onclick_option = method_exists($module, 'onclickOption');
 
                         if ($item->onclick_option) {
                             $href = Context::getContext()->link->getAdminLink('Module', true, [], ['module_name' => $tmp_module->name, 'tab_module' => $tmp_module->tab]);
@@ -2206,15 +2202,13 @@ abstract class ModuleCore implements ModuleInterface
      */
     public function displayConfirmation($string)
     {
-        $output = '
+        return '
         <div class="bootstrap">
         <div class="module_confirmation conf confirm alert alert-success">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             ' . $string . '
         </div>
         </div>';
-
-        return $output;
     }
 
     /**
@@ -3336,11 +3330,7 @@ abstract class ModuleCore implements ModuleInterface
         }
 
         // Check if override file is writable
-        if ($orig_path) {
-            $override_path = _PS_ROOT_DIR_ . '/' . $file;
-        } else {
-            $override_path = _PS_OVERRIDE_DIR_ . $path;
-        }
+        $override_path = $orig_path ? _PS_ROOT_DIR_ . '/' . $file : _PS_OVERRIDE_DIR_ . $path;
 
         if (! is_file($override_path)) {
             return true;

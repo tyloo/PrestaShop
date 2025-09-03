@@ -217,11 +217,7 @@ class RequestSqlCore extends ObjectModel
             }
         }
 
-        if (empty($this->_errors) && ! Db::getInstance()->executeS($sql)) {
-            return false;
-        }
-
-        return true;
+        return ! (empty($this->_errors) && ! Db::getInstance()->executeS($sql));
     }
 
     /**

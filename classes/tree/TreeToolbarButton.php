@@ -228,8 +228,6 @@ abstract class TreeToolbarButtonCore implements Stringable
             return $directory;
         }
 
-        $directory .= \DIRECTORY_SEPARATOR;
-
-        return $directory;
+        return $directory . \DIRECTORY_SEPARATOR;
     }
 }

@@ -131,13 +131,9 @@ class ProductDownloadCore extends ObjectModel
 
     public function update($nullValues = false)
     {
-        if (parent::update($nullValues)) {
-            // Refresh cache of feature detachable because the row can be deactive
-            // Configuration::updateGlobalValue('PS_VIRTUAL_PROD_FEATURE_ACTIVE', ProductDownload::isCurrentlyUsed($this->def['table'], true));
-            return true;
-        }
-
-        return false;
+        // Refresh cache of feature detachable because the row can be deactive
+        // Configuration::updateGlobalValue('PS_VIRTUAL_PROD_FEATURE_ACTIVE', ProductDownload::isCurrentlyUsed($this->def['table'], true));
+        return (bool) parent::update($nullValues);
     }
 
     public function delete($deleteFile = false)
@@ -293,9 +289,7 @@ class ProductDownloadCore extends ObjectModel
             $html .= ' class="' . $class . '"';
         }
 
-        $html .= '>' . $this->display_filename . '</a>';
-
-        return $html;
+        return $html . ('>' . $this->display_filename . '</a>');
     }
 
     /**

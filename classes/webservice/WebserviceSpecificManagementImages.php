@@ -1149,11 +1149,7 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
                         $image->id_product = (int) $product->id;
                         $image->position = Image::getHighestPosition($product->id) + 1;
 
-                        if (! Image::getCover((int) $product->id)) {
-                            $image->cover = true;
-                        } else {
-                            $image->cover = false;
-                        }
+                        $image->cover = ! Image::getCover((int) $product->id);
 
                         if (! $image->add()) {
                             throw new WebserviceException('Error while creating image', [76, 400]);

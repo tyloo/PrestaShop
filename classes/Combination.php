@@ -321,11 +321,7 @@ class CombinationCore extends ObjectModel
      */
     public function add($autoDate = true, $nullValues = false)
     {
-        if ($this->default_on) {
-            $this->default_on = true;
-        } else {
-            $this->default_on = null;
-        }
+        $this->default_on = $this->default_on ? true : null;
 
         if (! parent::add($autoDate, $nullValues)) {
             return false;
@@ -368,11 +364,7 @@ class CombinationCore extends ObjectModel
      */
     public function update($nullValues = false)
     {
-        if ($this->default_on) {
-            $this->default_on = true;
-        } else {
-            $this->default_on = null;
-        }
+        $this->default_on = $this->default_on ? true : null;
 
         $return = parent::update($nullValues);
         Product::updateDefaultAttribute($this->id_product);
@@ -472,13 +464,11 @@ class CombinationCore extends ObjectModel
      */
     public function getWsProductOptionValues()
     {
-        $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
 			SELECT a.id_attribute AS id
 			FROM `' . _DB_PREFIX_ . 'product_attribute_combination` a
 			' . Shop::addSqlAssociation('attribute', 'a') . '
 			WHERE a.id_product_attribute = ' . (int) $this->id);
-
-        return $result;
     }
 
     /**

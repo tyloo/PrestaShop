@@ -825,11 +825,7 @@ class EmployeeCore extends ObjectModel
         }
 
         // TODO maybe use another 'recent' value for this test. For instance, equals password validity value.
-        if (! $this->reset_password_validity || strtotime($this->reset_password_validity) < time()) {
-            return false;
-        }
-
-        return true;
+        return $this->reset_password_validity && strtotime($this->reset_password_validity) >= time();
     }
 
     /**

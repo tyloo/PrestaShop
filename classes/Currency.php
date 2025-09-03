@@ -322,11 +322,7 @@ class CurrencyCore extends ObjectModel
                 $this->name = Tools::ucfirst($this->name);
             }
 
-            if (is_array($this->pattern)) {
-                $this->localizedPatterns = $this->pattern;
-            } else {
-                $this->localizedPatterns = [$idLang => $this->pattern];
-            }
+            $this->localizedPatterns = is_array($this->pattern) ? $this->pattern : [$idLang => $this->pattern];
 
             $this->iso_code_num = $this->numeric_iso_code;
 
@@ -736,7 +732,7 @@ class CurrencyCore extends ObjectModel
      */
     public static function findAll($active = true, $groupBy = false, $currentShopOnly = true)
     {
-        $currencies = Db::getInstance()->executeS('
+        return Db::getInstance()->executeS('
             SELECT *
             FROM `' . _DB_PREFIX_ . 'currency` c
             ' . ($currentShopOnly ? Shop::addSqlAssociation('currency', 'c') : '') . '
@@ -744,8 +740,6 @@ class CurrencyCore extends ObjectModel
                 ($active ? ' AND c.`active` = 1' : '') .
                 ($groupBy ? ' GROUP BY c.`id_currency`' : '') .
                 ' ORDER BY `iso_code` ASC');
-
-        return $currencies;
     }
 
     /**
@@ -757,11 +751,9 @@ class CurrencyCore extends ObjectModel
      */
     public static function findAllInstalled()
     {
-        $currencies = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
             'SELECT * FROM `' . _DB_PREFIX_ . 'currency` c ORDER BY `iso_code` ASC'
         );
-
-        return $currencies;
     }
 
     /**

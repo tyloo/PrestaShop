@@ -140,6 +140,7 @@ class CookieCore
 
         $this->_path = rawurlencode($this->_path);
         $this->_path = str_replace(['%2F', '%7E', '%2B', '%26'], ['/', '~', '+', '&'], $this->_path);
+
         $this->_domain = $this->getDomain($shared_urls);
         $this->_sameSite = Configuration::get('PS_COOKIE_SAMESITE');
         $this->_name = 'PrestaShop-' . md5(($this->_standalone ? '' : _PS_VERSION_) . $name . $this->_domain);

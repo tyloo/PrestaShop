@@ -342,11 +342,7 @@ class MailCore extends ObjectModel
                     return false;
                 }
 
-                if (is_array($toName) && isset($toName[$key])) {
-                    $addrName = $toName[$key];
-                } else {
-                    $addrName = $toName;
-                }
+                $addrName = is_array($toName) && isset($toName[$key]) ? $toName[$key] : $toName;
 
                 $addrName = ($addrName === null || $addrName === $addr || ! Validate::isGenericName($addrName)) ?
                           '' :
@@ -744,11 +740,7 @@ class MailCore extends ObjectModel
             _PS_ROOT_DIR_,
         ];
 
-        if ($moduleName !== false) {
-            $templateRelativePath = '/modules/' . $moduleName . '/mails/';
-        } else {
-            $templateRelativePath = '/mails/';
-        }
+        $templateRelativePath = $moduleName !== false ? '/modules/' . $moduleName . '/mails/' : '/mails/';
 
         foreach ($basePathList as $base) {
             $templatePath = $base . $templateRelativePath;
@@ -816,11 +808,7 @@ class MailCore extends ObjectModel
 
         try {
             if ($smtpChecked) {
-                if (Tools::strtolower($smtpEncryption) === 'off') {
-                    $isTls = false;
-                } else {
-                    $isTls = true;
-                }
+                $isTls = Tools::strtolower($smtpEncryption) !== 'off';
 
                 $transport = (new EsmtpTransport(
                     $smtpServer,

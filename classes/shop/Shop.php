@@ -525,7 +525,7 @@ class ShopCore extends ObjectModel
                         $url .= $default_shop->getBaseURI();
                     }
 
-                    if (count($params)) {
+                    if ($params !== []) {
                         $url .= '?' . http_build_query($params);
                     }
                 }
@@ -856,11 +856,7 @@ class ShopCore extends ObjectModel
         foreach (self::$shops as $group_id => $group_data) {
             foreach ($group_data['shops'] as $id => $shop_data) {
                 if ((! $active || $shop_data['active']) && (! $id_shop_group || $id_shop_group === $group_id)) {
-                    if ($get_as_list_id) {
-                        $results[$id] = $id;
-                    } else {
-                        $results[$id] = $shop_data;
-                    }
+                    $results[$id] = $get_as_list_id ? $id : $shop_data;
                 }
             }
         }
@@ -1242,9 +1238,7 @@ class ShopCore extends ObjectModel
             $sql .= ' AND ' . $table_alias . '.id_shop IN (' . implode(', ', Shop::getContextListShopID()) . ')';
         }
 
-        $sql .= (($on) ? ' AND ' . $on : '') . ')';
-
-        return $sql;
+        return $sql . (($on) ? ' AND ' . $on : ')');
     }
 
     /**
@@ -1383,7 +1377,7 @@ class ShopCore extends ObjectModel
 
         // Hook for duplication of shop data
         $modules_list = Hook::getHookModuleExecList('actionShopDataDuplication');
-        if (is_array($modules_list) && count($modules_list) > 0) {
+        if (is_array($modules_list) && $modules_list !== []) {
             foreach ($modules_list as $m) {
                 if (! $tables_import || isset($tables_import['Module' . ucfirst((string) $m['module'])])) {
                     // Hook called only for the module concerned
@@ -1414,6 +1408,7 @@ class ShopCore extends ObjectModel
         $query->from('category_shop', 'cs');
         $query->leftJoin('category_lang', 'cl', 'cl.`id_category` = cs.`id_category` AND cl.`id_lang` = ' . (int) Context::getContext()->language->id);
         $query->where('cs.`id_shop` = ' . (int) $id);
+
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
         if ($only_id) {
@@ -1470,8 +1465,6 @@ class ShopCore extends ObjectModel
                         AND s.deleted = 0
                     ORDER BY LENGTH(CONCAT(su.physical_uri, su.virtual_uri)) DESC';
 
-        $result = Db::getInstance()->executeS($sql);
-
-        return $result;
+        return Db::getInstance()->executeS($sql);
     }
 }

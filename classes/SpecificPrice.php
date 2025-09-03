@@ -509,10 +509,7 @@ class SpecificPriceCore extends ObjectModel
         $beginning = $db->escape($beginning);
         $ending = $db->escape($ending);
 
-        $query_extra .= " AND (`from` = '0000-00-00 00:00:00' OR '" . $beginning . "' >= `from`)"
-                       . " AND (`to` = '0000-00-00 00:00:00' OR '" . $ending . "' <= `to`)";
-
-        return $query_extra;
+        return $query_extra . (" AND (`from` = '0000-00-00 00:00:00' OR '" . $beginning . "' >= `from`) AND (`to` = '0000-00-00 00:00:00' OR '" . $ending . "' <= `to`)");
     }
 
     protected static function formatIntInQuery($first_value, $second_value)

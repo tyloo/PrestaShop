@@ -129,9 +129,7 @@ class TaxCalculatorCore
             $name .= ($tax->name[$languageId] ?? '') . ' - ';
         }
 
-        $name = rtrim($name, ' - ');
-
-        return $name;
+        return rtrim($name, ' - ');
     }
 
     /**

@@ -59,7 +59,7 @@ class HelperOptionsCore extends Helper
 
         $has_color_field = false;
         $use_multishop = false;
-        $hide_multishop_checkbox = (Shop::getTotalShops(false, null) < 2) ? true : false;
+        $hide_multishop_checkbox = Shop::getTotalShops(false, null) < 2;
         foreach ($option_list as $category => $category_data) {
             if (! is_array($category_data)) {
                 continue;
@@ -199,11 +199,7 @@ class HelperOptionsCore extends Helper
                             $value = Configuration::get($key, $language['id_lang']);
                         }
 
-                        if (isset($value)) {
-                            $field['languages'][$language['id_lang']] = $value;
-                        } else {
-                            $field['languages'][$language['id_lang']] = '';
-                        }
+                        $field['languages'][$language['id_lang']] = $value ?? '';
 
                         $field['value'][$language['id_lang']] = $this->getOptionValue($key . '_' . strtoupper((string) $language['iso_code']), $field);
                     }

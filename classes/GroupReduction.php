@@ -106,7 +106,7 @@ class GroupReductionCore extends ObjectModel
             $values[] = '(' . (int) $row['id_product'] . ', ' . (int) $this->id_group . ', ' . (float) $this->reduction . ')';
         }
 
-        if (count($values)) {
+        if ($values !== []) {
             $query = 'INSERT INTO `' . _DB_PREFIX_ . 'product_group_reduction_cache` (`id_product`, `id_group`, `reduction`)
 			VALUES ' . implode(', ', $values) . ' ON DUPLICATE KEY UPDATE
 			`reduction` = IF(VALUES(`reduction`) > `reduction`, VALUES(`reduction`), `reduction`)';

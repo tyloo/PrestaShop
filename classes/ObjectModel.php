@@ -570,11 +570,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         // We get the fields before any insertion, because the validation is called inside those methods and in case of invalid value nothing
         // should be inserted at all
         $entityFields = $this->getFields();
-        if (! empty($this->def['multilang'])) {
-            $entityMultiLangFields = $this->getFieldsLang();
-        } else {
-            $entityMultiLangFields = [];
-        }
+        $entityMultiLangFields = ! empty($this->def['multilang']) ? $this->getFieldsLang() : [];
 
         if (! $result = Db::getInstance()->insert($this->def['table'], $entityFields, $null_values)) {
             return false;
@@ -763,11 +759,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         $fieldsToUpdate = $this->getFields();
         // Multi lang fields must be fetched before any updates is done, because if they are invalid the whole update should be blocked
         // and validation process is performed in getFieldsLang
-        if (isset($this->def['multilang']) && $this->def['multilang']) {
-            $multiLangFieldsToUpdate = $this->getFieldsLang();
-        } else {
-            $multiLangFieldsToUpdate = [];
-        }
+        $multiLangFieldsToUpdate = isset($this->def['multilang']) && $this->def['multilang'] ? $this->getFieldsLang() : [];
 
         if (! $result = Db::getInstance()->update($this->def['table'], $fieldsToUpdate, '`' . pSQL($this->def['primary']) . '` = ' . (int) $this->id, 0, $null_values)) {
             return false;
@@ -873,11 +865,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         $result = true;
 
         // Remove association to multishop table
-        if (count($this->id_shop_list)) {
-            $shopIdsList = $this->id_shop_list;
-        } else {
-            $shopIdsList = Shop::getContextListShopID();
-        }
+        $shopIdsList = count($this->id_shop_list) ? $this->id_shop_list : Shop::getContextListShopID();
 
         $shopIdsList = array_map('intval', $shopIdsList);
 
@@ -1378,11 +1366,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                 $current_field['maxSize'] = $details['size'];
             }
 
-            if (isset($details['lang'])) {
-                $current_field['i18n'] = $details['lang'];
-            } else {
-                $current_field['i18n'] = false;
-            }
+            $current_field['i18n'] = $details['lang'] ?? false;
 
             if ((isset($details['required']) && $details['required'] === true) || in_array($field_name, $required_fields, true)) {
                 $current_field['required'] = true;
@@ -1454,7 +1438,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                 }
 
                 $prepend = '';
-                if (count($or)) {
+                if ($or !== []) {
                     $prepend = 'AND (' . implode('OR', $or) . ')';
                 }
 
@@ -1466,8 +1450,8 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 		SELECT DISTINCT main.`' . bqSQL($this->def['primary']) . '` FROM `' . _DB_PREFIX_ . bqSQL($this->def['table']) . '` AS main
 		' . $sql_join . '
 		WHERE 1 ' . $sql_filter . '
-		' . ($sql_sort !== '' ? $sql_sort : '') . '
-		' . ($sql_limit !== '' ? $sql_limit : '');
+		' . $sql_sort . '
+		' . $sql_limit;
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
     }
@@ -2193,12 +2177,6 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
      */
     protected function getShopIdsList(): array
     {
-        if (count($this->id_shop_list)) {
-            $shopIdsList = $this->id_shop_list;
-        } else {
-            $shopIdsList = Shop::getContextListShopID();
-        }
-
-        return $shopIdsList;
+        return count($this->id_shop_list) ? $this->id_shop_list : Shop::getContextListShopID();
     }
 }

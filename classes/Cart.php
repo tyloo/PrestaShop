@@ -708,11 +708,7 @@ class CartCore extends ObjectModel
         }
 
         // Get cache key we will use, depending on whether we want to split gift products quantity or not
-        if ($shouldSplitGiftProductsQuantity) {
-            $cacheKey = '_products_with_separated_gifts';
-        } else {
-            $cacheKey = '_products';
-        }
+        $cacheKey = $shouldSplitGiftProductsQuantity ? '_products_with_separated_gifts' : '_products';
 
         // Product cache must be strictly compared to NULL, or else an empty cart will add dozens of queries
         if ($this->{$cacheKey} !== null && ! $refresh) {
@@ -1265,7 +1261,7 @@ class CartCore extends ObjectModel
             }
         }
 
-        if (! count($pa_implode)) {
+        if ($pa_implode === []) {
             return;
         }
 
@@ -2969,7 +2965,7 @@ class CartCore extends ObjectModel
 
                 $delivery_option_list[$id_address][$key]['total_price_with_tax'] = $total_price_with_tax;
                 $delivery_option_list[$id_address][$key]['total_price_without_tax'] = $total_price_without_tax;
-                $delivery_option_list[$id_address][$key]['is_free'] = ! $total_price_without_tax_with_rules ? true : false;
+                $delivery_option_list[$id_address][$key]['is_free'] = ! $total_price_without_tax_with_rules;
                 $delivery_option_list[$id_address][$key]['position'] = $position / count($value['carrier_list']);
             }
         }
@@ -3040,11 +3036,7 @@ class CartCore extends ObjectModel
             return false;
         }
 
-        if (! in_array($id_carrier, array_keys($delivery_option_list[$id_address][$delivery_option[$id_address]]['carrier_list']), true)) {
-            return false;
-        }
-
-        return true;
+        return in_array($id_carrier, array_keys($delivery_option_list[$id_address][$delivery_option[$id_address]]['carrier_list']), true);
     }
 
     /**
@@ -3706,7 +3698,6 @@ class CartCore extends ObjectModel
                 || (
                     $shipping_method === Carrier::SHIPPING_METHOD_PRICE && Carrier::checkDeliveryPriceByPrice($carrier->id, $order_total, $id_zone, (int) $this->id_currency) === false
                 )) {
-                $shipping_cost += 0;
             } else {
                 if ($shipping_method === Carrier::SHIPPING_METHOD_WEIGHT) {
                     $shipping_cost += $carrier->getDeliveryPriceByWeight($this->getTotalWeight($product_list), $id_zone);
@@ -4086,11 +4077,7 @@ class CartCore extends ObjectModel
         }
 
         if (! isset(self::$_isVirtualCart[$this->id])) {
-            if (! $this->hasProducts()) {
-                $isVirtual = false;
-            } else {
-                $isVirtual = ! $this->hasRealProducts();
-            }
+            $isVirtual = ! $this->hasProducts() ? false : ! $this->hasRealProducts();
 
             self::$_isVirtualCart[$this->id] = $isVirtual;
         }
@@ -4302,7 +4289,7 @@ class CartCore extends ObjectModel
             return [];
         }
 
-        $result = Db::getInstance()->executeS(
+        return Db::getInstance()->executeS(
             'SELECT cu.id_customization, cd.index, cd.value, cd.type, cu.in_cart, cu.quantity
             FROM `' . _DB_PREFIX_ . 'customization` cu
             LEFT JOIN `' . _DB_PREFIX_ . 'customized_data` cd ON (cu.`id_customization` = cd.`id_customization`)
@@ -4312,8 +4299,6 @@ class CartCore extends ObjectModel
             ($type === Product::CUSTOMIZE_TEXTFIELD ? ' AND type = ' . (int) Product::CUSTOMIZE_TEXTFIELD : '') .
             ($not_in_cart ? ' AND in_cart = 0' : '')
         );
-
-        return $result;
     }
 
     /**
@@ -4638,12 +4623,8 @@ class CartCore extends ObjectModel
             return true;
         }
 
-        if ($shipping_method === Carrier::SHIPPING_METHOD_PRICE
-            && Carrier::checkDeliveryPriceByPrice((int) $id_carrier, $this->getOrderTotal(true, Cart::BOTH_WITHOUT_SHIPPING), $id_zone, (int) $this->id_currency) !== false) {
-            return true;
-        }
-
-        return false;
+        return $shipping_method === Carrier::SHIPPING_METHOD_PRICE
+            && Carrier::checkDeliveryPriceByPrice((int) $id_carrier, $this->getOrderTotal(true, Cart::BOTH_WITHOUT_SHIPPING), $id_zone, (int) $this->id_currency) !== false;
     }
 
     /**

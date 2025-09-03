@@ -228,8 +228,6 @@ class TreeToolbarCore implements ITreeToolbarCore
             return $directory;
         }
 
-        $directory .= \DIRECTORY_SEPARATOR;
-
-        return $directory;
+        return $directory . \DIRECTORY_SEPARATOR;
     }
 }
