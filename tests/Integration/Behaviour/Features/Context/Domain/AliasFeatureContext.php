@@ -63,7 +63,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
     {
         // We retrieve the data from the table and cast the active column to a boolean
         $aliases = $table->getColumnsHash();
-        array_walk($aliases, function (&$alias): void {
+        array_walk($aliases, function (array &$alias): void {
             $alias['active'] = filter_var($alias['active'], \FILTER_VALIDATE_BOOL);
         });
 
@@ -245,7 +245,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
         // We retrieve the data from the table and cast the active column to a boolean
         $aliases = $table->getColumnsHash();
-        array_walk($aliases, function (&$alias): void {
+        array_walk($aliases, function (array &$alias): void {
             $alias['active'] = filter_var($alias['active'], \FILTER_VALIDATE_BOOL);
         });
 
@@ -282,7 +282,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
     private function assertAliasProperties(array $expectedData, array $aliases, bool $exist = false): void
     {
         foreach ($expectedData as $expectedAlias) {
-            $filter = array_filter($aliases, fn ($alias): bool => $alias['alias'] === $expectedAlias['alias']
+            $filter = array_filter($aliases, fn (array $alias): bool => $alias['alias'] === $expectedAlias['alias']
             && $alias['search'] === $expectedAlias['search']
             && filter_var($alias['active'], \FILTER_VALIDATE_BOOL) === filter_var($expectedAlias['active'], \FILTER_VALIDATE_BOOL));
 

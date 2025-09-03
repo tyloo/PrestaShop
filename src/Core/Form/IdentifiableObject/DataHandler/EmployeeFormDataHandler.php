@@ -74,7 +74,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         // Super admins have access to all shops and that cannot be changed by the user.
         if ($data['profile'] === $this->superAdminProfileId) {

@@ -44,7 +44,7 @@ class ProductImageFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         $uploadedFile = $data['file'] ?? null;
 

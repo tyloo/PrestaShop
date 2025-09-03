@@ -265,11 +265,9 @@ class FolderThemeCatalogTest extends TestCase
     }
 
     /**
-     * @param int $layoutsCount
-     *
      * @return MockObject|HookDispatcherInterface
      */
-    private function createHookDispatcherMock($layoutsCount): MockObject
+    private function createHookDispatcherMock(int $layoutsCount): MockObject
     {
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
             ->disableOriginalConstructor()
@@ -281,7 +279,7 @@ class FolderThemeCatalogTest extends TestCase
             ->method('dispatchWithParameters')
             ->with(
                 $this->equalTo(ThemeCatalogInterface::LIST_MAIL_THEMES_HOOK),
-                $this->callback(function (array $parameters) use ($layoutsCount) {
+                $this->callback(function (array $parameters) use ($layoutsCount): bool {
                     $this->assertInstanceOf(ThemeCollectionInterface::class, $parameters['mailThemes']);
                     /** @var ThemeInterface $theme */
                     $theme = $parameters['mailThemes'][0];

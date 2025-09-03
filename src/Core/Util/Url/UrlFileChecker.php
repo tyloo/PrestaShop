@@ -37,26 +37,17 @@ final class UrlFileChecker implements UrlFileCheckerInterface
     ) {
     }
 
-    /**
-     * @return bool
-     */
-    public function isHtaccessFileWritable()
+    public function isHtaccessFileWritable(): bool
     {
         return $this->isFileWritable('.htaccess');
     }
 
-    /**
-     * @return bool
-     */
-    public function isRobotsFileWritable()
+    public function isRobotsFileWritable(): bool
     {
         return $this->isFileWritable('robots.txt');
     }
 
-    /**
-     * @param string $fileName
-     */
-    private function isFileWritable($fileName): bool
+    private function isFileWritable(string $fileName): bool
     {
         $filePath = $this->fileDir . \DIRECTORY_SEPARATOR . $fileName;
 

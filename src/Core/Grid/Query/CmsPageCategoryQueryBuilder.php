@@ -37,12 +37,11 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CmsPageCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @param string $dbPrefix
-     * @param int    $contextIdLang
+     * @param int $contextIdLang
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         private readonly array $contextShopIds,
         private $contextIdLang,
@@ -174,7 +173,7 @@ final class CmsPageCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
      *
      * @return int|null - if null is returned then no results are found since position field does not hold null values
      */
-    private function getModifiedPositionFilter($positionFilterValue)
+    private function getModifiedPositionFilter($positionFilterValue): float|int|null
     {
         if (! is_numeric($positionFilterValue)) {
             return null;

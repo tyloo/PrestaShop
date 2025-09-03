@@ -101,7 +101,7 @@ final class HookExtractor
         }
     }
 
-    private function getAliasesForHook($hookName): array
+    private function getAliasesForHook(int|string $hookName): array
     {
         $hookNameLower = strtolower((string) $hookName);
 
@@ -123,7 +123,7 @@ final class HookExtractor
         }
     }
 
-    private function getHookInfo($hookName): array
+    private function getHookInfo(int|string $hookName): array
     {
         $hookNameLower = strtolower((string) $hookName);
 
@@ -224,7 +224,7 @@ final class HookExtractor
         }
     }
 
-    private function matchRegex($patterns, $content, $filePath): void
+    private function matchRegex($patterns, string|bool $content, $filePath): void
     {
         foreach ($patterns as $pattern) {
             if (preg_match_all($pattern, (string) $content, $allMatches, \PREG_SET_ORDER)) {

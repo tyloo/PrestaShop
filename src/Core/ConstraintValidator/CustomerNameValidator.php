@@ -60,10 +60,8 @@ class CustomerNameValidator extends ConstraintValidator
 
     /**
      * Validates url rewrite according a specific pattern.
-     *
-     * @param string $name
      */
-    private function isNameValid($name): bool
+    private function isNameValid(string $name): bool
     {
         return (bool) preg_match(static::PATTERN_NAME, $name);
     }
@@ -71,11 +69,9 @@ class CustomerNameValidator extends ConstraintValidator
     /**
      * Check if there is not more one space after point
      *
-     * @param string $name
-     *
      * @return bool
      */
-    private function isPointSpacedValid($name)
+    private function isPointSpacedValid(string $name)
     {
         if (mb_strpos($name, '.') === false && mb_strpos($name, '。') === false) {
             return true;

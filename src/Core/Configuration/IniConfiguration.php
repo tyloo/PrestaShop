@@ -56,7 +56,7 @@ class IniConfiguration
      *
      * @param string $value
      */
-    private function convertToBytes($value): int
+    private function convertToBytes(string|bool $value): int
     {
         $bytes = (int) trim($value);
         $last = strtolower($value[\strlen($value) - 1]);

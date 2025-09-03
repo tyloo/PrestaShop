@@ -140,7 +140,7 @@ class LayoutVariablesBuilderTest extends TestCase
     /**
      * @return MockObject|HookDispatcherInterface
      */
-    private function createHookDispatcherMock(array $expectedVariables, LayoutInterface $mailLayout): MockObject
+    private function createHookDispatcherMock(array $expectedVariables, MockObject $mailLayout): MockObject
     {
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
             ->disableOriginalConstructor()
@@ -152,7 +152,7 @@ class LayoutVariablesBuilderTest extends TestCase
             ->method('dispatchWithParameters')
             ->with(
                 $this->equalTo(LayoutVariablesBuilderInterface::BUILD_MAIL_LAYOUT_VARIABLES_HOOK),
-                $this->callback(function (array $hookParameters) use ($expectedVariables, $mailLayout) {
+                $this->callback(function (array $hookParameters) use ($expectedVariables, $mailLayout): bool {
                     $this->assertEquals($expectedVariables, $hookParameters['mailLayoutVariables']);
                     $this->assertInstanceOf(LayoutInterface::class, $hookParameters['mailLayout']);
                     $this->assertEquals($mailLayout, $hookParameters['mailLayout']);
@@ -166,12 +166,9 @@ class LayoutVariablesBuilderTest extends TestCase
     }
 
     /**
-     * @param string $isoCode
-     * @param bool   $isRTL
-     *
      * @return MockObject|LanguageInterface
      */
-    private function buildLanguageMock($isoCode = 'en', $isRTL = false): MockObject
+    private function buildLanguageMock(string $isoCode = 'en', bool $isRTL = false): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()
@@ -234,7 +231,7 @@ class LayoutVariablesBuilderTest extends TestCase
             ->with(
                 $this->isInstanceOf(LanguageInterface::class)
             )
-            ->willReturnCallback(function (LanguageInterface $language) {
+            ->willReturnCallback(function (LanguageInterface $language): string {
                 if (\in_array($language->getIsoCode(), ['ar', 'fa'], true)) {
                     return 'Tahoma';
                 }

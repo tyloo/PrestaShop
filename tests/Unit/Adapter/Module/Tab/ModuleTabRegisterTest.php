@@ -177,7 +177,7 @@ class ModuleTabRegisterTest extends TestCase
         // option that will add an undeclared controller
         $moduleRoutingLoader
             ->method('import')
-            ->willReturnCallback(function ($routingFile, $type) {
+            ->willReturnCallback(function ($routingFile, $type): RouteCollection {
                 $routeCollection = new RouteCollection();
                 $simpleRoute = new Route('/nowhere', [
                     '_controller' => 'PrestaShop\\Module\\Test\\SymfonyController::someAction',
@@ -337,7 +337,7 @@ class ModuleTabRegisterTest extends TestCase
      *
      * @see https://jtreminio.com/2013/03/unit-testing-tutorial-part-3-testing-protected-private-methods-coverage-reports-and-crap/
      */
-    protected function invokeMethod(object $object, string $methodName, array $parameters = [])
+    protected function invokeMethod(object $object, string $methodName, array $parameters = []): mixed
     {
         $reflection = new ReflectionClass($object::class);
         $method = $reflection->getMethod($methodName);

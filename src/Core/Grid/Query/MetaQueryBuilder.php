@@ -36,13 +36,12 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class MetaQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @param string $dbPrefix
-     * @param int    $contextIdLang
-     * @param int    $contextIdShop
+     * @param int $contextIdLang
+     * @param int $contextIdShop
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         private $contextIdLang,
         private $contextIdShop,

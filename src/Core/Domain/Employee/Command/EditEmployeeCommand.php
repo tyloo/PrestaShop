@@ -104,11 +104,9 @@ class EditEmployeeCommand
     }
 
     /**
-     * @param EmployeeId $employeeId
-     *
      * @return EditEmployeeCommand
      */
-    public function setEmployeeId($employeeId)
+    public function setEmployeeId(EmployeeId $employeeId)
     {
         $this->employeeId = $employeeId;
 

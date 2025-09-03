@@ -38,12 +38,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @param string $dbPrefix
-     */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);

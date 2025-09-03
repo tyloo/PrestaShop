@@ -65,10 +65,8 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
 
     /**
      * Get currency choices.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->getCountries(),

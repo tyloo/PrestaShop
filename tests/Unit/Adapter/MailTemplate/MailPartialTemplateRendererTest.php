@@ -70,14 +70,14 @@ class MailPartialTemplateRendererTest extends TestCase
     /**
      * @return MockObject|Smarty
      */
-    private function buildSmartyMock($template = ''): MockObject
+    private function buildSmartyMock(string $template = ''): MockObject
     {
         $smartyMock = $this->getMockBuilder(Smarty::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        if (empty($template)) {
+        if ($template === '' || $template === '0') {
             $smartyMock
                 ->expects($this->never())
                 ->method('fetch')

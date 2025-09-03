@@ -71,7 +71,7 @@ class FormHandler implements FormHandlerInterface
     /**
      * @throws Exception
      */
-    public function getForm()
+    public function getForm(): \Symfony\Component\Form\FormInterface
     {
         foreach ($this->formTypes as $formName => $formType) {
             $this->formBuilder->add($formName, $formType);

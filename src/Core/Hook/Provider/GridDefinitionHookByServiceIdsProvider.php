@@ -56,7 +56,7 @@ final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsPr
     ) {
     }
 
-    public function getHookNames(array $gridDefinitionServiceIds)
+    public function getHookNames(array $gridDefinitionServiceIds): array
     {
         /** @var Generator $gridDefinitionIds */
         $gridDefinitionIds = $this->getGridDefinitionIds($gridDefinitionServiceIds);
@@ -135,11 +135,9 @@ final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsPr
     /**
      * Formats hook names.
      *
-     * @param string $hookStartsWith
      * @param string $hookId
-     * @param string $hookEndsWidth
      */
-    private function formatHookName($hookStartsWith, $hookId, $hookEndsWidth): string
+    private function formatHookName(string $hookStartsWith, $hookId, string $hookEndsWidth): string
     {
         return $hookStartsWith . $hookId . $hookEndsWidth;
     }

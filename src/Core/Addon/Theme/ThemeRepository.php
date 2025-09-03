@@ -91,17 +91,15 @@ class ThemeRepository implements AddonRepositoryInterface
 
     /**
      * Gets list of themes as a collection.
-     *
-     * @return ThemeCollection
      */
-    public function getListAsCollection()
+    public function getListAsCollection(): ThemeCollection
     {
         $list = $this->getList();
 
         return ThemeCollection::createFrom($list);
     }
 
-    public function getListExcluding(array $exclude)
+    public function getListExcluding(array $exclude): array
     {
         $filter = (new AddonListFilter())
             ->setExclude($exclude);
@@ -146,7 +144,7 @@ class ThemeRepository implements AddonRepositoryInterface
         return $themes;
     }
 
-    private function getConfigFromFile($file)
+    private function getConfigFromFile(string $file)
     {
         if (! $this->filesystem->exists($file)) {
             throw new PrestaShopException(\sprintf('[ThemeRepository] Theme configuration file not found for theme at `%s`.', $file));
@@ -154,11 +152,11 @@ class ThemeRepository implements AddonRepositoryInterface
 
         $content = file_get_contents($file);
 
-        if (preg_match('/.\.(yml|yaml)$/', (string) $file)) {
+        if (preg_match('/.\.(yml|yaml)$/', $file)) {
             return (new Parser())->parse($content);
         }
 
-        if (preg_match('/.\.json$/', (string) $file)) {
+        if (preg_match('/.\.json$/', $file)) {
             return json_decode($content, true);
         }
 

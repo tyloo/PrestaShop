@@ -97,7 +97,7 @@ class CarrierRangeZone
         $min = 0;
 
         // First, we need to sort by range from
-        usort($ranges, fn ($a, $b): int => $a['range_from'] <=> $b['range_from']);
+        usort($ranges, fn (array $a, array $b): int => $a['range_from'] <=> $b['range_from']);
 
         // Then, we can check if ranges are overlapping or not
         foreach ($ranges as $range) {

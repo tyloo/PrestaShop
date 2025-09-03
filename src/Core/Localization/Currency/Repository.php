@@ -64,12 +64,12 @@ class Repository implements CurrencyRepositoryInterface
         return $this->currencies[$currencyCode];
     }
 
-    public function getAvailableCurrencies($localeCode)
+    public function getAvailableCurrencies($localeCode): CurrencyCollection
     {
         return $this->createCurrenciesFromData($this->dataSource->getAvailableCurrenciesData($localeCode));
     }
 
-    public function getAllInstalledCurrencies($localeCode)
+    public function getAllInstalledCurrencies($localeCode): CurrencyCollection
     {
         return $this->createCurrenciesFromData($this->dataSource->getAllInstalledCurrenciesData($localeCode));
     }

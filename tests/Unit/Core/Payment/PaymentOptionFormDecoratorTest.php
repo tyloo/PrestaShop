@@ -73,7 +73,7 @@ class PaymentOptionFormDecoratorTest extends TestCase
         );
     }
 
-    private function normalizeHTML($html): string|false
+    private function normalizeHTML(string|bool $html): string|false
     {
         $doc = new DOMDocument();
         if (! $doc->loadHTML($html)) {
@@ -86,7 +86,7 @@ class PaymentOptionFormDecoratorTest extends TestCase
         return $doc->saveHTML();
     }
 
-    private function assertSameHTML($exp, $act)
+    private function assertSameHTML(string $exp, string|bool $act)
     {
         $this->assertEquals(
             $this->normalizeHTML($exp),

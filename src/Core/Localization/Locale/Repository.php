@@ -133,7 +133,7 @@ class Repository implements RepositoryInterface
      *
      * @throws LocalizationException
      */
-    protected function getNumberSpecification($localeCode)
+    protected function getNumberSpecification($localeCode): NumberSpecification
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
 

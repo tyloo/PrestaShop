@@ -53,7 +53,7 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         $command = $this->buildCustomerAddCommandFromFormData($data);
 

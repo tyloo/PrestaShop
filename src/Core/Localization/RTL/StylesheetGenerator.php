@@ -94,7 +94,7 @@ class StylesheetGenerator
      * @param string $file       File path
      * @param bool   $regenerate Indicates if RTL files should be re-generated even if they exist
      */
-    private function shouldProcessFile($file, $regenerate): bool
+    private function shouldProcessFile(string $file, $regenerate): bool
     {
         return
             ! str_contains($file, '/node_modules/')
@@ -113,7 +113,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException
      */
-    private function processFile($filePath): void
+    private function processFile(string $filePath): void
     {
         $content = file_get_contents($filePath);
 
@@ -152,7 +152,7 @@ class StylesheetGenerator
      *
      * @param string $filePath Path to a file
      */
-    private function getFilePathWithoutExtension($filePath): string
+    private function getFilePathWithoutExtension(string $filePath): string
     {
         $path = pathinfo($filePath);
 
@@ -166,7 +166,7 @@ class StylesheetGenerator
      *
      * @return string RTL filename
      */
-    private function getRtlFileName($baseFileName): string
+    private function getRtlFileName(string $baseFileName): string
     {
         return $this->getFilePathWithoutExtension($baseFileName) . $this->rtlSuffix . '.' . $this->fileType;
     }
@@ -181,7 +181,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException If unable to read from .rtlfix file
      */
-    private function appendRtlFixIfNecessary($content, $baseFile)
+    private function appendRtlFixIfNecessary($content, string $baseFile)
     {
         $filePath = $this->getFilePathWithoutExtension($baseFile);
 
@@ -208,7 +208,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException If unable to write to file
      */
-    private function saveFile($content, $baseFile): void
+    private function saveFile($content, string $baseFile): void
     {
         $rtlFilePath = $this->getRtlFileName($baseFile);
 

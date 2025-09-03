@@ -37,12 +37,11 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @param string $dbPrefix
-     * @param int    $contextLangId
+     * @param int $contextLangId
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         private $contextLangId,
         private readonly array $contextShopIds,
@@ -181,10 +180,8 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
 
     /**
      * Adds filter restrictions.
-     *
-     * @param string $alias
      */
-    private function applyFilters(QueryBuilder $qb, array $filters, $alias): void
+    private function applyFilters(QueryBuilder $qb, array $filters, string $alias): void
     {
         $availableFilters = [
             'id_supplier',

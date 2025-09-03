@@ -119,12 +119,11 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param string $expected
      * @param object $subject
      *
      * @todo: import phpunit asserts instead of re-writing them
      */
-    private function assertInstanceOf($expected, $subject): void
+    private function assertInstanceOf(string $expected, $subject): void
     {
         if ($subject::class !== $expected) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expected, $subject::class));

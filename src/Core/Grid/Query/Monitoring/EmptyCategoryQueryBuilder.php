@@ -40,14 +40,13 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
 final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @param string $dbPrefix
-     * @param int    $contextLangId
-     * @param int    $contextShopId
-     * @param int    $rootCategoryId
+     * @param int $contextLangId
+     * @param int $contextShopId
+     * @param int $rootCategoryId
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private $contextLangId,
         private $contextShopId,
         private readonly DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,

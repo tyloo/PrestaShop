@@ -184,7 +184,7 @@ class FeatureFlagManagerTest extends TestCase
         ]];
     }
 
-    private function createContainerInterfaceMock($envLayer, $queryLayer, $dotenvLayer, $dbLayer): \PHPUnit\Framework\MockObject\MockObject
+    private function createContainerInterfaceMock(\PHPUnit\Framework\MockObject\MockObject $envLayer, \PHPUnit\Framework\MockObject\MockObject $queryLayer, \PHPUnit\Framework\MockObject\MockObject $dotenvLayer, \PHPUnit\Framework\MockObject\MockObject $dbLayer): \PHPUnit\Framework\MockObject\MockObject
     {
         $mock = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
@@ -202,7 +202,7 @@ class FeatureFlagManagerTest extends TestCase
 
         $mock->expects($this->atLeastOnce())
             ->method('get')
-            ->willReturnCallback(fn ($layer) => match ($layer) {
+            ->willReturnCallback(fn ($layer): ?\PHPUnit\Framework\MockObject\MockObject => match ($layer) {
                 'env' => $envLayer,
                 'query' => $queryLayer,
                 'dotenv' => $dotenvLayer,

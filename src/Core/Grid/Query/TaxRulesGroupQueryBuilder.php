@@ -36,12 +36,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 class TaxRulesGroupQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @param string $dbPrefix
-     */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         private readonly array $contextShopIds,
     ) {

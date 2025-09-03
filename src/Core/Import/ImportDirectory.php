@@ -51,10 +51,8 @@ final class ImportDirectory implements Stringable
 
     /**
      * Check if import directory exists.
-     *
-     * @return bool
      */
-    public function exists()
+    public function exists(): bool
     {
         return (new Filesystem())->exists($this->getDir());
     }

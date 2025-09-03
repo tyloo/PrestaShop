@@ -45,7 +45,7 @@ final class ContactByIdChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->contactRepository->findAllByLangId($this->langId),

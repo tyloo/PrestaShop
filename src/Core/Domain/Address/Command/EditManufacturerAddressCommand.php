@@ -117,10 +117,7 @@ class EditManufacturerAddressCommand
         return $this->addressId;
     }
 
-    /**
-     * @param AddressId $addressId
-     */
-    public function setAddressId($addressId): void
+    public function setAddressId(AddressId $addressId): void
     {
         $this->addressId = $addressId;
     }

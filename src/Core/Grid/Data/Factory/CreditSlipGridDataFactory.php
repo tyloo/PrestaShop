@@ -58,10 +58,7 @@ final class CreditSlipGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return array
-     */
-    private function applyModification(array $creditSlips)
+    private function applyModification(array $creditSlips): array
     {
         foreach (array_keys($creditSlips) as $i) {
             $creditSlips[$i]['link_value'] = $this->translator->trans(

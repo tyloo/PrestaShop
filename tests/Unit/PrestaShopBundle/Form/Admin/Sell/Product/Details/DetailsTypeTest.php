@@ -54,7 +54,7 @@ class DetailsTypeTest extends TestCase
 
         $children = [];
 
-        $mockFormBuilder->method('add')->willReturnCallback(function (string $child) use (&$children, $mockFormBuilder) {
+        $mockFormBuilder->method('add')->willReturnCallback(function (string $child) use (&$children, $mockFormBuilder): \PHPUnit\Framework\MockObject\MockObject {
             $children[] = $child;
 
             return $mockFormBuilder;

@@ -204,13 +204,13 @@ class RedirectTargetProviderTest extends TestCase
                 ->expects($this->once())
                 ->method('getPreview')
                 ->with(
-                    $this->callback(function ($categoryParam) use ($categoryId) {
+                    $this->callback(function ($categoryParam) use ($categoryId): bool {
                         $this->assertInstanceOf(CategoryId::class, $categoryParam);
                         $this->assertEquals($categoryId, $categoryParam->getValue());
 
                         return true;
                     }),
-                    $this->callback(function ($languageParam) use ($languageId) {
+                    $this->callback(function ($languageParam) use ($languageId): bool {
                         $this->assertInstanceOf(LanguageId::class, $languageParam);
                         $this->assertEquals($languageId, $languageParam->getValue());
 
@@ -251,13 +251,13 @@ class RedirectTargetProviderTest extends TestCase
                 ->expects($this->once())
                 ->method('getPreview')
                 ->with(
-                    $this->callback(function ($productIdVO) use ($productId) {
+                    $this->callback(function ($productIdVO) use ($productId): bool {
                         $this->assertInstanceOf(ProductId::class, $productIdVO);
                         $this->assertEquals($productId, $productIdVO->getValue());
 
                         return true;
                     }),
-                    $this->callback(function ($languageIdVO) use ($languageId) {
+                    $this->callback(function ($languageIdVO) use ($languageId): bool {
                         $this->assertInstanceOf(LanguageId::class, $languageIdVO);
                         $this->assertEquals($languageId, $languageIdVO->getValue());
 

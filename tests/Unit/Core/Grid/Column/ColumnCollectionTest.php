@@ -226,10 +226,7 @@ class ColumnCollectionTest extends TestCase
         $columns->move('undefined_id', 10);
     }
 
-    /**
-     * @param int|string $id
-     */
-    private function createColumnMock($id): ColumnInterface
+    private function createColumnMock(string|int $id): ColumnInterface
     {
         $column = $this->createMock(ColumnInterface::class);
         $column->method('getId')

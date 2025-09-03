@@ -45,7 +45,7 @@ class FilterCollectionTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\Depends('testFilterCollectionIsEmptyByDefault')]
-    public function testFilterCanBeAddedToCollection(FilterCollection $filters)
+    public function testFilterCanBeAddedToCollection(FilterCollection $filters): FilterCollection
     {
         $filters->add($this->getFilterMock('first'));
         $filters->add($this->getFilterMock('second'));
@@ -64,7 +64,7 @@ class FilterCollectionTest extends TestCase
         $this->assertCount(2, $filters->all());
     }
 
-    private function getFilterMock($name): \PHPUnit\Framework\MockObject\MockObject
+    private function getFilterMock(string $name): \PHPUnit\Framework\MockObject\MockObject
     {
         $filter = $this->createMock(FilterInterface::class);
         $filter->method('getName')

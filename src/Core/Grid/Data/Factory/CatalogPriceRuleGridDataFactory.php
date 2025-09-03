@@ -59,10 +59,7 @@ final class CatalogPriceRuleGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return array
-     */
-    private function applyModification(array $priceRules)
+    private function applyModification(array $priceRules): array
     {
         foreach ($priceRules as &$priceRule) {
             foreach ($priceRule as &$value) {

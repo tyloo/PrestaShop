@@ -58,10 +58,7 @@ final class ManufacturerGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return array
-     */
-    private function applyModification(array $manufacturers)
+    private function applyModification(array $manufacturers): array
     {
         foreach ($manufacturers as $i => $manufacturer) {
             $manufacturers[$i]['logo'] = $this->manufacturerLogoThumbnailProvider->getPath(

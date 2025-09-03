@@ -32,7 +32,7 @@ class CronJobsForms
 {
     protected static $module = false;
 
-    public static function init($module)
+    public static function init(bool $module)
     {
         if (self::$module === false) {
             self::$module = $module;

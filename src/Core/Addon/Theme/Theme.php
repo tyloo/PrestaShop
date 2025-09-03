@@ -73,7 +73,7 @@ class Theme implements AddonInterface
         return $this->attributes->get($attr, $default);
     }
 
-    public function has($attr)
+    public function has($attr): bool
     {
         return $this->attributes->offsetExists($attr);
     }

@@ -109,7 +109,7 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         $this->set('filters', $filters);
     }
 
-    public function getFilters()
+    public function getFilters(): mixed
     {
         return $this->get('filters');
     }

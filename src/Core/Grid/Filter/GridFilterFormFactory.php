@@ -45,7 +45,7 @@ final class GridFilterFormFactory implements GridFilterFormFactoryInterface
     ) {
     }
 
-    public function create(GridDefinitionInterface $definition)
+    public function create(GridDefinitionInterface $definition): \Symfony\Component\Form\FormInterface
     {
         $formBuilder = $this->formFactory->createNamedBuilder(
             $definition->getId(),

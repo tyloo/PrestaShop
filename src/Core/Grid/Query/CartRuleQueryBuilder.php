@@ -39,12 +39,11 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CartRuleQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @param string $dbPrefix
-     * @param int    $contextIdLang
+     * @param int $contextIdLang
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         private $contextIdLang,
     ) {

@@ -67,10 +67,7 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
         $this->configureRestrictions('carrier', $carrierRestrictions);
     }
 
-    /**
-     * @param string $restrictionType
-     */
-    private function configureRestrictions($restrictionType, array $restrictions): void
+    private function configureRestrictions(string $restrictionType, array $restrictions): void
     {
         [$moduleIds, $newConfiguration] = $this->parseRestrictionData($restrictions);
 
@@ -81,10 +78,9 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     /**
      * Clear current configuration for given restriction type.
      *
-     * @param string $restrictionType
-     * @param int[]  $moduleIds
+     * @param int[] $moduleIds
      */
-    private function clearCurrentConfiguration($restrictionType, array $moduleIds): int
+    private function clearCurrentConfiguration(string $restrictionType, array $moduleIds): int
     {
         $clearSql = '
             DELETE FROM ' . $this->getTableNameForRestriction($restrictionType) . '
@@ -97,10 +93,9 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     /**
      * Insert new configuration for given restriction type.
      *
-     * @param string $restrictionType
-     * @param array  $newConfiguration
+     * @param array $newConfiguration
      */
-    private function insertNewConfiguration($restrictionType, $newConfiguration): void
+    private function insertNewConfiguration(string $restrictionType, $newConfiguration): void
     {
         if (! empty($newConfiguration)) {
             $fieldName = $restrictionType === 'carrier' ? 'reference' : $restrictionType;
@@ -114,10 +109,8 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
 
     /**
      * Get table name for module restrictions.
-     *
-     * @param string $restrictionType
      */
-    private function getTableNameForRestriction($restrictionType): string
+    private function getTableNameForRestriction(string $restrictionType): string
     {
         return $this->databasePrefix . 'module_' . $restrictionType;
     }

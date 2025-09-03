@@ -44,7 +44,7 @@ final class AttributeGroupFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         /** @var AttributeGroupId $attributeGroupId */
         $attributeGroupId = $this->commandBus->handle(new AddAttributeGroupCommand(

@@ -88,7 +88,7 @@ class AbstractGridDefinitionFactoryTest extends TestCase
             ->add($this->createColumnMock('test_3'));
     }
 
-    private function createColumnMock($id): \PHPUnit\Framework\MockObject\MockObject
+    private function createColumnMock(string $id): \PHPUnit\Framework\MockObject\MockObject
     {
         $column = $this->createMock(ColumnInterface::class);
         $column->method('getId')

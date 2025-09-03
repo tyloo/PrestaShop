@@ -40,13 +40,12 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
 abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @param string $dbPrefix
-     * @param int    $contextLangId
-     * @param int    $contextShopId
+     * @param int $contextLangId
+     * @param int $contextShopId
      */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         protected $contextLangId,
         protected $contextShopId,
         protected DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,

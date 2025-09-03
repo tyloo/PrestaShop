@@ -36,12 +36,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @param string $dbPrefix
-     */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         private readonly int $contextLanguageId,
         private readonly array $contextShopIds,

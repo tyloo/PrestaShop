@@ -57,7 +57,7 @@ class LazyArrayTest extends TestCase
         $counter = 0;
 
         $test = new LazyArrayImplementation();
-        $test->appendClosure('a', function () use ($counter) {
+        $test->appendClosure('a', function () use ($counter): int {
             ++$counter;
 
             return $counter;
@@ -75,7 +75,7 @@ class LazyArrayTest extends TestCase
         $dummyLog = new DummyLog();
 
         $test = new LazyArrayImplementation();
-        $test->appendClosure('b', function () use ($dummyLog) {
+        $test->appendClosure('b', function () use ($dummyLog): int {
             $dummyLog->ping();
 
             return $dummyLog->getPingCounter();

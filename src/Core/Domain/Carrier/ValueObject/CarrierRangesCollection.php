@@ -45,7 +45,7 @@ class CarrierRangesCollection
         array $carrierRanges,
     ) {
         // First we need to sort carrier ranges by range_from then by range_to.
-        usort($carrierRanges, function ($a, $b) {
+        usort($carrierRanges, function (array $a, array $b): int {
             if ($a['range_from'] === $b['range_from']) {
                 return $a['range_to'] <=> $b['range_to'];
             }

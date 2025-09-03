@@ -31,10 +31,8 @@ class CMSRoleRepository extends \PrestaShop\PrestaShop\Core\Foundation\Database\
 {
     /**
      * Return all CMSRoles which are already associated.
-     *
-     * @return array|null
      */
-    public function getCMSRolesAssociated()
+    public function getCMSRolesAssociated(): array
     {
         $sql = '
 			SELECT *

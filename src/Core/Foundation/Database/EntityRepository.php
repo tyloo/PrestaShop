@@ -77,10 +77,8 @@ class EntityRepository
     /**
      * Convert a camelCase field name to a snakeCase one
      * e.g.: findAllByIdCMS => id_cms.
-     *
-     * @param string $camel_case_field_name
      */
-    private function convertToDbFieldName($camel_case_field_name): string
+    private function convertToDbFieldName(string $camel_case_field_name): string
     {
         return strtolower((string) preg_replace('/([a-z])([A-Z])/', '$1_$2', $camel_case_field_name));
     }
@@ -175,13 +173,11 @@ class EntityRepository
     /**
      * Constructs and performs 'SELECT' in DB.
      *
-     * @param bool $one
-     *
      * @return array|mixed|null
      *
      * @throws Exception
      */
-    private function doFind($one, array $cumulativeConditions)
+    private function doFind(bool $one, array $cumulativeConditions)
     {
         $whereClause = $this->queryBuilder->buildWhereConditions('AND', $cumulativeConditions);
 
@@ -215,10 +211,8 @@ class EntityRepository
 
     /**
      * Find all entities in DB.
-     *
-     * @return array
      */
-    public function findAll()
+    public function findAll(): array
     {
         $sql = 'SELECT * FROM ' . $this->getTableNameWithPrefix();
 

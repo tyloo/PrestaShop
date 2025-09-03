@@ -100,7 +100,7 @@ class NumberExtractor
      *
      * @throws ReflectionException
      */
-    private function extractPublicPropertyFirst($resource, string $property): ?DecimalNumber
+    private function extractPublicPropertyFirst(object $resource, string $property): ?DecimalNumber
     {
         if (! property_exists($resource, $property)) {
             return null;

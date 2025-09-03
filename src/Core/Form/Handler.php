@@ -70,7 +70,7 @@ class Handler implements FormHandlerInterface
     /**
      * @throws Exception
      */
-    public function getForm()
+    public function getForm(): \Symfony\Component\Form\FormInterface
     {
         $formBuilder = $this->formFactory->createNamedBuilder($this->formName, $this->form);
 

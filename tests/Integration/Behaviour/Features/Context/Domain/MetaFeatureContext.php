@@ -142,10 +142,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getWithDefaultLanguage(array $data)
+    private function getWithDefaultLanguage(array $data): array
     {
         $defaultLanguageId = SharedStorage::getStorage()->get('default_language_id');
 

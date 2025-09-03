@@ -186,7 +186,7 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
         Assert::assertEquals([$expectedData['shopAssociation']], $result->getShopAssociation());
     }
 
-    private function formatCountryDataIfNeeded(array $data)
+    private function formatCountryDataIfNeeded(array $data): array
     {
         if (\array_key_exists('callPrefix', $data)) {
             $data['callPrefix'] = (int) $data['callPrefix'];

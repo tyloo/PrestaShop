@@ -79,7 +79,7 @@ class CartRowCollection implements Iterator, Countable
                );
     }
 
-    protected function getKey($iteratorPosition)
+    protected function getKey($iteratorPosition): int|string|null
     {
         $keys = array_keys($this->cartRows);
         if (! isset($keys[$iteratorPosition])) {

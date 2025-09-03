@@ -46,10 +46,8 @@ final class LanguageChoiceProvider implements FormChoiceProviderInterface
 
     /**
      * Get active language choices for form.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->languages,

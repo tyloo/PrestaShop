@@ -240,10 +240,8 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
 
     /**
      * Return PrestaShop Symfony services container
-     *
-     * @return ContainerInterface
      */
-    public static function getContainer()
+    public static function getContainer(): ContainerInterface
     {
         return static::$kernel->getContainer();
     }

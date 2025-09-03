@@ -185,12 +185,9 @@ class RequestFiltersBuilderTest extends TestCase
     }
 
     /**
-     * @param string $requestScope
-     * @param bool   $postQuery
-     *
      * @return MockObject|Request
      */
-    private function buildRequestMock(array $parameters, $requestScope = '', $postQuery = false): MockObject
+    private function buildRequestMock(array $parameters, string $requestScope = '', bool $postQuery = false): MockObject
     {
         $requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
@@ -198,7 +195,7 @@ class RequestFiltersBuilderTest extends TestCase
 
         $parametersBagMock = new InputBag();
 
-        if (! empty($requestScope)) {
+        if ($requestScope !== '' && $requestScope !== '0') {
             $parameters = [
                 $requestScope => $parameters,
             ];

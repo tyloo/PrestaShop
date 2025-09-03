@@ -102,11 +102,16 @@ class RepositoryTest extends TestCase
         $currencyRepository = $this->getMockBuilder(CurrencyRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        // Create a proper CurrencyCollection and add the currency to it
+        $currencyCollection = new Currency\CurrencyCollection();
+        $currencyCollection->add($currency);
+
         $currencyRepository->method('getAvailableCurrencies')
-            ->willReturn([$currency]);
+            ->willReturn($currencyCollection);
         $currencyRepository
             ->method('getAllInstalledCurrencies')
-            ->willReturn([$currency]);
+            ->willReturn($currencyCollection);
 
         /** @var CldrLocaleRepository $cldrLocaleRepository */
         /** @var CurrencyRepository $currencyRepository */

@@ -93,12 +93,9 @@ class AddCartRuleToOrderCommand
         return $this->orderInvoiceId;
     }
 
-    /**
-     * @param string $cartRuleName
-     */
-    private function assertCartRuleNameIsNotEmpty($cartRuleName): void
+    private function assertCartRuleNameIsNotEmpty(string $cartRuleName): void
     {
-        if (! \is_string($cartRuleName) || ($cartRuleName === '' || $cartRuleName === '0')) {
+        if ($cartRuleName === '' || $cartRuleName === '0') {
             throw new OrderConstraintException('Cart rule name cannot be empty');
         }
     }

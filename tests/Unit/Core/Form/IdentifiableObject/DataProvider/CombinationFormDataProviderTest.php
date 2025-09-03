@@ -436,7 +436,7 @@ class CombinationFormDataProviderTest extends TestCase
                 $this->isInstanceOf(GetCombinationSuppliers::class),
                 $this->isInstanceOf(GetCombinationStockMovements::class)
             ))
-            ->willReturnCallback(fn ($query) => $this->createResultBasedOnQuery($query, $combinationData))
+            ->willReturnCallback(fn ($query): CombinationForEditing|\PrestaShop\PrestaShop\Core\Domain\Product\Supplier\QueryResult\AssociatedSuppliers|array => $this->createResultBasedOnQuery($query, $combinationData))
         ;
 
         return $queryBusMock;
@@ -447,7 +447,7 @@ class CombinationFormDataProviderTest extends TestCase
      *
      * @return CombinationForEditing|AssociatedSuppliers|ProductSupplierForEditing[]|StockMovement[]
      */
-    private function createResultBasedOnQuery($query, array $combinationData)
+    private function createResultBasedOnQuery($query, array $combinationData): CombinationForEditing|AssociatedSuppliers|array
     {
         switch ($queryClass = $query::class) {
             case GetCombinationForEditing::class:

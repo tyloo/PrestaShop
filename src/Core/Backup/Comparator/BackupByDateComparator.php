@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Backup\BackupInterface;
  */
 final class BackupByDateComparator implements BackupComparatorInterface
 {
-    public function compare(BackupInterface $backup1, BackupInterface $backup2)
+    public function compare(BackupInterface $backup1, BackupInterface $backup2): int|float
     {
         return $backup2->getDate()->getTimestamp() - $backup1->getDate()->getTimestamp();
     }

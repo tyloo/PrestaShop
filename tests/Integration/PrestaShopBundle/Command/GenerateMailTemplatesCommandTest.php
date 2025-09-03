@@ -153,10 +153,7 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
         }
     }
 
-    /**
-     * @param string $theme
-     */
-    private function getThemeInfos($theme): array
+    private function getThemeInfos(string $theme): array
     {
         $themeInfos = [
             'coreLayouts' => [],

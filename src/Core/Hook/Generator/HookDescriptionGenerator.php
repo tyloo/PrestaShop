@@ -85,11 +85,10 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
      * Gets text with replaced hook id.
      *
      * @param string $description
-     * @param string $hookId
      *
      * @return string
      */
-    private function getTextWithHookId($description, $hookId)
+    private function getTextWithHookId($description, string $hookId)
     {
         if (! $this->doesHookDescriptionContainsPlaceholder($description)) {
             return $description;

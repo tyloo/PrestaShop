@@ -457,13 +457,9 @@ class LegacyUrlConverterTest extends TestCase
     }
 
     /**
-     * @param string       $routeName
-     * @param string       $routePath
-     * @param string|array $legacyLink
-     *
      * @return MockObject|RouterInterface
      */
-    private function buildRouterMock($routeName, $routePath, $legacyLink, ?array $legacyParameters = null, ?array $expectedParameters = null): MockObject
+    private function buildRouterMock(string $routeName, string $routePath, string|array $legacyLink, ?array $legacyParameters = null, ?array $expectedParameters = null): MockObject
     {
         $routeCollection = new RouteCollection();
 
@@ -528,7 +524,7 @@ class LegacyUrlConverterTest extends TestCase
         $mockRouter
             ->method('generate')
             ->will($this->returnCallback(
-                function ($routeName) use ($routeCollection) {
+                function ($routeName) use ($routeCollection): ?string {
                     $route = $routeCollection->get($routeName);
 
                     return $route instanceof Route ? $route->getPath() : null;

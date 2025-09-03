@@ -45,7 +45,7 @@ final class AttributeFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         $addAttributeCommand = new AddAttributeCommand(
             $data['attribute_group'],

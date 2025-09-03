@@ -45,7 +45,7 @@ final class ProfileFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         /** @var ProfileId $profileId */
         $profileId = $this->bus->handle(new AddProfileCommand($data['name']));

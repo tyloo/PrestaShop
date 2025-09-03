@@ -47,10 +47,8 @@ final class ColorBrightnessCalculator
 
     /**
      * @param string $hexColor
-     *
-     * @return float|int
      */
-    private function calculate($hexColor)
+    private function calculate($hexColor): float|int
     {
         if (strtolower($hexColor) === 'transparent') {
             return self::BRIGHT_COLOR_MIN;

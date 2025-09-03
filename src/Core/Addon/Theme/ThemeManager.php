@@ -511,7 +511,7 @@ class ThemeManager implements AddonManagerInterface
      * @param string                                               $locale
      * @param \PrestaShopBundle\Translation\Provider\ThemeProvider $themeProvider
      */
-    private function getDefaultDomains($locale, $themeProvider): array
+    private function getDefaultDomains($locale, ?object $themeProvider): array
     {
         $allDomains = [];
 
@@ -540,12 +540,11 @@ class ThemeManager implements AddonManagerInterface
     }
 
     /**
-     * @param array                         $allDomains
      * @param \PrestaShopBundle\Entity\Lang $lang
      * @param string                        $locale
      * @param string                        $themeName
      */
-    private function handleImport(TranslationService $translationService, MessageCatalogue $messageCatalog, $allDomains, $lang, $locale, $themeName): void
+    private function handleImport(TranslationService $translationService, MessageCatalogue $messageCatalog, array $allDomains, $lang, $locale, $themeName): void
     {
         foreach ($messageCatalog->all() as $domain => $messages) {
             $domain = str_replace('.' . $locale, '', $domain);

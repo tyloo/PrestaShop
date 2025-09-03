@@ -76,10 +76,9 @@ class Pagination
     }
 
     /**
-     * @param int    $page
-     * @param string $type
+     * @param int $page
      */
-    private function buildPageLink($page, $type = 'page'): array
+    private function buildPageLink($page, string $type = 'page'): array
     {
         $current = $page === $this->getPage();
 

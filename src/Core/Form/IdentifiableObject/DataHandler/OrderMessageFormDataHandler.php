@@ -42,7 +42,7 @@ final class OrderMessageFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         /** @var OrderMessageId $orderMessageId */
         $orderMessageId = $this->commandBus->handle(new AddOrderMessageCommand($data['name'], $data['message']));

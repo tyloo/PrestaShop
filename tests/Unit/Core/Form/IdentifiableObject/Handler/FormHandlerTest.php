@@ -91,7 +91,7 @@ class FormHandlerTest extends TestCase
         $invokedCount = $this->exactly(3);
         $this->formBuilderMock->expects($invokedCount)
             ->method('add')
-            ->willReturnCallback(function (string|self $child, ?string $type = null) use ($invokedCount) {
+            ->willReturnCallback(function (string|self $child, ?string $type = null) use ($invokedCount): \PHPUnit\Framework\MockObject\MockObject {
                 if ($invokedCount->numberOfInvocations() === 1) {
                     $this->assertEquals('a', $child);
                     $this->assertEquals('a', $type);

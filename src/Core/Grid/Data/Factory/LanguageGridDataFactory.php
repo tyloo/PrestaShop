@@ -58,10 +58,7 @@ final class LanguageGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return array
-     */
-    private function applyModification(array $languages)
+    private function applyModification(array $languages): array
     {
         foreach ($languages as $i => $language) {
             $languages[$i]['flag'] = $this->languageFlagThumbnailProvider->getPath($language['id_lang']);

@@ -53,11 +53,9 @@ class DeleteSqlRequestCommand
     }
 
     /**
-     * @param SqlRequestId $sqlRequestId
-     *
      * @return self
      */
-    private function setSqlRequestId($sqlRequestId)
+    private function setSqlRequestId(SqlRequestId $sqlRequestId)
     {
         $this->sqlRequestId = $sqlRequestId;
 

@@ -68,7 +68,7 @@ final class ManufacturerFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         $data['is_enabled'] = true;
 

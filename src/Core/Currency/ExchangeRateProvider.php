@@ -181,10 +181,7 @@ class ExchangeRateProvider
         return $xmlFeed;
     }
 
-    /**
-     * @param SimpleXMLElement $xmlFeed
-     */
-    private function parseXmlFeed($xmlFeed): void
+    private function parseXmlFeed(SimpleXMLElement $xmlFeed): void
     {
         $xmlCurrencies = $xmlFeed->list->currency;
 

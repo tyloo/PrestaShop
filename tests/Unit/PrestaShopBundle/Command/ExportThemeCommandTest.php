@@ -102,7 +102,7 @@ class ExportThemeCommandTest extends TestCase
                 $themeRepositoryMock,
                 $translatorMock,
                 $themeExporterMock
-            ) {
+            ): ThemeRepository|\Symfony\Component\Translation\Translator|\PrestaShop\PrestaShop\Core\Addon\Theme\ThemeExporter {
                 $services = [
                     'prestashop.core.addon.theme.repository' => $themeRepositoryMock,
                     'translator' => $translatorMock,

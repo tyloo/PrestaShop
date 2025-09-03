@@ -165,7 +165,7 @@ class CartPresenterTest extends TestCase
      *
      * @see https://jtreminio.com/2013/03/unit-testing-tutorial-part-3-testing-protected-private-methods-coverage-reports-and-crap/
      */
-    protected function invokeMethod(&$object, string $methodName, array $parameters = [])
+    protected function invokeMethod(&$object, string $methodName, array $parameters = []): mixed
     {
         $reflection = new ReflectionClass($object::class);
         $method = $reflection->getMethod($methodName);

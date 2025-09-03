@@ -40,7 +40,7 @@ final class B2bFeature implements FeatureInterface
     ) {
     }
 
-    public function isUsed()
+    public function isUsed(): bool
     {
         return $this->isActive();
     }

@@ -53,13 +53,11 @@ final class AttributeId
     /**
      * Validates that the value is integer and is greater than zero
      *
-     * @param int $value
-     *
      * @throws AttributeConstraintException
      */
-    private function assertIsIntegerGreaterThanZero($value): void
+    private function assertIsIntegerGreaterThanZero(int $value): void
     {
-        if (! \is_int($value) || $value <= 0) {
+        if ($value <= 0) {
             throw new AttributeConstraintException(\sprintf('Invalid attribute id "%s".', var_export($value, true)), AttributeConstraintException::INVALID_ID);
         }
     }

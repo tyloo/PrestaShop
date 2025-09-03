@@ -43,10 +43,8 @@ final class LanguageByIdChoiceProvider implements ConfigurableFormChoiceProvider
 
     /**
      * Get active language choices for form.
-     *
-     * @return array
      */
-    public function getChoices(array $options = [])
+    public function getChoices(array $options = []): array
     {
         $shopId = isset($options['shop_id']) && (int) $options['shop_id'] > 0 ? $options['shop_id'] : false;
 

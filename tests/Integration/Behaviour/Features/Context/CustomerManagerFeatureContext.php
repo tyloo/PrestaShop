@@ -351,7 +351,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
         }
     }
 
-    protected function formatCustomerDataIfNeeded(array $data)
+    protected function formatCustomerDataIfNeeded(array $data): array
     {
         if (\array_key_exists('defaultGroupId', $data)) {
             $data['defaultGroupId'] = $this->validateAndFormatCustomerGroupData($data['defaultGroupId']);
@@ -468,7 +468,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @return CommandBusInterface
      */
-    protected function getCommandBus()
+    protected function getCommandBus(): ?object
     {
         return CommonFeatureContext::getContainer()->get('prestashop.core.command_bus');
     }
@@ -476,7 +476,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @return CommandBusInterface
      */
-    protected function getQueryBus()
+    protected function getQueryBus(): ?object
     {
         return CommonFeatureContext::getContainer()->get('prestashop.core.query_bus');
     }

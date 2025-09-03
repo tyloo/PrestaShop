@@ -50,7 +50,7 @@ final class FormBuilder implements FormBuilderInterface
     ) {
     }
 
-    public function getForm(array $data = [], array $options = [])
+    public function getForm(array $data = [], array $options = []): FormInterface
     {
         // Fetch default data
         $defaultData = $this->dataProvider->getDefaultData();
@@ -79,7 +79,7 @@ final class FormBuilder implements FormBuilderInterface
         );
     }
 
-    public function getFormFor($id, array $data = [], array $options = [])
+    public function getFormFor($id, array $data = [], array $options = []): FormInterface
     {
         $data = array_merge($this->dataProvider->getData($id), $data);
 
@@ -106,13 +106,9 @@ final class FormBuilder implements FormBuilderInterface
     }
 
     /**
-     * @param string   $formType
-     * @param array    $data
      * @param int|null $id
-     *
-     * @return FormInterface
      */
-    private function buildForm($formType, $data, array $options = [], $id = null)
+    private function buildForm(string $formType, array $data, array $options = [], $id = null): FormInterface
     {
         $formBuilder = $this->formFactory->createBuilder($formType, $data, $options);
 

@@ -115,7 +115,7 @@ class AdminLinkBuilderTest extends TestCase
 
         $linkMock
             ->method('getAdminLink')
-            ->willReturnCallback(function ($controller, $withToken, $sfRouteParams, $params) {
+            ->willReturnCallback(function ($controller, $withToken, $sfRouteParams, $params): string {
                 $this->assertTrue($withToken);
 
                 return '?controller=' . $controller . '&' . http_build_query(array_merge($sfRouteParams, $params));

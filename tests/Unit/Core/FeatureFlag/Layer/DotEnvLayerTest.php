@@ -157,7 +157,7 @@ class DotEnvLayerTest extends TestCase
         @unlink(self::DOTENV_PATH);
     }
 
-    private function setEnv($status): void
+    private function setEnv(bool|string $status): void
     {
         $_ENV[self::VAR_FEATURE_FLAG_TEST] = $status;
         $_ENV['SYMFONY_DOTENV_VARS'] .= ',' . self::VAR_FEATURE_FLAG_TEST;

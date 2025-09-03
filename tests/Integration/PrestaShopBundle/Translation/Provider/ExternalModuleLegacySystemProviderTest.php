@@ -44,7 +44,7 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
 
     private readonly CatalogueVerifier $catalogueVerifier;
 
-    public function __construct($name = null)
+    public function __construct(?string $name = null)
     {
         parent::__construct($name);
 

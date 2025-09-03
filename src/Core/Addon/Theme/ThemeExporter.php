@@ -74,10 +74,7 @@ class ThemeExporter
         $this->fileSystem->mirror($themeDir, $cacheDir, $fileList);
     }
 
-    /**
-     * @param string $cacheDir
-     */
-    private function copyModuleDependencies(array $moduleList, $cacheDir): void
+    private function copyModuleDependencies(array $moduleList, string $cacheDir): void
     {
         if ($moduleList === []) {
             return;

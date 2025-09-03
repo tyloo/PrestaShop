@@ -50,7 +50,7 @@ class TaxRulesGroupFormDataHandler implements FormDataHandlerInterface
      *
      * @throws TaxRulesGroupConstraintException
      */
-    public function create(array $data)
+    public function create(array $data): int
     {
         $command = new AddTaxRulesGroupCommand(
             $data['name'],

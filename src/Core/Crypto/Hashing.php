@@ -112,7 +112,7 @@ class Hashing
                 'hash' => fn ($passwd, $staticSalt, $option): string =>
                     /* @phpstan-ignore-next-line */
                     password_hash((string) $passwd, \PASSWORD_BCRYPT),
-                'verify' => function ($passwd, $hash, $staticSalt) {
+                'verify' => function ($passwd, $hash, $staticSalt): bool {
                     /*
                      * Prevent enumeration because nothing happens
                      * when there is no, or an invalid hash.

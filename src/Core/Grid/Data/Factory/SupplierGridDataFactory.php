@@ -58,10 +58,7 @@ final class SupplierGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return array
-     */
-    private function applyModification(array $suppliers)
+    private function applyModification(array $suppliers): array
     {
         foreach ($suppliers as $i => $supplier) {
             $suppliers[$i]['logo'] = $this->supplierLogoImageProvider->getPath($supplier['id_supplier']);

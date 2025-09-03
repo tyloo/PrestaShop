@@ -50,12 +50,12 @@ final class FormHandler implements FormHandlerInterface
     ) {
     }
 
-    public function handle(FormInterface $form)
+    public function handle(FormInterface $form): FormHandlerResult
     {
         return $this->handleForm($form);
     }
 
-    public function handleFor($id, FormInterface $form)
+    public function handleFor($id, FormInterface $form): FormHandlerResult
     {
         return $this->handleForm($form, $id);
     }
@@ -65,7 +65,7 @@ final class FormHandler implements FormHandlerInterface
      *
      * @return FormHandlerResultInterface
      */
-    private function handleForm(FormInterface $form, $id = null)
+    private function handleForm(FormInterface $form, $id = null): FormHandlerResult
     {
         if (! $form->isSubmitted()) {
             return FormHandlerResult::createNotSubmitted();
@@ -97,7 +97,7 @@ final class FormHandler implements FormHandlerInterface
      *
      * @return FormHandlerResultInterface
      */
-    private function handleFormUpdate(FormInterface $form, $id)
+    private function handleFormUpdate(FormInterface $form, $id): FormHandlerResult
     {
         $data = $form->getData();
 
@@ -116,10 +116,7 @@ final class FormHandler implements FormHandlerInterface
         return FormHandlerResult::createWithId($newId ?? $id);
     }
 
-    /**
-     * @return FormHandlerResult
-     */
-    private function handleFormCreate(FormInterface $form)
+    private function handleFormCreate(FormInterface $form): FormHandlerResult
     {
         $data = $form->getData();
 

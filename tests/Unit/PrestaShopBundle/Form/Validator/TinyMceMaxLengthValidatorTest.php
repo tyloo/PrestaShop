@@ -51,7 +51,7 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
         );
     }
 
-    private function getConstraintInstance($max, ?string $message = null): TinyMceMaxLength
+    private function getConstraintInstance(stdClass|string|bool|int|null $max, ?string $message = null): TinyMceMaxLength
     {
         return new TinyMceMaxLength([
             'max' => $max,

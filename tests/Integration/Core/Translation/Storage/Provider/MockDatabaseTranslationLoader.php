@@ -41,8 +41,8 @@ class MockDatabaseTranslationLoader extends DatabaseTranslationLoader
      */
     public function __construct(
         private readonly array $databaseContent,
-        $languageRepository,
-        $translationRepository,
+        \PrestaShop\PrestaShop\Core\Language\LanguageRepositoryInterface $languageRepository,
+        \PrestaShop\PrestaShop\Core\Translation\TranslationRepositoryInterface $translationRepository,
     ) {
         parent::__construct($languageRepository, $translationRepository);
     }

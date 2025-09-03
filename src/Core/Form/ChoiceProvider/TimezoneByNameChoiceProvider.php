@@ -43,10 +43,8 @@ final class TimezoneByNameChoiceProvider implements FormChoiceProviderInterface
 
     /**
      * Get timezone choices.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->timezoneRepository->findAll(),

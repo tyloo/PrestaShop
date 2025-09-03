@@ -31,7 +31,7 @@ use DOMDocument;
 
 class PaymentOptionFormDecorator
 {
-    public function addHiddenSubmitButton($formHTML, $optionId)
+    public function addHiddenSubmitButton($formHTML, $optionId): false|string
     {
         $doc = new DOMDocument();
         $doc->encoding = 'UTF-8';

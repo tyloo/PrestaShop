@@ -55,7 +55,7 @@ final class DoctrineQueryParser implements QueryParserInterface
      *
      * @throws UnsupportedParameterException
      */
-    private function parseValue($value)
+    private function parseValue($value): string|float|int
     {
         if (\is_string($value)) {
             return $this->parseStringParameter($value);
@@ -80,20 +80,12 @@ final class DoctrineQueryParser implements QueryParserInterface
         throw new UnsupportedParameterException('Unsupported value type: ' . \gettype($value));
     }
 
-    /**
-     * @param string $value
-     */
-    private function parseStringParameter($value): string
+    private function parseStringParameter(string $value): string
     {
         return "'" . addslashes($value) . "'";
     }
 
-    /**
-     * @param int|float $value
-     *
-     * @return int|float
-     */
-    private function parseNumericParameter($value)
+    private function parseNumericParameter(float|int $value): float|int
     {
         return $value;
     }
@@ -103,10 +95,7 @@ final class DoctrineQueryParser implements QueryParserInterface
         return "'" . implode("', '", array_map('addslashes', $value)) . "'";
     }
 
-    /**
-     * @param bool $value
-     */
-    private function parseBooleanParameter($value): string
+    private function parseBooleanParameter(bool $value): string
     {
         return $value ? 'TRUE' : 'FALSE';
     }

@@ -66,11 +66,9 @@ class LanguageDefaultFontsCatalogTest extends TestCase
     }
 
     /**
-     * @param string $isoCode
-     *
      * @return MockObject|LanguageInterface
      */
-    private function buildLanguageMock($isoCode): MockObject
+    private function buildLanguageMock(string $isoCode): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()

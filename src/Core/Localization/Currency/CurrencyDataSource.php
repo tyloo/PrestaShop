@@ -66,12 +66,12 @@ class CurrencyDataSource implements DataSourceInterface
         return $this->installedDataLayer->isAvailable($currencyCode);
     }
 
-    public function getAvailableCurrenciesData($localeCode)
+    public function getAvailableCurrenciesData($localeCode): array
     {
         return $this->formatCurrenciesData($this->installedDataLayer->getAvailableCurrencyCodes(), $localeCode);
     }
 
-    public function getAllInstalledCurrenciesData($localeCode)
+    public function getAllInstalledCurrenciesData($localeCode): array
     {
         return $this->formatCurrenciesData($this->installedDataLayer->getAllInstalledCurrencyIsoCodes(), $localeCode);
     }

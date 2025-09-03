@@ -308,7 +308,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isOptFloatDataProvider()
+    public function isOptFloatDataProvider(): array
     {
         return array_merge(
             $this->trueFloatDataProvider(),
@@ -320,7 +320,7 @@ class ValidateCoreTest extends TestCase
         );
     }
 
-    public function isUnsignedFloatDataProvider()
+    public function isUnsignedFloatDataProvider(): array
     {
         return array_merge(
             $this->trueFloatDataProvider(),
@@ -345,7 +345,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isFloatDataProvider()
+    public function isFloatDataProvider(): array
     {
         return array_merge(
             $this->trueFloatDataProvider(),

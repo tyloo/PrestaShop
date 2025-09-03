@@ -44,7 +44,7 @@ final class AttachmentFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         $command = $this->createAddAttachmentCommand($data);
 

@@ -42,7 +42,7 @@ final class FeatureFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         /** @var FeatureId $featureId */
         $featureId = $this->commandBus->handle(new AddFeatureCommand(

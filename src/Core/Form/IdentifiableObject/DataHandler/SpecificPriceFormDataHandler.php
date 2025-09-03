@@ -111,10 +111,9 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
     }
 
     /**
-     * @param AddSpecificPriceCommand|EditSpecificPriceCommand $command
-     * @param array<string, mixed>                             $data
+     * @param array<string, mixed> $data
      */
-    private function fillRelations($command, array $data): void
+    private function fillRelations(AddSpecificPriceCommand|EditSpecificPriceCommand $command, array $data): void
     {
         if (isset($data['groups']['currency_id'])) {
             $command->setCurrencyId((int) $data['groups']['currency_id']);

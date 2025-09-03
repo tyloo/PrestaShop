@@ -833,7 +833,7 @@ class ProductLazyArrayTest extends TestCase
 
         $this->mockConfiguration
             ->method('getBoolean')
-            ->willReturnCallback(function (string $key) use ($configOrderOutOfStock) {
+            ->willReturnCallback(function (string $key) use ($configOrderOutOfStock): bool {
                 if ($key === 'PS_ORDER_OUT_OF_STOCK') {
                     return $configOrderOutOfStock;
                 }

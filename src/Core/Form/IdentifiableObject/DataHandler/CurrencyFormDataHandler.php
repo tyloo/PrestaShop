@@ -46,7 +46,7 @@ final class CurrencyFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         if ($data['unofficial']) {
             $command = new AddUnofficialCurrencyCommand(

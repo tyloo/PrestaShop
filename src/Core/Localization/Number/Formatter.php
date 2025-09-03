@@ -331,7 +331,7 @@ class Formatter
      *
      * @return string
      */
-    protected function addPlaceholders($formattedNumber, $pattern)
+    protected function addPlaceholders($formattedNumber, $pattern): string|array|null
     {
         /*
          * Regex groups explanation:

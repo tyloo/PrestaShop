@@ -259,10 +259,8 @@ class Reader implements ReaderInterface
      * XML data will be mapped in a LocaleData object.
      *
      * @param string $localeTag The wanted locale. Can be either a language code (e.g.: fr) of an IETF tag (e.g.: en-US)
-     *
-     * @return LocaleData
      */
-    protected function getLocaleData($localeTag)
+    protected function getLocaleData($localeTag): LocaleData
     {
         $xmlData = $this->getMainXmlData($localeTag);
 

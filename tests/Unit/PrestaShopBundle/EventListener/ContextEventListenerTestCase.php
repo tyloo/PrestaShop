@@ -98,7 +98,7 @@ abstract class ContextEventListenerTestCase extends KernelTestCase
         $shopRepository = $this->createMock(ShopRepository::class);
         $shopRepository
             ->method('get')
-            ->with(self::callback(function ($shopId) use ($expectedShopId) {
+            ->with(self::callback(function ($shopId) use ($expectedShopId): bool {
                 self::assertInstanceOf(ShopId::class, $shopId);
                 self::assertEquals($expectedShopId, $shopId->getValue());
 

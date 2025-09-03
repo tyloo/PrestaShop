@@ -53,16 +53,14 @@ final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface,
 
     /**
      * Get order state choices.
-     *
-     * @return array
      */
-    public function getChoices(array $options = [])
+    public function getChoices(array $options = []): array
     {
         $orderStates = $this->orderStateDataProvider->getOrderStates($this->langId);
 
         // Filters on non-deleted order state
         // or deleted & active order state
-        $orderStates = array_filter($orderStates, function (array $item) use ($options) {
+        $orderStates = array_filter($orderStates, function (array $item) use ($options): bool {
             if ($item['deleted'] === 1 && (! empty($options['current_state']) && $options['current_state'] !== $item['id_order_state'])) {
                 return false;
             }

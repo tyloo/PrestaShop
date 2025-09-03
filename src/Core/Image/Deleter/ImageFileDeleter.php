@@ -92,11 +92,10 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
     /**
      * Delete images by given regex pattern from given path.
      *
-     * @param string $pattern  regex pattern
-     * @param string $path     file directory path
-     * @param string $filename
+     * @param string $pattern regex pattern
+     * @param string $path    file directory path
      */
-    private function deleteByPattern($pattern, $path, $filename): void
+    private function deleteByPattern(string $pattern, $path, string $filename): void
     {
         if (preg_match($pattern, $filename)) {
             unlink($path . $filename);

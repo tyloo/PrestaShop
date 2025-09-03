@@ -40,12 +40,9 @@ final class RequestSqlQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     private readonly string $requestSqlTable;
 
-    /**
-     * @param string $dbPrefix
-     */
     public function __construct(
         Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
     ) {
         parent::__construct($connection, $dbPrefix);
 

@@ -167,12 +167,9 @@ class TypedRegexValidator extends ConstraintValidator
     /**
      * Responsible for sanitizing the string depending on type. (eg. applying  stripslashes())
      *
-     * @param string $value
      * @param string $type
-     *
-     * @return string
      */
-    private function sanitize($value, $type)
+    private function sanitize(string $value, $type): string
     {
         if ($type === TypedRegex::TYPE_NAME) {
             $value = stripslashes($value);
@@ -187,13 +184,9 @@ class TypedRegexValidator extends ConstraintValidator
      * matches given subject, 0 if it does not, or FALSE
      * if an error occurred.
      *
-     * @param string $pattern
      * @param string $type
-     * @param string $value
-     *
-     * @return bool|int
      */
-    private function match($pattern, $type, $value)
+    private function match(string $pattern, $type, string $value): bool|int
     {
         $match = preg_match($pattern, $value);
 

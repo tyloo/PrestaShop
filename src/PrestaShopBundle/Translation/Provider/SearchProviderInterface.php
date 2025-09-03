@@ -37,8 +37,6 @@ interface SearchProviderInterface extends ProviderInterface, UseDefaultCatalogue
     public function setDomain($domain);
 
     /**
-     * @param string $locale
-     *
      * @return self
      */
     public function setLocale(string $locale);

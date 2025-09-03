@@ -217,13 +217,9 @@ class MailTemplateTwigRendererTest extends TestCase
     }
 
     /**
-     * @param string $initialTemplate
-     * @param array  $expectedVariables
-     * @param string $templateType
-     *
      * @return MockObject|TransformationInterface
      */
-    private function createTransformationMock($initialTemplate, $expectedVariables, $templateType): MockObject
+    private function createTransformationMock(string $initialTemplate, array $expectedVariables, string $templateType): MockObject
     {
         $transformationMock = $this->getMockBuilder(TransformationInterface::class)
             ->disableOriginalConstructor()
@@ -256,12 +252,9 @@ class MailTemplateTwigRendererTest extends TestCase
     }
 
     /**
-     * @param string $expectedPath
-     * @param string $generatedTemplate
-     *
      * @return MockObject|Environment
      */
-    private function createEngineMock($expectedPath, array $expectedVariables, $generatedTemplate): MockObject
+    private function createEngineMock(string $expectedPath, array $expectedVariables, string $generatedTemplate): MockObject
     {
         $engineMock = $this->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
@@ -282,12 +275,9 @@ class MailTemplateTwigRendererTest extends TestCase
     }
 
     /**
-     * @param string $templateType
-     * @param int    $transformationsCount
-     *
      * @return MockObject|HookDispatcherInterface
      */
-    private function createHookDispatcherMock(LayoutInterface $mailLayout, $templateType, $transformationsCount = 0): MockObject
+    private function createHookDispatcherMock(MockObject $mailLayout, string $templateType, int $transformationsCount = 0): MockObject
     {
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
             ->disableOriginalConstructor()
@@ -299,7 +289,7 @@ class MailTemplateTwigRendererTest extends TestCase
             ->method('dispatchWithParameters')
             ->with(
                 $this->equalTo(MailTemplateRendererInterface::GET_MAIL_LAYOUT_TRANSFORMATIONS),
-                $this->callback(function (array $hookParameters) use ($mailLayout, $templateType, $transformationsCount) {
+                $this->callback(function (array $hookParameters) use ($mailLayout, $templateType, $transformationsCount): bool {
                     $this->assertEquals($mailLayout, $hookParameters['mailLayout']);
                     $this->assertEquals($templateType, $hookParameters['templateType']);
                     $this->assertInstanceOf(TransformationCollectionInterface::class, $hookParameters['layoutTransformations']);
@@ -316,7 +306,7 @@ class MailTemplateTwigRendererTest extends TestCase
     /**
      * @return MockObject|LayoutVariablesBuilderInterface
      */
-    private function createVariablesBuilderMock(array $variables, LanguageInterface $expectedLanguage): MockObject
+    private function createVariablesBuilderMock(array $variables, MockObject $expectedLanguage): MockObject
     {
         $builderMock = $this->getMockBuilder(LayoutVariablesBuilderInterface::class)
             ->disableOriginalConstructor()

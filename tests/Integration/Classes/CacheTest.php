@@ -256,7 +256,7 @@ class CacheTest extends TestCase
         $this->assertArrayNotHasKey($otherTableMapKey, $this->cacheArray);
     }
 
-    private function checkTableCacheMapCounter($query, $counter): void
+    private function checkTableCacheMapCounter($query, int $counter): void
     {
         $queryHash = Cache::getInstance()->getQueryHash($query);
         $tableLists = Cache::getInstance()->getTables($query);

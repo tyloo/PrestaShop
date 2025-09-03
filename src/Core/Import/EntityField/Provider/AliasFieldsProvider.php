@@ -59,7 +59,7 @@ final class AliasFieldsProvider implements EntityFieldsProviderInterface
      * @param string $id     translation ID
      * @param string $domain translation domain
      */
-    private function trans($id, $domain = 'Admin.Advparameters.Feature'): string
+    private function trans(string $id, string $domain = 'Admin.Advparameters.Feature'): string
     {
         return $this->translator->trans($id, [], $domain);
     }

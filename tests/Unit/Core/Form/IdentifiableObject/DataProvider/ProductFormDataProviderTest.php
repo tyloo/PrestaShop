@@ -1392,7 +1392,7 @@ class ProductFormDataProviderTest extends TestCase
         $queryBusMock
             ->method('handle')
             ->with($this->getHandledQueries())
-            ->willReturnCallback(function ($query) use ($expectedShopId) {
+            ->willReturnCallback(function ($query) use ($expectedShopId): ProductForEditing|\PrestaShop\PrestaShop\Core\Domain\Product\Supplier\QueryResult\ProductSupplierOptions|array {
                 if ($query instanceof GetProductForEditing) {
                     $this->assertEquals($expectedShopId, $query->getShopConstraint()->getShopId()->getValue());
                 }
@@ -1411,7 +1411,7 @@ class ProductFormDataProviderTest extends TestCase
         $queryBusMock
             ->method('handle')
             ->with($this->getHandledQueries())
-            ->willReturnCallback(fn ($query) => $this->createResultBasedOnQuery($query, $productData))
+            ->willReturnCallback(fn ($query): ProductForEditing|\PrestaShop\PrestaShop\Core\Domain\Product\Supplier\QueryResult\ProductSupplierOptions|array => $this->createResultBasedOnQuery($query, $productData))
         ;
 
         return $queryBusMock;
@@ -1433,7 +1433,7 @@ class ProductFormDataProviderTest extends TestCase
     /**
      * @return ProductForEditing|ProductSupplierOptions|ProductFeatureValue[]|CustomizationField[]|StockMovement[]|RelatedProduct[]|PackedProductDetails[]
      */
-    private function createResultBasedOnQuery($query, array $productData)
+    private function createResultBasedOnQuery($query, array $productData): ProductForEditing|ProductSupplierOptions|array
     {
         switch ($queryClass = $query::class) {
             case GetProductForEditing::class:

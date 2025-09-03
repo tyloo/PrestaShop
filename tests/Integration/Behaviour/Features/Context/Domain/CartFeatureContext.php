@@ -395,7 +395,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $customerId = SharedStorage::getStorage()->get($customerReference);
         $customer = new Customer($customerId);
 
-        $getAddressByCountryIsoCode = static function ($isoCode) use ($customer) {
+        $getAddressByCountryIsoCode = static function ($isoCode) use ($customer): int {
             $customerAddresses = $customer->getAddresses((int) Configuration::get('PS_LANG_DEFAULT'));
 
             foreach ($customerAddresses as $address) {
@@ -432,7 +432,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $customerId = SharedStorage::getStorage()->get($customerReference);
         $customer = new Customer($customerId);
 
-        $getAddressByCountryIsoCode = static function ($isoCode) use ($customer, $stateName) {
+        $getAddressByCountryIsoCode = static function ($isoCode) use ($customer, $stateName): int {
             $customerAddresses = $customer->getAddresses((int) Configuration::get('PS_LANG_DEFAULT'));
 
             foreach ($customerAddresses as $address) {
@@ -938,10 +938,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         return $cartRule;
     }
 
-    /**
-     * @return int
-     */
-    private function getProductIdByName(string $productName)
+    private function getProductIdByName(string $productName): int
     {
         $products = $this->getQueryBus()->handle(
             new SearchProducts(

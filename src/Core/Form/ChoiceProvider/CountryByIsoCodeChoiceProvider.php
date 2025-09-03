@@ -47,10 +47,8 @@ final class CountryByIsoCodeChoiceProvider implements FormChoiceProviderInterfac
 
     /**
      * Get country choices.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->countryDataProvider->getCountries($this->langId),

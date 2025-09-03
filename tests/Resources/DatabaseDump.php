@@ -258,11 +258,9 @@ class DatabaseDump
     /**
      * Like exec, but will raise an exception if the command failed.
      *
-     * @param string $command
-     *
      * @throws Exception
      */
-    private function exec($command): array
+    private function exec(string $command): array
     {
         $output = [];
         $ret = 1;

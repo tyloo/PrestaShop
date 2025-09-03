@@ -38,10 +38,8 @@ class CMSRepository extends EntityRepository
      *
      * @param int $id_lang
      * @param int $id_shop
-     *
-     * @return array|null
      */
-    public function i10nFindAll($id_lang, $id_shop)
+    public function i10nFindAll($id_lang, $id_shop): array
     {
         $sql = '
 			SELECT *

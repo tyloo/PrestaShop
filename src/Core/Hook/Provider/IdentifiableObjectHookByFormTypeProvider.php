@@ -64,7 +64,7 @@ final class IdentifiableObjectHookByFormTypeProvider implements HookByFormTypePr
     ) {
     }
 
-    public function getHookNames(array $formTypes)
+    public function getHookNames(array $formTypes): array
     {
         $formNames = $this->getFormNames($formTypes);
         $formBuilderHookNames = [];
@@ -153,11 +153,9 @@ final class IdentifiableObjectHookByFormTypeProvider implements HookByFormTypePr
     /**
      * Formats hook names.
      *
-     * @param string $hookStartsWith
      * @param string $hookId
-     * @param string $hookEndsWidth
      */
-    private function formatHookName($hookStartsWith, $hookId, $hookEndsWidth): string
+    private function formatHookName(string $hookStartsWith, $hookId, string $hookEndsWidth): string
     {
         return $hookStartsWith . Container::camelize($hookId) . $hookEndsWidth;
     }

@@ -66,7 +66,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
      * @throws DomainConstraintException
      * @throws CurrencyException
      */
-    public function create(array $data)
+    public function create(array $data): int
     {
         // For the moment the names are not sent by the form so we continue to generate it as we did later in the method.
         $discountType = $data['information']['discount_type'];

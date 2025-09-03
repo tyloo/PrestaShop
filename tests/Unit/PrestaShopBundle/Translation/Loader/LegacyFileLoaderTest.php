@@ -98,7 +98,7 @@ class LegacyFileLoaderTest extends TestCase
     /**
      * @param array[] $expected
      */
-    private function verifyCatalogue(MessageCatalogue $messageCatalogue, $expected): void
+    private function verifyCatalogue(MessageCatalogue $messageCatalogue, array $expected): void
     {
         $domains = $messageCatalogue->getDomains();
 

@@ -89,7 +89,7 @@ class Container
         return $className;
     }
 
-    private function makeInstanceFromClassName($className, array $alreadySeen): object
+    private function makeInstanceFromClassName(string $className, array $alreadySeen): object
     {
         $className = $this->resolveClassName($className);
 

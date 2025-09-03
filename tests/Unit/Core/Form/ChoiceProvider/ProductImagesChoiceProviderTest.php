@@ -62,7 +62,7 @@ class ProductImagesChoiceProviderTest extends TestCase
         $queryBus
             ->expects($this->once())
             ->method('handle')
-            ->with($this->callback(function (GetProductImages $query) use ($productId, $expectedShopConstraint) {
+            ->with($this->callback(function (GetProductImages $query) use ($productId, $expectedShopConstraint): bool {
                 $this->assertEquals($productId, $query->getProductId()->getValue());
                 $this->assertEquals($expectedShopConstraint, $query->getShopConstraint());
 

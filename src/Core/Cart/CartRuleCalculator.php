@@ -364,7 +364,7 @@ class CartRuleCalculator
      *
      * @return float tax rate of the given row
      */
-    protected function getTaxRateFromRow($row)
+    protected function getTaxRateFromRow($row): float|int
     {
         // If the product was free, we return zero
         if (empty($row->getFinalTotalPrice()->getTaxExcluded())) {
@@ -395,7 +395,7 @@ class CartRuleCalculator
         return $this;
     }
 
-    protected function convertAmountBetweenCurrencies($amount, Currency $currencyFrom, Currency $currencyTo)
+    protected function convertAmountBetweenCurrencies($amount, Currency $currencyFrom, Currency $currencyTo): int|float
     {
         if ($amount === 0 || $currencyFrom->conversion_rate === 0) {
             return 0;

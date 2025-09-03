@@ -365,10 +365,8 @@ class StockManager
      * @param int   $productAttributeId
      * @param int   $deltaQuantity
      * @param array $params
-     *
-     * @return bool|StockMvt
      */
-    private function prepareMovement($productId, $productAttributeId, $deltaQuantity, $params = [])
+    private function prepareMovement($productId, $productAttributeId, $deltaQuantity, $params = []): StockMvt|false
     {
         $product = new Product($productId);
 

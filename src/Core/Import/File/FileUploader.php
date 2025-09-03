@@ -83,7 +83,7 @@ final class FileUploader
      *
      * @return string|false Returns error string on error or FALSE otherwise
      */
-    private function validateUploadedFile(UploadedFile $uploadedFile)
+    private function validateUploadedFile(UploadedFile $uploadedFile): string|false
     {
         $error = false;
 

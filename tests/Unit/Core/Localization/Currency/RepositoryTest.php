@@ -50,7 +50,7 @@ class RepositoryTest extends TestCase
         $dataSource
             ->method('getLocalizedCurrencyData')
             ->willReturnCallback(
-                function ($localizedCurrencyId) {
+                function ($localizedCurrencyId): CurrencyData {
                     $data = new CurrencyData();
 
                     switch ($localizedCurrencyId->getCurrencyCode()) {

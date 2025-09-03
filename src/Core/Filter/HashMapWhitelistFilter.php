@@ -159,7 +159,7 @@ class HashMapWhitelistFilter implements FilterInterface
      *
      * @throws RuntimeException
      */
-    public function filter($subject)
+    public function filter($subject): AbstractLazyArray|array
     {
         // keep whitelisted items
         if ($subject instanceof AbstractLazyArray) {

@@ -112,10 +112,7 @@ final class GridDefinition implements GridDefinitionInterface
         $this->name = $name;
     }
 
-    /**
-     * @param ColumnCollectionInterface $columns
-     */
-    public function setColumns($columns): void
+    public function setColumns(ColumnCollectionInterface $columns): void
     {
         $this->columns = $columns;
     }

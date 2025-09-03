@@ -45,7 +45,7 @@ final class GroupByIdChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->groupDataProvider->getGroups($this->langId),

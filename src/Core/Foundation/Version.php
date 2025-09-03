@@ -220,11 +220,9 @@ class Version implements Stringable
      *
      * @param string $version Must be a valid version string, for example "1.7.4.0"
      *
-     * @return bool
-     *
      * @throws InvalidVersionException If the provided version is invalid
      */
-    public function isGreaterThan($version)
+    public function isGreaterThan($version): bool
     {
         return $this->versionCompare($version, '>');
     }
@@ -234,11 +232,9 @@ class Version implements Stringable
      *
      * @param string $version Must be a valid version string, for example "1.7.4.0"
      *
-     * @return bool
-     *
      * @throws InvalidVersionException If the provided version is invalid
      */
-    public function isGreaterThanOrEqualTo($version)
+    public function isGreaterThanOrEqualTo($version): bool
     {
         return $this->versionCompare($version, '>=');
     }
@@ -248,11 +244,9 @@ class Version implements Stringable
      *
      * @param string $version Must be a valid version string, for example "1.7.4.0"
      *
-     * @return bool
-     *
      * @throws InvalidVersionException If the provided version is invalid
      */
-    public function isLessThan($version)
+    public function isLessThan($version): bool
     {
         return $this->versionCompare($version, '<');
     }
@@ -262,11 +256,9 @@ class Version implements Stringable
      *
      * @param string $version Must be a valid version string, for example "1.7.4.0"
      *
-     * @return bool
-     *
      * @throws InvalidVersionException If the provided version is invalid
      */
-    public function isLessThanOrEqualTo($version)
+    public function isLessThanOrEqualTo($version): bool
     {
         return $this->versionCompare($version, '<=');
     }
@@ -276,11 +268,9 @@ class Version implements Stringable
      *
      * @param string $version Must be a valid version string, for example "1.7.4.0"
      *
-     * @return bool
-     *
      * @throws InvalidVersionException If the provided version is invalid
      */
-    public function isEqualTo($version)
+    public function isEqualTo($version): bool
     {
         return $this->versionCompare($version, '=');
     }
@@ -290,11 +280,9 @@ class Version implements Stringable
      *
      * @param string $version Must be a valid version string, for example "1.7.4.0"
      *
-     * @return bool
-     *
      * @throws InvalidVersionException If the provided version is invalid
      */
-    public function isNotEqualTo($version)
+    public function isNotEqualTo($version): bool
     {
         return $this->versionCompare($version, '!=');
     }
@@ -319,7 +307,7 @@ class Version implements Stringable
      *
      * @throws InvalidVersionException if the provided version is invalid
      */
-    private function versionCompare($version, $operator): bool
+    private function versionCompare($version, string $operator): bool
     {
         $otherVersion = self::buildFromString($version);
 

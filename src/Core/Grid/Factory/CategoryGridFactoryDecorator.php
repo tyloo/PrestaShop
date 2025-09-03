@@ -84,12 +84,10 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
     /**
      * Position can only be changed when grid is
      * ordered by "position" in "asc" way.
-     *
-     * @param GridInterface $categoryGrid
      */
     private function removePositionDragColumnIfEligible(
         SearchCriteriaInterface $searchCriteria,
-        $categoryGrid,
+        GridInterface $categoryGrid,
     ): void {
         if ($searchCriteria->getOrderBy() !== 'position'
             || $searchCriteria->getOrderWay() !== 'asc') {
@@ -99,10 +97,7 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
         }
     }
 
-    /**
-     * @param GridInterface $categoryGrid
-     */
-    private function injectCategoryIdIntoSearchTypeOptions($categoryGrid, array $filters): void
+    private function injectCategoryIdIntoSearchTypeOptions(GridInterface $categoryGrid, array $filters): void
     {
         /** @var FilterCollection $filtersCollection */
         $filtersCollection = $categoryGrid->getDefinition()->getFilters();

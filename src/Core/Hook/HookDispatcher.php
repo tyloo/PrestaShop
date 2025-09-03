@@ -68,7 +68,7 @@ final class HookDispatcher implements HookDispatcherInterface
         return new RenderedHook($hook, $content);
     }
 
-    public function dispatchRenderingWithParameters($hookName, array $hookParameters = [])
+    public function dispatchRenderingWithParameters($hookName, array $hookParameters = []): RenderedHook
     {
         return $this->dispatchRendering(new Hook($hookName, $hookParameters));
     }
@@ -98,7 +98,7 @@ final class HookDispatcher implements HookDispatcherInterface
         $this->hookDispatcherAdapter->removeSubscriber($subscriber);
     }
 
-    public function getListeners($eventName = null)
+    public function getListeners($eventName = null): array
     {
         return $this->hookDispatcherAdapter->getListeners($eventName);
     }
@@ -108,7 +108,7 @@ final class HookDispatcher implements HookDispatcherInterface
         return $this->hookDispatcherAdapter->getListenerPriority($eventName, $listener);
     }
 
-    public function hasListeners($eventName = null)
+    public function hasListeners($eventName = null): bool
     {
         return $this->hookDispatcherAdapter->hasListeners($eventName);
     }

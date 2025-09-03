@@ -50,7 +50,7 @@ class CarrierFormDataProviderTest extends TestCase
         $invokedCount = $this->exactly(2);
         $queryBus->expects($invokedCount)
             ->method('handle')
-            ->willReturnCallback(function ($query) use ($invokedCount) {
+            ->willReturnCallback(function ($query) use ($invokedCount): EditableCarrier|\PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult\CarrierRangesCollection|null {
                 if ($invokedCount->numberOfInvocations() === 1) {
                     $this->assertInstanceOf(GetCarrierForEditing::class, $query);
 

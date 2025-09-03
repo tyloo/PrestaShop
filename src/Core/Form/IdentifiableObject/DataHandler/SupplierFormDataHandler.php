@@ -45,7 +45,7 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         if (! isset($data['shop_association']) || ! $data['shop_association']) {
             $data['shop_association'] = [];

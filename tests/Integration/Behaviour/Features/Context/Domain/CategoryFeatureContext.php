@@ -342,8 +342,6 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @param EditCategoryCommand|EditRootCategoryCommand $command
-     *
      * @see EditCategoryCommand
      * @see EditRootCategoryCommand
      *
@@ -353,7 +351,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
      * If in future these commands evolves differently (which probably won't happen),
      * then don't hesitate to extract this method into 2 dedicated ones.
      */
-    private function fillEditCommandWithData($command, TableNode $tableNode): void
+    private function fillEditCommandWithData(EditCategoryCommand|EditRootCategoryCommand $command, TableNode $tableNode): void
     {
         $supportedCommands = [EditCategoryCommand::class, EditRootCategoryCommand::class];
 

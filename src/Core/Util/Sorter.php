@@ -40,7 +40,7 @@ class Sorter
      */
     public function natural(array $array, string $order, string ...$criterias): array
     {
-        usort($array, function ($a, $b) use ($order, $criterias) {
+        usort($array, function (array $a, array $b) use ($order, $criterias): int {
             $cmp = 0;
             foreach ($criterias as $criteria) {
                 if (! isset($a[$criteria]) || ! isset($b[$criteria])) {

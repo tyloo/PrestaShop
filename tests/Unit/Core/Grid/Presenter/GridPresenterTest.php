@@ -133,7 +133,7 @@ class GridPresenterTest extends TestCase
         return $grid;
     }
 
-    private function createColumnMock($id): \PHPUnit\Framework\MockObject\MockObject
+    private function createColumnMock(string $id): \PHPUnit\Framework\MockObject\MockObject
     {
         $column = $this->createMock(ColumnInterface::class);
         $column->method('getId')

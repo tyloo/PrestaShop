@@ -102,11 +102,9 @@ class EditLanguageCommand
     }
 
     /**
-     * @param LanguageId $languageId
-     *
      * @return self
      */
-    public function setLanguageId($languageId)
+    public function setLanguageId(LanguageId $languageId)
     {
         $this->languageId = $languageId;
 

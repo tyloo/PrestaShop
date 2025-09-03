@@ -180,10 +180,9 @@ class HookRepository
         return $this;
     }
 
-    private function setModuleHookExceptions($id_module, $id_hook, array $pages)
+    private function setModuleHookExceptions(int $id_module, $id_hook, array $pages)
     {
         $id_shop = (int) $this->shop->id;
-        $id_module = (int) $id_module;
         $id_hook = (int) $id_hook;
 
         $this->db->execute("DELETE FROM {$this->db_prefix}hook_module_exceptions
@@ -218,7 +217,7 @@ class HookRepository
             ORDER BY file_name ASC
         ");
 
-        return array_map(fn ($row) => $row['file_name'], $rows);
+        return array_map(fn (array $row) => $row['file_name'], $rows);
     }
 
     /**
