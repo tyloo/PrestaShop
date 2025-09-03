@@ -40,7 +40,7 @@ final class ThemeProvider implements ThemeProviderInterface
         return $this->theme;
     }
 
-    public function getNotUsedThemes()
+    public function getNotUsedThemes(): array
     {
         return $this->themeRepository->getListExcluding([
             $this->getCurrentlyUsedTheme()->getName(),
