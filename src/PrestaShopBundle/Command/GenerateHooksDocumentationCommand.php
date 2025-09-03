@@ -137,9 +137,9 @@ final class GenerateHooksDocumentationCommand extends Command
 
             $content = <<<EOT
         ---
-        Title: $title
+        Title: {$title}
         hidden: true
-        hookTitle: $hookTitle
+        hookTitle: {$hookTitle}
         files:
         EOT;
 
@@ -156,14 +156,14 @@ final class GenerateHooksDocumentationCommand extends Command
 
             $content .= <<<EOT
 
-        locations:$locationsYaml
-        type: $type
-        hookAliases: $hookAliases
-        array_return: $arrayReturn
-        check_exceptions: $checkExceptions
-        chain: $chain
-        origin: $origin
-        description: $hookDescription
+        locations:{$locationsYaml}
+        type: {$type}
+        hookAliases: {$hookAliases}
+        array_return: {$arrayReturn}
+        check_exceptions: {$checkExceptions}
+        chain: {$chain}
+        origin: {$origin}
+        description: {$hookDescription}
 
         ---
 
@@ -177,7 +177,7 @@ final class GenerateHooksDocumentationCommand extends Command
         ## Call of the Hook in the origin file
 
         ```php
-        $fullImplementation;
+        {$fullImplementation};
         ```
 
         EOT;
