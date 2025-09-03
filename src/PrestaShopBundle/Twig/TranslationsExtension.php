@@ -518,7 +518,7 @@ class TranslationsExtension extends AbstractExtension
 
             if (! $isLastChild) {
                 $openingTag = '<h2>' . $openingTag;
-                $closingTag = $closingTag . '</h2>';
+                $closingTag .= '</h2>';
             }
         }
 

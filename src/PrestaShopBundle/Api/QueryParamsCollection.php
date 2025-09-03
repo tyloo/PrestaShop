@@ -145,7 +145,7 @@ abstract class QueryParamsCollection
             $orderFiltered = '{' . $filterColumn . '}';
 
             if ($descendingOrder) {
-                $orderFiltered = $orderFiltered . ' DESC';
+                $orderFiltered .= ' DESC';
             }
 
             $implodableOrder[] = $orderFiltered;
