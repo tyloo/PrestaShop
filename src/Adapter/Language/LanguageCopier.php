@@ -193,9 +193,8 @@ final class LanguageCopier implements LanguageCopierInterface
      *
      * @param string $source
      * @param string $destination
-     * @param string $language
      */
-    private function isModuleContext($source, $destination, $language): bool
+    private function isModuleContext($source, $destination, string $language): bool
     {
         // Legacy condition
         return str_contains($destination, 'modules') && basename($source) === $language . '.php';

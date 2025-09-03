@@ -100,9 +100,8 @@ abstract class AbstractLanguageHandler extends AbstractObjectModelHandler
     /**
      * @param int    $languageId
      * @param string $newImagePath
-     * @param string $imageDir
      */
-    protected function uploadImage($languageId, $newImagePath, $imageDir)
+    protected function uploadImage($languageId, $newImagePath, string $imageDir)
     {
         $temporaryImage = tempnam(_PS_TMP_IMG_DIR_, 'PS');
         if (! $temporaryImage) {

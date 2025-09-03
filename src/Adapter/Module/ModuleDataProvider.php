@@ -239,7 +239,7 @@ class ModuleDataProvider
      *
      * @return bool true if valid
      */
-    public function isModuleMainClassValid($name)
+    public function isModuleMainClassValid(string $name)
     {
         if (! Validate::isModuleName($name)) {
             return false;
@@ -312,7 +312,7 @@ class ModuleDataProvider
      *
      * @return bool True if found
      */
-    public function isOnDisk($name): bool
+    public function isOnDisk(string $name): bool
     {
         $path = _PS_MODULE_DIR_ . $name . '/' . $name . '.php';
 

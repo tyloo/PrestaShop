@@ -133,7 +133,7 @@ abstract class AbstractObjectModelHandler
      *
      * @return string
      */
-    protected function getTmpImageTag($imagePath, $imageId, $belongsTo)
+    protected function getTmpImageTag($imagePath, $imageId, string $belongsTo)
     {
         return ImageManager::thumbnail(
             $imagePath,

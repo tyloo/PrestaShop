@@ -70,10 +70,7 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
         return $this->link->getAdminLink($controller, true, $parameters);
     }
 
-    /**
-     * @param string $entity
-     */
-    private function buildActionParameters(string $action, $entity, array $parameters): array
+    private function buildActionParameters(string $action, string $entity, array $parameters): array
     {
         unset($parameters['current_index'], $parameters['token']);
 

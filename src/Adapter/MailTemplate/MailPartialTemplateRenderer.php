@@ -53,7 +53,7 @@ class MailPartialTemplateRenderer
      *
      * @return string
      */
-    public function render($partialTemplateName, LanguageInterface $language, array $variables = [], $cleanComments = false)
+    public function render(string $partialTemplateName, LanguageInterface $language, array $variables = [], $cleanComments = false)
     {
         $potentialPaths = [
             _PS_THEME_DIR_ . 'mails' . \DIRECTORY_SEPARATOR . $language->getIsoCode() . \DIRECTORY_SEPARATOR . $partialTemplateName,

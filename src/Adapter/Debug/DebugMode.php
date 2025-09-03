@@ -161,7 +161,7 @@ class DebugMode
      *
      * @return int the debug mode
      */
-    private function updateDebugModeValueInMainFile($value): int
+    private function updateDebugModeValueInMainFile(string $value): int
     {
         $filename = _PS_ROOT_DIR_ . '/config/defines.inc.php';
         $cleanedFileContent = php_strip_whitespace($filename);
@@ -190,7 +190,7 @@ class DebugMode
      *
      * @return int Debug mode
      */
-    private function updateDebugModeValueInCustomFile($value): int
+    private function updateDebugModeValueInCustomFile(string $value): int
     {
         $customFileName = _PS_ROOT_DIR_ . '/config/defines_custom.inc.php';
         $cleanedFileContent = php_strip_whitespace($customFileName);
@@ -220,7 +220,7 @@ class DebugMode
      *
      * @return int the debug mode
      */
-    public function changePsModeDevValue($value): int
+    public function changePsModeDevValue(string $value): int
     {
         // Check custom defines file first
         if ($this->isCustomDefinesReadable()) {

@@ -278,10 +278,7 @@ class ImageRetriever
         }
     }
 
-    /**
-     * @param string $imageHash
-     */
-    public function getCustomizationImage($imageHash): array
+    public function getCustomizationImage(string $imageHash): array
     {
         $large_image_url = $this->link->getPageLink('upload', null, null, ['file' => $imageHash]);
         $small_image_url = $this->link->getPageLink('upload', null, null, ['file' => $imageHash . '_small']);

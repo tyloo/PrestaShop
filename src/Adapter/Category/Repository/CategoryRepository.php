@@ -83,7 +83,7 @@ class CategoryRepository extends AbstractObjectModelRepository
      */
     public function getLocalizedNames(array $categoryIds): array
     {
-        $categoryIds = array_map(fn ($categoryId): int => $categoryId->getValue(), $categoryIds
+        $categoryIds = array_map(fn (CategoryId $categoryId): int => $categoryId->getValue(), $categoryIds
         );
 
         $qb = $this->connection->createQueryBuilder();

@@ -62,7 +62,7 @@ class ContainerFinder
         }
 
         $container = SymfonyContainer::getInstance();
-        if ($container !== null) {
+        if ($container instanceof ContainerInterface) {
             return $container;
         }
 

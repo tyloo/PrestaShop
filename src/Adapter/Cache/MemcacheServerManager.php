@@ -40,7 +40,7 @@ class MemcacheServerManager
 
     public function __construct(
         private readonly Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
     ) {
         $this->tableName = $dbPrefix . 'memcached_servers';
     }

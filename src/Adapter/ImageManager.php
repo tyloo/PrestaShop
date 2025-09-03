@@ -46,13 +46,12 @@ class ImageManager
      * Use it upon a new Image management system is available.
      *
      * @param int    $imageId
-     * @param string $imageType
      * @param string $tableName
      * @param string $imageDir
      *
      * @return string The HTML < img > tag
      */
-    public function getThumbnailForListing($imageId, $imageType = 'jpg', $tableName = 'product', $imageDir = _PS_PRODUCT_IMG_DIR_): ?string
+    public function getThumbnailForListing($imageId, string $imageType = 'jpg', $tableName = 'product', $imageDir = _PS_PRODUCT_IMG_DIR_): ?string
     {
         $thumbPath = $this->getThumbnailTag($imageId, $imageType, $tableName, $imageDir);
 
@@ -87,13 +86,11 @@ class ImageManager
 
     /**
      * @param int    $imageId
-     * @param string $imageType
      * @param string $tableName
-     * @param string $imageDir
      *
      * @return string
      */
-    private function getThumbnailTag($imageId, $imageType, $tableName, $imageDir)
+    private function getThumbnailTag($imageId, string $imageType, $tableName, string $imageDir)
     {
         $imagePath = $this->getImagePath($imageId, $imageType, $tableName, $imageDir);
 
@@ -107,11 +104,9 @@ class ImageManager
 
     /**
      * @param int    $imageId
-     * @param string $imageType
      * @param string $tableName
-     * @param string $imageDir
      */
-    private function getImagePath($imageId, $imageType, $tableName, $imageDir): string
+    private function getImagePath($imageId, string $imageType, $tableName, string $imageDir): string
     {
         if ($tableName === 'product') {
             $image = new Image($imageId);
@@ -123,11 +118,9 @@ class ImageManager
     }
 
     /**
-     * @param int    $imageId
-     * @param string $imageType
-     * @param string $tableName
+     * @param int $imageId
      */
-    private function makeCachedImageName($imageId, $imageType, $tableName): string
+    private function makeCachedImageName($imageId, string $imageType, string $tableName): string
     {
         return $tableName . '_mini_' . $imageId . '.' . $imageType;
     }

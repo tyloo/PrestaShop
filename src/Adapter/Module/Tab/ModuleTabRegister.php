@@ -173,11 +173,9 @@ class ModuleTabRegister
      * This allow to check a class exists for a registered tab and to register automatically all the classes
      * not explicitely declared by the module developer.
      *
-     * @param string $moduleName
-     *
      * @return array of Symfony\Component\Finder\SplFileInfo, listing all the ModuleAdminControllers found
      */
-    protected function getModuleAdminControllers($moduleName): array
+    protected function getModuleAdminControllers(string $moduleName): array
     {
         $modulePath = rtrim(_PS_MODULE_DIR_, '/') . '/' . $moduleName . '/controllers/admin/';
 
@@ -225,11 +223,9 @@ class ModuleTabRegister
     /**
      * Convert SPLFileInfo array to file names. Better & easier to check if a class to register exists.
      *
-     * @param string $moduleName
-     *
      * @return array of strings
      */
-    protected function getModuleAdminControllersFilename($moduleName): array
+    protected function getModuleAdminControllersFilename(string $moduleName): array
     {
         return array_map(fn (SplFileInfo $file) => $file->getFilename(), $this->getModuleAdminControllers($moduleName));
     }

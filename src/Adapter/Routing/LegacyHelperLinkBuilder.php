@@ -71,10 +71,7 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
         return $currentIndex . '&' . http_build_query($parameters);
     }
 
-    /**
-     * @param string $entity
-     */
-    private function buildActionParameters(string $action, $entity, array $parameters): array
+    private function buildActionParameters(string $action, string $entity, array $parameters): array
     {
         unset($parameters['current_index']);
         $actionParameter = $action . $entity;

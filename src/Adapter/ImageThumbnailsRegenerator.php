@@ -298,7 +298,7 @@ class ImageThumbnailsRegenerator
      *
      * @throws ImageTypeException
      */
-    public function deleteImagesFromType($imageTypeName, $path): void
+    public function deleteImagesFromType(string $imageTypeName, string $path): void
     {
         foreach (glob($path . '*', \GLOB_BRACE) as $file) {
             if (is_dir($file)) {

@@ -39,10 +39,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ModuleDataUpdater
 {
-    /**
-     * @param string $name
-     */
-    public function removeModuleFromDisk($name): bool
+    public function removeModuleFromDisk(string $name): bool
     {
         $fs = new Filesystem();
 

@@ -107,14 +107,13 @@ abstract class AbstractImageUploader
      * Generates different size images
      *
      * @param int    $id
-     * @param string $imageDir
      * @param string $belongsTo to whom the image belongs (for example 'suppliers' or 'categories')
      *
      * @return bool
      *
      * @throws ImageOptimizationException
      */
-    protected function generateDifferentSize($id, $imageDir, $belongsTo)
+    protected function generateDifferentSize($id, string $imageDir, $belongsTo)
     {
         $resized = true;
 
@@ -138,10 +137,9 @@ abstract class AbstractImageUploader
     /**
      * Resizes the image depending on its type
      *
-     * @param int    $id
-     * @param string $imageDir
+     * @param int $id
      */
-    private function resize($id, $imageDir, array $imageType): bool
+    private function resize($id, string $imageDir, array $imageType): bool
     {
         $ext = '.jpg';
         $width = $imageType['width'];

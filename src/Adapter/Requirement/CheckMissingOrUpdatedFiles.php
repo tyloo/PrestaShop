@@ -37,9 +37,8 @@ class CheckMissingOrUpdatedFiles
 {
     /**
      * @param string|null $dir
-     * @param string      $path
      */
-    public function getListOfUpdatedFiles($dir = null, $path = ''): array
+    public function getListOfUpdatedFiles($dir = null, string $path = ''): array
     {
         $fileList = [
             'missing' => [],
