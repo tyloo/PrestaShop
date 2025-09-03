@@ -95,7 +95,7 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
      * @param string $pattern regex pattern
      * @param string $path    file directory path
      */
-    private function deleteByPattern(string $pattern, $path, string $filename): void
+    private function deleteByPattern(string $pattern, string $path, string $filename): void
     {
         if (preg_match($pattern, $filename)) {
             unlink($path . $filename);

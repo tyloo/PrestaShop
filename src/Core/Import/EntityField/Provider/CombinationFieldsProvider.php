@@ -41,7 +41,7 @@ final class CombinationFieldsProvider implements EntityFieldsProviderInterface
     ) {
     }
 
-    public function getCollection()
+    public function getCollection(): EntityFieldCollection
     {
         $fields = [
             new EntityField('id_product', $this->trans('Product ID', 'Admin.Advparameters.Feature')),

@@ -226,11 +226,7 @@ class LogoUploader
         return $this->errors === [];
     }
 
-    /**
-     * @param string $logoPrefix
-     * @param string $fileExtension
-     */
-    private function getLogoName($logoPrefix, $fileExtension): string
+    private function getLogoName(string $logoPrefix, string $fileExtension): string
     {
         $shopId = $this->shop->id;
 

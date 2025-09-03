@@ -229,7 +229,7 @@ class Reader implements ReaderInterface
      *
      * @throws LocalizationFileNotFoundException If this locale code has no corresponding xml file
      */
-    protected function getMainXmlData($localeCode): SimpleXMLElement|false
+    protected function getMainXmlData(string $localeCode): SimpleXMLElement|false
     {
         return simplexml_load_file($this->mainPath($localeCode . '.xml'));
     }
@@ -260,7 +260,7 @@ class Reader implements ReaderInterface
      *
      * @param string $localeTag The wanted locale. Can be either a language code (e.g.: fr) of an IETF tag (e.g.: en-US)
      */
-    protected function getLocaleData($localeTag): LocaleData
+    protected function getLocaleData(string $localeTag): LocaleData
     {
         $xmlData = $this->getMainXmlData($localeTag);
 

@@ -210,7 +210,7 @@ class StoreGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_store', TextType::class))

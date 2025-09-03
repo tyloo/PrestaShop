@@ -110,7 +110,7 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
      *
      * @param string $orderBy - original order by value
      */
-    private function getModifiedOrderBy($orderBy): string
+    private function getModifiedOrderBy(string $orderBy): string
     {
         return 'wa.' . $orderBy;
     }

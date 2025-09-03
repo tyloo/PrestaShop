@@ -272,7 +272,7 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         return $filterCollection;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new SimpleGridAction('common_refresh_list'))
@@ -290,7 +290,7 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add((new SubmitBulkAction('enable_selection'))

@@ -189,7 +189,7 @@ abstract class AbstractDataLayer
      * @throws DataLayerException
      *                            When write failed
      */
-    protected function saveReadPropagationResult($id, $data)
+    protected function saveReadPropagationResult(mixed $id, $data)
     {
         if ($this->isWritable()) {
             try {
@@ -216,7 +216,7 @@ abstract class AbstractDataLayer
      * @throws DataLayerException
      *                            When write failed
      */
-    protected function saveWritePropagationResult($id, $data)
+    protected function saveWritePropagationResult(mixed $id, $data)
     {
         if ($this->isWritable()) {
             // If update needed before write

@@ -233,7 +233,7 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
         return $filters;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -275,7 +275,7 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(
@@ -304,7 +304,7 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
     /**
      * @return RowActionCollectionInterface
      */
-    private function getRowActions()
+    private function getRowActions(): RowActionCollection
     {
         return (new RowActionCollection())
             ->add(

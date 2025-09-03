@@ -115,7 +115,7 @@ class Theme implements AddonInterface
         return $this->get('dependencies.modules', []);
     }
 
-    public function getPageSpecificAssets($pageId): array
+    public function getPageSpecificAssets(string $pageId): array
     {
         return [
             'css' => $this->getPageSpecificCss($pageId),
@@ -235,7 +235,7 @@ class Theme implements AddonInterface
      *
      * @return string layout relative path
      */
-    public function getLayoutPath($layoutName): string
+    public function getLayoutPath(string $layoutName): string
     {
         return 'layouts/' . $layoutName . '.tpl';
     }
@@ -243,7 +243,7 @@ class Theme implements AddonInterface
     /**
      * @return mixed[]
      */
-    private function getPageSpecificCss($pageId): array
+    private function getPageSpecificCss(string $pageId): array
     {
         $css = array_merge(
             (array) $this->get('assets.css.all'),
@@ -276,7 +276,7 @@ class Theme implements AddonInterface
     /**
      * @return mixed[]
      */
-    private function getPageSpecificJs($pageId): array
+    private function getPageSpecificJs(string $pageId): array
     {
         $js = array_merge(
             (array) $this->get('assets.js.all'),

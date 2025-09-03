@@ -133,7 +133,7 @@ class Repository implements RepositoryInterface
      *
      * @throws LocalizationException
      */
-    protected function getNumberSpecification($localeCode): NumberSpecification
+    protected function getNumberSpecification(string $localeCode): NumberSpecification
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
 
@@ -162,7 +162,7 @@ class Repository implements RepositoryInterface
      *
      * @throws LocalizationException
      */
-    protected function getPriceSpecifications($localeCode): PriceSpecificationMap
+    protected function getPriceSpecifications(string $localeCode): PriceSpecificationMap
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
         if (! $cldrLocale instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Locale) {

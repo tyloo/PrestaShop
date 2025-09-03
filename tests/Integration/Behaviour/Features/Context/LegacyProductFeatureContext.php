@@ -158,7 +158,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a product in the catalog named "(.+)" with a price of (\d+\.\d+) and (\d+) items in stock$/
      */
-    public function thereIsAProductWithNameAndPriceAndQuantity($productName, $price, $productQuantity): void
+    public function thereIsAProductWithNameAndPriceAndQuantity(string $productName, $price, $productQuantity): void
     {
         $this->createProduct($productName, $price, $productQuantity);
     }
@@ -209,7 +209,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^the remaining available stock for product "(.+)" should be ([\-\d]+)$/
      */
-    public function remainingQuantityOfProductNamedShouldBe($productName, $productQuantity): void
+    public function remainingQuantityOfProductNamedShouldBe(string $productName, $productQuantity): void
     {
         if (! $this->hasProduct($productName)) {
             throw new Exception('Product named "' . $productName . '" doesn\'t exist');
@@ -225,7 +225,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^the available stock for product "(.+)" should be ([\-\d]+)$/
      */
-    public function actualQuantityOfProductNamedShouldBe($productName, $productQuantity): void
+    public function actualQuantityOfProductNamedShouldBe(string $productName, $productQuantity): void
     {
         if (! $this->hasProduct($productName)) {
             throw new Exception('Product named "' . $productName . '" doesn\'t exist');
@@ -261,7 +261,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         }
     }
 
-    protected function createProduct($productName, $price, $productQuantity)
+    protected function createProduct(string $productName, $price, $productQuantity)
     {
         if ($this->hasProduct($productName)) {
             throw new \Exception('Product named "' . $productName . '" was already added in fixtures');

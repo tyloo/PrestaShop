@@ -89,10 +89,7 @@ class ThemeExporter
         }
     }
 
-    /**
-     * @param string $cacheDir
-     */
-    protected function copyTranslations(Theme $theme, $cacheDir)
+    protected function copyTranslations(Theme $theme, string $cacheDir)
     {
         $translationsDir = $cacheDir . 'translations';
 

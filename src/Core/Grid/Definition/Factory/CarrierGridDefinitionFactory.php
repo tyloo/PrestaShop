@@ -261,7 +261,7 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $filters;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -304,7 +304,7 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

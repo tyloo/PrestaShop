@@ -32,6 +32,7 @@ use PrestaShop\PrestaShop\Core\Localization\Currency\CurrencyData;
 use PrestaShop\PrestaShop\Core\Localization\Currency\DataSourceInterface as CurrencyDataSourceInterface;
 use PrestaShop\PrestaShop\Core\Localization\Currency\Repository as CurrencyRepository;
 use PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException;
+use PrestaShop\PrestaShop\Core\Localization\Currency\LocalizedCurrencyId;
 
 class RepositoryTest extends TestCase
 {
@@ -50,7 +51,7 @@ class RepositoryTest extends TestCase
         $dataSource
             ->method('getLocalizedCurrencyData')
             ->willReturnCallback(
-                function ($localizedCurrencyId): CurrencyData {
+                function (LocalizedCurrencyId $localizedCurrencyId): CurrencyData {
                     $data = new CurrencyData();
 
                     switch ($localizedCurrencyId->getCurrencyCode()) {
@@ -87,7 +88,7 @@ class RepositoryTest extends TestCase
                             break;
 
                         default:
-                            throw new LocalizationException('Unknown currency code : ' . $localizedCurrencyId);
+                            throw new LocalizationException('Unknown currency code : ' . $localizedCurrencyId->getCurrencyCode());
                     }
 
                     return $data;

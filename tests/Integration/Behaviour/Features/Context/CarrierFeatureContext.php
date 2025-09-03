@@ -101,7 +101,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a country named "(.+)" and iso code "(.+)" in zone "(.+)"$/
      */
-    public function createCountry($countryName, $isoCode, $zoneName): void
+    public function createCountry($countryName, string $isoCode, $zoneName): void
     {
         $countryId = Country::getByIso($isoCode, false);
         if (! $countryId) {

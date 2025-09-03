@@ -69,7 +69,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I get meta "([^"]*)" with specified properties$/
      */
-    public function getMetaWithSpecifiedProperties($reference, TableNode $node): void
+    public function getMetaWithSpecifiedProperties(string $reference, TableNode $node): void
     {
         $data = $node->getRowsHash();
         $queryCommand = new GetMetaForEditing((int) $data['metaId']);
@@ -183,7 +183,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^meta "([^"]*)" editable form field "([^"]*)" should be equal to "([^"]*)"$/
      */
-    public function assertMetaEditableFormFieldShouldBeEqualTo($reference, $field, $value): void
+    public function assertMetaEditableFormFieldShouldBeEqualTo(string $reference, $field, $value): void
     {
         /** @var EditableMeta $editableMeta */
         $editableMeta = SharedStorage::getStorage()->get('editable_' . $reference);

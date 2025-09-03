@@ -157,7 +157,7 @@ final class AttributeGridDefinitionFactory extends AbstractFilterableGridDefinit
         return $columns;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new LinkGridAction('import'))
@@ -249,7 +249,7 @@ final class AttributeGridDefinitionFactory extends AbstractFilterableGridDefinit
         return $filters;
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add((new SubmitBulkAction('delete_selection'))

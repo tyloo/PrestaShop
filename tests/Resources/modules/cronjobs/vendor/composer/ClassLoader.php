@@ -340,7 +340,7 @@ class ClassLoader
      *
      * @return string|false The path if found, false otherwise
      */
-    public function findFile($class)
+    public function findFile(string $class)
     {
         // class map lookup
         if (isset($this->classMap[$class])) {
@@ -377,7 +377,7 @@ class ClassLoader
         return $file;
     }
 
-    private function findFileWithExtension($class, string $ext): string|false
+    private function findFileWithExtension(string $class, string $ext): string|false
     {
         // PSR-4 lookup
         $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;
@@ -385,8 +385,8 @@ class ClassLoader
         $first = $class[0];
         if (isset($this->prefixLengthsPsr4[$first])) {
             $subPath = $class;
-            while (false !== $lastPos = strrpos((string) $subPath, '\\')) {
-                $subPath = substr((string) $subPath, 0, $lastPos);
+            while (false !== $lastPos = strrpos($subPath, '\\')) {
+                $subPath = substr($subPath, 0, $lastPos);
                 $search = $subPath.'\\';
                 if (isset($this->prefixDirsPsr4[$search])) {
                     $pathEnd = DIRECTORY_SEPARATOR . substr($logicalPathPsr4, $lastPos + 1);
@@ -407,7 +407,7 @@ class ClassLoader
         }
 
         // PSR-0 lookup
-        if (false !== $pos = strrpos((string) $class, '\\')) {
+        if (false !== $pos = strrpos($class, '\\')) {
             // namespaced class name
             $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)
                 . strtr(substr($logicalPathPsr4, $pos + 1), '_', DIRECTORY_SEPARATOR);
@@ -418,7 +418,7 @@ class ClassLoader
 
         if (isset($this->prefixesPsr0[$first])) {
             foreach ($this->prefixesPsr0[$first] as $prefix => $dirs) {
-                if (str_starts_with((string) $class, (string) $prefix)) {
+                if (str_starts_with($class, (string) $prefix)) {
                     foreach ($dirs as $dir) {
                         if (file_exists($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr0)) {
                             return $file;

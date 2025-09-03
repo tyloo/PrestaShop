@@ -46,7 +46,7 @@ final class RootCategoryFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         $command = $this->createAddRootCategoryCommand($data);
 

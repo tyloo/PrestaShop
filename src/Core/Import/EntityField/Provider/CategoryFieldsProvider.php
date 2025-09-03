@@ -41,7 +41,7 @@ final class CategoryFieldsProvider implements EntityFieldsProviderInterface
     ) {
     }
 
-    public function getCollection()
+    public function getCollection(): EntityFieldCollection
     {
         $fields = [
             new EntityField('id', $this->trans('ID', 'Admin.Global')),

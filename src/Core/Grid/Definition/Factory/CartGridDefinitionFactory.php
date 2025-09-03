@@ -172,7 +172,7 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
         return $columnCollection;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new LinkGridAction('export'))
@@ -196,7 +196,7 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -270,7 +270,7 @@ class CartGridDefinitionFactory extends AbstractFilterableGridDefinitionFactory
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

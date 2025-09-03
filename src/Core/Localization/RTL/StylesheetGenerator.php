@@ -77,7 +77,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException
      */
-    public function generateInDirectory($directory, $regenerate = false): void
+    public function generateInDirectory(string $directory, $regenerate = false): void
     {
         $allFiles = $this->getFilesInDirectory($directory);
 
@@ -142,7 +142,7 @@ class StylesheetGenerator
      *
      * @return string[] Array of file paths, relative to the provided directory
      */
-    private function getFilesInDirectory($directory)
+    private function getFilesInDirectory(string $directory)
     {
         return Tools::scandir($directory, $this->fileType, '', true);
     }
@@ -181,7 +181,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException If unable to read from .rtlfix file
      */
-    private function appendRtlFixIfNecessary($content, string $baseFile)
+    private function appendRtlFixIfNecessary(string $content, string $baseFile): string
     {
         $filePath = $this->getFilePathWithoutExtension($baseFile);
 
@@ -208,7 +208,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException If unable to write to file
      */
-    private function saveFile($content, string $baseFile): void
+    private function saveFile(string $content, string $baseFile): void
     {
         $rtlFilePath = $this->getRtlFileName($baseFile);
 

@@ -161,7 +161,7 @@ final class OutstandingGridDefinitionFactory extends AbstractGridDefinitionFacto
         return $columns;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(

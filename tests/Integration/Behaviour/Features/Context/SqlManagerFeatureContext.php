@@ -56,7 +56,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I request the database fields from table :tableName
      */
-    public function getDatabaseTableFieldsList($tableName): void
+    public function getDatabaseTableFieldsList(string $tableName): void
     {
         $commandBus = CommonFeatureContext::getContainer()->get('prestashop.core.command_bus');
 
