@@ -65,7 +65,7 @@ class CurrencyType extends TranslatorAwareType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $newCurrency = ! isset($options['data']['id']);
-        $unofficialCurrency = isset($options['data']['unofficial']) ? (bool) $options['data']['unofficial'] : false;
+        $unofficialCurrency = isset($options['data']['unofficial']) && (bool) $options['data']['unofficial'];
         if ($newCurrency) {
             $builder
                 ->add('selected_iso_code', ChoiceType::class, [

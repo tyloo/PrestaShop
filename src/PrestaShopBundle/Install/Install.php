@@ -608,7 +608,7 @@ class Install extends AbstractInstall
                 'locale' => (string) $xml->locale,
             ];
 
-            if (file_exists(_PS_TRANSLATIONS_DIR_ . (string) $iso . '.gzip') === false) {
+            if (file_exists(_PS_TRANSLATIONS_DIR_ . $iso . '.gzip') === false) {
                 $language = EntityLanguage::downloadLanguagePack($iso, _PS_INSTALL_VERSION_);
 
                 if ($language === false) {
