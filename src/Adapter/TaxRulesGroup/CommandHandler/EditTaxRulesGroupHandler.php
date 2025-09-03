@@ -71,6 +71,7 @@ class EditTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements E
             $taxRulesGroup->name = $command->getName();
             $updatableProperties[] = 'name';
         }
+
         if (null !== $command->isEnabled()) {
             $taxRulesGroup->active = $command->isEnabled();
             $updatableProperties[] = 'active';

@@ -99,7 +99,7 @@ class ProductImageUpdater
                 continue;
             }
 
-            if ($currentCover) {
+            if ($currentCover !== null) {
                 $currentImage = $this->productImageRepository->get($currentCover, $shopId);
                 $this->updateCover($currentImage, false, $shopId);
             }

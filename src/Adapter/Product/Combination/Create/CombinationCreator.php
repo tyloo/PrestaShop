@@ -191,7 +191,7 @@ class CombinationCreator
     {
         foreach ($shopIds as $shopId) {
             // set default combination if none is set yet
-            if (!$this->combinationRepository->findDefaultCombinationIdForShop($productId, $shopId)) {
+            if ($this->combinationRepository->findDefaultCombinationIdForShop($productId, $shopId) === null) {
                 $shopConstraint = ShopConstraint::shop($shopId->getValue());
                 $firstCombinationId = $this->combinationRepository->findFirstCombinationId($productId, $shopConstraint);
                 $this->defaultCombinationUpdater->setDefaultCombination($firstCombinationId, $shopConstraint);
@@ -229,12 +229,12 @@ class CombinationCreator
 
         try {
             $this->combinationRepository->saveProductAttributeAssociation($combinationId, $generatedCombination);
-        } catch (CoreException $e) {
+        } catch (CoreException $coreException) {
             foreach ($shopIds as $shopId) {
                 $this->combinationRepository->delete($combinationId, ShopConstraint::shop($shopId->getValue()));
             }
 
-            throw $e;
+            throw $coreException;
         }
 
         return $combinationId;
@@ -247,8 +247,8 @@ class CombinationCreator
     {
         try {
             SpecificPriceRule::disableAnyApplication();
-        } catch (PrestaShopException $e) {
-            throw new CoreException('Error occurred when trying to disable specific price rules application', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException('Error occurred when trying to disable specific price rules application', 0, $prestaShopException);
         }
     }
 
@@ -262,8 +262,8 @@ class CombinationCreator
         try {
             SpecificPriceRule::enableAnyApplication();
             SpecificPriceRule::applyAllRules([$productId->getValue()]);
-        } catch (PrestaShopException $e) {
-            throw new CoreException('Error occurred when trying to apply specific prices rules', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException('Error occurred when trying to apply specific prices rules', 0, $prestaShopException);
         }
     }
 
@@ -293,11 +293,11 @@ class CombinationCreator
         try {
             $this->attributeGroupRepository->assertExistsInEveryShop($attributeGroupIds, $shopIds);
             $this->attributeRepository->assertExistsInEveryShop($attributeIds, $shopIds);
-        } catch (ShopAssociationNotFound $e) {
+        } catch (ShopAssociationNotFound $shopAssociationNotFound) {
             throw new CannotGenerateCombinationException(
                 'Not all provided attributes exists in all shops',
                 CannotGenerateCombinationException::DIFFERENT_ATTRIBUTES_BETWEEN_SHOPS,
-                $e
+                $shopAssociationNotFound
             );
         }
     }

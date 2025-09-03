@@ -48,8 +48,8 @@ class GetApiClientForEditingHandler implements GetApiClientForEditingHandlerInte
     {
         try {
             $apiClient = $this->repository->getById($query->getApiClientId()->getValue());
-        } catch (NoResultException $e) {
-            throw new ApiClientNotFoundException(sprintf('Could not find Api client %s', $query->getApiClientId()->getValue()), 0, $e);
+        } catch (NoResultException $noResultException) {
+            throw new ApiClientNotFoundException(sprintf('Could not find Api client %s', $query->getApiClientId()->getValue()), 0, $noResultException);
         }
 
         return new EditableApiClient(

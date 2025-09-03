@@ -113,6 +113,7 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
             if (null === $idLang) {
                 $idLang = $this->configuration->get('PS_LANG_DEFAULT');
             }
+
             $currency = new Currency(null, $idLang);
         }
 

@@ -69,6 +69,7 @@ class GetProductSupplierOptionsHandler extends AbstractProductSupplierHandler im
         if ($productType->getValue() !== ProductType::TYPE_COMBINATIONS) {
             $productSuppliers = $this->getProductSuppliersInfo($query->getProductId());
         }
+
         $supplierIntIds = array_map(fn(SupplierId $supplierId) => $supplierId->getValue(), $supplierIds);
 
         return new ProductSupplierOptions(

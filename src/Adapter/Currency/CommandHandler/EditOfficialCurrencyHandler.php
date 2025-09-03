@@ -65,10 +65,11 @@ final class EditOfficialCurrencyHandler extends AbstractCurrencyHandler implemen
             if (0 >= $entity->id) {
                 throw new CurrencyNotFoundException(sprintf('Currency object with id "%s" was not found for currency update', $command->getCurrencyId()->getValue()));
             }
+
             $this->verify($entity, $command);
             $this->updateEntity($entity, $command);
-        } catch (PrestaShopException $exception) {
-            throw new CurrencyException(sprintf('An error occurred when updating currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CurrencyException(sprintf('An error occurred when updating currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
         }
     }
 

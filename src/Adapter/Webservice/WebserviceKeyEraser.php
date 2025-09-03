@@ -65,7 +65,7 @@ final class WebserviceKeyEraser
         foreach ($webserviceKeys->getResults() as $webserviceKey) {
             if (!$webserviceKey->delete()) {
                 $errors[] = [
-                    'key' => 'Can\'t delete #%id%',
+                    'key' => "Can't delete #%id%",
                     'parameters' => [
                         '%id%' => $webserviceKey->id,
                     ],

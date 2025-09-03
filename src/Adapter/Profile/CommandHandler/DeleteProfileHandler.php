@@ -80,8 +80,8 @@ final class DeleteProfileHandler extends AbstractProfileHandler implements Delet
             if (false === $entity->delete()) {
                 throw new FailedToDeleteProfileException(sprintf('Failed to delete Profile with id %s', var_export($entityId, true)));
             }
-        } catch (PrestaShopException $e) {
-            throw new ProfileException(sprintf('Unexpected error occurred when deleting Profile with id %s', var_export($entityId, true)), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new ProfileException(sprintf('Unexpected error occurred when deleting Profile with id %s', var_export($entityId, true)), 0, $prestaShopException);
         }
     }
 }

@@ -86,6 +86,7 @@ class NewProductsProductSearchProvider implements ProductSearchProviderInterface
         if (!$products = $this->getProductsOrCount($context, $query, 'products')) {
             $products = [];
         }
+
         $count = $this->getProductsOrCount($context, $query, 'count');
 
         $result = new ProductSearchResult();

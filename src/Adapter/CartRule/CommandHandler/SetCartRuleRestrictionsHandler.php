@@ -64,22 +64,27 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
         if (null !== $restrictedCartRuleIds) {
             $this->setCartRuleRestrictions($cartRule, $restrictedCartRuleIds);
         }
+
         $productRestrictionGroups = $command->getProductRestrictionRuleGroups();
         if (null !== $productRestrictionGroups) {
             $this->setProductRestrictions($cartRule, $productRestrictionGroups);
         }
+
         $restrictedCarrierIds = $command->getRestrictedCarrierIds();
         if (null !== $restrictedCarrierIds) {
             $this->setCarrierRestrictions($cartRule, $restrictedCarrierIds);
         }
+
         $restrictedCountryIds = $command->getRestrictedCountryIds();
         if (null !== $restrictedCountryIds) {
             $this->setCountryRestrictions($cartRule, $restrictedCountryIds);
         }
+
         $restrictedGroupIds = $command->getRestrictedGroupIds();
         if (null !== $restrictedGroupIds) {
             $this->setGroupRestrictions($cartRule, $restrictedGroupIds);
         }
+
         // it would be more performant updating all restriction props at the end with one update call,
         // but that way we might introduce cart rule state failure in case one of steps fails somewhere in the middle
     }

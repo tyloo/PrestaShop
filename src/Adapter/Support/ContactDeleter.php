@@ -61,7 +61,7 @@ final class ContactDeleter
         foreach ($contactCollection as $contact) {
             if (!$contact->delete()) {
                 $errors[] = [
-                    'key' => 'Can\'t delete #%id%',
+                    'key' => "Can't delete #%id%",
                     'parameters' => [
                         '%id%' => $contact->id,
                     ],

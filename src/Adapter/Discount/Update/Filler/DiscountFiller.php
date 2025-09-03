@@ -42,50 +42,62 @@ class DiscountFiller
             $cartRule->date_from = $command->getValidFrom()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_from';
         }
+
         if (null !== $command->getValidTo()) {
             $cartRule->date_to = $command->getValidTo()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_to';
         }
+
         if (null !== $command->getLocalizedNames()) {
             $cartRule->name = $command->getLocalizedNames();
             $this->fillLocalizedValues($cartRule, 'name', $command->getLocalizedNames(), $updatableProperties);
         }
+
         if (null !== $command->getDescription()) {
             $cartRule->description = $command->getDescription();
             $updatableProperties[] = 'description';
         }
+
         if (null !== $command->getCode()) {
             $cartRule->code = $command->getCode();
             $updatableProperties[] = 'code';
         }
+
         if (null !== $command->isHighlightInCart()) {
             $cartRule->highlight = $command->isHighlightInCart();
             $updatableProperties[] = 'highlight';
         }
+
         if (null !== $command->allowPartialUse()) {
             $cartRule->partial_use = $command->allowPartialUse();
             $updatableProperties[] = 'partial_use';
         }
+
         if (null !== $command->isActive()) {
             $cartRule->active = $command->isActive();
             $updatableProperties[] = 'active';
         }
+
         if (null !== $command->getCustomerId()) {
             $cartRule->id_customer = $command->getCustomerId()->getValue();
             $updatableProperties[] = 'id_customer';
         }
+
         if (null !== $command->getTotalQuantity()) {
             $cartRule->quantity = $command->getTotalQuantity();
             $updatableProperties[] = 'quantity';
         }
+
         if (null !== $command->getQuantityPerUser()) {
             $cartRule->quantity_per_user = $command->getQuantityPerUser();
             $updatableProperties[] = 'quantity_per_user';
         }
+
         if (null !== $command->getReductionProduct()) {
             $cartRule->reduction_product = $command->getReductionProduct();
             $updatableProperties[] = 'reduction_product';
         }
+
         if (null !== $command->getAmountDiscount()) {
             $cartRule->reduction_amount = (float) (string) $command->getAmountDiscount()->getAmount();
             $cartRule->reduction_currency = $command->getAmountDiscount()->getCurrencyId()->getValue();
@@ -96,6 +108,7 @@ class DiscountFiller
             $updatableProperties[] = 'reduction_tax';
             $updatableProperties[] = 'reduction_percent';
         }
+
         if (null !== $command->getPercentDiscount()) {
             $cartRule->reduction_percent = (float) (string) $command->getPercentDiscount();
             $cartRule->reduction_amount = null;
@@ -106,10 +119,12 @@ class DiscountFiller
             $updatableProperties[] = 'reduction_currency';
             $updatableProperties[] = 'reduction_tax';
         }
+
         if (null !== $command->getProductId()) {
             $cartRule->gift_product = $command->getProductId()->getValue();
             $updatableProperties[] = 'gift_product';
         }
+
         if (null !== $command->getCombinationId()) {
             $cartRule->gift_product_attribute = $command->getCombinationId()->getValue();
             $updatableProperties[] = 'gift_product_attribute';

@@ -92,7 +92,8 @@ class OrderRefundCalculator
             $refundedAmount = $refundedAmount->minus($voucherAmount);
         } elseif ($voucherRefundType === VoucherRefundType::SPECIFIC_AMOUNT_REFUND) {
             $voucherChosen = true;
-            $refundedAmount = $voucherAmount = $chosenVoucherAmount;
+            $refundedAmount = $chosenVoucherAmount;
+            $voucherAmount = $chosenVoucherAmount;
         }
 
         $shippingCostAmount = $shippingRefund;
@@ -110,6 +111,7 @@ class OrderRefundCalculator
             if ($shippingCostAmount->isGreaterThan($shippingMaxRefund)) {
                 $shippingCostAmount = $shippingMaxRefund;
             }
+
             // Previously taxes were computed but then some values are mixed with and without taxes
             // They all should be in the same state since OrderRefundSummary contains $isTaxIncluded
             $refundedAmount = $refundedAmount->plus($shippingCostAmount);

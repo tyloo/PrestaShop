@@ -113,6 +113,7 @@ class EntityMapper
                         unset($object_datas[$key]);
                     }
                 }
+
                 if ($should_cache_objects) {
                     Cache::store($cache_id, $object_datas);
                 }

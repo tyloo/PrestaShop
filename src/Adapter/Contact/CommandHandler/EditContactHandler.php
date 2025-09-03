@@ -91,8 +91,8 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
             if (null !== $command->getShopAssociation()) {
                 $this->associateWithShops($entity, $command->getShopAssociation());
             }
-        } catch (PrestaShopException $e) {
-            throw new ContactException(sprintf('An unexpected error occurred when retrieving contact with id %s', var_export($command->getContactId()->getValue(), true)), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new ContactException(sprintf('An unexpected error occurred when retrieving contact with id %s', var_export($command->getContactId()->getValue(), true)), 0, $prestaShopException);
         }
     }
 

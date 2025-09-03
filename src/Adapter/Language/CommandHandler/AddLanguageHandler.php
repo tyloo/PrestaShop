@@ -117,6 +117,7 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
         if (false !== ($languageDetails = Language::getLangDetails($command->getIsoCode()->getValue()))) {
             $language->locale = $languageDetails['locale'];
         }
+
         $language->language_code = $command->getTagIETF()->getValue();
         $language->date_format_lite = $command->getShortDateFormat();
         $language->date_format_full = $command->getFullDateFormat();

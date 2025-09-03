@@ -114,7 +114,7 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     public function assertExists(FeatureId $featureId): void
     {
         $this->assertObjectModelExists(
-            (int) $featureId->getValue(),
+            $featureId->getValue(),
             'feature',
             FeatureNotFoundException::class
         );
@@ -240,7 +240,7 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getShopIdsByConstraint(ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             return $this->getAssociatedShopIdsFromGroup($shopConstraint->getShopGroupId());
         }
 

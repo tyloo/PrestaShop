@@ -380,7 +380,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
         if (null !== $shopConstraint->getShopGroupId()) {
             return $shopConstraint->getShopGroupId()->getValue();
         } elseif (null !== $shopConstraint->getShopId()) {
-            $shopGroupId = Shop::getGroupIdFromShopId((int) $shopConstraint->getShopId()->getValue());
+            $shopGroupId = Shop::getGroupIdFromShopId($shopConstraint->getShopId()->getValue());
             // $shopGroupId can not be false, it would mean that the shop group was not found for the given shop
             if (empty($shopGroupId)) {
                 throw new ShopException(

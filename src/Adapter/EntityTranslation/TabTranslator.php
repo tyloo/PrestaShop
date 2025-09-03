@@ -71,7 +71,7 @@ class TabTranslator extends EntityTranslator
     {
         $tableName = $this->dbPrefix . 'tab';
 
-        $sql = "SELECT id_tab, wording, wording_domain FROM $tableName WHERE wording > '' and wording_domain > ''";
+        $sql = sprintf("SELECT id_tab, wording, wording_domain FROM %s WHERE wording > '' and wording_domain > ''", $tableName);
         $results = $this->db->executeS($sql);
 
         $souceIndex = [];

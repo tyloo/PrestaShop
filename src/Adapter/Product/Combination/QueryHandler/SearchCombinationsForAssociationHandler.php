@@ -128,6 +128,7 @@ class SearchCombinationsForAssociationHandler implements SearchCombinationsForAs
         if ($combinationId === NoCombinationId::NO_COMBINATION_ID) {
             return $productName;
         }
+
         $attributesInformation = $this->attributeRepository->getAttributesInfoByCombinationIds(
             [new CombinationId($combinationId)],
             $languageId

@@ -92,8 +92,8 @@ abstract class AbstractDeleteSupplierHandler
             if (false === $entity->delete()) {
                 throw new SupplierException(sprintf('Unable to delete supplier object with id "%s"', $supplierId->getValue()));
             }
-        } catch (PrestaShopException $exception) {
-            throw new SupplierException(sprintf('An error occurred when deleting the supplier object with id "%s"', $supplierId->getValue()), 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SupplierException(sprintf('An error occurred when deleting the supplier object with id "%s"', $supplierId->getValue()), 0, $prestaShopException);
         }
     }
 

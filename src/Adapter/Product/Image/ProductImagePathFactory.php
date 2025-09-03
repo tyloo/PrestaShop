@@ -33,9 +33,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId;
 class ProductImagePathFactory
 {
     public const IMAGE_TYPE_SMALL_DEFAULT = 'small_default';
+
     public const IMAGE_TYPE_MEDIUM_DEFAULT = 'medium_default';
+
     public const IMAGE_TYPE_LARGE_DEFAULT = 'large_default';
+
     public const IMAGE_TYPE_HOME_DEFAULT = 'home_default';
+
     public const IMAGE_TYPE_CART_DEFAULT = 'cart_default';
 
     public const DEFAULT_IMAGE_FORMAT = 'jpg';

@@ -61,8 +61,8 @@ class DeleteProductFromShipmentHandler implements DeleteProductFromShipmentHandl
 
         try {
             $this->shipmentRepository->save($shipment);
-        } catch (Exception $e) {
-            throw new ShipmentException(sprintf('Failed to delete products from shipment with id "%s"', $shipmentId), 0, $e);
+        } catch (Exception $exception) {
+            throw new ShipmentException(sprintf('Failed to delete products from shipment with id "%s"', $shipmentId), 0, $exception);
         }
     }
 }

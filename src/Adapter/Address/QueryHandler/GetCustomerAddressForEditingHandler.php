@@ -68,8 +68,8 @@ final class GetCustomerAddressForEditingHandler extends AbstractCustomerAddressH
         try {
             $customerId = new CustomerId((int) $address->id_customer);
             $customer = new Customer($customerId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new CustomerException('Failed to get customer', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CustomerException('Failed to get customer', 0, $prestaShopException);
         }
 
         if ($customer->id !== $customerId->getValue()) {

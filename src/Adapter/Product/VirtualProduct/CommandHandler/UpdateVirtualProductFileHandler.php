@@ -72,12 +72,15 @@ final class UpdateVirtualProductFileHandler implements UpdateVirtualProductFileH
         if (null !== $command->getDisplayName()) {
             $virtualProductFile->display_filename = $command->getDisplayName();
         }
+
         if (null !== $command->getAccessDays()) {
             $virtualProductFile->nb_days_accessible = $command->getAccessDays();
         }
+
         if (null !== $command->getDownloadTimesLimit()) {
             $virtualProductFile->nb_downloadable = $command->getDownloadTimesLimit();
         }
+
         if (null !== $command->getExpirationDate()) {
             $virtualProductFile->date_expiration = $command->getExpirationDate()->format(DateTime::DEFAULT_DATE_FORMAT);
         }

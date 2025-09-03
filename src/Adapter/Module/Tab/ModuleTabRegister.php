@@ -92,7 +92,7 @@ class ModuleTabRegister
      */
     public function registerTabs(ModuleInterface $module)
     {
-        if (!$module->getInstance()) {
+        if ($module->getInstance() === null) {
             return;
         }
 
@@ -198,6 +198,7 @@ class ModuleTabRegister
         if ($data->has('ParentClassName') && !$data->has('parent_class_name')) {
             $this->logger->warning('Tab attribute "ParentClassName" is deprecated. You must use "parent_class_name" instead.');
         }
+
         // Check if the tab was already added manually
         if (!empty($this->tabRepository->findOneIdByClassName($className))) {
             throw new Exception(sprintf('Cannot register tab "%s" because it already exists', $className));

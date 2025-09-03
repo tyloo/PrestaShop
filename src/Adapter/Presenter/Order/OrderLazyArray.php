@@ -200,6 +200,7 @@ class OrderLazyArray extends AbstractLazyArray
                     } else {
                         $orderProduct['attributes'] = [];
                     }
+
                     $orderProduct['cover'] = $cartProduct['cover'];
                     $orderProduct['default_image'] = $cartProduct['default_image'];
                     $orderProduct['unit_price_full'] = $cartProduct['unit_price_full'];
@@ -294,6 +295,7 @@ class OrderLazyArray extends AbstractLazyArray
             if ($historyId === array_key_first($historyList)) {
                 $historyId = 'current';
             }
+
             $orderHistory[$historyId] = $history;
             $orderHistory[$historyId]['history_date'] = Tools::displayDate($history['date_add'], false);
             $orderHistory[$historyId]['contrast'] = (new ColorBrightnessCalculator())->isBright($history['color']) ? 'dark' : 'bright';

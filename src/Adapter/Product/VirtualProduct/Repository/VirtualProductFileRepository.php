@@ -94,11 +94,11 @@ class VirtualProductFileRepository extends AbstractObjectModelRepository
     {
         try {
             $id = (int) VirtualProductFile::getIdFromIdProduct($productId->getValue());
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when trying to find VirtualProductFile by product id #%d', $productId->getValue()),
                 0,
-                $e
+                $prestaShopException
             );
         }
 

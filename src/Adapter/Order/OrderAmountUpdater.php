@@ -172,6 +172,7 @@ class OrderAmountUpdater
                 );
             }
         }
+
         if (count($productsToAddToOrder) > 0) {
             $orderDetail = new OrderDetail();
             $orderDetail->createList($order, $cart, $order->getCurrentState(), $productsToAddToOrder);

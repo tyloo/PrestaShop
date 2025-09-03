@@ -159,6 +159,7 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
         if (null !== $specificPrice->reduction) {
             $reduction = $this->numberExtractor->extract($specificPrice, 'reduction');
         }
+
         if (null !== $specificPrice->price) {
             $price = $this->numberExtractor->extract($specificPrice, 'price');
         }

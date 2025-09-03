@@ -96,8 +96,8 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
             if ($this->filesystem->exists($thumbnailPath)) {
                 $this->filesystem->remove($thumbnailPath);
             }
-        } catch (IOException $e) {
-            throw new CannotDeleteImageException(sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $e);
+        } catch (IOException $ioException) {
+            throw new CannotDeleteImageException(sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $ioException);
         }
     }
 
@@ -114,8 +114,8 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
             if ($this->filesystem->exists($temporaryThumbnailPath)) {
                 $this->filesystem->remove($temporaryThumbnailPath);
             }
-        } catch (IOException $e) {
-            throw new CannotDeleteImageException(sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $e);
+        } catch (IOException $ioException) {
+            throw new CannotDeleteImageException(sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $ioException);
         }
     }
 
@@ -138,7 +138,7 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
                     }
                 }
             }
-        } catch (IOException $e) {
+        } catch (IOException $ioException) {
             throw new CannotDeleteImageException(
                 sprintf(
                     'Cannot delete image with type "%s" for category with id "%s"',
@@ -146,7 +146,7 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
                     $category->id
                 ),
                 CannotDeleteImageException::COVER_IMAGE,
-                $e
+                $ioException
             );
         }
     }

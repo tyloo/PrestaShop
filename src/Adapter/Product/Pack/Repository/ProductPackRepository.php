@@ -108,14 +108,14 @@ class ProductPackRepository extends AbstractObjectModelRepository
                 ->addGroupBy('attribute.id_product_attribute')
             ;
             $packedProducts = $qb->executeQuery()->fetchAll();
-        } catch (Throwable $exception) {
+        } catch (Throwable $throwable) {
             throw new CoreException(
                 sprintf(
                     'Error occurred when fetching packed products for pack #%d',
                     $productIdValue
                 ),
-                $exception->getCode(),
-                $exception
+                $throwable->getCode(),
+                $throwable
             );
         }
 
@@ -148,11 +148,11 @@ class ProductPackRepository extends AbstractObjectModelRepository
                     ProductPackException::FAILED_ADDING_TO_PACK
                 );
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 $this->appendIdsToMessage('Error occurred when trying to add product to pack.', $productForPacking, $packIdValue),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }
@@ -175,11 +175,11 @@ class ProductPackRepository extends AbstractObjectModelRepository
                     ProductPackException::FAILED_DELETING_PRODUCTS_FROM_PACK
                 );
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when trying to remove pack items from pack #%d', $packIdValue),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }
@@ -215,12 +215,12 @@ class ProductPackRepository extends AbstractObjectModelRepository
      */
     private function appendIdsToMessage(string $messageBody, QuantifiedProduct $product, int $packId): string
     {
-        if ($product->getCombinationId()) {
+        if ($product->getCombinationId() !== null) {
             $combinationId = sprintf(' combinationId #%d', $product->getCombinationId()->getValue());
         }
 
         return sprintf(
-            "$messageBody. [packId #%d; productId #%d;%s]",
+            sprintf('%s. [packId #%%d; productId #%%d;%%s]', $messageBody),
             $packId,
             $product->getProductId()->getValue(),
             $combinationId ?? ''

@@ -65,7 +65,7 @@ final class ChangeOrderCurrencyHandler extends AbstractOrderHandler implements C
             $newCurrency = new Currency($command->getNewCurrencyId()->getValue());
 
             if (!Validate::isLoadedObject($oldCurrency) || !Validate::isLoadedObject($newCurrency)) {
-                throw new OrderException('Can\'t load Currency object');
+                throw new OrderException("Can't load Currency object");
             }
 
             $this->updateOrderDetail($order, $oldCurrency, $newCurrency);
@@ -73,14 +73,14 @@ final class ChangeOrderCurrencyHandler extends AbstractOrderHandler implements C
             $this->updateInvoices($order->getInvoicesCollection(), $oldCurrency, $newCurrency);
             $this->updateCart($order->id_cart, $newCurrency);
             $this->updateOrder($order, $oldCurrency, $newCurrency);
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new OrderException(
                 sprintf(
                     'Error occurred when trying to change currency for order #%s',
                     $order->id
                 ),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }

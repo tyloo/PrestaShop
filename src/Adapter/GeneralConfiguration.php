@@ -101,7 +101,7 @@ class GeneralConfiguration implements DataConfigurationInterface
             CookieOptions::SAMESITE_AVAILABLE_VALUES
         );
 
-        return (bool) $isValid;
+        return $isValid;
     }
 
     /**

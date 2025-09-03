@@ -70,11 +70,9 @@ class GetAvailableCarriersHandler implements GetAvailableCarriersHandlerInterfac
         $carriersIndex = $this->indexCarriers($carriersMapping);
 
         $availableCarriers = [];
-        if (!empty($commonCarriers)) {
-            foreach ($commonCarriers as $carrierId) {
-                $carrier = $carriersIndex[$carrierId];
-                $availableCarriers[] = new CarrierSummary($carrier['id_carrier'], $carrier['name']);
-            }
+        foreach ($commonCarriers as $carrierId) {
+            $carrier = $carriersIndex[$carrierId];
+            $availableCarriers[] = new CarrierSummary($carrier['id_carrier'], $carrier['name']);
         }
 
         // Compute filtered carriers (carriers not available for all products)

@@ -85,6 +85,7 @@ class AddSpecificPriceHandler implements AddSpecificPriceHandlerInterface
         if ($command->getReduction()->getType() === Reduction::TYPE_PERCENTAGE) {
             $reductionValue = $reductionValue->dividedBy(new DecimalNumber('100'));
         }
+
         $specificPrice->reduction = (string) $reductionValue;
 
         $specificPrice->reduction_tax = $command->includesTax();

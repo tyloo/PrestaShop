@@ -60,6 +60,7 @@ final class EditCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler im
                 if (!$this->assertHasDefaultLanguage($command->getLocalisedName())) {
                     throw new CmsPageCategoryConstraintException('Missing name in default language', CmsPageCategoryConstraintException::MISSING_DEFAULT_LANGUAGE_FOR_NAME);
                 }
+
                 $cmsPageCategory->name = $command->getLocalisedName();
             }
 
@@ -92,6 +93,7 @@ final class EditCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler im
                 if (!$this->assertHasDefaultLanguage($command->getLocalisedFriendlyUrl())) {
                     throw new CmsPageCategoryConstraintException('Missing friendly url in default language', CmsPageCategoryConstraintException::MISSING_DEFAULT_LANGUAGE_FOR_FRIENDLY_URL);
                 }
+
                 $this->assertIsValidLinkRewrite($command->getLocalisedFriendlyUrl());
 
                 $cmsPageCategory->link_rewrite = $command->getLocalisedFriendlyUrl();
@@ -104,8 +106,8 @@ final class EditCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler im
             if (null !== $command->getShopAssociation()) {
                 $this->associateWithShops($cmsPageCategory, $command->getShopAssociation());
             }
-        } catch (PrestaShopException $exception) {
-            throw new CmsPageCategoryException('An unexpected error occurred when updating cms page category', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageCategoryException('An unexpected error occurred when updating cms page category', 0, $prestaShopException);
         }
     }
 

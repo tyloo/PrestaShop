@@ -72,6 +72,7 @@ class StockManager
                 $stockAvailable->id_shop = (int) $id_shop;
                 $stockAvailable->id_shop_group = 0;
             }
+
             $stockAvailable->add();
         }
 

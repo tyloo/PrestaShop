@@ -75,10 +75,12 @@ class StockInformationFiller implements ProductFillerInterface
             $product->minimal_quantity = $command->getMinimalQuantity();
             $updatableProperties[] = 'minimal_quantity';
         }
+
         if (null !== $command->getPackStockType()) {
             $product->pack_stock_type = $command->getPackStockType()->getValue();
             $updatableProperties[] = 'pack_stock_type';
         }
+
         if (null !== $command->getAvailableDate()) {
             $product->available_date = $command->getAvailableDate()->format(DateTime::DEFAULT_DATE_FORMAT);
             $updatableProperties[] = 'available_date';

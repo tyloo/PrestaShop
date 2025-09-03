@@ -159,11 +159,13 @@ class OrderDetailUpdater
 
                 $taxCalculator = $this->getTaxCalculatorByAddress($taxAddress, $orderDetail);
                 $taxesAmount = $taxCalculator->getTaxesAmount($orderDetail->unit_price_tax_excl);
-                $sumUnitAmount = $sumTotalAmount = 0;
+                $sumUnitAmount = 0;
+                $sumTotalAmount = 0;
                 if (!empty($taxesAmount)) {
                     $orderDetailTaxes = [];
                     foreach ($taxesAmount as $taxId => $amount) {
-                        $unitAmount = $totalAmount = 0;
+                        $unitAmount = 0;
+                        $totalAmount = 0;
                         switch ($roundType) {
                             case Order::ROUND_ITEM:
                                 $unitAmount = (float) Tools::ps_round($amount, $computingPrecision);
@@ -181,6 +183,7 @@ class OrderDetailUpdater
 
                                 break;
                         }
+
                         $orderDetailTaxes[] = [
                             'id_order_detail' => $orderDetail->id,
                             'id_tax' => $taxId,
@@ -253,8 +256,8 @@ class OrderDetailUpdater
     ): void {
         $floatPriceTaxExcluded = (float) (string) $priceTaxExcluded;
         $floatPriceTaxIncluded = (float) (string) $priceTaxIncluded;
-
-        $orderDetail->product_price = $orderDetail->unit_price_tax_excl = $floatPriceTaxExcluded;
+        $orderDetail->product_price = $floatPriceTaxExcluded;
+        $orderDetail->unit_price_tax_excl = $floatPriceTaxExcluded;
         $orderDetail->unit_price_tax_incl = $floatPriceTaxIncluded;
         switch ($roundType) {
             case Order::ROUND_TOTAL:
@@ -270,7 +273,8 @@ class OrderDetailUpdater
 
             case Order::ROUND_ITEM:
             default:
-                $orderDetail->product_price = $orderDetail->unit_price_tax_excl = Tools::ps_round($floatPriceTaxExcluded, $computingPrecision);
+                $orderDetail->product_price = Tools::ps_round($floatPriceTaxExcluded, $computingPrecision);
+                $orderDetail->unit_price_tax_excl = $orderDetail->product_price;
                 $orderDetail->unit_price_tax_incl = Tools::ps_round($floatPriceTaxIncluded, $computingPrecision);
                 $orderDetail->total_price_tax_excl = $orderDetail->unit_price_tax_excl * $orderDetail->product_quantity;
                 $orderDetail->total_price_tax_incl = $orderDetail->unit_price_tax_incl * $orderDetail->product_quantity;

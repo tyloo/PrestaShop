@@ -53,7 +53,9 @@ final class MailPreviewVariablesBuilder
     public const DOWNLOAD_PRODUCT = 'download_product';
 
     public const EMAIL_ALERTS_MODULE = 'ps_emailalerts';
+
     public const NEW_ORDER = 'new_order';
+
     public const RETURN_SLIP = 'return_slip';
 
     /** @var Context */
@@ -147,6 +149,7 @@ final class MailPreviewVariablesBuilder
         if (!isset($orders[0]['id_order'])) {
             return [];
         }
+
         $order = new Order($orders[0]['id_order']);
 
         if (self::ORDER_CONFIRMATION == $mailLayout->getName()) {
@@ -254,6 +257,7 @@ final class MailPreviewVariablesBuilder
 
                     $customizationText .= '---<br />';
                 }
+
                 if (method_exists('Tools', 'rtrimString')) {
                     $customizationText = Tools::rtrimString($customizationText, '---<br />');
                 } else {
@@ -278,6 +282,7 @@ final class MailPreviewVariablesBuilder
                 . '</td>
 				</tr>';
         }
+
         foreach ($order->getCartRules() as $discount) {
             $itemsTable .=
                 '<tr style="background-color:#EBECEE;">
@@ -378,6 +383,7 @@ final class MailPreviewVariablesBuilder
                     ];
                 }
             }
+
             $productTemplateList[] = $productTemplate;
         }
 
@@ -400,6 +406,7 @@ final class MailPreviewVariablesBuilder
                 'complementary_text' => '',
             ];
         }
+
         $results[1]['complementary_text'] = ' ' . $this->trans('expires on %s.', [date('Y-m-d')], 'Admin.Orderscustomers.Notification');
         $results[1]['complementary_text'] .= ' ' . $this->trans('downloadable %d time(s)', [10], 'Admin.Orderscustomers.Notification');
 

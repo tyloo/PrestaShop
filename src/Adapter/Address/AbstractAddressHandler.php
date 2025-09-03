@@ -50,8 +50,8 @@ abstract class AbstractAddressHandler
     {
         try {
             $address = new Address($addressId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new AddressException('Failed to create new address', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new AddressException('Failed to create new address', 0, $prestaShopException);
         }
 
         if ($address->id !== $addressId->getValue()) {

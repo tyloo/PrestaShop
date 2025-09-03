@@ -80,6 +80,7 @@ class IssueStandardRefundHandler extends AbstractOrderCommandHandler implements 
                 'Can not perform standard refund on an order which is not paid'
             );
         }
+
         if ($order->hasBeenDelivered()) {
             throw new InvalidOrderStateException(
                 InvalidOrderStateException::UNEXPECTED_DELIVERY,

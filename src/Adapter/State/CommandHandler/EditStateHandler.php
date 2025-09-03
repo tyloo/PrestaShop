@@ -86,8 +86,8 @@ class EditStateHandler implements EditStateHandlerInterface
             if (false === $state->update()) {
                 throw new CannotUpdateStateException('Failed to update state');
             }
-        } catch (PrestaShopException $e) {
-            throw new StateException('An unexpected error occurred when updating state', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new StateException('An unexpected error occurred when updating state', 0, $prestaShopException);
         }
     }
 
@@ -105,8 +105,8 @@ class EditStateHandler implements EditStateHandlerInterface
 
         try {
             $state = new State($stateIdValue);
-        } catch (PrestaShopException $e) {
-            throw new StateException(sprintf('Failed to get state with id: "%s"', $stateIdValue), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new StateException(sprintf('Failed to get state with id: "%s"', $stateIdValue), 0, $prestaShopException);
         }
 
         if ($state->id !== $stateIdValue) {

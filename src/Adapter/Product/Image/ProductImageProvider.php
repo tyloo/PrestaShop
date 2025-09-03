@@ -54,7 +54,7 @@ class ProductImageProvider implements ProductImageProviderInterface
     {
         $imageId = $this->productImageRepository->getPreviewCombinationProduct($combinationId);
 
-        if ($imageId) {
+        if ($imageId !== null) {
             return $this->productImagePathFactory->getPath($imageId);
         }
 

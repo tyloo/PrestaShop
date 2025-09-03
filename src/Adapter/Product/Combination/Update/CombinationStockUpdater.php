@@ -83,7 +83,7 @@ class CombinationStockUpdater
             return;
         }
 
-        if ($stockModification) {
+        if ($stockModification !== null) {
             $previousQuantity = (int) $stockAvailable->quantity;
             if (null !== $stockModification->getDeltaQuantity()) {
                 $stockAvailable->quantity += $stockModification->getDeltaQuantity();
@@ -99,7 +99,7 @@ class CombinationStockUpdater
         $fallbackShopId = $this->stockAvailableRepository->getFallbackShopId($stockAvailable);
         $this->stockAvailableRepository->update($stockAvailable, $fallbackShopId);
         // save movement only after stockAvailable has been updated
-        if ($stockModification) {
+        if ($stockModification !== null) {
             $this->saveMovement($stockAvailable, $stockModification, $previousQuantity, $fallbackShopId->getValue());
 
             // Update reserved and physical quantity for this stock
@@ -128,7 +128,7 @@ class CombinationStockUpdater
             $deltaQuantity,
             [
                 'id_stock_mvt_reason' => $movementReasonId->getValue(),
-                'id_shop' => (int) $affectedShopId,
+                'id_shop' => $affectedShopId,
             ]
         );
 

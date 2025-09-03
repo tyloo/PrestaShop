@@ -135,6 +135,7 @@ class OrderProductQuantityUpdater
             if ((int) $orderDetail->id_customization) {
                 $this->deleteProductCustomization((int) $orderDetail->id_customization);
             }
+
             $this->applyOtherProductUpdates($order, $cart, $orderInvoice, $cartComparator->getUpdatedProducts());
             $this->applyOtherProductCreation($order, $cart, $orderInvoice, $cartComparator->getAdditionalProducts());
         } else {
@@ -228,6 +229,7 @@ class OrderProductQuantityUpdater
                 }
             }
         }
+
         if (count($productsToAdd) > 0) {
             $orderDetail = new OrderDetail();
             $orderDetail->createList(
@@ -401,7 +403,7 @@ class OrderProductQuantityUpdater
     {
         if (!Db::getInstance()->execute(
             'DELETE FROM `' . _DB_PREFIX_ . 'customization` 
-            WHERE `id_customization` = ' . (int) $id_customization)) {
+            WHERE `id_customization` = ' . $id_customization)) {
             throw new OrderException('Could not delete customization from database.');
         }
     }

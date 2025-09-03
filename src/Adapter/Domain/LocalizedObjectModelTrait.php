@@ -37,6 +37,7 @@ trait LocalizedObjectModelTrait
         foreach ($localizedValues as $langId => $localizedValue) {
             $product->$propertyName[$langId] = $localizedValue;
         }
+
         $updatableProperties[$propertyName] = array_keys($localizedValues);
     }
 }

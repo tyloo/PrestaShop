@@ -43,7 +43,7 @@ use Tab;
 class LegacyContext
 {
     /** @var Context */
-    protected static $instance = null;
+    protected static $instance;
 
     /** @var Currency|null */
     private $employeeCurrency;
@@ -205,6 +205,7 @@ class LegacyContext
             if ($a['id_lang'] == $defaultLanguageFirst->id) {
                 return -1; // $a is the default one.
             }
+
             if ($b['id_lang'] == $defaultLanguageFirst->id) {
                 return 1; // $b is the default one.
             }

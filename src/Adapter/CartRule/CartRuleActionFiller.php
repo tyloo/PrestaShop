@@ -49,7 +49,7 @@ class CartRuleActionFiller
     ): array {
         $discount = $cartRuleAction->getDiscount();
 
-        if ($discount) {
+        if ($discount !== null) {
             $this->fillDiscount($cartRule, $discount);
         }
 
@@ -86,7 +86,7 @@ class CartRuleActionFiller
     private function fillDiscount(CartRule $cartRule, ?Discount $discount): void
     {
         // when there is no discount action, we reset all the related properties to defaults
-        if (!$discount) {
+        if ($discount === null) {
             $cartRule->reduction_amount = 0;
             $cartRule->reduction_currency = 0;
             $cartRule->reduction_tax = false;
@@ -100,7 +100,7 @@ class CartRuleActionFiller
         $percentageDiscount = $discount->getPercentageDiscount();
         $amountDiscount = $discount->getAmountDiscount();
 
-        if ($amountDiscount) {
+        if ($amountDiscount !== null) {
             $this->fillAmountDiscount($cartRule, $amountDiscount);
         } else {
             $this->fillPercentageDiscount($cartRule, $percentageDiscount);

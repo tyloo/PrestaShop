@@ -160,6 +160,7 @@ class ProductCategoryUpdater
                     // If product has still some categories we use the one with smallest ID as fallback
                     $fallbackDefaultCategory = min(array_values(array_map(static fn(CategoryId $categoryId): int => $categoryId->getValue(), $productCategories)));
                 }
+
                 $fallbackCategories[$shopId->getValue()] = $fallbackDefaultCategory;
             }
         }
@@ -210,7 +211,7 @@ class ProductCategoryUpdater
             }
         } catch (CategoryNotFoundException) {
             throw new CannotUpdateProductException(
-                sprintf('Failed to update product categories. Some of categories doesn\'t exist.'),
+                sprintf("Failed to update product categories. Some of categories doesn't exist."),
                 CannotUpdateProductException::FAILED_UPDATE_CATEGORIES
             );
         }

@@ -35,10 +35,15 @@ use Tools;
 class DebugProfiling
 {
     public const DEBUG_PROFILING_SUCCEEDED = 0;
+
     public const DEBUG_PROFILING_ERROR_NO_READ_ACCESS = 1;
+
     public const DEBUG_PROFILING_ERROR_NO_READ_ACCESS_CUSTOM = 2;
+
     public const DEBUG_PROFILING_ERROR_NO_WRITE_ACCESS = 3;
+
     public const DEBUG_PROFILING_ERROR_NO_WRITE_ACCESS_CUSTOM = 4;
+
     public const DEBUG_PROFILING_ERROR_NO_DEFINITION_FOUND = 5;
 
     /**
@@ -123,7 +128,7 @@ class DebugProfiling
             return self::DEBUG_PROFILING_ERROR_NO_DEFINITION_FOUND;
         }
 
-        $fileContent = preg_replace('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', 'define(\'_PS_DEBUG_PROFILING_\', ' . $value . ');', $fileContent);
+        $fileContent = preg_replace('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', "define('_PS_DEBUG_PROFILING_', " . $value . ');', $fileContent);
         if (!@file_put_contents($filename, $fileContent)) {
             return self::DEBUG_PROFILING_ERROR_NO_WRITE_ACCESS;
         }
@@ -151,7 +156,8 @@ class DebugProfiling
         if (!preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $cleanedFileContent)) {
             return self::DEBUG_PROFILING_ERROR_NO_DEFINITION_FOUND;
         }
-        $fileContent = preg_replace('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', 'define(\'_PS_DEBUG_PROFILING_\', ' . $value . ');', $fileContent);
+
+        $fileContent = preg_replace('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', "define('_PS_DEBUG_PROFILING_', " . $value . ');', $fileContent);
 
         if (!@file_put_contents($customFileName, $fileContent)) {
             return self::DEBUG_PROFILING_ERROR_NO_WRITE_ACCESS_CUSTOM;

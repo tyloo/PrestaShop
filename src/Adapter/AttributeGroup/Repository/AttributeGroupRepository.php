@@ -59,7 +59,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
     {
         $attributeGroupId = $this->addObjectModelToShops(
             $attributeGroup,
-            array_map(fn (int $shopId) => new ShopId((int) $shopId), $attributeGroup->id_shop_list),
+            array_map(fn (int $shopId) => new ShopId($shopId), $attributeGroup->id_shop_list),
             CannotAddAttributeGroupException::class
         );
 
@@ -104,9 +104,10 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getAttributeGroups(ShopConstraint $shopConstraint, array $attributeGroupIds = []): array
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             throw new InvalidShopConstraintException('Shop Group constraint is not supported');
         }
+
         $shopIdValue = $shopConstraint->getShopId() ? $shopConstraint->getShopId()->getValue() : null;
         $qb = $this->connection->createQueryBuilder()
             ->select('ag.*, agl.*')

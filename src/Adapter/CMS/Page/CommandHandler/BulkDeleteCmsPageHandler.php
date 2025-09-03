@@ -54,8 +54,8 @@ final class BulkDeleteCmsPageHandler extends AbstractCmsPageHandler implements B
                     throw new CannotDeleteCmsPageException(sprintf('An error occurred when deleting cms page with id %s', $cmsPageId->getValue()), CannotDeleteCmsPageException::FAILED_BULK_DELETE);
                 }
             }
-        } catch (PrestaShopException $exception) {
-            throw new CmsPageException('An unexpected error occurred when deleting cms page', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageException('An unexpected error occurred when deleting cms page', 0, $prestaShopException);
         }
     }
 }

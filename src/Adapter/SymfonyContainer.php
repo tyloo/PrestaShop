@@ -38,7 +38,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 final class SymfonyContainer
 {
     /** @var ContainerInterface|null */
-    private static $instance = null;
+    private static $instance;
 
     /**
      * Get a singleton instance of SymfonyContainer.

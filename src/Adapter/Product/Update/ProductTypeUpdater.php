@@ -64,6 +64,7 @@ class ProductTypeUpdater
         if ($product->product_type === ProductType::TYPE_PACK && $productType->getValue() !== ProductType::TYPE_PACK) {
             $this->productPackUpdater->setPackProducts(new PackId($productId->getValue()), []);
         }
+
         if ($product->product_type === ProductType::TYPE_COMBINATIONS && $productType->getValue() !== ProductType::TYPE_COMBINATIONS) {
             // When we change the combination type we must reset the stock since all combinations are removed, it must be done before
             // removing all combinations, because the Combination legacy object performs this reset internally, so we won't have the data
@@ -72,9 +73,11 @@ class ProductTypeUpdater
 
             $this->combinationDeleter->deleteAllProductCombinations($productId, ShopConstraint::allShops());
         }
+
         if ($product->product_type === ProductType::TYPE_VIRTUAL && $productType->getValue() !== ProductType::TYPE_VIRTUAL) {
             $this->virtualProductUpdater->deleteFileForProduct($productId);
         }
+
         // Finally, update product type
         $updatedProperties = [
             'product_type',
@@ -92,6 +95,7 @@ class ProductTypeUpdater
             $product->cache_default_attribute = 0;
             $updatedProperties[] = 'cache_default_attribute';
         }
+
         // Virtual product cannot have ecotax
         if ($productType->getValue() === ProductType::TYPE_VIRTUAL && !empty($product->ecotax)) {
             $product->price += $product->ecotax;

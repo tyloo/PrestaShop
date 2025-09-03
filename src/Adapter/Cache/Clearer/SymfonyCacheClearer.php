@@ -68,6 +68,7 @@ final class SymfonyCacheClearer implements CacheClearerInterface
         if ($this->clearCacheRequested) {
             return;
         }
+
         $this->clearCacheRequested = true;
 
         $cacheClearLocked = CacheClearLocker::lock($kernel->getEnvironment(), $kernel->getAppId());
@@ -149,8 +150,8 @@ final class SymfonyCacheClearer implements CacheClearerInterface
                         $this->unlockOtherCache($kernel, $applicationKernel->getEnvironment(), $applicationKernel->getAppId());
                     }
                 }
-            } catch (Throwable $e) {
-                $this->logger->error('SymfonyCacheClearer: Something went wrong while clearing cache: ' . $e->getMessage());
+            } catch (Throwable $throwable) {
+                $this->logger->error('SymfonyCacheClearer: Something went wrong while clearing cache: ' . $throwable->getMessage());
             } finally {
                 Hook::exec('actionClearSf2Cache');
                 CacheClearLocker::unlock($kernel->getEnvironment(), $kernel->getAppId());

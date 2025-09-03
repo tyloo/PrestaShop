@@ -75,7 +75,7 @@ class AdminModuleDataProvider implements ModuleInterface
     /**
      * @var Router|null
      */
-    private $router = null;
+    private $router;
 
     /**
      * @var array
@@ -165,7 +165,7 @@ class AdminModuleDataProvider implements ModuleInterface
             return true;
         }
 
-        if (!$this->employee) {
+        if ($this->employee === null) {
             return false;
         }
 
@@ -208,6 +208,7 @@ class AdminModuleDataProvider implements ModuleInterface
                     ]);
                     continue;
                 }
+
                 $parameters = [
                     'action' => $action,
                     'module_name' => $moduleAttributes->get('name'),
@@ -215,6 +216,7 @@ class AdminModuleDataProvider implements ModuleInterface
                 if ($action === 'upgrade' && $moduleAttributes->get('download_url') !== null) {
                     $parameters['source'] = $moduleAttributes->get('download_url');
                 }
+
                 $urls[$action] = $this->router->generate('admin_module_manage_action', $parameters);
             }
 

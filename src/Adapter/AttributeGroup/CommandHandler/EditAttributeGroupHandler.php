@@ -60,13 +60,16 @@ final class EditAttributeGroupHandler implements EditAttributeGroupHandlerInterf
         if (null !== $command->getLocalizedNames()) {
             $this->fillLocalizedValues($attributeGroup, 'name', $command->getLocalizedNames(), $propertiesToUpdate);
         }
+
         if (null !== $command->getLocalizedPublicNames()) {
             $this->fillLocalizedValues($attributeGroup, 'public_name', $command->getLocalizedPublicNames(), $propertiesToUpdate);
         }
+
         if (null !== $command->getType()) {
             $propertiesToUpdate[] = 'group_type';
             $attributeGroup->group_type = $command->getType()->getValue();
         }
+
         if (null !== $command->getAssociatedShopIds()) {
             $attributeGroup->id_shop_list = $command->getAssociatedShopIds();
             $propertiesToUpdate[] = 'id_shop_list';

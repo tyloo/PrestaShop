@@ -139,6 +139,7 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
             } else {
                 $products[$i]['image'] = $this->productImagePathFactory->getNoImagePath(ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT, $this->getLanguageIsoCode());
             }
+
             // If no legend is defined use the name as a fallback (used for alt property on image)
             if (empty($product['legend'])) {
                 $products[$i]['legend'] = $products[$i]['name'];
@@ -228,12 +229,14 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
             if (!isset($this->shopsNames[$shopId->getValue()])) {
                 $this->shopsNames[$shopId->getValue()] = $this->shopRepository->get($shopId);
             }
+
             $shop = $this->shopsNames[$shopId->getValue()];
 
             // In shop group context we only display the shops from group
             if ($searchCriteria->getShopConstraint()->getShopGroupId() && $searchCriteria->getShopConstraint()->getShopGroupId()->getValue() !== (int) $shop->id_shop_group) {
                 continue;
             }
+
             $shopNames[] = $shop->name;
         }
 

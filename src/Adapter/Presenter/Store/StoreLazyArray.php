@@ -86,6 +86,7 @@ class StoreLazyArray extends AbstractLazyArray
             $addressObj->{$a} = $this->store[$a];
             $this->store['address'][$a] = $this->store[$a];
         }
+
         $this->store['address']['formatted'] = AddressFormat::generateAddress($addressObj, [], '<br />');
 
         return $this->store['address'];

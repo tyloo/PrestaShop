@@ -62,7 +62,7 @@ class SetProductCustomizationFieldsHandler implements SetProductCustomizationFie
     public function handle(SetProductCustomizationFieldsCommand $command): array
     {
         $shopConstraint = $command->getShopConstraint();
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             $shopId = $shopConstraint->getShopId();
         } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
             $shopId = $shopConstraint->getShopIds()[0];
@@ -76,6 +76,7 @@ class SetProductCustomizationFieldsHandler implements SetProductCustomizationFie
         foreach ($command->getCustomizationFields() as $providedCustomizationField) {
             $customizationFields[] = $this->buildEntityFromDTO($productId, $providedCustomizationField, $shopId);
         }
+
         $this->productCustomizationFieldUpdater->setProductCustomizationFields($productId, $customizationFields, $shopConstraint);
 
         return $this->customizationFieldRepository->getCustomizationFieldIds($productId);

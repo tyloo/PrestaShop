@@ -72,8 +72,8 @@ class CategoryRepository extends AbstractObjectModelRepository
                 Category::class,
                 CategoryException::class
             );
-        } catch (CategoryException $e) {
-            throw new CategoryNotFoundException($categoryId, $e->getMessage());
+        } catch (CategoryException $categoryException) {
+            throw new CategoryNotFoundException($categoryId, $categoryException->getMessage());
         }
 
         return $category;
@@ -129,8 +129,8 @@ class CategoryRepository extends AbstractObjectModelRepository
                 'category',
                 CategoryException::class
             );
-        } catch (CategoryException $e) {
-            throw new CategoryNotFoundException($categoryId, $e->getMessage());
+        } catch (CategoryException $categoryException) {
+            throw new CategoryNotFoundException($categoryId, $categoryException->getMessage());
         }
     }
 
@@ -255,7 +255,7 @@ class CategoryRepository extends AbstractObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             $qb
                 ->innerJoin(
                     'cp',

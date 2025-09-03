@@ -227,7 +227,7 @@ class CarrierRangeRepository
     {
         if (!$shopConstraint->forAllShops()) {
             throw new CarrierConstraintException(
-                'Shop constraint isn\'t supported yet.',
+                "Shop constraint isn't supported yet.",
                 CarrierConstraintException::INVALID_SHOP_CONSTRAINT
             );
         }

@@ -204,8 +204,8 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
         $shopParams = [];
         try {
             StockAvailable::addSqlShopParams($shopParams, $shopId);
-        } catch (PrestaShopException $e) {
-            throw new CoreException('Error occurred when trying to add StockAvailable shop condition', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException('Error occurred when trying to add StockAvailable shop condition', 0, $prestaShopException);
         }
 
         foreach ($shopParams as $key => $value) {
@@ -256,11 +256,11 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
         $shopParams = [];
         try {
             StockAvailable::addSqlShopParams($shopParams, $shopId->getValue());
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when trying to add StockAvailable shop params #%d', $productId->getValue()),
                 0,
-                $e
+                $prestaShopException
             );
         }
 

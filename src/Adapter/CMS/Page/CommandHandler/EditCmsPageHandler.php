@@ -56,14 +56,16 @@ final class EditCmsPageHandler extends AbstractCmsPageHandler implements EditCms
             if (false === $cms->validateFields(false) || false === $cms->validateFieldsLang(false)) {
                 throw new CmsPageException('Cms page contains invalid field values');
             }
+
             if (false === $cms->update()) {
                 throw new CannotEditCmsPageException(sprintf('Failed to update cms page with id %s', $command->getCmsPageId()->getValue()));
             }
+
             if (null !== $command->getShopAssociation()) {
                 $this->associateWithShops($cms, $command->getShopAssociation());
             }
-        } catch (PrestaShopException $e) {
-            throw new CmsPageException(sprintf('An unexpected error occurred when editing cms page with id %s', $command->getCmsPageId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageException(sprintf('An unexpected error occurred when editing cms page with id %s', $command->getCmsPageId()->getValue()), 0, $prestaShopException);
         }
     }
 

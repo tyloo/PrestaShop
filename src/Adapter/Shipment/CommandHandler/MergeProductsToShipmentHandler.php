@@ -55,11 +55,11 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
         $targetShipment = $this->repository->findById($targetId);
         $shipmentProducts = [];
 
-        if (!$sourceShipment) {
+        if ($sourceShipment === null) {
             throw new ShipmentNotFoundException(sprintf('Shipment with id "%s" was not found', $sourceId));
         }
 
-        if (!$targetShipment) {
+        if ($targetShipment === null) {
             throw new ShipmentNotFoundException(sprintf('Shipment with id "%s" was not found', $targetId));
         }
 
@@ -73,8 +73,8 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
 
         try {
             $this->repository->mergeProductsToShipment($sourceShipment, $targetShipment, $shipmentProducts);
-        } catch (Throwable $e) {
-            throw new CannotMergeProductToShipmentException(sprintf('Cannot merge products to shipment with id "%s"', $targetId), 0, $e);
+        } catch (Throwable $throwable) {
+            throw new CannotMergeProductToShipmentException(sprintf('Cannot merge products to shipment with id "%s"', $targetId), 0, $throwable);
         }
     }
 }

@@ -52,8 +52,8 @@ class GenerateApiClientSecretHandler implements GenerateApiClientSecretHandlerIn
     {
         try {
             $apiClient = $this->repository->getById($command->getApiClientId()->getValue());
-        } catch (NoResultException $e) {
-            throw new ApiClientNotFoundException(sprintf('Could not find Api client with ID %s', $command->getApiClientId()->getValue()), 0, $e);
+        } catch (NoResultException $noResultException) {
+            throw new ApiClientNotFoundException(sprintf('Could not find Api client with ID %s', $command->getApiClientId()->getValue()), 0, $noResultException);
         }
 
         try {
@@ -62,8 +62,8 @@ class GenerateApiClientSecretHandler implements GenerateApiClientSecretHandlerIn
             $this->repository->save($apiClient);
 
             return $secret;
-        } catch (ORMException $e) {
-            throw new CannotGenerateApiClientSecretException('Could not generate new token Api client', 0, $e);
+        } catch (ORMException $ormException) {
+            throw new CannotGenerateApiClientSecretException('Could not generate new token Api client', 0, $ormException);
         }
     }
 }

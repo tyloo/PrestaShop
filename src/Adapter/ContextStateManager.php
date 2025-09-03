@@ -69,7 +69,7 @@ class ContextStateManager
     /**
      * @var array|null
      */
-    private $contextFieldsStack = null;
+    private $contextFieldsStack;
 
     /**
      * @param LegacyContext $legacyContext
@@ -159,7 +159,7 @@ class ContextStateManager
     {
         $this->saveContextField('language');
         $this->getContext()->language = $language;
-        if ($language) {
+        if ($language !== null) {
             $this->getContext()->getTranslator()->setLocale($language->locale);
         }
 
@@ -245,6 +245,7 @@ class ContextStateManager
         if ($shopContext === Shop::CONTEXT_SHOP) {
             $this->getContext()->shop = new Shop($shopContextId);
         }
+
         Shop::setContext($shopContext, $shopContextId);
 
         return $this;
@@ -261,6 +262,7 @@ class ContextStateManager
         foreach ($stackFields as $fieldName) {
             $this->restoreContextField($fieldName);
         }
+
         $this->removeLastSavedContext();
 
         return $this;
@@ -344,6 +346,7 @@ class ContextStateManager
             if ('shop' === $fieldName) {
                 $this->restoreShopContext($currentStashIndex);
             }
+
             if ('language' === $fieldName && $this->contextFieldsStack[$currentStashIndex][$fieldName] instanceof Language) {
                 $this->getContext()->getTranslator()->setLocale($this->contextFieldsStack[$currentStashIndex][$fieldName]->locale);
             }
@@ -353,6 +356,7 @@ class ContextStateManager
             } else {
                 $this->getContext()->$fieldName = $this->contextFieldsStack[$currentStashIndex][$fieldName];
             }
+
             unset($this->contextFieldsStack[$currentStashIndex][$fieldName]);
         }
     }
@@ -386,6 +390,7 @@ class ContextStateManager
         if (null !== $shopContext) {
             Shop::setContext($shopContext, $shopId);
         }
+
         unset($this->contextFieldsStack[$currentStashIndex]['shopContext']);
     }
 

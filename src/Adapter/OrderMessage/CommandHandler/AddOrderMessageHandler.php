@@ -60,16 +60,16 @@ final class AddOrderMessageHandler implements AddOrderMessageHandlerInterface
         try {
             $orderMessage->validateFields();
             $orderMessage->validateFieldsLang();
-        } catch (PrestaShopException $e) {
-            throw new OrderMessageException('Order message contains invalid fields', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new OrderMessageException('Order message contains invalid fields', 0, $prestaShopException);
         }
 
         try {
             if (false === $orderMessage->add()) {
                 throw new OrderMessageException('Failed to add order message');
             }
-        } catch (PrestaShopException $e) {
-            throw new OrderMessageException('Failed to add order message', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new OrderMessageException('Failed to add order message', 0, $prestaShopException);
         }
 
         return new OrderMessageId((int) $orderMessage->id);
@@ -82,6 +82,7 @@ final class AddOrderMessageHandler implements AddOrderMessageHandlerInterface
             if (!is_array($orderMessages)) {
                 continue;
             }
+
             foreach ($orderMessages as $orderMessage) {
                 if ($orderMessage['name'] === $langName) {
                     throw new OrderMessageNameAlreadyUsedException(

@@ -69,6 +69,7 @@ class CategoryPresenter
         if (empty($category['id_category'])) {
             $category['id_category'] = $category['id'];
         }
+
         if (empty($category['id'])) {
             $category['id'] = $category['id_category'];
         }

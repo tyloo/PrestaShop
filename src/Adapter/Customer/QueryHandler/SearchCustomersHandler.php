@@ -109,6 +109,7 @@ final class SearchCustomersHandler implements SearchCustomersHandlerInterface
                         ];
                     }
                 }
+
                 unset($customerArray['group_ids']);
 
                 // Removing some information that could be considered a security risk

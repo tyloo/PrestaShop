@@ -245,6 +245,7 @@ class OrderSlipCreator
             } else {
                 $product_tax_incl_line = Tools::ps_round($tax_calculator->removeTaxes($price) * $quantity, $precision);
             }
+
             switch ($this->configuration->get('PS_ROUND_TYPE')) {
                 case Order::ROUND_ITEM:
                     if ($add_tax) {
@@ -252,6 +253,7 @@ class OrderSlipCreator
                     } else {
                         $product_tax_incl = Tools::ps_round($tax_calculator->removeTaxes($price), $precision) * $quantity;
                     }
+
                     $total_products[$id_tax_rules_group] += $product_tax_incl;
                     break;
                 case Order::ROUND_LINE:
@@ -308,12 +310,14 @@ class OrderSlipCreator
             $orderSlip->total_products_tax_excl -= $amount && !$amount_choosen ? $amount : 0;
             $orderSlip->amount = $amount_choosen ? $amount : $orderSlip->total_products_tax_incl;
         }
+
         $orderSlip->shipping_cost_amount = $orderSlip->total_shipping_tax_incl;
 
-        if ((float) $amount && !$amount_choosen) {
+        if ($amount && !$amount_choosen) {
             $orderSlip->order_slip_type = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND;
         }
-        if (((float) $amount && $amount_choosen) || $orderSlip->shipping_cost_amount > 0) {
+
+        if (($amount && $amount_choosen) || $orderSlip->shipping_cost_amount > 0) {
             $orderSlip->order_slip_type = VoucherRefundType::SPECIFIC_AMOUNT_REFUND;
         }
 

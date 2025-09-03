@@ -65,8 +65,8 @@ final class AddSqlRequestHandler extends AbstractSqlRequestHandler implements Ad
             }
 
             return new SqlRequestId((int) $entity->id);
-        } catch (PrestaShopException $e) {
-            throw new SqlRequestException('Failed to create SqlRequest', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SqlRequestException('Failed to create SqlRequest', 0, $prestaShopException);
         }
     }
 }

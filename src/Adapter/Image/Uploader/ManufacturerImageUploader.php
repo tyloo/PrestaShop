@@ -62,6 +62,7 @@ final class ManufacturerImageUploader extends AbstractImageUploader implements I
         if (!ImageManager::checkImageMemoryLimit($temporaryImageName)) {
             throw new MemoryLimitException('Due to memory limit restrictions, this image cannot be loaded. Increase your memory_limit value.');
         }
+
         // Copy new image
         if (!ImageManager::resize($temporaryImageName, _PS_MANU_IMG_DIR_ . $manufacturerId . '.jpg')) {
             throw new ImageOptimizationException('An error occurred while uploading the image. Check your directory permissions.');

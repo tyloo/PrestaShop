@@ -63,16 +63,16 @@ final class EditOrderMessageHandler extends AbstractOrderMessageHandler implemen
         try {
             $orderMessage->validateFields();
             $orderMessage->validateFieldsLang();
-        } catch (PrestaShopException $e) {
-            throw new OrderMessageException('Order message contains invalid fields', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new OrderMessageException('Order message contains invalid fields', 0, $prestaShopException);
         }
 
         try {
             if (false === $orderMessage->update()) {
                 throw new OrderMessageException(sprintf('Failed to update order message with id "%s"', $command->getOrderMessageId()->getValue()));
             }
-        } catch (PrestaShopException $e) {
-            throw new OrderMessageException(sprintf('Failed to update order message with id "%s"', $command->getOrderMessageId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new OrderMessageException(sprintf('Failed to update order message with id "%s"', $command->getOrderMessageId()->getValue()), 0, $prestaShopException);
         }
     }
 
@@ -83,10 +83,12 @@ final class EditOrderMessageHandler extends AbstractOrderMessageHandler implemen
             if (!is_array($orderMessages)) {
                 continue;
             }
+
             foreach ($orderMessages as $orderMessage) {
                 if ((int) $orderMessage['id_order_message'] === $command->getOrderMessageId()->getValue()) {
                     continue;
                 }
+
                 if ($orderMessage['name'] === $langName) {
                     throw new OrderMessageNameAlreadyUsedException(
                         $langName,

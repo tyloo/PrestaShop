@@ -71,7 +71,7 @@ class AddTitleHandler extends AbstractTitleHandler implements AddTitleHandlerInt
      */
     protected function uploadTitleImage(TitleId $titleId, AddTitleCommand $command): void
     {
-        if (!$command->getImageFile()) {
+        if ($command->getImageFile() === null) {
             return;
         }
 

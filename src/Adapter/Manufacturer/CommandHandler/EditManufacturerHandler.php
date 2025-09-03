@@ -79,18 +79,23 @@ final class EditManufacturerHandler extends AbstractManufacturerHandler implemen
         if (null !== $command->getName()) {
             $manufacturer->name = $command->getName();
         }
+
         if (null !== $command->getLocalizedShortDescriptions()) {
             $manufacturer->short_description = $command->getLocalizedShortDescriptions();
         }
+
         if (null !== $command->getLocalizedDescriptions()) {
             $manufacturer->description = $command->getLocalizedDescriptions();
         }
+
         if (null !== $command->getLocalizedMetaDescriptions()) {
             $manufacturer->meta_description = $command->getLocalizedMetaDescriptions();
         }
+
         if (null !== $command->getLocalizedMetaTitles()) {
             $manufacturer->meta_title = $command->getLocalizedMetaTitles();
         }
+
         if (null !== $command->isEnabled()) {
             $manufacturer->active = $command->isEnabled();
         }

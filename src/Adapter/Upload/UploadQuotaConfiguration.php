@@ -86,7 +86,7 @@ class UploadQuotaConfiguration implements DataConfigurationInterface
             if (array_key_exists($configurationKey, $this->getConfiguration())) {
                 if ((int) $configurationValue > $sizes[$configurationKey]) {
                     $errors[] = [
-                        'key' => 'The limit chosen is larger than the server\'s maximum upload limit. Please increase the limits of your server.',
+                        'key' => "The limit chosen is larger than the server's maximum upload limit. Please increase the limits of your server.",
                         'domain' => 'Admin.Advparameters.Notification',
                         'parameters' => [],
                     ];

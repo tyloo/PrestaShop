@@ -79,6 +79,7 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
             if ($command->getReduction()->getType() === Reduction::TYPE_PERCENTAGE) {
                 $reductionValue = $reductionValue->dividedBy(new DecimalNumber('100'));
             }
+
             $specificPrice->reduction = (string) $reductionValue;
             $updatableProperties = [
                 'reduction_type',
@@ -86,7 +87,7 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
             ];
         }
 
-        if ($command->getFixedPrice()) {
+        if ($command->getFixedPrice() !== null) {
             $specificPrice->price = (string) $command->getFixedPrice()->getValue();
             $updatableProperties[] = 'price';
         }

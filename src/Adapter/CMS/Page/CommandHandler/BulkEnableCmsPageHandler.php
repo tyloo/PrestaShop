@@ -50,8 +50,8 @@ final class BulkEnableCmsPageHandler extends AbstractCmsPageHandler implements B
     {
         try {
             $this->enableCmsPages($command);
-        } catch (PrestaShopException $exception) {
-            throw new CmsPageException('An error occurred when bulk enabling the cms pages', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageException('An error occurred when bulk enabling the cms pages', 0, $prestaShopException);
         }
     }
 

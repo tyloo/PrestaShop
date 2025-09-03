@@ -57,6 +57,7 @@ abstract class AbstractBulkHandler
                 if (null === $bulkException) {
                     $bulkException = $this->buildBulkException();
                 }
+
                 $bulkException->addException($productId, $e);
             }
         }

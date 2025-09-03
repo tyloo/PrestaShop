@@ -45,16 +45,10 @@ use PrestaShopException;
 final class BulkDeleteCurrenciesHandler extends AbstractCurrencyHandler implements BulkDeleteCurrenciesHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $defaultCurrencyId;
-
-    /**
      * @param int $defaultCurrencyId
      */
-    public function __construct(int $defaultCurrencyId)
+    public function __construct(private readonly int $defaultCurrencyId)
     {
-        $this->defaultCurrencyId = (int) $defaultCurrencyId;
     }
 
     /**

@@ -239,11 +239,11 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
                 $durationFrom,
                 $durationTo
             );
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 'Something went wrong when trying to find existing specific price',
                 0,
-                $e->getPrevious()
+                $prestaShopException->getPrevious()
             );
         }
 
@@ -286,11 +286,11 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     {
         try {
             $priorities = explode(';', (string) $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 'Something went wrong when trying to get default priorities of specific prices',
                 0,
-                $e->getPrevious()
+                $prestaShopException->getPrevious()
             );
         }
 

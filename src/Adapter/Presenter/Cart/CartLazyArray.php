@@ -177,6 +177,7 @@ class CartLazyArray extends AbstractLazyArray
         } else {
             $subtotals['discounts'] = null;
         }
+
         if ($this->cart->gift) {
             $giftWrappingPrice = ($this->cart->getGiftWrappingPrice($this->cartPresenter->includeTaxes()) != 0)
                 ? $this->cart->getGiftWrappingPrice($this->cartPresenter->includeTaxes())
@@ -191,11 +192,13 @@ class CartLazyArray extends AbstractLazyArray
                     : $this->translator->trans('Free', [], 'Shop.Theme.Checkout'),
             ];
         }
+
         if (!$this->cart->isVirtualCart()) {
             $shippingCost = $this->cart->getTotalShippingCost(null, $this->cartPresenter->includeTaxes());
         } else {
             $shippingCost = 0;
         }
+
         $subtotals['shipping'] = [
             'type' => 'shipping',
             'label' => $this->translator->trans('Shipping', [], 'Shop.Theme.Checkout'),
@@ -455,6 +458,7 @@ class CartLazyArray extends AbstractLazyArray
             } else {
                 $cartVoucher['reduction_formatted'] = '-' . $this->priceFormatter->format($totalCartVoucherReduction);
             }
+
             $vouchers[$cartVoucher['id_cart_rule']]['reduction_formatted'] = $cartVoucher['reduction_formatted'];
             $vouchers[$cartVoucher['id_cart_rule']]['delete_url'] = $this->link->getPageLink(
                 'cart',
@@ -507,6 +511,7 @@ class CartLazyArray extends AbstractLazyArray
         if (isset($rawProduct['attributes']) && is_string($rawProduct['attributes'])) {
             $rawProduct['attributes'] = $this->cartPresenter->getAttributesArrayFromString($rawProduct['attributes']);
         }
+
         $rawProduct['remove_from_cart_url'] = $this->link->getRemoveFromCartURL(
             $rawProduct['id_product'],
             $rawProduct['id_product_attribute']

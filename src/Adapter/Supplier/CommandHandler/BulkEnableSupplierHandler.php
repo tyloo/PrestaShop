@@ -62,8 +62,8 @@ final class BulkEnableSupplierHandler implements BulkEnableSupplierHandlerInterf
                     throw new CannotUpdateSupplierStatusException(sprintf('Unable to enable supplier object with id "%s"', $supplierId->getValue()));
                 }
             }
-        } catch (PrestaShopException $e) {
-            throw new SupplierException('Unexpected error occurred when handling bulk enable supplier', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SupplierException('Unexpected error occurred when handling bulk enable supplier', 0, $prestaShopException);
         }
     }
 }

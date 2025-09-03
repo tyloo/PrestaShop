@@ -58,8 +58,8 @@ final class GetCmsPageCategoryForEditingHandler implements GetCmsPageCategoryFor
             }
 
             $shopIds = $cmsPageCategory->getAssociatedShops();
-        } catch (PrestaShopException $exception) {
-            throw new CmsPageCategoryException(sprintf('An error occurred when retrieving cms page category data with id %s', $query->getCmsPageCategoryId()->getValue()), 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageCategoryException(sprintf('An error occurred when retrieving cms page category data with id %s', $query->getCmsPageCategoryId()->getValue()), 0, $prestaShopException);
         }
 
         return new EditableCmsPageCategory(

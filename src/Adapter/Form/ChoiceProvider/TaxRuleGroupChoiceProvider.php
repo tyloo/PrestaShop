@@ -75,6 +75,7 @@ final class TaxRuleGroupChoiceProvider implements FormChoiceProviderInterface, F
                 $state = new State($stateId);
                 $stateIsoCode = $state->iso_code;
             }
+
             $taxRates[$rule['name']] = [
                 'data-tax-rate' => (string) $taxRate,
                 'data-state-iso-code' => $stateIsoCode,

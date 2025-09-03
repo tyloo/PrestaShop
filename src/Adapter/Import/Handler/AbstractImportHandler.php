@@ -246,7 +246,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         if ($dataRow->isEmpty()) {
             $this->warning(
                 $this->translator->trans(
-                    'There is an empty row in the file that won\'t be imported.',
+                    "There is an empty row in the file that won't be imported.",
                     [],
                     'Admin.Advparameters.Notification'
                 )
@@ -285,6 +285,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
                 $logMessage .= ' ';
                 $logMessage .= $this->translator->trans('with truncate', [], 'Admin.Advparameters.Notification');
             }
+
             $this->logger->notice(
                 $logMessage,
                 [

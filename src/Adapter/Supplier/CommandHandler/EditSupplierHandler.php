@@ -62,9 +62,11 @@ final class EditSupplierHandler extends AbstractSupplierHandler implements EditS
             if (false === $supplier->update()) {
                 throw new SupplierException(sprintf('Cannot update supplier with id "%s"', $supplier->id));
             }
+
             if (false === $address->update()) {
                 throw new SupplierException(sprintf('Cannot update supplier address with id "%s"', $address->id));
             }
+
             if (null !== $command->getAssociatedShops()) {
                 $this->associateWithShops($supplier, $command->getAssociatedShops());
             }
@@ -84,18 +86,23 @@ final class EditSupplierHandler extends AbstractSupplierHandler implements EditS
         if (null !== $command->getName()) {
             $supplier->name = $command->getName();
         }
+
         if (null !== $command->getLocalizedDescriptions()) {
             $supplier->description = $command->getLocalizedDescriptions();
         }
+
         if (null !== $command->getLocalizedMetaDescriptions()) {
             $supplier->meta_description = $command->getLocalizedMetaDescriptions();
         }
+
         if (null !== $command->getLocalizedMetaTitles()) {
             $supplier->meta_title = $command->getLocalizedMetaTitles();
         }
+
         if (null !== $command->isEnabled()) {
             $supplier->active = $command->isEnabled();
         }
+
         $supplier->date_upd = date('Y-m-d H:i:s');
     }
 
@@ -110,27 +117,35 @@ final class EditSupplierHandler extends AbstractSupplierHandler implements EditS
         if (null !== $command->getAddress()) {
             $address->address1 = $command->getAddress();
         }
+
         if (null !== $command->getAddress2()) {
             $address->address2 = $command->getAddress2();
         }
+
         if (null !== $command->getPostCode()) {
             $address->postcode = $command->getPostCode();
         }
+
         if (null !== $command->getPhone()) {
             $address->phone = $command->getPhone();
         }
+
         if (null !== $command->getMobilePhone()) {
             $address->phone_mobile = $command->getMobilePhone();
         }
+
         if (null !== $command->getCity()) {
             $address->city = $command->getCity();
         }
+
         if (null !== $command->getCountryId()) {
             $address->id_country = $command->getCountryId();
         }
+
         if (null !== $command->getStateId()) {
             $address->id_state = $command->getStateId();
         }
+
         if (null !== $command->getDni()) {
             $address->dni = $command->getDni();
         }

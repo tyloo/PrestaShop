@@ -192,7 +192,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         if (in_array($categoryId, $this->coreCategories)) {
             $this->error(
                 $this->translator->trans(
-                    'The category ID must be unique. It can\'t be the same as the one for Root or Home category.',
+                    "The category ID must be unique. It can't be the same as the one for Root or Home category.",
                     [],
                     'Admin.Advparameters.Notification'
                 )
@@ -238,6 +238,7 @@ final class CategoryImportHandler extends AbstractImportHandler
             if (isset($movedCategories[$category->parent])) {
                 $category->parent = $movedCategories[$category->parent];
             }
+
             $category->id_parent = $category->parent;
         } elseif (is_string($category->parent)) {
             // Validation for parenting itself
@@ -252,6 +253,7 @@ final class CategoryImportHandler extends AbstractImportHandler
 
                 throw new InvalidDataRowException();
             }
+
             $categoryParent = Category::searchByName($this->languageId, $category->parent, true);
             if ($categoryParent['id_category']) {
                 $category->id_parent = (int) $categoryParent['id_category'];
@@ -331,6 +333,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                     )
                 );
             }
+
             $category->link_rewrite = $this->dataFormatter->createMultiLangField($category->link_rewrite);
         }
 
@@ -417,6 +420,7 @@ final class CategoryImportHandler extends AbstractImportHandler
             ) {
                 $result = $category->update();
             }
+
             if ($category->id == $this->configuration->getInt('PS_ROOT_CATEGORY')) {
                 $this->error(
                     $this->translator->trans(
@@ -426,6 +430,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                     )
                 );
             }
+
             // If no id_category or update failed
             $category->force_id = (bool) $importConfig->forceIds();
             if (!$result && !$runtimeConfig->shouldValidateData()) {
@@ -508,6 +513,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                 if (empty($multipleValueSeparator)) {
                     return;
                 }
+
                 $shopData = explode($multipleValueSeparator, $shopData);
 
                 foreach ($shopData as $shop) {

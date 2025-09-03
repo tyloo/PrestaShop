@@ -55,16 +55,16 @@ class OrderReturnStateRepository extends AbstractObjectModelRepository
             if ((int) $orderReturnState->id !== $orderReturnStateId->getValue()) {
                 throw new OrderReturnStateNotFoundException($orderReturnStateId, sprintf('%s #%d was not found', OrderReturnState::class, $orderReturnStateId->getValue()));
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf(
                     'Error occurred when trying to get %s #%d [%s]',
                     OrderReturnState::class,
                     $orderReturnStateId->getValue(),
-                    $e->getMessage()
+                    $prestaShopException->getMessage()
                 ),
                 0,
-                $e
+                $prestaShopException
             );
         }
 

@@ -92,6 +92,7 @@ final class GetNotificationLastElementsHandler implements GetNotificationLastEle
                     );
                 }
             }
+
             $results[] = new NotificationsResult($type, $totalNotifications, $notificationsResult);
         }
 

@@ -72,8 +72,8 @@ final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCatego
                 CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID,
                 $this->contextLanguageId
             );
-        } catch (PrestaShopException $exception) {
-            throw new CmsPageCategoryException(sprintf('An error occurred when finding cms category object with id "%s" or root category by id "%s"', $query->getCurrentCategoryId()->getValue(), CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID), 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageCategoryException(sprintf('An error occurred when finding cms category object with id "%s" or root category by id "%s"', $query->getCurrentCategoryId()->getValue(), CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID), 0, $prestaShopException);
         }
 
         $rootCategoryData = [
@@ -84,7 +84,7 @@ final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCatego
         if (CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID === $query->getCurrentCategoryId()->getValue()) {
             return new Breadcrumb([
                 new BreadcrumbItem(
-                    (int) $rootCategoryData['id_cms_category'],
+                    $rootCategoryData['id_cms_category'],
                     $rootCategoryData['name']
                 ),
             ]);

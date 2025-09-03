@@ -62,8 +62,8 @@ class SwitchShipmentCarrierHandler implements SwitchShipmentCarrierHandlerInterf
         try {
             /** @var Shipment|null $shipment */
             $shipment = $this->shipmentRepository->findOneBy(['id' => $shipmentId]);
-        } catch (Throwable $e) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $e);
+        } catch (Throwable $throwable) {
+            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $throwable);
         }
 
         if ($shipment === null) {
@@ -74,8 +74,8 @@ class SwitchShipmentCarrierHandler implements SwitchShipmentCarrierHandlerInterf
 
         try {
             $this->shipmentRepository->save($shipment);
-        } catch (Throwable $e) {
-            throw new CannotSaveShipmentException(sprintf('Could not save shipment update with id "%s"', $shipmentId), 0, $e);
+        } catch (Throwable $throwable) {
+            throw new CannotSaveShipmentException(sprintf('Could not save shipment update with id "%s"', $shipmentId), 0, $throwable);
         }
     }
 }

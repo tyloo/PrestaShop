@@ -158,7 +158,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
             );
         }
 
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             $targetDefaultShopId = $shopConstraint->getShopId();
         } elseif ($shopConstraint->getShopGroupId() || ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds())) {
             // If source default shop is in the group use it as new default, if not use the first shop from group
@@ -168,6 +168,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                     $targetDefaultShopId = $sourceDefaultShopId;
                 }
             }
+
             if ($targetDefaultShopId === null) {
                 $targetDefaultShopId = reset($shopIds);
             }
@@ -191,7 +192,8 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
             $shopProduct->name = $this->getNewProductName($shopProduct->name);
             $shopProduct->link_rewrite = $this->getNewProductLinkRewrite($shopProduct->link_rewrite);
             // Force ID to update the new product
-            $shopProduct->id = $shopProduct->id_product = $newProductId->getValue();
+            $shopProduct->id = $newProductId->getValue();
+            $shopProduct->id_product = $shopProduct->id;
             // Force the desired default shop so that it doesn't switch back to the source one
             $shopProduct->id_shop_default = $targetDefaultShopId->getValue();
             $this->productRepository->update(
@@ -418,6 +420,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
             ];
             $lastCategoriesPosition[$categoryId] = $lastCategoryPosition;
         }
+
         $this->bulkInsert('category_product', $newRows, CannotDuplicateProductException::FAILED_DUPLICATE_CATEGORIES);
     }
 
@@ -489,6 +492,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                 if (empty($newCombinationId)) {
                     throw new CannotDuplicateProductException('Could not duplicate combination', CannotDuplicateProductException::FAILED_DUPLICATE_COMBINATIONS);
                 }
+
                 $combinationMatching[$oldCombinationId] = $newCombinationId;
 
                 // Associate attributes to combination
@@ -527,6 +531,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                 'id_product_attribute' => $combinationMatching[(int) $oldLang['id_product_attribute']],
             ]);
         }
+
         $this->bulkInsert('product_attribute_lang', $newCombinationsLang, CannotDuplicateProductException::FAILED_DUPLICATE_COMBINATIONS);
 
         return $combinationMatching;
@@ -562,6 +567,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
         if (empty($oldRows)) {
             return;
         }
+
         $newRows = $this->replaceInRows($oldRows, ['id_product_1' => $newProductId]);
         $this->bulkInsert(
             'accessory',
@@ -608,6 +614,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                 $langData = $this->replaceInRows($langData, ['id_feature_value' => $newCustomFeatureValueId]);
                 $newCustomFeatureValuesLang = array_merge($newCustomFeatureValuesLang, $langData);
             }
+
             $this->bulkInsert('feature_value', $newCustomFeatureValues, CannotDuplicateProductException::FAILED_DUPLICATE_FEATURES);
             $this->bulkInsert('feature_value_lang', $newCustomFeatureValuesLang, CannotDuplicateProductException::FAILED_DUPLICATE_FEATURES);
         }
@@ -630,6 +637,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                 ];
             }
         }
+
         $this->bulkInsert('feature_product', $newProductFeatures, CannotDuplicateProductException::FAILED_DUPLICATE_FEATURES);
     }
 
@@ -747,6 +755,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                 'date_add' => date('Y-m-d H:i:s'),
             ]);
         }
+
         $this->bulkInsert('product_download', $newVirtualProductFiles, CannotDuplicateProductException::FAILED_DUPLICATE_DOWNLOADS);
     }
 
@@ -802,6 +811,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                 'id_product_attribute' => $combinationMatching[(int) $oldCombinationImage['id_product_attribute']],
             ];
         }
+
         $this->bulkInsert('product_attribute_image', $newCombinationImages, CannotDuplicateProductException::FAILED_DUPLICATE_IMAGES);
     }
 
@@ -852,11 +862,11 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                     CannotUpdateProductException::FAILED_UPDATE_DEFAULT_ATTRIBUTE
                 );
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when trying to duplicate product #%d. Failed to update default attribute', $oldProductId),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }
@@ -878,6 +888,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
         if (empty($oldRows)) {
             return;
         }
+
         $newRows = $this->replaceInRows($oldRows, ['id_product' => $newProductId]);
         $this->bulkInsert($table, $newRows, $errorCode);
     }
@@ -903,6 +914,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
         if (empty($oldRows)) {
             return;
         }
+
         $newRows = $this->replaceInRows($oldRows, ['id_product' => $newProductId]);
         $this->bulkInsert($table, $newRows, $errorCode);
     }
@@ -958,7 +970,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
 
                 // We stringify values to avoid SQL syntax error, the float and integers will correctly casted in the DB anyway
                 // however string values and date time need to be quoted
-                return "'$columnValue'";
+                return sprintf("'%s'", $columnValue);
             }, $rowValue)) . ')';
             if ($i < count($multipleRowValues) - 1) {
                 $bulkInsertSql .= ',';
@@ -1017,12 +1029,12 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
             if (is_array($value)) {
                 $arrayType = is_int(reset($value)) ? Connection::PARAM_INT_ARRAY : Connection::PARAM_STR_ARRAY;
                 $qb
-                    ->andWhere("$column IN (:$column)")
+                    ->andWhere(sprintf('%s IN (:%s)', $column, $column))
                     ->setParameter($column, $value, $arrayType)
                 ;
             } else {
                 $qb
-                    ->andWhere("$column = :$column")
+                    ->andWhere(sprintf('%s = :%s', $column, $column))
                     ->setParameter($column, $value)
                 ;
             }

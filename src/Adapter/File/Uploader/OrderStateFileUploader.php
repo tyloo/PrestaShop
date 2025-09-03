@@ -80,8 +80,8 @@ class OrderStateFileUploader implements OrderStateFileUploaderInterface
     {
         try {
             move_uploaded_file($filePath, _PS_ORDER_STATE_IMG_DIR_ . $id . '.gif');
-        } catch (FileException $e) {
-            throw new OrderStateUploadFailedException(sprintf('Failed to copy the file %s.', $filePath), 0, $e);
+        } catch (FileException $fileException) {
+            throw new OrderStateUploadFailedException(sprintf('Failed to copy the file %s.', $filePath), 0, $fileException);
         }
     }
 

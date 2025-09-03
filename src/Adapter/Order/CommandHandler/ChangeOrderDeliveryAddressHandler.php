@@ -111,6 +111,7 @@ final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandle
             if (null === $orderDetail) {
                 continue;
             }
+
             $quantity = $productUpdate->isCreated()
                 ? $productUpdate->getDeltaQuantity()
                 : $orderDetail->product_quantity + $productUpdate->getDeltaQuantity();

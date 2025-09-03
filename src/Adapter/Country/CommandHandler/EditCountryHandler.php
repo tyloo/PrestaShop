@@ -53,6 +53,7 @@ class EditCountryHandler implements EditCountryHandlerInterface
         if (null !== $command->getLocalizedNames()) {
             $country->name = $command->getLocalizedNames();
         }
+
         if (null !== $command->getIsoCode()) {
             $country->iso_code = $command->getIsoCode();
         }

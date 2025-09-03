@@ -115,6 +115,7 @@ final class CurrencyCommandValidator
         if (empty($command->getShopIds())) {
             return;
         }
+
         $shopIds = $command->getShopIds();
         $allShopIds = Shop::getShops(false, null, true);
 

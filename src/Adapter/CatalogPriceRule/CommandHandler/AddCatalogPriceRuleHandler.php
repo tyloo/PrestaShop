@@ -56,10 +56,11 @@ final class AddCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler i
             if (false === $specificPriceRule->add()) {
                 throw new CatalogPriceRuleException(sprintf('Failed to create specific price rule'));
             }
+
             $specificPriceRule->deleteConditions();
             $specificPriceRule->apply();
-        } catch (PrestaShopException $e) {
-            throw new CatalogPriceRuleException('An unexpected error occurred while creating specific price rule', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CatalogPriceRuleException('An unexpected error occurred while creating specific price rule', 0, $prestaShopException);
         }
 
         return new CatalogPriceRuleId((int) $specificPriceRule->id);
@@ -93,11 +94,11 @@ final class AddCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler i
             $this->assertDateRangeIsNotInverse($from, $to);
         }
 
-        if ($from) {
+        if ($from !== null) {
             $specificPriceRule->from = $from->format('Y-m-d H:i:s');
         }
 
-        if ($to) {
+        if ($to !== null) {
             $specificPriceRule->to = $to->format('Y-m-d H:i:s');
         }
 

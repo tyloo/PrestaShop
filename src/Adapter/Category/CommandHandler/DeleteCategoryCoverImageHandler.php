@@ -108,8 +108,8 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
             if ($this->filesystem->exists($temporaryThumbnailPath)) {
                 $this->filesystem->remove($temporaryThumbnailPath);
             }
-        } catch (IOException $e) {
-            throw new CannotDeleteImageException(sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $e);
+        } catch (IOException $ioException) {
+            throw new CannotDeleteImageException(sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $ioException);
         }
     }
 
@@ -132,7 +132,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
                     }
                 }
             }
-        } catch (IOException $e) {
+        } catch (IOException $ioException) {
             throw new CannotDeleteImageException(
                 sprintf(
                     'Cannot delete image with type "%s" for category with id "%s"',
@@ -140,7 +140,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
                     $category->id
                 ),
                 CannotDeleteImageException::COVER_IMAGE,
-                $e
+                $ioException
             );
         }
     }

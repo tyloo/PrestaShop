@@ -156,6 +156,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
         if (empty($orderDetails['productsOrderDetails'])) {
             throw new InvalidCancelProductException(InvalidCancelProductException::INVALID_QUANTITY, 0);
         }
+
         foreach ($orderDetails['productsOrderDetails'] as $orderDetail) {
             // check non customized product quantities
             $cancelQuantity = (int) $orderDetails['productCancelQuantity'][$orderDetail->id_order_detail];

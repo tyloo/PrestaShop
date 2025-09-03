@@ -71,27 +71,35 @@ final class EditManufacturerAddressHandler extends AbstractAddressHandler implem
         if (null !== $command->getManufacturerId()) {
             $address->id_manufacturer = $command->getManufacturerId();
         }
+
         if (null !== $command->getLastName()) {
             $address->lastname = $command->getLastName();
         }
+
         if (null !== $command->getFirstName()) {
             $address->firstname = $command->getFirstName();
         }
+
         if (null !== $command->getAddress()) {
             $address->address1 = $command->getAddress();
         }
+
         if (null !== $command->getAddress2()) {
             $address->address2 = $command->getAddress2();
         }
+
         if (null !== $command->getPostCode()) {
             $address->postcode = $command->getPostCode();
         }
+
         if (null !== $command->getCity()) {
             $address->city = $command->getCity();
         }
+
         if (null !== $command->getCountryId()) {
             $address->id_country = $command->getCountryId();
         }
+
         if (null !== $command->getStateId()) {
             $address->id_state = $command->getStateId();
         } elseif (null !== $command->getCountryId()) {
@@ -101,15 +109,19 @@ final class EditManufacturerAddressHandler extends AbstractAddressHandler implem
                 $address->id_state = 0;
             }
         }
+
         if (null !== $command->getHomePhone()) {
             $address->phone = $command->getHomePhone();
         }
+
         if (null !== $command->getMobilePhone()) {
             $address->phone_mobile = $command->getMobilePhone();
         }
+
         if (null !== $command->getOther()) {
             $address->other = $command->getOther();
         }
+
         if (null !== $command->getDni()) {
             $address->dni = $command->getDni();
         }

@@ -126,7 +126,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
             $product['qty_in_stock'] = StockAvailable::getQuantityAvailableByProduct(
                 $product['id_product'],
                 $product['id_product_attribute'] ?? null,
-                (int) $id_shop
+                $id_shop
             );
 
             // Add customizations for the product
@@ -139,6 +139,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
             );
             $context->cart->setProductCustomizedDatas($product, $customized_datas);
         }
+
         unset($product);
 
         $customerStats = $customer->getStats();

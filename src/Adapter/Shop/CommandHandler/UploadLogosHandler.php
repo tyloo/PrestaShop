@@ -79,8 +79,8 @@ final class UploadLogosHandler implements UploadLogosHandlerInterface
             if (null !== $command->getUploadedFavicon()) {
                 $this->uploadFavicon($command->getUploadedFavicon());
             }
-        } catch (PrestaShopException $exception) {
-            throw new ShopException('An unexpected error occurred when uploading image', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new ShopException('An unexpected error occurred when uploading image', 0, $prestaShopException);
         }
 
         $this->hookDispatcher->dispatchWithParameters('actionAdminThemesControllerUpdate_optionsAfter');

@@ -195,7 +195,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
         $children = [];
 
         foreach ($tabs as &$tab) {
-            if ((int) $tab['id_parent'] !== (int) $parentId) {
+            if ((int) $tab['id_parent'] !== $parentId) {
                 continue;
             }
 

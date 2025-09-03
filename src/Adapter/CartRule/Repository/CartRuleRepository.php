@@ -139,6 +139,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
                         // skip in case there are duplicates
                         continue;
                     }
+
                     $productRuleValues[] = sprintf('(%d, %d)', $productRuleId, $id);
                     $checkedIds[] = $id;
                 }
@@ -243,6 +244,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
                         sprintf('Unexpected state of cart rule product restrictions. Failed to retrieve item ids for rule %d', $productRuleId)
                     );
                 }
+
                 $restrictionRules[] = new RestrictionRule($type, $ruleItemIdsForRules[$productRuleId]);
             }
 
@@ -321,6 +323,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
             if (in_array($restrictedCartRuleId, $checkedIds, true)) {
                 continue;
             }
+
             $insertValues[] = sprintf('(%d,%d)', $cartRuleId->getValue(), $restrictedCartRuleId->getValue());
             $checkedIds[] = $restrictedCartRuleId;
         }
@@ -502,6 +505,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
             if (in_array($entityIdValue, $checkedIds, true)) {
                 continue;
             }
+
             $insertValues[] = sprintf('(%d,%d)', $cartRuleId->getValue(), $entityIdValue);
             $checkedIds[] = $entityIdValue;
         }

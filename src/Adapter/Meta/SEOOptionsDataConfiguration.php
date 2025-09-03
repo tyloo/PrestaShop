@@ -63,8 +63,8 @@ class SEOOptionsDataConfiguration extends AbstractMultistoreConfiguration
 
                 $this->updateConfigurationValue('PS_PRODUCT_ATTRIBUTES_IN_TITLE', 'product_attributes_in_title', $configuration, $shopConstraint);
             }
-        } catch (CoreException $exception) {
-            $errors[] = $exception->getMessage();
+        } catch (CoreException $coreException) {
+            $errors[] = $coreException->getMessage();
         }
 
         return $errors;

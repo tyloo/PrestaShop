@@ -163,6 +163,7 @@ class AttachmentRepository extends AbstractObjectModelRepository
                 if ($attachmentId !== (int) $result['id_attachment']) {
                     continue;
                 }
+
                 $fullAttachments[] = array_merge($result, $localizedValues);
             }
         }

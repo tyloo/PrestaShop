@@ -102,8 +102,8 @@ class CartRuleValidator extends AbstractObjectModelValidator
 
         try {
             $duplicateCodeCartRuleId = (int) CartRule::getIdByCode($code);
-        } catch (PrestaShopException $e) {
-            throw new CoreException('Error occurred when trying to check if cart rule code is unique', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException('Error occurred when trying to check if cart rule code is unique', 0, $prestaShopException);
         }
 
         if ($duplicateCodeCartRuleId && $duplicateCodeCartRuleId !== (int) $cartRule->id) {

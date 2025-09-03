@@ -115,7 +115,7 @@ final class GetOrderForViewingHandler extends AbstractOrderHandler implements Ge
      * @param GetOrderProductsForViewingHandlerInterface $getOrderProductsForViewingHandler
      */
     public function __construct(
-        private TranslatorInterface $translator,
+        private readonly TranslatorInterface $translator,
         private readonly int $contextLanguageId,
         private readonly Locale $locale,
         private readonly Context $context,
@@ -124,7 +124,6 @@ final class GetOrderForViewingHandler extends AbstractOrderHandler implements Ge
         private readonly Configuration $configuration,
         ?AddressFormatterInterface $addressFormatter = null
     ) {
-        $this->translator = $this->translator;
         $this->addressFormatter = $addressFormatter ?? new AddressFormatter();
     }
 
@@ -402,6 +401,7 @@ final class GetOrderForViewingHandler extends AbstractOrderHandler implements Ge
                 if ($document->getRestPaid()) {
                     $isAddPaymentAllowed = true;
                 }
+
                 $amount = $this->locale->formatPrice($document->total_paid_tax_incl, $currency->iso_code);
                 $numericAmount = $document->total_paid_tax_incl;
 
@@ -723,6 +723,7 @@ final class GetOrderForViewingHandler extends AbstractOrderHandler implements Ge
             $shippingPrice = (float) $order->total_shipping_tax_incl;
             $shippingRefundable = max(0, $shipping_refundable_tax_incl);
         }
+
         $totalAmount = (float) $order->total_paid_tax_incl;
 
         $taxesAmount = $order->total_paid_tax_incl - $order->total_paid_tax_excl;

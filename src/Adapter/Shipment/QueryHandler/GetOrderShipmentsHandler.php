@@ -59,8 +59,8 @@ class GetOrderShipmentsHandler implements GetOrderShipmentsHandlerInterface
 
         try {
             $result = $this->shipmentRepository->findByOrderId($orderId);
-        } catch (Throwable $e) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment for order with id "%s"', $orderId), 0, $e);
+        } catch (Throwable $throwable) {
+            throw new ShipmentNotFoundException(sprintf('Could not find shipment for order with id "%s"', $orderId), 0, $throwable);
         }
 
         foreach ($result as $shipment) {

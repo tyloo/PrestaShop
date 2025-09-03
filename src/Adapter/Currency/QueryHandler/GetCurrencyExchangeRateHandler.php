@@ -55,8 +55,8 @@ class GetCurrencyExchangeRateHandler implements GetCurrencyExchangeRateHandlerIn
     {
         try {
             $currencyExchangeRate = $this->exchangeRateProvider->getExchangeRate($query->getIsoCode()->getValue());
-        } catch (CurrencyFeedException $e) {
-            throw new ExchangeRateNotFoundException(sprintf('Exchange rate for Currency with iso code %s was not found', $query->getIsoCode()->getValue()), 0, $e);
+        } catch (CurrencyFeedException $currencyFeedException) {
+            throw new ExchangeRateNotFoundException(sprintf('Exchange rate for Currency with iso code %s was not found', $query->getIsoCode()->getValue()), 0, $currencyFeedException);
         }
 
         return new ExchangeRate($currencyExchangeRate);

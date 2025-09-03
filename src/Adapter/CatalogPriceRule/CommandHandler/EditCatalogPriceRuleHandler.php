@@ -59,10 +59,11 @@ final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler 
             if (false === $specificPriceRule->update()) {
                 throw new CannotUpdateCatalogPriceRuleException(sprintf('Failed to update specific price rule with id %s', $specificPriceRule->id));
             }
+
             $specificPriceRule->deleteConditions();
             $specificPriceRule->apply();
-        } catch (PrestaShopException $e) {
-            throw new CatalogPriceRuleException(sprintf('An unexpected error occurred when editing specific price rule with id %s', $command->getCatalogPriceRuleId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CatalogPriceRuleException(sprintf('An unexpected error occurred when editing specific price rule with id %s', $command->getCatalogPriceRuleId()->getValue()), 0, $prestaShopException);
         }
     }
 
@@ -83,21 +84,27 @@ final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler 
         if (null !== $command->getName()) {
             $specificPriceRule->name = $command->getName();
         }
+
         if (null !== $command->getShopId()) {
             $specificPriceRule->id_shop = $command->getShopId();
         }
+
         if (null !== $command->getCurrencyId()) {
             $specificPriceRule->id_currency = $command->getCurrencyId();
         }
+
         if (null !== $command->getCountryId()) {
             $specificPriceRule->id_country = $command->getCountryId();
         }
+
         if (null !== $command->getGroupId()) {
             $specificPriceRule->id_group = $command->getGroupId();
         }
+
         if (null !== $command->getFromQuantity()) {
             $specificPriceRule->from_quantity = $command->getFromQuantity();
         }
+
         if (null !== $command->getPrice()) {
             $specificPriceRule->price = $command->getPrice();
         }
@@ -105,6 +112,7 @@ final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler 
         if (null !== $command->isTaxIncluded()) {
             $specificPriceRule->reduction_tax = $command->isTaxIncluded();
         }
+
         if (null !== $command->getReduction()) {
             $specificPriceRule->reduction_type = $command->getReduction()->getType();
             $specificPriceRule->reduction = $command->getReduction()->getValue();

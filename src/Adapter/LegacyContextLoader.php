@@ -71,6 +71,7 @@ class LegacyContextLoader
         if (null !== $shopId) {
             $this->loadShopContext($shopId);
         }
+
         if (null !== $shopGroupId) {
             $this->loadShopGroupId($shopGroupId);
         }

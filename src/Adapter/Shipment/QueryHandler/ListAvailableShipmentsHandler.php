@@ -60,9 +60,10 @@ class ListAvailableShipmentsHandler implements ListAvailableShipmentsHandlerInte
 
         try {
             $getShipmentsFromOrder = $this->repository->findByOrderId($orderId);
-        } catch (Throwable $e) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment for order id "%s"', $orderId), 0, $e);
+        } catch (Throwable $throwable) {
+            throw new ShipmentNotFoundException(sprintf('Could not find shipment for order id "%s"', $orderId), 0, $throwable);
         }
+
         if (empty($getShipmentsFromOrder)) {
             return $shipments;
         }

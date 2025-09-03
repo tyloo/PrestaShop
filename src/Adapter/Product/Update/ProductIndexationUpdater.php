@@ -131,11 +131,11 @@ class ProductIndexationUpdater
                 // If not the other types of ShopConstraint are handled by this method
                 $this->updateProductIndexesByShopConstraint($productId, $shopConstraint);
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred while updating search indexes for product %d', $productId),
                 0,
-                $e
+                $prestaShopException
             );
         } finally {
             $this->contextStateManager->restorePreviousContext();
@@ -172,11 +172,11 @@ class ProductIndexationUpdater
                 // If not the other types of ShopConstraint are handled by this method
                 $this->removeProductIndexesByShopConstraint($productId, $shopConstraint);
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred while removing search indexes for product %d', $productId),
                 0,
-                $e
+                $prestaShopException
             );
         } finally {
             $this->contextStateManager->restorePreviousContext();
@@ -191,7 +191,7 @@ class ProductIndexationUpdater
 
     private function adaptShopContext(ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             $this->contextStateManager->setShop(new Shop($shopConstraint->getShopId()->getValue()));
         } elseif ($shopConstraint->getShopGroupId()) {
             $this->contextStateManager->setShopContext(Shop::CONTEXT_GROUP, $shopConstraint->getShopGroupId()->getValue());

@@ -69,7 +69,7 @@ final class GetEditableCombinationsListHandler implements GetEditableCombination
     {
         $shopId = $query->getShopConstraint()->getShopId();
 
-        if (!$shopId) {
+        if ($shopId === null) {
             throw new CombinationException(sprintf(
                 'Only single shop constraint is supported for query %s',
                 GetEditableCombinationsList::class

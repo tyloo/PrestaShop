@@ -76,8 +76,8 @@ final class AddCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler imp
             }
 
             $this->associateWithShops($cmsPageCategory, $command->getShopAssociation());
-        } catch (PrestaShopException $exception) {
-            throw new CmsPageCategoryException('An unexpected error occurred when adding cms page category', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageCategoryException('An unexpected error occurred when adding cms page category', 0, $prestaShopException);
         }
 
         return new CmsPageCategoryId((int) $cmsPageCategory->id);

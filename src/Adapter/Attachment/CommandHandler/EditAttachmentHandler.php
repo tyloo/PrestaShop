@@ -123,8 +123,8 @@ final class EditAttachmentHandler extends AbstractAttachmentHandler implements E
             if (false === $attachment->update()) {
                 throw new CannotUpdateAttachmentException('Failed to update attachment');
             }
-        } catch (PrestaShopException $e) {
-            throw new AttachmentException('An unexpected error occurred when updating attachment', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new AttachmentException('An unexpected error occurred when updating attachment', 0, $prestaShopException);
         }
     }
 }

@@ -40,18 +40,25 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class Module implements ModuleInterface
 {
     public const ACTION_INSTALL = 'install';
+
     public const ACTION_UNINSTALL = 'uninstall';
+
     public const ACTION_ENABLE = 'enable';
+
     public const ACTION_DISABLE = 'disable';
+
     public const ACTION_RESET = 'reset';
+
     public const ACTION_UPGRADE = 'upgrade';
+
     public const ACTION_CONFIGURE = 'configure';
+
     public const ACTION_DELETE = 'delete';
 
     /**
      * @var LegacyModule Module The instance of the legacy module
      */
-    public $instance = null;
+    public $instance;
 
     /**
      * Module attributes (name, displayName etc.).
@@ -376,6 +383,7 @@ class Module implements ModuleInterface
         if (empty($path)) {
             $this->disk->set('path', _PS_MODULE_DIR_ . DIRECTORY_SEPARATOR . $this->attributes->get('name'));
         }
+
         // End of temporary content
         require_once $this->disk->get('path') . DIRECTORY_SEPARATOR . $this->attributes->get('name') . '.php';
         $this->instance = LegacyModule::getInstanceByName($this->attributes->get('name'));
@@ -424,6 +432,7 @@ class Module implements ModuleInterface
         if (empty($img)) {
             $this->attributes->set('img', __PS_BASE_URI__ . 'img/module/default.png');
         }
+
         $this->attributes->set('logo', __PS_BASE_URI__ . 'img/module/default.png');
 
         foreach (['logo.png', 'logo.gif'] as $logo) {

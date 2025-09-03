@@ -53,8 +53,8 @@ abstract class AbstractCartRuleHandler
     {
         try {
             $cartRule = new CartRule($cartRuleId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new CartRuleException('Failed to create new CartRule object', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CartRuleException('Failed to create new CartRule object', 0, $prestaShopException);
         }
 
         if ($cartRule->id !== $cartRuleId->getValue()) {

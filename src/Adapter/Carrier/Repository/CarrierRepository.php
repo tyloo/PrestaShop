@@ -85,7 +85,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
             CannotAddCarrierException::class
         );
 
-        return new CarrierId((int) $carrierId);
+        return new CarrierId($carrierId);
     }
 
     public function update(Carrier $carrier, int $errorCode): void
@@ -108,7 +108,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getShopIdsByConstraint(CarrierId $carrierId, ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             return $this->getAssociatedShopIdsFromGroup($carrierId, $shopConstraint->getShopGroupId());
         }
 
@@ -128,7 +128,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
     {
         $shops = parent::getObjectModelAssociatedShopIds($carrierId->getValue(), 'carrier');
 
-        return array_map(static fn(int $shopId) => new ShopId((int) $shopId), $shops);
+        return array_map(static fn(int $shopId) => new ShopId($shopId), $shops);
     }
 
     /**
@@ -267,12 +267,13 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
             ->setMaxResults(1)
         ;
 
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             $qb
                 ->andWhere('ct.id_shop = :shopId')
                 ->setparameter('shopId', $shopConstraint->getShopId()->getValue())
             ;
         }
+
         $id = (int) $qb->fetchOne();
 
         return $id;
@@ -280,14 +281,16 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
 
     public function setTaxRulesGroup(CarrierId $carrierId, TaxRulesGroupId $taxRulesGroupId, ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopId()) {
-            $shopIdsToClean = $shopIdsToUpdate = [$shopConstraint->getShopId()->getValue()];
+        if ($shopConstraint->getShopId() !== null) {
+            $shopIdsToClean = [$shopConstraint->getShopId()->getValue()];
+            $shopIdsToUpdate = [$shopConstraint->getShopId()->getValue()];
         } elseif ($shopConstraint->forAllShops()) {
             $shopIdsToUpdate = $this->getObjectModelAssociatedShopIds($carrierId->getValue(), Carrier::class);
             $shopIdsToClean = $this->shopRepository->getAssociatedShopIds($shopConstraint);
         } else {
             throw new RuntimeException('Cannot handle this shop constraint');
         }
+
         $this->deleteTaxRulesGroup($carrierId, $shopIdsToClean);
 
         // Doctrine doesn't handle bulk insert so e must insert each ro one by one

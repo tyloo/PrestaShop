@@ -118,6 +118,7 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
                 GroupConstraintException::EMPTY_NAME
             );
         }
+
         foreach ($names as $name) {
             $this->validateGroupName($name);
         }
@@ -138,6 +139,7 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
                 GroupConstraintException::NAME_TOO_LONG
             );
         }
+
         if (false === preg_match('/^[^<>{}]*$/u', $name)) {
             throw new GroupConstraintException(
                 'Customer group name cannot contain these characters: < > = { }',

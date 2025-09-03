@@ -65,7 +65,7 @@ final class MetaEraser
         foreach ($metaData->getResults() as $item) {
             if (!$item->delete()) {
                 $errors[] = [
-                    'key' => 'Can\'t delete #%id%',
+                    'key' => "Can't delete #%id%",
                     'parameters' => [
                         '%id%' => $item->id,
                     ],

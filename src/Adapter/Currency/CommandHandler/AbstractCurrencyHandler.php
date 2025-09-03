@@ -148,6 +148,7 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
             $languageCurrencyPattern = $this->getCurrencyPatternByLanguageId($langId);
             $localizedPatterns[$langId] = $this->patternTransformer->transform($languageCurrencyPattern, $transformationType);
         }
+
         $entity->setLocalizedPatterns($localizedPatterns);
     }
 
@@ -200,17 +201,21 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
         if (null !== $command->getExchangeRate()) {
             $entity->conversion_rate = $command->getExchangeRate()->getValue();
         }
+
         if (null !== $command->getPrecision()) {
             $entity->precision = $command->getPrecision()->getValue();
         }
+
         $entity->active = $command->isEnabled();
 
         if (!empty($command->getLocalizedNames())) {
             $entity->setLocalizedNames($command->getLocalizedNames());
         }
+
         if (!empty($command->getLocalizedSymbols())) {
             $entity->setLocalizedSymbols($command->getLocalizedSymbols());
         }
+
         if (!empty($command->getLocalizedTransformations())) {
             $this->applyPatternTransformations($entity, $command->getLocalizedTransformations());
         }

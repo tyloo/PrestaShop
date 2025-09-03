@@ -83,6 +83,7 @@ class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
         if (empty($rawData)) {
             return 0;
         }
+
         $firstRow = reset($rawData);
 
         return (int) $firstRow['id_state'];

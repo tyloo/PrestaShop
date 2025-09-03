@@ -67,26 +67,32 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
             $cartRule->name = $command->getLocalizedNames();
             $propertiesToUpdate['name'] = array_keys($command->getLocalizedNames());
         }
+
         if (null !== $command->getDescription()) {
             $cartRule->description = $command->getDescription();
             $propertiesToUpdate[] = 'description';
         }
+
         if (null !== $command->getCode()) {
             $cartRule->code = $command->getCode();
             $propertiesToUpdate[] = 'code';
         }
+
         if (null !== $command->highlightInCart()) {
             $cartRule->highlight = $command->highlightInCart();
             $propertiesToUpdate[] = 'highlight';
         }
+
         if (null !== $command->allowPartialUse()) {
             $cartRule->partial_use = $command->allowPartialUse();
             $propertiesToUpdate[] = 'partial_use';
         }
+
         if (null !== $command->getPriority()) {
             $cartRule->priority = $command->getPriority();
             $propertiesToUpdate[] = 'priority';
         }
+
         if (null !== $command->isActive()) {
             $cartRule->active = $command->isActive();
             $propertiesToUpdate[] = 'active';
@@ -114,10 +120,12 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
             $cartRule->id_customer = $command->getCustomerId()->getValue();
             $updatableProperties[] = 'id_customer';
         }
+
         if (null !== $command->getValidFrom()) {
             $cartRule->date_from = $command->getValidFrom()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_from';
         }
+
         if (null !== $command->getValidTo()) {
             $cartRule->date_to = $command->getValidTo()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_to';
@@ -136,10 +144,12 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
                 'minimum_amount_shipping',
             ]);
         }
+
         if (null !== $command->getTotalQuantity()) {
             $cartRule->quantity = $command->getTotalQuantity();
             $updatableProperties[] = 'quantity';
         }
+
         if (null !== $command->getQuantityPerUser()) {
             $cartRule->quantity_per_user = $command->getQuantityPerUser();
             $updatableProperties[] = 'quantity_per_user';

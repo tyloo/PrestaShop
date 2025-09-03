@@ -58,8 +58,8 @@ final class BulkDeleteSqlRequestHandler implements BulkDeleteSqlRequestHandlerIn
                     );
                 }
             }
-        } catch (PrestaShopException $e) {
-            throw new SqlRequestException('Unexpected error occurred when handling bulk delete SqlRequest', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SqlRequestException('Unexpected error occurred when handling bulk delete SqlRequest', 0, $prestaShopException);
         }
     }
 }

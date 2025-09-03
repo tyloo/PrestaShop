@@ -74,8 +74,8 @@ final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutio
                 $columns,
                 $rows
             );
-        } catch (PrestaShopException $e) {
-            throw new SqlRequestException('Unexpected error occurred', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SqlRequestException('Unexpected error occurred', 0, $prestaShopException);
         }
     }
 
@@ -121,6 +121,7 @@ final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutio
                 while (is_array($selectField['sub_tree'])) {
                     $selectField = $selectField['sub_tree'][0];
                 }
+
                 $field = end($selectField['no_quotes']['parts']);
                 if (array_key_exists($field, $sensitiveAttributes)) {
                     $alias = str_replace(['"', "'", '`'], '', $alias);

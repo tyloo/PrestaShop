@@ -67,6 +67,7 @@ class ManufacturerPresenter
         if (empty($manufacturer['id_manufacturer'])) {
             $manufacturer['id_manufacturer'] = $manufacturer['id'];
         }
+
         if (empty($manufacturer['id'])) {
             $manufacturer['id'] = $manufacturer['id_manufacturer'];
         }

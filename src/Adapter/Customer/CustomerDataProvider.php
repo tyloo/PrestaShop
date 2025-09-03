@@ -114,10 +114,10 @@ class CustomerDataProvider
         $mainSql .= ' GROUP BY cm.id_customer_message
             ORDER BY cm.date_add DESC';
 
-        $count = Db::getInstance()->executeS("SELECT COUNT(*) AS total FROM ($mainSql) AS messages");
+        $count = Db::getInstance()->executeS(sprintf('SELECT COUNT(*) AS total FROM (%s) AS messages', $mainSql));
 
         if ($limit) {
-            $mainSql .= " LIMIT $limit";
+            $mainSql .= ' LIMIT ' . $limit;
         }
 
         return [

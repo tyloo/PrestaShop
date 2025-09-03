@@ -326,6 +326,7 @@ class ProductLazyArray extends AbstractLazyArray
         if (!isset($this->product['attachments'])) {
             return null;
         }
+
         foreach ($this->product['attachments'] as $attachment) {
             return Tools::formatBytes($attachment['file_size'], 2);
         }
@@ -976,9 +977,11 @@ class ProductLazyArray extends AbstractLazyArray
         $this->product['discount_amount_to_display'] = null;
 
         if ($settings->include_taxes) {
-            $price = $regular_price = $product['price'];
+            $price = $product['price'];
+            $regular_price = $product['price'];
         } else {
-            $price = $regular_price = $product['price_tax_exc'];
+            $price = $product['price_tax_exc'];
+            $regular_price = $product['price_tax_exc'];
         }
 
         if ($product['specific_prices']) {
@@ -1017,6 +1020,7 @@ class ProductLazyArray extends AbstractLazyArray
                 $regular_price =
                     $product['price_without_reduction_without_tax'];
             }
+
             // We must calculate the real amount of discount.
             // see @https://github.com/PrestaShop/PrestaShop/issues/32924
             $product['reduction'] = $regular_price - $price;

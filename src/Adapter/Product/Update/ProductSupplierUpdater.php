@@ -225,10 +225,11 @@ class ProductSupplierUpdater
         if ($productType->getValue() === ProductType::TYPE_COMBINATIONS) {
             // Product must always be updated even for product with combinations, we use the default combination as the reference
             $defaultProductSupplier = $this->getDefaultCombinationProductSupplier($productId, $defaultSupplierId);
-            if (!$defaultProductSupplier) {
+            if ($defaultProductSupplier === null) {
                 // When no combinations exist yet we use the default ProductSupplier as a fallback
                 $defaultProductSupplier = $this->getDefaultProductSupplier($productId, $defaultSupplierId);
             }
+
             $this->updateDefaultSupplierDataForProduct($defaultProductSupplier);
 
             // Then each combination must be updated based on its data for default supplier (which may be different for each one)
@@ -366,7 +367,7 @@ class ProductSupplierUpdater
             $productId,
             $this->productRepository->getProductDefaultShopId($productId)
         );
-        if (!$defaultCombinationId) {
+        if ($defaultCombinationId === null) {
             return null;
         }
 

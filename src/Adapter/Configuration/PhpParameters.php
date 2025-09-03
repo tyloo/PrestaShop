@@ -51,7 +51,7 @@ class PhpParameters
     public function __construct($filename)
     {
         if (!is_readable($filename)) {
-            throw new InvalidArgumentException("File $filename is not readable for configuration");
+            throw new InvalidArgumentException(sprintf('File %s is not readable for configuration', $filename));
         }
 
         $this->filename = $filename;

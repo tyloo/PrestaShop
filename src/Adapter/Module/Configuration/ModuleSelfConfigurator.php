@@ -128,6 +128,7 @@ class ModuleSelfConfigurator
         if (!is_string($name)) {
             throw new UnexpectedTypeException($name, 'string');
         }
+
         $this->module = $name;
 
         return $this;
@@ -214,8 +215,8 @@ class ModuleSelfConfigurator
 
         try {
             $file = $this->getFile();
-        } catch (InvalidArgumentException $e) {
-            $errors[] = $e->getMessage();
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $errors[] = $invalidArgumentException->getMessage();
             $file = null;
         }
 
@@ -252,6 +253,7 @@ class ModuleSelfConfigurator
         if (count($this->validate())) {
             return false;
         }
+
         $config = $this->loadYmlFile($this->getFile());
 
         $this->runConfigurationStep($config);
@@ -335,6 +337,7 @@ class ModuleSelfConfigurator
         if (array_key_exists($file, $this->configs)) {
             return $this->configs[$file];
         }
+
         $this->configs[$file] = Yaml::parse(file_get_contents($file));
 
         return $this->configs[$file];
@@ -375,6 +378,7 @@ class ModuleSelfConfigurator
             if (empty($copy['source'])) {
                 throw new Exception('Missing source file');
             }
+
             if (empty($copy['dest'])) {
                 throw new Exception('Missing destination file');
             }
@@ -430,11 +434,12 @@ class ModuleSelfConfigurator
             foreach ($config['sql'] as $data) {
                 $this->runSqlFile($data);
             }
+
             $this->connection->commit();
-        } catch (Throwable $e) {
+        } catch (Throwable $throwable) {
             $this->connection->rollBack();
 
-            throw $e;
+            throw $throwable;
         }
     }
 
@@ -489,6 +494,7 @@ class ModuleSelfConfigurator
             } else {
                 throw new Exception(sprintf('No value given for key %s', $key));
             }
+
             $this->configuration->set($key, $value);
         }
     }

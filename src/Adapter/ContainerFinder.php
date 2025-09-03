@@ -61,6 +61,7 @@ class ContainerFinder
         if (isset($this->context->container)) {
             return $this->context->container;
         }
+
         if (isset($this->context->controller)
             && method_exists($this->context->controller, 'getContainer')
             && ($container = $this->context->controller->getContainer())
@@ -68,6 +69,7 @@ class ContainerFinder
         ) {
             return $container;
         }
+
         $container = SymfonyContainer::getInstance();
         if (null !== $container) {
             return $container;

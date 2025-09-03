@@ -50,8 +50,8 @@ final class EditZoneHandler extends AbstractObjectModelHandler implements EditZo
     {
         try {
             $zone = new Zone($command->getZoneId()->getValue());
-        } catch (PrestaShopException $e) {
-            throw new ZoneException(sprintf('Failed to get zone with id "%d"', $command->getZoneId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new ZoneException(sprintf('Failed to get zone with id "%d"', $command->getZoneId()->getValue()), 0, $prestaShopException);
         }
 
         if ($zone->id !== $command->getZoneId()->getValue()) {

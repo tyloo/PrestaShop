@@ -60,8 +60,8 @@ final class BulkDeleteCmsPageCategoryHandler implements BulkDeleteCmsPageCategor
                     throw new CannotDeleteCmsPageCategoryException(sprintf('Unable to delete  cms category object with id "%s"', $cmsPageCategoryId->getValue()), CannotDeleteCmsPageCategoryException::FAILED_BULK_DELETE);
                 }
             }
-        } catch (PrestaShopException $e) {
-            throw new CmsPageCategoryException('Unexpected error occurred when handling bulk delete cms category', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageCategoryException('Unexpected error occurred when handling bulk delete cms category', 0, $prestaShopException);
         }
     }
 }

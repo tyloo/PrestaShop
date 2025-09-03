@@ -107,6 +107,7 @@ class ModuleDataProvider
                     $lastAccessDate = $modulesHistory[$moduleID]->getDateUpd()->format('Y-m-d H:i:s');
                 }
             }
+
             $result['last_access_date'] = $lastAccessDate;
 
             return $result;
@@ -196,7 +197,7 @@ class ModuleDataProvider
         WHERE `name` = "' . pSQL($name) . '"
         AND ms.`id_shop` IN (' . implode(',', array_map('intval', $id_shops)) . ')');
         if ($result) {
-            return (bool) ($result['active'] && $result['shop_active']);
+            return $result['active'] && $result['shop_active'];
         } else {
             return false;
         }
@@ -265,13 +266,13 @@ class ModuleDataProvider
 
         try {
             $parser->parse(file_get_contents($file_path));
-        } catch (PhpParser\Error $exception) {
+        } catch (PhpParser\Error $error) {
             $this->logger->critical(
                 $this->translator->trans(
                     'Parse error detected in main class of module %module%: %parse_error%',
                     [
                         '%module%' => $name,
-                        '%parse_error%' => $exception->getMessage(),
+                        '%parse_error%' => $error->getMessage(),
                     ],
                     'Admin.Modules.Notification'
                 ),
@@ -290,13 +291,13 @@ class ModuleDataProvider
         $require_correct = function ($name) use ($file_path, $logger, $log_context_data) {
             try {
                 require_once $file_path;
-            } catch (Exception $e) {
+            } catch (Exception $exception) {
                 $logger->error(
                     $this->translator->trans(
                         'Error while loading file of module %module%. %error_message%',
                         [
                             '%module%' => $name,
-                            '%error_message%' => $e->getMessage(), ],
+                            '%error_message%' => $exception->getMessage(), ],
                         'Admin.Modules.Notification'
                     ),
                     $log_context_data

@@ -140,6 +140,7 @@ final class DeleteCartRuleFromOrderHandler extends AbstractOrderHandler implemen
 
                 return new OrderDetail($giftOrderDetailId);
             }
+
             // keep the first one for fallback
             $fallbackOrderDetailId ??= $orderDetail['id_order_detail'];
         }

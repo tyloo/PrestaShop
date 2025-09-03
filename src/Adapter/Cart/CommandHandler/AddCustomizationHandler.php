@@ -142,6 +142,7 @@ final class AddCustomizationHandler extends AbstractCartHandler implements AddCu
         if (!($tmpName = tempnam(_PS_TMP_IMG_DIR_, 'PS')) || !copy($file->getPathname(), $tmpName)) {
             throw new FileUploadException('An error occurred during the image upload process.');
         }
+
         $fileName = md5(uniqid('', true));
         $resized = ImageManager::resize($tmpName, _PS_UPLOAD_DIR_ . $fileName)
             && ImageManager::resize(
@@ -171,7 +172,7 @@ final class AddCustomizationHandler extends AbstractCartHandler implements AddCu
     {
         $maxFileSize = (int) Configuration::get('PS_PRODUCT_PICTURE_MAX_SIZE');
 
-        if ((int) $maxFileSize > 0 && $file->getSize() > (int) $maxFileSize) {
+        if ($maxFileSize > 0 && $file->getSize() > $maxFileSize) {
             throw new FileUploadException(sprintf('Image is too large (%s kB). Maximum allowed: %s kB', $file->getSize() / 1024, $maxFileSize / 1024), UPLOAD_ERR_FORM_SIZE);
         }
 

@@ -106,6 +106,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
                 );
             }
         }
+
         $this->arrayAccessIterator = $this->arrayAccessList->getIterator();
     }
 
@@ -263,6 +264,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
                         $methodName = $this->arrayAccessList[$index]['value'];
                         $this->methodCacheResults[$index] = $this->{$methodName}();
                     }
+
                     $result = $this->methodCacheResults[$index];
 
                     break;
@@ -274,6 +276,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
                         $methodName = $this->arrayAccessList[$index]['value'];
                         $this->methodCacheResults[$index] = $methodName();
                     }
+
                     $result = $this->methodCacheResults[$index];
 
                     break;

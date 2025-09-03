@@ -61,8 +61,8 @@ final class GetCreditSlipIdsByDateRangeHandler implements GetCreditSlipIdsByDate
             foreach ($ids as $id) {
                 $creditSlipIds[] = new CreditSlipId($id);
             }
-        } catch (PrestaShopException $e) {
-            throw new CreditSlipException('Something went wrong when trying to get OrderSlip ids by date range', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CreditSlipException('Something went wrong when trying to get OrderSlip ids by date range', 0, $prestaShopException);
         }
 
         return $creditSlipIds;

@@ -48,12 +48,12 @@ final class DeleteSupplierHandler extends AbstractDeleteSupplierHandler implemen
         $supplierId = $command->getSupplierId();
         try {
             $this->removeSupplier($supplierId);
-        } catch (SupplierException $e) {
-            if (SupplierException::class === $e::class) {
+        } catch (SupplierException $supplierException) {
+            if (SupplierException::class === $supplierException::class) {
                 throw new CannotDeleteSupplierException(sprintf('Cannot delete Supplier object with id "%s".', $supplierId->getValue()), CannotDeleteSupplierException::FAILED_DELETE);
             }
 
-            throw $e;
+            throw $supplierException;
         }
     }
 }

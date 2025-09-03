@@ -61,6 +61,7 @@ final class ToggleLanguageStatusHandler extends AbstractLanguageHandler implemen
         if (false === $language->update()) {
             throw new LanguageException(sprintf('Failed to toggle language "%s" to status %s', $language->id, var_export($command->getStatus(), true)));
         }
+
         $this->robotsTextFileGenerator->generateFile();
     }
 }

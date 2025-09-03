@@ -395,6 +395,7 @@ final class ProductImportHandler extends AbstractImportHandler
                 if ($product->category && !is_array($product->category)) {
                     continue;
                 }
+
                 $product->category[] = $tmp;
             }
         }
@@ -426,6 +427,7 @@ final class ProductImportHandler extends AbstractImportHandler
         if (empty($multipleValueSeparator)) {
             return;
         }
+
         $productShops = explode($multipleValueSeparator, (string) $product->shop);
 
         if (is_array($productShops)) {
@@ -924,6 +926,7 @@ final class ProductImportHandler extends AbstractImportHandler
             } else {
                 $specificPrice = new SpecificPrice();
             }
+
             $specificPrice->id_product = (int) $product->id;
             $specificPrice->id_specific_price_rule = 0;
             $specificPrice->id_shop = $shopId;
@@ -969,17 +972,20 @@ final class ProductImportHandler extends AbstractImportHandler
                 if (is_string($product->tags) && !empty($multipleValueSeparator)) {
                     $product->tags = explode($multipleValueSeparator, $product->tags);
                 }
+
                 if (is_array($product->tags)) {
                     foreach ($product->tags as $key => $tag) {
                         if (!empty($tag)) {
                             $product->tags[$key] = trim((string) $tag);
                         }
                     }
+
                     $tags[$this->languageId] = $product->tags;
                     $product->tags = $tags;
                 }
             }
         }
+
         // Delete tags for this id product, for no duplicating error
         Tag::deleteTagsForProduct($product->id);
 
@@ -1147,6 +1153,7 @@ final class ProductImportHandler extends AbstractImportHandler
             if (empty($singleFeature)) {
                 continue;
             }
+
             $feature = explode(':', $singleFeature);
             $featureName = isset($feature[0]) ? trim($feature[0]) : '';
             $featureValue = isset($feature[1]) ? trim($feature[1]) : '';
@@ -1159,6 +1166,7 @@ final class ProductImportHandler extends AbstractImportHandler
                 if ($importConfig->forceIds() || $importConfig->matchReferences()) {
                     $productId = (int) $product->id;
                 }
+
                 $featureValueId = (int) FeatureValue::addFeatureValueImport(
                     $featureId,
                     $featureValue,

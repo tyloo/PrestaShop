@@ -164,6 +164,7 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
                 // there is not yet a 'free shipping' cart rule available in the system so we create it
                 $freeShippingCartRule = $this->createCartRule($cart, $backOfficeOrderCode);
             }
+
             $cart->addCartRule((int) $freeShippingCartRule->id);
 
             return;

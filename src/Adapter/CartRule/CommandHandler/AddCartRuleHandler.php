@@ -107,7 +107,7 @@ class AddCartRuleHandler implements AddCartRuleHandlerInterface
         }
 
         $minimumAmount = $command->getMinimumAmount();
-        if ($minimumAmount) {
+        if ($minimumAmount !== null) {
             $cartRule->minimum_amount = (float) (string) $minimumAmount->getAmount();
             $cartRule->minimum_amount_currency = $minimumAmount->getCurrencyId()->getValue();
             $cartRule->minimum_amount_shipping = $command->isMinimumAmountShippingIncluded();

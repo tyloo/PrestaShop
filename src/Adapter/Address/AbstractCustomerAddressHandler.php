@@ -41,8 +41,8 @@ abstract class AbstractCustomerAddressHandler extends AbstractAddressHandler
     {
         try {
             $requiredFields = (new CustomerAddress())->getFieldsRequiredDatabase();
-        } catch (PrestaShopDatabaseException $e) {
-            throw new AddressException('Something went wrong while retrieving required fields for address', 0, $e);
+        } catch (PrestaShopDatabaseException $prestaShopDatabaseException) {
+            throw new AddressException('Something went wrong while retrieving required fields for address', 0, $prestaShopDatabaseException);
         }
 
         if (empty($requiredFields)) {

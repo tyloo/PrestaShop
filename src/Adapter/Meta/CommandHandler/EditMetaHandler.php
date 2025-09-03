@@ -93,8 +93,8 @@ final class EditMetaHandler implements EditMetaHandlerInterface
             if (false === $entity->update()) {
                 throw new CannotEditMetaException(sprintf('Error occurred when updating Meta with id "%s"', $command->getMetaId()->getValue()));
             }
-        } catch (PrestaShopException $exception) {
-            throw new CannotEditMetaException(sprintf('Error occurred when updating Meta with id "%s"', $command->getMetaId()->getValue()), 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CannotEditMetaException(sprintf('Error occurred when updating Meta with id "%s"', $command->getMetaId()->getValue()), 0, $prestaShopException);
         }
     }
 

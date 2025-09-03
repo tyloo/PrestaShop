@@ -144,7 +144,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     public function getByAssociation(SupplierAssociationInterface $association): ProductSupplier
     {
         $productSupplierId = $this->findIdByAssociation($association);
-        if (!$productSupplierId) {
+        if ($productSupplierId === null) {
             throw new ProductSupplierNotAssociatedException(sprintf(
                 'Could not find a ProductSupplier matching this association: %s',
                 (string) $association
@@ -361,7 +361,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        if ($combinationId) {
+        if ($combinationId !== null) {
             $qb->andWhere('ps.id_product_attribute = :combinationId')
                 ->setParameter('combinationId', $combinationId->getValue())
             ;

@@ -163,6 +163,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
                 $this->renderingContent[$listenerName] = $event->popContent();
             }
         }
+
         if ($event instanceof RenderingHookEvent) {
             $event->setContent($this->renderingContent);
             $this->renderingContent = [];

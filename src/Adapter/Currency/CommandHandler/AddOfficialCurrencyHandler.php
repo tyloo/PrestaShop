@@ -89,8 +89,8 @@ final class AddOfficialCurrencyHandler extends AbstractCurrencyHandler implement
             $entity->precision = $this->getPrecision($command);
 
             $this->addEntity($entity, $command);
-        } catch (PrestaShopException $exception) {
-            throw new CurrencyException('Failed to create new currency', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CurrencyException('Failed to create new currency', 0, $prestaShopException);
         }
 
         return new CurrencyId((int) $entity->id);

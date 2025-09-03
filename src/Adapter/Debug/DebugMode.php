@@ -34,10 +34,15 @@ use Tools;
 class DebugMode
 {
     public const DEBUG_MODE_SUCCEEDED = 0;
+
     public const DEBUG_MODE_ERROR_NO_READ_ACCESS = 1;
+
     public const DEBUG_MODE_ERROR_NO_READ_ACCESS_CUSTOM = 2;
+
     public const DEBUG_MODE_ERROR_NO_WRITE_ACCESS = 3;
+
     public const DEBUG_MODE_ERROR_NO_WRITE_ACCESS_CUSTOM = 4;
+
     public const DEBUG_MODE_ERROR_NO_DEFINITION_FOUND = 5;
 
     /**
@@ -104,12 +109,12 @@ class DebugMode
         $debug_cookie_name = stripslashes((string) $configuration['debug_cookie_name']);
 
         if (empty($configuration['debug_cookie_value'])) {
-            return "isset(\$_COOKIE['$debug_cookie_name'])";
+            return sprintf("isset(\$_COOKIE['%s'])", $debug_cookie_name);
         }
 
         $debug_cookie_value = stripslashes((string) $configuration['debug_cookie_value']);
 
-        return "isset(\$_COOKIE['$debug_cookie_name']) && \$_COOKIE['$debug_cookie_name'] === '$debug_cookie_value'";
+        return sprintf("isset(\$_COOKIE['%s']) && \$_COOKIE['%s'] === '%s'", $debug_cookie_name, $debug_cookie_name, $debug_cookie_value);
     }
 
     /**
@@ -169,7 +174,7 @@ class DebugMode
             return self::DEBUG_MODE_ERROR_NO_DEFINITION_FOUND;
         }
 
-        $fileContent = preg_replace('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', 'define(\'_PS_MODE_DEV_\', ' . $value . ');', $fileContent);
+        $fileContent = preg_replace('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', "define('_PS_MODE_DEV_', " . $value . ');', $fileContent);
         if (!@file_put_contents($filename, $fileContent)) {
             return self::DEBUG_MODE_ERROR_NO_WRITE_ACCESS;
         }
@@ -197,7 +202,8 @@ class DebugMode
         if (!preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $cleanedFileContent)) {
             return self::DEBUG_MODE_ERROR_NO_DEFINITION_FOUND;
         }
-        $fileContent = preg_replace('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', 'define(\'_PS_MODE_DEV_\', ' . $value . ');', $fileContent);
+
+        $fileContent = preg_replace('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', "define('_PS_MODE_DEV_', " . $value . ');', $fileContent);
 
         if (!@file_put_contents($customFileName, $fileContent)) {
             return self::DEBUG_MODE_ERROR_NO_WRITE_ACCESS_CUSTOM;

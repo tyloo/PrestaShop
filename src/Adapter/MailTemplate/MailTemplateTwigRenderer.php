@@ -151,12 +151,14 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
         if ($htmlPath !== null && preg_match('#mails/themes/([^/]+)/#', $htmlPath, $matches)) {
             $themeName = $matches[1];
         }
+
         $templateTransformations = new TransformationCollection();
         /** @var TransformationInterface $transformation */
         foreach ($this->transformations as $transformation) {
             if ($transformation::class == \PrestaShop\PrestaShop\Core\MailTemplate\Transformation\CSSInlineTransformation::class && $themeName == 'modern') {
                 continue;
             }
+
             if ($templateType !== $transformation->getType()) {
                 continue;
             }

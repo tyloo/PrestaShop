@@ -54,8 +54,8 @@ final class BulkDisableCmsPageHandler extends AbstractCmsPageHandler implements 
     {
         try {
             $this->disableCmsPages($command);
-        } catch (PrestaShopException $exception) {
-            throw new CmsPageException('An error occurred when bulk disabling the cms pages', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageException('An error occurred when bulk disabling the cms pages', 0, $prestaShopException);
         }
     }
 

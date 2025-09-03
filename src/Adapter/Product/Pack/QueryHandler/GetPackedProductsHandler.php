@@ -128,6 +128,7 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
                 $combinationIds[] = new CombinationId($combinationId);
             }
         }
+
         $attributesInformations = $this->attributeRepository->getAttributesInfoByCombinationIds(
             $combinationIds,
             new LanguageId($this->languageId)
@@ -146,10 +147,12 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
                     $shopConstraint->getShopId()
                 );
             }
+
             $name = $packedItem['name'];
             if ($combinationId > 0) {
                 $name = $this->combinationNameBuilder->buildFullName($name, $attributesInformations[$combinationId]);
             }
+
             $reference = '';
             if (!empty($packedItem['combination_reference']) || !empty($packedItem['product_reference'])) {
                 $reference = empty($packedItem['combination_reference']) ? $packedItem['product_reference'] : $packedItem['combination_reference'];
@@ -159,7 +162,7 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
             $packedProducts[] = new PackedProductDetails(
                 (int) $packedItem['id_product_item'],
                 (int) $packedItem['quantity'],
-                (int) $combinationId,
+                $combinationId,
                 (string) $name,
                 (string) $reference,
                 $coverUrl

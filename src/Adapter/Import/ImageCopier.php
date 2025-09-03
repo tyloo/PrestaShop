@@ -93,6 +93,7 @@ final class ImageCopier
             foreach ($parts as &$part) {
                 $part = rawurlencode($part);
             }
+
             unset($part);
             $parsedUrl['path'] = '/' . implode('/', $parts);
         }
@@ -115,8 +116,10 @@ final class ImageCopier
                 return false;
             }
 
-            $targetWidth = $targetHeight = 0;
-            $sourceWidth = $sourceHeight = 0;
+            $targetWidth = 0;
+            $targetHeight = 0;
+            $sourceWidth = 0;
+            $sourceHeight = 0;
             $error = 0;
             ImageManager::resize(
                 $tmpFile,
@@ -159,6 +162,7 @@ final class ImageCopier
                         if ($targetWidth <= $sourceWidth && $targetHeight <= $sourceHeight) {
                             $pathInfos[] = [$targetWidth, $targetHeight, $path . '-' . stripslashes((string) $imageType['name']) . '.jpg'];
                         }
+
                         if ($entity == 'products') {
                             $file = $tmpDir . 'product_mini_' . (int) $entityId . '.jpg';
                             if (is_file($file)) {
@@ -186,6 +190,7 @@ final class ImageCopier
 
             return false;
         }
+
         unlink($origTmpfile);
 
         return true;

@@ -55,8 +55,8 @@ class GetStoreForEditingHandler implements GetStoreForEditingHandlerInterface
             if (0 >= $store->id) {
                 throw new StoreNotFoundException(sprintf('Store object with id %d was not found', $query->getStoreId()->getValue()));
             }
-        } catch (PrestaShopException $e) {
-            throw new StoreException(sprintf('An unexpected error occurred when retrieving store with id %d', $query->getStoreId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new StoreException(sprintf('An unexpected error occurred when retrieving store with id %d', $query->getStoreId()->getValue()), 0, $prestaShopException);
         }
 
         return new StoreForEditing($store->id, $store->active);

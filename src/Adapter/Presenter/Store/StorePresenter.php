@@ -76,6 +76,7 @@ class StorePresenter
         if (empty($store['id_store'])) {
             $store['id_store'] = $store['id'];
         }
+
         if (empty($store['id'])) {
             $store['id'] = $store['id_store'];
         }

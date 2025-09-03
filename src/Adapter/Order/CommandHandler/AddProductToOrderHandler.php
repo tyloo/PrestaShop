@@ -564,9 +564,11 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
             if ($command->getProductId()->getValue() !== (int) $orderDetail['product_id']) {
                 continue;
             }
+
             if (!empty($command->getCombinationId()) && $command->getCombinationId()->getValue() !== (int) $orderDetail['product_attribute_id']) {
                 continue;
             }
+
             $invoicesContainingProduct[] = (int) $orderDetail['id_order_invoice'];
         }
 

@@ -52,9 +52,11 @@ final class EditTaxHandler extends AbstractTaxHandler implements EditTaxHandlerI
         if (null !== $command->getLocalizedNames()) {
             $tax->name = $command->getLocalizedNames();
         }
+
         if (null !== $command->getRate()) {
             $tax->rate = $command->getRate();
         }
+
         if (null !== $command->isEnabled()) {
             $tax->active = $command->isEnabled();
         }

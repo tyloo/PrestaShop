@@ -84,11 +84,11 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getImages(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             throw new InvalidShopConstraintException('Shop group constraint is not supported');
         }
 
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             $this->productRepository->assertProductIsAssociatedToShop($productId, $shopConstraint->getShopId());
         }
 
@@ -132,7 +132,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                 ->addGroupBy('i.id_image')
             ;
 
-            if ($shopConstraint->getShopGroupId()) {
+            if ($shopConstraint->getShopGroupId() !== null) {
                 $qb
                     ->innerJoin(
                         'img_shop',
@@ -172,7 +172,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     public function getDefaultImageId(ProductId $productId, ShopId $shopId): ?ImageId
     {
         $coverId = $this->findCoverId($productId, $shopId);
-        if ($coverId) {
+        if ($coverId !== null) {
             return $coverId;
         }
 
@@ -250,6 +250,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             if (!isset($imageIds[$id])) {
                 $imageIds[$id] = new ImageId($id);
             }
+
             $imagesIdsByCombinationIds[(int) $result['id_product_attribute']][] = $imageIds[$id];
         }
 
@@ -278,7 +279,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
 
     public function getByShopConstraint(ImageId $imageId, ShopConstraint $shopConstraint): Image
     {
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             return $this->get($imageId, $shopConstraint->getShopId());
         }
 
@@ -327,7 +328,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('imageId', $imageId->getValue())
         ;
 
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             $qb
                 ->innerJoin(
                     '`is`',
@@ -494,6 +495,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             if (isset($productImagesByShop[$shopId->getValue()])) {
                 continue;
             }
+
             $productImagesByShop[$shopId->getValue()] = [];
         }
 
@@ -592,6 +594,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             if ($newValue === $image['cover']) {
                 continue;
             }
+
             $this->connection->createQueryBuilder()
                 ->update($this->dbPrefix . 'image_shop')
                 ->set($this->dbPrefix . 'image_shop.cover', ':cover')

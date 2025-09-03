@@ -67,6 +67,7 @@ class GetReferenceCurrencyHandler implements GetReferenceCurrencyHandlerInterfac
                 $localizedNames[$language->getId()] = $query->getIsoCode()->getValue();
                 $localizedSymbols[$language->getId()] = $query->getIsoCode()->getValue();
             }
+
             $localizedPatterns[$language->getId()] = $locale->getCurrencyPattern();
         }
 

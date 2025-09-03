@@ -103,11 +103,11 @@ class ProductPackUpdater
                     ProductPackConstraintException::CANNOT_ADD_PACK_INTO_PACK
                 );
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when asserting if product #%d is pack', $productId),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }

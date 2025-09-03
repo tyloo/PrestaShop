@@ -88,6 +88,7 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
         if (!$temporaryImageName) {
             throw new ImageUploadException('Failed to create temporary category thumbnail image file');
         }
+
         // move_uploaded_file -  also checks that the given file is a file that was uploaded via the POST,
         // this prevents for example that a local file is moved
         if (!move_uploaded_file($image->getPathname(), $temporaryImageName)) {

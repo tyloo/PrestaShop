@@ -85,6 +85,7 @@ final class UpdateCartCarrierHandler extends AbstractCartHandler implements Upda
         if (!Validate::isLoadedObject($carrier) || (int) $carrier->id !== $carrierId) {
             throw new CartConstraintException(sprintf('Carrier with id "%d" was not found', $carrierId), CartConstraintException::INVALID_CARRIER);
         }
+
         if (!$carrier->active) {
             throw new CartConstraintException(sprintf('Carrier with id "%d" is not active', $carrierId), CartConstraintException::INVALID_CARRIER);
         }

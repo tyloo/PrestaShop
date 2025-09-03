@@ -73,6 +73,7 @@ class CartProductUpdate
         if ($this->getProductId()->getValue() !== $cartProductUpdate->getProductId()->getValue()) {
             return false;
         }
+
         $combinationIdValue = null !== $this->getCombinationId() ? $this->getCombinationId()->getValue() : 0;
         $checkedCombinationIdValue = null !== $cartProductUpdate->getCombinationId() ? $cartProductUpdate->getCombinationId()->getValue() : 0;
 

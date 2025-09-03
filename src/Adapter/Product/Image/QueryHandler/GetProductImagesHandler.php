@@ -61,7 +61,7 @@ final class GetProductImagesHandler implements GetProductImagesHandlerInterface
      */
     public function handle(GetProductImages $query): array
     {
-        if (!$query->getShopConstraint()->getShopId()) {
+        if ($query->getShopConstraint()->getShopId() === null) {
             throw new InvalidShopConstraintException('Only single shop constraint is supported');
         }
 
@@ -78,7 +78,7 @@ final class GetProductImagesHandler implements GetProductImagesHandlerInterface
         $productImages = [];
         foreach ($images as $image) {
             // if for some reason there is no cover, we set first found image as cover to avoid further errors
-            if (!$coverId) {
+            if ($coverId === null) {
                 $imageId = new ImageId($image->id);
                 $coverId = $imageId;
             }

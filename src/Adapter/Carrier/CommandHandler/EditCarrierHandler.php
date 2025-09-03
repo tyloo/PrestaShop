@@ -65,30 +65,39 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
         if (null !== $command->getName()) {
             $newCarrier->name = $command->getName();
         }
+
         if (null !== $command->getGrade()) {
             $newCarrier->grade = $command->getGrade();
         }
+
         if (null !== $command->getTrackingUrl()) {
             $newCarrier->url = $command->getTrackingUrl();
         }
+
         if (null !== $command->getPosition()) {
             $newCarrier->position = $command->getPosition();
         }
+
         if (null !== $command->getActive()) {
             $newCarrier->active = $command->getActive();
         }
+
         if (null !== $command->getLocalizedDelay()) {
             $newCarrier->delay = $command->getLocalizedDelay();
         }
+
         if (null !== $command->getMaxWidth()) {
             $newCarrier->max_width = $command->getMaxWidth();
         }
+
         if (null !== $command->getMaxHeight()) {
             $newCarrier->max_height = $command->getMaxHeight();
         }
+
         if (null !== $command->getMaxDepth()) {
             $newCarrier->max_depth = $command->getMaxDepth();
         }
+
         if (null !== $command->getMaxWeight()) {
             $newCarrier->max_weight = $command->getMaxWeight();
         }
@@ -112,7 +121,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             }
         }
 
-        if ($command->getShippingMethod()) {
+        if ($command->getShippingMethod() !== null) {
             $newCarrier->shipping_method = $command->getShippingMethod()->getValue();
         }
 
@@ -124,9 +133,11 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
         if ($command->getAssociatedGroupIds()) {
             $this->carrierValidator->validateGroupsExist($command->getAssociatedGroupIds());
         }
+
         if ($command->getLogoPathName() !== null && $command->getLogoPathName() !== '') {
             $this->carrierValidator->validateLogoUpload($command->getLogoPathName());
         }
+
         if (!empty($command->getAssociatedShopIds())) {
             foreach ($command->getAssociatedShopIds() as $shopId) {
                 $this->shopRepository->assertShopExists($shopId);

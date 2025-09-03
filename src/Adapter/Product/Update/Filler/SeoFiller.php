@@ -105,7 +105,7 @@ class SeoFiller implements ProductFillerInterface
 
             if (!isset($updatableProperties['link_rewrite'])
                 // strict false is important, because array_search could also return 0 as found item index
-                || false === array_search($langId, $updatableProperties['link_rewrite'], true)
+                || !in_array($langId, $updatableProperties['link_rewrite'], true)
             ) {
                 // we only add updatable property for lang if it is not yet added
                 $updatableProperties['link_rewrite'][] = $langId;

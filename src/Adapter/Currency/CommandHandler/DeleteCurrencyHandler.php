@@ -80,8 +80,8 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
             if (false === $entity->delete()) {
                 throw new CannotDeleteCurrencyException(sprintf('Unable to delete currency object with id "%s"', $command->getCurrencyId()->getValue()));
             }
-        } catch (PrestaShopException $e) {
-            throw new CurrencyException(sprintf('An error occurred when  deleting Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CurrencyException(sprintf('An error occurred when  deleting Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
         }
     }
 

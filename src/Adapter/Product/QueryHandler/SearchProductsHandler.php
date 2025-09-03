@@ -108,8 +108,8 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
     {
         $computingPrecision = new ComputingPrecision();
         $currencyPrecision = $computingPrecision->getPrecision((int) $currency->precision);
-
-        $order = $address = null;
+        $order = null;
+        $address = null;
         if (null !== $query->getOrderId()) {
             $order = $this->getOrder($query->getOrderId());
             $orderAddressId = $order->{Configuration::get('PS_TAX_ADDRESS_TYPE', null, null, $order->id_shop)};

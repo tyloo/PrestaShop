@@ -108,14 +108,14 @@ class LegacyHookSubscriber implements EventSubscriberInterface
     public function __call($name, $args)
     {
         if (!str_starts_with($name, 'call_')) {
-            throw new BadMethodCallException('The call to \'' . $name . '\' is not recognized.');
+            throw new BadMethodCallException("The call to '" . $name . "' is not recognized.");
         }
 
         $ids = explode('_', $name);
         array_shift($ids); // remove 'call'
 
         if (count($ids) !== 2) {
-            throw new BadMethodCallException('The call to \'' . $name . '\' is not recognized.');
+            throw new BadMethodCallException("The call to '" . $name . "' is not recognized.");
         }
 
         $moduleId = (int) $ids[1];

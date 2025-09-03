@@ -92,6 +92,7 @@ class StockMovementRepository
                 unset($result[$key]);
                 continue;
             }
+
             $result[$key]['delta_quantity'] = $totalQuantity;
         }
 
@@ -140,9 +141,9 @@ class StockMovementRepository
         $groupingCondition = 'sm.id_order IS NULL';
         $queryBuilder
             ->addSelect(
-                "MIN(@grouping_id := CASE WHEN @grouping_id IS NULL THEN $stockMovementId WHEN $groupingCondition THEN $stockMovementId ELSE @grouping_id END) grouping_id",
-                "CASE WHEN $groupingCondition THEN CONCAT('edition-', $stockMovementId) ELSE CONCAT('orders-', @grouping_id) END grouping_name",
-                "CASE WHEN $groupingCondition THEN 'edition' ELSE 'orders' END grouping_type"
+                sprintf('MIN(@grouping_id := CASE WHEN @grouping_id IS NULL THEN %s WHEN %s THEN %s ELSE @grouping_id END) grouping_id', $stockMovementId, $groupingCondition, $stockMovementId),
+                sprintf("CASE WHEN %s THEN CONCAT('edition-', %s) ELSE CONCAT('orders-', @grouping_id) END grouping_name", $groupingCondition, $stockMovementId),
+                sprintf("CASE WHEN %s THEN 'edition' ELSE 'orders' END grouping_type", $groupingCondition)
             )
             ->groupBy('grouping_name')
         ;

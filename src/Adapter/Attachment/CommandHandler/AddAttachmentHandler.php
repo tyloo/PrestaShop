@@ -91,8 +91,8 @@ final class AddAttachmentHandler extends AbstractAttachmentHandler implements Ad
             if (false === $attachment->add()) {
                 throw new CannotAddAttachmentException('Failed to add attachment');
             }
-        } catch (PrestaShopException $e) {
-            throw new AttachmentException('An unexpected error occurred when adding attachment', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new AttachmentException('An unexpected error occurred when adding attachment', 0, $prestaShopException);
         }
 
         return new AttachmentId($attachment->id);

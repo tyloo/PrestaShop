@@ -58,8 +58,8 @@ final class ToggleSupplierStatusHandler implements ToggleSupplierStatusHandlerIn
             if (false === $entity->toggleStatus()) {
                 throw new CannotToggleSupplierStatusException(sprintf('Unable to toggle supplier with id "%s"', $command->getSupplierId()->getValue()));
             }
-        } catch (PrestaShopException $exception) {
-            throw new SupplierException(sprintf('An error occurred when toggling status for supplier object with id "%s"', $command->getSupplierId()->getValue()), 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SupplierException(sprintf('An error occurred when toggling status for supplier object with id "%s"', $command->getSupplierId()->getValue()), 0, $prestaShopException);
         }
     }
 }

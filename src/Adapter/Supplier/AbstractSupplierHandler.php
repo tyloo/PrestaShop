@@ -53,8 +53,8 @@ abstract class AbstractSupplierHandler extends AbstractObjectModelHandler
     {
         try {
             $supplier = new Supplier($supplierId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new SupplierException('Failed to create new supplier', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SupplierException('Failed to create new supplier', 0, $prestaShopException);
         }
 
         if ($supplier->id !== $supplierId->getValue()) {
@@ -82,8 +82,8 @@ abstract class AbstractSupplierHandler extends AbstractObjectModelHandler
             if (null === $address->id_supplier) {
                 throw new AddressNotFoundException(sprintf('Address for supplier with id "%s" was not found', $supplierIdValue));
             }
-        } catch (PrestaShopException $e) {
-            throw new SupplierException('Failed to get supplier address', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SupplierException('Failed to get supplier address', 0, $prestaShopException);
         }
 
         return $address;

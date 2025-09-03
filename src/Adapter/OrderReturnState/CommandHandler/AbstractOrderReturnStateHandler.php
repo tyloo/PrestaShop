@@ -77,8 +77,8 @@ abstract class AbstractOrderReturnStateHandler
     {
         try {
             $OrderReturnState = new OrderReturnState($orderReturnStateId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new OrderReturnStateException('Failed to create new order return state', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new OrderReturnStateException('Failed to create new order return state', 0, $prestaShopException);
         }
 
         if ($OrderReturnState->id !== $orderReturnStateId->getValue()) {

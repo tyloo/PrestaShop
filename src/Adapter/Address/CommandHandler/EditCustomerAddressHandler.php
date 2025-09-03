@@ -64,9 +64,9 @@ final class EditCustomerAddressHandler extends AbstractAddressHandler implements
             if ($editedAddress->isUsed()) {
                 // Get a copy of current address
                 $copyAddress = new Address($editedAddress->id);
-
                 // Reset ID to force recreating a new address
-                $editedAddress->id = $editedAddress->id_address = null;
+                $editedAddress->id = null;
+                $editedAddress->id_address = null;
 
                 // We consider this address as necessarily NOT deleted, in case you were editing a deleted address
                 // from an order then the newly edited address should not be deleted, so that you can select it
@@ -74,6 +74,7 @@ final class EditCustomerAddressHandler extends AbstractAddressHandler implements
                 if (false === $editedAddress->save()) {
                     throw new CannotAddAddressException(sprintf('Failed to add new address "%s"', $command->getAddress()));
                 }
+
                 // Soft delete the former address
                 if (false === $copyAddress->delete()) {
                     throw new DeleteAddressException(sprintf('Cannot delete Address object with id "%s".', $copyAddress->id), DeleteAddressException::FAILED_DELETE);

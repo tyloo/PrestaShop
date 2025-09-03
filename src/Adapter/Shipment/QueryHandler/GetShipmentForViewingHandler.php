@@ -73,6 +73,7 @@ class GetShipmentForViewingHandler implements GetShipmentForViewingHandlerInterf
         if ($shipment === null) {
             throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $id));
         }
+
         $order = $this->orderRepository->get(new OrderId($shipment->getOrderId()));
         $carrier = $this->carrierRepository->get(new CarrierId($shipment->getCarrierId()));
         $address = $this->addressRepository->get(new AddressId($shipment->getAddressId()));

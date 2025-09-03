@@ -69,7 +69,7 @@ class ProductCustomizationFieldUpdater
 
         foreach ($customizationFields as $customizationField) {
             if ($customizationField->id) {
-                if ($shopConstraint->getShopId()) {
+                if ($shopConstraint->getShopId() !== null) {
                     $shopIds = [$shopConstraint->getShopId()];
                 } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
                     $shopIds = $shopConstraint->getShopIds();

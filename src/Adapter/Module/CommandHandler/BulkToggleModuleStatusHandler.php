@@ -71,6 +71,7 @@ class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInte
             if ($this->isDisablingAlreadyDisabledModule($command->getExpectedStatus(), $moduleName)) {
                 continue;
             }
+
             $modulesToUpdate[] = $moduleName;
         }
 

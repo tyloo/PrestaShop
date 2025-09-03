@@ -191,7 +191,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getByShopConstraint(ProductId $productId, ShopConstraint $shopConstraint): Product
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             return $this->getProductByShopGroup($productId, $shopConstraint->getShopGroupId());
         }
 
@@ -914,7 +914,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getShopIdsByConstraint(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             return $this->getAssociatedShopIdsFromGroup($productId, $shopConstraint->getShopGroupId());
         }
 
@@ -942,11 +942,11 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     {
         try {
             $product->loadStockData();
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when trying to load Product stock #%d', $product->id),
                 0,
-                $e
+                $prestaShopException
             );
         }
 
@@ -975,6 +975,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         if ($taxRulesGroupIdIsBeingUpdated && $taxRulesGroupId !== ProductTaxRulesGroupSettings::NONE_APPLIED) {
             $this->taxRulesGroupRepository->assertTaxRulesGroupExists(new TaxRulesGroupId($taxRulesGroupId));
         }
+
         if ($manufacturerIdIsBeingUpdated && $manufacturerId !== NoManufacturerId::NO_MANUFACTURER_ID) {
             $this->manufacturerRepository->assertManufacturerExists(new ManufacturerId($manufacturerId));
         }

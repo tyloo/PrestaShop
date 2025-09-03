@@ -74,6 +74,7 @@ final class AddOrderFromBackOfficeHandler extends AbstractOrderCommandHandler im
         if (false === $paymentModule) {
             throw new OrderException(sprintf('Payment method "%s" does not exist.', $paymentModule));
         }
+
         /** @var PaymentModule $paymentModule */
         $cart = new Cart($command->getCartId()->getValue());
 
@@ -112,8 +113,8 @@ final class AddOrderFromBackOfficeHandler extends AbstractOrderCommandHandler im
                 false,
                 $cart->secure_key
             );
-        } catch (Exception $e) {
-            throw new OrderException('Failed to add order. ' . $e->getMessage(), 0, $e);
+        } catch (Exception $exception) {
+            throw new OrderException('Failed to add order. ' . $exception->getMessage(), 0, $exception);
         } finally {
             $this->contextStateManager->restorePreviousContext();
         }
@@ -145,6 +146,7 @@ final class AddOrderFromBackOfficeHandler extends AbstractOrderCommandHandler im
         if ($oldMessage = Message::getMessageByCartId((int) $cart->id)) {
             $messageId = $oldMessage['id_message'];
         }
+
         $message = new Message((int) $messageId);
         $message->message = $orderMessage;
         $message->id_cart = (int) $cart->id;

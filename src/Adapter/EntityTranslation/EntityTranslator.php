@@ -111,7 +111,7 @@ class EntityTranslator implements EntityTranslatorInterface
             : '';
 
         // get table data
-        $sql = "SELECT * FROM `$tableNameSql` WHERE `id_lang` = $languageId"
+        $sql = sprintf('SELECT * FROM `%s` WHERE `id_lang` = %d', $tableNameSql, $languageId)
             . $shopWhere;
 
         $tableData = $this->db->executeS($sql, true, false);
@@ -150,9 +150,9 @@ class EntityTranslator implements EntityTranslatorInterface
                 $updateWhere = implode(' AND ', $updateWhere);
                 $updateFields = implode(', ', $updateFields);
 
-                $sql = "UPDATE `$tableNameSql`
-                    SET $updateFields
-                    WHERE $updateWhere AND `id_lang` = $languageId"
+                $sql = "UPDATE `{$tableNameSql}`
+                    SET {$updateFields}
+                    WHERE {$updateWhere} AND `id_lang` = {$languageId}"
                     . $shopWhere
                     . ' LIMIT 1';
 

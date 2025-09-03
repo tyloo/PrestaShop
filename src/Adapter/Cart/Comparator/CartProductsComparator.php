@@ -186,6 +186,7 @@ class CartProductsComparator
                     break;
                 }
             }
+
             if (0 !== $updateProduct->getDeltaQuantity()) {
                 $filteredUpdates[] = $updateProduct;
             }

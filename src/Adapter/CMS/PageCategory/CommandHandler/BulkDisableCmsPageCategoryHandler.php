@@ -62,8 +62,8 @@ final class BulkDisableCmsPageCategoryHandler implements BulkDisableCmsPageCateg
                     throw new CannotDisableCmsPageCategoryException(sprintf('Unable to disable cms category object with id "%s"', $cmsPageCategoryId->getValue()));
                 }
             }
-        } catch (PrestaShopException $e) {
-            throw new CmsPageCategoryException('Unexpected error occurred when handling bulk disable cms category', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CmsPageCategoryException('Unexpected error occurred when handling bulk disable cms category', 0, $prestaShopException);
         }
     }
 }

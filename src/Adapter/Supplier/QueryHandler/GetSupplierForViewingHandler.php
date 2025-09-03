@@ -183,6 +183,7 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
                 if (!$combinationSupplierInfo) {
                     continue;
                 }
+
                 $isoCode = Currency::getIsoCodeById((int) $combinationSupplierInfo['id_currency'])
                     ?: Currency::getIsoCodeById($this->defaultCurrencyId);
                 $formattedWholesalePrice = null !== $combinationSupplierInfo['product_supplier_price_te']

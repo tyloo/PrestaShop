@@ -57,11 +57,11 @@ class ToggleStateStatusHandler implements ToggleStateStatusHandlerInterface
             if (false === $state->toggleStatus()) {
                 throw new CannotToggleStateStatusException(sprintf('Unable to toggle status of state with id "%d"', $command->getStateId()->getValue()));
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new StateException(
                 sprintf('An error occurred when toggling status for state with id "%d"', $command->getStateId()->getValue()),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }

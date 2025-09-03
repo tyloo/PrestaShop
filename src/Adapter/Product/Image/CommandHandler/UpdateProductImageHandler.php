@@ -60,7 +60,7 @@ class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
     {
         $shopConstraint = $command->getShopConstraint();
 
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             throw new InvalidShopConstraintException('Shop group constraint is not supported');
         }
 

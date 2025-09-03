@@ -71,12 +71,14 @@ final class BulkDeleteLanguagesHandler extends AbstractLanguageHandler implement
                     DefaultLanguageException::CANNOT_DELETE_DEFAULT_ERROR
                 );
             }
+
             $this->assertLanguageIsNotInUse($language);
 
             if (false === $language->delete()) {
                 throw new LanguageException(sprintf('Failed to delete language "%s"', $language->iso_code));
             }
         }
+
         $this->robotsTextFileGenerator->generateFile();
     }
 }

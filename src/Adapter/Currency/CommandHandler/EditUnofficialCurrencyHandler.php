@@ -67,14 +67,16 @@ final class EditUnofficialCurrencyHandler extends AbstractCurrencyHandler implem
             if (0 >= $entity->id) {
                 throw new CurrencyNotFoundException(sprintf('Currency object with id "%s" was not found for currency update', $command->getCurrencyId()->getValue()));
             }
+
             $this->verify($entity, $command);
 
             if (null !== $command->getIsoCode()) {
                 $entity->iso_code = $command->getIsoCode()->getValue();
             }
+
             $this->updateEntity($entity, $command);
-        } catch (PrestaShopException $exception) {
-            throw new CurrencyException(sprintf('An error occurred when updating currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CurrencyException(sprintf('An error occurred when updating currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
         }
     }
 
@@ -96,6 +98,7 @@ final class EditUnofficialCurrencyHandler extends AbstractCurrencyHandler implem
                 $this->validator->assertCurrencyIsNotAvailableInDatabase($command->getIsoCode()->getValue());
             }
         }
+
         $this->validator->assertDefaultCurrencyIsNotBeingRemovedOrDisabledFromShop($entity, $command);
     }
 }

@@ -50,8 +50,8 @@ abstract class AbstractTaxHandler
     {
         try {
             $tax = new Tax($taxId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new TaxException('Failed to create new tax', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new TaxException('Failed to create new tax', 0, $prestaShopException);
         }
 
         if ($tax->id !== $taxId->getValue()) {

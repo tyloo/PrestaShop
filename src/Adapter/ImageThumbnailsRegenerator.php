@@ -43,6 +43,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ImageThumbnailsRegenerator
 {
     private int $maxExecutionTime = 7200;
+
     private int $startTime = 0;
 
     public function __construct(
@@ -78,6 +79,7 @@ class ImageThumbnailsRegenerator
         foreach ($types as $type) {
             $regexTypes[] = $type->getName();
         }
+
         $regexStandard = '/^[0-9]+(|_thumb)\-(' . implode('|', $regexTypes) . ')(|2x)\.(' . implode('|', ImageFormatConfiguration::SUPPORTED_FORMATS) . ')$/';
         $regexPlaceholders = '/^([[:lower:]]{2})\-default\-(' . implode('|', $regexTypes) . ')(|2x)\.(' . implode('|', ImageFormatConfiguration::SUPPORTED_FORMATS) . ')$/';
         $regexProducts = '/^[0-9]+\-(' . implode('|', $regexTypes) . ')(|2x)\.(' . implode('|', ImageFormatConfiguration::SUPPORTED_FORMATS) . ')$/';
@@ -219,6 +221,7 @@ class ImageThumbnailsRegenerator
                         'Admin.Design.Notification'
                     );
                 }
+
                 if (time() - $this->startTime > $this->maxExecutionTime - 4) { // stop 4 seconds before the tiemout, just enough time to process the end of the page on a slow server
                     return ['timeout'];
                 }

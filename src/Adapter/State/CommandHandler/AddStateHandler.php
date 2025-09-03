@@ -69,8 +69,8 @@ class AddStateHandler implements AddStateHandlerInterface
             if (false === $state->add()) {
                 throw new CannotAddStateException('Failed to add state');
             }
-        } catch (PrestaShopException $e) {
-            throw new StateException('An unexpected error occurred when adding state', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new StateException('An unexpected error occurred when adding state', 0, $prestaShopException);
         }
 
         return new StateId((int) $state->id);

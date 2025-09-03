@@ -90,8 +90,8 @@ final class AddMetaHandler implements AddMetaHandlerInterface
             if (0 >= $entity->id) {
                 throw new CannotAddMetaException(sprintf('Invalid entity id after creation: %s', $entity->id));
             }
-        } catch (PrestaShopException $exception) {
-            throw new MetaException('Failed to create meta entity', 0, $exception);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new MetaException('Failed to create meta entity', 0, $prestaShopException);
         }
 
         $this->hookDispatcher->dispatchWithParameters('actionAdminMetaSave');

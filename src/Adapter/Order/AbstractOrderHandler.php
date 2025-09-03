@@ -57,14 +57,14 @@ abstract class AbstractOrderHandler
     {
         try {
             $order = new Order($orderId->getValue());
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new OrderException(
                 sprintf(
                     'Error occured when trying to get order object #%s',
                     $orderId->getValue()
                 ),
                 0,
-                $e
+                $prestaShopException
             );
         }
 

@@ -57,7 +57,7 @@ final class UpdateProductPriceInCartHandler extends AbstractCartHandler implemen
         $specificPrice->id_country = 0;
         $specificPrice->id_group = 0;
         $specificPrice->id_customer = (int) $cart->id_customer;
-        $specificPrice->id_product = (int) $command->getProductId()->getValue();
+        $specificPrice->id_product = $command->getProductId()->getValue();
         $specificPrice->id_product_attribute = (int) $command->getCombinationId();
         $specificPrice->price = $command->getPrice();
         $specificPrice->from_quantity = 1;

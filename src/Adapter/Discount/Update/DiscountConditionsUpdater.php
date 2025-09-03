@@ -164,6 +164,7 @@ class DiscountConditionsUpdater
                     $productRuleValues[] = sprintf('(%d, %d)', $productRuleId, $itemId);
                     $checkedIds[] = $itemId;
                 }
+
                 $this->connection->prepare(sprintf(
                     'INSERT INTO %s (id_product_rule, id_item) VALUES %s',
                     $this->dbPrefix . 'cart_rule_product_rule_value',
@@ -172,6 +173,7 @@ class DiscountConditionsUpdater
                 )->executeStatement();
             }
         }
+
         $discount->product_restriction = !empty($productRuleGroups);
 
         return ['product_restriction'];

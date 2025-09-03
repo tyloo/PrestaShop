@@ -156,6 +156,7 @@ class ProductShopUpdater
                 $this->combinationStockUpdater->update($combinationId, $stockProperties, $targetConstraint);
             }
         }
+
         $this->combinationRepository->updateCombinationOutOfStockType($productId, $outOfStockType, $targetConstraint);
     }
 
@@ -198,6 +199,7 @@ class ProductShopUpdater
             if (in_array((int) $image->id, $targetImageIds, true)) {
                 continue;
             }
+
             $this->productImageRepository->associateImageToShop($image, $targetShopId);
         }
     }
@@ -217,7 +219,7 @@ class ProductShopUpdater
             $this->combinationRepository->copyToShop($shopCombinationId, $sourceShopId, $targetShopId);
         }
 
-        if (!$this->combinationRepository->findDefaultCombinationIdForShop($productId, $targetShopId)) {
+        if ($this->combinationRepository->findDefaultCombinationIdForShop($productId, $targetShopId) === null) {
             $shopConstraint = ShopConstraint::shop($targetShopId->getValue());
             $firstCombinationId = $this->combinationRepository->findFirstCombinationId($productId, $shopConstraint);
             $this->defaultCombinationUpdater->setDefaultCombination($firstCombinationId, $shopConstraint);

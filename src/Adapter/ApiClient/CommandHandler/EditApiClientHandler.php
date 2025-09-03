@@ -53,8 +53,8 @@ class EditApiClientHandler implements EditApiClientCommandHandlerInterface
     {
         try {
             $apiClient = $this->repository->getById($command->getApiClientId()->getValue());
-        } catch (NoResultException $e) {
-            throw new ApiClientNotFoundException(sprintf('Could not find Api client %s', $command->getClientId()), 0, $e);
+        } catch (NoResultException $noResultException) {
+            throw new ApiClientNotFoundException(sprintf('Could not find Api client %s', $command->getClientId()), 0, $noResultException);
         }
 
         if (!is_null($command->getClientId())) {
@@ -93,8 +93,8 @@ class EditApiClientHandler implements EditApiClientCommandHandlerInterface
 
         try {
             $this->repository->save($apiClient);
-        } catch (ORMException $e) {
-            throw new CannotUpdateApiClientException('Could not update Api client', 0, $e);
+        } catch (ORMException $ormException) {
+            throw new CannotUpdateApiClientException('Could not update Api client', 0, $ormException);
         }
     }
 }

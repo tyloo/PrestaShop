@@ -64,16 +64,16 @@ class OrderRepository extends AbstractObjectModelRepository
             if ($order->id !== $orderId->getValue()) {
                 throw new OrderNotFoundException($orderId, sprintf('%s #%d was not found', Order::class, $orderId->getValue()));
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf(
                     'Error occurred when trying to get %s #%d [%s]',
                     Order::class,
                     $orderId->getValue(),
-                    $e->getMessage()
+                    $prestaShopException->getMessage()
                 ),
                 0,
-                $e
+                $prestaShopException
             );
         }
 

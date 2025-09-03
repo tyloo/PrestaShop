@@ -58,8 +58,8 @@ class ToggleCarrierIsFreeHandler implements ToggleCarrierIsFreeHandlerInterface
             if (false === $carrier->update()) {
                 throw new CannotToggleCarrierIsFreeStatusException(sprintf('Unable to toggle is-free status of carrier with id "%d"', $command->getCarrierId()->getValue()));
             }
-        } catch (PrestaShopException $e) {
-            throw new CarrierException(sprintf('An error occurred when toggling is-free status of carrier with id "%d"', $command->getCarrierId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CarrierException(sprintf('An error occurred when toggling is-free status of carrier with id "%d"', $command->getCarrierId()->getValue()), 0, $prestaShopException);
         }
     }
 }

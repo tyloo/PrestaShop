@@ -61,7 +61,7 @@ final class EmailLogEraser implements EmailLogEraserInterface
         foreach ($emailLogs->getResults() as $emailLog) {
             if (!$emailLog->delete()) {
                 $errors[] = [
-                    'key' => 'Can\'t delete #%id%',
+                    'key' => "Can't delete #%id%",
                     'parameters' => [
                         '%id%' => $emailLog->id,
                     ],

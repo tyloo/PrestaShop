@@ -106,26 +106,31 @@ class DiscountValidator extends AbstractObjectModelValidator
                 if ($command->getAmountDiscount() !== null && $command->getPercentDiscount() !== null) {
                     throw new DiscountConstraintException('Discount can not be amount and percent at the same time', DiscountConstraintException::INVALID_DISCOUNT_CANNOT_BE_AMOUNT_AND_PERCENT);
                 }
+
                 if ($command->getAmountDiscount() !== null) {
                     if ($command->getAmountDiscount()->getAmount()->isLowerThanZero()) {
                         throw new DiscountConstraintException('Discount value can not be negative', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
                     }
                 }
+
                 if ($command->getPercentDiscount() !== null) {
                     if ($command->getPercentDiscount()->isLowerThanZero() || $command->getPercentDiscount()->isGreaterThan(new DecimalNumber('100'))) {
                         throw new DiscountConstraintException('Discount value can not be negative or above 100', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
                     }
                 }
+
                 break;
             case DiscountType::PRODUCT_LEVEL:
                 if ($command->getReductionProduct() === 0 || $command->getPercentDiscount() === null) {
                     throw new DiscountConstraintException('Product discount must have his properties set.', DiscountConstraintException::INVALID_PRODUCT_DISCOUNT_PROPERTIES);
                 }
+
                 break;
             case DiscountType::FREE_GIFT:
                 if ($command->getProductId() === null) {
                     throw new DiscountConstraintException('Free gift discount must have his properties set.', DiscountConstraintException::INVALID_FREE_GIFT_DISCOUNT_PROPERTIES);
                 }
+
                 break;
             default:
                 throw new DiscountConstraintException(sprintf("Invalid discount type '%s'.", $command->getDiscountType()->getValue()), DiscountConstraintException::INVALID_DISCOUNT_TYPE);
@@ -158,8 +163,8 @@ class DiscountValidator extends AbstractObjectModelValidator
 
         try {
             $duplicateCodeCartRuleId = $this->discountRepository->getIdByCode($code);
-        } catch (PrestaShopException $e) {
-            throw new CoreException('Error occurred when trying to check if discount code is unique', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException('Error occurred when trying to check if discount code is unique', 0, $prestaShopException);
         }
 
         if ($duplicateCodeCartRuleId && $duplicateCodeCartRuleId !== (int) $cartRule->id) {

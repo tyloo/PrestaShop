@@ -60,11 +60,11 @@ abstract class AbstractObjectModelValidator
                     $errorCode
                 );
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when validating %s property "%s"', $objectModel::class, $propertyName),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }
@@ -101,11 +101,11 @@ abstract class AbstractObjectModelValidator
                     );
                 }
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when trying to validate %s localized property "%s"', $objectModel::class, $propertyName),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }

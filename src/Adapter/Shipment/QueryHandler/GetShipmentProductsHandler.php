@@ -66,9 +66,10 @@ class GetShipmentProductsHandler implements GetShipmentProductsHandlerInterface
 
         try {
             $result = $this->repository->findOneBy(['id' => $shipmentId]);
-        } catch (Throwable $e) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $e);
+        } catch (Throwable $throwable) {
+            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $throwable);
         }
+
         if (!empty($result)) {
             foreach ($result->getProducts() as $product) {
                 $orderDetail = new OrderDetail($product->getOrderDetailId());

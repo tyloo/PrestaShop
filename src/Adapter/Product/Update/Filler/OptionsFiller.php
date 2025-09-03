@@ -51,6 +51,7 @@ class OptionsFiller implements ProductFillerInterface
             $product->available_for_order = $command->isAvailableForOrder();
             $updatableProperties[] = 'available_for_order';
         }
+
         $availableForOrder = $product->available_for_order;
 
         if (null !== $command->showPrice() && !$availableForOrder) {

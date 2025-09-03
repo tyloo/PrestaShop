@@ -153,8 +153,8 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
         $country = new Country($address->id_country);
         $carrier = new Carrier($order->id_carrier);
         $state = new State($address->id_state);
-
-        $carrierName = $trackingUrl = null;
+        $carrierName = null;
+        $trackingUrl = null;
         $stateName = Validate::isLoadedObject($state) ? $state->name : null;
 
         $orderCarrierId = $order->getIdOrderCarrier();

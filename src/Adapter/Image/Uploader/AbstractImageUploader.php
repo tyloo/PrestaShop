@@ -137,6 +137,7 @@ abstract class AbstractImageUploader
         } catch (PrestaShopException) {
             throw new ImageOptimizationException('Unable to resize one or more of your pictures.');
         }
+
         if (!$resized) {
             throw new ImageOptimizationException('Unable to resize one or more of your pictures.');
         }

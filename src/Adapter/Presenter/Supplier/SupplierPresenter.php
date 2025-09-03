@@ -67,6 +67,7 @@ class SupplierPresenter
         if (empty($supplier['id_supplier'])) {
             $supplier['id_supplier'] = $supplier['id'];
         }
+
         if (empty($supplier['id'])) {
             $supplier['id'] = $supplier['id_supplier'];
         }

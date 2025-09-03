@@ -98,7 +98,7 @@ class ShopRepository extends AbstractObjectModelRepository
 
     public function getAssociatedShopIds(ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             return [$shopConstraint->getShopId()->getValue()];
         }
 
@@ -109,7 +109,7 @@ class ShopRepository extends AbstractObjectModelRepository
             ->from($this->dbPrefix . 'shop', 's')
         ;
 
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             $qb
                 ->andWhere('s.id_shop_group = :shopGroupId')
                 ->setParameter('shopGroupId', $shopConstraint->getShopGroupId()->getValue())

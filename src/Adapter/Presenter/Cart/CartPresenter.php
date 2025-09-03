@@ -90,6 +90,7 @@ class CartPresenter implements PresenterInterface
             if (!$data) {
                 $data = [];
             }
+
             $id_product = (int) $product['id_product'];
             $id_product_attribute = (int) $product['id_product_attribute'];
             if (array_key_exists($id_product, $data)) {
@@ -122,6 +123,7 @@ class CartPresenter implements PresenterInterface
                                             default:
                                                 $field['type'] = null;
                                         }
+
                                         $field['label'] = $data['name'];
                                         $field['id_module'] = $data['id_module'];
                                         $presentedCustomization['id_customization'] = $data['id_customization'];

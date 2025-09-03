@@ -64,7 +64,7 @@ class AddFeatureValueHandler implements AddFeatureValueHandlerInterface
     private function fillObjectWithCommand(AddFeatureValueCommand $command): FeatureValue
     {
         $featureValue = new FeatureValue();
-        $featureValue->id_feature = (int) $command->getFeatureId()->getValue();
+        $featureValue->id_feature = $command->getFeatureId()->getValue();
         $featureValue->value = $command->getLocalizedValues();
 
         return $featureValue;

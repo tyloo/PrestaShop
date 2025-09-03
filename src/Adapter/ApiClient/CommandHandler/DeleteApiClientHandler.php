@@ -49,14 +49,14 @@ class DeleteApiClientHandler implements DeleteApiClientHandlerInterface
     {
         try {
             $apiClient = $this->repository->getById($command->getApiClientId()->getValue());
-        } catch (NoResultException $e) {
-            throw new ApiClientNotFoundException(sprintf('Could not find Api client with ID %s', $command->getApiClientId()->getValue()), 0, $e);
+        } catch (NoResultException $noResultException) {
+            throw new ApiClientNotFoundException(sprintf('Could not find Api client with ID %s', $command->getApiClientId()->getValue()), 0, $noResultException);
         }
 
         try {
             $this->repository->delete($apiClient);
-        } catch (ORMException $e) {
-            throw new CannotDeleteApiClientException('Could not delete Api client', 0, $e);
+        } catch (ORMException $ormException) {
+            throw new CannotDeleteApiClientException('Could not delete Api client', 0, $ormException);
         }
     }
 }

@@ -94,7 +94,7 @@ class ProductStockUpdater
      */
     public function resetStock(ProductId $productId, ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             throw new InvalidShopConstraintException('Product has no features related with shop group use single shop and all shops constraints');
         }
 
@@ -162,10 +162,12 @@ class ProductStockUpdater
             $product->location = $properties->getLocation();
             $updatableProperties[] = 'location';
         }
+
         if (null !== $properties->getOutOfStockType()) {
             $product->out_of_stock = $properties->getOutOfStockType()->getValue();
             $updatableProperties[] = 'out_of_stock';
         }
+
         if (null !== $properties->getStockModification()) {
             $product->quantity = $properties->getStockModification()->getDeltaQuantity() !== null ?
                 $stockAvailable->quantity + $properties->getStockModification()->getDeltaQuantity() :
@@ -212,12 +214,13 @@ class ProductStockUpdater
             $stockAvailable->out_of_stock = $properties->getOutOfStockType()->getValue();
             $stockUpdateRequired = true;
         }
+
         if (null !== $properties->getLocation()) {
             $stockAvailable->location = $properties->getLocation();
             $stockUpdateRequired = true;
         }
 
-        if ($properties->getStockModification()) {
+        if ($properties->getStockModification() !== null) {
             $stockAvailable->quantity = $properties->getStockModification()->getDeltaQuantity() !== null ?
                 $stockAvailable->quantity + $properties->getStockModification()->getDeltaQuantity() :
                 $properties->getStockModification()->getFixedQuantity()
@@ -232,7 +235,7 @@ class ProductStockUpdater
         $fallbackShopId = $this->stockAvailableRepository->getFallbackShopId($stockAvailable);
         $this->stockAvailableRepository->update($stockAvailable, $fallbackShopId);
 
-        if ($properties->getStockModification()) {
+        if ($properties->getStockModification() !== null) {
             // Save movement only after stock has been updated
             $this->saveMovement($stockAvailable, $properties->getStockModification(), $previousQuantity, $fallbackShopId->getValue());
 
@@ -268,7 +271,7 @@ class ProductStockUpdater
             $deltaQuantity,
             [
                 'id_stock_mvt_reason' => $movementReasonId->getValue(),
-                'id_shop' => (int) $affectedShopId,
+                'id_shop' => $affectedShopId,
             ]
         );
 
@@ -279,7 +282,7 @@ class ProductStockUpdater
                 'id_product_attribute' => $stockAvailable->id_product_attribute,
                 'quantity' => $stockAvailable->quantity,
                 'delta_quantity' => $deltaQuantity,
-                'id_shop' => (int) $affectedShopId,
+                'id_shop' => $affectedShopId,
             ]
         );
     }

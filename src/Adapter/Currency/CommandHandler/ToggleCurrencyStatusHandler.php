@@ -82,8 +82,8 @@ final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerIn
             if (false === $entity->toggleStatus()) {
                 throw new CannotToggleCurrencyException(sprintf('Unable to toggle Currency with id "%s"', $command->getCurrencyId()->getValue()));
             }
-        } catch (PrestaShopException $e) {
-            throw new CurrencyException(sprintf('An error occurred when toggling status for Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CurrencyException(sprintf('An error occurred when toggling status for Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
         }
     }
 

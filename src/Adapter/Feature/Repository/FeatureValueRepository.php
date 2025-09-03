@@ -158,6 +158,7 @@ class FeatureValueRepository extends AbstractObjectModelRepository
                     'custom' => (int) $featureValue['custom'],
                 ];
             }
+
             $featureValues[$featureValueId]['localized_values'][(int) $featureValue['id_lang']] = $featureValue['value'];
         }
 
@@ -204,6 +205,7 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         foreach ($featureValues as $featureValue) {
             $indexedFeatureValues[$featureValue['id_feature_value']] = $featureValue;
         }
+
         $featureValueIds = array_keys($indexedFeatureValues);
 
         $localizedFeatureValues = $this->getFeatureValueLocalizedValues($featureValueIds, $filters);

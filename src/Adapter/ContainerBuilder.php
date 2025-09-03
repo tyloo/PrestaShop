@@ -92,9 +92,10 @@ class ContainerBuilder
     {
         if ($containerName === 'admin') {
             throw new ServiceContainerException(
-                'You should use `SymfonyContainer::getInstance()` instead of `ContainerBuilder::getContainer(\'admin\')`'
+                "You should use `SymfonyContainer::getInstance()` instead of `ContainerBuilder::getContainer('admin')`"
             );
         }
+
         if (!isset(self::$containers[$containerName])) {
             // Container builder is only used for FO now, so we hard code the Environment to use the front appId so that
             // it uses the cache dir from FrontKernel (in var/cache/{dev|prod}/front)

@@ -62,8 +62,8 @@ final class BulkDisableSupplierHandler implements BulkDisableSupplierHandlerInte
                     throw new CannotUpdateSupplierStatusException(sprintf('Unable to disable supplier object with id "%s"', $supplierId->getValue()));
                 }
             }
-        } catch (PrestaShopException $e) {
-            throw new SupplierException('Unexpected error occurred when handling bulk disable supplier', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SupplierException('Unexpected error occurred when handling bulk disable supplier', 0, $prestaShopException);
         }
     }
 }

@@ -88,9 +88,11 @@ class ProductFeatureValueUpdater
                 if ((int) $featureValue->id_feature !== $productFeatureValue->getFeatureId()->getValue()) {
                     throw new InvalidAssociatedFeatureException('You cannot associate a value to another feature.');
                 }
+
                 if (in_array($productFeatureValue->getFeatureValueId()->getValue(), $previousFeatureIds)) {
                     throw new DuplicateFeatureValueAssociationException('You cannot associate the same feature value more than once.');
                 }
+
                 $previousFeatureIds[] = $productFeatureValue->getFeatureValueId()->getValue();
             }
         }
@@ -186,6 +188,7 @@ class ProductFeatureValueUpdater
         if (null === $productFeatureValue->getLocalizedCustomValues()) {
             return;
         }
+
         $featureValue = $this->featureValueRepository->get($productFeatureValue->getFeatureValueId());
         $featureValue->value = $productFeatureValue->getLocalizedCustomValues();
         $this->featureValueRepository->update($featureValue);
@@ -200,11 +203,12 @@ class ProductFeatureValueUpdater
     private function addFeatureValue(ProductFeatureValue $productFeatureValue): void
     {
         $featureValue = new FeatureValue();
-        $featureValue->id_feature = (int) $productFeatureValue->getFeatureId()->getValue();
+        $featureValue->id_feature = $productFeatureValue->getFeatureId()->getValue();
         $featureValue->custom = null !== $productFeatureValue->getLocalizedCustomValues();
         if (null !== $productFeatureValue->getLocalizedCustomValues()) {
             $featureValue->value = $productFeatureValue->getLocalizedCustomValues();
         }
+
         $featureValueId = $this->featureValueRepository->add($featureValue);
         $productFeatureValue->setFeatureValueId($featureValueId);
     }

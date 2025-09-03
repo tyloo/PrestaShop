@@ -97,8 +97,8 @@ class VirtualProductFileUploader
     {
         try {
             copy($filePath, $destination);
-        } catch (ErrorException $e) {
-            throw new FileUploadException($e->getMessage(), 0, $e);
+        } catch (ErrorException $errorException) {
+            throw new FileUploadException($errorException->getMessage(), 0, $errorException);
         }
     }
 
@@ -111,8 +111,8 @@ class VirtualProductFileUploader
     {
         try {
             unlink($filePath);
-        } catch (ErrorException $e) {
-            throw new CannotUnlinkFileException($e->getMessage(), 0, $e);
+        } catch (ErrorException $errorException) {
+            throw new CannotUnlinkFileException($errorException->getMessage(), 0, $errorException);
         }
     }
 }

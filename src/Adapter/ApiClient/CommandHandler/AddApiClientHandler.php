@@ -76,8 +76,8 @@ class AddApiClientHandler implements AddApiClientCommandHandlerInterface
 
         try {
             $apiClientId = $this->repository->save($apiClient);
-        } catch (ORMException $e) {
-            throw new CannotAddApiClientException('Could not add Api client', 0, $e);
+        } catch (ORMException $ormException) {
+            throw new CannotAddApiClientException('Could not add Api client', 0, $ormException);
         }
 
         return new CreatedApiClient($apiClientId, $secret);

@@ -151,6 +151,7 @@ class OrderProductRemover
         if (!(int) $order->getCurrentState()) {
             throw new DeleteCustomizedProductFromOrderException('Could not get a valid Order state before deletion');
         }
+
         if (!Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'customization` WHERE `id_customization` = ' . (int) $orderDetail->id_customization . ' AND `id_cart` = ' . (int) $order->id_cart . ' AND `id_product` = ' . (int) $orderDetail->product_id)) {
             throw new DeleteCustomizedProductFromOrderException('Could not delete customization from database.');
         }
@@ -182,6 +183,7 @@ class OrderProductRemover
             if (!is_array($discountedProducts)) {
                 continue;
             }
+
             foreach ($discountedProducts as $discountedProduct) {
                 // The return value is the concatenation of productId and attributeId, but the attributeId is always replaced by 0
                 if ($discountedProduct === $orderDetail->product_id . '-0') {

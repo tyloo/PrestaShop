@@ -101,7 +101,7 @@ class CombinationDeleter
     {
         $newDefaultCombinationId = $this->combinationRepository->findFirstCombinationId($productId, $shopConstraint);
 
-        if (!$newDefaultCombinationId) {
+        if ($newDefaultCombinationId === null) {
             $this->productRepository->updateCachedDefaultCombination($productId, $shopConstraint);
 
             return;

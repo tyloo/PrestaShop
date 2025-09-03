@@ -56,6 +56,7 @@ class EditFeatureValueHandler implements EditFeatureValueHandlerInterface
         if (null !== $command->getLocalizedValues()) {
             $featureValue->value = $command->getLocalizedValues();
         }
+
         if (null !== $command->getFeatureId()) {
             $featureValue->id_feature = $command->getFeatureId()->getValue();
         }

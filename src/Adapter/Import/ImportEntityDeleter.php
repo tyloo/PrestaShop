@@ -68,7 +68,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
             Entity::TYPE_ALIAS => $this->truncateTables([
                 'alias',
             ]),
-            default => throw new NotSupportedImportEntityException("Import entity \"{$importEntity}\" is not supported"),
+            default => throw new NotSupportedImportEntityException(sprintf('Import entity "%s" is not supported', $importEntity)),
         };
 
         $this->imageFileDeleter->deleteAllImages($this->configuration->get('_PS_TMP_IMG_DIR_'));
@@ -113,24 +113,24 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
         ];
 
         $this->connection->executeQuery(
-            "DELETE FROM {$this->dbPrefix}category WHERE id_category NOT IN (?)",
+            sprintf('DELETE FROM %scategory WHERE id_category NOT IN (?)', $this->dbPrefix),
             [$protectedCategoriesIds],
             [Connection::PARAM_INT_ARRAY]
         );
 
         $this->connection->executeQuery(
-            "DELETE FROM {$this->dbPrefix}category_lang WHERE id_category NOT IN (?)",
+            sprintf('DELETE FROM %scategory_lang WHERE id_category NOT IN (?)', $this->dbPrefix),
             [$protectedCategoriesIds],
             [Connection::PARAM_INT_ARRAY]
         );
 
         $this->connection->executeQuery(
-            "DELETE FROM {$this->dbPrefix}category_shop WHERE id_category NOT IN (?)",
+            sprintf('DELETE FROM %scategory_shop WHERE id_category NOT IN (?)', $this->dbPrefix),
             [$protectedCategoriesIds],
             [Connection::PARAM_INT_ARRAY]
         );
 
-        $this->connection->executeQuery("ALTER TABLE {$this->dbPrefix}category AUTO_INCREMENT = 3");
+        $this->connection->executeQuery(sprintf('ALTER TABLE %scategory AUTO_INCREMENT = 3', $this->dbPrefix));
 
         $this->imageFileDeleter->deleteFromPath($this->configuration->get('_PS_CAT_IMG_DIR_'));
     }
@@ -206,7 +206,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
 
         $this->truncateTables($truncateTables);
         $this->connection->executeQuery(
-            "DELETE FROM `{$this->dbPrefix}stock_available` WHERE id_product_attribute != 0"
+            sprintf('DELETE FROM `%sstock_available` WHERE id_product_attribute != 0', $this->dbPrefix)
         );
     }
 
@@ -220,7 +220,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
     private function truncateTables(array $tables)
     {
         foreach ($tables as $table) {
-            $this->connection->executeQuery("TRUNCATE TABLE `{$this->dbPrefix}{$table}`");
+            $this->connection->executeQuery(sprintf('TRUNCATE TABLE `%s%s`', $this->dbPrefix, $table));
         }
     }
 
@@ -236,12 +236,12 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
         foreach ($tables as $table) {
             $tableExists = $this->connection->getSchemaManager()->tablesExist(
                 [
-                    "{$this->dbPrefix}{$table}",
+                    $this->dbPrefix . $table,
                 ]
             );
 
             if ($tableExists) {
-                $this->connection->executeQuery("TRUNCATE TABLE `{$this->dbPrefix}{$table}`");
+                $this->connection->executeQuery(sprintf('TRUNCATE TABLE `%s%s`', $this->dbPrefix, $table));
             }
         }
     }

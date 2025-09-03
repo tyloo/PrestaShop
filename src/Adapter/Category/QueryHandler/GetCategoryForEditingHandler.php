@@ -82,7 +82,7 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
             ') category_sorted, ' .
             '(SELECT @pv := ' . (int) $category->id . ') initialisation ' .
             'WHERE FIND_IN_SET(id_parent, @pv) ' .
-            'AND LENGTH(@pv := CONCAT(@pv, \',\', id_category))'
+            "AND LENGTH(@pv := CONCAT(@pv, ',', id_category))"
         );
 
         $categoryRedirectTarget = $this->targetProvider->getRedirectTarget(

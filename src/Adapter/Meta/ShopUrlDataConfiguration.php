@@ -77,6 +77,7 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
                         ],
                     ];
                 }
+
                 $this->mainShopUrl->domain = $configuration['domain'];
                 $this->mainShopUrl->domain_ssl = $configuration['domain_ssl'];
                 $this->mainShopUrl->physical_uri = $configuration['physical_uri'];
@@ -87,8 +88,8 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
                 $this->configuration->set('PS_SHOP_DOMAIN_SSL', $configuration['domain_ssl']);
                 $this->htaccessFileGenerator->generateFile();
             }
-        } catch (PrestaShopException $exception) {
-            $errors[] = $exception->getMessage();
+        } catch (PrestaShopException $prestaShopException) {
+            $errors[] = $prestaShopException->getMessage();
         }
 
         return $errors;

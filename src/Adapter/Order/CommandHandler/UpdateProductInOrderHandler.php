@@ -108,8 +108,8 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
             $order = $this->orderProductQuantityUpdater->update($order, $orderDetail, $command->getQuantity(), $orderInvoice);
 
             Hook::exec('actionOrderEdited', ['order' => $order]);
-        } catch (Exception $e) {
-            throw $e;
+        } catch (Exception $exception) {
+            throw $exception;
         } finally {
             $this->contextStateManager->restorePreviousContext();
         }
@@ -207,12 +207,15 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
             if ((int) $orderDetail->id === (int) $orderDetailData['id_order_detail']) {
                 continue;
             }
+
             if ((int) $orderDetail->product_id !== (int) $orderDetailData['product_id']) {
                 continue;
             }
+
             if ((int) $orderDetail->product_attribute_id !== (int) $orderDetailData['product_attribute_id']) {
                 continue;
             }
+
             $invoicesContainingProduct[] = (int) $orderDetailData['id_order_invoice'];
         }
 

@@ -80,6 +80,7 @@ class IssueReturnProductHandler extends AbstractOrderCommandHandler implements I
                 'Can not perform return product on order with not delivered yet'
             );
         }
+
         $this->setOrderContext($this->contextStateManager, $order);
 
         try {
@@ -107,6 +108,7 @@ class IssueReturnProductHandler extends AbstractOrderCommandHandler implements I
             if ($command->restockRefundedProducts()) {
                 $this->reinjectQuantity($orderDetail, $productRefund['quantity']);
             }
+
             // Hook called only for the shop concerned
             Hook::exec('actionProductCancel', ['order' => $order, 'id_order_detail' => (int) $orderDetailId, 'cancel_quantity' => $productRefund['quantity'], 'action' => CancellationActionType::RETURN_PRODUCT], null, false, true, false, $order->id_shop);
         }

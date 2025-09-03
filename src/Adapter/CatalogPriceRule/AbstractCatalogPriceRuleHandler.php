@@ -50,8 +50,8 @@ abstract class AbstractCatalogPriceRuleHandler
     {
         try {
             $specificPriceRule = new SpecificPriceRule($catalogPriceRuleId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new CatalogPriceRuleException('Failed to create new SpecificPriceRule object', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CatalogPriceRuleException('Failed to create new SpecificPriceRule object', 0, $prestaShopException);
         }
 
         if ($specificPriceRule->id !== $catalogPriceRuleId->getValue()) {

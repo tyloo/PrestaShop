@@ -147,6 +147,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
                 $cart
             );
         }
+
         if (0 !== (int) $cart->id_address_invoice && !isset($cartAddresses[$cart->id_address_invoice])) {
             $cartAddresses[$cart->id_address_invoice] = $this->buildCartAddress(
                 $cart->id_address_invoice,
@@ -360,6 +361,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
         if (empty($deliveryOptionsByAddress)) {
             return $deliveryOptions;
         }
+
         // legacy multishipping feature allowed to split cart shipping to multiple addresses.
         // now when the multishipping feature is removed
         // the list of carriers should be shared across whole cart for single delivery address

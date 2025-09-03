@@ -72,11 +72,11 @@ class ProductAttachmentUpdater
                     CannotUpdateProductException::FAILED_UPDATE_ATTACHMENTS
                 );
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf('Error occurred when trying to associate attachment #%d with product #%d', $attachmentIdValue, $productIdValue),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }
@@ -108,14 +108,14 @@ class ProductAttachmentUpdater
                     CannotUpdateProductException::FAILED_UPDATE_ATTACHMENTS
                 );
             }
-        } catch (PrestaShopException $e) {
+        } catch (PrestaShopException $prestaShopException) {
             throw new CoreException(
                 sprintf(
                     'Error occurred when trying to set product #%d attachments',
                     $productIdValue
                 ),
                 0,
-                $e
+                $prestaShopException
             );
         }
     }

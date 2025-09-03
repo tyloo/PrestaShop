@@ -102,9 +102,10 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
         if ($order->hasInvoice() && null !== $command->getOrderInvoiceId()) {
             $orderInvoice = new OrderInvoice($command->getOrderInvoiceId()->getValue());
             if (!Validate::isLoadedObject($orderInvoice)) {
-                throw new OrderException('Can\'t load Order Invoice object');
+                throw new OrderException("Can't load Order Invoice object");
             }
         }
+
         $this->assertAmountCartRule($command, $order, $orderInvoice);
         $this->assertFreeShippingCartRule($command, $order, $orderInvoice);
 
@@ -135,8 +136,8 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
             if (!$cartRuleObj->add()) {
                 throw new OrderException('An error occurred during the CartRule creation');
             }
-        } catch (PrestaShopException $e) {
-            throw new OrderException('An error occurred during the CartRule creation', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new OrderException('An error occurred during the CartRule creation', 0, $prestaShopException);
         }
 
         try {
@@ -144,8 +145,8 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
             if (!$cart->addCartRule($cartRuleObj->id)) {
                 throw new OrderException('An error occurred while adding CartRule to cart');
             }
-        } catch (PrestaShopException $e) {
-            throw new OrderException('An error occurred while adding CartRule to cart', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new OrderException('An error occurred while adding CartRule to cart', 0, $prestaShopException);
         }
 
         $this->orderAmountUpdater->update($order, $cart, null !== $orderInvoice ? (int) $orderInvoice->id : null);
@@ -202,6 +203,7 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
         } elseif ($order->hasInvoice()) {
             $orderInvoices = $order->getInvoicesCollection()->getResults();
         }
+
         if (!empty($orderInvoices)) {
             foreach ($orderInvoices as $invoice) {
                 if ($discountValue > $invoice->total_paid_tax_incl) {
@@ -239,6 +241,7 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
         } elseif ($order->hasInvoice()) {
             $orderInvoices = $order->getInvoicesCollection()->getResults();
         }
+
         if (!empty($orderInvoices)) {
             foreach ($orderInvoices as $invoice) {
                 if ($invoice->total_paid_tax_incl < $invoice->total_shipping_tax_incl) {

@@ -49,8 +49,8 @@ abstract class AbstractSearchEngineHandler
     {
         try {
             $searchEngine = new SearchEngine($searchEngineId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new SearchEngineException('Failed to retrieve new search engine', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new SearchEngineException('Failed to retrieve new search engine', 0, $prestaShopException);
         }
 
         if ($searchEngine->id !== $searchEngineId->getValue()) {

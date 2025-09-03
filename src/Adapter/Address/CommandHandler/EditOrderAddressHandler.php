@@ -117,49 +117,64 @@ class EditOrderAddressHandler implements EditOrderAddressHandlerInterface
                 $addressId = (int) $order->id_address_invoice;
                 break;
         }
+
         $addressCommand = new EditCustomerAddressCommand($addressId);
         if (null !== $orderCommand->getAddressAlias()) {
             $addressCommand->setAddressAlias($orderCommand->getAddressAlias());
         }
+
         if (null !== $orderCommand->getFirstName()) {
             $addressCommand->setFirstName($orderCommand->getFirstName());
         }
+
         if (null !== $orderCommand->getLastName()) {
             $addressCommand->setLastName($orderCommand->getLastName());
         }
+
         if (null !== $orderCommand->getAddress()) {
             $addressCommand->setAddress($orderCommand->getAddress());
         }
+
         if (null !== $orderCommand->getCity()) {
             $addressCommand->setCity($orderCommand->getCity());
         }
+
         if (null !== $orderCommand->getPostCode()) {
             $addressCommand->setPostCode($orderCommand->getPostCode());
         }
+
         if (null !== $orderCommand->getCountryId()) {
             $addressCommand->setCountryId($orderCommand->getCountryId()->getValue());
         }
+
         if (null !== $orderCommand->getDni()) {
             $addressCommand->setDni($orderCommand->getDni());
         }
+
         if (null !== $orderCommand->getCompany()) {
             $addressCommand->setCompany($orderCommand->getCompany());
         }
+
         if (null !== $orderCommand->getVatNumber()) {
             $addressCommand->setVatNumber($orderCommand->getVatNumber());
         }
+
         if (null !== $orderCommand->getAddress2()) {
             $addressCommand->setAddress2($orderCommand->getAddress2());
         }
+
         if (null !== $orderCommand->getStateId()) {
             $addressCommand->setStateId($orderCommand->getStateId()->getValue());
         }
+
         if (null !== $orderCommand->getHomePhone()) {
             $addressCommand->setHomePhone($orderCommand->getHomePhone());
         }
+
         if (null !== $orderCommand->getMobilePhone()) {
             $addressCommand->setMobilePhone($orderCommand->getMobilePhone());
         }
+
         if (null !== $orderCommand->getOther()) {
             $addressCommand->setOther($orderCommand->getOther());
         }

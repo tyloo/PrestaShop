@@ -108,6 +108,7 @@ final class ImportDataFormatter
             do {
                 $uniqidPath = $this->configuration->get('_PS_UPLOAD_DIR_') . uniqid();
             } while (file_exists($uniqidPath));
+
             file_put_contents($uniqidPath, $field);
             $fd = fopen($uniqidPath, 'r');
         }

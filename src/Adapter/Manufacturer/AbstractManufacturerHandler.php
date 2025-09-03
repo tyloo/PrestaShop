@@ -51,8 +51,8 @@ abstract class AbstractManufacturerHandler extends AbstractObjectModelHandler
     {
         try {
             $manufacturer = new Manufacturer($manufacturerId->getValue());
-        } catch (PrestaShopException $e) {
-            throw new ManufacturerException('Failed to create new manufacturer', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new ManufacturerException('Failed to create new manufacturer', 0, $prestaShopException);
         }
 
         if ($manufacturer->id !== $manufacturerId->getValue()) {
