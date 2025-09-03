@@ -80,7 +80,7 @@ class LegacySessionAlert
             24 => $this->translator->trans('Localization pack imported successfully.', [], 'Admin.International.Notification'),
             25 => $this->translator->trans('The selected images have successfully been moved.', [], 'Admin.Notifications.Success'),
             26 => $this->translator->trans('Your cover image selection has been saved.', [], 'Admin.Notifications.Success'),
-            27 => $this->translator->trans('The image\'s shop association has been modified.', [], 'Admin.Notifications.Success'),
+            27 => $this->translator->trans("The image's shop association has been modified.", [], 'Admin.Notifications.Success'),
             28 => $this->translator->trans('A zone has been assigned to the selection successfully.', [], 'Admin.Notifications.Success'),
             29 => $this->translator->trans('Successful upgrade.', [], 'Admin.Notifications.Success'),
             30 => $this->translator->trans('A partial refund was successfully created.', [], 'Admin.Orderscustomers.Notification'),
@@ -99,7 +99,7 @@ class LegacySessionAlert
 
         return match (\intval($errorIndex)) {
             1 => $this->translator->trans(
-                'The root category of the shop %shop% is not associated with the current shop. You can\'t access this page. Please change the root category of the shop.',
+                "The root category of the shop %shop% is not associated with the current shop. You can't access this page. Please change the root category of the shop.",
                 [
                     '%shop%' => $this->shopContext->getName(),
                 ],

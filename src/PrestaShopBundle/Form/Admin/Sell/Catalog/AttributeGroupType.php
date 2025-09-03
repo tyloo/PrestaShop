@@ -96,7 +96,7 @@ class AttributeGroupType extends TranslatorAwareType
             ])
             ->add('group_type', ChoiceType::class, [
                 'label' => $this->trans('Attribute type', 'Admin.Catalog.Feature'),
-                'help' => $this->trans('The way the attribute\'s values will be presented to the customers in the product\'s page.', 'Admin.Catalog.Help'),
+                'help' => $this->trans("The way the attribute's values will be presented to the customers in the product's page.", 'Admin.Catalog.Help'),
                 'choices' => [
                     $this->trans('Drop-down list', 'Admin.Global') => GroupType::ATTRIBUTE_GROUP_TYPE_SELECT,
                     $this->trans('Radio buttons', 'Admin.Global') => GroupType::ATTRIBUTE_GROUP_TYPE_RADIO,

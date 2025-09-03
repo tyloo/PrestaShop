@@ -45,7 +45,7 @@ class SmtpConfigurationType extends TranslatorAwareType
                 'required' => false,
                 'empty_data' => '',
                 'label' => $this->trans('Email domain name', 'Admin.Advparameters.Feature'),
-                'help' => $this->trans('Fully qualified domain name (keep this field empty if you don\'t know).', 'Admin.Advparameters.Help'),
+                'help' => $this->trans("Fully qualified domain name (keep this field empty if you don't know).", 'Admin.Advparameters.Help'),
                 'attr' => [
                     'autocapitalize' => 'off',
                 ],

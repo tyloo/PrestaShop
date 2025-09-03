@@ -86,7 +86,7 @@ class GeneralType extends TranslatorAwareType
             ])
             ->add('new_days_number', IntegerType::class, [
                 'label' => $this->trans(
-                    'Number of days for which the product is considered \'new\'',
+                    "Number of days for which the product is considered 'new'",
                     'Admin.Shopparameters.Feature'
                 ),
                 'required' => false,
@@ -139,7 +139,7 @@ class GeneralType extends TranslatorAwareType
                 'choice_translation_domain' => 'Admin.Global',
                 'placeholder' => false,
                 'help' => $this->trans(
-                    'Select which category to display on the product page breadcrumbs. It can be the product\'s default category or the category the customer came from.',
+                    "Select which category to display on the product page breadcrumbs. It can be the product's default category or the category the customer came from.",
                     'Admin.Shopparameters.Help'
                 ),
                 'required' => false,

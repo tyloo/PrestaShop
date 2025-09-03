@@ -64,7 +64,7 @@ class GeneralSettings extends TranslatorAwareType
             ->add('name', TextType::class, [
                 'label' => $this->trans('Carrier name', 'Admin.Shipping.Feature'),
                 'label_help_box' => $this->trans('Allowed characters: letters, spaces and "%special_chars%".', 'Admin.Shipping.Help', ['%special_chars%' => '().-']) . '<br/>' .
-                    $this->trans('The carrier\'s name will be displayed during checkout.', 'Admin.Shipping.Help') . '<br/>' .
+                    $this->trans("The carrier's name will be displayed during checkout.", 'Admin.Shipping.Help') . '<br/>' .
                     $this->trans('For in-store pickup, enter 0 to replace the carrier name with your shop name.', 'Admin.Shipping.Help'),
                 'required' => true,
             ])
@@ -112,8 +112,8 @@ class GeneralSettings extends TranslatorAwareType
             ->add('tracking_url', TextType::class, [
                 'required' => false,
                 'label' => $this->trans('Tracking URL', 'Admin.Shipping.Feature'),
-                'label_help_box' => $this->trans('Delivery tracking URL: Type \'@\' where the tracking number should appear. It will be automatically replaced by the tracking number.', 'Admin.Shipping.Help'),
-                'help' => $this->trans('For example: \'http://example.com/track.php?num=@\' with \'@\' where the tracking number should appear.', 'Admin.Shipping.Help'),
+                'label_help_box' => $this->trans("Delivery tracking URL: Type '@' where the tracking number should appear. It will be automatically replaced by the tracking number.", 'Admin.Shipping.Help'),
+                'help' => $this->trans("For example: 'http://example.com/track.php?num=@' with '@' where the tracking number should appear.", 'Admin.Shipping.Help'),
                 'constraints' => [
                     new Url([
                         'message' => $this->trans('Please enter a valid URL.', 'Admin.Notifications.Error'),

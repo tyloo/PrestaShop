@@ -81,7 +81,7 @@ class ResetPasswordType extends AbstractType
                     'help' => '',
                     'attr' => [
                         'data-invalid-password' => $this->translator->trans(
-                            'The confirmation password doesn\'t match.',
+                            "The confirmation password doesn't match.",
                             [],
                             'Admin.Notifications.Error'
                         ),

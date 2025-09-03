@@ -58,7 +58,7 @@ class CombinationImagesChoiceType extends TranslatorAwareType
             ->setDefaults(
                 [
                     'label' => $this->trans('Images', 'Admin.Global'),
-                    'label_subtitle' => $this->trans('You can specify which images should be displayed when customer selects this combination. If you don\'t select any image, all will be displayed. The default image of the combination will be the first one selected from the list.', 'Admin.Catalog.Feature'),
+                    'label_subtitle' => $this->trans("You can specify which images should be displayed when customer selects this combination. If you don't select any image, all will be displayed. The default image of the combination will be the first one selected from the list.", 'Admin.Catalog.Feature'),
                     'choice_attr' => fn (string $choice, string $key): array => ['data-image-url' => $key],
                     'multiple' => true,
                     'expanded' => true,

@@ -236,7 +236,7 @@ class BackupController extends PrestaShopAdminController
             foreach ($failedBackups as $backupFileName) {
                 $this->addFlash(
                     'error',
-                    $this->trans('Can\'t delete #%id%', ['%id%' => $backupFileName], 'Admin.Notifications.Error')
+                    $this->trans("Can't delete #%id%", ['%id%' => $backupFileName], 'Admin.Notifications.Error')
                 );
             }
 

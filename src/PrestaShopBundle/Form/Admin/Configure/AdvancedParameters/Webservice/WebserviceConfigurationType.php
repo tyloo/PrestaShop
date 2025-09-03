@@ -59,7 +59,7 @@ class WebserviceConfigurationType extends TranslatorAwareType
         $builder
             ->add('enable_webservice', SwitchType::class, [
                 'label' => $this->trans(
-                    'Enable PrestaShop\'s webservice',
+                    "Enable PrestaShop's webservice",
                     'Admin.Advparameters.Feature'
                 ),
                 'help' => $enableWebservicesHelp,

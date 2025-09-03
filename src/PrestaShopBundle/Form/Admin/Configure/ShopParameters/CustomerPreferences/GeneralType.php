@@ -122,7 +122,7 @@ class GeneralType extends TranslatorAwareType
                     'Admin.Shopparameters.Feature'
                 ),
                 'help' => $this->trans(
-                    'Display or not the partner offers tick box, to receive offers from the store\'s partners.',
+                    "Display or not the partner offers tick box, to receive offers from the store's partners.",
                     'Admin.Shopparameters.Help'
                 ),
                 'multistore_configuration_key' => 'PS_CUSTOMER_OPTIN',

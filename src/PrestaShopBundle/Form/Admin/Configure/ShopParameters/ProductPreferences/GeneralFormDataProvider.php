@@ -70,7 +70,7 @@ class GeneralFormDataProvider implements FormDataProviderInterface
         $newDaysNumber = $data['new_days_number'];
         if (! is_numeric($newDaysNumber) || $newDaysNumber < 0) {
             $invalidFields[] = $this->translator->trans(
-                'Number of days for which the product is considered \'new\'',
+                "Number of days for which the product is considered 'new'",
                 [],
                 'Admin.Shopparameters.Feature'
             );

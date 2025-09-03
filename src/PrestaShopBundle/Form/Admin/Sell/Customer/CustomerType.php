@@ -119,7 +119,7 @@ class CustomerType extends TranslatorAwareType
                 ->add('is_guest', SwitchType::class, [
                     'label' => $this->trans('Guest account', 'Admin.Global'),
                     'help' => $this->trans(
-                        'Quick customers with no password, who don\'t have access to the privileges of registered ones. You can create as many guests as needed using the same email. It could be helpful if you take phone call orders.',
+                        "Quick customers with no password, who don't have access to the privileges of registered ones. You can create as many guests as needed using the same email. It could be helpful if you take phone call orders.",
                         'Admin.Orderscustomers.Help'
                     ),
                     'required' => false,
@@ -262,7 +262,7 @@ class CustomerType extends TranslatorAwareType
                 'help' => \sprintf(
                     '%s %s',
                     $this->trans(
-                        'This group will be the user\'s default group.',
+                        "This group will be the user's default group.",
                         'Admin.Orderscustomers.Help'
                     ),
                     $this->trans(

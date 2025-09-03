@@ -346,7 +346,7 @@ class ImportController extends PrestaShopAdminController
             $this->addFlash(
                 'error',
                 $this->trans(
-                    'The import directory doesn\'t exist. Please check your file path.',
+                    "The import directory doesn't exist. Please check your file path.",
                     [],
                     'Admin.Advparameters.Notification'
                 )

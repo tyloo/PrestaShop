@@ -113,7 +113,7 @@ class GeneralType extends TranslatorAwareType
             ->add('tos_cms_id', ChoiceType::class, [
                 'required' => false,
                 'label' => $this->trans('Page for terms and conditions', 'Admin.Shopparameters.Feature'),
-                'help' => $this->trans('Choose the page which contains your store\'s terms and conditions of use.', 'Admin.Shopparameters.Help'),
+                'help' => $this->trans("Choose the page which contains your store's terms and conditions of use.", 'Admin.Shopparameters.Help'),
                 'placeholder' => $this->trans('None', 'Admin.Global'),
                 'choices' => $this->tosCmsChoices,
                 'multistore_configuration_key' => 'PS_CONDITIONS_CMS_ID',

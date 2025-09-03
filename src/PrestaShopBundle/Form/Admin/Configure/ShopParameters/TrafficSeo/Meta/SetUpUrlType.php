@@ -81,7 +81,7 @@ class SetUpUrlType extends TranslatorAwareType
             ->add('default_language_url_prefix', SwitchType::class, [
                 'label' => $this->trans('Use prefix for default language', 'Admin.Global'),
                 'help' => $this->trans(
-                    'If there are multiple languages enabled on the shop, all URLs are prefixed with the ISO code of the language. Do you want to do this also for the default language, or keep it un-prefixed? If adding a language to a well established single language shop, it\'s a good idea to disable this and avoid changing the URLs.',
+                    "If there are multiple languages enabled on the shop, all URLs are prefixed with the ISO code of the language. Do you want to do this also for the default language, or keep it un-prefixed? If adding a language to a well established single language shop, it's a good idea to disable this and avoid changing the URLs.",
                     'Admin.Shopparameters.Help'
                 ),
                 'multistore_configuration_key' => 'PS_DEFAULT_LANGUAGE_URL_PREFIX',
@@ -108,7 +108,7 @@ class SetUpUrlType extends TranslatorAwareType
         if ($this->isHtaccessFileWritable && $this->doesMainShopUrlExist) {
             $builder
                 ->add('disable_apache_multiview', SwitchType::class, [
-                    'label' => $this->trans('Disable Apache\'s MultiViews option', 'Admin.Shopparameters.Feature'),
+                    'label' => $this->trans("Disable Apache's MultiViews option", 'Admin.Shopparameters.Feature'),
                     'help' => $this->trans(
                         'Enable this option only if you have problems with URL rewriting.',
                         'Admin.Shopparameters.Help'
@@ -116,9 +116,9 @@ class SetUpUrlType extends TranslatorAwareType
                     'multistore_configuration_key' => 'PS_HTACCESS_DISABLE_MULTIVIEWS',
                 ])
                 ->add('disable_apache_mod_security', SwitchType::class, [
-                    'label' => $this->trans('Disable Apache\'s mod_security module', 'Admin.Shopparameters.Feature'),
+                    'label' => $this->trans("Disable Apache's mod_security module", 'Admin.Shopparameters.Feature'),
                     'help' => $this->trans(
-                        'Some of PrestaShop\'s features might not work correctly with a specific configuration of Apache\'s mod_security module. We recommend to turn it off.',
+                        "Some of PrestaShop's features might not work correctly with a specific configuration of Apache's mod_security module. We recommend to turn it off.",
                         'Admin.Shopparameters.Help'
                     ),
                     'multistore_configuration_key' => 'PS_HTACCESS_DISABLE_MODSEC',

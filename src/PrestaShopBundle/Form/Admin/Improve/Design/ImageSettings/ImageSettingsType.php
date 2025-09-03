@@ -55,7 +55,7 @@ class ImageSettingsType extends TranslatorAwareType
         $helpFormats = $this->trans('Choose which image formats you want to be generated. Base image will always have .jpg extension, other formats will have .webp or .avif. Think twice before enabling all of them, because it can easily double the size of your shop.', 'Admin.Design.Help');
 
         if (! $avifEnabled) {
-            $helpFormats .= '<br/><strong>' . $this->trans('AVIF is disabled because it\'s not supported on your server, check your configuration if you want to use it.', 'Admin.Design.Help') . '</strong>';
+            $helpFormats .= '<br/><strong>' . $this->trans("AVIF is disabled because it's not supported on your server, check your configuration if you want to use it.", 'Admin.Design.Help') . '</strong>';
         }
 
         // Build the settings form

@@ -1291,7 +1291,7 @@ class ProductController extends PrestaShopAdminController
                     'Admin.Catalog.Notification'
                 ),
                 ProductConstraintException::INVALID_ONLINE_DATA => $this->trans(
-                    'Product doesn\'t have the minimum data to go online.',
+                    "Product doesn't have the minimum data to go online.",
                     [],
                     'Admin.Catalog.Notification'
                 ),

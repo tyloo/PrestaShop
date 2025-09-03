@@ -123,7 +123,7 @@ class StockType extends TranslatorAwareType
                     ],
                 ],
                 'required' => false,
-                'help' => $this->trans('This will be the default displayed availability of a product, if there is at least 1 in stock. If you don\'t enter anything, nothing will be displayed. Further customization is possible for each product.', 'Admin.Catalog.Help'),
+                'help' => $this->trans("This will be the default displayed availability of a product, if there is at least 1 in stock. If you don't enter anything, nothing will be displayed. Further customization is possible for each product.", 'Admin.Catalog.Help'),
             ])
             ->add('oos_allowed_backorders', TranslatableType::class, [
                 'label' => $this->trans(
@@ -138,7 +138,7 @@ class StockType extends TranslatorAwareType
                     ],
                 ],
                 'required' => false,
-                'help' => $this->trans('This will be the default displayed availability of a product, if it\'s not in stock and backordering it is enabled. If you don\'t enter anything, nothing will be displayed. Further customization is possible for each product.', 'Admin.Catalog.Help'),
+                'help' => $this->trans("This will be the default displayed availability of a product, if it's not in stock and backordering it is enabled. If you don't enter anything, nothing will be displayed. Further customization is possible for each product.", 'Admin.Catalog.Help'),
             ])
             ->add('oos_denied_backorders', TranslatableType::class, [
                 'label' => $this->trans(
@@ -153,7 +153,7 @@ class StockType extends TranslatorAwareType
                     ],
                 ],
                 'required' => false,
-                'help' => $this->trans('This will be the default displayed availability of a product, if it\'s not in stock and backordering it is denied. If you don\'t enter anything, nothing will be displayed. Further customization is possible for each product.', 'Admin.Catalog.Help'),
+                'help' => $this->trans("This will be the default displayed availability of a product, if it's not in stock and backordering it is denied. If you don't enter anything, nothing will be displayed. Further customization is possible for each product.", 'Admin.Catalog.Help'),
             ])
             ->add('delivery_time', TranslatableType::class, [
                 'label' => $this->trans(

@@ -196,7 +196,7 @@ class ThemeController extends PrestaShopAdminController
                 if ($importSource === null) {
                     $this->addFlash(
                         'warning',
-                        $this->trans('Please select theme\'s import source.', [], 'Admin.Notifications.Warning')
+                        $this->trans("Please select theme's import source.", [], 'Admin.Notifications.Warning')
                     );
 
                     return $this->redirectToRoute('admin_themes_import');
@@ -318,7 +318,7 @@ class ThemeController extends PrestaShopAdminController
         $this->dispatchCommand(new ResetThemeLayoutsCommand(new ThemeName($themeName)));
 
         $this->addFlash('success', $this->trans(
-            'Your theme has been correctly reset to its default settings. You may want to regenerate your images. See the Improve > Design > Images Settings screen for the \'%regenerate_label%\' button.',
+            "Your theme has been correctly reset to its default settings. You may want to regenerate your images. See the Improve > Design > Images Settings screen for the '%regenerate_label%' button.",
             [
                 '%regenerate_label%' => $this->trans('Regenerate thumbnails', [], 'Admin.Design.Feature'),
             ],

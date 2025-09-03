@@ -341,7 +341,7 @@ class EmployeeController extends PrestaShopAdminController
             'editableEmployee' => $editableEmployee,
             'enableSidebar' => true,
             'layoutTitle' => $this->trans(
-                'Editing %lastname% %firstname%\'s profile',
+                "Editing %lastname% %firstname%'s profile",
                 [
                     '%firstname%' => $editableEmployee->getFirstname()->getValue(),
                     '%lastname%' => $editableEmployee->getLastName()->getValue(),
@@ -435,7 +435,7 @@ class EmployeeController extends PrestaShopAdminController
                 ),
             ],
             CannotDeleteEmployeeException::class => $this->trans(
-                'Can\'t delete #%id%',
+                "Can't delete #%id%",
                 [
                     '%id%' => $e instanceof CannotDeleteEmployeeException ? $e->getEmployeeId()->getValue() : 0,
                 ],
@@ -482,7 +482,7 @@ class EmployeeController extends PrestaShopAdminController
                     'Admin.Notifications.Error',
                 ),
                 EmployeeConstraintException::INVALID_PASSWORD => $this->trans(
-                    'The password doesn\'t meet the password policy requirements.',
+                    "The password doesn't meet the password policy requirements.",
                     [],
                     'Admin.Notifications.Error'
                 ),

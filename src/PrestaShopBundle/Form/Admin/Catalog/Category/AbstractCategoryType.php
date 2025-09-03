@@ -115,7 +115,7 @@ abstract class AbstractCategoryType extends TranslatorAwareType
             ])
             ->add('additional_description', TranslatableType::class, [
                 'label' => $this->trans('Additional description', 'Admin.Catalog.Feature'),
-                'help' => $this->trans('Text that is usually displayed after the product list on category page. It\'s a good place to put longer SEO related content.', 'Admin.Catalog.Help') . ' ' . $genericCharactersHint,
+                'help' => $this->trans("Text that is usually displayed after the product list on category page. It's a good place to put longer SEO related content.", 'Admin.Catalog.Help') . ' ' . $genericCharactersHint,
                 'type' => FormattedTextareaType::class,
                 'required' => false,
                 'options' => [
@@ -220,7 +220,7 @@ abstract class AbstractCategoryType extends TranslatorAwareType
             ])
             ->add('link_rewrite', TranslatableType::class, [
                 'label' => $this->trans('Friendly URL', 'Admin.Global'),
-                'help' => $this->trans('Allowed characters: letters, numbers, underscores (_) and hyphens (-). To allow more characters, enable the \'Accented URL\' feature in Shop Parameters > Traffic & SEO.', 'Admin.Catalog.Help'),
+                'help' => $this->trans("Allowed characters: letters, numbers, underscores (_) and hyphens (-). To allow more characters, enable the 'Accented URL' feature in Shop Parameters > Traffic & SEO.", 'Admin.Catalog.Help'),
                 'type' => TextType::class,
                 'constraints' => [
                     new DefaultLanguage(),

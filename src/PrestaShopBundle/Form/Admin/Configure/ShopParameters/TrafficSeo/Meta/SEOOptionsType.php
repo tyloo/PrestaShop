@@ -47,7 +47,7 @@ class SEOOptionsType extends TranslatorAwareType
                     'Admin.Shopparameters.Feature'
                 ),
                 'help' => $this->trans(
-                    'Enable this option if you want to display your product\'s attributes in its meta title.',
+                    "Enable this option if you want to display your product's attributes in its meta title.",
                     'Admin.Shopparameters.Help'
                 ),
                 'multistore_configuration_key' => 'PS_PRODUCT_ATTRIBUTES_IN_TITLE',

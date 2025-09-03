@@ -72,7 +72,7 @@ class ImportThemeType extends TranslatorAwareType
             ->add('import_from_ftp', ChoiceType::class, [
                 'label' => $this->trans('Select the archive', 'Admin.Design.Feature'),
                 'help' => $this->trans(
-                    'This selector lists the Zip files that you uploaded in the \'/themes\' folder.',
+                    "This selector lists the Zip files that you uploaded in the '/themes' folder.",
                     'Admin.Design.Help'
                 ),
                 'required' => false,

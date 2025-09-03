@@ -326,7 +326,7 @@ class LanguageController extends PrestaShopAdminController
             ],
             LanguageImageUploadingException::class => [
                 LanguageImageUploadingException::MEMORY_LIMIT_RESTRICTION => $this->trans(
-                    'Due to memory limit restrictions, this image cannot be loaded. Please increase your memory_limit value via your server\'s configuration settings.',
+                    "Due to memory limit restrictions, this image cannot be loaded. Please increase your memory_limit value via your server's configuration settings.",
                     [],
                     'Admin.Notifications.Error'
                 ),

@@ -127,7 +127,7 @@ class UploadQuotaType extends TranslatorAwareType
                 IntegerType::class,
                 [
                     'label' => $this->trans(
-                        'Maximum size for a product\'s image',
+                        "Maximum size for a product's image",
                         'Admin.Advparameters.Feature'
                     ),
                     'help' => $this->trans(

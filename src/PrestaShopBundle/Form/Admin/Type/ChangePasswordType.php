@@ -97,7 +97,7 @@ class ChangePasswordType extends AbstractType
                     'help' => '',
                     'attr' => [
                         'data-invalid-password' => $this->trans(
-                            'The confirmation password doesn\'t match.',
+                            "The confirmation password doesn't match.",
                             [],
                             'Admin.Notifications.Error'
                         ),

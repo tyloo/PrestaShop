@@ -237,7 +237,7 @@ class AdministrationController extends PrestaShopAdminController
                 'Admin.Advparameters.Feature'
             ),
             UploadQuotaType::FIELD_MAX_SIZE_PRODUCT_IMAGE => $this->trans(
-                'Maximum size for a product\'s image',
+                "Maximum size for a product's image",
                 [],
                 'Admin.Advparameters.Feature'
             ),

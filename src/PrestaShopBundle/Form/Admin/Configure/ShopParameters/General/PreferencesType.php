@@ -63,7 +63,7 @@ class PreferencesType extends TranslatorAwareType
             $builder->add('enable_ssl', SwitchType::class, [
                 'label' => $this->trans('Enable SSL', 'Admin.Shopparameters.Feature'),
                 'help' => $this->trans(
-                    'If you own an SSL certificate for your shop\'s domain name, you can activate SSL encryption (https://) for all the pages of your shop.',
+                    "If you own an SSL certificate for your shop's domain name, you can activate SSL encryption (https://) for all the pages of your shop.",
                     'Admin.Shopparameters.Help'
                 ),
             ]);
@@ -77,7 +77,7 @@ class PreferencesType extends TranslatorAwareType
                     'Admin.Shopparameters.Feature'
                 ),
                 'help' => $this->trans(
-                    'Enable or disable token in the Front Office to improve PrestaShop\'s security.',
+                    "Enable or disable token in the Front Office to improve PrestaShop's security.",
                     'Admin.Shopparameters.Help'
                 ),
             ])

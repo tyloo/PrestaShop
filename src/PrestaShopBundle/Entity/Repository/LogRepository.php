@@ -101,7 +101,7 @@ class LogRepository implements RepositoryInterface
         $scalarFilters = array_filter($wheres, fn ($key): bool => ! \in_array($key, ['date_from', 'date_to', 'employee'], true), \ARRAY_FILTER_USE_KEY);
 
         $qb = $queryBuilder
-            ->select('l.*', 'e.email', 'CONCAT(e.firstname, \' \', e.lastname) as employee')
+            ->select('l.*', 'e.email', "CONCAT(e.firstname, ' ', e.lastname) as employee")
             ->from($this->logTable, 'l')
             ->innerJoin('l', $employeeTable, 'e', 'l.id_employee = e.id_employee')
             ->orderBy($filters['orderBy'], $filters['sortOrder'])

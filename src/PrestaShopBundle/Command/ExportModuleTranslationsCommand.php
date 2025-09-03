@@ -80,7 +80,7 @@ class ExportModuleTranslationsCommand extends Command
                 'auto-install',
                 'a',
                 InputOption::VALUE_NONE,
-                'Automatically install the exported translations to the module\'s translations directory'
+                "Automatically install the exported translations to the module's translations directory"
             );
     }
 

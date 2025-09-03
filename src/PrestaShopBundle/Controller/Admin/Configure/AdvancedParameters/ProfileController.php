@@ -278,7 +278,7 @@ class ProfileController extends PrestaShopAdminController
                 'Admin.Notifications.Error'
             ),
             CannotDeleteSuperAdminProfileException::class => $this->trans(
-                'For security reasons, you cannot delete the Administrator\'s role.',
+                "For security reasons, you cannot delete the Administrator's role.",
                 [],
                 'Admin.Advparameters.Notification'
             ),

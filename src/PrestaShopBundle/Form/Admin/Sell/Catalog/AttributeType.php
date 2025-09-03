@@ -83,7 +83,7 @@ class AttributeType extends TranslatorAwareType
         $builder
             ->add('attribute_group', ChoiceType::class, [
                 'label' => $this->trans('Attribute group', 'Admin.Catalog.Feature'),
-                'help' => $this->trans('The way the attribute\'s values will be presented to the customers in the product\'s page.', 'Admin.Catalog.Help'),
+                'help' => $this->trans("The way the attribute's values will be presented to the customers in the product's page.", 'Admin.Catalog.Help'),
                 'choices' => $this->getAttributeGroupChoices(
                     new ShopId($this->shopContext->getId()),
                     new LanguageId($this->languageContext->getId())

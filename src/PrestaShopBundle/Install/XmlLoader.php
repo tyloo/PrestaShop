@@ -552,7 +552,7 @@ class XmlLoader
 
     public function createEntityConfiguration(string $identifier, array $data, array $data_lang): void
     {
-        if (Db::getInstance()->getValue('SELECT id_configuration FROM ' . _DB_PREFIX_ . 'configuration WHERE name = \'' . pSQL($data['name']) . '\'')) {
+        if (Db::getInstance()->getValue('SELECT id_configuration FROM ' . _DB_PREFIX_ . "configuration WHERE name = '" . pSQL($data['name']) . "'")) {
             return;
         }
 

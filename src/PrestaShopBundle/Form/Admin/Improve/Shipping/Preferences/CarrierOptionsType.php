@@ -66,7 +66,7 @@ class CarrierOptionsType extends TranslatorAwareType
                     'Admin.Shipping.Feature'
                 ),
                 'help' => $this->trans(
-                    'Your shop\'s default carrier.',
+                    "Your shop's default carrier.",
                     'Admin.Shipping.Help'
                 ),
                 'multistore_configuration_key' => 'PS_CARRIER_DEFAULT',

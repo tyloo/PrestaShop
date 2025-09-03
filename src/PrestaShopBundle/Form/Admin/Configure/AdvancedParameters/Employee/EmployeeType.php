@@ -157,7 +157,7 @@ final class EmployeeType extends AbstractType
             ->add('active', SwitchType::class, [
                 'label' => $this->trans('Active', [], 'Admin.Global'),
                 'help' => $this->trans(
-                    'Allow or deny this employee\'s access to the Admin panel.',
+                    "Allow or deny this employee's access to the Admin panel.",
                     [],
                     'Admin.Advparameters.Help'
                 ),

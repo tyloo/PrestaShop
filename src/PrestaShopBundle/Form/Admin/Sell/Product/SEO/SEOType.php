@@ -128,11 +128,11 @@ class SEOType extends TranslatorAwareType
             ])
             ->add('link_rewrite', TranslatableType::class, [
                 'label' => $this->trans('Friendly URL', 'Admin.Catalog.Feature'),
-                'label_help_box' => $this->trans('This is the human-readable URL, as generated from the product\'s name. You can change it if you want.', 'Admin.Catalog.Help'),
+                'label_help_box' => $this->trans("This is the human-readable URL, as generated from the product's name. You can change it if you want.", 'Admin.Catalog.Help'),
                 'required' => false,
                 'type' => TextType::class,
                 'help' => $this->trans(
-                    'This is the human-readable URL, as generated from the product\'s name. You can change it if you want.',
+                    "This is the human-readable URL, as generated from the product's name. You can change it if you want.",
                     'Admin.Catalog.Help'
                 ),
                 'alert_message' => $this->getFriendlyAlterMessages(),

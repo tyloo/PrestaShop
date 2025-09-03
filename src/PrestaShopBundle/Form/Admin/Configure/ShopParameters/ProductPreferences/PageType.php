@@ -108,7 +108,7 @@ class PageType extends TranslatorAwareType
                     'Admin.Shopparameters.Feature'
                 ),
                 'help' => $this->trans(
-                    'If your customer already has this product in their cart, a notification will be displayed on top of the product page. The customer will also be notified if the product they are browsing is part of a pack that\'s in their cart.',
+                    "If your customer already has this product in their cart, a notification will be displayed on top of the product page. The customer will also be notified if the product they are browsing is part of a pack that's in their cart.",
                     'Admin.Shopparameters.Help'
                 ),
                 'required' => false,

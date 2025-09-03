@@ -254,7 +254,7 @@ class AdminAPIController extends PrestaShopAdminController
             \sprintf(
                 '%s <strong>%s</strong>',
                 $successMessage,
-                $this->trans('This secret value will only be displayed once. Don\'t forget to make a copy in a secure location.', [], 'Admin.Notifications.Info'),
+                $this->trans("This secret value will only be displayed once. Don't forget to make a copy in a secure location.", [], 'Admin.Notifications.Info'),
             )
         );
 

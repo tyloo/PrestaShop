@@ -87,7 +87,7 @@ class AvailabilityType extends TranslatorAwareType
                     ],
                 ],
                 'help' => $this->trans(
-                    'This will be the displayed availability of the product, if there is at least 1 in stock. If you don\'t enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.',
+                    "This will be the displayed availability of the product, if there is at least 1 in stock. If you don't enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.",
                     'Admin.Catalog.Help',
                     [
                         '[1]' => '<a href="' . $this->router->generate('admin_product_preferences') . '#configuration_fieldset_stock">',
@@ -117,7 +117,7 @@ class AvailabilityType extends TranslatorAwareType
                     ],
                 ],
                 'help' => $this->trans(
-                    'This will be the displayed availability of the product, if it\'s not in stock. If you don\'t enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.',
+                    "This will be the displayed availability of the product, if it's not in stock. If you don't enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.",
                     'Admin.Catalog.Help',
                     [
                         '[1]' => '<a href="' . $this->router->generate('admin_product_preferences') . '#configuration_fieldset_stock">',

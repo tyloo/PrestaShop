@@ -537,7 +537,7 @@ class ModuleController extends ModuleAbstractController
         return ! empty(Db::getInstance()->executeS(
             'SELECT 1 FROM `' . _DB_PREFIX_ . 'hook_module` hm
             INNER JOIN `' . _DB_PREFIX_ . 'hook` h ON h.id_hook = hm.id_hook
-            WHERE hm.id_module = ' . (int) $instance->id . ' AND h.name = \'actionListModules\' LIMIT 1'
+            WHERE hm.id_module = ' . (int) $instance->id . " AND h.name = 'actionListModules' LIMIT 1"
         ));
     }
 

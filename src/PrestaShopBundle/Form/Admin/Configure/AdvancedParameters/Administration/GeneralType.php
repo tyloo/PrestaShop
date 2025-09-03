@@ -47,7 +47,7 @@ class GeneralType extends TranslatorAwareType
     {
         $builder
             ->add('check_ip_address', SwitchType::class, [
-                'label' => $this->trans('Check the cookie\'s IP address', 'Admin.Advparameters.Feature'),
+                'label' => $this->trans("Check the cookie's IP address", 'Admin.Advparameters.Feature'),
                 'help' => $this->trans('Check the IP address of the cookie in order to prevent your cookie from being stolen.', 'Admin.Advparameters.Help'),
             ])
             ->add(self::FIELD_FRONT_COOKIE_LIFETIME, IntegerType::class, [

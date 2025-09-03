@@ -106,7 +106,7 @@ class OrderStateType extends TranslatorAwareType
                 'label' => $this->trans('Status name', 'Admin.Shopparameters.Feature'),
                 'help' => \sprintf(
                     '%s %s %s',
-                    $this->trans('Order status (e.g. \'Pending\').', 'Admin.Shopparameters.Help'),
+                    $this->trans("Order status (e.g. 'Pending').", 'Admin.Shopparameters.Help'),
                     $this->trans('Invalid characters: numbers and', 'Admin.Shopparameters.Help'),
                     static::NAME_CHARS
                 ),
