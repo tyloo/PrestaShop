@@ -48,7 +48,7 @@ class MultipartDecoder implements DecoderInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if (! $request) {
+        if ($request === null) {
             return null;
         }
 

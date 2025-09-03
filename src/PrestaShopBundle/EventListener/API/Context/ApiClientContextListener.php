@@ -52,7 +52,7 @@ class ApiClientContextListener
         }
 
         $token = $this->security->getToken();
-        if ($token) {
+        if ($token !== null) {
             $this->accessContextBuilder->setClientId($token->getUserIdentifier());
             if ($token->getUser() instanceof JwtTokenUser) {
                 $this->accessContextBuilder->setExternalIssuer($token->getUser()->getExternalIssuer());

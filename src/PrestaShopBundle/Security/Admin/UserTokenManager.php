@@ -55,7 +55,7 @@ class UserTokenManager implements CacheClearerInterface
     public function getSymfonyToken(): string
     {
         // When user is logged we can get it from Security service
-        if ($this->security->getUser()) {
+        if ($this->security->getUser() !== null) {
             $userIdentifier = $this->security->getUser()->getUserIdentifier();
         } else {
             // When user is not initialized yet (like in LegacyRouterChecker) we fetch the employee based on saved session data
@@ -99,7 +99,7 @@ class UserTokenManager implements CacheClearerInterface
 
     private function isCsrfTokenValid(string $tokenValue): bool
     {
-        if (! $this->security->getUser()) {
+        if ($this->security->getUser() === null) {
             return false;
         }
 

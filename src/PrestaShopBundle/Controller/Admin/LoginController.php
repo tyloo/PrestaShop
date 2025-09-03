@@ -74,11 +74,11 @@ class LoginController extends PrestaShopAdminController
         FormHandlerInterface $requestResetPasswordFormHandler,
     ): Response {
         $securityResponse = $this->checkRequiredActions($request);
-        if ($securityResponse) {
+        if ($securityResponse !== null) {
             return $securityResponse;
         }
 
-        if ($security->getUser()) {
+        if ($security->getUser() !== null) {
             return $this->redirectToRoute('admin_homepage');
         }
 
@@ -102,7 +102,7 @@ class LoginController extends PrestaShopAdminController
      */
     public function logoutAction(Security $security): RedirectResponse
     {
-        if ($security->getUser()) {
+        if ($security->getUser() !== null) {
             $security->logout();
         }
 

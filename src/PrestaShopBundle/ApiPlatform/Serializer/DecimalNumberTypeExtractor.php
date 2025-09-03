@@ -59,7 +59,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
     public function getTypes(string $class, string $property, array $context = []): ?array
     {
         $reflectionClass = $this->getReflectionClass($class);
-        if (! $reflectionClass) {
+        if ($reflectionClass === null) {
             return null;
         }
 
@@ -106,7 +106,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
 
         // Check if the returned type is a ValueObject that relies on DecimalNumber (ex: PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Dimension)
         $returnReflectionClass = $this->getReflectionClass($reflectionType->getName());
-        if ($returnReflectionClass) {
+        if ($returnReflectionClass !== null) {
             foreach ($returnReflectionClass->getMethods() as $returnReflectionMethod) {
                 if (! $returnReflectionMethod->hasReturnType() || ! $returnReflectionMethod->getReturnType() instanceof ReflectionNamedType || $returnReflectionMethod->getReturnType()->isBuiltin()) {
                     continue;

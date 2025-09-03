@@ -119,7 +119,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                     }
 
                     $definition = $this->getSchemaDefinition($parentOpenApi, $operation);
-                    if (! $definition) {
+                    if ($definition === null) {
                         continue;
                     }
 

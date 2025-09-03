@@ -232,7 +232,7 @@ class PrestaShopAdminController extends AbstractController
                 );
             }
 
-            if ($e->getShopConstraint()->getShopId()) {
+            if ($e->getShopConstraint()->getShopId() !== null) {
                 return $this->trans(
                     'Authorization not allowed for this store.',
                     [],
@@ -240,7 +240,7 @@ class PrestaShopAdminController extends AbstractController
                 );
             }
 
-            if ($e->getShopConstraint()->getShopGroupId()) {
+            if ($e->getShopConstraint()->getShopGroupId() !== null) {
                 return $this->trans(
                     'Authorization not allowed for this group of stores.',
                     [],
@@ -420,11 +420,11 @@ class PrestaShopAdminController extends AbstractController
             return true;
         }
 
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             return $this->getEmployeeContext()->hasAuthorizationOnShop($shopConstraint->getShopId()->getValue());
         }
 
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             return $this->getEmployeeContext()->hasAuthorizationOnShopGroup($shopConstraint->getShopGroupId()->getValue());
         }
 

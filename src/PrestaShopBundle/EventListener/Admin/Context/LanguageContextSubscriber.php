@@ -85,7 +85,7 @@ class LanguageContextSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($this->employeeContext->getEmployee()) {
+        if ($this->employeeContext->getEmployee() !== null) {
             // Use the employee language if available
             $this->languageContextBuilder->setLanguageId($this->employeeContext->getEmployee()->getLanguageId());
         }

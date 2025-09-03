@@ -73,7 +73,7 @@ class ShopContextListener
             }
 
             $this->shopContextBuilder->setShopConstraint($shopConstraint);
-            if ($shopConstraint->getShopId()) {
+            if ($shopConstraint->getShopId() !== null) {
                 $this->shopContextBuilder->setShopId($shopConstraint->getShopId()->getValue());
             } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
                 $this->shopContextBuilder->setShopId($shopConstraint->getShopIds()[0]->getValue());

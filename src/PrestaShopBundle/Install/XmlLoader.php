@@ -319,7 +319,7 @@ class XmlLoader
             if ($is_multi_lang_entity) {
                 $xpath_query = $entity . '[@id="' . $identifier . '"]';
                 foreach ($xml_langs as $id_lang => $xml_lang) {
-                    if (! $xml_lang) {
+                    if ($xml_lang === null) {
                         continue;
                     }
 
@@ -327,7 +327,7 @@ class XmlLoader
                         $node_lang = $node_lang[0];
                         foreach ($multilang_columns as $column => $is_text) {
                             $value = '';
-                            if ($node_lang[$column]) {
+                            if ($node_lang[$column] !== null) {
                                 $value = (string) $node_lang[$column];
                             }
 

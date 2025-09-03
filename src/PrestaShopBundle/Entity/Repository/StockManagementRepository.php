@@ -337,11 +337,11 @@ abstract class StockManagementRepository
         $statement->bindValue('stock_shop_id', $stockShopId, PDO::PARAM_INT);
         $statement->bindValue('stock_group_id', $stockGroupId, PDO::PARAM_INT);
 
-        if ($queryParams) {
+        if ($queryParams !== null) {
             $this->bindValuesInStatement($statement, $queryParams);
         }
 
-        if ($productIdentity) {
+        if ($productIdentity !== null) {
             $statement->bindValue('product_id', $productIdentity->getProductId(), PDO::PARAM_INT);
             $statement->bindValue('combination_id', $productIdentity->getCombinationId(), PDO::PARAM_INT);
         }

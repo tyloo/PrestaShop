@@ -130,7 +130,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
         $this->shopContextBuilder->setSecureMode($psSslEnabled && $request->isSecure());
 
         $redirectResponse = $this->redirectShopContext($event);
-        if ($redirectResponse) {
+        if ($redirectResponse !== null) {
             $event->setResponse($redirectResponse);
 
             return;
@@ -140,7 +140,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
         // If not shop constraint was definable it means the employee may not be logged in In any case we have no info to setup the
         // shop context more accurately so we do nothing
-        if (! $shopConstraint) {
+        if ($shopConstraint === null) {
             return;
         }
 
@@ -181,7 +181,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
     {
         // Firstly check if the displayed legacy controller forces All shops mode
         $legacyConstraint = $this->getLegacyMultiShopConstraint($request);
-        if ($legacyConstraint) {
+        if ($legacyConstraint !== null) {
             return $legacyConstraint;
         }
 
@@ -210,7 +210,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
     private function getMultiShopConstraint(Request $request): ?ShopConstraint
     {
         $shopConstraint = $this->getShopConstraintFromRouteAttribute($request);
-        if ($shopConstraint) {
+        if ($shopConstraint !== null) {
             return $shopConstraint;
         }
 
@@ -309,7 +309,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
         // Update legacy cookie shop context to make sure it is synced with the token attribute
         $legacyCookie = $this->legacyContext->getContext()->cookie;
-        if ($updatedShopConstraint->getShopId()) {
+        if ($updatedShopConstraint->getShopId() !== null) {
             $legacyCookie->shopContext = 's-' . $updatedShopConstraint->getShopId()->getValue();
         } elseif ($updatedShopConstraint->getShopGroupId()) {
             $legacyCookie->shopContext = 'g-' . $updatedShopConstraint->getShopGroupId()->getValue();
@@ -380,11 +380,11 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
     private function isAuthorizedByShopConstraint(ShopConstraint $shopConstraint): bool
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             return $this->employeeContext->hasAuthorizationOnShopGroup($shopConstraint->getShopGroupId()->getValue());
         }
 
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             return $this->employeeContext->hasAuthorizationOnShop($shopConstraint->getShopId()->getValue());
         }
 

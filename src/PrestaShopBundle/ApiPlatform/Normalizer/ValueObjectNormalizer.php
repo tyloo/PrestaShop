@@ -242,7 +242,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
         $objectType = \is_object($type) ? $type::class : $type;
         if (! \array_key_exists($objectType, $this->constructorParameter)) {
             $metadata = $this->classMetadataFactory->getMetadataFor($type);
-            if (! $metadata->getReflectionClass()->getConstructor()) {
+            if ($metadata->getReflectionClass()->getConstructor() === null) {
                 $this->constructorParameter[$objectType] = null;
             } elseif ($metadata->getReflectionClass()->getConstructor()->getNumberOfRequiredParameters() !== 1) {
                 // ValueObject are supposed to have only one required parameter (if the convention evolves, this normalizer should evolve too)

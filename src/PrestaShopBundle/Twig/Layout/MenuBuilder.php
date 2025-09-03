@@ -59,7 +59,7 @@ class MenuBuilder
 
     public function getCurrentTab(): ?Tab
     {
-        if ($this->currentTab) {
+        if ($this->currentTab !== null) {
             return $this->currentTab;
         }
 
@@ -69,7 +69,7 @@ class MenuBuilder
             $tab = $this->tabRepository->findOneByRouteName($routeName);
         }
 
-        if (! $tab) {
+        if ($tab === null) {
             $className = $this->getLegacyControllerClassName();
             if (! empty($className)) {
                 $tab = $this->tabRepository->findOneByClassName($className);
@@ -84,7 +84,7 @@ class MenuBuilder
     public function getCurrentTabLevel(): int
     {
         $currentTab = $this->getCurrentTab();
-        if ($currentTab) {
+        if ($currentTab !== null) {
             $ancestorsTab = $this->getAncestorsTab($currentTab->getId());
             if (! empty($ancestorsTab)) {
                 return \count($ancestorsTab);

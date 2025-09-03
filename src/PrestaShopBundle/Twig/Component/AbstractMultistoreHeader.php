@@ -94,7 +94,7 @@ abstract class AbstractMultistoreHeader
 
     public function getColorConfigLink(): string
     {
-        if ($this->shopContext->getShopConstraint()->getShopId()) {
+        if ($this->shopContext->getShopConstraint()->getShopId() !== null) {
             $this->legacyContext->getAdminLink('AdminShop', extraParams: ['shop_id' => $this->shopContext->getShopConstraint()->getShopId()->getValue(), 'updateshop' => true]);
         } elseif ($this->shopContext->getShopConstraint()->getShopGroupId()) {
             return $this->legacyContext->getAdminLink('AdminShopGroup', extraParams: ['id_shop_group' => $this->shopContext->getShopConstraint()->getShopGroupId()->getValue(), 'updateshop_group' => true]);
@@ -120,7 +120,7 @@ abstract class AbstractMultistoreHeader
 
     protected function doMount(): void
     {
-        if ($this->shopContext->getShopConstraint()->getShopId()) {
+        if ($this->shopContext->getShopConstraint()->getShopId() !== null) {
             $shop = $this->entityManager->getRepository(Shop::class)->findOneBy(['id' => $this->shopContext->getShopConstraint()->getShopId()->getValue()]);
             $this->contextColor = $shop->getColor();
             $this->contextName = $shop->getName();
