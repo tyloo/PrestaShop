@@ -123,6 +123,7 @@ class TabRepository extends EntityRepository
         foreach ($tabs as $tab) {
             $tab->setEnabled($enabled);
         }
+
         $this->getEntityManager()->flush();
     }
 

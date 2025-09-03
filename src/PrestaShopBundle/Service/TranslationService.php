@@ -195,6 +195,7 @@ class TranslationService
             } else {
                 $queryBuilder->andWhere('t.theme IS NULL');
             }
+
             $translation = $queryBuilder->getQuery()->getSingleResult();
         } catch (Exception $exception) {
             $logger->error($exception->getMessage(), $log_context);
@@ -213,6 +214,7 @@ class TranslationService
             if (! empty($theme)) {
                 $translation->setTheme($theme);
             }
+
             $translation->setTranslation($translationValue);
         }
 

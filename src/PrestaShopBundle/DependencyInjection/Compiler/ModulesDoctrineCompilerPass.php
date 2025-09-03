@@ -73,6 +73,7 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
                 if (empty($moduleNamespace)) {
                     continue;
                 }
+
                 $modulePrefix = 'Module' . Inflector::getInflector()->camelize($moduleFolder->getFilename());
                 $moduleEntityDirectory = realpath($moduleFolder . '/src/Entity');
                 $mappingPass = $this->createAnnotationMappingDriver($moduleNamespace, $moduleEntityDirectory);

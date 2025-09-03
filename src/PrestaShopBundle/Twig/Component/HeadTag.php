@@ -80,6 +80,7 @@ class HeadTag
         } else {
             $this->metaTitle = $metaTitle;
         }
+
         // This hook is kept for backward compatibility, it was previously called by AdminController::setMedia which is not called any more.
         // To keep this hook that needs to be called as soon as possible in the rendering workflow, we execute in this
         // component's mount method as the component is always displayed and the mount method is executed early
@@ -189,6 +190,7 @@ class HeadTag
             return $this->translator->trans('This field will be modified for this shop:', [], 'Admin.Notifications.Info')
                 . \sprintf('<b>%s</b>', $this->getShopName());
         }
+
         if (Shop::getContext() === Shop::CONTEXT_GROUP) {
             return $this->translator->trans('This field will be modified for all shops in this shop group:', [], 'Admin.Notifications.Info')
                 . \sprintf('<b>%s</b>', $this->getShopName());

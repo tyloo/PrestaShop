@@ -56,6 +56,7 @@ class PrestashopAuthorisationServer implements AuthorisationServerInterface
         if ($authorization === null) {
             return false;
         }
+
         if (! str_starts_with($authorization, 'Bearer ')) {
             return false;
         }

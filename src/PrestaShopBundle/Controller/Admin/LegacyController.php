@@ -165,6 +165,7 @@ class LegacyController extends PrestaShopAdminController
                     if (method_exists($adminController, $controllerDisplay . u($adminController->className)->camel())) {
                         $adminController->{$controllerDisplay . u($adminController->className)->camel()}();
                     }
+
                     $smarty->assign('content', $smarty->fetch($actionTemplate));
 
                     break;

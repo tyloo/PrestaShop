@@ -99,6 +99,7 @@ final class UploadQuotaDataProvider implements FormDataProviderInterface
         if (is_numeric($value)) {
             return $value;
         }
+
         $value_length = mb_strlen((string) $value);
         $qty = (int) mb_substr((string) $value, 0, $value_length - 1);
         $unit = mb_strtolower(mb_substr((string) $value, $value_length - 1));

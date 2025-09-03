@@ -504,6 +504,7 @@ class OrderController extends PrestaShopAdminController
         if (! \in_array($paginationNum, $paginationNumOptions, true)) {
             $paginationNumOptions[] = $paginationNum;
         }
+
         sort($paginationNumOptions);
 
         $metatitle = \sprintf(
@@ -762,6 +763,7 @@ class OrderController extends PrestaShopAdminController
                 if ($request->request->has('free_shipping')) {
                     $hasFreeShipping = (bool) filter_var($request->get('free_shipping'), \FILTER_VALIDATE_BOOLEAN);
                 }
+
                 $addProductCommand = AddProductToOrderCommand::withNewInvoice(
                     $orderId,
                     (int) $request->get('product_id'),
@@ -772,6 +774,7 @@ class OrderController extends PrestaShopAdminController
                     $hasFreeShipping
                 );
             }
+
             $this->dispatchCommand($addProductCommand);
         } catch (Exception $e) {
             return $this->json(
@@ -1423,6 +1426,7 @@ class OrderController extends PrestaShopAdminController
         if (! \in_array($paginationNum, $paginationNumOptions, true)) {
             $paginationNumOptions[] = $paginationNum;
         }
+
         sort($paginationNumOptions);
 
         $isColumnLocationDisplayed = false;
@@ -1432,6 +1436,7 @@ class OrderController extends PrestaShopAdminController
             if (! empty($product->getLocation())) {
                 $isColumnLocationDisplayed = true;
             }
+
             if ($product->getQuantityRefunded() > 0) {
                 $isColumnRefundedDisplayed = true;
             }
@@ -1735,6 +1740,7 @@ class OrderController extends PrestaShopAdminController
         if ($e instanceof InvalidCancelProductException) {
             $refundableQuantity = $e->getRefundableQuantity();
         }
+
         $orderInvoiceNumber = '#unknown';
         if ($e instanceof DuplicateProductInOrderInvoiceException) {
             $orderInvoiceNumber = $e->getOrderInvoiceNumber();

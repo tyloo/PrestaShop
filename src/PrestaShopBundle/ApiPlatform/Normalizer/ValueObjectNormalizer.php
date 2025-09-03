@@ -228,6 +228,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
             if ($constructorParameter && ! \in_array($constructorParameter->getName(), $this->allowedNamesByType[$type], true)) {
                 $this->allowedNamesByType[$type][] = $constructorParameter->getName();
             }
+
             if (! \in_array('value', $this->allowedNamesByType[$type], true)) {
                 $this->allowedNamesByType[$type][] = 'value';
             }

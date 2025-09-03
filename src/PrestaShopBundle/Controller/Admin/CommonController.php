@@ -122,6 +122,7 @@ class CommonController extends PrestaShopAdminController
                 unset($callerParameters[$k]);
             }
         }
+
         $callerParameters += ['_route' => false];
         $routeName = $request->attributes->get('caller_route', $callerParameters['_route']);
         $nextPageUrl = (! $routeName || ($offset + $limit >= $total)) ? false : $this->generateUrl($routeName, array_merge(

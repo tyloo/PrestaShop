@@ -90,6 +90,7 @@ class ResponseBuilder
             if ($request->query->has($paramName)) {
                 $redirectParams[$paramName] = $request->query->get($paramName);
             }
+
             if ($request->attributes->has($paramName)) {
                 $redirectParams[$paramName] = $request->attributes->get($paramName);
             }
@@ -103,6 +104,7 @@ class ResponseBuilder
         if (empty($filterId)) {
             return;
         }
+
         $adminFilter = $this->adminFilterRepository->findByEmployeeAndFilterId(
             $this->employeeId,
             $this->shopId,
@@ -111,6 +113,7 @@ class ResponseBuilder
         if (! $adminFilter) {
             return;
         }
+
         $this->adminFilterRepository->unsetFilters($adminFilter);
     }
 
@@ -123,6 +126,7 @@ class ResponseBuilder
             if ($data === null) {
                 continue;
             }
+
             if (\is_array($data) && $this->checkIsFormDataEmpty($data)) {
                 continue;
             }

@@ -63,6 +63,7 @@ class CountryChoiceType extends AbstractType
             $this->needLogo = $options['with_logo_attr'];
             $this->countriesAttr = $this->countriesChoiceProvider->getChoicesAttributes();
         }
+
         parent::buildForm($builder, $options);
     }
 
@@ -106,9 +107,11 @@ class CountryChoiceType extends AbstractType
         if ($this->needDni && isset($this->countriesAttr[$key], $this->countriesAttr[$key]['need_dni'])) {
             $attr['need_dni'] = 1;
         }
+
         if ($this->needPostcode && isset($this->countriesAttr[$key], $this->countriesAttr[$key]['need_postcode'])) {
             $attr['need_postcode'] = 1;
         }
+
         if ($this->needLogo && isset($this->countriesAttr[$key], $this->countriesAttr[$key]['data-logo'])) {
             $attr['data-logo'] = $this->countriesAttr[$key]['data-logo'];
         }

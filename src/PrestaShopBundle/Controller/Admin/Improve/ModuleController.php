@@ -224,6 +224,7 @@ class ModuleController extends ModuleAbstractController
             if ($source !== null) {
                 $args[] = $source;
             }
+
             if ($action === ModuleAdapter::ACTION_UNINSTALL) {
                 $args[] = (bool) ($request->request->all('actionParams')['deletion'] ?? false);
                 /** @var ModuleAdapter $moduleInstance */
@@ -231,6 +232,7 @@ class ModuleController extends ModuleAbstractController
                 $response[$moduleName]['refresh_needed'] = $this->moduleNeedsReload($moduleInstance);
                 $response[$moduleName]['has_download_url'] = $moduleInstance->attributes->has('download_url');
             }
+
             if ($action === ModuleAdapter::ACTION_DELETE) {
                 $moduleInstance = $this->getModuleRepository()->getModule($moduleName);
                 $response[$moduleName]['refresh_needed'] = false;
@@ -259,6 +261,7 @@ class ModuleController extends ModuleAbstractController
             if (! isset($response[$moduleName]['refresh_needed'])) {
                 $response[$moduleName]['refresh_needed'] = $this->moduleNeedsReload($moduleInstance);
             }
+
             $response[$moduleName]['msg'] = $this->trans(
                 '%action% action on module %module% succeeded.',
                 [
@@ -420,6 +423,7 @@ class ModuleController extends ModuleAbstractController
                 $moduleManager->disable($moduleName);
             } catch (Exception) {
             }
+
             $installationResponse['status'] = false;
             $installationResponse['msg'] = $this->trans(
                 'Installation of module %module% failed. %error%',

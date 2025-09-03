@@ -94,6 +94,7 @@ class ScopeRepository implements ScopeRepositoryInterface
                 );
                 throw OAuthServerException::accessDenied($hint);
             }
+
             $finalizedScopes[] = $scope;
         }
 

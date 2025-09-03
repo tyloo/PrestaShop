@@ -130,6 +130,7 @@ class PositionsController extends PrestaShopAdminController
         if ($this->selectedModule) {
             $saveUrlParams['show_modules'] = $this->selectedModule;
         }
+
         $saveUrl = $legacyContextService->getAdminLink('AdminModulesPositions', true, $saveUrlParams);
 
         return $this->render('@PrestaShop/Admin/Improve/Design/positions.html.twig', [

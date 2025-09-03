@@ -88,6 +88,7 @@ class Router extends BaseRouter
             if (! empty($components['port'])) {
                 $baseHost .= ':' . $components['port'];
             }
+
             $url = $baseHost . $url;
         }
 

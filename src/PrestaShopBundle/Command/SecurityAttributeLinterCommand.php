@@ -109,6 +109,7 @@ final class SecurityAttributeLinterCommand extends Command
         if (\count($matches1) > 1) {
             return $matches1[1];
         }
+
         preg_match($pattern2, $expression, $matches2);
         if (\count($matches2) > 1) {
             return $matches2[1];
@@ -155,6 +156,7 @@ final class SecurityAttributeLinterCommand extends Command
                 if ($this->findRoutesWithMissingSecurityAttributes($input, $output)) {
                     return 1;
                 }
+
                 break;
 
             default:
@@ -206,6 +208,7 @@ final class SecurityAttributeLinterCommand extends Command
             if (\in_array($routeName, self::EXCEPTION_ROUTES, true)) {
                 continue;
             }
+
             try {
                 $this->securityAttributeLinter->lint($routeName, $route);
             } catch (LinterException) {

@@ -125,6 +125,7 @@ abstract class QueryParamsCollection
         if (empty($allParams)) {
             $allParams = $queryParams;
         }
+
         $this->queryParams = $this->parseFilterParamsArray($queryParams, $allParams);
 
         return $this;
@@ -492,6 +493,7 @@ abstract class QueryParamsCollection
             $search = ($this->isTimestamp($dateAdd['sup']) ? 'UNIX_TIMESTAMP(%s)' : '%s');
             $filters[] = \sprintf('AND ' . $search . ' >= %s', '{date_add}', ':date_add_sup');
         }
+
         if (\array_key_exists('inf', $dateAdd)) {
             $search = ($this->isTimestamp($dateAdd['inf']) ? 'UNIX_TIMESTAMP(%s)' : '%s');
             $filters[] = \sprintf('AND ' . $search . ' <= %s', '{date_add}', ':date_add_inf');
@@ -512,6 +514,7 @@ abstract class QueryParamsCollection
         if (\array_key_exists('sup', $value)) {
             $sqlParams[':date_add_sup'] = $value['sup'];
         }
+
         if (\array_key_exists('inf', $value)) {
             $sqlParams[':date_add_inf'] = $value['inf'];
         }

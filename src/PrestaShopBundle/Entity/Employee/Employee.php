@@ -321,6 +321,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
                 $employeeSession->setEmployee(null);
             }
         }
+
         $this->sessions->removeElement($employeeSession);
 
         return $this;

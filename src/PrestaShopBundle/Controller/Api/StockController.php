@@ -152,6 +152,7 @@ class StockController extends ApiController
         if (! $this->isGranted(Permission::READ, $request->get('_legacy_controller'))) {
             return new JsonResponse(null, Response::HTTP_FORBIDDEN);
         }
+
         try {
             $queryParamsCollection = $this->queryParams->fromRequest($request);
         } catch (InvalidPaginationParamsException $exception) {
@@ -238,6 +239,7 @@ class StockController extends ApiController
             if (! \array_key_exists('product_id', $item) || ! \array_key_exists('delta', $item)) {
                 throw new BadRequestHttpException(\sprintf($messageMissingParameters, $index));
             }
+
             if ($item['delta'] === 0) {
                 throw new BadRequestHttpException(\sprintf($messageEmptyData, $index));
             }

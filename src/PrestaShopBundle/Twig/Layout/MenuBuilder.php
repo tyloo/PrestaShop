@@ -100,6 +100,7 @@ class MenuBuilder
         if (isset($this->ancestorsTab[$currentTabId])) {
             return $this->ancestorsTab[$currentTabId];
         }
+
         $this->ancestorsTab[$currentTabId] = $this->tabRepository->getAncestors($currentTabId);
 
         return $this->ancestorsTab[$currentTabId];
@@ -178,6 +179,7 @@ class MenuBuilder
         if ($request->attributes->has('_legacy_controller')) {
             return $request->attributes->get('_legacy_controller');
         }
+
         if ($request->query->has('controller')) {
             return $request->query->get('controller');
         }
@@ -271,30 +273,39 @@ class MenuBuilder
         if ($request->query->has('deleteImage')) {
             return 'delete_image';
         }
+
         if ($request->query->has('delete' . $controllerTable)) {
             return 'delete';
         }
+
         if ($request->query->has('status' . $controllerTable) || $request->query->has('status')) {
             return 'status';
         }
+
         if ($request->query->has('position')) {
             return 'position';
         }
+
         if ($request->query->has('add' . $controllerTable)) {
             return 'new';
         }
+
         if ($request->query->has('update' . $controllerTable) && $objectId) {
             return 'edit';
         }
+
         if ($request->query->has('view' . $controllerTable)) {
             return 'view';
         }
+
         if ($request->query->has('details' . $controllerTable)) {
             return 'details';
         }
+
         if ($request->query->has('export' . $controllerTable)) {
             return 'export';
         }
+
         if ($request->query->has('action') && ! empty($request->query->get('action'))) {
             return $request->query->get('action');
         }

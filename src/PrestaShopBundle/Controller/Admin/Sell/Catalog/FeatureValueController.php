@@ -120,10 +120,12 @@ class FeatureValueController extends PrestaShopAdminController
                     return $this->redirectToRoute('admin_feature_values_add', ['featureId' => $featureId]);
                     // Case 2 - save and stay, user entered the form from feature list
                 }
+
                 if ($request->request->has(self::SAVE_AND_ADD_BUTTON_NAME)) {
                     return $this->redirectToRoute('admin_feature_values_add');
                     // Case 3 - save and exit, user entered the form from feature value list
                 }
+
                 if ($featureId) {
                     return $this->redirectToRoute('admin_feature_values_index', ['featureId' => $featureId]);
                 }

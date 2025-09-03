@@ -54,6 +54,7 @@ class NavigationTabType extends AbstractType
         if (! empty($options['toolbar_buttons'])) {
             $this->addButtonCollection($builder, '_toolbar_buttons', $options['toolbar_buttons'], $options['toolbar_options']);
         }
+
         if (! empty($options['footer_buttons'])) {
             $this->addButtonCollection($builder, '_footer_buttons', $options['footer_buttons'], $options['footer_options']);
         }
@@ -82,6 +83,7 @@ class NavigationTabType extends AbstractType
             if ($this->isDebug) {
                 throw new InvalidConfigurationException(\sprintf('You cannot add a field which name is %s on this component as it is used internally.', $buttonCollectionName));
             }
+
             $this->logger->warning(\sprintf('You should not add a field which name is %s on this component as it is used internally.', $buttonCollectionName));
         }
 

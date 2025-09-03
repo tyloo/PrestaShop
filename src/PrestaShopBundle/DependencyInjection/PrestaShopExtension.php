@@ -142,6 +142,7 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
                 if (file_exists($entitiesRessourcesPath . '/index.php')) {
                     unlink($entitiesRessourcesPath . '/index.php');
                 }
+
                 $paths[] = $entitiesRessourcesPath;
             }
 

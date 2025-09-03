@@ -69,6 +69,7 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
                 if (! $id) {
                     continue;
                 }
+
                 $customer = $this->customerAdapter->getCustomer($id);
                 $collection[] = [
                     'id' => $id,
@@ -81,6 +82,7 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
                     break;
                 }
             }
+
             $view->vars['collection'] = $collection;
         }
     }

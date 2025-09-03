@@ -380,6 +380,7 @@ class MetaController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_metas_index');
             }
+
             $this->addFlashErrors($saveErrors);
         }
 

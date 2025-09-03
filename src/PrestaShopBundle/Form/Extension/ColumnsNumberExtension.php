@@ -64,6 +64,7 @@ class ColumnsNumberExtension extends AbstractTypeExtension
         if (! empty($options['columns_number'])) {
             $view->vars['columns_number'] = $options['columns_number'];
         }
+
         $view->vars['column_breaker'] = $options['column_breaker'];
     }
 

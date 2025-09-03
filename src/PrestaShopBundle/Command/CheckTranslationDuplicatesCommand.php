@@ -73,6 +73,7 @@ class CheckTranslationDuplicatesCommand extends Command
                         $duplicates[$domain][] = [$i => $messages[$i], $j => $messages[$j]];
                     }
                 }
+
                 $progress->advance();
             }
         }

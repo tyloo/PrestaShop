@@ -156,6 +156,7 @@ class ConfigCommand extends Command
         if ($this->input->getOption('shopId') && $this->input->getOption('shopGroupId')) {
             throw new Exception('Both shopId and shopGroupId cannot be defined', self::STATUS_INVALID_OPTIONS);
         }
+
         // init shopConstraint
         try {
             if ($this->input->getOption('shopGroupId')) {
@@ -187,6 +188,7 @@ class ConfigCommand extends Command
         if ($this->shopConstraint->getShopId() !== null) {
             $onlyShopId = $this->shopConstraint->getShopId()->getValue();
         }
+
         $languages = $this->languageDataProvider->getLanguages($onlyActive, $onlyShopId);
 
         $found = current(array_filter($languages, function (array $item) use ($inputlang): bool {
@@ -222,6 +224,7 @@ class ConfigCommand extends Command
                 $msg = \sprintf('%s is language dependant, --lang option is required', $key);
                 throw new Exception($msg, self::STATUS_LANG_REQUIRED);
             }
+
             $value = $value[$this->idLang];
         }
 
@@ -278,6 +281,7 @@ class ConfigCommand extends Command
             if (! $this->idLang) {
                 $this->idLang = $this->configuration->get('PS_LANG_DEFAULT');
             }
+
             // this will give the user at least some backup
             $this->get();
             $this->configuration->remove($key);

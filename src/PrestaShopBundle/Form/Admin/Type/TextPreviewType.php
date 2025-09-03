@@ -50,6 +50,7 @@ class TextPreviewType extends TextType
         if (! empty($options['prefix'])) {
             $view->vars['prefix'] = $options['prefix'];
         }
+
         if (! empty($options['suffix'])) {
             $view->vars['suffix'] = $options['suffix'];
         }

@@ -66,12 +66,14 @@ class GenerateMailTemplatesCommand extends Command
         if (! empty($coreOutputFolder) && file_exists($coreOutputFolder)) {
             $coreOutputFolder = realpath($coreOutputFolder);
         }
+
         $modulesOutputFolder = $input->getArgument('modulesOutputFolder');
         if (! empty($modulesOutputFolder) && file_exists($modulesOutputFolder)) {
             $modulesOutputFolder = realpath($modulesOutputFolder);
         } else {
             $modulesOutputFolder = $coreOutputFolder;
         }
+
         $overwrite = $input->getOption('overwrite') !== false;
 
         $this->initContext();

@@ -102,6 +102,7 @@ class NavBar
         if ($isCurrentTab) {
             $tab['current_level'] = $level;
         }
+
         $tab['img'] = null;
 
         try {

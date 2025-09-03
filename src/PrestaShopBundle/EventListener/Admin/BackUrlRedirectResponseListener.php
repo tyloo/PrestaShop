@@ -109,6 +109,7 @@ final class BackUrlRedirectResponseListener
             if (empty($parsedUrlA[$checkedPart])) {
                 $parsedUrlA[$checkedPart] = $missingValue;
             }
+
             if (empty($parsedUrlB[$checkedPart])) {
                 $parsedUrlB[$checkedPart] = $missingValue;
             }
@@ -137,9 +138,11 @@ final class BackUrlRedirectResponseListener
                 if (\in_array($parameterName, $ignoredParameters, true)) {
                     continue;
                 }
+
                 if (! isset($parametersA[$parameterName]) || ! isset($parametersB[$parameterName])) {
                     continue;
                 }
+
                 if ($parametersA[$parameterName] !== $parametersB[$parameterName]) {
                     return false;
                 }

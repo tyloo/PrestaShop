@@ -89,6 +89,7 @@ class ToggleChildrenChoiceType extends AbstractType
             if ($childName === 'children_selector') {
                 throw new InvalidArgumentException('You can not use children_selector as a child name as this name is reserved for internal purposes');
             }
+
             $childrenChoices[$child->getConfig()->getOptions()['label'] ?? $childName] = $child->getName();
         }
 

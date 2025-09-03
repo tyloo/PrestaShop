@@ -46,6 +46,7 @@ class UpdateOrderStatusType extends AbstractType
         if (! empty($options['data']['new_order_status_id'])) {
             $choiceProviderParams = ['current_state' => $options['data']['new_order_status_id']];
         }
+
         $builder
             ->add('new_order_status_id', ChoiceType::class, [
                 'required' => false,

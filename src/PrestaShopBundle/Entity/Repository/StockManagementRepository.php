@@ -157,6 +157,7 @@ abstract class StockManagementRepository
         if (! $shop instanceof Shop) {
             throw new RuntimeException('Determining the active shop requires a contextual shop instance.');
         }
+
         if ($shop->getContextType() !== Shop::CONTEXT_SHOP) {
             throw new NotImplementedException('Shop context types other than "single shop" are not supported');
         }

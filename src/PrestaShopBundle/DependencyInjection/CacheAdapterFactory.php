@@ -45,6 +45,7 @@ class CacheAdapterFactory
         if ($driver === 'apcu') {
             return new ApcuAdapter();
         }
+
         if ($driver === 'memcached') {
             return new MemcachedAdapter(
                 AbstractAdapter::createConnection('memcached://localhost', ['lazy' => true])

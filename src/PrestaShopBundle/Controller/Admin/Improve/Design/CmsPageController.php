@@ -175,6 +175,7 @@ class CmsPageController extends PrestaShopAdminController
         if ($categoryParentId) {
             $formData['page_category_id'] = $categoryParentId;
         }
+
         $form = $cmsPageFormBuilder->getForm($formData, [
             'cms_preview_url' => $urlProvider->getUrl(0, '{friendly-url}'),
         ]);

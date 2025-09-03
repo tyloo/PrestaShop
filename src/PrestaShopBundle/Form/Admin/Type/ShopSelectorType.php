@@ -92,6 +92,7 @@ class ShopSelectorType extends AbstractType
                 if (\is_array($selection)) {
                     return array_map(fn (int $shopId) => $this->shopRepository->find($shopId), $selection);
                 }
+
                 if (! empty($selection)) {
                     $this->shopRepository->find($selection);
                 }
@@ -116,6 +117,7 @@ class ShopSelectorType extends AbstractType
             if (! $shopGroup->getShops()->count()) {
                 continue;
             }
+
             $groupShops = [];
             /** @var Shop $shop */
             foreach ($shopGroup->getShops() as $shop) {

@@ -78,9 +78,11 @@ class CQRSNotFoundMetadataCollectionFactoryDecorator implements ResourceMetadata
                 if ($operations->has($key) && ! empty($extraProperties['CQRSQuery']) && ! class_exists($extraProperties['CQRSQuery'])) {
                     $operations->remove($key);
                 }
+
                 if ($operations->has($key) && ! empty($extraProperties['CQRSCommand']) && ! class_exists($extraProperties['CQRSCommand'])) {
                     $operations->remove($key);
                 }
+
                 if ($operations->has($key) && ! empty($extraProperties['gridDataFactory']) && ! $this->container->has($extraProperties['gridDataFactory'])) {
                     $operations->remove($key);
                 }

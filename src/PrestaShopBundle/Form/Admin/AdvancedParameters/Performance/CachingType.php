@@ -66,6 +66,7 @@ class CachingType extends TranslatorAwareType
 
                             break;
                         }
+
                         $disabled = true;
                     }
 
@@ -79,6 +80,7 @@ class CachingType extends TranslatorAwareType
 
                             break;
                         }
+
                         $disabled = true;
                     }
 

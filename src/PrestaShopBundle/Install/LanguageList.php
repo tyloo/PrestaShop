@@ -70,6 +70,7 @@ class LanguageList
         foreach ((new Finder())->files()->name('language.xml')->in(_PS_INSTALL_LANGS_PATH_) as $langFile) {
             $this->languages[$langFile->getRelativePath()] = new Language($langFile->getRelativePath());
         }
+
         uasort($this->languages, function ($a, $b): int {
             $aname = $a->getName();
             $bname = $b->getName();
@@ -97,6 +98,7 @@ class LanguageList
         if (! \in_array($iso, $this->getIsoList(), true)) {
             throw new PrestashopInstallerException('Language ' . $iso . ' not found');
         }
+
         $this->language = $iso;
     }
 
@@ -167,6 +169,7 @@ class LanguageList
                 $countryList[$iso] = $langCountries[$iso] ?? $defaultCountries[$iso];
             }
         }
+
         asort($countryList);
 
         return $countryList;

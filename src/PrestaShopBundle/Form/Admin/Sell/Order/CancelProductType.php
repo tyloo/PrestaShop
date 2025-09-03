@@ -82,6 +82,7 @@ class CancelProductType extends TranslatorAwareType
                     'data' => (new DecimalNumber('0'))->toPrecision($precision),
                 ]);
         }
+
         $builder
             ->add(
                 'shipping_amount',

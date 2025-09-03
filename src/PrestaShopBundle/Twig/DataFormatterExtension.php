@@ -123,6 +123,7 @@ class DataFormatterExtension extends AbstractExtension
                 $oldKey = $key;
                 $newKey = $value;
             }
+
             if (isset($array[$oldKey])) {
                 $extractedArray[$newKey] = $array[$oldKey];
             }

@@ -732,6 +732,7 @@ class CategoryController extends PrestaShopAdminController
         if ($categoryId === 0) {
             $categoryId = $request->attributes->get('categoryId');
         }
+
         if (empty($categoryId)) {
             $categoryId = (int) $this->getConfiguration()->get('PS_HOME_CATEGORY');
         }

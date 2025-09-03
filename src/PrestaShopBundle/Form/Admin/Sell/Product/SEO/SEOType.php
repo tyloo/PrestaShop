@@ -218,6 +218,7 @@ class SEOType extends TranslatorAwareType
                 ])
             );
         }
+
         if ($this->forceFriendlyUrl) {
             $alertMessages[] = \sprintf(
                 '<strong>%s</strong> %s',

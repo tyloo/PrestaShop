@@ -80,6 +80,7 @@ class LegacyRouterChecker
             if (! isset($controllers[mb_strtolower((string) $queryController)])) {
                 throw new NotFoundHttpException(\sprintf('Controller %s was not found. It belonged to module %s, make sure it is still installed.', $queryController, $moduleName));
             }
+
             $controllerName = $controllers[mb_strtolower((string) $queryController)];
             // Controllers in modules can be named AdminXXX.php or AdminXXXController.php
             include_once _PS_MODULE_DIR_ . "{$moduleName}/controllers/admin/$controllerName.php";
@@ -111,6 +112,7 @@ class LegacyRouterChecker
             } else {
                 $controllerClass = $controllers[mb_strtolower((string) $queryController)];
             }
+
             $controllerName = $queryController;
         }
 
@@ -139,6 +141,7 @@ class LegacyRouterChecker
         if (str_ends_with((string) $controllerName, 'Controller')) {
             $controllerName = mb_substr((string) $controllerName, 0, -mb_strlen('Controller'));
         }
+
         $request->attributes->set(LegacyControllerConstants::CONTROLLER_NAME_ATTRIBUTE, $controllerName);
         $request->attributes->set(LegacyControllerConstants::CONTROLLER_ACTION_ATTRIBUTE, $this->getPermission($request, $controller->table ?? ''));
 

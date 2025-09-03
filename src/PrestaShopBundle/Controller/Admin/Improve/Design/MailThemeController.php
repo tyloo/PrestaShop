@@ -125,6 +125,7 @@ class MailThemeController extends PrestaShopAdminController
                     if (is_dir($data['theme'] . '/mails')) {
                         $coreMailsFolder = $data['theme'] . '/mails';
                     }
+
                     if (is_dir($data['theme'] . '/modules')) {
                         $modulesMailFolder = $data['theme'] . '/modules';
                     }
@@ -411,6 +412,7 @@ class MailThemeController extends PrestaShopAdminController
         if (empty($locale)) {
             $locale = $this->getLanguageContext()->getLocale();
         }
+
         $language = $this->container->get(LanguageRepositoryInterface::class)->getOneByLocaleOrIsoCode($locale);
         if ($language === null) {
             throw new InvalidArgumentException(\sprintf('Cannot find Language with locale or isoCode %s', $locale));

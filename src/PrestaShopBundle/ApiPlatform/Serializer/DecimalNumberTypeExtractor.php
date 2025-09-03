@@ -158,6 +158,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
                 $reflectionClass = null;
             }
         }
+
         $this->reflectionClasses[$className] = $reflectionClass;
 
         return $this->reflectionClasses[$className];

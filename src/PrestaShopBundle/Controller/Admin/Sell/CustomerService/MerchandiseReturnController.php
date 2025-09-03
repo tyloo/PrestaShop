@@ -74,6 +74,7 @@ class MerchandiseReturnController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_merchandise_returns_index');
             }
+
             $this->addFlashErrors($errors);
         }
 

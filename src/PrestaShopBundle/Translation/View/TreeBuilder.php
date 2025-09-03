@@ -219,6 +219,7 @@ class TreeBuilder
                                 if (empty($cleanTree[$index1]['children'][$index2]['children'][$index3]['children'])) {
                                     unset($cleanTree[$index1]['children'][$index2]['children'][$index3]['children']);
                                 }
+
                                 ++$index3;
                             }
                         }
@@ -226,6 +227,7 @@ class TreeBuilder
                         if (empty($cleanTree[$index1]['children'][$index2]['children'])) {
                             unset($cleanTree[$index1]['children'][$index2]['children']);
                         }
+
                         ++$index2;
                     }
                 }
@@ -233,6 +235,7 @@ class TreeBuilder
                 if (empty($cleanTree[$index1]['children'])) {
                     unset($cleanTree[$index1]['children']);
                 }
+
                 ++$index1;
             }
         }

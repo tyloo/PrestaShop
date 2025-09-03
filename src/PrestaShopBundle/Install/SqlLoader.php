@@ -49,6 +49,7 @@ class SqlLoader
         if ($db === null) {
             $db = Db::getInstance();
         }
+
         $this->db = $db;
     }
 

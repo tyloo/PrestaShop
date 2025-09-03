@@ -96,6 +96,7 @@ class CurrencyType extends TranslatorAwareType
                 ])
             ;
         }
+
         $isoCodeAttrs = [];
         if (! $newCurrency && ! $unofficialCurrency) {
             $isoCodeAttrs['readonly'] = 1;

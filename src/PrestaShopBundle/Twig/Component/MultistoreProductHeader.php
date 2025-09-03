@@ -93,6 +93,7 @@ class MultistoreProductHeader extends AbstractMultistoreHeader
                         $shopGroup->getShops()->removeElement($shop);
                     }
                 }
+
                 if (! $shopGroup->getShops()->isEmpty()) {
                     $this->groupList[] = $shopGroup;
                 }

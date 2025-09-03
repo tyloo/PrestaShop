@@ -58,6 +58,7 @@ class ModuleTemplateLoader extends FilesystemLoader
                     $templatePaths[] = $dir;
                 }
             }
+
             $this->setPaths($templatePaths, $namespace);
         }
     }

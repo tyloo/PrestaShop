@@ -66,6 +66,7 @@ class ResourceScopesType extends TranslatorAwareType implements DataMapperInterf
                 'entry_type' => SwitchScopeType::class,
             ]);
         }
+
         $builder->setDataMapper($this);
     }
 
@@ -84,6 +85,7 @@ class ResourceScopesType extends TranslatorAwareType implements DataMapperInterf
                     'associated' => \is_array($viewData) && \in_array($scope, $viewData, true),
                 ];
             }
+
             $resourceForm->setData($formattedData);
         }
     }
@@ -99,6 +101,7 @@ class ResourceScopesType extends TranslatorAwareType implements DataMapperInterf
                 }
             }
         }
+
         $viewData = $associatedScopes;
     }
 

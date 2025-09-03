@@ -219,9 +219,11 @@ class LegacyLinkLinterCommand extends Command
             if (\in_array($routeName, self::ROUTE_WHITE_LIST, true) || $this->legacyLinkLinter->lint($routeName, $route) === true) {
                 continue;
             }
+
             if ($route->getDefault('_legacy_controller') && \in_array($route->getDefault('_legacy_controller'), self::CONTROLLER_WHITE_LIST, true)) {
                 continue;
             }
+
             $unconfiguredRoutes[] = $routeName;
         }
 

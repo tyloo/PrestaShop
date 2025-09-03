@@ -167,6 +167,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                     $updatedPathItem = $updatedPathItem->{$setterMethod}($updatedOperation);
                 }
             }
+
             $updatedPaths->addPath($path, $updatedPathItem);
         }
 
@@ -356,6 +357,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                 } else {
                     continue 2;
                 }
+
                 $methodSchema['properties'][$methodParameter->getName()] = $methodParameterSchema;
             }
 
@@ -365,6 +367,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             foreach (array_keys($methodSchema['properties']) as $propertyName) {
                 unset($definition['properties'][$propertyName]);
             }
+
             $definition['properties'][$methodPropertyName] = $methodSchema;
         }
     }
@@ -418,6 +421,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             } else {
                 $methodPropertyName = $reflectionMethod->getName();
             }
+
             $methodsWithMultipleArguments[$methodPropertyName] = $reflectionMethod;
         }
 

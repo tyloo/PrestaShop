@@ -419,6 +419,7 @@ class CombinationController extends PrestaShopAdminController
             if (! $result->isSubmitted()) {
                 return $this->json(['errors' => $this->getFormErrorsForJS($combinationsListForm)], Response::HTTP_BAD_REQUEST);
             }
+
             if (! $result->isValid()) {
                 return $this->json([
                     'errors' => $this->getFormErrorsForJS($combinationsListForm),
@@ -533,9 +534,11 @@ class CombinationController extends PrestaShopAdminController
                 if ($attribute->getColor() !== null) {
                     $attributeData['color'] = $attribute->getColor();
                 }
+
                 if ($attribute->getTextureFilePath() !== null) {
                     $attributeData['texture'] = $attribute->getTextureFilePath();
                 }
+
                 $attributes[] = $attributeData;
             }
 

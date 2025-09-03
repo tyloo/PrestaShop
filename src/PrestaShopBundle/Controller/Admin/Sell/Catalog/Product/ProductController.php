@@ -144,6 +144,7 @@ class ProductController extends PrestaShopAdminController
         if (isset($filters->getFilters()['id_category'])) {
             $filteredCategoryId = (int) $filters->getFilters()['id_category'];
         }
+
         $categoriesForm = $this->createForm(CategoryFilterType::class, $filteredCategoryId, [
             'action' => $this->generateUrl('admin_products_grid_category_filter'),
         ]);
@@ -243,6 +244,7 @@ class ProductController extends PrestaShopAdminController
             } else {
                 $currentFilters['filters']['id_category'] = $filteredCategoryId;
             }
+
             $currentFilters['offset'] = 0;
             $adminFilter->setFilter(json_encode($currentFilters));
             $this->container->get(AdminFilterRepository::class)->updateFilter($adminFilter);
@@ -377,6 +379,7 @@ class ProductController extends PrestaShopAdminController
         } else {
             $data['shop_id'] = $this->getShopContext()->getId();
         }
+
         $productForm = $productFormBuilder->getForm($data);
 
         try {
@@ -466,6 +469,7 @@ class ProductController extends PrestaShopAdminController
 
                     return $this->redirectToRoute('admin_products_edit', ['productId' => $productId]);
                 }
+
                 // Display root level errors with flash messages
                 foreach ($productForm->getErrors() as $error) {
                     $this->addFlash('error', \sprintf(

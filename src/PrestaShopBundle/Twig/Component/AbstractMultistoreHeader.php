@@ -131,6 +131,7 @@ abstract class AbstractMultistoreHeader
         } else {
             $this->contextName = $this->translator->trans('All stores', domain: 'Admin.Global');
         }
+
         $this->link = $this->legacyContext->getContext()->link;
     }
 }

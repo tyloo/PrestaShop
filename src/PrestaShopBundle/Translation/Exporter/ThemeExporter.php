@@ -113,6 +113,7 @@ class ThemeExporter
         } catch (Exception) {
             $themeCatalogue = new MessageCatalogue($locale, []);
         }
+
         $databaseCatalogue = $this->themeProvider->getDatabaseCatalogue($themeName);
         $databaseCatalogue = $this->addLocaleToDomain($locale, $databaseCatalogue);
 
@@ -219,6 +220,7 @@ class ThemeExporter
             if ($this->filesystem->exists($destinationFilename)) {
                 $this->filesystem->remove($destinationFilename);
             }
+
             $this->filesystem->rename($file->getPathname(), $destinationFilename);
         }
 

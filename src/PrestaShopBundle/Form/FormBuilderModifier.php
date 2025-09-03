@@ -62,6 +62,7 @@ class FormBuilderModifier
             if ($childName === $targetFieldName) {
                 $formBuilder->add($newChild, $type, $options);
             }
+
             $formBuilder->add($formType);
         }
     }

@@ -51,6 +51,7 @@ class AttachmentType extends TranslatorAwareType
         if (isset($options['data']['file_name']) && $options['data']['file_name']) {
             $required = false;
         }
+
         $builder
             ->add('name', TranslatableType::class, [
                 'type' => TextType::class,

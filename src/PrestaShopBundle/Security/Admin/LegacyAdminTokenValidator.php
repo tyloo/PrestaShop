@@ -117,6 +117,7 @@ class LegacyAdminTokenValidator
             // Symfony CSRF token is passed via _token parameter
             $token = $this->requestStack->getMainRequest()->get('_token', null);
         }
+
         if ($token === null) {
             // Frontend token (used for preview mode mostly) is passed via adtoken parameter
             $token = $this->requestStack->getMainRequest()->get('adtoken', null);

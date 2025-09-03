@@ -84,6 +84,7 @@ class QuickAccess
                 $cleanLink = $this->quickAccessGenerator->cleanQuickLink($quick['link']);
                 $quick['active'] = $this->isCurrentPage($cleanLink);
             }
+
             $this->quickAccesses = $quickAccesses;
         }
 
@@ -152,6 +153,7 @@ class QuickAccess
         } else {
             $this->currentPageTitle = '';
         }
+
         if (isset($breadcrumbLinks['container'])) {
             $this->currentPageIcon = $breadcrumbLinks['container']->icon ?? '';
         } else {
@@ -173,6 +175,7 @@ class QuickAccess
         if (isset($parsedUrl['query'])) {
             parse_str($parsedUrl['query'], $parsedUrlParameters);
         }
+
         $parsedCurrentUrlParameters = [];
         if (isset($parsedCurrentUrl['query'])) {
             parse_str($parsedCurrentUrl['query'], $parsedCurrentUrlParameters);

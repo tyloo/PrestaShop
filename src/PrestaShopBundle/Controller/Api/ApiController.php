@@ -140,6 +140,7 @@ abstract class ApiController
             if (\array_key_exists('page_index', $previousParams)) {
                 --$previousParams['page_index'];
             }
+
             $info['previous_url'] = $router->generate($request->attributes->get('_route'), $previousParams);
         }
 
@@ -150,6 +151,7 @@ abstract class ApiController
             if (\array_key_exists('page_index', $nextParams)) {
                 ++$nextParams['page_index'];
             }
+
             $info['next_url'] = $router->generate($request->attributes->get('_route'), $nextParams);
         }
 

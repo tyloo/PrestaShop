@@ -55,9 +55,11 @@ class AdminAuthenticationSuccessHandler implements AuthenticationSuccessHandlerI
         if ($request->hasPreviousSession()) {
             $redirectUrl = $this->getTargetPath($request->getSession(), 'main');
         }
+
         if (empty($redirectUrl)) {
             $redirectUrl = $this->employeeHomepageProvider->getHomepageUrl();
         }
+
         if (empty($redirectUrl)) {
             $redirectUrl = $this->router->generate('admin_homepage');
         }

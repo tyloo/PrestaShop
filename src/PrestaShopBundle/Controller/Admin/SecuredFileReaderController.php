@@ -82,6 +82,7 @@ class SecuredFileReaderController extends AbstractController
         if (\count($fileExtensions) > 2) {
             throw new PrestaShopException('Too many extensions for ' . $fileName);
         }
+
         if (! \array_key_exists($fileExtensions[1], self::allowedExtensions)) {
             throw new PrestaShopException('Invalid extension for ' . $fileName);
         }

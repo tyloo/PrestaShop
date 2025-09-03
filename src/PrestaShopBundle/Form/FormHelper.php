@@ -47,6 +47,7 @@ class FormHelper
             if (\array_key_exists($item[$mapping_name], $new_list)) {
                 return self::formatDataDuplicateChoicesList($list, $mapping_value, $mapping_name);
             }
+
             $new_list[$item[$mapping_name]] = $item[$mapping_value];
         }
 

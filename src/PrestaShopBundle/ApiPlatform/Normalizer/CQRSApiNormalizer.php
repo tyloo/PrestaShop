@@ -102,8 +102,10 @@ class CQRSApiNormalizer extends ObjectNormalizer
                     $localizedValueParameters[$parameterName][LocalizedValue::DENORMALIZED_KEY] = LocalizedValue::ID_KEY;
                     $localizedValueParameters[$parameterName][LocalizedValue::NORMALIZED_KEY] = LocalizedValue::ID_KEY;
                 }
+
                 $context += [LocalizedValue::LOCALIZED_VALUE_PARAMETERS => $localizedValueParameters];
             }
+
             if (! empty($context['operation']) && ! empty($context['operation']->getExtraProperties()['CQRSCommandMapping'])) {
                 $context[NormalizationMapper::NORMALIZATION_MAPPING] = ($context[NormalizationMapper::NORMALIZATION_MAPPING] ?? []) + $context['operation']->getExtraProperties()['CQRSCommandMapping'];
             }
@@ -319,6 +321,7 @@ class CQRSApiNormalizer extends ObjectNormalizer
                     throw new InvalidArgumentException(\sprintf('Missing required parameter "%s" for method "%s"', $reflectionParameter->getName(), $reflectionMethod->getName()));
                 }
             }
+
             $methodsWithMultipleArguments[$methodPropertyName] = $reflectionMethod;
         }
 

@@ -106,6 +106,7 @@ class FeatureFlagCommand extends Command
                 $this->featureFlagManager->isEnabled($featureFlag->getName()) ? 'Enabled' : 'Disabled',
             ]);
         }
+
         $table->render();
 
         return self::SUCCESS_RETURN_CODE;

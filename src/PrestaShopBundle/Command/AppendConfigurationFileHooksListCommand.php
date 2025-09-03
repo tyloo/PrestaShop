@@ -91,6 +91,7 @@ class AppendConfigurationFileHooksListCommand extends Command
             if (preg_match('/<[^>]+>/', (string) $hook['hook']) > 0) {
                 continue;
             }
+
             $fixtureHooks[$hook['hook']] = [
                 'hook' => $hook['hook'],
                 'description' => $hook['description'],
@@ -106,6 +107,7 @@ class AppendConfigurationFileHooksListCommand extends Command
             if (isset($fixtureHooks[$hookDescription->getName()])) {
                 continue;
             }
+
             $fixtureHooks[$hookDescription->getName()] = [
                 'hook' => $hookDescription->getName(),
                 'description' => $hookDescription->getDescription(),

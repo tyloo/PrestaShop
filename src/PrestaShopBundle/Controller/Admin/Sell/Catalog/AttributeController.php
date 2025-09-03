@@ -281,6 +281,7 @@ class AttributeController extends PrestaShopAdminController
                 $dataToPush['color'] = $record['color'];
                 $hasColor = true;
             }
+
             $dataToPush['position'] = $record['position'];
             $data[] = $dataToPush;
         }
@@ -292,6 +293,7 @@ class AttributeController extends PrestaShopAdminController
         if ($hasColor) {
             $headers['color'] = $this->trans('Color', [], 'Admin.Global');
         }
+
         $headers['id_attribute'] = $this->trans('ID', [], 'Admin.Global');
         $headers['position'] = $this->trans('Position', [], 'Admin.Global');
 

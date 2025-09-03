@@ -64,6 +64,7 @@ class SessionEmployeeProvider
         if ($request === null) {
             return null;
         }
+
         $session = $request->hasPreviousSession() ? $request->getSession() : null;
         if ($session !== null) {
             $token = $session->get($this->sessionKey);

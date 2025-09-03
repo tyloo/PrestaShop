@@ -142,6 +142,7 @@ class UrlSchemaType extends TranslatorAwareType
                 if (isset($keyWord['param'])) {
                     $value .= '*';
                 }
+
                 $formattedKeyWords[] = $value;
             }
         }

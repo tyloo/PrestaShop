@@ -50,6 +50,7 @@ class RadioWithChoiceChildrenType extends AbstractType
                 $childChoice['choices'] = array_merge([$childChoice['empty'] => ''], $childChoice['choices']);
                 $childChoiceAttr[$childChoice['empty']] = ['disabled' => true];
             }
+
             $builder->add($childChoice['name'], ChoiceType::class, [
                 'label' => false,
                 'row_attr' => [

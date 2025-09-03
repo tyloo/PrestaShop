@@ -103,6 +103,7 @@ class TranslatorLanguageLoader
                             // Load core user-translated wordings
                             $translator->addResource('db', $domain . '.' . $locale . '.db', $locale, $domain);
                         }
+
                         if (! $this->isAdminContext && $theme !== null) {
                             // Load theme user-translated wordings for core + theme wordings
                             $translator->addResource('db.theme', $domain . '.' . $locale . '.db', $locale, $domain);

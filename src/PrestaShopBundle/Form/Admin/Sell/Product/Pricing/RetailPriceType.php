@@ -78,6 +78,7 @@ class RetailPriceType extends TranslatorAwareType
         } else {
             $ecotaxRate = new DecimalNumber('0');
         }
+
         $country = new Country($this->contextCountryId);
 
         $taxRateHelpPlaceholderWithoutState = $this->trans(
@@ -195,6 +196,7 @@ class RetailPriceType extends TranslatorAwareType
             if ($this->isTaxEnabled) {
                 $helpMessage = $this->trans('Ecotax rate %rate%%', 'Admin.Catalog.Feature', ['%rate%' => $ecotaxRate->round(2)]);
             }
+
             $builder->add('ecotax_tax_included', MoneyType::class, [
                 'label' => $this->trans('Ecotax (tax incl.)', 'Admin.Catalog.Feature'),
                 'help' => $helpMessage,

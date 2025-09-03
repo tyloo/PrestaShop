@@ -98,6 +98,7 @@ class ImageController extends PrestaShopAdminController
                         $imageAssociation['shops']
                     ));
                 }
+
                 $this->dispatchQuery($command);
             } catch (CoreException $e) {
                 return $this->json([
@@ -130,6 +131,7 @@ class ImageController extends PrestaShopAdminController
                     'form_errors' => $this->getFormErrorsForJS($imageForm),
                 ], Response::HTTP_BAD_REQUEST);
             }
+
             if ($result->getIdentifiableObjectId() === null) {
                 return new JsonResponse([
                     'error' => 'Could not create image.',

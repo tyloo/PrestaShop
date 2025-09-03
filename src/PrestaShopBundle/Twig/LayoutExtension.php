@@ -70,6 +70,7 @@ class LayoutExtension extends AbstractExtension implements GlobalsInterface
         } catch (Exception) {
             $defaultCurrency = null;
         }
+
         try {
             $rootUrl = $this->context->getRootUrl();
         } catch (Exception) {

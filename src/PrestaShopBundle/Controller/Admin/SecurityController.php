@@ -55,6 +55,7 @@ class SecurityController extends PrestaShopAdminController
         if (empty($requestUri)) {
             $requestUri = $this->router->generate('admin_homepage');
         }
+
         $url = new Assert\Url();
         $violations = $this->validator->validate($requestUri, [$url]);
         if ($violations->count()) {

@@ -91,6 +91,7 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
         if (isset($parsedBody['scope'])) {
             return $this->convertScopeParameterIntoLeagueExpectedScope($parsedBody['scope']);
         }
+
         if (isset($parsedBody['scopes'])) {
             return $this->convertScopeParameterIntoLeagueExpectedScope($parsedBody['scopes']);
         }
@@ -112,6 +113,7 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
             } else {
                 $scopes = explode(' ', $scope);
             }
+
             $scopes = array_map(fn (string $scope): string => mb_trim($scope), $scopes);
         } elseif (\is_array($scope)) {
             $scopes = array_map(fn (string $scope): string => mb_trim($scope), $scope);

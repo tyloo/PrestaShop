@@ -108,6 +108,7 @@ class ProductSupplierType extends TranslatorAwareType
             if (empty($productSupplierData['currency_id'])) {
                 return;
             }
+
             $currencyId = $productSupplierData['currency_id'];
 
             /** @var Currency $currency */

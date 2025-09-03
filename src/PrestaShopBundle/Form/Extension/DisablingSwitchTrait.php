@@ -53,6 +53,7 @@ trait DisablingSwitchTrait
             if ($disabledValue === null) {
                 $disabledValue = $form->getConfig()->getOption('default_empty_data');
             }
+
             if ($disabledValue === null) {
                 $emptyData = $form->getConfig()->getOption('empty_data');
                 $disabledValue = $emptyData instanceof Closure ? $emptyData($form) : $emptyData;

@@ -121,6 +121,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
 
             return 1;
         }
+
         if (empty($sqlUpgradeFile)) {
             return 1;
         }
@@ -291,6 +292,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
             if (! isset($hook->name)) {
                 continue;
             }
+
             $hookName = $hook->name->__toString();
             if (! \in_array($hookName, $extractedHooks, true)) {
                 continue;

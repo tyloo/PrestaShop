@@ -92,6 +92,7 @@ final class GenerateHooksDocumentationCommand extends Command
         if (! is_dir($outputDir)) {
             mkdir($outputDir, 0777, true);
         }
+
         $outputDir = mb_rtrim($outputDir, '/') . '/';
 
         $githubBaseUrl = 'https://github.com/PrestaShop/PrestaShop/blob/9.0.x/';
@@ -292,6 +293,7 @@ final class GenerateHooksDocumentationCommand extends Command
         if (str_starts_with($hookName, 'action')) {
             return 'action';
         }
+
         if (str_starts_with($hookName, 'display')) {
             return 'display';
         }

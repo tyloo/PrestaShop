@@ -121,6 +121,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
                 if ($this->isUsingFixedPrice($form->getData())) {
                     $validationGroups[] = self::FIXED_PRICE_GROUP;
                 }
+
                 if ($this->isUsingReduction($form->getData())) {
                     $validationGroups[] = self::REDUCTION_GROUP;
                 }

@@ -45,8 +45,8 @@ return RectorConfig::configure()
     ->withPhpSets(php81: true)
     // ->withComposerBased(twig: true, doctrine: true, symfony: true)
     // ->withAttributesSets(symfony: true, doctrine: true)
-    ->withTypeCoverageLevel(51)
-    // ->withDeadCodeLevel(0)
-    // ->withCodeQualityLevel(0)
-    // ->withCodingStyleLevel(0)
+    ->withTypeCoverageLevel(53) // max = 53
+    // ->withDeadCodeLevel(0) // max = 51
+    // ->withCodeQualityLevel(0) // max = 74
+    ->withCodingStyleLevel(1) // max = 25
 ;

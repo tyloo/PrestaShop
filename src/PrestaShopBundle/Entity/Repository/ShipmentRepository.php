@@ -80,6 +80,7 @@ class ShipmentRepository extends EntityRepository
             if (empty($sourceProductsByOrderDetailId[$shipmentProduct->getOrderDetailId()])) {
                 throw new ShipmentException(\sprintf('Order detail with id %d does not exist in source shipment', $shipmentProduct->getOrderDetailId()));
             }
+
             if (empty($targetProductsByOrderDetailId[$shipmentProduct->getOrderDetailId()])) {
                 $target->addShipmentProduct($shipmentProduct);
             } else {
@@ -87,6 +88,7 @@ class ShipmentRepository extends EntityRepository
                 $newQuantity = $targetProduct->getQuantity() + $shipmentProduct->getQuantity();
                 $targetProduct->setQuantity($newQuantity);
             }
+
             $sourceProduct = $sourceProductsByOrderDetailId[$shipmentProduct->getOrderDetailId()];
             $newQuantity = $sourceProduct->getQuantity() - $shipmentProduct->getQuantity();
             if ($newQuantity <= 0) {
@@ -95,6 +97,7 @@ class ShipmentRepository extends EntityRepository
                 $sourceProduct->setQuantity($newQuantity);
             }
         }
+
         $this->getEntityManager()->flush();
 
         if ($source->getProducts()->isEmpty()) {
@@ -137,6 +140,7 @@ class ShipmentRepository extends EntityRepository
             } else {
                 throw new ShipmentException(\sprintf('Cannot find product with order detail id %s', $orderDetailId));
             }
+
             $shipmentProducts[] = (new ShipmentProduct())
                 ->setOrderDetailId($orderDetailId)
                 ->setQuantity($quantity)
@@ -146,6 +150,7 @@ class ShipmentRepository extends EntityRepository
         foreach ($shipmentProducts as $shipmentProduct) {
             $newShipment->addShipmentProduct($shipmentProduct);
         }
+
         $this->save($newShipment);
 
         if ($shipmentToRemoveProduct->getProducts()->isEmpty()) {

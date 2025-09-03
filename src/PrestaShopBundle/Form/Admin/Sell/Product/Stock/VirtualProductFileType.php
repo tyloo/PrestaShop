@@ -67,6 +67,7 @@ class VirtualProductFileType extends TranslatorAwareType
                 'virtualProductFileId' => (int) $options['virtual_product_file_id'],
             ]);
         }
+
         $maxUploadSize = $this->maxFileSizeInMegabytes . 'M';
 
         $builder

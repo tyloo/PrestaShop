@@ -45,6 +45,7 @@ class OverrideTranslatorServiceCompilerPass implements CompilerPassInterface
         if (! \in_array($container->getParameter('kernel.environment'), ['dev', 'test'], true)) {
             return;
         }
+
         $definition = $container->getDefinition('translator.data_collector');
         $definition->setClass($container->getParameter('translator.data_collector'));
     }

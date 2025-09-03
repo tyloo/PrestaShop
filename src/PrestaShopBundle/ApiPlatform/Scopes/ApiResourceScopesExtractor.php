@@ -197,9 +197,11 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
         if (! empty($extraProperties['CQRSQuery']) && ! class_exists($extraProperties['CQRSQuery'])) {
             return true;
         }
+
         if (! empty($extraProperties['CQRSCommand']) && ! class_exists($extraProperties['CQRSCommand'])) {
             return true;
         }
+
         if (! empty($extraProperties['gridDataFactory']) && ! $this->container->has($extraProperties['gridDataFactory'])) {
             return true;
         }

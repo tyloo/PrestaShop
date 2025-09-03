@@ -63,10 +63,12 @@ class SwitchType extends AbstractType
         if ($options['disabled'] === true) {
             $view->vars['disabled'] = true;
         }
+
         $view->vars['attr']['class'] = 'ps-switch';
         if (isset($options['attr']['class'])) {
             $view->vars['attr']['class'] .= ' ' . $options['attr']['class'];
         }
+
         $view->vars['show_choices'] = $options['show_choices'];
 
         // Add a class when inline mode is enabled
@@ -77,6 +79,7 @@ class SwitchType extends AbstractType
             } else {
                 $rowAttributes['class'] = 'inline-switch-widget';
             }
+
             $view->vars['row_attr'] = $rowAttributes;
         }
     }

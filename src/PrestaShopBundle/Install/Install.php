@@ -176,6 +176,7 @@ class Install extends AbstractInstall
 
             return false;
         }
+
         if (
             ! file_exists(_PS_ROOT_DIR_ . \DIRECTORY_SEPARATOR . $this->settingsFile)
             && ! is_writable(_PS_ROOT_DIR_ . \DIRECTORY_SEPARATOR . \dirname($this->settingsFile))
@@ -358,6 +359,7 @@ class Install extends AbstractInstall
                 $context->country = new Country((int) $id_country);
             }
         }
+
         if (! isset($context->currency) || ! Validate::isLoadedObject($context->currency)) {
             if ($id_currency = Currency::getDefaultCurrencyId()) {
                 $context->currency = new Currency((int) $id_currency);
@@ -379,6 +381,7 @@ class Install extends AbstractInstall
         if (! \defined('_PS_SMARTY_FAST_LOAD_')) {
             \define('_PS_SMARTY_FAST_LOAD_', true);
         }
+
         require_once _PS_ROOT_DIR_ . '/config/smarty.config.inc.php';
 
         $context->smarty = $smarty;
@@ -425,6 +428,7 @@ class Install extends AbstractInstall
                         }
                     }
                 }
+
                 $languages = $this->installLanguages(array_unique($iso_codes_to_install));
             } else {
                 $languages = $this->installLanguages();
@@ -483,6 +487,7 @@ class Install extends AbstractInstall
                     $xml_loader->populateFromXmlFiles();
                 });
             }
+
             if ($errors = $xml_loader->getErrors()) {
                 $this->setError($errors);
 
@@ -545,6 +550,7 @@ class Install extends AbstractInstall
 
             return false;
         }
+
         $shop->setTheme();
         Context::getContext()->shop = $shop;
 
@@ -577,6 +583,7 @@ class Install extends AbstractInstall
         if ($languages_list === null || (\is_array($languages_list) && ! \count($languages_list))) {
             $languages_list = $this->language->getIsoList();
         }
+
         $this->getLogger()->log('Installing languages: ' . implode(', ', $languages_list));
 
         $languages_list = array_unique($languages_list);
@@ -773,6 +780,7 @@ class Install extends AbstractInstall
                 $group_default = $group_default['name'];
             }
         }
+
         unset($group_default);
 
         if (\is_array($groups) && \count($groups)) {
@@ -791,6 +799,7 @@ class Install extends AbstractInstall
                 $state_default = $state_default['name'];
             }
         }
+
         unset($state_default);
 
         if (\is_array($states) && \count($states)) {
@@ -799,6 +808,7 @@ class Install extends AbstractInstall
                     Configuration::updateGlobalValue($states_default[$key], (int) $states[$key]['id_order_state']);
                 }
             }
+
             /* deprecated order state */
             Configuration::updateGlobalValue('PS_OS_OUTOFSTOCK_PAID', (int) Configuration::get('PS_OS_OUTOFSTOCK'));
         }
@@ -849,6 +859,7 @@ class Install extends AbstractInstall
 
                 return false;
             }
+
             Context::getContext()->employee = $employee;
         } else {
             $this->setError($this->translator->trans('Cannot create admin account', [], 'Install'));
@@ -1010,6 +1021,7 @@ class Install extends AbstractInstall
         } else {
             $xml_loader = new XmlLoader();
         }
+
         $xml_loader->setTranslator($this->translator);
 
         // Install XML data (data/xml/ folder)
@@ -1022,6 +1034,7 @@ class Install extends AbstractInstall
         foreach (EntityLanguage::getLanguages(false) as $lang) {
             $languages[$lang['id_lang']] = $lang['iso_code'];
         }
+
         $xml_loader->setLanguages($languages);
 
         if ($entity) {
@@ -1151,6 +1164,7 @@ class Install extends AbstractInstall
             $db->execute('SET SESSION auto_increment_offset = 1', false);
             $db->execute('SET SESSION auto_increment_increment = 1', false);
         }
+
         try {
             return $callback(...$args);
         } finally {

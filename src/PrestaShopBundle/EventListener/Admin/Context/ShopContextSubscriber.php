@@ -316,6 +316,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
         } else {
             $legacyCookie->shopContext = '';
         }
+
         $legacyCookie->write();
 
         // Redirect to same url but remove setShopContext and conf parameters
@@ -345,6 +346,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
                 if ($splitShopType === 'g') {
                     return ShopConstraint::shopGroup($splitShopValue);
                 }
+
                 if ($splitShopType === 's') {
                     return ShopConstraint::shop($splitShopValue);
                 }

@@ -69,12 +69,15 @@ class LabelOptionsExtension extends AbstractTypeExtension
         if (! empty($options['label_tag_name'])) {
             $view->vars['label_tag_name'] = $options['label_tag_name'];
         }
+
         if (! empty($options['label_subtitle'])) {
             $view->vars['label_subtitle'] = $options['label_subtitle'];
         }
+
         if (! empty($options['label_help_box'])) {
             $view->vars['label_help_box'] = $options['label_help_box'];
         }
+
         if (! empty($options['label_tab'])) {
             $view->vars['label_tab'] = $options['label_tab'];
         }

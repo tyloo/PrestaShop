@@ -51,6 +51,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         if (! empty($userIdentifier)) {
             $token->setUserIdentifier($userIdentifier);
         }
+
         foreach ($scopes as $scope) {
             $token->addScope($scope);
         }

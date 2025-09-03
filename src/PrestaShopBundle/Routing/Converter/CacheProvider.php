@@ -106,6 +106,7 @@ class CacheProvider extends AbstractLegacyRouteProvider implements CacheCleanerI
                     $legacyLinks[] = $legacyLink['controller'] . ':' . $legacyLink['action'];
                 }
             }
+
             $flattenRoutes[] = [
                 'route_name' => $legacyRoute->getRouteName(),
                 'legacy_links' => $legacyLinks,

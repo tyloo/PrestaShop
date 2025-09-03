@@ -98,6 +98,7 @@ class FrameworkBundleAdminController extends AbstractController
         if ($container instanceof ServiceProviderInterface) {
             $this->controllerContainer = $container;
         }
+
         if ($container instanceof Container) {
             $this->globalContainer = $container;
         }
@@ -168,6 +169,7 @@ class FrameworkBundleAdminController extends AbstractController
         if ($this->controllerContainer && $this->controllerContainer->has($id)) {
             return true;
         }
+
         if ($this->globalContainer && $this->globalContainer->has($id)) {
             return true;
         }

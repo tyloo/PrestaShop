@@ -75,9 +75,11 @@ class LegacyParametersConverter
                 if (! isset($legacyParameters['controller'])) {
                     $legacyParameters['controller'] = $linkParts[0];
                 }
+
                 if (! isset($legacyParameters['action']) && \count($linkParts) > 1) {
                     $legacyParameters['action'] = $linkParts[1];
                 }
+
                 if (isset($legacyParameters['action'])) {
                     break;
                 }

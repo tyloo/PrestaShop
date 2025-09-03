@@ -48,9 +48,11 @@ class ShopConstraintNormalizer implements DenormalizerInterface, NormalizerInter
         if (! empty($data['shopId'])) {
             return ShopConstraint::shop($data['shopId'], $data['isStrict'] ?? false);
         }
+
         if (! empty($data['shopGroupId'])) {
             return ShopConstraint::shopGroup($data['shopGroupId'], $data['isStrict'] ?? false);
         }
+
         if (! empty($data['shopIds'])) {
             return ShopCollection::shops($data['shopIds']);
         }

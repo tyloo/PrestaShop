@@ -100,6 +100,7 @@ class FormattedTextareaType extends TranslatorAwareType
                         return $constraints;
                     }
                 }
+
                 // add length constraint
                 $constraints[] = new TinyMceMaxLength([
                     'max' => $limit,
@@ -121,6 +122,7 @@ class FormattedTextareaType extends TranslatorAwareType
         if ($options['autoload'] === true) {
             $view->vars['attr']['class'] .= ' autoload_rte';
         }
+
         $view->vars['attr']['counter'] = $options['limit'];
     }
 

@@ -132,6 +132,7 @@ class AccessDeniedListener
                 'message' => $this->getErrorMessage($adminSecurity),
             ], Response::HTTP_FORBIDDEN);
         }
+
         /** @var Session $session */
         $session = $this->requestStack->getSession();
         $session->getFlashBag()->add('error', $this->getErrorMessage($adminSecurity));

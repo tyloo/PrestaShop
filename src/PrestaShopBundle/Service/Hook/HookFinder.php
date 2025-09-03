@@ -78,14 +78,17 @@ class HookFinder
             if (! \is_array($moduleContents)) {
                 continue;
             }
+
             foreach ($moduleContents as $content) {
                 // Check data returned if asked
                 if (! \count($this->expectedInstanceClasses)) {
                     continue;
                 }
+
                 if (\is_object($content) && ! \in_array($content::class, $this->expectedInstanceClasses, true)) {
                     throw new Exception('The module ' . $moduleName . ' did not return expected class. Was ' . $content::class . ' instead of ' . implode(' or ', $this->expectedInstanceClasses) . '.');
                 }
+
                 if (! \is_object($content)) {
                     throw new Exception('The module ' . $moduleName . ' did not return expected type. Was ' . \gettype($content) . ' instead of ' . implode(' or ', $this->expectedInstanceClasses) . '.');
                 }
@@ -107,6 +110,7 @@ class HookFinder
             if (! \is_array($moduleContents)) {
                 continue;
             }
+
             foreach ($moduleContents as $content) {
                 if (! $content instanceof HookContentClassInterface) {
                     throw new Exception('The class returned must implement HookContentClassInterface to be presented');

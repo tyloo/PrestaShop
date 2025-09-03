@@ -233,6 +233,7 @@ class AdminFilter
 
                 return \sprintf('BETWEEN %f AND %f', $matches['min'], $matches['max']);
             }
+
             $subjectWithoutOperator = str_replace($operator, '', $subject);
 
             $flag = \FILTER_DEFAULT;

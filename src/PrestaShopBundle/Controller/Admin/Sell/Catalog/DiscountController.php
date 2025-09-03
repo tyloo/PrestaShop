@@ -151,6 +151,7 @@ class DiscountController extends PrestaShopAdminController
 
                     return $this->redirectToRoute('admin_discount_edit', ['discountId' => $discountId]);
                 }
+
                 // Display root level errors with flash messages
                 foreach ($form->getErrors() as $error) {
                     $this->addFlash('error', \sprintf(

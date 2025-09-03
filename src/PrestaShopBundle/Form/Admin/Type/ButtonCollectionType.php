@@ -74,6 +74,7 @@ class ButtonCollectionType extends AbstractType
         foreach ($buttonsOptions as $buttonOptions) {
             $buttonGroups[$buttonOptions['group']][] = $buttonOptions['name'];
         }
+
         $view->vars['button_groups'] = $buttonGroups;
         $view->vars['justify_content'] = $options['justify_content'];
         $view->vars['inline_buttons_limit'] = $options['inline_buttons_limit'];

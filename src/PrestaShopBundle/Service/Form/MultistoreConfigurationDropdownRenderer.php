@@ -79,6 +79,7 @@ class MultistoreConfigurationDropdownRenderer
             if ($this->shouldIncludeGroupShop($group)) {
                 $groupList[] = $group;
             }
+
             if ($group->getId() === $this->shopContext->getShopConstraint()->getShopGroupId()?->getValue() && ! $shouldDisplayDropdown) {
                 foreach ($group->getShops() as $shop) {
                     if ($shopCustomizationChecker->isConfigurationCustomizedForThisShop($configurationKey, $shop, true)) {
@@ -113,9 +114,11 @@ class MultistoreConfigurationDropdownRenderer
             if ($this->shouldIncludeGroupShop($group)) {
                 $groupList[] = $group;
             }
+
             if ($shouldDisplayDropdown) {
                 continue;
             }
+
             foreach ($group->getShops() as $shop) {
                 if ($shopCustomizationChecker->isConfigurationCustomizedForThisShop($configurationKey, $shop, false)) {
                     $shouldDisplayDropdown = true;

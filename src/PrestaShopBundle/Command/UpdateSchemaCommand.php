@@ -100,6 +100,7 @@ class UpdateSchemaCommand extends Command
                 $output->writeln('Database schema not updated because force option is not set');
             }
         }
+
         $connection->close();
 
         if ($this->forceSql) {
@@ -113,6 +114,7 @@ class UpdateSchemaCommand extends Command
             foreach ($this->executedQueries as $executedQuery) {
                 $output->writeln($executedQuery);
             }
+
             $output->writeln('');
         }
 

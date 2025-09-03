@@ -213,6 +213,7 @@ class UpdateLicensesCommand extends Command
 
                     break;
             }
+
             $progress->advance();
         }
 
@@ -268,6 +269,7 @@ class UpdateLicensesCommand extends Command
         if ($startDelimiter !== '\/') {
             $text = $startDelimiter . mb_ltrim($text, '/');
         }
+
         if ($endDelimiter !== '\/') {
             $text = mb_rtrim($text, '/') . $endDelimiter;
         }

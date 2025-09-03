@@ -149,6 +149,7 @@ class ProductTypeListener implements EventSubscriberInterface
         if (! $form->has('stock')) {
             return;
         }
+
         $stock = $form->get('stock');
         $stock->remove('pack_stock_type');
     }
@@ -158,6 +159,7 @@ class ProductTypeListener implements EventSubscriberInterface
         if (! $form->has('stock')) {
             return;
         }
+
         $stock = $form->get('stock');
         $stock->remove('packed_products');
     }
@@ -167,6 +169,7 @@ class ProductTypeListener implements EventSubscriberInterface
         if (! $form->has('stock')) {
             return;
         }
+
         $stock = $form->get('stock');
         $stock->remove('virtual_product_file');
     }
@@ -176,10 +179,12 @@ class ProductTypeListener implements EventSubscriberInterface
         if (! $form->has('stock')) {
             return;
         }
+
         $stock = $form->get('stock');
         if (! $stock->has('quantities')) {
             return;
         }
+
         $quantities = $stock->get('quantities');
         if ($quantities->has('stock_movements') && empty($data['stock']['quantities']['stock_movements'])) {
             $quantities->remove('stock_movements');
@@ -196,10 +201,12 @@ class ProductTypeListener implements EventSubscriberInterface
         if (! $form->has('pricing')) {
             return;
         }
+
         $pricing = $form->get('pricing');
         if (! $pricing->has('retail_price')) {
             return;
         }
+
         $retailPrice = $pricing->get('retail_price');
         if ($retailPrice->has('ecotax_tax_excluded')) {
             $retailPrice->remove('ecotax_tax_excluded');

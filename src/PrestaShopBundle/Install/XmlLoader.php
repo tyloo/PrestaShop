@@ -196,10 +196,12 @@ class XmlLoader
                             if (! isset($dependencies[(string) $field['relation']])) {
                                 $dependencies[(string) $field['relation']] = [];
                             }
+
                             $dependencies[(string) $field['relation']][] = $entity;
                         }
                     }
                 }
+
                 $entities[] = $entity;
             }
         }
@@ -216,6 +218,7 @@ class XmlLoader
                             $min = min($min, $key);
                         }
                     }
+
                     if ($min === 0) {
                         array_unshift($sort_entities, $entity);
                     } else {
@@ -225,6 +228,7 @@ class XmlLoader
                     $sort_entities[] = $entity;
                 }
             }
+
             $entities = $sort_entities;
         } while ($current !== $sort_entities);
 
@@ -330,6 +334,7 @@ class XmlLoader
                             if ($node_lang->{$column}) {
                                 $value = (string) $node_lang->{$column};
                             }
+
                             $data_lang[$column][$id_lang] = $value;
                         }
                     }
@@ -353,6 +358,7 @@ class XmlLoader
                     $this->copyImages($entity, $identifier, (string) $xml->fields['image'], $data);
                 }
             }
+
             ++$i;
 
             if ($i >= 100) {
@@ -376,6 +382,7 @@ class XmlLoader
         if (empty($xml->fields)) {
             throw new PrestashopInstallerException('List of fields not found for entity country');
         }
+
         $langs = [];
         $languageList = LanguageList::getInstance();
         foreach ($this->languages as $id_lang => $iso) {
@@ -395,6 +402,7 @@ class XmlLoader
                         $identifier = (string) $v;
                         continue;
                     }
+
                     $data[$k] = (string) $v;
                 }
 
@@ -442,6 +450,7 @@ class XmlLoader
                     if (! isset($tags[$product_id])) {
                         $tags[$product_id] = [];
                     }
+
                     $tags[$product_id][] = mb_trim((string) $tag_node['name']);
                 }
             }
@@ -463,6 +472,7 @@ class XmlLoader
             if (! Db::getInstance()->insert($entity, $queries, false, true, $type)) {
                 $this->setError($this->translator->trans('An SQL error occurred for entity <i>%entity%</i>: <i>%message%</i>', ['%entity%' => $entity, '%message%' => Db::getInstance()->getMsgError()], 'Install'));
             }
+
             unset($this->delayed_inserts[$entity]);
         }
     }
@@ -484,6 +494,7 @@ class XmlLoader
             if ($data_lang) {
                 $object->hydrate($data_lang);
             }
+
             $object->add(true, isset($xml->fields['null']));
             $entity_id = $object->id;
             unset($object);
@@ -496,6 +507,7 @@ class XmlLoader
             } elseif (! str_contains((string) $xml->fields['primary'], ',')) {
                 $primary = (string) $xml->fields['primary'];
             }
+
             unset($xml);
 
             if ($primary) {
@@ -607,6 +619,7 @@ class XmlLoader
         if (! isset($position[$data['id_parent']])) {
             $position[$data['id_parent']] = 0;
         }
+
         $data['position'] = $position[$data['id_parent']]++;
         $data['icon'] ??= '';
         $data['wording'] ??= '';
@@ -726,6 +739,7 @@ class XmlLoader
                             )
                         );
                     }
+
                     @chmod($target_file, FileSystem::DEFAULT_MODE_FILE);
                 } elseif (! ImageManager::resize(
                     $from_path . $identifier . '.' . $extension,
@@ -760,6 +774,7 @@ class XmlLoader
                 }
             }
         }
+
         Image::moveToNewFileSystem();
     }
 
@@ -798,6 +813,7 @@ class XmlLoader
 
             return;
         }
+
         @chmod($dst_path . '.' . $image->image_format, FileSystem::DEFAULT_MODE_FILE);
 
         $types = ImageType::getImagesTypes('products');
@@ -826,6 +842,7 @@ class XmlLoader
                         )
                     );
                 }
+
                 @chmod($target_file, FileSystem::DEFAULT_MODE_FILE);
             } elseif (! ImageManager::resize($path . $identifier . '.jpg', $target_file, $type['width'], $type['height'])) {
                 // Resize the image if no cache was prepared in fixtures
@@ -1047,6 +1064,7 @@ class XmlLoader
                     if (! isset($dependencies[$info_field['relation']])) {
                         $dependencies[$info_field['relation']] = [];
                     }
+
                     $dependencies[$info_field['relation']][] = $entity;
                 }
             }
@@ -1062,6 +1080,7 @@ class XmlLoader
         } else {
             $xml = new SimpleXMLElement('<entity_' . $entity . ' />');
         }
+
         unset($xml->fields);
 
         // Fill <fields> attributes (config)
@@ -1098,6 +1117,7 @@ class XmlLoader
         foreach ($this->getEntitiesList() as $entity) {
             $entities[$entity] = $this->getEntityInfo($entity);
         }
+
         $this->generateEntityFiles($entities);
     }
 
@@ -1120,6 +1140,7 @@ class XmlLoader
                             $min = min($min, $key);
                         }
                     }
+
                     if ($min === 0) {
                         array_unshift($sort_entities, $entity);
                     } else {
@@ -1129,6 +1150,7 @@ class XmlLoader
                     $sort_entities[] = $entity;
                 }
             }
+
             $entities = $sort_entities;
         } while ($current !== $sort_entities);
 
@@ -1273,6 +1295,7 @@ class XmlLoader
                             $node[$column] = $row[$column];
                         }
                     }
+
                     $nodes[$id] = $node;
                 }
 
@@ -1282,6 +1305,7 @@ class XmlLoader
                     foreach ($multilang_columns as $column => $is_text) {
                         $node[$column] = $row[$alias_multilang[$column] ?? $column];
                     }
+
                     $nodes_lang[$row['id_lang']][$id] = $node;
                 }
             }
@@ -1356,6 +1380,7 @@ class XmlLoader
             while (\in_array($store_identifier, $ids[$entity], true)) {
                 $store_identifier = $value . '_' . $i++;
             }
+
             $ids[$entity][$primary] = $store_identifier;
         }
 
@@ -1498,6 +1523,7 @@ class XmlLoader
                 if (! $id && $data[(string) $field['name']] && is_numeric($data[(string) $field['name']])) {
                     $id = $data[(string) $field['name']];
                 }
+
                 $data[(string) $field['name']] = $id;
             }
         }

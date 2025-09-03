@@ -74,6 +74,7 @@ class EmployeeContextSubscriber implements EventSubscriberInterface
         if ($this->security->getUser() instanceof Employee) {
             $employeeId = $this->security->getUser()->getId();
         }
+
         // Then fetch the employee ID from the session
         if (empty($employeeId)) {
             $employeeId = $this->sessionEmployeeProvider->getEmployeeFromSession($event->getRequest())?->getId();

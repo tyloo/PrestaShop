@@ -97,6 +97,7 @@ class FeatureFlag
         if ($name === '') {
             throw new InvalidArgumentException('Feature flag name cannot be empty');
         }
+
         $this->name = $name;
         $this->type = FeatureFlagSettings::TYPE_DEFAULT;
         $this->state = false;

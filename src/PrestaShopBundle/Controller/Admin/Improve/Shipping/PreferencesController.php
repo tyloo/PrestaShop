@@ -87,6 +87,7 @@ class PreferencesController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_shipping_preferences');
             }
+
             $this->addFlashErrors($saveErrors);
         }
 

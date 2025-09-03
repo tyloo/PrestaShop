@@ -297,6 +297,7 @@ class WebserviceController extends PrestaShopAdminController
 
                 return $this->redirectToRoute('admin_webservice_keys_index');
             }
+
             $this->addFlashErrors($saveErrors);
         }
 
@@ -384,6 +385,7 @@ class WebserviceController extends PrestaShopAdminController
         if ($statusCode >= Response::HTTP_OK && $statusCode < Response::HTTP_MULTIPLE_CHOICES) {
             return true;
         }
+
         if ($statusCode === Response::HTTP_UNAUTHORIZED) {
             return true;
         }

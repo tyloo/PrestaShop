@@ -73,6 +73,7 @@ class CommandProcessor implements ProcessorInterface
             // Denormalize the command and let the bus handle it
             $command = $this->domainSerializer->denormalize($commandParameters, $CQRSCommandClass, null, [NormalizationMapper::NORMALIZATION_MAPPING => $this->getCQRSCommandMapping($operation)]);
         }
+
         $commandResult = $this->commandBus->handle($command);
 
         // If no result is returned and no query is configured the API returns nothing
@@ -95,6 +96,7 @@ class CommandProcessor implements ProcessorInterface
             // Use URI variables as fallback when the command returned no result as it probably contains the ID that will be needed to create the CQRS query
             $normalizedCommandResult = $uriVariables;
         }
+
         $normalizedCommandResult = array_merge($normalizedCommandResult, $this->contextParametersProvider->getContextParameters());
 
         $queryClass = $this->getCQRSQueryClass($operation);

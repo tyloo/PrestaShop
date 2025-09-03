@@ -84,6 +84,7 @@ class ConfigYamlLoader extends FileLoader
             if (! \is_array($import)) {
                 $import = ['resource' => $import];
             }
+
             if (! isset($import['resource'])) {
                 throw new InvalidArgumentException(\sprintf('An import should provide a resource in %s. Check your YAML syntax.', $file));
             }
