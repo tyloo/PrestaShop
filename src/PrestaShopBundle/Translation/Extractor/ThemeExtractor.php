@@ -222,10 +222,9 @@ class ThemeExtractor
     /**
      * Add default catalogue in this &$catalogue when the translation exists.
      *
-     * @param string           $locale
-     * @param MessageCatalogue $catalogue
+     * @param string $locale
      */
-    private function overrideFromDefaultCatalog($locale, &$catalogue): void
+    private function overrideFromDefaultCatalog($locale, MessageCatalogue &$catalogue): void
     {
         $defaultCatalogue = $this->themeProvider
             ->setLocale($locale)

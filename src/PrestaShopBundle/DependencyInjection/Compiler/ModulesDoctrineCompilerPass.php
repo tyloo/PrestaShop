@@ -89,10 +89,9 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
      * whole process was stopped. So we manually create the DoctrineOrmMappingsPass so that AnnotationDriver ignores
      * the index.php file.
      *
-     * @param string $moduleNamespace
      * @param string $moduleEntityDirectory
      */
-    private function createAnnotationMappingDriver($moduleNamespace, $moduleEntityDirectory): DoctrineOrmMappingsPass
+    private function createAnnotationMappingDriver(string $moduleNamespace, $moduleEntityDirectory): DoctrineOrmMappingsPass
     {
         $reader = new Reference('annotation_reader');
         $driverDefinition = new Definition(\Doctrine\ORM\Mapping\Driver\AnnotationDriver::class, [$reader, [$moduleEntityDirectory]]);

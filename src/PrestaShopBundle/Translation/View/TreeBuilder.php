@@ -244,11 +244,10 @@ class TreeBuilder
      * Check if data contains search word.
      *
      * @param string|array|null $search
-     * @param array             $data
      *
      * @return bool
      */
-    private function dataContainsSearchWord($search, $data)
+    private function dataContainsSearchWord($search, array $data)
     {
         if (\is_string($search)) {
             $search = mb_strtolower($search);
@@ -275,14 +274,13 @@ class TreeBuilder
 
     /**
      * @param array       $tree
-     * @param int         $index
      * @param string      $name
      * @param string      $fullName
      * @param string|bool $theme
      * @param string|null $search
      * @param string|bool $module
      */
-    private function addTreeInfo(Router $router, &$tree, $index, $name, $fullName, $theme = false, $search = null, $module = false)
+    private function addTreeInfo(Router $router, &$tree, int $index, $name, $fullName, $theme = false, $search = null, $module = false)
     {
         if (! isset($tree[$index])) {
             $routeParams = [

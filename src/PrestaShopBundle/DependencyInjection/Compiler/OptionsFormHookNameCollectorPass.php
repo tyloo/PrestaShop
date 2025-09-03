@@ -107,7 +107,7 @@ final class OptionsFormHookNameCollectorPass implements CompilerPassInterface
      * @param string $serviceId
      * @param string $serviceClass
      */
-    private function isOptionsFormService($serviceId, $serviceClass): bool
+    private function isOptionsFormService(int|string $serviceId, $serviceClass): bool
     {
         return $this->stringEndsWith($serviceId, self::OPTIONS_FORM_SERVICE_SUFFIX)
             && is_subclass_of($serviceClass, FormHandlerInterface::class)
@@ -118,9 +118,8 @@ final class OptionsFormHookNameCollectorPass implements CompilerPassInterface
      * Checks if string ends with certain string.
      *
      * @param string $haystack
-     * @param string $needle
      */
-    private function stringEndsWith($haystack, $needle): bool
+    private function stringEndsWith(int|string $haystack, string $needle): bool
     {
         $diff = mb_strlen($haystack) - mb_strlen($needle);
 
@@ -154,11 +153,9 @@ final class OptionsFormHookNameCollectorPass implements CompilerPassInterface
     /**
      * Formats hook names.
      *
-     * @param string $hookStartsWith
      * @param string $hookId
-     * @param string $hookEndsWidth
      */
-    private function formatHookName($hookStartsWith, $hookId, $hookEndsWidth): string
+    private function formatHookName(string $hookStartsWith, $hookId, string $hookEndsWidth): string
     {
         return $hookStartsWith . $hookId . $hookEndsWidth;
     }

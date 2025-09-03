@@ -174,10 +174,7 @@ class FeatureAttributeRepository
         return $this->castNumericToInt($rows);
     }
 
-    /**
-     * @param array $rows
-     */
-    private function explodeCollections($rows): array
+    private function explodeCollections(array $rows): array
     {
         return array_map(function ($row) {
             $row['values'] = explode(',', (string) $row['values']);

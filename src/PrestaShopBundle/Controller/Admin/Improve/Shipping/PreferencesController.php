@@ -131,9 +131,8 @@ class PreferencesController extends PrestaShopAdminController
     /**
      * @param FormInterface $handlingForm
      * @param FormInterface $carrierOptionsForm
-     * @param Request       $request
      */
-    private function doRenderForm($handlingForm, $carrierOptionsForm, $request): Response
+    private function doRenderForm($handlingForm, $carrierOptionsForm, Request $request): Response
     {
         $legacyController = $request->attributes->get('_legacy_controller');
 

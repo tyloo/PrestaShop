@@ -54,7 +54,7 @@ class ThemeTranslationsFactory extends TranslationsFactory
             ->getMessageCatalogue();
     }
 
-    public function createTranslationsArray($themeName, $locale = 'en_US', $theme = null, $search = null)
+    public function createTranslationsArray($themeName, $locale = 'en_US', $theme = null, $search = null): array
     {
         $this->themeProvider
             ->setThemeName($themeName)

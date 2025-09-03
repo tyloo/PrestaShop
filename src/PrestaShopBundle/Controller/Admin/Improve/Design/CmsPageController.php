@@ -997,10 +997,7 @@ class CmsPageController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * @param int $cmsCategoryId
-     */
-    private function getCmsPageIndexToolbarButtons($cmsCategoryId): array
+    private function getCmsPageIndexToolbarButtons(int $cmsCategoryId): array
     {
         $toolbarButtons = [];
 

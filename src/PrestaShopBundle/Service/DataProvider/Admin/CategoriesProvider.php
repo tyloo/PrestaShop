@@ -122,7 +122,7 @@ class CategoriesProvider
      *
      * @return array<string, stdClass>
      */
-    private function initializeCategories($categoriesListing): array
+    private function initializeCategories(stdClass $categoriesListing): array
     {
         // Create root category
         $categories = [

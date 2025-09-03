@@ -171,10 +171,8 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
 
     /**
      * Gets sql upgrade file by PrestaShop version.
-     *
-     * @param string $version
      */
-    private function getSqlUpgradeFileByPrestaShopVersion($version, $autoUpgradeModulePath): string
+    private function getSqlUpgradeFileByPrestaShopVersion(string $version, $autoUpgradeModulePath): string
     {
         $sqlUpgradeFile = "$autoUpgradeModulePath/upgrade/sql/$version.sql";
 
@@ -233,11 +231,8 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
 
     /**
      * Appends new content to the given file.
-     *
-     * @param string $pathToFile
-     * @param string $content
      */
-    private function appendSqlToFile($pathToFile, $content): void
+    private function appendSqlToFile(string $pathToFile, string $content): void
     {
         $fileSystem = new Filesystem();
 

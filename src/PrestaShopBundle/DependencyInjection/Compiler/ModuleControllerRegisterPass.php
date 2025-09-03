@@ -71,7 +71,7 @@ class ModuleControllerRegisterPass implements CompilerPassInterface
         }
     }
 
-    private function getServiceDefinition(ContainerBuilder $container, $className): Definition
+    private function getServiceDefinition(ContainerBuilder $container, string $className): Definition
     {
         if ($container->has($className)) {
             return $container->getDefinition($className);

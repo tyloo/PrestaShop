@@ -145,7 +145,7 @@ class ShopLogosType extends AbstractType
      *
      * @param string $suffix - helps to find multi shop checkbox field
      */
-    private function transformMultiStoreFields(FormBuilderInterface $builder, $suffix): void
+    private function transformMultiStoreFields(FormBuilderInterface $builder, string $suffix): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
             fn ($form) => $form,
@@ -177,7 +177,7 @@ class ShopLogosType extends AbstractType
      *
      * @param string $suffix - helps to find multi shop checkbox field
      */
-    private function disableAllShopContextFields(FormBuilderInterface $builder, $suffix): void
+    private function disableAllShopContextFields(FormBuilderInterface $builder, string $suffix): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix): void {
             $form = $event->getForm();
@@ -210,7 +210,7 @@ class ShopLogosType extends AbstractType
      *
      * @param string $suffix - helps to find multi shop checkbox field
      */
-    private function setShopRestrictionSource(FormBuilderInterface $builder, $suffix): void
+    private function setShopRestrictionSource(FormBuilderInterface $builder, string $suffix): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix): void {
             $form = $event->getForm();
@@ -235,11 +235,8 @@ class ShopLogosType extends AbstractType
 
     /**
      * Gets the checkbox form fields which are the source of multi-store behavior.
-     *
-     * @param FormInterface $form
-     * @param string        $suffix
      */
-    private function getShopRestrictionSourceFormFields($form, $suffix): array
+    private function getShopRestrictionSourceFormFields(FormInterface $form, string $suffix): array
     {
         $formFields = [];
 
@@ -258,7 +255,7 @@ class ShopLogosType extends AbstractType
      * @param string $haystack - the string in which search operation will be performed
      * @param string $needle   - the string which is being searched if exists at the end of the string
      */
-    private function stringEndsWith($haystack, $needle): bool
+    private function stringEndsWith($haystack, string $needle): bool
     {
         $diff = mb_strlen($haystack) - mb_strlen($needle);
 
@@ -270,9 +267,8 @@ class ShopLogosType extends AbstractType
      *  suffix is _is_restricted_to_shop then it will return header_logo
      *
      * @param string $shopRestrictionFieldName
-     * @param string $suffix
      */
-    private function getOriginalFieldNameFromSuffix($shopRestrictionFieldName, $suffix): string
+    private function getOriginalFieldNameFromSuffix($shopRestrictionFieldName, string $suffix): string
     {
         return str_replace($suffix, '', $shopRestrictionFieldName);
     }

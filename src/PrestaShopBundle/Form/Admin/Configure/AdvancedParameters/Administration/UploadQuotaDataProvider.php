@@ -94,7 +94,7 @@ final class UploadQuotaDataProvider implements FormDataProviderInterface
         }
     }
 
-    private function convertBytes($value): int
+    private function convertBytes(string $value): int
     {
         if (is_numeric($value)) {
             return $value;

@@ -84,7 +84,7 @@ class IdentifiableObjectFormTypesCollectorPass implements CompilerPassInterface
      * @param string $serviceId
      * @param string $serviceClass
      */
-    private function isIdentifiableObjectFormBuilderService($serviceId, $serviceClass): bool
+    private function isIdentifiableObjectFormBuilderService(int|string $serviceId, $serviceClass): bool
     {
         $isServiceKeyBelongsToIdentifiableObject =
             str_starts_with($serviceId, self::IDENTIFIABLE_OBJECT_SERVICE_NAME_START_WITH)

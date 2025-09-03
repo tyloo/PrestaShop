@@ -128,13 +128,11 @@ class UrlSchemaType extends TranslatorAwareType
     }
 
     /**
-     * @param string $idRoute
-     *
      * @return string
      *
      * @throws PrestaShopException
      */
-    private function getKeywords($idRoute)
+    private function getKeywords(string $idRoute)
     {
         $keyWords = $this->defaultRouteProvider->getKeywords();
         $formattedKeyWords = [];

@@ -102,10 +102,7 @@ class UpdateLicensesCommand extends Command
         return 0;
     }
 
-    /**
-     * @param string $ext
-     */
-    private function findAndCheckExtension(OutputInterface $output, $ext): void
+    private function findAndCheckExtension(OutputInterface $output, string $ext): void
     {
         $finder = new Finder();
         $finder
@@ -232,10 +229,7 @@ class UpdateLicensesCommand extends Command
         }
     }
 
-    /**
-     * @param string $fileName
-     */
-    private function isAFLLicense($fileName): bool
+    private function isAFLLicense(string $fileName): bool
     {
         foreach ($this->aflLicense as $afl) {
             if (str_starts_with($fileName, (string) $afl)) {
@@ -264,12 +258,7 @@ class UpdateLicensesCommand extends Command
         $this->license = str_replace('{licenseLink}', 'https://opensource.org/licenses/AFL-3.0', $this->license);
     }
 
-    /**
-     * @param SplFileInfo $file
-     * @param string      $startDelimiter
-     * @param string      $endDelimiter
-     */
-    private function addLicenseToFile($file, $startDelimiter = '\/', $endDelimiter = '\/'): void
+    private function addLicenseToFile(SplFileInfo $file, string $startDelimiter = '\/', string $endDelimiter = '\/'): void
     {
         $content = $file->getContents();
         // Regular expression found thanks to Stephen Ostermiller's Blog. http://blog.ostermiller.org/find-comment
