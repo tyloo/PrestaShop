@@ -31,7 +31,7 @@ use PrestaShop\PrestaShop\Core\Grid\Column\AbstractColumn;
 
 final class AliasesColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'aliases';
     }

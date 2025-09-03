@@ -38,35 +38,17 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CurrencyQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param string $dbPrefix
+     * @param int    $contextLangId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds,
-        $contextLangId,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly array $contextShopIds,
+        private $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextShopIds = $contextShopIds;
-        $this->contextLangId = $contextLangId;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)

@@ -58,7 +58,7 @@ use Tools;
 
 class ThemeManager implements AddonManagerInterface
 {
-    public ?string $sandbox;
+    public ?string $sandbox = null;
 
     private readonly TranslationFinder $translationFinder;
 
@@ -67,7 +67,7 @@ class ThemeManager implements AddonManagerInterface
     private readonly ApiClientContext $apiClientContext;
 
     public function __construct(
-        private Shop $shop,
+        private readonly Shop $shop,
         private readonly ConfigurationInterface $configuration,
         private readonly ThemeValidator $themeValidator,
         private readonly TranslatorInterface $translator,
@@ -95,12 +95,13 @@ class ThemeManager implements AddonManagerInterface
      *
      * @return bool true for success
      */
-    public function install($source)
+    public function install($source): bool
     {
         if (filter_var($source, \FILTER_VALIDATE_URL)) {
             $source = Tools::createFileFromUrl($source);
         }
-        if (preg_match('/\.zip$/', $source)) {
+
+        if (preg_match('/\.zip$/', (string) $source)) {
             $this->installFromZip($source);
         }
 
@@ -115,7 +116,7 @@ class ThemeManager implements AddonManagerInterface
      *
      * @return bool true for success
      */
-    public function uninstall($name)
+    public function uninstall($name): bool
     {
         $apiClientHasPermission = $this->apiClientContext->getApiClient() !== null && $this->apiClientContext->getApiClient()->hasScope('theme_write');
         if (! $this->employee->can('delete', 'AdminThemes') && ! $apiClientHasPermission) {
@@ -141,7 +142,7 @@ class ThemeManager implements AddonManagerInterface
      *
      * @return bool true for success
      */
-    public function upgrade($name, $version, $source = null)
+    public function upgrade($name, $version, $source = null): bool
     {
         return true;
     }
@@ -157,7 +158,7 @@ class ThemeManager implements AddonManagerInterface
      *
      * @return bool True for success
      */
-    public function enable($name, $force = false)
+    public function enable($name, $force = false): bool
     {
         $apiClientHasPermission = $this->apiClientContext->getApiClient() !== null && $this->apiClientContext->getApiClient()->hasScope('theme_write');
         if (! $force && ! $this->employee->can('edit', 'AdminThemes') && ! $apiClientHasPermission) {
@@ -190,9 +191,9 @@ class ThemeManager implements AddonManagerInterface
             $this->shop->update();
 
             $this->saveTheme($theme);
-        } catch (Exception $e) {
-            $this->logger->error($e->getMessage());
-            throw $e;
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage());
+            throw $exception;
         }
 
         return true;
@@ -205,7 +206,7 @@ class ThemeManager implements AddonManagerInterface
      *
      * @return bool True for success
      */
-    public function disable($name)
+    public function disable($name): bool
     {
         /** @var Theme $theme */
         $theme = $this->themeRepository->getInstanceByName($name);
@@ -304,6 +305,7 @@ class ThemeManager implements AddonManagerInterface
             ) {
                 throw new FailedToEnableThemeModuleException($moduleName, $moduleManager->getError($moduleName));
             }
+
             if (! $moduleManager->isEnabled($moduleName)) {
                 $moduleManager->enable($moduleName);
             }
@@ -373,10 +375,10 @@ class ThemeManager implements AddonManagerInterface
 
         try {
             $theme = new Theme($theme_data);
-        } catch (ErrorException $exception) {
+        } catch (ErrorException $errorException) {
             $errorMessage = \sprintf('Theme data %s is not valid', var_export($theme_data, true));
             $this->logger->error($errorMessage);
-            throw new ThemeConstraintException($errorMessage, ThemeConstraintException::INVALID_DATA, $exception);
+            throw new ThemeConstraintException($errorMessage, ThemeConstraintException::INVALID_DATA, $errorException);
         }
 
         if (! $this->themeValidator->isValid($theme)) {
@@ -401,8 +403,10 @@ class ThemeManager implements AddonManagerInterface
                 if (! $this->filesystem->exists($destination)) {
                     $this->filesystem->mkdir($destination);
                 }
+
                 $this->filesystem->mirror($dir->getPathName(), $destination);
             }
+
             $this->filesystem->remove($modules_parent_dir);
         }
 
@@ -506,10 +510,8 @@ class ThemeManager implements AddonManagerInterface
      *
      * @param string                                               $locale
      * @param \PrestaShopBundle\Translation\Provider\ThemeProvider $themeProvider
-     *
-     * @return array
      */
-    private function getDefaultDomains($locale, $themeProvider)
+    private function getDefaultDomains($locale, $themeProvider): array
     {
         $allDomains = [];
 

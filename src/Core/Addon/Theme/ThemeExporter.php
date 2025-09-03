@@ -40,14 +40,17 @@ class ThemeExporter
      * @var ConfigurationInterface
      */
     protected $configuration;
+
     /**
      * @var Filesystem
      */
     protected $fileSystem;
+
     /**
      * @var LangRepository
      */
     protected $langRepository;
+
     /**
      * @var TranslationsExporter
      */
@@ -127,6 +130,7 @@ class ThemeExporter
         if (empty($languages)) {
             return;
         }
+
         $catalogueDir = '';
         foreach ($languages as $lang) {
             $locale = $lang->getLocale();

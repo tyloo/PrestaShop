@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\ImageSettings\ValueObject\ImageTypeId;
  */
 class DeleteImageTypeCommand
 {
-    private ImageTypeId $imageTypeId;
+    private readonly ImageTypeId $imageTypeId;
 
     public function __construct(int $imageTypeId)
     {

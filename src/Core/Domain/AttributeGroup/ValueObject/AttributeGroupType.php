@@ -37,7 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Exception\InvalidAttributeG
 class AttributeGroupType
 {
     public const ATTRIBUTE_GROUP_TYPE_SELECT = 'select';
+
     public const ATTRIBUTE_GROUP_TYPE_RADIO = 'radio';
+
     public const ATTRIBUTE_GROUP_TYPE_COLOR = 'color';
 
     /**

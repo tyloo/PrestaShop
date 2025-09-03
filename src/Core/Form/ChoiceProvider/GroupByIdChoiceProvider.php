@@ -37,24 +37,12 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 final class GroupByIdChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var GroupDataProvider
-     */
-    private $groupDataProvider;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    /**
      * @param int $langId
      */
     public function __construct(
-        GroupDataProvider $groupDataProvider,
-        $langId,
+        private readonly GroupDataProvider $groupDataProvider,
+        private $langId,
     ) {
-        $this->groupDataProvider = $groupDataProvider;
-        $this->langId = $langId;
     }
 
     public function getChoices()

@@ -39,14 +39,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class LanguageChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $languages;
-
-    public function __construct(array $languages)
-    {
-        $this->languages = $languages;
+    public function __construct(
+        private readonly array $languages,
+    ) {
     }
 
     /**

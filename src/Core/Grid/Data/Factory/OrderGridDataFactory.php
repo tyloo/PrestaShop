@@ -39,38 +39,14 @@ use PrestaShop\PrestaShop\Core\Localization\Locale\RepositoryInterface;
 final class OrderGridDataFactory implements GridDataFactoryInterface
 {
     /**
-     * @var GridDataFactoryInterface
-     */
-    private $dataFactory;
-
-    /**
-     * @var RepositoryInterface
-     */
-    private $localeRepository;
-
-    /**
-     * @var string
-     */
-    private $contextLocale;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param string $contextLocale
      */
     public function __construct(
-        GridDataFactoryInterface $dataFactory,
-        RepositoryInterface $localeRepository,
-        ConfigurationInterface $configuration,
-        $contextLocale,
+        private readonly GridDataFactoryInterface $dataFactory,
+        private readonly RepositoryInterface $localeRepository,
+        private readonly ConfigurationInterface $configuration,
+        private $contextLocale,
     ) {
-        $this->dataFactory = $dataFactory;
-        $this->localeRepository = $localeRepository;
-        $this->contextLocale = $contextLocale;
-        $this->configuration = $configuration;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

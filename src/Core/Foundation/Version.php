@@ -28,12 +28,13 @@
 namespace PrestaShop\PrestaShop\Core\Foundation;
 
 use PrestaShop\PrestaShop\Core\Foundation\Exception\InvalidVersionException;
+use Stringable;
 
 /**
  * Class responsible of managing the right version of Shop
  * for every internal/external services.
  */
-class Version
+class Version implements Stringable
 {
     /**
      * Full version name.
@@ -50,41 +51,6 @@ class Version
     private $majorVersionString;
 
     /**
-     * Major version.
-     *
-     * @var int
-     */
-    private $majorVersion;
-
-    /**
-     * Minor version.
-     *
-     * @var int
-     */
-    private $minorVersion;
-
-    /**
-     * Patch version.
-     *
-     * @var int
-     */
-    private $patchVersion;
-
-    /**
-     * Pre release version, (eg. "dev", "beta"...)
-     *
-     * @var string
-     */
-    private $preReleaseVersion;
-
-    /**
-     * Build metadata (eg. build number)
-     *
-     * @var string
-     */
-    private $buildMetadata;
-
-    /**
      * Initialize version data.
      *
      * @param string $version            Version
@@ -98,19 +64,29 @@ class Version
     public function __construct(
         $version,
         $majorVersionString,
-        $majorVersion,
-        $minorVersion = 0,
-        $patchVersion = 0,
-        $preReleaseVersion = '',
-        $buildMetadata = '',
+        /**
+         * Major version.
+         */
+        private $majorVersion,
+        /**
+         * Minor version.
+         */
+        private $minorVersion = 0,
+        /**
+         * Patch version.
+         */
+        private $patchVersion = 0,
+        /**
+         * Pre release version, (eg. "dev", "beta"...)
+         */
+        private $preReleaseVersion = '',
+        /**
+         * Build metadata (eg. build number)
+         */
+        private $buildMetadata = '',
     ) {
         $this->version = $this->removeLegacyPrefix($version, $majorVersionString);
         $this->majorVersionString = $majorVersionString;
-        $this->majorVersion = $majorVersion;
-        $this->minorVersion = $minorVersion;
-        $this->patchVersion = $patchVersion;
-        $this->preReleaseVersion = $preReleaseVersion;
-        $this->buildMetadata = $buildMetadata;
     }
 
     /**
@@ -145,12 +121,12 @@ class Version
 
         return new self(
             $version,
-            "1.$major",
+            '1.' . $major,
             $major,
             $minor,
             $patch,
-            isset($matches['prerelease']) ? $matches['prerelease'] : '',
-            isset($matches['build']) ? $matches['build'] : ''
+            $matches['prerelease'] ?? '',
+            $matches['build'] ?? ''
         );
     }
 
@@ -330,7 +306,7 @@ class Version
     /**
      * Returns the semantic version string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getSemVersion();
     }

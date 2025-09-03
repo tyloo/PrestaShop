@@ -33,24 +33,12 @@ namespace PrestaShop\PrestaShop\Core\Util\HelperCard;
 final class DocumentationLinkProvider implements DocumentationLinkProviderInterface
 {
     /**
-     * @var string
-     */
-    private $contextLangIsoCode;
-
-    /**
-     * @var array
-     */
-    private $documentationLinks;
-
-    /**
      * @param string $contextLangIsoCode
      */
     public function __construct(
-        $contextLangIsoCode,
-        array $documentationLinks,
+        private $contextLangIsoCode,
+        private array $documentationLinks,
     ) {
-        $this->contextLangIsoCode = $contextLangIsoCode;
-        $this->documentationLinks = $documentationLinks;
     }
 
     public function getLink($cardType)

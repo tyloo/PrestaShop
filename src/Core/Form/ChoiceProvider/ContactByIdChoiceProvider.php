@@ -37,24 +37,12 @@ use PrestaShop\PrestaShop\Core\Support\ContactRepositoryInterface;
 final class ContactByIdChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var ContactRepositoryInterface
-     */
-    private $contactRepository;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    /**
      * @param int $langId
      */
     public function __construct(
-        ContactRepositoryInterface $contactRepository,
-        $langId,
+        private readonly ContactRepositoryInterface $contactRepository,
+        private $langId,
     ) {
-        $this->contactRepository = $contactRepository;
-        $this->langId = $langId;
     }
 
     public function getChoices()

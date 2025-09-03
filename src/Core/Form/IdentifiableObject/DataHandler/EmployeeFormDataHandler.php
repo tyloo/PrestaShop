@@ -51,90 +51,27 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 final class EmployeeFormDataHandler implements FormDataHandlerInterface
 {
     /**
-     * @var CommandBusInterface
+     * @param int $superAdminProfileId
      */
-    private $bus;
-
-    /**
-     * @var array
-     */
-    private $defaultShopAssociation;
-
-    /**
-     * @var int
-     */
-    private $superAdminProfileId;
-
-    /**
-     * @var EmployeeFormAccessCheckerInterface
-     */
-    private $employeeFormAccessChecker;
-
-    /**
-     * @var EmployeeDataProviderInterface
-     */
-    private $employeeDataProvider;
-
-    /**
-     * @var Hashing
-     */
-    private $hashing;
-
-    /**
-     * @var ImageUploaderInterface
-     */
-    private $imageUploader;
-
-    /**
-     * @var int
-     */
-    private $minScore;
-
-    /**
-     * @var int
-     */
-    private $minLength;
-
-    /**
-     * @var int
-     */
-    private $maxLength;
-
-    private bool $boAllowEmployeeFormLang;
-
-    private Cookie $legacyContextCookie;
-
     public function __construct(
-        CommandBusInterface $bus,
-        array $defaultShopAssociation,
-        $superAdminProfileId,
-        EmployeeFormAccessCheckerInterface $employeeFormAccessChecker,
-        EmployeeDataProviderInterface $employeeDataProvider,
-        Hashing $hashing,
-        ImageUploaderInterface $imageUploader,
-        int $minLength,
-        int $maxLength,
-        int $minScore,
-        bool $boAllowEmployeeFormLang,
-        Cookie $legacyContextCookie,
+        private readonly CommandBusInterface $bus,
+        private readonly array $defaultShopAssociation,
+        private $superAdminProfileId,
+        private readonly EmployeeFormAccessCheckerInterface $employeeFormAccessChecker,
+        private readonly EmployeeDataProviderInterface $employeeDataProvider,
+        private readonly Hashing $hashing,
+        private readonly ImageUploaderInterface $imageUploader,
+        private readonly int $minLength,
+        private readonly int $maxLength,
+        private readonly int $minScore,
+        private readonly bool $boAllowEmployeeFormLang,
+        private readonly Cookie $legacyContextCookie,
         private readonly EmployeeContext $employeeContext,
         private readonly TokenStorageInterface $tokenStorage,
         private readonly EmployeeRepository $employeeRepository,
         private readonly UserTokenManager $userTokenManager,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
     ) {
-        $this->bus = $bus;
-        $this->defaultShopAssociation = $defaultShopAssociation;
-        $this->superAdminProfileId = $superAdminProfileId;
-        $this->employeeFormAccessChecker = $employeeFormAccessChecker;
-        $this->employeeDataProvider = $employeeDataProvider;
-        $this->hashing = $hashing;
-        $this->imageUploader = $imageUploader;
-        $this->minLength = $minLength;
-        $this->maxLength = $maxLength;
-        $this->minScore = $minScore;
-        $this->boAllowEmployeeFormLang = $boAllowEmployeeFormLang;
-        $this->legacyContextCookie = $legacyContextCookie;
     }
 
     public function create(array $data)
@@ -154,7 +91,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
             $data['language'],
             $data['active'],
             $data['profile'],
-            isset($data['shop_association']) ? $data['shop_association'] : $this->defaultShopAssociation,
+            $data['shop_association'] ?? $this->defaultShopAssociation,
             $data['has_enabled_gravatar'] ?? false,
             $this->minLength,
             $this->maxLength,
@@ -199,7 +136,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
         if (isset($data['shop_association'])) {
             $shopAssociation = $data['shop_association'] ?: [];
             $command->setShopAssociation(
-                array_map(function ($shopId) { return (int) $shopId; }, $shopAssociation)
+                array_map(fn ($shopId): int => (int) $shopId, $shopAssociation)
             );
         }
 

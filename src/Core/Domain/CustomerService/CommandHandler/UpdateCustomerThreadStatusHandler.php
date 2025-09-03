@@ -39,22 +39,12 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\Exception\CustomerServiceE
 class UpdateCustomerThreadStatusHandler implements UpdateCustomerThreadStatusHandlerInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
      * @param string $dbPrefix
      */
-    public function __construct(Connection $connection, $dbPrefix)
-    {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
+    public function __construct(
+        private readonly Connection $connection,
+        private $dbPrefix,
+    ) {
     }
 
     public function handle(UpdateCustomerThreadStatusCommand $command)

@@ -33,22 +33,12 @@ namespace PrestaShop\PrestaShop\Core\Hook;
 final class Hook implements HookInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var array
-     */
-    private $parameters;
-
-    /**
      * @param string $name
      */
-    public function __construct($name, array $parameters = [])
-    {
-        $this->name = $name;
-        $this->parameters = $parameters;
+    public function __construct(
+        private $name,
+        private readonly array $parameters = [],
+    ) {
     }
 
     public function getName()

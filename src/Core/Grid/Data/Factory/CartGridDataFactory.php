@@ -111,15 +111,11 @@ class CartGridDataFactory implements GridDataFactoryInterface
      */
     private function getOrderLabel(array $record): string
     {
-        switch ($record['status']) {
-            case CartStatus::ORDERED:
-                return $this->translator->trans('Ordered', [], 'Admin.Orderscustomers.Feature');
-            case CartStatus::NOT_ORDERED:
-                return $this->translator->trans('Non ordered', [], 'Admin.Orderscustomers.Feature');
-            case CartStatus::ABANDONED_CART:
-                return $this->translator->trans('Abandoned cart', [], 'Admin.Orderscustomers.Feature');
-        }
-
-        return '';
+        return match ($record['status']) {
+            CartStatus::ORDERED => $this->translator->trans('Ordered', [], 'Admin.Orderscustomers.Feature'),
+            CartStatus::NOT_ORDERED => $this->translator->trans('Non ordered', [], 'Admin.Orderscustomers.Feature'),
+            CartStatus::ABANDONED_CART => $this->translator->trans('Abandoned cart', [], 'Admin.Orderscustomers.Feature'),
+            default => '',
+        };
     }
 }

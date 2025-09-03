@@ -34,9 +34,13 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\Permission\Exception\InvalidPermis
 class ControllerPermission implements PermissionInterface
 {
     public const VIEW = 'view';
+
     public const ADD = 'add';
+
     public const EDIT = 'edit';
+
     public const DELETE = 'delete';
+
     public const ALL = 'all';
 
     public const SUPPORTED_PERMISSIONS = [

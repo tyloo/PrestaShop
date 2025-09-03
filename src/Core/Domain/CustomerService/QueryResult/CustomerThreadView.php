@@ -36,60 +36,18 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\LanguageId;
 class CustomerThreadView
 {
     /**
-     * @var CustomerThreadId
-     */
-    private $customerThreadId;
-
-    /**
-     * @var array
-     */
-    private $actions;
-
-    /**
-     * @var CustomerInformation
-     */
-    private $customerInformation;
-
-    /**
-     * @var string
-     */
-    private $contactName;
-
-    /**
-     * @var CustomerThreadMessage[]
-     */
-    private $messages;
-
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
-
-    /**
-     * @var CustomerThreadTimeline
-     */
-    private $timeline;
-
-    /**
      * @param string                  $contactName
      * @param CustomerThreadMessage[] $messages
      */
     public function __construct(
-        CustomerThreadId $customerThreadId,
-        LanguageId $languageId,
-        array $actions,
-        CustomerInformation $customerInformation,
-        $contactName,
-        array $messages,
-        CustomerThreadTimeline $timeline,
+        private readonly CustomerThreadId $customerThreadId,
+        private readonly LanguageId $languageId,
+        private readonly array $actions,
+        private readonly CustomerInformation $customerInformation,
+        private $contactName,
+        private readonly array $messages,
+        private readonly CustomerThreadTimeline $timeline,
     ) {
-        $this->customerThreadId = $customerThreadId;
-        $this->actions = $actions;
-        $this->customerInformation = $customerInformation;
-        $this->contactName = $contactName;
-        $this->messages = $messages;
-        $this->languageId = $languageId;
-        $this->timeline = $timeline;
     }
 
     /**

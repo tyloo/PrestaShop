@@ -37,29 +37,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $employeeIdLang;
-
-    /**
      * @param string $dbPrefix
      * @param int    $employeeIdLang
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $employeeIdLang,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private $employeeIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->employeeIdLang = $employeeIdLang;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)

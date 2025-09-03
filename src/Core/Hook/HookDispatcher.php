@@ -35,14 +35,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class HookDispatcher implements HookDispatcherInterface
 {
-    /**
-     * @var HookDispatcherAdapter
-     */
-    private $hookDispatcherAdapter;
-
-    public function __construct(HookDispatcherAdapter $hookDispatcherAdapter)
-    {
-        $this->hookDispatcherAdapter = $hookDispatcherAdapter;
+    public function __construct(
+        private readonly HookDispatcherAdapter $hookDispatcherAdapter,
+    ) {
     }
 
     public function dispatchHook(HookInterface $hook)
@@ -66,7 +61,7 @@ final class HookDispatcher implements HookDispatcherInterface
         );
 
         $content = $event->getContent();
-        array_walk($content, function (&$partialContent) {
+        array_walk($content, function (&$partialContent): void {
             $partialContent = empty($partialContent) ? '' : current($partialContent);
         });
 

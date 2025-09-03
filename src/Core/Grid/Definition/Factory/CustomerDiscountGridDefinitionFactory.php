@@ -46,7 +46,7 @@ final class CustomerDiscountGridDefinitionFactory extends AbstractGridDefinition
 {
     public const GRID_ID = 'customer_discount';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

@@ -37,21 +37,14 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class EmailLogsQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -88,7 +81,7 @@ final class EmailLogsQueryBuilder extends AbstractDoctrineQueryBuilder
 
         foreach ($filters as $name => $value) {
             if ($name === 'id_lang') {
-                $qb->andWhere("l.id_lang = :$name");
+                $qb->andWhere('l.id_lang = :' . $name);
                 $qb->setParameter($name, $value);
 
                 continue;
@@ -108,7 +101,7 @@ final class EmailLogsQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            $qb->andWhere("$name LIKE :$name");
+            $qb->andWhere(\sprintf('%s LIKE :%s', $name, $name));
             $qb->setParameter($name, '%' . $value . '%');
         }
 

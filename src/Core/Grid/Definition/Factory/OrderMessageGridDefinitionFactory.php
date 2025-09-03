@@ -51,7 +51,7 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
 
     public const GRID_ID = 'order_message';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

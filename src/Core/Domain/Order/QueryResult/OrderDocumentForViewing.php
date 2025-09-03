@@ -31,75 +31,26 @@ use DateTimeImmutable;
 
 class OrderDocumentForViewing
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $createdAt;
-
-    /**
-     * @var string
-     */
-    private $referenceNumber;
-
-    /**
-     * When eligible, document amount as a number
-     *
-     * @var float|null
-     */
-    private $numericalAmount;
-
-    /**
-     * When eligible, document amount as a string, ready to be displayed
-     *
-     * @var string|null
-     */
-    private $amount;
-
-    /**
-     * @var string|null
-     */
-    private $amountMismatch;
-
-    /**
-     * @var string
-     */
-    private $note;
-
-    /**
-     * @var bool
-     */
-    private $isAddPaymentAllowed;
-
     public function __construct(
-        int $id,
-        string $type,
-        DateTimeImmutable $createdAt,
-        string $referenceNumber,
-        ?float $numericalAmount,
-        ?string $amount,
-        ?string $amountMismatch,
-        ?string $note,
-        bool $isAddPaymentAllowed,
+        private readonly int $id,
+        private readonly string $type,
+        private readonly DateTimeImmutable $createdAt,
+        private readonly string $referenceNumber,
+        /**
+         * When eligible, document amount as a number
+         */
+        private readonly ?float $numericalAmount,
+        /**
+         * When eligible, document amount as a string, ready to be displayed
+         */
+        private readonly ?string $amount,
+        private readonly ?string $amountMismatch,
+        /**
+         * @var string
+         */
+        private readonly ?string $note,
+        private readonly bool $isAddPaymentAllowed,
     ) {
-        $this->id = $id;
-        $this->type = $type;
-        $this->createdAt = $createdAt;
-        $this->referenceNumber = $referenceNumber;
-        $this->numericalAmount = $numericalAmount;
-        $this->amount = $amount;
-        $this->amountMismatch = $amountMismatch;
-        $this->note = $note;
-        $this->isAddPaymentAllowed = $isAddPaymentAllowed;
     }
 
     public function getId(): int

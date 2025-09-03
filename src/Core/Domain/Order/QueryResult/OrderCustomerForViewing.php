@@ -31,106 +31,28 @@ use DateTimeImmutable;
 
 class OrderCustomerForViewing
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string Gender name
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $gender;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $accountRegistrationDate;
-
-    /**
-     * @var string Formatted price with currency
-     */
-    private $totalSpentSinceRegistration;
-
-    /**
-     * @var int
-     */
-    private $validOrdersPlaced;
-
-    /**
-     * @var string|null
-     */
-    private $privateNote;
-
-    /**
-     * @var bool
-     */
-    private $isGuest;
-
-    /**
-     * @var string
-     */
-    private $ape;
-
-    /**
-     * @var string
-     */
-    private $siret;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
-     * @var array
-     */
-    private $groups;
-
     public function __construct(
-        int $id,
-        string $firstName,
-        string $lastName,
-        string $gender,
-        string $email,
-        DateTimeImmutable $accountRegistrationDate,
-        string $totalSpentSinceRegistration,
-        int $validOrdersPlaced,
-        ?string $privateNote,
-        bool $isGuest,
-        int $languageId,
-        string $ape = '',
-        string $siret = '',
-        array $groups = [],
+        private readonly int $id,
+        private readonly string $firstName,
+        /**
+         * @var string Gender name
+         */
+        private readonly string $lastName,
+        private readonly string $gender,
+        private readonly string $email,
+        private readonly DateTimeImmutable $accountRegistrationDate,
+        /**
+         * @var string Formatted price with currency
+         */
+        private readonly string $totalSpentSinceRegistration,
+        private readonly int $validOrdersPlaced,
+        private readonly ?string $privateNote,
+        private readonly bool $isGuest,
+        private readonly int $languageId,
+        private readonly string $ape = '',
+        private readonly string $siret = '',
+        private readonly array $groups = [],
     ) {
-        $this->id = $id;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->gender = $gender;
-        $this->email = $email;
-        $this->accountRegistrationDate = $accountRegistrationDate;
-        $this->totalSpentSinceRegistration = $totalSpentSinceRegistration;
-        $this->validOrdersPlaced = $validOrdersPlaced;
-        $this->privateNote = $privateNote;
-        $this->isGuest = $isGuest;
-        $this->languageId = $languageId;
-        $this->ape = $ape;
-        $this->siret = $siret;
-        $this->groups = $groups;
     }
 
     public function getId(): int

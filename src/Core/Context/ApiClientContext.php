@@ -32,7 +32,7 @@ namespace PrestaShop\PrestaShop\Core\Context;
 class ApiClientContext
 {
     public function __construct(
-        private ?ApiClient $apiClient,
+        private readonly ?ApiClient $apiClient,
     ) {
     }
 

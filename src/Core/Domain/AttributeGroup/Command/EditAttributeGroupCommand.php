@@ -38,24 +38,24 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupT
  */
 class EditAttributeGroupCommand
 {
-    private AttributeGroupId $attributeGroupId;
+    private readonly AttributeGroupId $attributeGroupId;
 
     /**
      * @var string[]|null
      */
-    private ?array $localizedNames;
+    private ?array $localizedNames = null;
 
     /**
      * @var int[]|null
      */
-    private ?array $associatedShopIds;
+    private ?array $associatedShopIds = null;
 
     /**
      * @var string[]|null
      */
-    private ?array $localizedPublicNames;
+    private ?array $localizedPublicNames = null;
 
-    private ?AttributeGroupType $type;
+    private ?AttributeGroupType $type = null;
 
     public function __construct(int $attributeGroupId)
     {

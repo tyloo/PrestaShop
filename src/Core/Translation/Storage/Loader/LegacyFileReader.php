@@ -37,14 +37,12 @@ use PrestaShop\PrestaShop\Core\Translation\Locale\Converter;
  */
 class LegacyFileReader
 {
-    /**
-     * @var Converter Converts IETF language tags into two-letter language code
-     */
-    private $localeConverter;
-
-    public function __construct(Converter $converter)
-    {
-        $this->localeConverter = $converter;
+    public function __construct(
+        /**
+         * @var Converter Converts IETF language tags into two-letter language code
+         */
+        private readonly Converter $localeConverter,
+    ) {
     }
 
     /**
@@ -62,7 +60,7 @@ class LegacyFileReader
 
         $shopLocale = $this->localeConverter->toLegacyLocale($locale);
 
-        $filePath = $path . "$shopLocale.php";
+        $filePath = $path . ($shopLocale . '.php');
 
         if (! file_exists($filePath)) {
             throw UnsupportedLocaleException::fileNotFound($filePath, $locale);

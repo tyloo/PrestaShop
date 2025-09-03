@@ -39,101 +39,6 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 class EditableCustomer
 {
     /**
-     * @var CustomerId
-     */
-    private $customerId;
-
-    /**
-     * @var int
-     */
-    private $genderId;
-
-    /**
-     * @var FirstName
-     */
-    private $firstName;
-
-    /**
-     * @var LastName
-     */
-    private $lastName;
-
-    /**
-     * @var Email
-     */
-    private $email;
-
-    /**
-     * @var Birthday
-     */
-    private $birthday;
-
-    /**
-     * @var bool
-     */
-    private $isEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isPartnerOffersSubscribed;
-
-    /**
-     * @var bool
-     */
-    private $isNewsletterSubscribed;
-
-    /**
-     * @var array|int[]
-     */
-    private $groupIds;
-
-    /**
-     * @var int
-     */
-    private $defaultGroupId;
-
-    /**
-     * @var string
-     */
-    private $companyName;
-
-    /**
-     * @var string
-     */
-    private $siretCode;
-
-    /**
-     * @var string
-     */
-    private $apeCode;
-
-    /**
-     * @var string
-     */
-    private $website;
-
-    /**
-     * @var float
-     */
-    private $allowedOutstandingAmount;
-
-    /**
-     * @var int
-     */
-    private $maxPaymentDays;
-
-    /**
-     * @var int
-     */
-    private $riskId;
-
-    /**
-     * @var bool
-     */
-    private $isGuest;
-
-    /**
      * @param int    $genderId
      * @param bool   $isEnabled
      * @param bool   $isPartnerOffersSubscribed
@@ -149,45 +54,26 @@ class EditableCustomer
      * @param int    $riskId
      */
     public function __construct(
-        CustomerId $customerId,
-        $genderId,
-        FirstName $firstName,
-        LastName $lastName,
-        Email $email,
-        Birthday $birthday,
-        $isEnabled,
-        $isPartnerOffersSubscribed,
-        $isNewsletterSubscribed,
-        array $groupIds,
-        $defaultGroupId,
-        $companyName,
-        $siretCode,
-        $apeCode,
-        $website,
-        $allowedOutstandingAmount,
-        $maxPaymentDays,
-        $riskId,
-        bool $isGuest = false,
+        private readonly CustomerId $customerId,
+        private $genderId,
+        private readonly FirstName $firstName,
+        private readonly LastName $lastName,
+        private readonly Email $email,
+        private readonly Birthday $birthday,
+        private $isEnabled,
+        private $isPartnerOffersSubscribed,
+        private $isNewsletterSubscribed,
+        private readonly array $groupIds,
+        private $defaultGroupId,
+        private $companyName,
+        private $siretCode,
+        private $apeCode,
+        private $website,
+        private $allowedOutstandingAmount,
+        private $maxPaymentDays,
+        private $riskId,
+        private readonly bool $isGuest = false,
     ) {
-        $this->customerId = $customerId;
-        $this->genderId = $genderId;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->birthday = $birthday;
-        $this->isEnabled = $isEnabled;
-        $this->isPartnerOffersSubscribed = $isPartnerOffersSubscribed;
-        $this->isNewsletterSubscribed = $isNewsletterSubscribed;
-        $this->groupIds = $groupIds;
-        $this->defaultGroupId = $defaultGroupId;
-        $this->companyName = $companyName;
-        $this->siretCode = $siretCode;
-        $this->apeCode = $apeCode;
-        $this->website = $website;
-        $this->allowedOutstandingAmount = $allowedOutstandingAmount;
-        $this->maxPaymentDays = $maxPaymentDays;
-        $this->riskId = $riskId;
-        $this->isGuest = $isGuest;
     }
 
     /**

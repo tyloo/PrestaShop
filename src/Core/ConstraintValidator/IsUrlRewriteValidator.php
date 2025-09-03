@@ -40,20 +40,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class IsUrlRewriteValidator extends ConstraintValidator
 {
     /**
-     * @var ConfigurationInterface|bool
-     */
-    private $accentedCharsConfiguration;
-
-    /**
      * this constructor can accept boolean value of already predefined accented chars allowance configuration to not
      * introduce BC break. The recommended approach is to pass
      * PrestaShop\PrestaShop\Adapter\Configuration as a service instead to avoid keeping cached scalar value.
      *
      * @param ConfigurationInterface|bool $accentedCharsConfiguration
      */
-    public function __construct($accentedCharsConfiguration)
-    {
-        $this->accentedCharsConfiguration = $accentedCharsConfiguration;
+    public function __construct(
+        private $accentedCharsConfiguration,
+    ) {
     }
 
     public function validate($value, Constraint $constraint)

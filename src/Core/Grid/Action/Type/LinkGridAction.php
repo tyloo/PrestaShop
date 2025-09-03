@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class LinkGridAction extends AbstractGridAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'link';
     }

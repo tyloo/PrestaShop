@@ -35,20 +35,10 @@ use PrestaShop\PrestaShop\Core\ConfigurationInterface;
  */
 final class EmployeeOptionsConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var OptionsCheckerInterface
-     */
-    private $optionsChecker;
-
-    public function __construct(ConfigurationInterface $configuration, OptionsCheckerInterface $optionsChecker)
-    {
-        $this->configuration = $configuration;
-        $this->optionsChecker = $optionsChecker;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly OptionsCheckerInterface $optionsChecker,
+    ) {
     }
 
     public function getConfiguration()
@@ -59,7 +49,10 @@ final class EmployeeOptionsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return array{key: 'You cannot change the value of this configuration field in the context of this shop.', parameters: array{}, domain: 'Admin.Notifications.Warning'}[]
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 

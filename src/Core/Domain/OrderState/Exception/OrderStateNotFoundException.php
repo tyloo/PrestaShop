@@ -37,19 +37,16 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\ValueObject\OrderStateId;
 class OrderStateNotFoundException extends OrderStateException
 {
     /**
-     * @var OrderStateId
-     */
-    private $orderStateId;
-
-    /**
      * @param string         $message
      * @param int            $code
      * @param Exception|null $previous
      */
-    public function __construct(OrderStateId $orderStateId, $message = '', $code = 0, $previous = null)
-    {
-        $this->orderStateId = $orderStateId;
-
+    public function __construct(
+        private readonly OrderStateId $orderStateId,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
     }
 

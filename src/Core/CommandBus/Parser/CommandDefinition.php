@@ -33,30 +33,15 @@ namespace PrestaShop\PrestaShop\Core\CommandBus\Parser;
 class CommandDefinition
 {
     /**
-     * @var string
-     */
-    private $className;
-
-    /**
-     * @var string
-     */
-    private $commandType;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
      * @param string $className
      * @param string $commandType
      * @param string $description
      */
-    public function __construct($className, $commandType, $description)
-    {
-        $this->className = $className;
-        $this->commandType = $commandType;
-        $this->description = $description;
+    public function __construct(
+        private $className,
+        private $commandType,
+        private $description,
+    ) {
     }
 
     /**

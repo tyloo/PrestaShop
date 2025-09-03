@@ -35,20 +35,10 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
 
 final class CmsPageCategoryFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    public function __construct(CommandBusInterface $queryBus, array $contextShopIds)
-    {
-        $this->queryBus = $queryBus;
-        $this->contextShopIds = $contextShopIds;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+        private readonly array $contextShopIds,
+    ) {
     }
 
     /**

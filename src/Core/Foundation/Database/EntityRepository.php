@@ -35,43 +35,44 @@ class EntityRepository
      * @var EntityManager
      */
     protected $entityManager;
+
     /**
      * @var DatabaseInterface
      */
     protected $db;
-    /**
-     * @var string
-     */
-    protected $tablesPrefix;
+
     /**
      * @var EntityMetaData
      */
     protected $entityMetaData;
+
     /**
      * @var QueryBuilder
      */
     protected $queryBuilder;
 
+    /**
+     * @param string $tablesPrefix
+     */
     public function __construct(
         EntityManager $entityManager,
-        $tablesPrefix,
+        protected $tablesPrefix,
         EntityMetaData $entityMetaData,
     ) {
         $this->entityManager = $entityManager;
         $this->db = $this->entityManager->getDatabase();
-        $this->tablesPrefix = $tablesPrefix;
         $this->entityMetaData = $entityMetaData;
         $this->queryBuilder = new QueryBuilder($this->db);
     }
 
     public function __call($method, $arguments)
     {
-        if (str_starts_with($method, 'findOneBy')) {
+        if (str_starts_with((string) $method, 'findOneBy')) {
             $one = true;
-            $by = substr($method, 9);
-        } elseif (str_starts_with($method, 'findBy')) {
+            $by = substr((string) $method, 9);
+        } elseif (str_starts_with((string) $method, 'findBy')) {
             $one = false;
-            $by = substr($method, 6);
+            $by = substr((string) $method, 6);
         } else {
             throw new Exception(\sprintf('Undefind method %s.', $method));
         }
@@ -101,7 +102,7 @@ class EntityRepository
      */
     private function convertToDbFieldName($camel_case_field_name)
     {
-        return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $camel_case_field_name));
+        return strtolower((string) preg_replace('/([a-z])([A-Z])/', '$1_$2', $camel_case_field_name));
     }
 
     /**
@@ -116,6 +117,7 @@ class EntityRepository
         if (\count($primary) === 0) {
             throw new Exception(\sprintf('No primary key defined in entity `%s`.', $this->entityMetaData->getEntityClassName()));
         }
+
         if (\count($primary) > 1) {
             throw new Exception(\sprintf('Entity `%s` has a composite primary key, which is not supported by entity repositories.', $this->entityMetaData->getEntityClassName()));
         }
@@ -163,9 +165,11 @@ class EntityRepository
         if (\count($rows) === 0) {
             return null;
         }
+
         if (\count($rows) > 1) {
             throw new Exception('Too many rows returned.');
         }
+
         $data = $rows[0];
         $entity = $this->getNewEntity();
         $entity->hydrate($data);
@@ -173,7 +177,10 @@ class EntityRepository
         return $entity;
     }
 
-    protected function hydrateMany(array $rows)
+    /**
+     * @return list
+     */
+    protected function hydrateMany(array $rows): array
     {
         $entities = [];
         foreach ($rows as $row) {

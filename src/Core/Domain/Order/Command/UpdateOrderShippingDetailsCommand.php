@@ -39,27 +39,13 @@ class UpdateOrderShippingDetailsCommand
      */
     private $orderId;
 
-    /**
-     * @var int
-     */
-    private $newCarrierId;
-
-    /**
-     * @var string|null
-     */
-    private $trackingNumber;
-
-    /**
-     * @var int
-     */
-    private $currentOrderCarrierId;
-
-    public function __construct(int $orderId, int $currentOrderCarrierId, int $newCarrierId, ?string $trackingNumber = '')
-    {
+    public function __construct(
+        int $orderId,
+        private readonly int $currentOrderCarrierId,
+        private readonly int $newCarrierId,
+        private readonly ?string $trackingNumber = '',
+    ) {
         $this->orderId = new OrderId($orderId);
-        $this->newCarrierId = $newCarrierId;
-        $this->trackingNumber = $trackingNumber;
-        $this->currentOrderCarrierId = $currentOrderCarrierId;
     }
 
     public function getOrderId(): OrderId

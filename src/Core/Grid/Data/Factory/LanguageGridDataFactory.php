@@ -37,22 +37,10 @@ use PrestaShop\PrestaShop\Core\Image\ImageProviderInterface;
  */
 final class LanguageGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $doctrineLanguageDataFactory;
-
-    /**
-     * @var ImageProviderInterface
-     */
-    private $languageFlagThumbnailProvider;
-
     public function __construct(
-        GridDataFactoryInterface $doctrineLanguageDataFactory,
-        ImageProviderInterface $languageFlagThumbnailProvider,
+        private readonly GridDataFactoryInterface $doctrineLanguageDataFactory,
+        private readonly ImageProviderInterface $languageFlagThumbnailProvider,
     ) {
-        $this->doctrineLanguageDataFactory = $doctrineLanguageDataFactory;
-        $this->languageFlagThumbnailProvider = $languageFlagThumbnailProvider;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

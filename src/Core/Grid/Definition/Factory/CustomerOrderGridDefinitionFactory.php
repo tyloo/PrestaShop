@@ -49,22 +49,16 @@ final class CustomerOrderGridDefinitionFactory extends AbstractGridDefinitionFac
     public const GRID_ID = 'customer_order';
 
     /**
-     * @var string
-     */
-    private $contextDateFormat;
-
-    /**
      * @param string $contextDateFormat
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        $contextDateFormat,
+        private $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
-        $this->contextDateFormat = $contextDateFormat;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

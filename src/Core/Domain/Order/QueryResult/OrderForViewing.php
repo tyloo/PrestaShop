@@ -34,259 +34,47 @@ use DateTimeImmutable;
  */
 class OrderForViewing
 {
-    /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var int
-     */
-    private $cartId;
-
-    /**
-     * @var OrderCustomerForViewing
-     */
-    private $customer;
-
-    /**
-     * @var OrderShippingAddressForViewing
-     */
-    private $shippingAddress;
-
-    /**
-     * @var OrderInvoiceAddressForViewing
-     */
-    private $invoiceAddress;
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var OrderProductsForViewing
-     */
-    private $products;
-
-    /**
-     * @var string
-     */
-    private $taxMethod;
-
-    /**
-     * @var OrderHistoryForViewing
-     */
-    private $history;
-
-    /**
-     * @var OrderDocumentsForViewing
-     */
-    private $documents;
-
-    /**
-     * @var OrderShippingForViewing
-     */
-    private $shipping;
-
-    /**
-     * @var OrderReturnsForViewing
-     */
-    private $returns;
-
-    /**
-     * @var OrderPaymentsForViewing
-     */
-    private $payments;
-
-    /**
-     * @var bool
-     */
-    private $isValid;
-
-    /**
-     * @var OrderMessagesForViewing
-     */
-    private $messages;
-
-    /**
-     * @var int
-     */
-    private $currencyId;
-
-    /**
-     * @var bool
-     */
-    private $isDelivered;
-
-    /**
-     * @var bool
-     */
-    private $isShipped;
-
-    /**
-     * @var OrderPricesForViewing
-     */
-    private $prices;
-
-    /**
-     * @var bool
-     */
-    private $isTaxIncluded;
-
-    /**
-     * @var bool
-     */
-    private $hasBeenPaid;
-
-    /**
-     * @var bool
-     */
-    private $hasInvoice;
-
-    /**
-     * @var OrderDiscountsForViewing
-     */
-    private $discounts;
-
-    /**
-     * @var LinkedOrdersForViewing
-     */
-    private $linkedOrders;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $createdAt;
-
-    /**
-     * @var bool
-     */
-    private $isVirtual;
-
-    /**
-     * @var int
-     */
-    private $carrierId;
-
-    /**
-     * @var string
-     */
-    private $carrierName;
-
-    /**
-     * @var int
-     */
-    private $shopId;
-
-    /**
-     * @var bool
-     */
-    private $invoiceManagementIsEnabled;
-
-    /**
-     * @var OrderSourcesForViewing
-     */
-    private $sources;
-
-    /**
-     * @var string
-     */
-    private $shippingAddressFormatted;
-
-    /**
-     * @var string
-     */
-    private $invoiceAddressFormatted;
-
-    /**
-     * @var string
-     */
-    private $note;
-
-    /**
-     * @var string
-     */
-    private $paymentName;
-
-    /**
-     * @var string
-     */
-    private $paymentModule;
-
     public function __construct(
-        int $orderId,
-        int $currencyId,
-        int $carrierId,
-        string $carrierName,
-        int $shopId,
-        string $reference,
-        bool $isVirtual,
-        string $taxMethod,
-        bool $isTaxIncluded,
-        bool $isValid,
-        bool $hasBeenPaid,
-        bool $hasInvoice,
-        bool $isDelivered,
-        bool $isShipped,
-        bool $invoiceManagementIsEnabled,
-        DateTimeImmutable $createdAt,
-        ?OrderCustomerForViewing $customer,
-        OrderShippingAddressForViewing $shippingAddress,
-        OrderInvoiceAddressForViewing $invoiceAddress,
-        OrderProductsForViewing $products,
-        OrderHistoryForViewing $history,
-        OrderDocumentsForViewing $documents,
-        OrderShippingForViewing $shipping,
-        OrderReturnsForViewing $returns,
-        OrderPaymentsForViewing $payments,
-        OrderMessagesForViewing $messages,
-        OrderPricesForViewing $prices,
-        OrderDiscountsForViewing $discounts,
-        OrderSourcesForViewing $sources,
-        LinkedOrdersForViewing $linkedOrders,
-        string $shippingAddressFormatted = '',
-        string $invoiceAddressFormatted = '',
-        string $note = '',
-        string $paymentName = '',
-        string $paymentModule = '',
-        int $cartId = 0,
+        private readonly int $orderId,
+        private readonly int $currencyId,
+        private readonly int $carrierId,
+        private readonly string $carrierName,
+        private readonly int $shopId,
+        private readonly string $reference,
+        private readonly bool $isVirtual,
+        private readonly string $taxMethod,
+        private readonly bool $isTaxIncluded,
+        private readonly bool $isValid,
+        private readonly bool $hasBeenPaid,
+        private readonly bool $hasInvoice,
+        private readonly bool $isDelivered,
+        private readonly bool $isShipped,
+        private readonly bool $invoiceManagementIsEnabled,
+        private readonly DateTimeImmutable $createdAt,
+        /**
+         * @var OrderCustomerForViewing
+         */
+        private readonly ?OrderCustomerForViewing $customer,
+        private readonly OrderShippingAddressForViewing $shippingAddress,
+        private readonly OrderInvoiceAddressForViewing $invoiceAddress,
+        private readonly OrderProductsForViewing $products,
+        private readonly OrderHistoryForViewing $history,
+        private readonly OrderDocumentsForViewing $documents,
+        private readonly OrderShippingForViewing $shipping,
+        private readonly OrderReturnsForViewing $returns,
+        private readonly OrderPaymentsForViewing $payments,
+        private readonly OrderMessagesForViewing $messages,
+        private readonly OrderPricesForViewing $prices,
+        private readonly OrderDiscountsForViewing $discounts,
+        private readonly OrderSourcesForViewing $sources,
+        private readonly LinkedOrdersForViewing $linkedOrders,
+        private readonly string $shippingAddressFormatted = '',
+        private readonly string $invoiceAddressFormatted = '',
+        private readonly string $note = '',
+        private readonly string $paymentName = '',
+        private readonly string $paymentModule = '',
+        private readonly int $cartId = 0,
     ) {
-        $this->reference = $reference;
-        $this->customer = $customer;
-        $this->shippingAddress = $shippingAddress;
-        $this->invoiceAddress = $invoiceAddress;
-        $this->products = $products;
-        $this->taxMethod = $taxMethod;
-        $this->history = $history;
-        $this->documents = $documents;
-        $this->shipping = $shipping;
-        $this->returns = $returns;
-        $this->payments = $payments;
-        $this->isValid = $isValid;
-        $this->messages = $messages;
-        $this->orderId = $orderId;
-        $this->currencyId = $currencyId;
-        $this->isDelivered = $isDelivered;
-        $this->isShipped = $isShipped;
-        $this->prices = $prices;
-        $this->isTaxIncluded = $isTaxIncluded;
-        $this->hasBeenPaid = $hasBeenPaid;
-        $this->hasInvoice = $hasInvoice;
-        $this->discounts = $discounts;
-        $this->createdAt = $createdAt;
-        $this->isVirtual = $isVirtual;
-        $this->carrierId = $carrierId;
-        $this->carrierName = $carrierName;
-        $this->shopId = $shopId;
-        $this->invoiceManagementIsEnabled = $invoiceManagementIsEnabled;
-        $this->sources = $sources;
-        $this->linkedOrders = $linkedOrders;
-        $this->shippingAddressFormatted = $shippingAddressFormatted;
-        $this->invoiceAddressFormatted = $invoiceAddressFormatted;
-        $this->note = $note;
-        $this->paymentName = $paymentName;
-        $this->paymentModule = $paymentModule;
-        $this->cartId = $cartId;
     }
 
     public function getId(): int

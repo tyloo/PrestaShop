@@ -54,75 +54,21 @@ class CatalogueProviderFactory
     private $providers = [];
 
     /**
-     * @var DatabaseTranslationLoader
-     */
-    private $databaseTranslationLoader;
-
-    /**
-     * @var LegacyModuleExtractorInterface
-     */
-    private $legacyModuleExtractor;
-
-    /**
-     * @var LoaderInterface
-     */
-    private $legacyFileLoader;
-
-    /**
-     * @var string
-     */
-    private $modulesDirectory;
-
-    /**
-     * @var string
-     */
-    private $translationsDirectory;
-
-    /**
-     * @var ThemeExtractor
-     */
-    private $themeExtractor;
-
-    /**
-     * @var ThemeRepository
-     */
-    private $themeRepository;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var string
-     */
-    private $themesDirectory;
-
-    /**
      * @var ModuleCatalogueProviderFactory
      */
     private $moduleCatalogueProviderFactory;
 
     public function __construct(
-        DatabaseTranslationLoader $databaseTranslationLoader,
-        LegacyModuleExtractorInterface $legacyModuleExtractor,
-        LoaderInterface $legacyFileLoader,
-        ThemeExtractor $themeExtractor,
-        ThemeRepository $themeRepository,
-        Filesystem $filesystem,
-        string $themesDirectory,
-        string $modulesDirectory,
-        string $translationsDirectory,
+        private readonly DatabaseTranslationLoader $databaseTranslationLoader,
+        private readonly LegacyModuleExtractorInterface $legacyModuleExtractor,
+        private readonly LoaderInterface $legacyFileLoader,
+        private readonly ThemeExtractor $themeExtractor,
+        private readonly ThemeRepository $themeRepository,
+        private readonly Filesystem $filesystem,
+        private readonly string $themesDirectory,
+        private readonly string $modulesDirectory,
+        private readonly string $translationsDirectory,
     ) {
-        $this->databaseTranslationLoader = $databaseTranslationLoader;
-        $this->legacyModuleExtractor = $legacyModuleExtractor;
-        $this->legacyFileLoader = $legacyFileLoader;
-        $this->modulesDirectory = $modulesDirectory;
-        $this->translationsDirectory = $translationsDirectory;
-        $this->themeExtractor = $themeExtractor;
-        $this->themeRepository = $themeRepository;
-        $this->filesystem = $filesystem;
-        $this->themesDirectory = $themesDirectory;
         $this->moduleCatalogueProviderFactory = new ModuleCatalogueProviderFactory(
             $this->databaseTranslationLoader,
             $this->legacyModuleExtractor,
@@ -145,9 +91,11 @@ class CatalogueProviderFactory
         if ($providerDefinition instanceof ModuleProviderDefinition) {
             return $this->moduleCatalogueProviderFactory->getModuleCatalogueProvider($providerDefinition);
         }
+
         if ($providerDefinition instanceof AbstractCoreProviderDefinition) {
             return $this->getCoreCatalogueProvider($providerDefinition);
         }
+
         if ($providerDefinition instanceof ThemeProviderDefinition) {
             return $this->getThemeCatalogueProvider($providerDefinition);
         }

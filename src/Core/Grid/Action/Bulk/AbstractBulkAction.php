@@ -34,11 +34,6 @@ abstract class AbstractBulkAction implements BulkActionInterface
     /**
      * @var string
      */
-    private $id;
-
-    /**
-     * @var string
-     */
     protected $name;
 
     /**
@@ -54,9 +49,9 @@ abstract class AbstractBulkAction implements BulkActionInterface
     /**
      * @param string $id
      */
-    public function __construct($id)
-    {
-        $this->id = $id;
+    public function __construct(
+        private $id,
+    ) {
     }
 
     public function getName()

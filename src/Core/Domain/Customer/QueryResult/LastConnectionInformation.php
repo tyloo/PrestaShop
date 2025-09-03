@@ -33,36 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class LastConnectionInformation
 {
     /**
-     * @var int
-     */
-    private $connectionId;
-
-    /**
-     * @var string
-     */
-    private $connectionDate;
-
-    /**
-     * @var int
-     */
-    private $pagesViewed;
-
-    /**
-     * @var string
-     */
-    private $totalTime;
-
-    /**
-     * @var string
-     */
-    private $httpReferer;
-
-    /**
-     * @var string
-     */
-    private $ipAddress;
-
-    /**
      * @param int    $connectionId
      * @param string $connectionDate
      * @param int    $pagesViewed
@@ -71,19 +41,13 @@ class LastConnectionInformation
      * @param string $ipAddress
      */
     public function __construct(
-        $connectionId,
-        $connectionDate,
-        $pagesViewed,
-        $totalTime,
-        $httpReferer,
-        $ipAddress,
+        private $connectionId,
+        private $connectionDate,
+        private $pagesViewed,
+        private $totalTime,
+        private $httpReferer,
+        private $ipAddress,
     ) {
-        $this->connectionId = $connectionId;
-        $this->connectionDate = $connectionDate;
-        $this->pagesViewed = $pagesViewed;
-        $this->totalTime = $totalTime;
-        $this->httpReferer = $httpReferer;
-        $this->ipAddress = $ipAddress;
     }
 
     /**

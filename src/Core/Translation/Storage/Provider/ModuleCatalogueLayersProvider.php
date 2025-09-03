@@ -52,13 +52,6 @@ use Symfony\Component\Translation\MessageCatalogue;
 class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
 {
     /**
-     * We need a connection to DB to load user translated catalogue.
-     *
-     * @var DatabaseTranslationLoader
-     */
-    private $databaseTranslationLoader;
-
-    /**
      * @var DefaultCatalogueFinder
      */
     private $defaultCatalogueFinder;
@@ -79,67 +72,27 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
     private $userTranslatedCatalogueFinder;
 
     /**
-     * @var string
-     */
-    private $moduleName;
-
-    /**
-     * @var string
-     */
-    private $modulesDirectory;
-
-    /**
-     * @var string
-     */
-    private $translationsDirectory;
-
-    /**
      * @var MessageCatalogue[]
      */
     private $defaultCatalogueCache;
-
-    /**
-     * @var LegacyModuleExtractorInterface
-     */
-    private $legacyModuleExtractor;
-
-    /**
-     * @var LoaderInterface
-     */
-    private $legacyFileLoader;
-
-    /**
-     * @var array<int, string>
-     */
-    private $filenameFilters;
-
-    /**
-     * @var array<int, string>
-     */
-    private $translationDomains;
 
     /**
      * @param array<int, string> $filenameFilters
      * @param array<int, string> $translationDomains
      */
     public function __construct(
-        DatabaseTranslationLoader $databaseTranslationLoader,
-        LegacyModuleExtractorInterface $legacyModuleExtractor,
-        LoaderInterface $legacyFileLoader,
-        string $modulesDirectory,
-        string $translationsDirectory,
-        string $moduleName,
-        array $filenameFilters,
-        array $translationDomains,
+        /**
+         * We need a connection to DB to load user translated catalogue.
+         */
+        private readonly DatabaseTranslationLoader $databaseTranslationLoader,
+        private readonly LegacyModuleExtractorInterface $legacyModuleExtractor,
+        private readonly LoaderInterface $legacyFileLoader,
+        private readonly string $modulesDirectory,
+        private readonly string $translationsDirectory,
+        private readonly string $moduleName,
+        private readonly array $filenameFilters,
+        private readonly array $translationDomains,
     ) {
-        $this->databaseTranslationLoader = $databaseTranslationLoader;
-        $this->moduleName = $moduleName;
-        $this->modulesDirectory = $modulesDirectory;
-        $this->translationsDirectory = $translationsDirectory;
-        $this->legacyModuleExtractor = $legacyModuleExtractor;
-        $this->legacyFileLoader = $legacyFileLoader;
-        $this->filenameFilters = $filenameFilters;
-        $this->translationDomains = $translationDomains;
     }
 
     public function getDefaultCatalogue(string $locale): MessageCatalogue
@@ -175,6 +128,7 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
             // If no translation file was found in the module, No Exception
             // we search in the Core's files
         }
+
         try {
             return $this->getCoreFileTranslatedCatalogueFinder()->getCatalogue($locale);
         } catch (TranslationFilesNotFoundException) {

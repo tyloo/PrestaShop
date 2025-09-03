@@ -36,7 +36,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class SubmitBulkAction extends AbstractBulkAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'submit';
     }

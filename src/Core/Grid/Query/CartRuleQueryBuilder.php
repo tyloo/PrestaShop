@@ -39,28 +39,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CartRuleQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $contextIdLang;
-
-    /**
      * @param string $dbPrefix
      * @param int    $contextIdLang
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $contextIdLang,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private $contextIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextIdLang = $contextIdLang;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
@@ -146,6 +134,7 @@ final class CartRuleQueryBuilder extends AbstractDoctrineQueryBuilder
                     $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' >= :' . $filterName . '_from');
                     $qb->setParameter($filterName . '_from', $value['from']);
                 }
+
                 if (isset($value['to'])) {
                     $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' <= :' . $filterName . '_to');
                     $qb->setParameter($filterName . '_to', $value['to']);
@@ -155,7 +144,7 @@ final class CartRuleQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' LIKE :' . $filterName);
-            $qb->setParameter($filterName, "%$value%");
+            $qb->setParameter($filterName, \sprintf('%%%s%%', $value));
         }
     }
 }

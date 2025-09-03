@@ -30,11 +30,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Shipment\QueryResult;
 class OrderShipmentProduct
 {
     public function __construct(
-        private int $orderDetailId,
-        private int $quantity,
-        private string $productName,
-        private string $productReference,
-        private string $productImagePath,
+        private readonly int $orderDetailId,
+        private readonly int $quantity,
+        private readonly string $productName,
+        private readonly string $productReference,
+        private readonly string $productImagePath,
     ) {
     }
 

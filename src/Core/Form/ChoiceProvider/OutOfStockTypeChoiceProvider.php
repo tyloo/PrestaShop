@@ -38,22 +38,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class OutOfStockTypeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $configuration;
-
     public function __construct(
-        TranslatorInterface $translator,
-        ShopConfigurationInterface $configuration,
+        private readonly TranslatorInterface $translator,
+        private readonly ShopConfigurationInterface $configuration,
     ) {
-        $this->translator = $translator;
-        $this->configuration = $configuration;
     }
 
     public function getChoices()

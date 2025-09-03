@@ -36,21 +36,10 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\QueryResult\EditableProfile;
  */
 final class ProfileFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var string
-     */
-    private $defaultAvatarUrl;
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
     public function __construct(
-        CommandBusInterface $queryBus,
-        string $defaultAvatarUrl,
+        private readonly CommandBusInterface $queryBus,
+        private readonly string $defaultAvatarUrl,
     ) {
-        $this->queryBus = $queryBus;
-        $this->defaultAvatarUrl = $defaultAvatarUrl;
     }
 
     public function getData($profileId)

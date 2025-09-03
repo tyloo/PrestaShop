@@ -35,38 +35,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\QueryResult;
 class RedirectTargetInformation
 {
     public const PRODUCT_TYPE = 'product';
+
     public const CATEGORY_TYPE = 'category';
 
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $image;
-
     public function __construct(
-        int $id,
-        string $type,
-        string $name,
-        string $image,
+        private readonly int $id,
+        private readonly string $type,
+        private readonly string $name,
+        private readonly string $image,
     ) {
-        $this->id = $id;
-        $this->type = $type;
-        $this->name = $name;
-        $this->image = $image;
     }
 
     public function getId(): int

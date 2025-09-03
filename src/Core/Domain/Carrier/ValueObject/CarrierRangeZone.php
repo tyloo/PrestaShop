@@ -42,7 +42,7 @@ class CarrierRangeZone
     private array $ranges;
 
     public function __construct(
-        private int $zoneId,
+        private readonly int $zoneId,
 
         /** @var array{
          *     range_from: float,
@@ -99,18 +99,18 @@ class CarrierRangeZone
         $min = 0;
 
         // First, we need to sort by range from
-        usort($ranges, function ($a, $b) {
-            return $a['range_from'] <=> $b['range_from'];
-        });
+        usort($ranges, fn ($a, $b): int => $a['range_from'] <=> $b['range_from']);
 
         // Then, we can check if ranges are overlapping or not
         foreach ($ranges as $range) {
             if ($range['range_from'] < 0 || $range['range_to'] < 0) {
                 throw new CarrierConstraintException('Carrier range cannot be less than zero.', CarrierConstraintException::INVALID_RANGE_NEGATIVE);
             }
+
             if ($min > $range['range_from']) {
                 throw new CarrierConstraintException('Carrier ranges are overlapping', CarrierConstraintException::INVALID_RANGES_OVERLAPPING);
             }
+
             $min = $range['range_to'];
         }
     }

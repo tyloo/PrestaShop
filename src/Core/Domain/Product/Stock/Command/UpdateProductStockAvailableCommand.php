@@ -47,11 +47,6 @@ class UpdateProductStockAvailableCommand
     private $productId;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @var int|null
      */
     private $deltaQuantity;
@@ -68,10 +63,9 @@ class UpdateProductStockAvailableCommand
 
     public function __construct(
         int $productId,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getProductId(): ProductId

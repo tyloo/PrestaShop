@@ -33,22 +33,27 @@ class ProductSearchResult
      * @var array
      */
     private $products = [];
+
     /**
      * @var int
      */
     private $totalProductsCount;
+
     /**
      * @var FacetCollection|null
      */
     private $facetCollection;
+
     /**
      * @var string
      */
     private $encodedFacets;
+
     /**
      * @var SortOrder[]
      */
     private $availableSortOrders = [];
+
     /**
      * @var SortOrder
      */

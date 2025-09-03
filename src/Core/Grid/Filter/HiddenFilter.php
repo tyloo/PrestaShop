@@ -44,21 +44,19 @@ class HiddenFilter implements FilterInterface
     private $typeOptions = [];
 
     /**
-     * @var string Filter name
-     */
-    private $name;
-
-    /**
      * @var string|null Column ID if filter is associated with columns
      */
     private $column;
 
-    public function __construct(string $name)
-    {
-        $this->name = $name;
+    public function __construct(
+        /**
+         * @var string Filter name
+         */
+        private readonly string $name,
+    ) {
     }
 
-    public function getType()
+    public function getType(): string
     {
         return HiddenType::class;
     }

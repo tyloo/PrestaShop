@@ -37,24 +37,16 @@ use Exception;
 class OrderMessageNameAlreadyUsedException extends OrderMessageException
 {
     /**
-     * @var int
-     */
-    private $langId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @param string $name the email that's being used
      */
-    public function __construct(string $name, int $langId, string $message = '', int $code = 0, ?Exception $previous = null)
-    {
+    public function __construct(
+        private readonly string $name,
+        private readonly int $langId,
+        string $message = '',
+        int $code = 0,
+        ?Exception $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->name = $name;
-        $this->langId = $langId;
     }
 
     public function getName(): string

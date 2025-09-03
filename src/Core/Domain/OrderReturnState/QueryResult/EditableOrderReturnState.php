@@ -35,27 +35,11 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnSt
  */
 class EditableOrderReturnState
 {
-    /**
-     * @var OrderReturnStateId
-     */
-    private $orderReturnStateId;
-    /**
-     * @var array
-     */
-    private $localizedNames;
-    /**
-     * @var string
-     */
-    private $color;
-
     public function __construct(
-        OrderReturnStateId $orderStateId,
-        array $name,
-        string $color,
+        private readonly OrderReturnStateId $orderReturnStateId,
+        private readonly array $localizedNames,
+        private readonly string $color,
     ) {
-        $this->orderReturnStateId = $orderStateId;
-        $this->localizedNames = $name;
-        $this->color = $color;
     }
 
     /**

@@ -35,43 +35,13 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class ModuleCatalogueProviderFactory
 {
-    /**
-     * @var DatabaseTranslationLoader
-     */
-    private $databaseTranslationLoader;
-
-    /**
-     * @var LegacyModuleExtractorInterface
-     */
-    private $legacyModuleExtractor;
-
-    /**
-     * @var LoaderInterface
-     */
-    private $legacyFileLoader;
-
-    /**
-     * @var string
-     */
-    private $modulesDirectory;
-
-    /**
-     * @var string
-     */
-    private $translationsDirectory;
-
     public function __construct(
-        DatabaseTranslationLoader $databaseTranslationLoader,
-        LegacyModuleExtractorInterface $legacyModuleExtractor,
-        LoaderInterface $legacyFileLoader,
-        string $modulesDirectory,
-        string $translationsDirectory,
+        private readonly DatabaseTranslationLoader $databaseTranslationLoader,
+        private readonly LegacyModuleExtractorInterface $legacyModuleExtractor,
+        private readonly LoaderInterface $legacyFileLoader,
+        private readonly string $modulesDirectory,
+        private readonly string $translationsDirectory,
     ) {
-        $this->databaseTranslationLoader = $databaseTranslationLoader;
-        $this->legacyModuleExtractor = $legacyModuleExtractor;
-        $this->legacyFileLoader = $legacyFileLoader;
-        $this->modulesDirectory = $modulesDirectory;
-        $this->translationsDirectory = $translationsDirectory;
     }
 
     public function getModuleCatalogueProvider(ModuleProviderDefinition $providerDefinition): CatalogueLayersProviderInterface

@@ -136,17 +136,11 @@ class CarrierFormDataProvider implements FormDataProviderInterface
         $zones = array_flip($zones);
 
         // We choose the right symbol for the range in function of the ShippingMethod
-        switch ($carrier->getShippingMethod()) {
-            default:
-                $rangeSymbol = '';
-                break;
-            case ShippingMethod::BY_PRICE:
-                $rangeSymbol = $this->currencyDataProvider->getDefaultCurrencySymbol();
-                break;
-            case ShippingMethod::BY_WEIGHT:
-                $rangeSymbol = $this->configuration->get('PS_WEIGHT_UNIT');
-                break;
-        }
+        $rangeSymbol = match ($carrier->getShippingMethod()) {
+            ShippingMethod::BY_PRICE => $this->currencyDataProvider->getDefaultCurrencySymbol(),
+            ShippingMethod::BY_WEIGHT => $this->configuration->get('PS_WEIGHT_UNIT'),
+            default => '',
+        };
 
         // For each zones, we need to get all ranges
         foreach ($carrierRangesCollection->getZones() as $zone) {

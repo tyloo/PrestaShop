@@ -36,17 +36,15 @@ use PrestaShop\PrestaShop\Core\Domain\Hook\ValueObject\HookId;
  */
 class UpdateHookStatusCommand
 {
-    private HookId $id;
+    private readonly HookId $id;
 
-    /**
+    public function __construct(
+        int $id, /**
      * New hook status
      */
-    private bool $active;
-
-    public function __construct(int $id, bool $active)
-    {
+        private readonly bool $active,
+    ) {
         $this->id = new HookId($id);
-        $this->active = $active;
     }
 
     public function getHookId(): HookId

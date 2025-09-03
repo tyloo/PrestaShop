@@ -87,10 +87,8 @@ class CurrencyDataSource implements DataSourceInterface
 
     /**
      * @param string $localeCode
-     *
-     * @return array
      */
-    private function formatCurrenciesData(array $currencyCodes, $localeCode)
+    private function formatCurrenciesData(array $currencyCodes, $localeCode): array
     {
         $currenciesData = [];
         foreach ($currencyCodes as $currencyCode) {

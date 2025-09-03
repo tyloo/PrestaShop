@@ -57,7 +57,7 @@ final class ManufacturerGridDefinitionFactory extends AbstractGridDefinitionFact
 
     public const GRID_ID = 'manufacturer';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

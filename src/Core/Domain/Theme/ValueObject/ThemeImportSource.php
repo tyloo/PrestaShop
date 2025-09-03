@@ -36,19 +36,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ThemeImportSource
 {
     public const FROM_ARCHIVE = 'from_archive';
+
     public const FROM_WEB = 'from_web';
+
     public const FROM_FTP = 'from_ftp';
 
     /**
      * @var string
      */
     private $sourceType;
-
-    /**
-     * @var UploadedFile|string If import source type is "from archive"
-     *                          then $source is uploaded file or path to theme otherwise
-     */
-    private $source;
 
     /**
      * @return ThemeImportSource
@@ -84,12 +80,13 @@ class ThemeImportSource
      *
      * @throws NotSupportedThemeImportSourceException
      */
-    private function __construct($sourceType, $source)
-    {
+    private function __construct(
+        $sourceType,
+        private $source,
+    ) {
         $this->assertSupportedThemeImportSourceTypeSupplied($sourceType);
 
         $this->sourceType = $sourceType;
-        $this->source = $source;
     }
 
     /**

@@ -39,22 +39,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class ProfileFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $bus;
-
-    /**
-     * @var ImageUploaderInterface
-     */
-    private $imageUploader;
-
     public function __construct(
-        CommandBusInterface $bus,
-        ImageUploaderInterface $imageUploader,
+        private readonly CommandBusInterface $bus,
+        private readonly ImageUploaderInterface $imageUploader,
     ) {
-        $this->bus = $bus;
-        $this->imageUploader = $imageUploader;
     }
 
     public function create(array $data)

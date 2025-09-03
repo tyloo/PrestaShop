@@ -41,14 +41,9 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\DataField;
  */
 class UpdateCombinationStockAvailableCommandsBuilder implements CombinationCommandsBuilderInterface
 {
-    /**
-     * @var string
-     */
-    private $modifyAllNamePrefix;
-
-    public function __construct(string $modifyAllNamePrefix)
-    {
-        $this->modifyAllNamePrefix = $modifyAllNamePrefix;
+    public function __construct(
+        private readonly string $modifyAllNamePrefix,
+    ) {
     }
 
     public function buildCommands(CombinationId $combinationId, array $formData, ShopConstraint $singleShopConstraint): array

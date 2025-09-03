@@ -41,16 +41,12 @@ class SetTaxRulesGroupStatusCommand
     private $taxRulesGroupId;
 
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @throws TaxRulesGroupConstraintException
      */
-    public function __construct(int $taxRulesGroupId, bool $expectedStatus)
-    {
-        $this->expectedStatus = $expectedStatus;
+    public function __construct(
+        int $taxRulesGroupId,
+        private readonly bool $expectedStatus,
+    ) {
         $this->taxRulesGroupId = new TaxRulesGroupId($taxRulesGroupId);
     }
 

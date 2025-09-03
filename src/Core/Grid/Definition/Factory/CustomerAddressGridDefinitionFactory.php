@@ -58,7 +58,7 @@ final class CustomerAddressGridDefinitionFactory extends AbstractGridDefinitionF
         $this->backUrl = $currentRequest ? $currentRequest->getUri() : '';
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

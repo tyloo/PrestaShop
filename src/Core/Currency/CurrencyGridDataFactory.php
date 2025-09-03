@@ -38,14 +38,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class CurrencyGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $gridDataFactory;
-
-    public function __construct(GridDataFactoryInterface $gridDataFactory)
-    {
-        $this->gridDataFactory = $gridDataFactory;
+    public function __construct(
+        private readonly GridDataFactoryInterface $gridDataFactory,
+    ) {
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

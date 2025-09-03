@@ -51,19 +51,16 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class TypedRegexValidator extends ConstraintValidator
 {
     public const CATALOG_CHARS = '<>{}';
+
     public const GENERIC_NAME_CHARS = '<>{}';
+
     public const MESSAGE_CHARS = '<>{}';
+
     public const NAME_CHARS = '0-9!<>,;?=+()@#"{}_$%:';
 
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
     public function __construct(
-        ConfigurationInterface $configuration,
+        private readonly ConfigurationInterface $configuration,
     ) {
-        $this->configuration = $configuration;
     }
 
     public function validate($value, Constraint $constraint)

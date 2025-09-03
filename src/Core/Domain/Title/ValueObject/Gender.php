@@ -34,7 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Title\Exception\TitleConstraintException;
 class Gender
 {
     public const TYPE_MALE = 0;
+
     public const TYPE_FEMALE = 1;
+
     public const TYPE_OTHER = 2;
 
     /**

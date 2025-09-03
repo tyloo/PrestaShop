@@ -33,43 +33,18 @@ namespace PrestaShop\PrestaShop\Core\Grid\Search;
 final class SearchCriteria implements SearchCriteriaInterface
 {
     /**
-     * @var array
-     */
-    private $filters;
-
-    /**
-     * @var string|null
-     */
-    private $orderBy;
-
-    /**
-     * @var string|null
-     */
-    private $orderWay;
-
-    /**
-     * @var int|null
-     */
-    private $offset;
-
-    /**
-     * @var int|null
-     */
-    private $limit;
-
-    /**
      * @param string|null $orderBy
      * @param string|null $orderWay
      * @param int|null    $offset
      * @param int|null    $limit
      */
-    public function __construct(array $filters = [], $orderBy = null, $orderWay = null, $offset = null, $limit = null)
-    {
-        $this->filters = $filters;
-        $this->orderBy = $orderBy;
-        $this->orderWay = $orderWay;
-        $this->offset = $offset;
-        $this->limit = $limit;
+    public function __construct(
+        private readonly array $filters = [],
+        private $orderBy = null,
+        private $orderWay = null,
+        private $offset = null,
+        private $limit = null,
+    ) {
     }
 
     public function getOrderBy()

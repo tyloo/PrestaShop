@@ -31,7 +31,7 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
 
 class LayoutCollection extends AbstractTypedCollection implements LayoutCollectionInterface
 {
-    protected function getType()
+    protected function getType(): string
     {
         return LayoutInterface::class;
     }

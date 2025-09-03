@@ -40,18 +40,14 @@ class UpdateOrderStatusCommand
     private $orderId;
 
     /**
-     * @var int
-     */
-    private $newOrderStatusId;
-
-    /**
      * @param int $orderId
      * @param int $newOrderStatusId
      */
-    public function __construct($orderId, $newOrderStatusId)
-    {
+    public function __construct(
+        $orderId,
+        private $newOrderStatusId,
+    ) {
         $this->orderId = new OrderId($orderId);
-        $this->newOrderStatusId = $newOrderStatusId;
     }
 
     /**

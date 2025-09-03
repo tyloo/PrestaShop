@@ -33,30 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Hook;
 final class HookDescription
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
      * @param string $name
      * @param string $title
      * @param string $description
      */
-    public function __construct($name, $title, $description)
-    {
-        $this->name = $name;
-        $this->title = $title;
-        $this->description = $description;
+    public function __construct(
+        private $name,
+        private $title,
+        private $description,
+    ) {
     }
 
     /**

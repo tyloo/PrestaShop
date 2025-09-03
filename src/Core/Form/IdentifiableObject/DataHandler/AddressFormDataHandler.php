@@ -41,20 +41,10 @@ use PrestaShop\PrestaShop\Core\Domain\State\Exception\StateConstraintException;
  */
 final class AddressFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var CustomerDataProvider
-     */
-    private $customerDataProvider;
-
-    public function __construct(CommandBusInterface $commandBus, CustomerDataProvider $customerDataProvider)
-    {
-        $this->commandBus = $commandBus;
-        $this->customerDataProvider = $customerDataProvider;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+        private readonly CustomerDataProvider $customerDataProvider,
+    ) {
     }
 
     /**

@@ -53,6 +53,7 @@ abstract class AbstractBulkCommandHandler
                 if (! $this->supports($id)) {
                     throw new InvalidArgumentException(\sprintf('%s not supported by bulk action', var_export($id, true)));
                 }
+
                 $this->handleSingleAction($id, $command);
             } catch (Throwable $e) {
                 if (! ($e instanceof $exceptionToCatch)) {

@@ -38,25 +38,13 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class CustomerViewedProductQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $contextLanguageId,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly int $contextLanguageId,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextLanguageId = $contextLanguageId;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder

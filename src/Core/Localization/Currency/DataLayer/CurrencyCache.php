@@ -42,19 +42,15 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
  */
 class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayerInterface
 {
-    /**
-     * Symfony Cache component adapter.
-     *
-     * Provides cached CurrencyData objects
-     * Implements PSR-6: Cache Interface (@see http://www.php-fig.org/psr/psr-6/)
-     *
-     * @var AdapterInterface
-     */
-    private $cache;
-
-    public function __construct(AdapterInterface $cache)
-    {
-        $this->cache = $cache;
+    public function __construct(
+        /**
+         * Symfony Cache component adapter.
+         *
+         * Provides cached CurrencyData objects
+         * Implements PSR-6: Cache Interface (@see http://www.php-fig.org/psr/psr-6/)
+         */
+        private readonly AdapterInterface $cache,
+    ) {
     }
 
     public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer)

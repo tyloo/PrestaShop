@@ -30,16 +30,11 @@ namespace PrestaShop\PrestaShop\Core\Util\Url;
 final class UrlFileChecker implements UrlFileCheckerInterface
 {
     /**
-     * @var string
-     */
-    private $fileDir;
-
-    /**
      * @param string $fileDir
      */
-    public function __construct($fileDir)
-    {
-        $this->fileDir = $fileDir;
+    public function __construct(
+        private $fileDir,
+    ) {
     }
 
     /**

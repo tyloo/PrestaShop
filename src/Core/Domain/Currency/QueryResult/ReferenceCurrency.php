@@ -29,50 +29,23 @@ namespace PrestaShop\PrestaShop\Core\Domain\Currency\QueryResult;
 
 class ReferenceCurrency
 {
-    /**
-     * @var string[]
-     */
-    private $names;
-
-    /**
-     * @var string[]
-     */
-    private $symbols;
-
-    /**
-     * @var string[]
-     */
-    private $patterns;
-
-    /**
-     * @var string
-     */
-    private $isoCode;
-
-    /**
-     * @var string|null
-     */
-    private $numericIsoCode;
-
-    /**
-     * @var int
-     */
-    private $precision;
-
     public function __construct(
-        string $isoCode,
-        string $numericIsoCode,
-        array $names,
-        array $symbols,
-        array $patterns,
-        int $precision,
+        private readonly string $isoCode,
+        private readonly string $numericIsoCode,
+        /**
+         * @var string[]
+         */
+        private readonly array $names,
+        /**
+         * @var string[]
+         */
+        private readonly array $symbols,
+        /**
+         * @var string[]
+         */
+        private readonly array $patterns,
+        private readonly int $precision,
     ) {
-        $this->isoCode = $isoCode;
-        $this->numericIsoCode = $numericIsoCode;
-        $this->names = $names;
-        $this->symbols = $symbols;
-        $this->patterns = $patterns;
-        $this->precision = $precision;
     }
 
     /**

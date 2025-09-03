@@ -35,14 +35,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class SortOrdersCollection
 {
-    /**
-     * @var TranslatorInterface the translator
-     */
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
+    public function __construct(
+        /**
+         * @var TranslatorInterface the translator
+         */
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     /**

@@ -33,30 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class ViewedProductInformation
 {
     /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var string
-     */
-    private $productName;
-
-    /**
-     * @var string
-     */
-    private $productUrl;
-
-    /**
      * @param int    $productId
      * @param string $productName
      * @param string $productUrl
      */
-    public function __construct($productId, $productName, $productUrl)
-    {
-        $this->productId = $productId;
-        $this->productName = $productName;
-        $this->productUrl = $productUrl;
+    public function __construct(
+        private $productId,
+        private $productName,
+        private $productUrl,
+    ) {
     }
 
     /**

@@ -42,41 +42,17 @@ class EditableAttributeGroup
     private $attributeGroupId;
 
     /**
-     * @var string[]
-     */
-    private $name;
-
-    /**
-     * @var int[]
-     */
-    private $associatedShopIds;
-
-    /**
-     * @var array
-     */
-    private $publicName;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
      * @param string[] $name
      * @param int[]    $associatedShopIds
      */
     public function __construct(
         int $attributeGroupId,
-        array $name,
-        array $publicName,
-        string $type,
-        array $associatedShopIds,
+        private readonly array $name,
+        private readonly array $publicName,
+        private readonly string $type,
+        private readonly array $associatedShopIds,
     ) {
         $this->attributeGroupId = new AttributeGroupId($attributeGroupId);
-        $this->name = $name;
-        $this->associatedShopIds = $associatedShopIds;
-        $this->publicName = $publicName;
-        $this->type = $type;
     }
 
     public function getAttributeGroupId(): AttributeGroupId

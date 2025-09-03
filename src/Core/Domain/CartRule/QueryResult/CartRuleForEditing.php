@@ -37,50 +37,14 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\CartRuleId;
  */
 class CartRuleForEditing
 {
-    /**
-     * @var CartRuleId
-     */
-    private $cartRuleId;
-
-    /**
-     * @var CartRuleInformationForEditing
-     */
-    private $information;
-
-    /**
-     * @var CartRuleConditionsForEditing
-     */
-    private $conditions;
-
-    /**
-     * @var CartRuleActionForEditing
-     */
-    private $actions;
-
-    /**
-     * @var DateTime|null
-     */
-    private $dateAdd;
-
-    /**
-     * @var DateTime|null
-     */
-    private $dateUpd;
-
     public function __construct(
-        CartRuleId $cartRuleId,
-        CartRuleInformationForEditing $information,
-        CartRuleConditionsForEditing $conditions,
-        CartRuleActionForEditing $actions,
-        ?DateTime $dateAdd,
-        ?DateTime $dateUpd,
+        private readonly CartRuleId $cartRuleId,
+        private readonly CartRuleInformationForEditing $information,
+        private readonly CartRuleConditionsForEditing $conditions,
+        private readonly CartRuleActionForEditing $actions,
+        private readonly ?DateTime $dateAdd,
+        private readonly ?DateTime $dateUpd,
     ) {
-        $this->cartRuleId = $cartRuleId;
-        $this->information = $information;
-        $this->conditions = $conditions;
-        $this->actions = $actions;
-        $this->dateAdd = $dateAdd;
-        $this->dateUpd = $dateUpd;
     }
 
     public function getCartRuleId(): CartRuleId

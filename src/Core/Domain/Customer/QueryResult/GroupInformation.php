@@ -34,29 +34,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
  */
 class GroupInformation
 {
-    /**
-     * @var int
-     */
-    private $groupId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $isDefault;
-
     public function __construct(
-        int $groupId,
-        string $name,
-        bool $isDefault = false,
+        private readonly int $groupId,
+        private readonly string $name,
+        private readonly bool $isDefault = false,
     ) {
-        $this->groupId = $groupId;
-        $this->name = $name;
-        $this->isDefault = $isDefault;
     }
 
     public function getGroupId(): int

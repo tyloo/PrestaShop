@@ -39,32 +39,14 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class ProductLightQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var ProductQueryBuilder
-     */
-    private $productQueryBuilder;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        Configuration $configuration,
-        ProductQueryBuilder $productQueryBuilder,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly Configuration $configuration,
+        private readonly ProductQueryBuilder $productQueryBuilder,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->configuration = $configuration;
-        $this->productQueryBuilder = $productQueryBuilder;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder

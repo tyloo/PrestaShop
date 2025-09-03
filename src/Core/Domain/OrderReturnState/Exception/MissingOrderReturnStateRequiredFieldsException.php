@@ -36,21 +36,18 @@ use Exception;
 class MissingOrderReturnStateRequiredFieldsException extends OrderReturnStateException
 {
     /**
-     * @var string[]
-     */
-    private $missingRequiredFields;
-
-    /**
      * @param string[]       $missingRequiredFields
      * @param string         $message
      * @param int            $code
      * @param Exception|null $previous
      */
-    public function __construct(array $missingRequiredFields, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private readonly array $missingRequiredFields,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->missingRequiredFields = $missingRequiredFields;
     }
 
     /**

@@ -27,37 +27,31 @@
 
 namespace PrestaShop\PrestaShop\Core\Localization\Currency;
 
+use Stringable;
+
 /**
  * Value-object representing an identifier for a currency, "translated" in a given locale (language + region).
  */
-class LocalizedCurrencyId
+class LocalizedCurrencyId implements Stringable
 {
-    /**
-     * ISO 4217 code of the currency.
-     *
-     * @var string
-     */
-    private $currencyCode;
-
-    /**
-     * CurrencyData's data is translated in this locale.
-     * IETF tag (e.g.: fr-FR, en-US...).
-     *
-     * @var string
-     */
-    private $localeCode;
-
     /**
      * @param string $currencyCode ISO 4217 currency code
      * @param string $localeCode   IETF tag (e.g.: fr-FR, en-US...)
      */
-    public function __construct($currencyCode, $localeCode)
-    {
-        $this->currencyCode = $currencyCode;
-        $this->localeCode = $localeCode;
+    public function __construct(
+        /**
+         * ISO 4217 code of the currency.
+         */
+        private $currencyCode,
+        /**
+         * CurrencyData's data is translated in this locale.
+         * IETF tag (e.g.: fr-FR, en-US...).
+         */
+        private $localeCode,
+    ) {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->currencyCode . '-' . $this->localeCode;
     }

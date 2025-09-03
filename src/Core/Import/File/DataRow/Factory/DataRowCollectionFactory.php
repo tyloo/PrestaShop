@@ -36,14 +36,9 @@ use SplFileInfo;
  */
 final class DataRowCollectionFactory implements DataRowCollectionFactoryInterface
 {
-    /**
-     * @var FileReaderInterface
-     */
-    private $fileReader;
-
-    public function __construct(FileReaderInterface $fileReader)
-    {
-        $this->fileReader = $fileReader;
+    public function __construct(
+        private readonly FileReaderInterface $fileReader,
+    ) {
     }
 
     public function buildFromFile(SplFileInfo $file, $maxRowsInCollection = null)

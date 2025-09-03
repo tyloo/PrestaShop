@@ -35,29 +35,14 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 class EditableFeature
 {
     /**
-     * @var FeatureId
-     */
-    private $featureId;
-
-    /**
-     * @var string[]
-     */
-    private $name;
-
-    /**
-     * @var int[]
-     */
-    private $shopAssociationIds;
-
-    /**
      * @param string[] $name
      * @param int[]    $shopAssociationIds
      */
-    public function __construct(FeatureId $featureId, array $name, array $shopAssociationIds)
-    {
-        $this->featureId = $featureId;
-        $this->name = $name;
-        $this->shopAssociationIds = $shopAssociationIds;
+    public function __construct(
+        private readonly FeatureId $featureId,
+        private readonly array $name,
+        private readonly array $shopAssociationIds,
+    ) {
     }
 
     /**

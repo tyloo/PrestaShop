@@ -164,10 +164,6 @@ final class Currency implements CurrencyInterface
             throw new LocalizationException(\sprintf('Unknown symbol type: "%s"', print_r($type, true)));
         }
 
-        if (isset($this->symbols[$type])) {
-            return $this->symbols[$type];
-        }
-
-        return $this->symbols[CurrencyInterface::SYMBOL_TYPE_DEFAULT] ?? null;
+        return $this->symbols[$type] ?? $this->symbols[CurrencyInterface::SYMBOL_TYPE_DEFAULT] ?? null;
     }
 }

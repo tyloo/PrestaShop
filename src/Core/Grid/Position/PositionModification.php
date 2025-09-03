@@ -34,33 +34,15 @@ namespace PrestaShop\PrestaShop\Core\Grid\Position;
 final class PositionModification implements PositionModificationInterface
 {
     /**
-     * @var string|int
-     */
-    private $id;
-
-    /**
-     * @var int
-     */
-    private $oldPosition;
-
-    /**
-     * @var int
-     */
-    private $newPosition;
-
-    /**
      * @param string|int $id
      * @param int        $oldPosition
      * @param int        $newPosition
      */
     public function __construct(
-        $id,
-        $oldPosition,
-        $newPosition,
+        private $id,
+        private $oldPosition,
+        private $newPosition,
     ) {
-        $this->id = $id;
-        $this->oldPosition = $oldPosition;
-        $this->newPosition = $newPosition;
     }
 
     public function getId()

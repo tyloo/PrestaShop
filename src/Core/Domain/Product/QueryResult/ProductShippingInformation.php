@@ -37,75 +37,21 @@ use PrestaShop\Decimal\DecimalNumber;
 class ProductShippingInformation
 {
     /**
-     * @var DecimalNumber
-     */
-    private $width;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $height;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $depth;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $weight;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $additionalShippingCost;
-
-    /**
-     * @var int[]
-     */
-    private $carrierReferences;
-
-    /**
-     * @var int
-     */
-    private $deliveryTimeNotesType;
-
-    /**
-     * @var string[]
-     */
-    private $localizedDeliveryTimeInStockNotes;
-
-    /**
-     * @var string[]
-     */
-    private $localizedDeliveryTimeOutOfStockNotes;
-
-    /**
      * @param int[]    $carrierReferences
      * @param string[] $localizedDeliveryTimeInStockNotes
      * @param string[] $localizedDeliveryTimeOutOfStockNotes
      */
     public function __construct(
-        DecimalNumber $width,
-        DecimalNumber $height,
-        DecimalNumber $depth,
-        DecimalNumber $weight,
-        DecimalNumber $additionalShippingCost,
-        array $carrierReferences,
-        int $deliveryTimeNotesType,
-        array $localizedDeliveryTimeInStockNotes,
-        array $localizedDeliveryTimeOutOfStockNotes,
+        private readonly DecimalNumber $width,
+        private readonly DecimalNumber $height,
+        private readonly DecimalNumber $depth,
+        private readonly DecimalNumber $weight,
+        private readonly DecimalNumber $additionalShippingCost,
+        private readonly array $carrierReferences,
+        private readonly int $deliveryTimeNotesType,
+        private readonly array $localizedDeliveryTimeInStockNotes,
+        private readonly array $localizedDeliveryTimeOutOfStockNotes,
     ) {
-        $this->width = $width;
-        $this->height = $height;
-        $this->depth = $depth;
-        $this->weight = $weight;
-        $this->additionalShippingCost = $additionalShippingCost;
-        $this->carrierReferences = $carrierReferences;
-        $this->deliveryTimeNotesType = $deliveryTimeNotesType;
-        $this->localizedDeliveryTimeInStockNotes = $localizedDeliveryTimeInStockNotes;
-        $this->localizedDeliveryTimeOutOfStockNotes = $localizedDeliveryTimeOutOfStockNotes;
     }
 
     public function getWidth(): DecimalNumber

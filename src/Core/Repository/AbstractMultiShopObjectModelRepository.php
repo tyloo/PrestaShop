@@ -92,9 +92,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
     ): void {
         // Force internal shop list which is used as an override of the one from Context when generating the SQL queries
         // this way we can control exactly which shop is updated
-        $objectModel->id_shop_list = array_map(function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $shopIds);
+        $objectModel->id_shop_list = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
         $this->updateObjectModel($objectModel, $exceptionClass, $errorCode);
     }
@@ -174,18 +172,17 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
         if (empty($shopIds)) {
             throw new InvalidArgumentException('The shopIds should not be empty');
         }
+
         try {
             // Force internal shop list which is used as an override of the one from Context when generating the SQL queries
             // this way we can control exactly which shop is deleted
-            $objectModel->id_shop_list = array_map(static function (ShopId $shopId): int {
-                return $shopId->getValue();
-            }, $shopIds);
+            $objectModel->id_shop_list = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
             if (! $objectModel->delete()) {
                 throw new $exceptionClass(\sprintf('Failed to delete %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
-        } catch (PrestaShopException $e) {
-            throw new CoreException(\sprintf('Error occurred when trying to delete %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException(\sprintf('Error occurred when trying to delete %s #%d [%s]', $objectModel::class, $objectModel->id, $prestaShopException->getMessage()), 0, $prestaShopException);
         }
     }
 
@@ -224,7 +221,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
         try {
             $rows = Db::getInstance()->executeS($query);
 
-            return array_map(fn (array $row) => (int) $row['id_shop'], $rows);
+            return array_map(fn (array $row): int => (int) $row['id_shop'], $rows);
         } catch (PrestaShopDatabaseException|PrestaShopException) {
             return [];
         }
@@ -257,6 +254,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
                 $shopIdsToAdd[] = $shopId;
             }
         }
+
         $shopIdsToRemove = [];
         foreach ($associatedShopIds as $shopId) {
             if (! \in_array($shopId, $updatedShopIds, true)) {

@@ -36,20 +36,17 @@ use Throwable;
 class ImportedThemeAlreadyExistsException extends ThemeException
 {
     /**
-     * @var ThemeName
-     */
-    private $themeName;
-
-    /**
      * @param string         $message
      * @param int            $code
      * @param Throwable|null $previous
      */
-    public function __construct(ThemeName $themeName, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private readonly ThemeName $themeName,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->themeName = $themeName;
     }
 
     /**

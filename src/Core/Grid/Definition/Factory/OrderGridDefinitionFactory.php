@@ -67,71 +67,23 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
     public const GRID_ID = 'order';
 
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderCountriesChoiceProvider;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderStatusesChoiceProvider;
-
-    /**
-     * @var string
-     */
-    private $contextDateFormat;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $multistoreFeature;
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderStatesChoiceProvider;
-
-    /**
-     * @var AccessibilityCheckerInterface
-     */
-    private $printInvoiceAccessibilityChecker;
-
-    /**
-     * @var AccessibilityCheckerInterface
-     */
-    private $printDeliverySlipAccessibilityChecker;
-
-    /**
      * @param string $contextDateFormat
      */
     public function __construct(
         HookDispatcherInterface $dispatcher,
-        ConfigurationInterface $configuration,
-        FormChoiceProviderInterface $orderCountriesChoiceProvider,
-        FormChoiceProviderInterface $orderStatusesChoiceProvider,
-        $contextDateFormat,
-        FeatureInterface $multistoreFeature,
-        AccessibilityCheckerInterface $printInvoiceAccessibilityChecker,
-        AccessibilityCheckerInterface $printDeliverySlipAccessibilityChecker,
-        FormChoiceProviderInterface $orderStatesChoiceProvider,
+        private readonly ConfigurationInterface $configuration,
+        private readonly FormChoiceProviderInterface $orderCountriesChoiceProvider,
+        private readonly FormChoiceProviderInterface $orderStatusesChoiceProvider,
+        private $contextDateFormat,
+        private readonly FeatureInterface $multistoreFeature,
+        private readonly AccessibilityCheckerInterface $printInvoiceAccessibilityChecker,
+        private readonly AccessibilityCheckerInterface $printDeliverySlipAccessibilityChecker,
+        private readonly FormChoiceProviderInterface $orderStatesChoiceProvider,
     ) {
         parent::__construct($dispatcher);
-
-        $this->configuration = $configuration;
-        $this->orderCountriesChoiceProvider = $orderCountriesChoiceProvider;
-        $this->orderStatusesChoiceProvider = $orderStatusesChoiceProvider;
-        $this->contextDateFormat = $contextDateFormat;
-        $this->multistoreFeature = $multistoreFeature;
-        $this->printInvoiceAccessibilityChecker = $printInvoiceAccessibilityChecker;
-        $this->printDeliverySlipAccessibilityChecker = $printDeliverySlipAccessibilityChecker;
-        $this->orderStatesChoiceProvider = $orderStatesChoiceProvider;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

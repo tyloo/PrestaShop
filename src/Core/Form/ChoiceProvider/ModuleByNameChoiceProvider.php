@@ -36,17 +36,18 @@ use PrestaShop\PrestaShop\Core\Module\ModuleInterface;
  */
 final class ModuleByNameChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var ModuleCollection collection of installed modules
-     */
-    private $installedModules;
-
-    public function __construct(ModuleCollection $installedModules)
-    {
-        $this->installedModules = $installedModules;
+    public function __construct(
+        /**
+         * @var ModuleCollection collection of installed modules
+         */
+        private readonly ModuleCollection $installedModules,
+    ) {
     }
 
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         $moduleChoices = [];
 

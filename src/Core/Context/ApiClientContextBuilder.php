@@ -37,11 +37,13 @@ use PrestaShopBundle\Entity\Repository\ApiClientRepository;
 class ApiClientContextBuilder
 {
     private string $clientId;
+
     private ?string $externalIssuer = null;
+
     private ?ApiClientEntity $apiClient = null;
 
     public function __construct(
-        private ApiClientRepository $apiClientRepository,
+        private readonly ApiClientRepository $apiClientRepository,
         private readonly ShopConfigurationInterface $configuration,
     ) {
     }
@@ -50,7 +52,7 @@ class ApiClientContextBuilder
     {
         $apiClientDTO = null;
         $apiClient = $this->getApiClient();
-        if ($apiClient) {
+        if ($apiClient !== null) {
             // Authorized shop should be associated to the client but for no we use the default one
             $defaultShopId = $this->configuration->get('PS_SHOP_DEFAULT', null, ShopConstraint::allShops());
             $apiClientDTO = new ApiClient(

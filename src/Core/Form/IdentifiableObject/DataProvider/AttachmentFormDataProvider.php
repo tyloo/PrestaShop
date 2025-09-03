@@ -36,17 +36,12 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult\EditableAttachment;
  */
 final class AttachmentFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    public function __construct(CommandBusInterface $queryBus)
-    {
-        $this->queryBus = $queryBus;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+    ) {
     }
 
-    public function getData($attachmentId)
+    public function getData($attachmentId): array
     {
         /** @var EditableAttachment $editableAttachment */
         $editableAttachment = $this->queryBus->handle(new GetAttachmentForEditing((int) $attachmentId));

@@ -47,7 +47,7 @@ final class MerchandiseReturnGridDefinitionFactory extends AbstractFilterableGri
 {
     public const GRID_ID = 'merchandise_return';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

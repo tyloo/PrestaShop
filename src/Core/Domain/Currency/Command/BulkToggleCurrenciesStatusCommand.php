@@ -43,17 +43,13 @@ class BulkToggleCurrenciesStatusCommand
     private $currencyIds = [];
 
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @param int[] $currencyIds
      */
-    public function __construct(array $currencyIds, bool $expectedStatus)
-    {
+    public function __construct(
+        array $currencyIds,
+        private readonly bool $expectedStatus,
+    ) {
         $this->setCurrencies($currencyIds);
-        $this->expectedStatus = $expectedStatus;
     }
 
     /**

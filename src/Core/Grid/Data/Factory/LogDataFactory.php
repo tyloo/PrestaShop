@@ -43,21 +43,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class LogDataFactory implements GridDataFactoryInterface
 {
     /**
-     * @var AvatarProviderInterface
-     */
-    private $avatarProvider;
-
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $dataFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @var string
      */
     private const DEFAULT_EMPTY_DATA = '---';
@@ -68,13 +53,10 @@ final class LogDataFactory implements GridDataFactoryInterface
     private $avatars = [];
 
     public function __construct(
-        GridDataFactoryInterface $dataFactory,
-        TranslatorInterface $translator,
-        AvatarProviderInterface $avatarProvider,
+        private readonly GridDataFactoryInterface $dataFactory,
+        private readonly TranslatorInterface $translator,
+        private readonly AvatarProviderInterface $avatarProvider,
     ) {
-        $this->dataFactory = $dataFactory;
-        $this->translator = $translator;
-        $this->avatarProvider = $avatarProvider;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria): GridData
@@ -97,7 +79,7 @@ final class LogDataFactory implements GridDataFactoryInterface
     {
         foreach ($records as $key => $record) {
             $records[$key]['shop_name'] = $this->ShopContextFormatted($record);
-            $records[$key]['language'] = $records[$key]['language'] ?? self::DEFAULT_EMPTY_DATA;
+            $records[$key]['language'] ??= self::DEFAULT_EMPTY_DATA;
             $records[$key]['image'] = $this->getEmployeeAvatar((int) $record['id_employee']);
         }
 

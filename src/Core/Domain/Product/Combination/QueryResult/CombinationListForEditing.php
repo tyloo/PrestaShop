@@ -35,22 +35,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryResult;
 class CombinationListForEditing
 {
     /**
-     * @var EditableCombinationForListing[]
-     */
-    private $combinations;
-
-    /**
-     * @var int
-     */
-    private $totalCombinationsCount;
-
-    /**
      * @param EditableCombinationForListing[] $combinations
      */
-    public function __construct(int $totalCombinationsCount, array $combinations)
-    {
-        $this->totalCombinationsCount = $totalCombinationsCount;
-        $this->combinations = $combinations;
+    public function __construct(
+        private readonly int $totalCombinationsCount,
+        private readonly array $combinations,
+    ) {
     }
 
     /**

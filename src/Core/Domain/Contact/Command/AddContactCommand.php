@@ -42,11 +42,6 @@ class AddContactCommand extends AbstractContactCommand
     private $localisedTitles;
 
     /**
-     * @var bool
-     */
-    private $isMessageSavingEnabled;
-
-    /**
      * @var Email
      */
     private $email;
@@ -67,12 +62,13 @@ class AddContactCommand extends AbstractContactCommand
      *
      * @throws ContactConstraintException
      */
-    public function __construct(array $localisedTitles, $isMessageSavingEnabled)
-    {
+    public function __construct(
+        array $localisedTitles,
+        private $isMessageSavingEnabled,
+    ) {
         $this->assertIsLocalisedTitleValid($localisedTitles);
 
         $this->localisedTitles = $localisedTitles;
-        $this->isMessageSavingEnabled = $isMessageSavingEnabled;
     }
 
     /**

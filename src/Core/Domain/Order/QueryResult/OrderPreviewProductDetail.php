@@ -32,64 +32,16 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
  */
 class OrderPreviewProductDetail
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var string
-     */
-    private $unitPrice;
-
-    /**
-     * @var string
-     */
-    private $totalPrice;
-
-    /**
-     * @var string
-     */
-    private $totalTax;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $location;
-
-    /**
-     * @var int
-     */
-    private $id;
-
     public function __construct(
-        string $name,
-        string $reference,
-        string $location,
-        int $quantity,
-        string $unitPrice,
-        string $totalPrice,
-        string $totalTax,
-        int $id,
+        private readonly string $name,
+        private readonly string $reference,
+        private readonly string $location,
+        private readonly int $quantity,
+        private readonly string $unitPrice,
+        private readonly string $totalPrice,
+        private readonly string $totalTax,
+        private readonly int $id,
     ) {
-        $this->name = $name;
-        $this->quantity = $quantity;
-        $this->unitPrice = $unitPrice;
-        $this->totalPrice = $totalPrice;
-        $this->totalTax = $totalTax;
-        $this->reference = $reference;
-        $this->location = $location;
-        $this->id = $id;
     }
 
     public function getName(): string

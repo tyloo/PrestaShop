@@ -38,22 +38,10 @@ use PrestaShop\PrestaShop\Core\Product\Combination\NameBuilder\CombinationNameBu
 #[AsQueryHandler]
 class SearchProductCombinationsHandler implements SearchProductCombinationsHandlerInterface
 {
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var CombinationNameBuilderInterface
-     */
-    private $combinationNameBuilder;
-
     public function __construct(
-        CombinationRepository $combinationRepository,
-        CombinationNameBuilderInterface $combinationNameBuilder,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly CombinationNameBuilderInterface $combinationNameBuilder,
     ) {
-        $this->combinationRepository = $combinationRepository;
-        $this->combinationNameBuilder = $combinationNameBuilder;
     }
 
     public function handle(SearchProductCombinations $query): ProductCombinationsCollection

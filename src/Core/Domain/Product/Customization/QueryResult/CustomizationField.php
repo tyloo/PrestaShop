@@ -35,45 +35,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Customization\QueryResult;
 class CustomizationField
 {
     /**
-     * @var int
-     */
-    private $customizationFieldId;
-
-    /**
-     * @var int
-     */
-    private $type;
-
-    /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
-     * @var bool
-     */
-    private $required;
-
-    /**
-     * @var bool
-     */
-    private $addedByModule;
-
-    /**
      * @param string[] $localizedNames
      */
     public function __construct(
-        int $customizationFieldId,
-        int $type,
-        array $localizedNames,
-        bool $required,
-        bool $addedByModule,
+        private readonly int $customizationFieldId,
+        private readonly int $type,
+        private readonly array $localizedNames,
+        private readonly bool $required,
+        private readonly bool $addedByModule,
     ) {
-        $this->customizationFieldId = $customizationFieldId;
-        $this->type = $type;
-        $this->localizedNames = $localizedNames;
-        $this->required = $required;
-        $this->addedByModule = $addedByModule;
     }
 
     public function getCustomizationFieldId(): int

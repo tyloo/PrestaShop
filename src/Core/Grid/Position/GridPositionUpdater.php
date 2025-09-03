@@ -35,14 +35,9 @@ use PrestaShop\PrestaShop\Core\Grid\Position\UpdateHandler\PositionUpdateHandler
  */
 final class GridPositionUpdater implements GridPositionUpdaterInterface
 {
-    /**
-     * @var PositionUpdateHandlerInterface
-     */
-    private $updateHandler;
-
-    public function __construct(PositionUpdateHandlerInterface $updateHandler)
-    {
-        $this->updateHandler = $updateHandler;
+    public function __construct(
+        private readonly PositionUpdateHandlerInterface $updateHandler,
+    ) {
     }
 
     public function update(PositionUpdateInterface $positionUpdate)

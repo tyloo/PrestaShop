@@ -41,11 +41,6 @@ class StockModification
     private $deltaQuantity;
 
     /**
-     * @var int|null
-     */
-    private $fixedQuantity;
-
-    /**
      * Builds class using delta quantity (delta means the quantity will be added up to the previous quantity)
      */
     public static function buildDeltaQuantity(int $deltaQuantity): self
@@ -82,11 +77,10 @@ class StockModification
      */
     private function __construct(
         ?int $deltaQuantity,
-        ?int $fixedQuantity,
+        private readonly ?int $fixedQuantity,
     ) {
         $this->assertDeltaQuantityIsNotZero($deltaQuantity);
         $this->deltaQuantity = $deltaQuantity;
-        $this->fixedQuantity = $fixedQuantity;
     }
 
     private function assertDeltaQuantityIsNotZero(?int $quantity): void

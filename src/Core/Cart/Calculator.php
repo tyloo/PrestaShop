@@ -103,6 +103,7 @@ class Calculator
             $currency = new Currency((int) $cart->id_currency);
             $computePrecision = (new ComputingPrecision())->getPrecision($currency->precision);
         }
+
         $this->computePrecision = $computePrecision;
     }
 
@@ -178,6 +179,7 @@ class Calculator
         if ($shippingFees !== null) {
             $amount = $amount->add($this->rounded($shippingFees, $this->computePrecision));
         }
+
         $wrappingFees = $this->fees->getFinalWrappingFees();
         if ($wrappingFees !== null) {
             $amount = $amount->add($this->rounded($wrappingFees, $this->computePrecision));
@@ -231,8 +233,10 @@ class Calculator
                     $initialShippingFees = $this->getFees()->getInitialShippingFees();
                     $amount = $amount->sub($initialShippingFees);
                 }
+
                 $isFreeShippingAppliedToAmount = true;
             }
+
             $amount = $amount->add($cartRule->getDiscountApplied());
         }
 
@@ -245,6 +249,7 @@ class Calculator
             ;
             $allowedMaxDiscount = $allowedMaxDiscount->add($shippingDiscount);
         }
+
         // discount cannot be above total cart price
         if ($amount > $allowedMaxDiscount) {
             $amount = $allowedMaxDiscount;

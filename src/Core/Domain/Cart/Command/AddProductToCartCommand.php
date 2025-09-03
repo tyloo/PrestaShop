@@ -58,11 +58,6 @@ class AddProductToCartCommand
     private $combinationId;
 
     /**
-     * @var array key-value pairs where key is customizationFieldId and value is customization field value
-     */
-    private $customizationsByFieldIds;
-
-    /**
      * @throws CartConstraintException
      */
     public function __construct(
@@ -70,14 +65,16 @@ class AddProductToCartCommand
         int $productId,
         int $quantity,
         ?int $combinationId = null,
-        array $customizationsByFieldIds = [],
+        /**
+         * @var array key-value pairs where key is customizationFieldId and value is customization field value
+         */
+        private readonly array $customizationsByFieldIds = [],
     ) {
         $this->assertQtyIsPositive($quantity);
         $this->setCombinationId($combinationId);
         $this->cartId = new CartId($cartId);
         $this->productId = new ProductId($productId);
         $this->quantity = $quantity;
-        $this->customizationsByFieldIds = $customizationsByFieldIds;
     }
 
     public function getCartId(): CartId

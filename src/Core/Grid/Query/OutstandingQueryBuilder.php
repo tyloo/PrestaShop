@@ -36,50 +36,20 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 
 final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $criteriaApplicator;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
     public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
-        int $contextLangId,
-        array $contextShopIds,
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
+        private readonly int $contextLangId,
+        private readonly array $contextShopIds,
     ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->contextLangId = $contextLangId;
-        $this->criteriaApplicator = $criteriaApplicator;
-        $this->contextShopIds = $contextShopIds;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
         $qb = $this->getBaseQueryBuilder($searchCriteria)
             ->addSelect('oi.id_order_invoice AS id_invoice, oi.date_add')
-            ->addSelect('CONCAT(LEFT(c.`firstname`, 1), \'. \' , c.`lastname`) AS customer')
+            ->addSelect("CONCAT(LEFT(c.`firstname`, 1), '. ' , c.`lastname`) AS customer")
             ->addSelect('c.company, rl.name AS risk, r.color')
             ->addSelect('c.outstanding_allow_amount')
             ->addSelect('c.id_customer, o.id_order')
@@ -127,7 +97,7 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
         ];
 
         $likeComparisonFilters = [
-            'customer' => 'CONCAT(LEFT(c.firstname, 1), \'. \' , c.lastname)',
+            'customer' => "CONCAT(LEFT(c.firstname, 1), '. ' , c.lastname)",
             'company' => 'c.company',
         ];
 
@@ -139,7 +109,7 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
             if (isset($strictComparisonFilters[$filterName])) {
                 $alias = $strictComparisonFilters[$filterName];
 
-                $qb->andWhere("$alias = :$filterName");
+                $qb->andWhere(\sprintf('%s = :%s', $alias, $filterName));
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
@@ -148,7 +118,7 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
             if (isset($likeComparisonFilters[$filterName])) {
                 $alias = $likeComparisonFilters[$filterName];
 
-                $qb->andWhere("$alias LIKE :$filterName");
+                $qb->andWhere(\sprintf('%s LIKE :%s', $alias, $filterName));
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
@@ -160,14 +130,14 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
                 if (isset($filterValue['from'])) {
                     $name = \sprintf('%s_from', $filterName);
 
-                    $qb->andWhere("$alias >= :$name");
+                    $qb->andWhere(\sprintf('%s >= :%s', $alias, $name));
                     $qb->setParameter($name, \sprintf('%s %s', $filterValue['from'], '0:0:0'));
                 }
 
                 if (isset($filterValue['to'])) {
                     $name = \sprintf('%s_to', $filterName);
 
-                    $qb->andWhere("$alias <= :$name");
+                    $qb->andWhere(\sprintf('%s <= :%s', $alias, $name));
                     $qb->setParameter($name, \sprintf('%s %s', $filterValue['to'], '23:59:59'));
                 }
 
@@ -181,7 +151,7 @@ final class OutstandingQueryBuilder implements DoctrineQueryBuilderInterface
         $sortableFields = [
             'id_invoice' => 'oi.id_order_invoice',
             'date_add' => 'oi.date_add',
-            'customer' => 'CONCAT(LEFT(c.firstname, 1), \'. \' , c.lastname)',
+            'customer' => "CONCAT(LEFT(c.firstname, 1), '. ' , c.lastname)",
             'company' => 'c.company',
             'risk' => 'r.id_risk',
             'outstanding_allow_amount' => 'c.outstanding_allow_amount',

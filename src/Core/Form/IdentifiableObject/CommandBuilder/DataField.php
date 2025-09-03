@@ -41,9 +41,13 @@ use Symfony\Component\PropertyAccess\PropertyPath;
 class DataField
 {
     public const TYPE_STRING = 'string';
+
     public const TYPE_BOOL = 'bool';
+
     public const TYPE_INT = 'int';
+
     public const TYPE_ARRAY = 'array';
+
     public const TYPE_DATETIME = 'datetime';
 
     public const ACCEPTED_TYPES = [
@@ -82,9 +86,11 @@ class DataField
         if (! \in_array($type, static::ACCEPTED_TYPES, true)) {
             throw new DataFieldException(\sprintf('Invalid type "%s" used, only accepted values are: %s', $type, implode(',', static::ACCEPTED_TYPES)));
         }
+
         if (\func_num_args() > 2) {
             $this->setDefaultValue($defaultValue);
         }
+
         $this->propertyPath = new PropertyPath($path);
         $this->type = $type;
     }
@@ -112,6 +118,7 @@ class DataField
         if ($this->hasDefaultValue()) {
             return $this->defaultValue;
         }
+
         throw new DataFieldException('Cannot return undefined default value');
     }
 

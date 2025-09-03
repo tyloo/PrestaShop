@@ -37,11 +37,6 @@ use PrestaShop\PrestaShop\Core\Domain\Store\ValueObject\StoreId;
 class BulkUpdateStoreStatusCommand
 {
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @var array<int, StoreId>
      */
     private $storeIds;
@@ -49,10 +44,11 @@ class BulkUpdateStoreStatusCommand
     /**
      * @param array<int, int> $storeIds
      */
-    public function __construct(bool $expectedStatus, array $storeIds)
-    {
+    public function __construct(
+        private readonly bool $expectedStatus,
+        array $storeIds,
+    ) {
         $this->setStoreIds($storeIds);
-        $this->expectedStatus = $expectedStatus;
     }
 
     /**

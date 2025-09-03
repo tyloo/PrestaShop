@@ -33,31 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Import\Configuration;
 final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
 {
     /**
-     * @var bool
-     */
-    private $shouldValidateData;
-
-    /**
-     * @var int
-     */
-    private $offset;
-
-    /**
-     * @var int
-     */
-    private $limit;
-
-    /**
-     * @var array import entity fields mapping
-     */
-    private $entityFields;
-
-    /**
-     * @var array
-     */
-    private $sharedData = [];
-
-    /**
      * @var int
      */
     private $processedRows = 0;
@@ -98,17 +73,15 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
      * @param int  $limit
      */
     public function __construct(
-        $shouldValidateData,
-        $offset,
-        $limit,
-        array $sharedData,
-        array $entityFields,
+        private $shouldValidateData,
+        private $offset,
+        private $limit,
+        private array $sharedData,
+        /**
+         * @var array import entity fields mapping
+         */
+        private readonly array $entityFields,
     ) {
-        $this->shouldValidateData = $shouldValidateData;
-        $this->offset = $offset;
-        $this->limit = $limit;
-        $this->entityFields = $entityFields;
-        $this->sharedData = $sharedData;
     }
 
     public function shouldValidateData()

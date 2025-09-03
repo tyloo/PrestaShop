@@ -33,12 +33,12 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\Exception\CartRuleConstraintExcep
 
 class RestrictionRuleGroup
 {
-    private int $requiredQuantityInCart;
+    private readonly int $requiredQuantityInCart;
 
     /**
      * @var RestrictionRule[]
      */
-    private array $restrictionRules;
+    private readonly array $restrictionRules;
 
     /**
      * @param RestrictionRule[] $restrictionRules

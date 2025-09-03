@@ -43,7 +43,7 @@ final class BackupDefinitionFactory extends AbstractGridDefinitionFactory
     use BulkDeleteActionTrait;
     use DeleteActionTrait;
 
-    protected function getId()
+    protected function getId(): string
     {
         return 'backup';
     }

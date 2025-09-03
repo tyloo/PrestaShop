@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SeverityLevelColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'severity_level';
     }

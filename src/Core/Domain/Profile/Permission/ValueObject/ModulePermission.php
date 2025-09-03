@@ -34,7 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\Permission\Exception\InvalidPermis
 class ModulePermission implements PermissionInterface
 {
     public const VIEW = 'view';
+
     public const CONFIGURE = 'configure';
+
     public const UNINSTALL = 'uninstall';
 
     public const SUPPORTED_PERMISSIONS = [

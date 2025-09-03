@@ -47,16 +47,15 @@ class ProductFeatureValue
      */
     private $featureValueId;
 
-    /**
+    public function __construct(
+        int $featureId,
+        ?int $featureValueId = null, /**
      * @var string[]|null
      */
-    private $localizedCustomValues;
-
-    public function __construct(int $featureId, ?int $featureValueId = null, ?array $localizedCustomValues = null)
-    {
+        private readonly ?array $localizedCustomValues = null,
+    ) {
         $this->featureId = new FeatureId($featureId);
         $this->featureValueId = $featureValueId !== null ? new FeatureValueId($featureValueId) : null;
-        $this->localizedCustomValues = $localizedCustomValues;
     }
 
     public function getFeatureId(): FeatureId

@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\Exception\AliasConstraintException;
 class SearchTerm
 {
     public function __construct(
-        private string $searchTerm,
+        private readonly string $searchTerm,
     ) {
         $this->assertStringNotEmpty($searchTerm);
     }

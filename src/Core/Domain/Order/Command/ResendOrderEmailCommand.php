@@ -36,21 +36,12 @@ class ResendOrderEmailCommand
      */
     private $orderId;
 
-    /**
-     * @var int
-     */
-    private $orderStatusId;
-
-    /**
-     * @var int
-     */
-    private $orderHistoryId;
-
-    public function __construct(int $orderId, int $orderStatusId, int $orderHistoryId)
-    {
+    public function __construct(
+        int $orderId,
+        private readonly int $orderStatusId,
+        private readonly int $orderHistoryId,
+    ) {
         $this->orderId = new OrderId($orderId);
-        $this->orderStatusId = $orderStatusId;
-        $this->orderHistoryId = $orderHistoryId;
     }
 
     public function getOrderId(): OrderId

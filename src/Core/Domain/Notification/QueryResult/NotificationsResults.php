@@ -33,16 +33,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Notification\QueryResult;
 class NotificationsResults
 {
     /**
-     * @var NotificationsResult[]
-     */
-    private $notifications = [];
-
-    /**
      * @param NotificationsResult[] $notifications
      */
-    public function __construct(array $notifications)
-    {
-        $this->notifications = $notifications;
+    public function __construct(
+        private readonly array $notifications,
+    ) {
     }
 
     /**
@@ -53,7 +48,10 @@ class NotificationsResults
         return $this->notifications;
     }
 
-    public function getNotificationsResultsForJS()
+    /**
+     * @return array{total: mixed, results: list<array{id_order: mixed, id_customer: mixed, id_customer_message: mixed, id_customer_thread: mixed, total_paid: mixed, carrier: mixed, iso_code: mixed, company: mixed, status: mixed, customer_name: mixed, date_add: mixed, customer_view_url: mixed, customer_thread_view_url: mixed, order_view_url: mixed}>}[]
+     */
+    public function getNotificationsResultsForJS(): array
     {
         $response = [];
         foreach ($this->getNotificationsResults() as $element) {
@@ -76,6 +74,7 @@ class NotificationsResults
                     'order_view_url' => $notification->getOrderViewUrl(),
                 ];
             }
+
             $response[$element->getType()->getValue()] = [
                 'total' => $element->getTotal(),
                 'results' => $notifications,

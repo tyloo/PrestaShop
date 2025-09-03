@@ -44,24 +44,16 @@ class Formatter
      * They are meant to be replaced by the correct localized symbols in the number formatting process.
      */
     public const CURRENCY_SYMBOL_PLACEHOLDER = '¤';
+
     public const DECIMAL_SEPARATOR_PLACEHOLDER = '.';
+
     public const GROUP_SEPARATOR_PLACEHOLDER = ',';
+
     public const MINUS_SIGN_PLACEHOLDER = '-';
+
     public const PERCENT_SYMBOL_PLACEHOLDER = '%';
+
     public const PLUS_SIGN_PLACEHOLDER = '+';
-
-    /**
-     * @var string The wanted rounding mode when formatting numbers.
-     *             Cf. PrestaShop\Decimal\Operation\Rounding::ROUND_* values
-     */
-    protected $roundingMode;
-
-    /**
-     * @var string Numbering system to use when formatting numbers
-     *
-     * @see http://cldr.unicode.org/translation/numbering-systems
-     */
-    protected $numberingSystem;
 
     /**
      * Number specification to be used when formatting a number.
@@ -79,10 +71,13 @@ class Formatter
      *
      *                             @see http://cldr.unicode.org/translation/numbering-systems
      */
-    public function __construct($roundingMode, $numberingSystem)
-    {
-        $this->roundingMode = $roundingMode;
-        $this->numberingSystem = $numberingSystem;
+    public function __construct(
+        protected $roundingMode,
+        /**
+         * @see http://cldr.unicode.org/translation/numbering-systems
+         */
+        protected $numberingSystem,
+    ) {
     }
 
     /**
@@ -105,8 +100,8 @@ class Formatter
 
         try {
             $decimalNumber = $this->prepareNumber($number);
-        } catch (SPLInvalidArgumentException $e) {
-            throw new LocalizationException('Invalid $number parameter: ' . $e->getMessage(), 0, $e);
+        } catch (SPLInvalidArgumentException $splInvalidArgumentException) {
+            throw new LocalizationException('Invalid $number parameter: ' . $splInvalidArgumentException->getMessage(), 0, $splInvalidArgumentException);
         }
 
         /*
@@ -192,16 +187,19 @@ class Formatter
             // Reverse the major digits, since they are grouped from the right.
             $majorDigits = array_reverse(str_split($majorDigits));
             // Group the major digits.
-            $groups = $groupsDigits = [];
+            $groups = [];
+            $groupsDigits = [];
             $groups[] = array_splice($majorDigits, 0, $this->numberSpecification->getPrimaryGroupSize());
             while (! empty($majorDigits)) {
                 $groups[] = array_splice($majorDigits, 0, $this->numberSpecification->getSecondaryGroupSize());
             }
+
             // Reverse back the digits and the groups
             $groups = array_reverse($groups);
             foreach ($groups as $group) {
                 $groupsDigits[] = implode('', array_reverse($group));
             }
+
             // Reconstruct the major digits.
             $majorDigits = implode(self::GROUP_SEPARATOR_PLACEHOLDER, $groupsDigits);
         }

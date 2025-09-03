@@ -33,16 +33,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Configuration\Command;
 class SwitchDebugModeCommand
 {
     /**
-     * @var bool
-     */
-    private $enableDebugMode;
-
-    /**
      * @param bool $enableDebugMode
      */
-    public function __construct($enableDebugMode)
-    {
-        $this->enableDebugMode = $enableDebugMode;
+    public function __construct(
+        private $enableDebugMode,
+    ) {
     }
 
     /**

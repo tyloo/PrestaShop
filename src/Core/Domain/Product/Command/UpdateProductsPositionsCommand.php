@@ -87,14 +87,13 @@ class UpdateProductsPositionsCommand
 
     private function setPositions(array $positions): void
     {
-        $this->positions = array_map(static function (array $position): RowPosition {
+        $this->positions = array_map(static fn (array $position): RowPosition =>
             // We use -1 as the default fallback because it's not a valid value in the VO the idea is to trigger
             // an exception via the VO when the field is not specified.
-            return new RowPosition(
+            new RowPosition(
                 (int) ($position['rowId'] ?? -1),
                 (int) ($position['oldPosition'] ?? -1),
                 (int) ($position['newPosition'] ?? -1)
-            );
-        }, $positions);
+            ), $positions);
     }
 }

@@ -43,14 +43,9 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\DataField;
  */
 class ProductStockAvailableCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * @var string
-     */
-    private $modifyAllNamePrefix;
-
-    public function __construct(string $modifyAllNamePrefix)
-    {
-        $this->modifyAllNamePrefix = $modifyAllNamePrefix;
+    public function __construct(
+        private readonly string $modifyAllNamePrefix,
+    ) {
     }
 
     /**

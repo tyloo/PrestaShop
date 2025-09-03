@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\ValueObject\SearchTerm;
  */
 class DeleteSearchTermAliasesCommand
 {
-    private SearchTerm $searchTerm;
+    private readonly SearchTerm $searchTerm;
 
     public function __construct(string $searchTerm)
     {

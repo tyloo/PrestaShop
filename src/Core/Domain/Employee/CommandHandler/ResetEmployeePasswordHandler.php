@@ -42,7 +42,7 @@ class ResetEmployeePasswordHandler implements ResetEmployeePasswordHandlerInterf
 
     public function handle(ResetEmployeePasswordCommand $command): void
     {
-        if (! ($employee = $this->employeePasswordResetter->getEmployeeByValidResetPasswordToken($command->getResetToken()))) {
+        if (($employee = $this->employeePasswordResetter->getEmployeeByValidResetPasswordToken($command->getResetToken())) === null) {
             throw new InvalidResetPasswordTokenException();
         }
 

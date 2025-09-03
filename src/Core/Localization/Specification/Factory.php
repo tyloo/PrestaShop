@@ -163,7 +163,7 @@ class Factory
      * @throws LocalizationException
      *                               If passed data is invalid
      */
-    protected function computeNumberSymbolLists($allNumberSymbolsData)
+    protected function computeNumberSymbolLists($allNumberSymbolsData): array
     {
         $symbolsLists = [];
         foreach ($allNumberSymbolsData as $numberingSystem => $numberSymbolsData) {
@@ -243,7 +243,7 @@ class Factory
         $groups = $this->getPatternGroups($pattern);
         $nbGroups = \count($groups);
 
-        return \strlen($groups[$nbGroups - 1]);
+        return \strlen((string) $groups[$nbGroups - 1]);
     }
 
     /**
@@ -261,15 +261,15 @@ class Factory
         $nbGroups = \count($groups);
 
         if ($nbGroups > 2) {
-            return \strlen($groups[$nbGroups - 2]);
+            return \strlen((string) $groups[$nbGroups - 2]);
         }
 
-        return \strlen($groups[$nbGroups - 1]);
+        return \strlen((string) $groups[$nbGroups - 1]);
     }
 
     protected function getPatternGroups($pattern)
     {
-        $parts = explode('.', $pattern);
+        $parts = explode('.', (string) $pattern);
         $integerPart = $parts[0];
 
         return explode(',', $integerPart);

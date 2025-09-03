@@ -37,18 +37,16 @@ use Throwable;
 class CannotUnlinkAttachmentException extends CannotUnlinkFileException
 {
     /**
-     * @var string
-     */
-    private $filePath = '';
-
-    /**
      * @param string $message
      * @param int    $code
      */
-    public function __construct($message = '', $code = 0, ?Throwable $previous = null, string $filePath = '')
-    {
+    public function __construct(
+        $message = '',
+        $code = 0,
+        ?Throwable $previous = null,
+        private readonly string $filePath = '',
+    ) {
         parent::__construct($message, $code, $previous);
-        $this->filePath = $filePath;
     }
 
     public function getFilePath(): string

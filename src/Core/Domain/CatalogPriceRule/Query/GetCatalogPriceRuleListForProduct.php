@@ -46,24 +46,16 @@ class GetCatalogPriceRuleListForProduct
     private $langId;
 
     /**
-     * @var int|null
-     */
-    private $limit;
-
-    /**
-     * @var int|null
-     */
-    private $offset;
-
-    /**
      * @throws ProductConstraintException
      */
-    public function __construct(int $productId, int $langId, ?int $limit = null, ?int $offset = null)
-    {
+    public function __construct(
+        int $productId,
+        int $langId,
+        private readonly ?int $limit = null,
+        private readonly ?int $offset = null,
+    ) {
         $this->productId = new ProductId($productId);
         $this->langId = new LanguageId($langId);
-        $this->limit = $limit;
-        $this->offset = $offset;
     }
 
     public function getProductId(): ProductId

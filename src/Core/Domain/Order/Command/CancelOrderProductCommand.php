@@ -32,20 +32,19 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
 class CancelOrderProductCommand
 {
     /**
-     * @var array
-     *
-     * key: orderDetailId, value: quantity
-     */
-    private $cancelledProducts;
-
-    /**
      * @var OrderId
      */
     private $orderId;
 
-    public function __construct(array $cancelledProducts, int $orderId)
-    {
-        $this->cancelledProducts = $cancelledProducts;
+    public function __construct(
+        /**
+         * @var array
+         *
+         * key: orderDetailId, value: quantity
+         */
+        private readonly array $cancelledProducts,
+        int $orderId,
+    ) {
         $this->orderId = new OrderId($orderId);
     }
 

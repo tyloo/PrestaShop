@@ -36,14 +36,22 @@ use PrestaShop\PrestaShop\Core\Domain\ImageSettings\ValueObject\ImageTypeId;
  */
 class EditImageTypeCommand
 {
-    private ImageTypeId $imageTypeId;
+    private readonly ImageTypeId $imageTypeId;
+
     private ?string $name = null;
+
     private ?int $width = null;
+
     private ?int $height = null;
+
     private ?bool $products = null;
+
     private ?bool $categories = null;
+
     private ?bool $manufacturers = null;
+
     private ?bool $suppliers = null;
+
     private ?bool $stores = null;
 
     public function __construct(int $imageTypeId)

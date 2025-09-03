@@ -34,29 +34,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
  */
 class ProductPreview
 {
-    /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $image;
-
     public function __construct(
-        int $productId,
-        string $name,
-        string $imageUrl,
+        private readonly int $productId,
+        private readonly string $name,
+        private readonly string $image,
     ) {
-        $this->productId = $productId;
-        $this->name = $name;
-        $this->image = $imageUrl;
     }
 
     public function getProductId(): int

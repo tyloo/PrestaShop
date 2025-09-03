@@ -45,33 +45,20 @@ class UpdateCategoryPositionCommand
     private $parentCategoryId;
 
     /**
-     * @var int
-     */
-    private $way;
-
-    /**
-     * @var array
-     */
-    private $positions;
-
-    /**
-     * @var bool
-     */
-    private $foundFirst;
-
-    /**
      * @param int  $categoryId
      * @param int  $parentCategoryId
      * @param int  $way
      * @param bool $foundFirst
      */
-    public function __construct($categoryId, $parentCategoryId, $way, array $positions, $foundFirst)
-    {
+    public function __construct(
+        $categoryId,
+        $parentCategoryId,
+        private $way,
+        private readonly array $positions,
+        private $foundFirst,
+    ) {
         $this->categoryId = new CategoryId($categoryId);
         $this->parentCategoryId = new CategoryId($parentCategoryId);
-        $this->way = $way;
-        $this->positions = $positions;
-        $this->foundFirst = $foundFirst;
     }
 
     /**

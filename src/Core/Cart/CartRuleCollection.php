@@ -36,6 +36,7 @@ class CartRuleCollection implements Iterator
      * @var CartRuleData[]
      */
     protected $cartRules = [];
+
     protected $iteratorPosition = 0;
 
     public function addCartRule(CartRuleData $cartRule)

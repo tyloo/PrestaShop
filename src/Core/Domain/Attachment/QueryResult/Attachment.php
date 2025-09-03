@@ -32,20 +32,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult;
  */
 class Attachment
 {
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    public function __construct(string $path, string $name)
-    {
-        $this->path = $path;
-        $this->name = $name;
+    public function __construct(
+        private readonly string $path,
+        private readonly string $name,
+    ) {
     }
 
     public function getPath(): string

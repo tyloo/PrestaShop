@@ -55,10 +55,8 @@ final class CommandDefinitionParser
      * Checks whether the command is of type Query or Command by provided name
      *
      * @param string $commandName
-     *
-     * @return string
      */
-    private function parseType($commandName)
+    private function parseType($commandName): string
     {
         if (strpos($commandName, '\Command\\')) {
             return 'Command';
@@ -87,11 +85,11 @@ final class CommandDefinitionParser
         /**
          * Replaces multiple spaces to single space
          */
-        $commandName = preg_replace('/ +/', ' ', $commandName);
+        $commandName = preg_replace('/ +/', ' ', (string) $commandName);
 
         /*
          * Strips whitespace from the beginning and end
          */
-        return trim($commandName);
+        return trim((string) $commandName);
     }
 }

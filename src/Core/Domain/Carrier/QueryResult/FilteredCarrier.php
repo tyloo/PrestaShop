@@ -32,17 +32,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult;
  */
 class FilteredCarrier
 {
-    /**
-     * @var ProductSummary[]
-     */
-    private array $products;
-
-    private CarrierSummary $carrier;
-
-    public function __construct(array $products, CarrierSummary $carrier)
-    {
-        $this->products = $products;
-        $this->carrier = $carrier;
+    public function __construct(
+        /**
+         * @var ProductSummary[]
+         */
+        private readonly array $products,
+        private readonly CarrierSummary $carrier,
+    ) {
     }
 
     /**

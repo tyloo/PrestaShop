@@ -49,7 +49,7 @@ final class DateTimeColumn extends AbstractColumn
         '-' => '‑', // convert hyphens into non-breaking hyphens
     ];
 
-    public function getType()
+    public function getType(): string
     {
         return 'date_time';
     }
@@ -73,9 +73,7 @@ final class DateTimeColumn extends AbstractColumn
             ->setAllowedTypes('clickable', 'bool')
             ->setNormalizer(
                 'format',
-                function (Options $options, $value) {
-                    return strtr($value, self::FORMAT_NORMALIZATION_MAP);
-                }
+                fn (Options $options, $value): string => strtr($value, self::FORMAT_NORMALIZATION_MAP)
             );
     }
 }

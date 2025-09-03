@@ -31,17 +31,12 @@ use PrestaShop\PrestaShop\Adapter\EntityMetaDataRetriever;
 
 class EntityManager
 {
-    private $db;
-    private $configuration;
-
     private $entityMetaData = [];
 
     public function __construct(
-        DatabaseInterface $db,
-        \PrestaShop\PrestaShop\Core\ConfigurationInterface $configuration,
+        private readonly DatabaseInterface $db,
+        private readonly \PrestaShop\PrestaShop\Core\ConfigurationInterface $configuration,
     ) {
-        $this->db = $db;
-        $this->configuration = $configuration;
     }
 
     /**
@@ -67,7 +62,7 @@ class EntityManager
         }
 
         if (! $repositoryClass) {
-            $repositoryClass = '\\PrestaShop\\PrestaShop\\Core\\Foundation\\Database\\EntityRepository';
+            $repositoryClass = EntityRepository::class;
         }
 
         $repository = new $repositoryClass(

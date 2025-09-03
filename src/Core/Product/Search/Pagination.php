@@ -106,14 +106,11 @@ class Pagination
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function buildLinks()
+    public function buildLinks(): array
     {
         $links = [];
 
-        $addPageLink = function ($page) use (&$links) {
+        $addPageLink = function ($page) use (&$links): void {
             static $lastPage = null;
 
             if ($page < 1 || $page > $this->getPagesCount()) {

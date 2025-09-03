@@ -38,22 +38,12 @@ use PrestaShop\PrestaShop\Core\Domain\Webservice\ValueObject\WebserviceKeyId;
 final class WebserviceKeyFormDataHandler implements FormDataHandlerInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
      * @param int $contextShopId
      */
-    public function __construct(CommandBusInterface $commandBus, $contextShopId)
-    {
-        $this->commandBus = $commandBus;
-        $this->contextShopId = $contextShopId;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+        private $contextShopId,
+    ) {
     }
 
     public function create(array $data)

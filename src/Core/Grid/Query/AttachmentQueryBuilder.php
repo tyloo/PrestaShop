@@ -36,26 +36,13 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var string
-     */
-    private $employeeIdLang;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        string $employeeIdLang,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly string $employeeIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->employeeIdLang = $employeeIdLang;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder

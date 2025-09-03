@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\ApiClient\ValueObject\ApiClientId;
 
 class EditApiClientCommand
 {
-    private ApiClientId $apiClientId;
+    private readonly ApiClientId $apiClientId;
 
     private ?string $clientId = null;
 
@@ -116,6 +116,7 @@ class EditApiClientCommand
         if (\count($scopes) !== \count(array_filter($scopes, 'is_string'))) {
             throw new ApiClientConstraintException('Expected list of non empty string for scopes', ApiClientConstraintException::INVALID_SCOPES);
         }
+
         $this->scopes = $scopes;
 
         return $this;

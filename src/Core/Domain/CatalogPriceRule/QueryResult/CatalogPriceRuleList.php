@@ -35,24 +35,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\QueryResult;
 class CatalogPriceRuleList
 {
     /**
-     * @var CatalogPriceRuleForListing[]
-     */
-    private $catalogPriceRules;
-
-    /**
-     * @var int
-     */
-    private $totalCount;
-
-    /**
      * @param CatalogPriceRuleForListing[] $catalogPriceRules
      */
     public function __construct(
-        array $catalogPriceRules,
-        int $totalCount,
+        private readonly array $catalogPriceRules,
+        private readonly int $totalCount,
     ) {
-        $this->catalogPriceRules = $catalogPriceRules;
-        $this->totalCount = $totalCount;
     }
 
     /**

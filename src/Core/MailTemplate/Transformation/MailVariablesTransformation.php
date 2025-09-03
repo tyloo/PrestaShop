@@ -39,19 +39,15 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 class MailVariablesTransformation extends AbstractTransformation
 {
     /**
-     * @var array
-     */
-    private $replaceVariables;
-
-    /**
      * @param string $type
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($type, array $replaceVariables = [])
-    {
+    public function __construct(
+        $type,
+        private readonly array $replaceVariables = [],
+    ) {
         parent::__construct($type);
-        $this->replaceVariables = $replaceVariables;
     }
 
     public function apply($templateContent, array $templateVariables)
@@ -63,6 +59,7 @@ class MailVariablesTransformation extends AbstractTransformation
                 $templateVariables['templateVars']
             );
         }
+
         if (! empty($replaceVariables)) {
             $templateContent = strtr($templateContent, $replaceVariables);
         }

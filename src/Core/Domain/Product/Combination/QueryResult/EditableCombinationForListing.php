@@ -38,73 +38,19 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CombinationAttributeIn
 class EditableCombinationForListing
 {
     /**
-     * @var int
-     */
-    private $combinationId;
-
-    /**
-     * @var CombinationAttributeInformation[]
-     */
-    private $attributesInformation;
-
-    /**
-     * @var string
-     */
-    private $combinationName;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var bool
-     */
-    private $default;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $impactOnPrice;
-
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var string
-     */
-    private $imageUrl;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $ecoTax;
-
-    /**
      * @param CombinationAttributeInformation[] $attributesInformation
      */
     public function __construct(
-        int $combinationId,
-        string $combinationName,
-        string $reference,
-        array $attributesInformation,
-        bool $default,
-        DecimalNumber $impactOnPrice,
-        int $quantity,
-        string $imageUrl,
-        DecimalNumber $ecoTax,
+        private readonly int $combinationId,
+        private readonly string $combinationName,
+        private readonly string $reference,
+        private readonly array $attributesInformation,
+        private readonly bool $default,
+        private readonly DecimalNumber $impactOnPrice,
+        private readonly int $quantity,
+        private readonly string $imageUrl,
+        private readonly DecimalNumber $ecoTax,
     ) {
-        $this->combinationId = $combinationId;
-        $this->attributesInformation = $attributesInformation;
-        $this->combinationName = $combinationName;
-        $this->reference = $reference;
-        $this->default = $default;
-        $this->impactOnPrice = $impactOnPrice;
-        $this->quantity = $quantity;
-        $this->imageUrl = $imageUrl;
-        $this->ecoTax = $ecoTax;
     }
 
     public function getCombinationId(): int

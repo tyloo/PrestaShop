@@ -35,20 +35,17 @@ use Exception;
 class BulkDeleteAddressException extends AddressException
 {
     /**
-     * @var int[]
-     */
-    private $addressIds;
-
-    /**
      * @param int[]  $addressIds
      * @param string $message
      * @param int    $code
      */
-    public function __construct(array $addressIds, $message = '', $code = 0, ?Exception $previous = null)
-    {
+    public function __construct(
+        private readonly array $addressIds,
+        $message = '',
+        $code = 0,
+        ?Exception $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->addressIds = $addressIds;
     }
 
     /**

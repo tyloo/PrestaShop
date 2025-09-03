@@ -31,7 +31,7 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
 
 class TransformationCollection extends AbstractTypedCollection implements TransformationCollectionInterface
 {
-    protected function getType()
+    protected function getType(): string
     {
         return TransformationInterface::class;
     }

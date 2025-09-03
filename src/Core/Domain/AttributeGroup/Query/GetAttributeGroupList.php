@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class GetAttributeGroupList
 {
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    public function __construct(ShopConstraint $shopConstraint)
-    {
-        $this->shopConstraint = $shopConstraint;
+    public function __construct(
+        private readonly ShopConstraint $shopConstraint,
+    ) {
     }
 
     public function getShopConstraint(): ShopConstraint

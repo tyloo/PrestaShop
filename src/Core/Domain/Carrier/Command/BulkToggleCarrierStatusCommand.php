@@ -43,19 +43,15 @@ class BulkToggleCarrierStatusCommand
     private $carrierIds = [];
 
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @param int[] $carrierIds
      *
      * @throws CarrierConstraintException
      */
-    public function __construct(array $carrierIds, bool $expectedStatus)
-    {
+    public function __construct(
+        array $carrierIds,
+        private readonly bool $expectedStatus,
+    ) {
         $this->setCarrierIds($carrierIds);
-        $this->expectedStatus = $expectedStatus;
     }
 
     /**

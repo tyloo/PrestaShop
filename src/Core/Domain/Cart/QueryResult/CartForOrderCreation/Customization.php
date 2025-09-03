@@ -32,22 +32,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
  */
 class Customization
 {
-    /**
-     * @var int
-     */
-    private $customizationId;
-
-    /**
-     * @var CustomizationFieldData[]
-     */
-    private $customizationFieldsData;
-
     public function __construct(
-        int $customizationId,
-        array $customizationFieldsData,
+        private readonly int $customizationId,
+        /**
+         * @var CustomizationFieldData[]
+         */
+        private readonly array $customizationFieldsData,
     ) {
-        $this->customizationId = $customizationId;
-        $this->customizationFieldsData = $customizationFieldsData;
     }
 
     public function getCustomizationId(): int

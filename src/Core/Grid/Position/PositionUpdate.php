@@ -34,31 +34,13 @@ namespace PrestaShop\PrestaShop\Core\Grid\Position;
 final class PositionUpdate implements PositionUpdateInterface
 {
     /**
-     * @var PositionDefinitionInterface
-     */
-    private $positionDefinition;
-
-    /**
-     * @var PositionModificationCollectionInterface
-     */
-    private $positionModificationCollection;
-
-    /**
-     * @var string|null
-     */
-    private $parentId;
-
-    /**
      * @param string|null $parentId
      */
     public function __construct(
-        PositionModificationCollectionInterface $positionModificationCollection,
-        PositionDefinitionInterface $positionDefinition,
-        $parentId = null,
+        private readonly PositionModificationCollectionInterface $positionModificationCollection,
+        private readonly PositionDefinitionInterface $positionDefinition,
+        private $parentId = null,
     ) {
-        $this->positionDefinition = $positionDefinition;
-        $this->positionModificationCollection = $positionModificationCollection;
-        $this->parentId = $parentId;
     }
 
     public function getPositionDefinition()

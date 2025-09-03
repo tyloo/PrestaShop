@@ -77,9 +77,7 @@ class Facet
             'displayed' => $this->displayed,
             'type' => $this->type,
             'properties' => $this->properties,
-            'filters' => array_map(function (Filter $filter) {
-                return $filter->toArray();
-            }, $this->filters),
+            'filters' => array_map(fn (Filter $filter) => $filter->toArray(), $this->filters),
             'multipleSelectionAllowed' => $this->multipleSelectionAllowed,
             'widgetType' => $this->widgetType,
         ];

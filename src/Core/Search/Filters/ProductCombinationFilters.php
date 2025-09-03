@@ -56,7 +56,7 @@ class ProductCombinationFilters extends ShopFilters
 
         $this->productId = (int) $filters['filters']['product_id'];
 
-        if (! $shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() === null) {
             throw new InvalidArgumentException(\sprintf('%s filters supports only single shopConstraint', static::class));
         }
 

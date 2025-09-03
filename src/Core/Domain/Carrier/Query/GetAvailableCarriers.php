@@ -28,14 +28,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\Carrier\Query;
  */
 class GetAvailableCarriers
 {
-    /**
-     * @var array
-     */
-    private $productsIds;
-
-    public function __construct(array $productsIds)
-    {
-        $this->productsIds = $productsIds;
+    public function __construct(
+        private readonly array $productsIds,
+    ) {
     }
 
     public function getProductsIds(): array

@@ -35,14 +35,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 
 class ContactTypeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var int
-     */
-    private $langId;
-
-    public function __construct(int $langId)
-    {
-        $this->langId = $langId;
+    public function __construct(
+        private readonly int $langId,
+    ) {
     }
 
     public function getChoices(): array

@@ -41,14 +41,9 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  */
 class AddressStateRequiredValidator extends ConstraintValidator
 {
-    /**
-     * @var CountryRequiredFieldsProviderInterface
-     */
-    private $countryRequiredFieldsProvider;
-
-    public function __construct(CountryRequiredFieldsProviderInterface $countryRequiredFieldsProvider)
-    {
-        $this->countryRequiredFieldsProvider = $countryRequiredFieldsProvider;
+    public function __construct(
+        private readonly CountryRequiredFieldsProviderInterface $countryRequiredFieldsProvider,
+    ) {
     }
 
     /**
@@ -59,6 +54,7 @@ class AddressStateRequiredValidator extends ConstraintValidator
         if (! ($constraint instanceof AddressStateRequired)) {
             return;
         }
+
         $countryId = new CountryId((int) $constraint->id_country);
 
         if ($this->countryRequiredFieldsProvider->isStatesRequired($countryId)) {

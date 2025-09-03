@@ -67,9 +67,7 @@ class SetProductShopsCommand
         $this->productId = new ProductId($productId);
         $this->sourceShopId = new ShopId($sourceShopId);
 
-        $this->shopIds = array_map(static function (int $shopId): ShopId {
-            return new ShopId($shopId);
-        }, $shopIds);
+        $this->shopIds = array_map(static fn (int $shopId): ShopId => new ShopId($shopId), $shopIds);
     }
 
     public function getProductId(): ProductId

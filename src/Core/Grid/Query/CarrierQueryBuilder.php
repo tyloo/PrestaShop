@@ -48,33 +48,17 @@ final class CarrierQueryBuilder extends AbstractDoctrineQueryBuilder
         'external_module_name',
     ];
 
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var string
-     */
-    private $contextIdLang;
-
-    /**
-     * @var int[]
-     */
-    private $contextShopIds;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        string $contextIdLang,
-        array $contextShopIds,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly string $contextIdLang,
+        /**
+         * @var int[]
+         */
+        private readonly array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextIdLang = $contextIdLang;
-        $this->contextShopIds = $contextShopIds;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)

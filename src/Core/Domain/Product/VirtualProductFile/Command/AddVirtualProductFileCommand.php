@@ -43,47 +43,17 @@ class AddVirtualProductFileCommand
     private $productId;
 
     /**
-     * @var string
-     */
-    private $filePath;
-
-    /**
-     * @var string
-     */
-    private $displayName;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $expirationDate;
-
-    /**
-     * @var int|null
-     */
-    private $accessDays;
-
-    /**
-     * @var int|null
-     */
-    private $downloadTimesLimit;
-
-    /**
      * @param string $displayName display name of the file
      */
     public function __construct(
         int $productId,
-        string $filePath,
-        string $displayName,
-        ?int $accessDays = null,
-        ?int $downloadTimesLimit = null,
-        ?DateTimeInterface $expirationDate = null,
+        private readonly string $filePath,
+        private readonly string $displayName,
+        private readonly ?int $accessDays = null,
+        private readonly ?int $downloadTimesLimit = null,
+        private readonly ?DateTimeInterface $expirationDate = null,
     ) {
         $this->productId = new ProductId($productId);
-        $this->filePath = $filePath;
-        $this->displayName = $displayName;
-        $this->accessDays = $accessDays;
-        $this->downloadTimesLimit = $downloadTimesLimit;
-        $this->expirationDate = $expirationDate;
     }
 
     public function getProductId(): ProductId

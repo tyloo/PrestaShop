@@ -35,14 +35,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class ProfileChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $profiles;
-
-    public function __construct(array $profiles)
-    {
-        $this->profiles = $profiles;
+    public function __construct(
+        private readonly array $profiles,
+    ) {
     }
 
     public function getChoices()

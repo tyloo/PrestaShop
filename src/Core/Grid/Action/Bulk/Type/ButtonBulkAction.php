@@ -37,7 +37,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ButtonBulkAction extends AbstractBulkAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'button';
     }

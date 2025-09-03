@@ -47,15 +47,15 @@ final class VirtualProductFileCommandsBuilder implements ProductCommandsBuilderI
 
         $virtualProductFileData = $formData['stock']['virtual_product_file'];
 
-        if ($addCommand = $this->buildAddCommand($productId, $virtualProductFileData)) {
+        if (($addCommand = $this->buildAddCommand($productId, $virtualProductFileData)) !== null) {
             return [$addCommand];
         }
 
-        if ($updateCommand = $this->buildUpdateCommand($virtualProductFileData)) {
+        if (($updateCommand = $this->buildUpdateCommand($virtualProductFileData)) !== null) {
             return [$updateCommand];
         }
 
-        if ($deleteCommand = $this->buildDeleteCommand($virtualProductFileData)) {
+        if (($deleteCommand = $this->buildDeleteCommand($virtualProductFileData)) !== null) {
             return [$deleteCommand];
         }
 
@@ -107,18 +107,22 @@ final class VirtualProductFileCommandsBuilder implements ProductCommandsBuilderI
             $newFile = $virtualProductFileData['file'];
             $command->setFilePath($newFile->getPathname());
         }
+
         if (isset($virtualProductFileData['name'])) {
             $update = true;
             $command->setDisplayName($virtualProductFileData['name']);
         }
+
         if (isset($virtualProductFileData['access_days_limit'])) {
             $update = true;
             $command->setAccessDays((int) $virtualProductFileData['access_days_limit']);
         }
+
         if (isset($virtualProductFileData['download_times_limit'])) {
             $update = true;
             $command->setDownloadTimesLimit((int) $virtualProductFileData['download_times_limit']);
         }
+
         if (isset($virtualProductFileData['expiration_date'])) {
             $update = true;
             $command->setExpirationDate(DateTimeUtil::buildNullableDateTime($virtualProductFileData['expiration_date']));

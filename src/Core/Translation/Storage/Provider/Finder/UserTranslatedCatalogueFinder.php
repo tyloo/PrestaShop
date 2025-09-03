@@ -38,19 +38,9 @@ use Symfony\Component\Translation\MessageCatalogue;
 class UserTranslatedCatalogueFinder extends AbstractCatalogueFinder
 {
     /**
-     * @var DatabaseTranslationLoader
-     */
-    private $databaseTranslationReader;
-
-    /**
      * @var array<int, string>
      */
     private $translationDomains;
-
-    /**
-     * @var string|null
-     */
-    private $themeName;
 
     /**
      * You will need to give theme if you want only the translations linked to a specific theme.
@@ -59,17 +49,15 @@ class UserTranslatedCatalogueFinder extends AbstractCatalogueFinder
      * @param array<int, string> $translationDomains
      */
     public function __construct(
-        DatabaseTranslationLoader $databaseTranslationReader,
+        private readonly DatabaseTranslationLoader $databaseTranslationReader,
         array $translationDomains,
-        ?string $themeName = null,
+        private readonly ?string $themeName = null,
     ) {
         if (! $this->assertIsArrayOfString($translationDomains)) {
             throw new InvalidArgumentException('Given translation domains are invalid. An array of strings was expected.');
         }
 
-        $this->databaseTranslationReader = $databaseTranslationReader;
         $this->translationDomains = $translationDomains;
-        $this->themeName = $themeName;
     }
 
     /**

@@ -37,17 +37,12 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleDataLayerInterface as Cld
 class LocaleDataSource
 {
     /**
-     * @var CldrLocaleDataLayerInterface
-     */
-    private $topLayer;
-
-    /**
      * LocaleDataSource constructor needs a CldrLocaleDataLayerInterface layer object.
      * This top layer might be chained with lower layers and will be the entry point of this middleware stack.
      */
-    public function __construct(CldrLocaleDataLayerInterface $topLayer)
-    {
-        $this->topLayer = $topLayer;
+    public function __construct(
+        private readonly CldrLocaleDataLayerInterface $topLayer,
+    ) {
     }
 
     /**

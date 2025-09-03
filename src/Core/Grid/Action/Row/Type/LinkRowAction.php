@@ -33,7 +33,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class LinkRowAction extends AbstractRowAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'link';
     }

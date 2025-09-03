@@ -33,30 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler;
 class FormHandlerResult implements FormHandlerResultInterface
 {
     /**
-     * @var bool
-     */
-    private $isValid;
-
-    /**
-     * @var bool
-     */
-    private $isSubmitted;
-
-    /**
-     * @var int|null
-     */
-    private $identifiableObjectId;
-
-    /**
      * @param int|null $identifiableObjectId ID of identifiable object or null if it does not exist
      * @param bool     $isSubmitted
      * @param bool     $isValid
      */
-    private function __construct($identifiableObjectId, $isSubmitted, $isValid)
-    {
-        $this->identifiableObjectId = $identifiableObjectId;
-        $this->isSubmitted = $isSubmitted;
-        $this->isValid = $isValid;
+    private function __construct(
+        private $identifiableObjectId,
+        private $isSubmitted,
+        private $isValid,
+    ) {
     }
 
     /**

@@ -44,99 +44,27 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
  */
 class OrderPreviewInvoiceDetails
 {
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $address1;
-
-    /**
-     * @var string
-     */
-    private $address2;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var string
-     */
-    private $country;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var string
-     */
-    private $phone;
-
-    /**
-     * @var string
-     */
-    private $company;
-
-    /**
-     * @var string|null
-     */
-    private $vatNumber;
-
-    /**
-     * @var string
-     */
-    private $postalCode;
-
-    /**
-     * @var string|null
-     */
-    private $stateName;
-
-    /**
-     * @var string|null
-     */
-    private $dni;
-
     public function __construct(
-        string $firstName,
-        string $lastName,
-        ?string $company,
-        ?string $vatNumber,
-        string $address1,
-        string $address2,
-        string $city,
-        string $postalCode,
-        ?string $stateName,
-        string $country,
-        ?string $email,
-        string $phone,
-        ?string $dni = null,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        /**
+         * @var string
+         */
+        private readonly ?string $company,
+        private readonly ?string $vatNumber,
+        private readonly string $address1,
+        private readonly string $address2,
+        private readonly string $city,
+        private readonly string $postalCode,
+        private readonly ?string $stateName,
+        private readonly string $country,
+        /**
+         * @var string
+         */
+        private readonly ?string $email,
+        private readonly string $phone,
+        private readonly ?string $dni = null,
     ) {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->address1 = $address1;
-        $this->address2 = $address2;
-        $this->city = $city;
-        $this->country = $country;
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->company = $company;
-        $this->vatNumber = $vatNumber;
-        $this->postalCode = $postalCode;
-        $this->stateName = $stateName;
-        $this->dni = $dni;
     }
 
     public function getFirstName(): string

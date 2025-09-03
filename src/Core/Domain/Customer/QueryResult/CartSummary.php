@@ -32,29 +32,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
  */
 class CartSummary
 {
-    /**
-     * @var int
-     */
-    private $cartId;
-
-    /**
-     * @var string
-     */
-    private $creationDate;
-
-    /**
-     * @var string
-     */
-    private $totalPrice;
-
     public function __construct(
-        int $cartId,
-        string $creationDate,
-        string $totalPrice,
+        private readonly int $cartId,
+        private readonly string $creationDate,
+        private readonly string $totalPrice,
     ) {
-        $this->cartId = $cartId;
-        $this->creationDate = $creationDate;
-        $this->totalPrice = $totalPrice;
     }
 
     public function getCartId(): int

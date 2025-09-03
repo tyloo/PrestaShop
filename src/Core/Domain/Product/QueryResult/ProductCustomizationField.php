@@ -33,38 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
 class ProductCustomizationField
 {
     public const TYPE_FILE = 0;
+
     public const TYPE_TEXT = 1;
 
-    /**
-     * @var int
-     */
-    private $customizationFieldId;
-
-    /**
-     * @var int
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $isRequired;
-
     public function __construct(
-        int $customizationFieldId,
-        int $type,
-        string $name,
-        bool $isRequired,
+        private readonly int $customizationFieldId,
+        private readonly int $type,
+        private readonly string $name,
+        private readonly bool $isRequired,
     ) {
-        $this->customizationFieldId = $customizationFieldId;
-        $this->type = $type;
-        $this->name = $name;
-        $this->isRequired = $isRequired;
     }
 
     public function getCustomizationFieldId(): int

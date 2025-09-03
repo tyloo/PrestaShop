@@ -34,14 +34,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject;
  */
 class CustomizationFieldId
 {
-    /**
-     * @var int
-     */
-    private $value;
-
-    public function __construct(int $value)
-    {
-        $this->value = $value;
+    public function __construct(
+        private readonly int $value,
+    ) {
     }
 
     public function getValue(): int

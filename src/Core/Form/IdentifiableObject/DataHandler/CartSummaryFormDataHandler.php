@@ -37,22 +37,10 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Command\AddOrderFromBackOfficeComman
  */
 class CartSummaryFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var int
-     */
-    private $contextEmployeeId;
-
     public function __construct(
-        CommandBusInterface $commandBus,
-        int $contextEmployeeId,
+        private readonly CommandBusInterface $commandBus,
+        private readonly int $contextEmployeeId,
     ) {
-        $this->commandBus = $commandBus;
-        $this->contextEmployeeId = $contextEmployeeId;
     }
 
     /**
@@ -64,7 +52,7 @@ class CartSummaryFormDataHandler implements FormDataHandlerInterface
     {
         return $this->commandBus->handle(new AddOrderFromBackOfficeCommand(
             (int) $data['cart_id'],
-            (int) $this->contextEmployeeId,
+            $this->contextEmployeeId,
             $data['order_message'],
             $data['payment_module'],
             (int) $data['order_state']

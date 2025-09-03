@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
  */
 class ThemeCollection extends AbstractTypedCollection implements ThemeCollectionInterface
 {
-    protected function getType()
+    protected function getType(): string
     {
         return ThemeInterface::class;
     }
@@ -47,8 +47,6 @@ class ThemeCollection extends AbstractTypedCollection implements ThemeCollection
     public function getByName($themeName)
     {
         /* @phpstan-ignore-next-line $theme can't be null as we are in a typed collection */
-        return $this->filter(function (ThemeInterface $theme) use ($themeName) {
-            return $themeName === $theme->getName();
-        })->first();
+        return $this->filter(fn (ThemeInterface $theme): bool => $themeName === $theme->getName())->first();
     }
 }

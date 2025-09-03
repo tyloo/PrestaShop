@@ -39,21 +39,6 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
     private const ZIP_FILENAME_PATTERN = '/(\w+)\.zip\b/';
 
     /**
-     * @var ZipSourceHandler
-     */
-    private $zipSourceHandler;
-
-    /**
-     * @var string
-     */
-    private $downloadDir;
-
-    /**
-     * @var HttpClientInterface
-     */
-    private $httpClient;
-
-    /**
      * @var string|null
      */
     private $moduleName;
@@ -61,13 +46,10 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
     private $handledSource;
 
     public function __construct(
-        ZipSourceHandler $zipSourceHandler,
-        HttpClientInterface $httpClient,
-        string $downloadDir,
+        private readonly ZipSourceHandler $zipSourceHandler,
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $downloadDir,
     ) {
-        $this->zipSourceHandler = $zipSourceHandler;
-        $this->httpClient = $httpClient;
-        $this->downloadDir = $downloadDir;
     }
 
     public function canHandle($source): bool

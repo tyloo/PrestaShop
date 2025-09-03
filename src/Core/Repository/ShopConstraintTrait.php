@@ -64,7 +64,7 @@ trait ShopConstraintTrait
                 ->andWhere('id_shop IN (:shopIds)')
                 ->setParameter(
                     'shopIds',
-                    array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopConstraint->getShopIds()),
+                    array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopConstraint->getShopIds()),
                     ArrayParameterType::INTEGER
                 )
             ;

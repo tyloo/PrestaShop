@@ -33,64 +33,22 @@ use DateTimeInterface;
 
 class CombinationStock
 {
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var int
-     */
-    private $minimalQuantity;
-
-    /**
-     * @var int
-     */
-    private $lowStockThreshold;
-
-    /**
-     * @var bool
-     */
-    private $lowStockAlertEnabled;
-
-    /**
-     * @var string
-     */
-    private $location;
-
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $availableDate;
-
-    /**
-     * @var string[] key value pairs where key is the id of language
-     */
-    private $localizedAvailableNowLabels;
-
-    /**
-     * @var string[] key value pairs where key is the id of language
-     */
-    private $localizedAvailableLaterLabels;
-
     public function __construct(
-        int $quantity,
-        int $minimalQuantity,
-        int $lowStockThreshold,
-        bool $lowStockAlertEnabled,
-        string $location,
-        ?DateTimeInterface $availableDate,
-        array $localizedAvailableNowLabels,
-        array $localizedAvailableLaterLabels,
+        private readonly int $quantity,
+        private readonly int $minimalQuantity,
+        private readonly int $lowStockThreshold,
+        private readonly bool $lowStockAlertEnabled,
+        private readonly string $location,
+        private readonly ?DateTimeInterface $availableDate,
+        /**
+         * @var string[] key value pairs where key is the id of language
+         */
+        private readonly array $localizedAvailableNowLabels,
+        /**
+         * @var string[] key value pairs where key is the id of language
+         */
+        private readonly array $localizedAvailableLaterLabels,
     ) {
-        $this->quantity = $quantity;
-        $this->minimalQuantity = $minimalQuantity;
-        $this->location = $location;
-        $this->lowStockThreshold = $lowStockThreshold;
-        $this->lowStockAlertEnabled = $lowStockAlertEnabled;
-        $this->availableDate = $availableDate;
-        $this->localizedAvailableNowLabels = $localizedAvailableNowLabels;
-        $this->localizedAvailableLaterLabels = $localizedAvailableLaterLabels;
     }
 
     public function getQuantity(): int

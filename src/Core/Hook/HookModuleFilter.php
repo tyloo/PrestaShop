@@ -41,11 +41,9 @@ namespace PrestaShop\PrestaShop\Core\Hook;
  */
 class HookModuleFilter implements HookModuleFilterInterface
 {
-    private $hookModuleFilters;
-
-    public function __construct(iterable $hookModuleFilters)
-    {
-        $this->hookModuleFilters = $hookModuleFilters;
+    public function __construct(
+        private readonly iterable $hookModuleFilters,
+    ) {
     }
 
     public function filterHookModuleExecList(array $modules, string $hookName): array

@@ -48,21 +48,15 @@ class BulkDeleteCombinationCommand
     private $combinationIds;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @param int[] $combinationIds
      */
     public function __construct(
         int $productId,
         array $combinationIds,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
         $this->setCombinationIds($combinationIds);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getProductId(): ProductId

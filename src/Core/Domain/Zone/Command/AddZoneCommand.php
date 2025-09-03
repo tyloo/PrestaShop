@@ -34,26 +34,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Zone\Command;
  */
 class AddZoneCommand
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var array
-     */
-    private $shopAssociation;
-
-    public function __construct(string $name, bool $enabled, array $shopAssociation)
-    {
-        $this->name = $name;
-        $this->enabled = $enabled;
-        $this->shopAssociation = $shopAssociation;
+    public function __construct(
+        private readonly string $name,
+        private readonly bool $enabled,
+        private readonly array $shopAssociation,
+    ) {
     }
 
     public function getName(): string

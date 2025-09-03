@@ -125,7 +125,7 @@ class DiscountQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' LIKE :' . $filterName);
-            $qb->setParameter($filterName, "%$value%");
+            $qb->setParameter($filterName, \sprintf('%%%s%%', $value));
         }
     }
 }

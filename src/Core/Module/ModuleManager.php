@@ -349,15 +349,13 @@ class ModuleManager implements ModuleManagerInterface
 
     private function getInstalledLocales(): array
     {
-        if ($this->languageRepository) {
+        if ($this->languageRepository !== null) {
             $languages = $this->languageRepository->getMapping();
         } else {
             $languages = LegacyLanguage::getLanguages(false);
         }
 
-        return array_map(function (array $language) {
-            return $language['locale'];
-        }, $languages);
+        return array_map(fn (array $language) => $language['locale'], $languages);
     }
 
     protected function upgradeMigration(string $name): bool

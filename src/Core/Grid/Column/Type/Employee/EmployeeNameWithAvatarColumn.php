@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class EmployeeNameWithAvatarColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'employee_name_with_avatar';
     }

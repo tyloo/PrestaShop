@@ -35,54 +35,21 @@ use PrestaShop\PrestaShop\Core\Domain\Webservice\ValueObject\WebserviceKeyId;
 class EditableWebserviceKey
 {
     /**
-     * @var WebserviceKeyId
-     */
-    private $webserviceKeyId;
-
-    /**
-     * @var string
-     */
-    private $key;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var bool
-     */
-    private $status;
-
-    /**
-     * @var array
-     */
-    private $resourcePermissions;
-
-    /**
-     * @var int[]
-     */
-    private $associatedShops;
-
-    /**
      * @param string $key
      * @param string $description
      * @param bool   $status
      */
     public function __construct(
-        WebserviceKeyId $webserviceKeyId,
-        $key,
-        $description,
-        $status,
-        array $resourcePermissions,
-        array $associatedShops,
+        private readonly WebserviceKeyId $webserviceKeyId,
+        private $key,
+        private $description,
+        private $status,
+        private readonly array $resourcePermissions,
+        /**
+         * @var int[]
+         */
+        private readonly array $associatedShops,
     ) {
-        $this->webserviceKeyId = $webserviceKeyId;
-        $this->key = $key;
-        $this->description = $description;
-        $this->status = $status;
-        $this->resourcePermissions = $resourcePermissions;
-        $this->associatedShops = $associatedShops;
     }
 
     /**

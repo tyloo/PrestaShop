@@ -47,11 +47,6 @@ class AddOrderFromBackOfficeCommand
     /**
      * @var string
      */
-    private $orderMessage;
-
-    /**
-     * @var string
-     */
     private $paymentModuleName;
 
     /**
@@ -71,14 +66,18 @@ class AddOrderFromBackOfficeCommand
      * @param string $paymentModuleName
      * @param int    $orderStateId
      */
-    public function __construct($cartId, $employeeId, $orderMessage, $paymentModuleName, $orderStateId)
-    {
+    public function __construct(
+        $cartId,
+        $employeeId,
+        private $orderMessage,
+        $paymentModuleName,
+        $orderStateId,
+    ) {
         $this->assertIsModuleName($paymentModuleName);
         $this->assertOrderStateIsPositiveInt($orderStateId);
 
         $this->cartId = new CartId($cartId);
         $this->employeeId = $employeeId === NoEmployeeId::NO_EMPLOYEE_ID_VALUE ? new NoEmployeeId() : new EmployeeId($employeeId);
-        $this->orderMessage = $orderMessage;
         $this->paymentModuleName = $paymentModuleName;
         $this->orderStateId = $orderStateId;
     }

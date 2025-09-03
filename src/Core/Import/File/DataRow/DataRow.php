@@ -90,7 +90,7 @@ final class DataRow implements DataRowInterface
         return \count($this->cells);
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         if (\count($this->cells) === 0) {
             return true;

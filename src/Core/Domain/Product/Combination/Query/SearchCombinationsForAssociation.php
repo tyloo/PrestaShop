@@ -60,6 +60,7 @@ class SearchCombinationsForAssociation
      * @var int|null
      */
     private $limit;
+
     /**
      * @var array<string>
      */

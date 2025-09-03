@@ -36,22 +36,6 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ProductCustomizabilitySettings;
  */
 class ProductCustomizationOptions
 {
-    /**
-     * @var int value representing if product requires, allows, disallows customizations
-     *          see @var ProductCustomizabilitySettings for more info
-     */
-    private $customizabilityValue;
-
-    /**
-     * @var int
-     */
-    private $availableTextCustomizationsCount;
-
-    /**
-     * @var int
-     */
-    private $availableFileCustomizationsCount;
-
     public static function createNotCustomizable(): self
     {
         return new self(ProductCustomizabilitySettings::NOT_CUSTOMIZABLE, 0, 0);
@@ -121,10 +105,14 @@ class ProductCustomizationOptions
     /**
      * Use static factories to instantiate this class
      */
-    private function __construct(int $value, int $availableTextCustomizations, int $availableFileCustomizations)
-    {
-        $this->customizabilityValue = $value;
-        $this->availableTextCustomizationsCount = $availableTextCustomizations;
-        $this->availableFileCustomizationsCount = $availableFileCustomizations;
+    private function __construct(
+        /**
+         * @var int value representing if product requires, allows, disallows customizations
+         *          see @var ProductCustomizabilitySettings for more info
+         */
+        private readonly int $customizabilityValue,
+        private readonly int $availableTextCustomizationsCount,
+        private readonly int $availableFileCustomizationsCount,
+    ) {
     }
 }

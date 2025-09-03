@@ -58,54 +58,18 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;
 class ProductFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var int
-     */
-    private $defaultShopId;
-
-    /**
-     * @var int|null
-     */
-    private $contextShopId;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var FeaturesChoiceProvider
-     */
-    private $featuresChoiceProvider;
-
-    /**
      * @var array|null
      */
     private $featureNames;
 
     public function __construct(
-        CommandBusInterface $queryBus,
-        ConfigurationInterface $configuration,
-        int $contextLangId,
-        int $defaultShopId,
-        ?int $contextShopId,
-        FeaturesChoiceProvider $featuresChoiceProvider,
+        private readonly CommandBusInterface $queryBus,
+        private readonly ConfigurationInterface $configuration,
+        private readonly int $contextLangId,
+        private readonly int $defaultShopId,
+        private readonly ?int $contextShopId,
+        private readonly FeaturesChoiceProvider $featuresChoiceProvider,
     ) {
-        $this->queryBus = $queryBus;
-        $this->configuration = $configuration;
-        $this->contextLangId = $contextLangId;
-        $this->defaultShopId = $defaultShopId;
-        $this->contextShopId = $contextShopId;
-        $this->featuresChoiceProvider = $featuresChoiceProvider;
     }
 
     public function getData($id): array
@@ -449,7 +413,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
     {
         $priorities = $productForEditing->getPricesInformation()->getSpecificPricePriorities();
 
-        if (! $priorities) {
+        if ($priorities === null) {
             return [
                 'use_custom_priority' => false,
                 'priorities' => $this->getDefaultPrioritiesData(),
@@ -654,7 +618,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
     private function getDefaultPrioritiesData(): array
     {
         if (! empty($this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'))) {
-            return explode(';', $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
+            return explode(';', (string) $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
         }
 
         return array_values(PriorityList::AVAILABLE_PRIORITIES);

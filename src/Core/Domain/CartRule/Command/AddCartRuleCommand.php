@@ -49,11 +49,6 @@ class AddCartRuleCommand
     private $localizedNames;
 
     /**
-     * @var CartRuleAction
-     */
-    private $cartRuleAction;
-
-    /**
      * @var string
      */
     private $description = '';
@@ -120,10 +115,9 @@ class AddCartRuleCommand
 
     public function __construct(
         array $localizedNames,
-        CartRuleAction $cartRuleAction,
+        private readonly CartRuleAction $cartRuleAction,
     ) {
         $this->setLocalizedNames($localizedNames);
-        $this->cartRuleAction = $cartRuleAction;
     }
 
     public function getDescription(): string

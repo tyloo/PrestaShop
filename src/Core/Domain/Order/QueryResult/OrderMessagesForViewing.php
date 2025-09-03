@@ -35,20 +35,15 @@ class OrderMessagesForViewing
     private $messages = [];
 
     /**
-     * @var int
-     */
-    private $total;
-
-    /**
      * @param OrderMessageForViewing[] $messages
      */
-    public function __construct(array $messages, int $total)
-    {
+    public function __construct(
+        array $messages,
+        private readonly int $total,
+    ) {
         foreach ($messages as $message) {
             $this->add($message);
         }
-
-        $this->total = $total;
     }
 
     /**

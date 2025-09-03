@@ -35,14 +35,9 @@ use Symfony\Component\Finder\Finder;
  */
 final class FileFinder
 {
-    /**
-     * @var ImportDirectory
-     */
-    private $importDirectory;
-
-    public function __construct(ImportDirectory $importDirectory)
-    {
-        $this->importDirectory = $importDirectory;
+    public function __construct(
+        private readonly ImportDirectory $importDirectory,
+    ) {
     }
 
     /**
@@ -50,7 +45,7 @@ final class FileFinder
      *
      * @return array|string[]
      */
-    public function getImportFileNames()
+    public function getImportFileNames(): array
     {
         if (! $this->importDirectory->isReadable()) {
             return [];

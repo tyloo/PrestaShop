@@ -41,38 +41,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface, FormChoiceAttributeProviderInterface, ConfigurableFormChoiceProviderInterface
 {
     /**
-     * @var int language ID
-     */
-    private $langId;
-
-    /**
-     * @var OrderStateDataProviderInterface
-     */
-    private $orderStateDataProvider;
-
-    /**
-     * @var ColorBrightnessCalculator
-     */
-    private $colorBrightnessCalculator;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param int $langId language ID
      */
     public function __construct(
-        $langId,
-        OrderStateDataProviderInterface $orderStateDataProvider,
-        ColorBrightnessCalculator $colorBrightnessCalculator,
-        TranslatorInterface $translator,
+        private $langId,
+        private readonly OrderStateDataProviderInterface $orderStateDataProvider,
+        private readonly ColorBrightnessCalculator $colorBrightnessCalculator,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->langId = $langId;
-        $this->orderStateDataProvider = $orderStateDataProvider;
-        $this->colorBrightnessCalculator = $colorBrightnessCalculator;
-        $this->translator = $translator;
     }
 
     /**
@@ -108,10 +84,8 @@ final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface,
 
     /**
      * Get order state choices attributes.
-     *
-     * @return array
      */
-    public function getChoicesAttributes()
+    public function getChoicesAttributes(): array
     {
         $orderStates = $this->orderStateDataProvider->getOrderStates($this->langId);
         $orderStates = $this->updateOrderStatesNames($orderStates);

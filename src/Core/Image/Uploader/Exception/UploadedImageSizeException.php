@@ -32,11 +32,6 @@ use Throwable;
 
 class UploadedImageSizeException extends ImageUploadException
 {
-    /**
-     * @var int
-     */
-    private $allowedSizeBytes;
-
     public static function build(
         int $allowedSizeBytes,
         ?string $message = null,
@@ -64,12 +59,11 @@ class UploadedImageSizeException extends ImageUploadException
     }
 
     private function __construct(
-        int $allowedSizeBytes,
+        private readonly int $allowedSizeBytes,
         string $message = '',
         int $code = 0,
         ?Throwable $previous = null,
     ) {
-        $this->allowedSizeBytes = $allowedSizeBytes;
         parent::__construct($message, $code, $previous);
     }
 }

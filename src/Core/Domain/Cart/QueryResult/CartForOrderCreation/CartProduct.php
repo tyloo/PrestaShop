@@ -32,99 +32,21 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
  */
 class CartProduct
 {
-    /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var int
-     */
-    private $attributeId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $attribute;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $unitPrice;
-
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var string
-     */
-    private $price;
-
-    /**
-     * @var string
-     */
-    private $imageLink;
-
-    /**
-     * @var Customization|null
-     */
-    private $customization;
-
-    /**
-     * @var int
-     */
-    private $availableStock;
-
-    /**
-     * @var bool
-     */
-    private $availableOutOfStock;
-
-    /**
-     * @var bool
-     */
-    private $isGift;
-
     public function __construct(
-        int $productId,
-        int $attributeId,
-        string $name,
-        string $attribute,
-        string $reference,
-        string $unitPrice,
-        int $quantity,
-        string $price,
-        string $imageLink,
-        ?Customization $customization,
-        int $availableStock,
-        bool $availableOutOfStock,
-        bool $isGift = false,
+        private readonly int $productId,
+        private readonly int $attributeId,
+        private readonly string $name,
+        private readonly string $attribute,
+        private readonly string $reference,
+        private readonly string $unitPrice,
+        private readonly int $quantity,
+        private readonly string $price,
+        private readonly string $imageLink,
+        private readonly ?Customization $customization,
+        private readonly int $availableStock,
+        private readonly bool $availableOutOfStock,
+        private readonly bool $isGift = false,
     ) {
-        $this->productId = $productId;
-        $this->attributeId = $attributeId;
-        $this->name = $name;
-        $this->attribute = $attribute;
-        $this->reference = $reference;
-        $this->unitPrice = $unitPrice;
-        $this->quantity = $quantity;
-        $this->price = $price;
-        $this->imageLink = $imageLink;
-        $this->customization = $customization;
-        $this->availableStock = $availableStock;
-        $this->availableOutOfStock = $availableOutOfStock;
-        $this->isGift = $isGift;
     }
 
     public function getProductId(): int

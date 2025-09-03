@@ -36,36 +36,17 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
-     * @var int
-     */
-    private $contextIdLang;
-
-    /**
      * @param string $dbPrefix
      * @param int    $contextIdLang
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds,
-        $contextIdLang,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly array $contextShopIds,
+        private $contextIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextShopIds = $contextShopIds;
-        $this->contextIdLang = $contextIdLang;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -182,6 +163,7 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
         if (! is_numeric($positionFilterValue)) {
             return null;
         }
+
         $reducedByOneFilterValue = $positionFilterValue - 1;
         if ($reducedByOneFilterValue < 0) {
             return null;

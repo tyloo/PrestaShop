@@ -186,6 +186,7 @@ final class Locale implements LocaleInterface
         if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
+
         if (! isset($this->getAllNumberSymbols()[$numberingSystem])) {
             throw new LocalizationException('Invalid numbering system: ' . $numberingSystem);
         }
@@ -208,6 +209,7 @@ final class Locale implements LocaleInterface
         if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
+
         if (! isset($this->decimalPatterns[$numberingSystem])) {
             throw new LocalizationException('No decimal pattern found for numbering system: ' . $numberingSystem);
         }
@@ -230,6 +232,7 @@ final class Locale implements LocaleInterface
         if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
+
         if (! isset($this->percentPatterns[$numberingSystem])) {
             throw new LocalizationException('No percent pattern found for numbering system: ' . $numberingSystem);
         }
@@ -252,6 +255,7 @@ final class Locale implements LocaleInterface
         if ($numberingSystem === null) {
             $numberingSystem = $this->getDefaultNumberingSystem();
         }
+
         if (! isset($this->currencyPatterns[$numberingSystem])) {
             throw new LocalizationException('No currency pattern found for numbering system: ' . $numberingSystem);
         }

@@ -37,17 +37,12 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Reduction;
  */
 final class CatalogPriceRuleFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    public function __construct(CommandBusInterface $queryBus)
-    {
-        $this->queryBus = $queryBus;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+    ) {
     }
 
-    public function getData($catalogPriceRuleId)
+    public function getData($catalogPriceRuleId): array
     {
         /** @var EditableCatalogPriceRule $editableCatalogPriceRule */
         $editableCatalogPriceRule = $this->queryBus->handle(new GetCatalogPriceRuleForEditing((int) $catalogPriceRuleId));

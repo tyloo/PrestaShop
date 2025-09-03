@@ -41,16 +41,6 @@ class TranslatableCoreException extends CoreException
     private $key;
 
     /**
-     * @var string
-     */
-    private $domain;
-
-    /**
-     * @var array
-     */
-    private $parameters = [];
-
-    /**
      * @param string                   $key
      * @param string                   $domain
      * @param array                    $parameters
@@ -59,15 +49,13 @@ class TranslatableCoreException extends CoreException
      */
     public function __construct(
         $key,
-        $domain,
-        $parameters = [],
+        private $domain,
+        private $parameters = [],
         $code = 0,
         $previous = null,
     ) {
         parent::__construct($key, $code, $previous);
         $this->key = $key;
-        $this->domain = $domain;
-        $this->parameters = $parameters;
     }
 
     /**

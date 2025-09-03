@@ -40,18 +40,14 @@ class ReplyToCustomerThreadCommand
     private $customerThreadId;
 
     /**
-     * @var string
-     */
-    private $replyMessage;
-
-    /**
      * @param int    $customerThreadId
      * @param string $replyMessage
      */
-    public function __construct($customerThreadId, $replyMessage)
-    {
+    public function __construct(
+        $customerThreadId,
+        private $replyMessage,
+    ) {
         $this->customerThreadId = new CustomerThreadId($customerThreadId);
-        $this->replyMessage = $replyMessage;
     }
 
     /**

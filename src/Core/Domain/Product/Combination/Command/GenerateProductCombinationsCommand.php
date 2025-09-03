@@ -51,21 +51,15 @@ class GenerateProductCombinationsCommand
     private $groupedAttributeIdsList;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @param array<int, array<int>> $groupedAttributeIds key-value pairs where key is the attribute group id and value is the list of that group attribute ids
      */
     public function __construct(
         int $productId,
         array $groupedAttributeIds,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->setGroupedAttributeIdsList($groupedAttributeIds);
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getProductId(): ProductId

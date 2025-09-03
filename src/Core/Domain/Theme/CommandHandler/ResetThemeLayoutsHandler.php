@@ -35,14 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\CannotResetThemeLayoutsExc
 #[AsCommandHandler]
 final class ResetThemeLayoutsHandler implements ResetThemeLayoutsHandlerInterface
 {
-    /**
-     * @var ThemeManager
-     */
-    private $themeManager;
-
-    public function __construct(ThemeManager $themeManager)
-    {
-        $this->themeManager = $themeManager;
+    public function __construct(
+        private readonly ThemeManager $themeManager,
+    ) {
     }
 
     public function handle(ResetThemeLayoutsCommand $command)

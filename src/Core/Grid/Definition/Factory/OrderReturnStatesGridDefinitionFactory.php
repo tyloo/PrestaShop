@@ -57,21 +57,14 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
 
     public const GRID_ID = 'order_return_states';
 
-    /**
-     * @var AccessibilityCheckerInterface
-     */
-    protected $deleteOrderReturnStatesAccessibilityChecker;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        AccessibilityCheckerInterface $deleteOrderReturnStatesAccessibilityChecker,
+        protected AccessibilityCheckerInterface $deleteOrderReturnStatesAccessibilityChecker,
     ) {
         parent::__construct($hookDispatcher);
-
-        $this->deleteOrderReturnStatesAccessibilityChecker = $deleteOrderReturnStatesAccessibilityChecker;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

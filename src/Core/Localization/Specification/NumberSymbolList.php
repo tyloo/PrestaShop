@@ -36,104 +36,6 @@ use PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException;
 class NumberSymbolList
 {
     /**
-     * Decimal separator character.
-     *
-     * Separates the integer and fractional part of the number.
-     *
-     * @var string|null
-     */
-    protected $decimal;
-
-    /**
-     * Digits group separator character.
-     *
-     * separates clusters of integer digits to make large numbers more legible; commonly used for thousands(grouping
-     * size 3, e.g. "100,000,000") or in some locales, ten-thousands (grouping size 4, e.g. "1,0000,0000").
-     *
-     * @var string|null
-     */
-    protected $group;
-
-    /**
-     * List elements separator character.
-     *
-     * Symbol used to separate numbers in a list intended to represent structured data such as an array.
-     *
-     * @var string|null
-     */
-    protected $list;
-
-    /**
-     * Percent sign character.
-     *
-     * Used to indicate a percentage (1/100th) amount.
-     *
-     * @var string|null
-     */
-    protected $percentSign;
-
-    /**
-     * Minus sign character.
-     *
-     * Symbol used to denote negative value.
-     *
-     * @var string|null
-     */
-    protected $minusSign;
-
-    /**
-     * Plus sign character.
-     *
-     * Symbol used to denote positive value.
-     * It can be used to produce modified patterns, so that 3.12 is formatted as "+3.12", for example.
-     *
-     * @var string|null
-     */
-    protected $plusSign;
-
-    /**
-     * Exponential character.
-     *
-     * Symbol separating the mantissa and exponent values.
-     *
-     * @var string|null
-     */
-    protected $exponential;
-
-    /**
-     * Superscripting exponent character.
-     *
-     * Used in numbers to show a format like "1.23 × 10^4"
-     * (exponential character is a shortcut for "× 10^n" notation)
-     *
-     * @var string|null
-     */
-    protected $superscriptingExponent;
-
-    /**
-     * Permille sign character.
-     *
-     * Used to define them as a per-mille (1/1000th) amount.
-     *
-     * @var string|null
-     */
-    protected $perMille;
-
-    /**
-     * The infinity sign. Corresponds to the IEEE infinity bit pattern.
-     *
-     * @var string|null
-     */
-    protected $infinity;
-
-    /**
-     * The NaN (Not A Number) sign. Corresponds to the IEEE NaN bit pattern.
-     *
-     * @var string|null
-     */
-    protected $nan;
-
-    /**
      * @param string $decimal                Decimal separator character
      * @param string $group                  Digits group separator character
      * @param string $list                   List elements separator character
@@ -149,30 +51,72 @@ class NumberSymbolList
      * @throws LocalizationException
      */
     public function __construct(
-        $decimal,
-        $group,
-        $list,
-        $percentSign,
-        $minusSign,
-        $plusSign,
-        $exponential,
-        $superscriptingExponent,
-        $perMille,
-        $infinity,
-        $nan,
+        /**
+         * Decimal separator character.
+         *
+         * Separates the integer and fractional part of the number.
+         */
+        protected $decimal,
+        /**
+         * Digits group separator character.
+         *
+         * separates clusters of integer digits to make large numbers more legible; commonly used for thousands(grouping
+         * size 3, e.g. "100,000,000") or in some locales, ten-thousands (grouping size 4, e.g. "1,0000,0000").
+         */
+        protected $group,
+        /**
+         * List elements separator character.
+         *
+         * Symbol used to separate numbers in a list intended to represent structured data such as an array.
+         */
+        protected $list,
+        /**
+         * Percent sign character.
+         *
+         * Used to indicate a percentage (1/100th) amount.
+         */
+        protected $percentSign,
+        /**
+         * Minus sign character.
+         *
+         * Symbol used to denote negative value.
+         */
+        protected $minusSign,
+        /**
+         * Plus sign character.
+         *
+         * Symbol used to denote positive value.
+         * It can be used to produce modified patterns, so that 3.12 is formatted as "+3.12", for example.
+         */
+        protected $plusSign,
+        /**
+         * Exponential character.
+         *
+         * Symbol separating the mantissa and exponent values.
+         */
+        protected $exponential,
+        /**
+         * Superscripting exponent character.
+         *
+         * Used in numbers to show a format like "1.23 × 10^4"
+         * (exponential character is a shortcut for "× 10^n" notation)
+         */
+        protected $superscriptingExponent,
+        /**
+         * Permille sign character.
+         *
+         * Used to define them as a per-mille (1/1000th) amount.
+         */
+        protected $perMille,
+        /**
+         * The infinity sign. Corresponds to the IEEE infinity bit pattern.
+         */
+        protected $infinity,
+        /**
+         * The NaN (Not A Number) sign. Corresponds to the IEEE NaN bit pattern.
+         */
+        protected $nan,
     ) {
-        $this->decimal = $decimal;
-        $this->group = $group;
-        $this->list = $list;
-        $this->percentSign = $percentSign;
-        $this->minusSign = $minusSign;
-        $this->plusSign = $plusSign;
-        $this->exponential = $exponential;
-        $this->superscriptingExponent = $superscriptingExponent;
-        $this->perMille = $perMille;
-        $this->infinity = $infinity;
-        $this->nan = $nan;
-
         $this->validateData();
     }
 

@@ -39,36 +39,12 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Co
  */
 class CombinationFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $bus;
-
-    /**
-     * @var CombinationCommandsBuilderInterface
-     */
-    private $commandsBuilder;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var int
-     */
-    private $defaultShopId;
-
     public function __construct(
-        CommandBusInterface $bus,
-        CombinationCommandsBuilderInterface $commandsBuilder,
-        int $contextShopId,
-        int $defaultShopId,
+        private readonly CommandBusInterface $bus,
+        private readonly CombinationCommandsBuilderInterface $commandsBuilder,
+        private readonly int $contextShopId,
+        private readonly int $defaultShopId,
     ) {
-        $this->bus = $bus;
-        $this->commandsBuilder = $commandsBuilder;
-        $this->contextShopId = $contextShopId;
-        $this->defaultShopId = $defaultShopId;
     }
 
     public function create(array $data)

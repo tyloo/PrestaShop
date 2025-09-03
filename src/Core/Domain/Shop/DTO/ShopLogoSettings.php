@@ -62,7 +62,7 @@ class ShopLogoSettings
      *
      * @return array<int, string>
      */
-    public function getLogoImageExtensionsWithDot(string $fieldName = '')
+    public function getLogoImageExtensionsWithDot(string $fieldName = ''): array
     {
         $mimeTypes = [];
         $availableExtensions = (\in_array($fieldName, ['PS_LOGO_MAIL', 'PS_LOGO_INVOICE'], true)) ? self::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS : self::AVAILABLE_LOGO_IMAGE_EXTENSIONS;

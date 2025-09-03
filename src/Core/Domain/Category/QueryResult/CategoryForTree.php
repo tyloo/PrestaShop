@@ -31,45 +31,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Category\QueryResult;
 class CategoryForTree
 {
     /**
-     * @var int
-     */
-    private $categoryId;
-
-    /**
-     * @var bool
-     */
-    private $active;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $displayName;
-
-    /**
-     * @var CategoryForTree[]
-     */
-    private $children;
-
-    /**
      * @param CategoryForTree[] $children
      */
     public function __construct(
-        int $categoryId,
-        bool $active,
-        string $name,
-        string $displayName,
-        array $children,
+        private readonly int $categoryId,
+        private readonly bool $active,
+        private readonly string $name,
+        private readonly string $displayName,
+        private readonly array $children,
     ) {
-        $this->categoryId = $categoryId;
-        $this->active = $active;
-        $this->name = $name;
-        $this->displayName = $displayName;
-        $this->children = $children;
     }
 
     public function getCategoryId(): int

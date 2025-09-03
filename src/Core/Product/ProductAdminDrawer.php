@@ -64,12 +64,15 @@ class ProductAdminDrawer implements HookContentClassInterface
         if (! empty($data['icon'])) {
             $this->setIcon($data['icon']);
         }
+
         if (! empty($data['id'])) {
             $this->setId($data['id']);
         }
+
         if (! empty($data['link'])) {
             $this->setLink($data['link']);
         }
+
         if (! empty($data['title'])) {
             $this->setTitle($data['title']);
         }

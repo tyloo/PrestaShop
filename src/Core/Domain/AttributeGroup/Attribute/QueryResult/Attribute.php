@@ -32,45 +32,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\QueryResult
 class Attribute
 {
     /**
-     * @var int
-     */
-    private $attributeId;
-
-    /**
-     * @var int
-     */
-    private $position;
-
-    /**
-     * @var string
-     */
-    private $color;
-
-    /**
-     * @var string[] key => value pairs where each key represents language id
-     */
-    private $localizedNames;
-
-    /**
-     * @var string|null
-     */
-    private $textureFilePath;
-
-    /**
      * @param string[] $localizedNames key => value pairs where each key represents language id
      */
     public function __construct(
-        int $attributeId,
-        int $position,
-        string $color,
-        array $localizedNames,
-        ?string $textureFilePath = null,
+        private readonly int $attributeId,
+        private readonly int $position,
+        private readonly string $color,
+        private readonly array $localizedNames,
+        private readonly ?string $textureFilePath = null,
     ) {
-        $this->attributeId = $attributeId;
-        $this->position = $position;
-        $this->color = $color;
-        $this->localizedNames = $localizedNames;
-        $this->textureFilePath = $textureFilePath;
     }
 
     public function getAttributeId(): int

@@ -35,11 +35,6 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\EmployeeId;
 class BulkUpdateEmployeeStatusCommand
 {
     /**
-     * @var bool
-     */
-    private $status;
-
-    /**
      * @var EmployeeId[]
      */
     private $employeeIds;
@@ -48,10 +43,10 @@ class BulkUpdateEmployeeStatusCommand
      * @param int[] $employeeIds
      * @param bool  $status
      */
-    public function __construct(array $employeeIds, $status)
-    {
-        $this->status = $status;
-
+    public function __construct(
+        array $employeeIds,
+        private $status,
+    ) {
         $this->setEmployeeIds($employeeIds);
     }
 

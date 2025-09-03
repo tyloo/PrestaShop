@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class ImportMatchConfigurationChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $matchConfigurations;
-
-    public function __construct(array $matchConfigurations)
-    {
-        $this->matchConfigurations = $matchConfigurations;
+    public function __construct(
+        private readonly array $matchConfigurations,
+    ) {
     }
 
     public function getChoices()

@@ -41,43 +41,25 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
 {
-    /**
-     * @var PhpExtractor the PHP Code extractor
-     */
-    private $phpExtractor;
-
-    /**
-     * @var SmartyExtractor the Smarty Code extractor
-     */
-    private $smartyExtractor;
-
-    /**
-     * @var TwigExtractor the Twig Code extractor
-     */
-    private $twigExtractor;
-
-    /**
-     * @var string the "modules" directory path
-     */
-    private $modulesDirectory;
-
-    /**
-     * @var array
-     */
-    private $catalogueExtractExcludedDirectories;
-
     public function __construct(
-        PhpExtractor $phpExtractor,
-        SmartyExtractor $smartyExtractor,
-        TwigExtractor $twigExtractor,
-        string $modulesDirectory,
-        array $catalogueExtractExcludedDirectories,
+        /**
+         * @var PhpExtractor the PHP Code extractor
+         */
+        private readonly PhpExtractor $phpExtractor,
+        /**
+         * @var SmartyExtractor the Smarty Code extractor
+         */
+        private readonly SmartyExtractor $smartyExtractor,
+        /**
+         * @var TwigExtractor the Twig Code extractor
+         */
+        private readonly TwigExtractor $twigExtractor,
+        /**
+         * @var string the "modules" directory path
+         */
+        private readonly string $modulesDirectory,
+        private readonly array $catalogueExtractExcludedDirectories,
     ) {
-        $this->phpExtractor = $phpExtractor;
-        $this->smartyExtractor = $smartyExtractor;
-        $this->twigExtractor = $twigExtractor;
-        $this->modulesDirectory = $modulesDirectory;
-        $this->catalogueExtractExcludedDirectories = $catalogueExtractExcludedDirectories;
     }
 
     /**

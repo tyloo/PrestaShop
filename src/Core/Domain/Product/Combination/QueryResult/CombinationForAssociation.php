@@ -31,38 +31,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryResult;
 
 class CombinationForAssociation
 {
-    /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var int
-     */
-    private $combinationId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $imageUrl;
-
-    public function __construct(int $productId, int $combinationId, string $name, string $reference, string $imageUrl)
-    {
-        $this->productId = $productId;
-        $this->combinationId = $combinationId;
-        $this->name = $name;
-        $this->reference = $reference;
-        $this->imageUrl = $imageUrl;
+    public function __construct(
+        private readonly int $productId,
+        private readonly int $combinationId,
+        private readonly string $name,
+        private readonly string $reference,
+        private readonly string $imageUrl,
+    ) {
     }
 
     public function getProductId(): int

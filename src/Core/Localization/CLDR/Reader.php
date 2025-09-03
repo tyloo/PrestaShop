@@ -40,14 +40,19 @@ use SimpleXMLElement;
 class Reader implements ReaderInterface
 {
     public const CLDR_ROOT = 'localization/CLDR/';
+
     public const CLDR_MAIN = 'localization/CLDR/core/common/main/';
+
     public const CLDR_SUPPLEMENTAL = 'localization/CLDR/core/common/supplemental/';
 
     public const CLDR_ROOT_LOCALE = 'root';
 
     public const SUPPL_DATA_CURRENCY = 'currencyData';
+
     public const SUPPL_DATA_LANGUAGE = 'languageData';
+
     public const SUPPL_DATA_NUMBERING = 'numberingSystems';
+
     public const SUPPL_DATA_PARENT_LOCALES = 'parentLocales'; // For specific locales hierarchy
 
     public const DEFAULT_CURRENCY_DIGITS = 2;
@@ -168,7 +173,7 @@ class Reader implements ReaderInterface
      *
      * @see http://www.unicode.org/reports/tr35/tr35.html#Lookup
      */
-    protected function getLookup($localeCode)
+    protected function getLookup($localeCode): array
     {
         $lookup = [$localeCode];
 
@@ -241,9 +246,9 @@ class Reader implements ReaderInterface
      */
     protected function mainPath($filename = '')
     {
-        $path = realpath(_PS_ROOT_DIR_ . '/' . self::CLDR_MAIN . ($filename ? $filename : ''));
+        $path = realpath(_PS_ROOT_DIR_ . '/' . self::CLDR_MAIN . ($filename ?: ''));
         if ($path === false) {
-            throw new LocalizationFileNotFoundException("The file $filename does not exist");
+            throw new LocalizationFileNotFoundException(\sprintf('The file %s does not exist', $filename));
         }
 
         return $path;
@@ -289,6 +294,7 @@ class Reader implements ReaderInterface
         if (isset($xmlLocaleData->identity->language)) {
             $localeData->setLocaleCode((string) $xmlLocaleData->identity->language['type']);
         }
+
         if (isset($xmlLocaleData->identity->territory)) {
             $localeData->setLocaleCode(
                 $localeData->getLocaleCode() . '-' . $xmlLocaleData->identity->territory['type']
@@ -301,12 +307,14 @@ class Reader implements ReaderInterface
         if (isset($numbersData->defaultNumberingSystem)) {
             $localeData->setDefaultNumberingSystem((string) $numbersData->defaultNumberingSystem);
         }
+
         // Minimum grouping digits value defines when we should start grouping digits.
         // 1 => we start grouping at 4 figures numbers (1,000+) (most frequent)
         // 2 => we start grouping at 5 figures numbers (10,000+)
         if (isset($numbersData->minimumGroupingDigits)) {
             $localeData->setMinimumGroupingDigits((int) $numbersData->minimumGroupingDigits);
         }
+
         // Complete numbering systems list with the "others" available for this locale.
         // Possible other systems are "native", "traditional" and "finance".
         // @see http://www.unicode.org/reports/tr35/tr35-numbers.html#otherNumberingSystems
@@ -316,8 +324,10 @@ class Reader implements ReaderInterface
                 /** @var SimplexmlElement $system */
                 $numberingSystems[$system->getName()] = (string) $system;
             }
+
             $localeData->setNumberingSystems($numberingSystems);
         }
+
         // Symbols (by numbering system)
         if (isset($numbersData->symbols)) {
             $numberSymbols = $localeData->getNumberSymbols();
@@ -326,6 +336,7 @@ class Reader implements ReaderInterface
                 if (! isset($symbolsNode['numberSystem'])) {
                     continue;
                 }
+
                 $thisNumberingSystem = (string) $symbolsNode['numberSystem'];
 
                 // Copying data from another node when relevant (alias)
@@ -335,6 +346,7 @@ class Reader implements ReaderInterface
                     if (empty($results)) {
                         continue;
                     }
+
                     $symbolsNode = $results[0];
                 }
 
@@ -342,50 +354,65 @@ class Reader implements ReaderInterface
                 if (isset($symbolsNode->decimal)) {
                     $symbolsList->setDecimal((string) $symbolsNode->decimal);
                 }
+
                 if (isset($symbolsNode->group)) {
                     $symbolsList->setGroup((string) $symbolsNode->group);
                 }
+
                 if (isset($symbolsNode->list)) {
                     $symbolsList->setList((string) $symbolsNode->list);
                 }
+
                 if (isset($symbolsNode->percentSign)) {
                     $symbolsList->setPercentSign((string) $symbolsNode->percentSign);
                 }
+
                 if (isset($symbolsNode->minusSign)) {
                     $symbolsList->setMinusSign((string) $symbolsNode->minusSign);
                 }
+
                 if (isset($symbolsNode->plusSign)) {
                     $symbolsList->setPlusSign((string) $symbolsNode->plusSign);
                 }
+
                 if (isset($symbolsNode->exponential)) {
                     $symbolsList->setExponential((string) $symbolsNode->exponential);
                 }
+
                 if (isset($symbolsNode->superscriptingExponent)) {
                     $symbolsList->setSuperscriptingExponent((string) $symbolsNode->superscriptingExponent);
                 }
+
                 if (isset($symbolsNode->perMille)) {
                     $symbolsList->setPerMille((string) $symbolsNode->perMille);
                 }
+
                 if (isset($symbolsNode->infinity)) {
                     $symbolsList->setInfinity((string) $symbolsNode->infinity);
                 }
+
                 if (isset($symbolsNode->nan)) {
                     $symbolsList->setNan((string) $symbolsNode->nan);
                 }
+
                 if (isset($symbolsNode->timeSeparator)) {
                     $symbolsList->setTimeSeparator((string) $symbolsNode->timeSeparator);
                 }
+
                 if (isset($symbolsNode->currencyDecimal)) {
                     $symbolsList->setCurrencyDecimal((string) $symbolsNode->currencyDecimal);
                 }
+
                 if (isset($symbolsNode->currencyGroup)) {
                     $symbolsList->setCurrencyGroup((string) $symbolsNode->currencyGroup);
                 }
 
                 $numberSymbols[$thisNumberingSystem] = $symbolsList;
             }
+
             $localeData->setNumberSymbols($numberSymbols);
         }
+
         // Decimal patterns (by numbering system)
         if (isset($numbersData->decimalFormats)) {
             $decimalPatterns = $localeData->getDecimalPatterns();
@@ -398,6 +425,7 @@ class Reader implements ReaderInterface
                     $decimalPatterns[$numberSystem] = (string) $patternResult[0];
                 }
             }
+
             // Aliases nodes are in root.xml only. They avoid duplicated data.
             // We browse aliases after all regular patterns have been defined, and duplicate data for target number
             // systems.
@@ -418,8 +446,10 @@ class Reader implements ReaderInterface
                     continue;
                 }
             }
+
             $localeData->setDecimalPatterns($decimalPatterns);
         }
+
         // Percent patterns (by numbering system)
         if (isset($numbersData->percentFormats)) {
             $percentPatterns = $localeData->getPercentPatterns();
@@ -430,6 +460,7 @@ class Reader implements ReaderInterface
                     $percentPatterns[$numberSystem] = (string) $patternResult[0];
                 }
             }
+
             // Aliases nodes are in root.xml only. They avoid duplicated data.
             // We browse aliases after all regular patterns have been defined, and duplicate data for target number
             // systems.
@@ -450,8 +481,10 @@ class Reader implements ReaderInterface
                     continue;
                 }
             }
+
             $localeData->setPercentPatterns($percentPatterns);
         }
+
         // Currency patterns (by numbering system)
         if (isset($numbersData->currencyFormats)) {
             $currencyPatterns = $localeData->getCurrencyPatterns();
@@ -465,6 +498,7 @@ class Reader implements ReaderInterface
                     $currencyPatterns[$numberSystem] = (string) $patternResult[0];
                 }
             }
+
             // Aliases nodes are in root.xml only. They avoid duplicated data.
             // We browse aliases after all regular patterns have been defined, and duplicate data for target number
             // systems.
@@ -485,6 +519,7 @@ class Reader implements ReaderInterface
                     continue;
                 }
             }
+
             $localeData->setCurrencyPatterns($currencyPatterns);
         }
 
@@ -519,8 +554,10 @@ class Reader implements ReaderInterface
                     if (empty($type)) {
                         $type = 'default';
                     }
+
                     $symbols[$type] = (string) $symbolNode;
                 }
+
                 $currencyData->setSymbols($symbols);
 
                 // Names
@@ -530,8 +567,10 @@ class Reader implements ReaderInterface
                     if (! empty($nameNode['count'])) {
                         $countContext = (string) $nameNode['count'];
                     }
+
                     $displayNames[$countContext] = (string) $nameNode;
                 }
+
                 $currencyData->setDisplayNames($displayNames);
 
                 // Supplemental (fraction digits and numeric iso code)
@@ -546,6 +585,7 @@ class Reader implements ReaderInterface
                     if (\strlen($numericIsoCode) < 3) {
                         $numericIsoCode = str_pad($numericIsoCode, 3, '0', \STR_PAD_LEFT);
                     }
+
                     $currencyData->setNumericIsoCode($numericIsoCode);
                 }
 
@@ -567,6 +607,7 @@ class Reader implements ReaderInterface
 
                 $currencies[$currencyCode] = $currencyData;
             }
+
             $localeData->setCurrencies($currencies);
         }
 
@@ -584,7 +625,7 @@ class Reader implements ReaderInterface
      *               'fullwide' => '０１２３４５６７８９',
      *               ]
      */
-    protected function getDigitsData()
+    protected function getDigitsData(): array
     {
         $digitsSets = [];
         $results = $this->numberingSystemsXml->numberingSystems->xpath('//numberingSystem[@type="numeric"]');
@@ -610,6 +651,7 @@ class Reader implements ReaderInterface
         if ($currencyCode === self::CURRENCY_CODE_TEST) {
             return false;
         }
+
         // check if currency is still active in one territory
         $currencyDates = $supplementalData->xpath('//region/currency[@iso4217="' . $currencyCode . '"]');
         if (empty($currencyDates)) {
@@ -624,10 +666,8 @@ class Reader implements ReaderInterface
      * check if currency is still in use in some territory
      *
      * @param int $currencyActiveDateThreshold timestamp after which currency should be used
-     *
-     * @return bool
      */
-    protected function isCurrencyActiveSomewhere(array $currencyDates, $currencyActiveDateThreshold)
+    protected function isCurrencyActiveSomewhere(array $currencyDates, $currencyActiveDateThreshold): bool
     {
         foreach ($currencyDates as $currencyDate) {
             if (empty($currencyDate->attributes()->to)) {

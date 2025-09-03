@@ -33,23 +33,13 @@ namespace PrestaShop\PrestaShop\Core\Group\Provider;
 class DefaultGroup
 {
     /**
-     * @var int
-     */
-    private $groupId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @param int    $groupId
      * @param string $name
      */
-    public function __construct($groupId, $name)
-    {
-        $this->groupId = $groupId;
-        $this->name = $name;
+    public function __construct(
+        private $groupId,
+        private $name,
+    ) {
     }
 
     /**

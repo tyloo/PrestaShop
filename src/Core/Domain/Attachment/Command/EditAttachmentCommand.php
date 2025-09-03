@@ -35,11 +35,6 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\ValueObject\AttachmentId;
 class EditAttachmentCommand
 {
     /**
-     * @var AttachmentId
-     */
-    private $attachmentId;
-
-    /**
      * @var string
      */
     private $pathName;
@@ -69,9 +64,9 @@ class EditAttachmentCommand
      */
     private $fileSize;
 
-    public function __construct(AttachmentId $attachmentId)
-    {
-        $this->attachmentId = $attachmentId;
+    public function __construct(
+        private readonly AttachmentId $attachmentId,
+    ) {
     }
 
     public function getAttachmentId(): AttachmentId

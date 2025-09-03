@@ -43,17 +43,13 @@ class AddFeatureValueCommand
     private $featureId;
 
     /**
-     * @var string[]
-     */
-    private $localizedValues;
-
-    /**
      * @param string[] $localizedValues
      */
-    public function __construct(int $featureId, array $localizedValues)
-    {
+    public function __construct(
+        int $featureId,
+        private readonly array $localizedValues,
+    ) {
         $this->featureId = new FeatureId($featureId);
-        $this->localizedValues = $localizedValues;
     }
 
     public function getFeatureId(): FeatureId

@@ -38,22 +38,10 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
  */
 final class MailThemeConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var ThemeCatalogInterface
-     */
-    private $themeCatalog;
-
     public function __construct(
-        ConfigurationInterface $configuration,
-        ThemeCatalogInterface $themeCatalog,
+        private readonly ConfigurationInterface $configuration,
+        private readonly ThemeCatalogInterface $themeCatalog,
     ) {
-        $this->configuration = $configuration;
-        $this->themeCatalog = $themeCatalog;
     }
 
     public function getConfiguration()
@@ -63,15 +51,18 @@ final class MailThemeConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return list<string>
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 
         try {
             $this->validateConfiguration($configuration);
             $this->configuration->set('PS_MAIL_THEME', $configuration['defaultTheme']);
-        } catch (CoreException $e) {
-            $errors[] = $e->getMessage();
+        } catch (CoreException $coreException) {
+            $errors[] = $coreException->getMessage();
         }
 
         return $errors;

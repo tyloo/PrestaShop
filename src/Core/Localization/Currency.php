@@ -37,81 +37,11 @@ use PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException;
 class Currency implements CurrencyInterface
 {
     /**
-     * Is this currency active ?
-     *
-     * @var bool
-     */
-    protected $isActive;
-
-    /**
-     * Conversion rate of this currency against the default shop's currency.
-     *
-     * Price in currency A * currency A's conversion rate = price in default currency
-     *
-     * Example:
-     * Given the Euro as default shop's currency,
-     * If 1 dollar = 1.31 euros,
-     * Then conversion rate for Dollar will be 1.31
-     *
-     * @var float
-     */
-    protected $conversionRate;
-
-    /**
-     * Currency's alphabetic ISO code (ISO 4217).
-     *
-     * @see https://www.iso.org/iso-4217-currency-codes.html
-     *
-     * @var string
-     */
-    protected $isoCode;
-
-    /**
-     * Currency's numeric ISO code (ISO 4217).
-     *
-     * @see https://www.iso.org/iso-4217-currency-codes.html
-     *
-     * @var int
-     */
-    protected $numericIsoCode;
-
-    /**
-     * Currency's symbols, by locale code.
-     *
-     * eg.: $symbolsUSD = [
-     *     'en-US' => '$',
-     *     'es-CO' => 'US$', // In Colombia, colombian peso's symbol is "$". They have to differentiate foreign dollars.
-     * ]
-     *
-     * @var string[]
-     */
-    protected $symbols;
-
-    /**
      * Number of decimal digits to use with this currency.
      *
      * @var int
      */
     protected $precision;
-
-    /**
-     * the currency's name, by locale code.
-     *
-     * @var string[]
-     */
-    protected $names;
-
-    /**
-     * Currency's patterns, by locale code.
-     *
-     * eg.: $patternsUSD = [
-     *     'fr-FR' => '#,##0.00 ¤',
-     *     'en-EN' => '¤#,##0.00',
-     * ]
-     *
-     * @var string[]
-     */
-    protected $patterns;
 
     /**
      * @param bool     $isActive       Is this currency active ?
@@ -124,23 +54,58 @@ class Currency implements CurrencyInterface
      * @param string[] $patterns       the currency's pattern, by locale code
      */
     public function __construct(
-        $isActive,
-        $conversionRate,
-        $isoCode,
-        $numericIsoCode,
-        $symbols,
+        /**
+         * Is this currency active ?
+         */
+        protected $isActive,
+        /**
+         * Conversion rate of this currency against the default shop's currency.
+         *
+         * Price in currency A * currency A's conversion rate = price in default currency
+         *
+         * Example:
+         * Given the Euro as default shop's currency,
+         * If 1 dollar = 1.31 euros,
+         * Then conversion rate for Dollar will be 1.31
+         */
+        protected $conversionRate,
+        /**
+         * Currency's alphabetic ISO code (ISO 4217).
+         *
+         * @see https://www.iso.org/iso-4217-currency-codes.html
+         */
+        protected $isoCode,
+        /**
+         * Currency's numeric ISO code (ISO 4217).
+         *
+         * @see https://www.iso.org/iso-4217-currency-codes.html
+         */
+        protected $numericIsoCode,
+        /**
+         * Currency's symbols, by locale code.
+         *
+         * eg.: $symbolsUSD = [
+         *     'en-US' => '$',
+         *     'es-CO' => 'US$', // In Colombia, colombian peso's symbol is "$". They have to differentiate foreign dollars.
+         * ]
+         */
+        protected $symbols,
         $precision,
-        $names,
-        $patterns = [],
+        /**
+         * the currency's name, by locale code.
+         */
+        protected $names,
+        /**
+         * Currency's patterns, by locale code.
+         *
+         * eg.: $patternsUSD = [
+         *     'fr-FR' => '#,##0.00 ¤',
+         *     'en-EN' => '¤#,##0.00',
+         * ]
+         */
+        protected $patterns = [],
     ) {
-        $this->isActive = $isActive;
-        $this->conversionRate = $conversionRate;
-        $this->isoCode = $isoCode;
-        $this->numericIsoCode = $numericIsoCode;
-        $this->symbols = $symbols;
         $this->precision = (int) $precision;
-        $this->names = $names;
-        $this->patterns = $patterns;
     }
 
     public function isActive()

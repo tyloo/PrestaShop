@@ -77,7 +77,10 @@ final class ColumnCollection extends AbstractCollection implements ColumnCollect
         return $this;
     }
 
-    public function toArray()
+    /**
+     * @return list<array{id: mixed, name: mixed, type: mixed, options: mixed}>
+     */
+    public function toArray(): array
     {
         $columns = [];
 

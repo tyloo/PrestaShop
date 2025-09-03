@@ -33,37 +33,17 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class MessageInformation
 {
     /**
-     * @var int
-     */
-    private $customerThreadId;
-
-    /**
-     * @var string
-     */
-    private $message;
-
-    /**
-     * @var string
-     */
-    private $status;
-
-    /**
-     * @var string
-     */
-    private $date;
-
-    /**
      * @param int    $customerThreadId
      * @param string $message
      * @param string $status
      * @param string $date
      */
-    public function __construct($customerThreadId, $message, $status, $date)
-    {
-        $this->customerThreadId = $customerThreadId;
-        $this->message = $message;
-        $this->status = $status;
-        $this->date = $date;
+    public function __construct(
+        private $customerThreadId,
+        private $message,
+        private $status,
+        private $date,
+    ) {
     }
 
     /**

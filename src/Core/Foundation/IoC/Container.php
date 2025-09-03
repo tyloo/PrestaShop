@@ -34,7 +34,9 @@ use ReflectionNamedType;
 class Container
 {
     private $bindings = [];
+
     private $instances = [];
+
     private $namespaceAliases = [];
 
     public function knows($serviceName)
@@ -74,11 +76,11 @@ class Container
 
     public function resolveClassName($className)
     {
-        $colonPos = strpos($className, ':');
+        $colonPos = strpos((string) $className, ':');
         if ($colonPos !== 0 && $colonPos !== false) {
-            $alias = substr($className, 0, $colonPos);
+            $alias = substr((string) $className, 0, $colonPos);
             if ($this->knowsNamespaceAlias($alias)) {
-                $class = ltrim(substr($className, $colonPos + 1), '\\');
+                $class = ltrim(substr((string) $className, $colonPos + 1), '\\');
 
                 return $this->namespaceAliases[$alias] . '\\' . $class;
             }
@@ -94,7 +96,7 @@ class Container
         try {
             $refl = new ReflectionClass($className);
         } catch (ReflectionException) {
-            throw new Exception(\sprintf('This doesn\'t seem to be a class name: `%s`.', $className));
+            throw new Exception(\sprintf("This doesn't seem to be a class name: `%s`.", $className));
         }
 
         $args = [];
@@ -143,6 +145,7 @@ class Container
         if ($binding['shared'] && \array_key_exists($serviceName, $this->instances)) {
             return $this->instances[$serviceName];
         }
+
         $constructor = $binding['constructor'];
 
         if (\is_callable($constructor)) {

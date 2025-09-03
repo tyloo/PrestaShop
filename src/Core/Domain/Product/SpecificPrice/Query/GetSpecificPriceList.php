@@ -48,35 +48,17 @@ class GetSpecificPriceList
     private $languageId;
 
     /**
-     * @var int|null
-     */
-    private $limit;
-
-    /**
-     * @var int|null
-     */
-    private $offset;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private $filters;
-
-    /**
      * @param array<string, mixed> $filters
      */
     public function __construct(
         int $productId,
         int $languageId,
-        ?int $limit = null,
-        ?int $offset = null,
-        array $filters = [],
+        private readonly ?int $limit = null,
+        private readonly ?int $offset = null,
+        private readonly array $filters = [],
     ) {
         $this->productId = new ProductId($productId);
         $this->languageId = new LanguageId($languageId);
-        $this->limit = $limit;
-        $this->offset = $offset;
-        $this->filters = $filters;
     }
 
     public function getProductId(): ProductId

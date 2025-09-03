@@ -34,99 +34,21 @@ use PrestaShop\Decimal\DecimalNumber;
 
 class CatalogPriceRuleForListing
 {
-    /**
-     * @var int
-     */
-    private $catalogPriceRuleId;
-
-    /**
-     * @var string
-     */
-    private $catalogPriceRuleName;
-
-    /**
-     * @var string|null
-     */
-    private $shopName;
-
-    /**
-     * @var string|null
-     */
-    private $currencyName;
-
-    /**
-     * @var string|null
-     */
-    private $countryName;
-
-    /**
-     * @var string|null
-     */
-    private $groupName;
-
-    /**
-     * @var int
-     */
-    private $fromQuantity;
-
-    /**
-     * @var string
-     */
-    private $reductionType;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $reduction;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $dateStart;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $dateEnd;
-
-    /**
-     * @var string|null
-     */
-    private $currencyIso;
-
-    /**
-     * @var bool
-     */
-    private $isTaxIncluded;
-
     public function __construct(
-        int $catalogPriceRuleId,
-        string $catalogPriceRuleName,
-        int $fromQuantity,
-        string $reductionType,
-        DecimalNumber $reduction,
-        bool $isTaxIncluded,
-        DateTimeInterface $dateStart,
-        DateTimeInterface $dateEnd,
-        ?string $shopName,
-        ?string $currencyName,
-        ?string $countryName,
-        ?string $groupName,
-        ?string $currencyIso,
+        private readonly int $catalogPriceRuleId,
+        private readonly string $catalogPriceRuleName,
+        private readonly int $fromQuantity,
+        private readonly string $reductionType,
+        private readonly DecimalNumber $reduction,
+        private readonly bool $isTaxIncluded,
+        private readonly DateTimeInterface $dateStart,
+        private readonly DateTimeInterface $dateEnd,
+        private readonly ?string $shopName,
+        private readonly ?string $currencyName,
+        private readonly ?string $countryName,
+        private readonly ?string $groupName,
+        private readonly ?string $currencyIso,
     ) {
-        $this->catalogPriceRuleId = $catalogPriceRuleId;
-        $this->catalogPriceRuleName = $catalogPriceRuleName;
-        $this->fromQuantity = $fromQuantity;
-        $this->reductionType = $reductionType;
-        $this->reduction = $reduction;
-        $this->isTaxIncluded = $isTaxIncluded;
-        $this->dateStart = $dateStart;
-        $this->dateEnd = $dateEnd;
-        $this->shopName = $shopName;
-        $this->currencyName = $currencyName;
-        $this->countryName = $countryName;
-        $this->groupName = $groupName;
-        $this->currencyIso = $currencyIso;
     }
 
     public function getCatalogPriceRuleId(): int

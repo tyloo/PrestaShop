@@ -40,27 +40,18 @@ use PrestaShop\PrestaShop\Core\Grid\Position\PositionDefinitionInterface;
 final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
      * @param string $dbPrefix
      */
     public function __construct(
-        Connection $connection,
-        $dbPrefix,
+        private readonly Connection $connection,
+        private $dbPrefix,
     ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
     }
 
-    public function getCurrentPositions(PositionDefinitionInterface $positionDefinition, $parentId = null)
+    /**
+     * @return mixed[]
+     */
+    public function getCurrentPositions(PositionDefinitionInterface $positionDefinition, $parentId = null): array
     {
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -109,8 +100,10 @@ final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterf
                 } catch (Exception) {
                     throw new PositionUpdateException('Could not update #%i', 'Admin.Catalog.Notification', [$rowId]);
                 }
+
                 ++$positionIndex;
             }
+
             $this->connection->commit();
         } catch (ConnectionException) {
             $this->connection->rollBack();

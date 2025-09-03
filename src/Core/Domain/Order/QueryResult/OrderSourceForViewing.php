@@ -33,32 +33,12 @@ use DateTimeImmutable;
 
 class OrderSourceForViewing
 {
-    /**
-     * @var string
-     */
-    private $httpReferer;
-
-    /**
-     * @var string
-     */
-    private $requestUri;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $addedAt;
-
-    /**
-     * @var string
-     */
-    private $keywords;
-
-    public function __construct(string $httpReferer, string $requestUri, DateTimeImmutable $addedAt, string $keywords)
-    {
-        $this->httpReferer = $httpReferer;
-        $this->requestUri = $requestUri;
-        $this->addedAt = $addedAt;
-        $this->keywords = $keywords;
+    public function __construct(
+        private readonly string $httpReferer,
+        private readonly string $requestUri,
+        private readonly DateTimeImmutable $addedAt,
+        private readonly string $keywords,
+    ) {
     }
 
     public function getHttpReferer(): string

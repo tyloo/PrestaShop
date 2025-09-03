@@ -44,19 +44,10 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
  */
 class TranslationsTreeBuilder
 {
-    /**
-     * @var Router
-     */
-    private $router;
-    /**
-     * @var TranslationCatalogueBuilder
-     */
-    private $translationCatalogueBuilder;
-
-    public function __construct(Router $router, TranslationCatalogueBuilder $translationCatalogueBuilder)
-    {
-        $this->router = $router;
-        $this->translationCatalogueBuilder = $translationCatalogueBuilder;
+    public function __construct(
+        private readonly Router $router,
+        private readonly TranslationCatalogueBuilder $translationCatalogueBuilder,
+    ) {
     }
 
     /**
@@ -105,6 +96,7 @@ class TranslationsTreeBuilder
         if ($subtreeName !== null) {
             $current['name'] = $subtreeName;
         }
+
         if ($fullSubtreeName !== null) {
             $current['full_name'] = $fullSubtreeName;
             $current['domain_catalog_link'] = $this->getRoute($fullSubtreeName, $routeParams);
@@ -116,6 +108,7 @@ class TranslationsTreeBuilder
                 $current['total_missing_translations'] = $value['missing_translations'];
                 continue;
             }
+
             if (! isset($current['children'])) {
                 $current['children'] = [];
             }
@@ -124,9 +117,7 @@ class TranslationsTreeBuilder
         }
 
         if (isset($current['children'])) {
-            usort($current['children'], function (array $child1, array $child2) {
-                return strcmp($child1['name'], $child2['name']);
-            });
+            usort($current['children'], fn (array $child1, array $child2): int => strcmp((string) $child1['name'], (string) $child2['name']));
         }
 
         return $current;

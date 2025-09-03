@@ -35,75 +35,33 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\ValueObject\ManufacturerId;
 class EditableManufacturer
 {
     /**
-     * @var ManufacturerId
-     */
-    private $manufacturerId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string[]
-     */
-    private $localizedShortDescriptions;
-
-    /**
-     * @var string[]
-     */
-    private $localizedDescriptions;
-
-    /**
-     * @var array
-     */
-    private $logoImage;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMetaTitles;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMetaDescriptions;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var array
-     */
-    private $associatedShops;
-
-    /**
      * @param string     $name
      * @param bool       $enabled
      * @param array|null $logoImage
      */
     public function __construct(
-        ManufacturerId $manufacturerId,
-        $name,
-        $enabled,
-        array $localizedShortDescriptions,
-        array $localizedDescriptions,
-        array $localizedMetaTitles,
-        array $localizedMetaDescriptions,
-        $logoImage,
-        array $associatedShops,
+        private readonly ManufacturerId $manufacturerId,
+        private $name,
+        private $enabled,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedShortDescriptions,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedDescriptions,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedMetaTitles,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedMetaDescriptions,
+        private $logoImage,
+        private readonly array $associatedShops,
     ) {
-        $this->manufacturerId = $manufacturerId;
-        $this->name = $name;
-        $this->localizedShortDescriptions = $localizedShortDescriptions;
-        $this->localizedDescriptions = $localizedDescriptions;
-        $this->logoImage = $logoImage;
-        $this->localizedMetaTitles = $localizedMetaTitles;
-        $this->localizedMetaDescriptions = $localizedMetaDescriptions;
-        $this->enabled = $enabled;
-        $this->associatedShops = $associatedShops;
     }
 
     /**

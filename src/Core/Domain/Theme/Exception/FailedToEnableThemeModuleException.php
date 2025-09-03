@@ -30,19 +30,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Theme\Exception;
 class FailedToEnableThemeModuleException extends ThemeException
 {
     /**
-     * @var string
+     * @param string $moduleName
      */
-    private $moduleName;
-
     public function __construct(
-        $moduleName,
+        private $moduleName,
         $message = '',
         $code = 0,
         $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
-
-        $this->moduleName = $moduleName;
     }
 
     /**

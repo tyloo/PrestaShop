@@ -32,21 +32,12 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult\CarrierSummary;
 
 class ShipmentForViewing
 {
-    private int $id;
-    private ?string $trackingNumber;
-    private CarrierSummary $carrierSummary;
-    private ShippingAdressSummary $shippingAdressSummary;
-
     public function __construct(
-        int $id,
-        ?string $trackingNumber,
-        CarrierSummary $carrierSummary,
-        ShippingAdressSummary $shippingAdressSummary,
+        private int $id,
+        private ?string $trackingNumber,
+        private CarrierSummary $carrierSummary,
+        private ShippingAdressSummary $shippingAdressSummary,
     ) {
-        $this->id = $id;
-        $this->trackingNumber = $trackingNumber;
-        $this->carrierSummary = $carrierSummary;
-        $this->shippingAdressSummary = $shippingAdressSummary;
     }
 
     public function getId(): int

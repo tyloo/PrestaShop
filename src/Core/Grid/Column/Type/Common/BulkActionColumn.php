@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class BulkActionColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'bulk_action';
     }

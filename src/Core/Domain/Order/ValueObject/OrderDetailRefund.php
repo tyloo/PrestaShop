@@ -46,11 +46,6 @@ class OrderDetailRefund
     private $productQuantity;
 
     /**
-     * @var DecimalNumber|null
-     */
-    private $refundedAmount;
-
-    /**
      * @throws InvalidCancelProductException
      * @throws OrderException
      */
@@ -80,15 +75,18 @@ class OrderDetailRefund
     /**
      * @throws OrderException
      */
-    private function __construct(int $orderDetailId, int $productQuantity, ?DecimalNumber $refundedAmount)
-    {
+    private function __construct(
+        int $orderDetailId,
+        int $productQuantity,
+        private readonly ?DecimalNumber $refundedAmount,
+    ) {
         $this->assertOrderDetailIdIsGreaterThanZero($orderDetailId);
         if ($productQuantity <= 0) {
             throw new InvalidCancelProductException(InvalidCancelProductException::INVALID_QUANTITY);
         }
+
         $this->orderDetailId = $orderDetailId;
         $this->productQuantity = $productQuantity;
-        $this->refundedAmount = $refundedAmount;
     }
 
     public function getOrderDetailId(): int

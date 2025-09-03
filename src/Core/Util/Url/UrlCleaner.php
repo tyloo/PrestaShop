@@ -48,12 +48,12 @@ class UrlCleaner
         foreach ($parameters as $key => $value) {
             // Empty parameter that had no defined value must remain defined with no value (?action&otherAction not ?action=&otherAction=)
             if ($value === '' && ! preg_match('/' . $key . '=[^&]*/', $parsedUrl['query'])) {
-                $query = preg_replace('/' . $key . '=/', $key, $query);
+                $query = preg_replace('/' . $key . '=/', $key, (string) $query);
             }
         }
 
         // Replace %5B%5D escaped brackets with actual brackets but keep their content
-        $query = preg_replace('/\%5B([^\%5B\%5D]*?)\%5D/', '[$1]', $query);
+        $query = preg_replace('/\%5B([^\%5B\%5D]*?)\%5D/', '[$1]', (string) $query);
 
         // Finally rebuild url with cleaned query parameters
         $parsedUrl['query'] = $query;

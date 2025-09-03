@@ -37,8 +37,8 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\QueryResult\Edita
 class AttributeFormDataProvider implements FormDataProviderInterface
 {
     public function __construct(
-        private CommandBusInterface $queryBus,
-        private ShopContext $shopContext,
+        private readonly CommandBusInterface $queryBus,
+        private readonly ShopContext $shopContext,
     ) {
     }
 

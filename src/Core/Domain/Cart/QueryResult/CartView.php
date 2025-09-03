@@ -30,46 +30,16 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult;
 class CartView
 {
     /**
-     * @var array
-     */
-    private $customerInformation;
-
-    /**
-     * @var array
-     */
-    private $orderInformation;
-
-    /**
-     * @var int
-     */
-    private $cartId;
-
-    /**
-     * @var array
-     */
-    private $cartSummary;
-
-    /**
-     * @var int
-     */
-    private $currencyId;
-
-    /**
      * @param int $cartId
      * @param int $currencyId
      */
     public function __construct(
-        $cartId,
-        $currencyId,
-        array $customerInformation,
-        array $orderInformation,
-        array $cartSummary,
+        private $cartId,
+        private $currencyId,
+        private readonly array $customerInformation,
+        private readonly array $orderInformation,
+        private readonly array $cartSummary,
     ) {
-        $this->customerInformation = $customerInformation;
-        $this->orderInformation = $orderInformation;
-        $this->cartId = $cartId;
-        $this->cartSummary = $cartSummary;
-        $this->currencyId = $currencyId;
     }
 
     /**

@@ -36,80 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation;
 class EditableCategory
 {
     /**
-     * @var CategoryId
-     */
-    private $id;
-
-    /**
-     * @var string[]
-     */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $isActive;
-
-    /**
-     * @var string[]
-     */
-    private $description;
-
-    /**
-     * @var int
-     */
-    private $parentId;
-
-    /**
-     * @var string[]
-     */
-    private $metaTitle;
-
-    /**
-     * @var string[]
-     */
-    private $metaDescription;
-
-    private string $redirectType;
-
-    private ?RedirectTargetInformation $categoryRedirectTarget;
-
-    /**
-     * @var string[]
-     */
-    private $linkRewrite;
-
-    /**
-     * @var int[]
-     */
-    private $groupAssociationIds;
-
-    /**
-     * @var int[]
-     */
-    private $shopAssociationIds;
-
-    private $thumbnailImage;
-
-    /**
      * @var null
      */
     private $coverImage;
-
-    /**
-     * @var bool
-     */
-    private $isRootCategory;
-
-    /**
-     * @var array
-     */
-    private $subCategories;
-
-    /**
-     * @var string[]
-     */
-    private $additionalDescription;
 
     /**
      * @param string[] $name
@@ -125,41 +54,25 @@ class EditableCategory
      * @param string[] $additionalDescription
      */
     public function __construct(
-        CategoryId $id,
-        array $name,
-        $isActive,
-        array $description,
-        $parentId,
-        array $metaTitle,
-        array $metaDescription,
-        array $linkRewrite,
-        string $redirectType,
-        ?RedirectTargetInformation $categoryRedirectTarget,
-        array $groupAssociationIds,
-        array $shopAssociationIds,
-        $isRootCategory,
+        private readonly CategoryId $id,
+        private readonly array $name,
+        private $isActive,
+        private readonly array $description,
+        private $parentId,
+        private readonly array $metaTitle,
+        private readonly array $metaDescription,
+        private readonly array $linkRewrite,
+        private string $redirectType,
+        private ?RedirectTargetInformation $categoryRedirectTarget,
+        private readonly array $groupAssociationIds,
+        private readonly array $shopAssociationIds,
+        private $isRootCategory,
         $coverImage = null,
-        $thumbnailImage = null,
-        array $subCategories = [],
-        array $additionalDescription = [],
+        private $thumbnailImage = null,
+        private readonly array $subCategories = [],
+        private readonly array $additionalDescription = [],
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->isActive = $isActive;
-        $this->description = $description;
-        $this->parentId = $parentId;
-        $this->metaTitle = $metaTitle;
-        $this->metaDescription = $metaDescription;
-        $this->linkRewrite = $linkRewrite;
-        $this->groupAssociationIds = $groupAssociationIds;
-        $this->shopAssociationIds = $shopAssociationIds;
-        $this->thumbnailImage = $thumbnailImage;
         $this->coverImage = $coverImage;
-        $this->isRootCategory = $isRootCategory;
-        $this->subCategories = $subCategories;
-        $this->additionalDescription = $additionalDescription;
-        $this->redirectType = $redirectType;
-        $this->categoryRedirectTarget = $categoryRedirectTarget;
     }
 
     /**

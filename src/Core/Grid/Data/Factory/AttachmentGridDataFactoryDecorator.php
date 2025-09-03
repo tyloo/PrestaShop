@@ -42,43 +42,13 @@ final class AttachmentGridDataFactoryDecorator implements GridDataFactoryInterfa
 {
     use TranslatorAwareTrait;
 
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $attachmentDoctrineGridDataFactory;
-
-    /**
-     * @var int
-     */
-    private $employeeIdLang;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var FileSizeConverter
-     */
-    private $fileSizeConverter;
-
     public function __construct(
-        GridDataFactoryInterface $attachmentDoctrineGridDataFactory,
-        int $employeeIdLang,
-        Connection $connection,
-        string $dbPrefix,
-        FileSizeConverter $fileSizeConverter,
+        private GridDataFactoryInterface $attachmentDoctrineGridDataFactory,
+        private int $employeeIdLang,
+        private Connection $connection,
+        private string $dbPrefix,
+        private FileSizeConverter $fileSizeConverter,
     ) {
-        $this->attachmentDoctrineGridDataFactory = $attachmentDoctrineGridDataFactory;
-        $this->employeeIdLang = $employeeIdLang;
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->fileSizeConverter = $fileSizeConverter;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

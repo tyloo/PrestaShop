@@ -42,26 +42,14 @@ use Symfony\Component\Form\FormInterface;
 final class CategoryGridFactoryDecorator implements GridFactoryInterface
 {
     /**
-     * @var GridFactoryInterface
-     */
-    private $categoryGridFactory;
-
-    /**
-     * @var GridFilterFormFactoryInterface
-     */
-    private $filterFormFactory;
-
-    /**
      * @param GridFilterFormFactoryInterface $filterFormFactory optional
      *
      * $filterFormFactory is optional in order to comply with SemVer
      */
     public function __construct(
-        GridFactoryInterface $categoryGridFactory,
-        ?GridFilterFormFactoryInterface $filterFormFactory = null,
+        private readonly GridFactoryInterface $categoryGridFactory,
+        private readonly ?GridFilterFormFactoryInterface $filterFormFactory = null,
     ) {
-        $this->categoryGridFactory = $categoryGridFactory;
-        $this->filterFormFactory = $filterFormFactory;
     }
 
     public function getGrid(SearchCriteriaInterface $searchCriteria): GridInterface

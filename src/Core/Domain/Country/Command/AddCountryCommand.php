@@ -39,24 +39,9 @@ use Tools;
 class AddCountryCommand
 {
     /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
      * @var string
      */
     private $isoCode;
-
-    /**
-     * @var int
-     */
-    private $callPrefix;
-
-    /**
-     * @var int
-     */
-    private $defaultCurrency;
 
     /**
      * @var ZoneId
@@ -64,73 +49,34 @@ class AddCountryCommand
     private $zoneId;
 
     /**
-     * @var bool
-     */
-    private $needZipCode;
-
-    /**
      * @var ?CountryZipCodeFormat
      */
     private $zipCodeFormat;
 
-    /**
-     * @var string
-     */
-    private $addressFormat;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var bool
-     */
-    private $containsStates;
-
-    /**
-     * @var bool
-     */
-    private $needIdNumber;
-
-    /**
-     * @var bool
-     */
-    private $displayTaxLabel;
-
-    /**
-     * @var int[]
-     */
-    private $shopAssociation;
-
     public function __construct(
-        array $localizedNames,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedNames,
         string $isoCode,
-        int $callPrefix,
-        int $defaultCurrency,
+        private readonly int $callPrefix,
+        private readonly int $defaultCurrency,
         int $zoneId,
-        bool $needZipCode,
+        private readonly bool $needZipCode,
         ?string $zipCodeFormat,
-        string $addressFormat,
-        bool $enabled,
-        bool $containsStates,
-        bool $needIdNumber,
-        bool $displayTaxLabel,
-        array $shopAssociation,
+        private readonly string $addressFormat,
+        private readonly bool $enabled,
+        private readonly bool $containsStates,
+        private readonly bool $needIdNumber,
+        private readonly bool $displayTaxLabel,
+        /**
+         * @var int[]
+         */
+        private readonly array $shopAssociation,
     ) {
-        $this->localizedNames = $localizedNames;
         $this->isoCode = Tools::strtoupper(Tools::substr($isoCode, 0, 2));
-        $this->callPrefix = $callPrefix;
-        $this->defaultCurrency = $defaultCurrency;
         $this->zoneId = new ZoneId($zoneId);
-        $this->needZipCode = $needZipCode;
         $this->zipCodeFormat = $zipCodeFormat ? new CountryZipCodeFormat($zipCodeFormat) : null;
-        $this->addressFormat = $addressFormat;
-        $this->enabled = $enabled;
-        $this->containsStates = $containsStates;
-        $this->needIdNumber = $needIdNumber;
-        $this->displayTaxLabel = $displayTaxLabel;
-        $this->shopAssociation = $shopAssociation;
     }
 
     /**

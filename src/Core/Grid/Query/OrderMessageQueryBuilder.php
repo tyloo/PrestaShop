@@ -38,43 +38,13 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class OrderMessageQueryBuilder implements DoctrineQueryBuilderInterface
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var DoctrineFilterApplicatorInterface
-     */
-    private $doctrineFilterApplicator;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $doctrineSearchCriteriaApplicator;
-
     public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        int $contextLanguageId,
-        DoctrineFilterApplicatorInterface $doctrineFilterApplicator,
-        DoctrineSearchCriteriaApplicatorInterface $doctrineSearchCriteriaApplicator,
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly int $contextLanguageId,
+        private readonly DoctrineFilterApplicatorInterface $doctrineFilterApplicator,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $doctrineSearchCriteriaApplicator,
     ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->doctrineFilterApplicator = $doctrineFilterApplicator;
-        $this->doctrineSearchCriteriaApplicator = $doctrineSearchCriteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)

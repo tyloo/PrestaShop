@@ -37,19 +37,17 @@ use Throwable;
 class CannotBulkDeleteProductSupplierException extends ProductSupplierException
 {
     /**
-     * @var int[]
-     */
-    private $productSupplierIds;
-
-    /**
      * @param int[]  $productSupplierIds ids of product supplier which cannot be deleted
      * @param string $message
      * @param int    $code
      */
-    public function __construct(array $productSupplierIds, $message = '', $code = 0, ?Throwable $previous = null)
-    {
+    public function __construct(
+        private readonly array $productSupplierIds,
+        $message = '',
+        $code = 0,
+        ?Throwable $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-        $this->productSupplierIds = $productSupplierIds;
     }
 
     /**

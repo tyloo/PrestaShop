@@ -39,54 +39,18 @@ class GetCombinationIds
     private $productId;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
-     * @var int|null
-     */
-    private $limit;
-
-    /**
-     * @var int|null
-     */
-    private $offset;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private $filters;
-
-    /**
-     * @var string|null
-     */
-    private $orderBy;
-
-    /**
-     * @var string|null
-     */
-    private $orderWay;
-
-    /**
      * @param array<string, mixed> $filters
      */
     public function __construct(
         int $productId,
-        ShopConstraint $shopConstraint,
-        ?int $limit = null,
-        ?int $offset = null,
-        ?string $orderBy = null,
-        ?string $orderWay = null,
-        array $filters = [],
+        private readonly ShopConstraint $shopConstraint,
+        private readonly ?int $limit = null,
+        private readonly ?int $offset = null,
+        private readonly ?string $orderBy = null,
+        private readonly ?string $orderWay = null,
+        private readonly array $filters = [],
     ) {
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
-        $this->limit = $limit;
-        $this->offset = $offset;
-        $this->filters = $filters;
-        $this->orderBy = $orderBy;
-        $this->orderWay = $orderWay;
     }
 
     public function getProductId(): ProductId

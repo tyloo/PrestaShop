@@ -52,7 +52,10 @@ final class PositionModificationCollection extends AbstractCollection implements
         return $this;
     }
 
-    public function toArray()
+    /**
+     * @return list<array{id: mixed, oldPosition: mixed, newPosition: mixed}>
+     */
+    public function toArray(): array
     {
         $positionModifications = [];
 

@@ -37,21 +37,6 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var string
-     */
-    private $contextIdLang;
-
-    /**
-     * @var int[]
-     */
-    private $contextShopIds;
-
-    /**
      * @param string $dbPrefix
      * @param string $contextIdLang
      * @param int[]  $contextShopIds
@@ -59,15 +44,11 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $contextIdLang,
-        array $contextShopIds,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private $contextIdLang,
+        private readonly array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextIdLang = $contextIdLang;
-        $this->contextShopIds = $contextShopIds;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -156,7 +137,7 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            $queryBuilder->andWhere("`$filterName` LIKE :$filterName");
+            $queryBuilder->andWhere(\sprintf('`%s` LIKE :%s', $filterName, $filterName));
             $queryBuilder->setParameter($filterName, '%' . $filterValue . '%');
         }
     }

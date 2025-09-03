@@ -31,22 +31,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Image\QueryResult\Shop;
 
 class ShopImageAssociation
 {
-    /**
-     * @var int
-     */
-    private $imageId;
-
-    /**
-     * @var bool
-     */
-    private $isCover;
-
     public function __construct(
-        int $imageId,
-        bool $isCover,
+        private readonly int $imageId,
+        private readonly bool $isCover,
     ) {
-        $this->imageId = $imageId;
-        $this->isCover = $isCover;
     }
 
     public function getImageId(): int

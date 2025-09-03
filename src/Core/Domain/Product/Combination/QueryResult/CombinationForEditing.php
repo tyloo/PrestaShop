@@ -35,73 +35,19 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryResult;
 class CombinationForEditing
 {
     /**
-     * @var int
-     */
-    private $combinationId;
-
-    /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var CombinationDetails
-     */
-    private $details;
-
-    /**
-     * @var CombinationPrices
-     */
-    private $prices;
-
-    /**
-     * @var CombinationStock
-     */
-    private $stock;
-
-    /**
-     * @var int[]
-     */
-    private $imageIds;
-
-    /**
-     * @var string
-     */
-    private $coverThumbnailUrl;
-
-    /**
-     * @var bool
-     */
-    private $isDefault;
-
-    /**
      * @param int[] $imageIds
      */
     public function __construct(
-        int $combinationId,
-        int $productId,
-        string $name,
-        CombinationDetails $options,
-        CombinationPrices $prices,
-        CombinationStock $stock,
-        array $imageIds,
-        string $coverThumbnailUrl,
-        bool $isDefault,
+        private readonly int $combinationId,
+        private readonly int $productId,
+        private readonly string $name,
+        private readonly CombinationDetails $details,
+        private readonly CombinationPrices $prices,
+        private readonly CombinationStock $stock,
+        private readonly array $imageIds,
+        private readonly string $coverThumbnailUrl,
+        private readonly bool $isDefault,
     ) {
-        $this->combinationId = $combinationId;
-        $this->productId = $productId;
-        $this->name = $name;
-        $this->details = $options;
-        $this->stock = $stock;
-        $this->prices = $prices;
-        $this->imageIds = $imageIds;
-        $this->coverThumbnailUrl = $coverThumbnailUrl;
-        $this->isDefault = $isDefault;
     }
 
     public function getCombinationId(): int

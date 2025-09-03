@@ -36,25 +36,16 @@ use PrestaShop\PrestaShop\Core\Module\DataProvider\PaymentModuleListProviderInte
  */
 final class PaymentModulePreferencesConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @var PaymentModuleListProviderInterface
-     */
-    private $paymentModuleProvider;
-
-    /**
-     * @var PaymentRestrictionsConfiguratorInterface
-     */
-    private $paymentRestrictionsConfigurator;
-
     public function __construct(
-        PaymentModuleListProviderInterface $paymentModuleProvider,
-        PaymentRestrictionsConfiguratorInterface $paymentRestrictionsConfigurator,
+        private readonly PaymentModuleListProviderInterface $paymentModuleProvider,
+        private readonly PaymentRestrictionsConfiguratorInterface $paymentRestrictionsConfigurator,
     ) {
-        $this->paymentModuleProvider = $paymentModuleProvider;
-        $this->paymentRestrictionsConfigurator = $paymentRestrictionsConfigurator;
     }
 
-    public function getConfiguration()
+    /**
+     * @return array{}|array{currency_restrictions: non-empty-array, country_restrictions: non-empty-array, group_restrictions: non-empty-array, carrier_restrictions: non-empty-array}
+     */
+    public function getConfiguration(): array
     {
         $config = [];
         $paymentModules = $this->paymentModuleProvider->getPaymentModuleList();
@@ -69,7 +60,7 @@ final class PaymentModulePreferencesConfiguration implements DataConfigurationIn
         return $config;
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         $errors = [];
 

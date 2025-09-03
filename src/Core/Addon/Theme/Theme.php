@@ -58,11 +58,11 @@ class Theme implements AddonInterface
             $yamlParser = new YamlParser($configurationCacheDirectory);
             $parentAttributes = $yamlParser->parse($themesDirectory . '/' . $attributes['parent'] . '/config/theme.yml');
             $parentAttributes['preview'] = 'themes/' . $attributes['parent'] . '/preview.png';
-            $parentAttributes['parent_directory'] = rtrim($attributes['directory'], '/') . '/';
+            $parentAttributes['parent_directory'] = rtrim((string) $attributes['directory'], '/') . '/';
             $attributes = array_merge($parentAttributes, $attributes);
         }
 
-        $attributes['directory'] = rtrim($attributes['directory'], '/') . '/';
+        $attributes['directory'] = rtrim((string) $attributes['directory'], '/') . '/';
 
         if (file_exists($themesDirectory . $attributes['name'] . '/preview.png')) {
             $attributes['preview'] = 'themes/' . $attributes['name'] . '/preview.png';
@@ -102,6 +102,7 @@ class Theme implements AddonInterface
                     if (\is_array($module)) {
                         $module = key($module);
                     }
+
                     if ($module !== null && ! \in_array($module, $modulesToEnable, true)) {
                         $modulesToEnable[] = $module;
                     }
@@ -125,12 +126,12 @@ class Theme implements AddonInterface
         ];
     }
 
-    public function onInstall()
+    public function onInstall(): bool
     {
         return true;
     }
 
-    public function onUninstall()
+    public function onUninstall(): bool
     {
         return true;
     }
@@ -141,7 +142,7 @@ class Theme implements AddonInterface
      *
      * @return bool true for success
      */
-    public function onUpgrade($version)
+    public function onUpgrade($version): bool
     {
         return true;
     }
@@ -152,7 +153,7 @@ class Theme implements AddonInterface
      *
      * @return bool true for success
      */
-    public function onEnable()
+    public function onEnable(): bool
     {
         return true;
     }
@@ -164,12 +165,12 @@ class Theme implements AddonInterface
      *
      * @return bool true for success
      */
-    public function onDisable()
+    public function onDisable(): bool
     {
         return true;
     }
 
-    public function onReset()
+    public function onReset(): bool
     {
         return true;
     }
@@ -242,7 +243,10 @@ class Theme implements AddonInterface
         return 'layouts/' . $layoutName . '.tpl';
     }
 
-    private function getPageSpecificCss($pageId)
+    /**
+     * @return mixed[]
+     */
+    private function getPageSpecificCss($pageId): array
     {
         $css = array_merge(
             (array) $this->get('assets.css.all'),
@@ -255,12 +259,15 @@ class Theme implements AddonInterface
 
                 continue;
             }
+
             if (! isset($entry['media'])) {
                 $entry['media'] = AbstractAssetManager::DEFAULT_MEDIA;
             }
+
             if (! isset($entry['priority'])) {
                 $entry['priority'] = AbstractAssetManager::DEFAULT_PRIORITY;
             }
+
             if (! isset($entry['inline'])) {
                 $entry['inline'] = false;
             }
@@ -269,7 +276,10 @@ class Theme implements AddonInterface
         return $css;
     }
 
-    private function getPageSpecificJs($pageId)
+    /**
+     * @return mixed[]
+     */
+    private function getPageSpecificJs($pageId): array
     {
         $js = array_merge(
             (array) $this->get('assets.js.all'),
@@ -282,15 +292,19 @@ class Theme implements AddonInterface
 
                 continue;
             }
+
             if (! isset($entry['position'])) {
                 $entry['position'] = AbstractAssetManager::DEFAULT_JS_POSITION;
             }
+
             if (! isset($entry['priority'])) {
                 $entry['priority'] = AbstractAssetManager::DEFAULT_PRIORITY;
             }
+
             if (! isset($entry['inline'])) {
                 $entry['inline'] = false;
             }
+
             if (! isset($entry['attribute'])) {
                 $entry['attribute'] = false;
             }

@@ -33,53 +33,17 @@ use PrestaShop\Decimal\DecimalNumber;
 class EditableCustomerGroup
 {
     /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var array<int, string>
-     */
-    private $localizedNames;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $reduction;
-
-    /**
-     * @var bool
-     */
-    private $displayPriceTaxExcluded;
-
-    /**
-     * @var bool
-     */
-    private $showPrice;
-
-    /**
-     * @var array<int>
-     */
-    private $shopIds;
-
-    /**
      * @param array<int, string> $localizedNames array of names indexed by language id
      * @param array<int>         $shopIds
      */
     public function __construct(
-        int $id,
-        array $localizedNames,
-        DecimalNumber $reduction,
-        bool $displayPriceTaxExcluded,
-        bool $showPrice,
-        array $shopIds,
+        private readonly int $id,
+        private readonly array $localizedNames,
+        private readonly DecimalNumber $reduction,
+        private readonly bool $displayPriceTaxExcluded,
+        private readonly bool $showPrice,
+        private readonly array $shopIds,
     ) {
-        $this->id = $id;
-        $this->localizedNames = $localizedNames;
-        $this->reduction = $reduction;
-        $this->displayPriceTaxExcluded = $displayPriceTaxExcluded;
-        $this->showPrice = $showPrice;
-        $this->shopIds = $shopIds;
     }
 
     public function getId(): int

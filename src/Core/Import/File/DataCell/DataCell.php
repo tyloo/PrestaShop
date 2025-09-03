@@ -33,23 +33,13 @@ namespace PrestaShop\PrestaShop\Core\Import\File\DataCell;
 final class DataCell implements DataCellInterface
 {
     /**
-     * @var string key of the data
-     */
-    private $key;
-
-    /**
-     * @var string data value
-     */
-    private $value;
-
-    /**
      * @param string $key
      * @param string $value
      */
-    public function __construct($key, $value)
-    {
-        $this->key = $key;
-        $this->value = $value;
+    public function __construct(
+        private $key,
+        private $value,
+    ) {
     }
 
     public function getValue()

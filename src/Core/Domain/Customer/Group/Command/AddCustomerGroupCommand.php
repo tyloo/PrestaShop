@@ -35,24 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 class AddCustomerGroupCommand
 {
     /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
      * @var DecimalNumber
      */
     private $reductionPercent;
-
-    /**
-     * @var bool
-     */
-    private $displayPriceTaxExcluded;
-
-    /**
-     * @var bool
-     */
-    private $showPrice;
 
     /**
      * @var ShopId[]
@@ -64,21 +49,15 @@ class AddCustomerGroupCommand
      * @param array<int> $shopIds
      */
     public function __construct(
-        array $localizedNames,
+        private readonly array $localizedNames,
         DecimalNumber $reductionPercent,
-        bool $displayPriceTaxExcluded,
-        bool $showPrice,
+        private readonly bool $displayPriceTaxExcluded,
+        private readonly bool $showPrice,
         array $shopIds,
     ) {
         $this->assertReductionIsValid($reductionPercent);
-
-        $this->localizedNames = $localizedNames;
         $this->reductionPercent = $reductionPercent;
-        $this->displayPriceTaxExcluded = $displayPriceTaxExcluded;
-        $this->showPrice = $showPrice;
-        $this->shopIds = array_map(function (int $shopId) {
-            return new ShopId($shopId);
-        }, $shopIds);
+        $this->shopIds = array_map(fn (int $shopId): ShopId => new ShopId($shopId), $shopIds);
     }
 
     /**

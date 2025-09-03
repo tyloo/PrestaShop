@@ -39,17 +39,11 @@ class GetProductImage
      */
     private $imageId;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
     public function __construct(
         int $imageId,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->imageId = new ImageId($imageId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getImageId(): ImageId

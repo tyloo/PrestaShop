@@ -33,51 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\CustomerService\QueryResult;
 class CustomerThreadMessage
 {
     /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $message;
-
-    /**
-     * @var string
-     */
-    private $date;
-
-    /**
-     * @var string|null
-     */
-    private $employeeImage;
-
-    /**
-     * @var string|null
-     */
-    private $employeeName;
-
-    /**
-     * @var string|null
-     */
-    private $customerName;
-
-    /**
-     * @var string|null
-     */
-    private $attachmentFile;
-
-    /**
-     * @var int|null
-     */
-    private $productId;
-
-    /**
-     * @var string|null
-     */
-    private $productName;
-
-    /**
      * @param string      $type
      * @param string      $message
      * @param string      $date
@@ -89,25 +44,16 @@ class CustomerThreadMessage
      * @param string|null $productName
      */
     public function __construct(
-        $type,
-        $message,
-        $date,
-        $employeeImage,
-        $employeeName,
-        $customerName,
-        $attachmentFile,
-        $productId,
-        $productName,
+        private $type,
+        private $message,
+        private $date,
+        private $employeeImage,
+        private $employeeName,
+        private $customerName,
+        private $attachmentFile,
+        private $productId,
+        private $productName,
     ) {
-        $this->type = $type;
-        $this->message = $message;
-        $this->date = $date;
-        $this->employeeImage = $employeeImage;
-        $this->employeeName = $employeeName;
-        $this->customerName = $customerName;
-        $this->attachmentFile = $attachmentFile;
-        $this->productId = $productId;
-        $this->productName = $productName;
     }
 
     /**

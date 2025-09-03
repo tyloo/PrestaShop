@@ -47,9 +47,9 @@ class LogoUploader
     private $errors = [];
 
     public function __construct(
-        private Shop $shop,
-        private ImageFormatConfigurationInterface $imageFormatConfiguration,
-        private string $imageDirection,
+        private readonly Shop $shop,
+        private readonly ImageFormatConfigurationInterface $imageFormatConfiguration,
+        private readonly string $imageDirection,
     ) {
     }
 
@@ -78,6 +78,7 @@ class LogoUploader
         if ($shopId === Configuration::get('PS_SHOP_DEFAULT')) {
             $this->uploadIco('PS_FAVICON', $this->imageDirection . 'favicon.ico');
         }
+
         if ($this->uploadIco('PS_FAVICON', $this->imageDirection . 'favicon-' . $shopId . '.ico')) {
             Configuration::updateValue('PS_FAVICON', 'favicon-' . $shopId . '.ico');
         }
@@ -92,11 +93,9 @@ class LogoUploader
      * @param string                             $logoPrefix
      * @param array<string,array<string,string>> $files[]    the array of files to avoid use $_POST
      *
-     * @return bool
-     *
      * @throws PrestaShopException in case of upload failure
      */
-    public function update($fieldName, $logoPrefix, array $files = [])
+    public function update($fieldName, $logoPrefix, array $files = []): bool
     {
         $files = empty($files) ? $_FILES : $files;
 
@@ -105,6 +104,7 @@ class LogoUploader
             if ($error = ImageManager::validateUpload($files[$fieldName], Tools::getMaxUploadSize(), $availableExtensions)) {
                 throw new PrestaShopException($error);
             }
+
             $tmpName = tempnam(_PS_TMP_IMG_DIR_, 'PS');
 
             if (! $tmpName || ! move_uploaded_file($files[$fieldName]['tmp_name'], $tmpName)) {
@@ -116,6 +116,7 @@ class LogoUploader
             } else {
                 $fileExtension = ($fieldName === 'PS_STORES_ICON') ? '.gif' : '.jpg';
             }
+
             $logoName = $this->getLogoName($logoPrefix, $fileExtension);
 
             if ($fieldName === 'PS_STORES_ICON') {
@@ -160,6 +161,7 @@ class LogoUploader
                         Configuration::updateValue('PS_LOGO_MAIL', $newLogoMail);
                     }
                 }
+
                 if (empty(Configuration::get('PS_LOGO_INVOICE'))) {
                     $newLogoInvoice = $this->getLogoName('logo_invoice', '.' . pathinfo(Configuration::get($fieldName), \PATHINFO_EXTENSION));
                     // copy old logo file for invoice
@@ -220,6 +222,7 @@ class LogoUploader
             if ($error = ImageManager::validateIconUpload($files[$name])) {
                 throw new PrestaShopException($error);
             }
+
             if (! copy($_FILES[$name]['tmp_name'], $destination)) {
                 throw new PrestaShopException(Context::getContext()->getTranslator()->trans('An error occurred while uploading the favicon: cannot copy file "%s" to folder "%s".', [$files[$name]['tmp_name'], $destination], 'Admin.Design.Notification'));
             }

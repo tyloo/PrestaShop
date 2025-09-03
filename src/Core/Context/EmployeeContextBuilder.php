@@ -42,6 +42,7 @@ class EmployeeContextBuilder implements LegacyContextBuilderInterface
     use LegacyObjectCheckerTrait;
 
     private ?int $employeeId = null;
+
     private ?LegacyEmployee $legacyEmployee = null;
 
     public function __construct(
@@ -55,7 +56,7 @@ class EmployeeContextBuilder implements LegacyContextBuilderInterface
     {
         $employee = null;
         $legacyEmployee = $this->getLegacyEmployee();
-        if ($legacyEmployee) {
+        if ($legacyEmployee !== null) {
             $employee = new Employee(
                 id: (int) $legacyEmployee->id,
                 profileId: (int) $legacyEmployee->id_profile,

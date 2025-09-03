@@ -36,11 +36,6 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\TagIETF;
 class AddLanguageCommand
 {
     /**
-     * @var string Language's name
-     */
-    private $name;
-
-    /**
      * @var IsoCode Two-letter (639-1) language ISO code, e.g. FR, EN
      */
     private $isoCode;
@@ -49,43 +44,6 @@ class AddLanguageCommand
      * @var TagIETF IETF language tag, e.g. en-US
      */
     private $tagIETF;
-
-    /**
-     * @var string
-     */
-    private $flagImagePath;
-
-    /**
-     * @var string Image that is used as fallback image for product, category and brand
-     *             when the actual image is not available.
-     *             Each language has different "No picture" image.
-     */
-    private $noPictureImagePath;
-
-    /**
-     * @var string Short date format. e.g. Y-m-d
-     */
-    private $shortDateFormat;
-
-    /**
-     * @var string Full date format, e.g. Y-m-d H:i:s
-     */
-    private $fullDateFormat;
-
-    /**
-     * @var bool Is language read from right to left
-     */
-    private $isRtl;
-
-    /**
-     * @var bool
-     */
-    private $isActive;
-
-    /**
-     * @var int[] ID of shops which are associated with language
-     */
-    private $shopAssociation;
 
     /**
      * @param string $name
@@ -100,27 +58,19 @@ class AddLanguageCommand
      * @param int[]  $shopAssociation
      */
     public function __construct(
-        $name,
+        private $name,
         $isoCode,
         $tagIETF,
-        $shortDateFormat,
-        $fullDateFormat,
-        $flagImagePath,
-        $noPictureImagePath,
-        $isRtl,
-        $isActive,
-        array $shopAssociation,
+        private $shortDateFormat,
+        private $fullDateFormat,
+        private $flagImagePath,
+        private $noPictureImagePath,
+        private $isRtl,
+        private $isActive,
+        private readonly array $shopAssociation,
     ) {
-        $this->name = $name;
         $this->isoCode = new IsoCode($isoCode);
         $this->tagIETF = new TagIETF($tagIETF);
-        $this->shortDateFormat = $shortDateFormat;
-        $this->fullDateFormat = $fullDateFormat;
-        $this->flagImagePath = $flagImagePath;
-        $this->noPictureImagePath = $noPictureImagePath;
-        $this->isRtl = $isRtl;
-        $this->isActive = $isActive;
-        $this->shopAssociation = $shopAssociation;
     }
 
     /**

@@ -56,6 +56,7 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
             if (! $module instanceof ModuleInterface) {
                 throw new PrestaShopException(\sprintf('%s only accept %s elements.', self::class, ModuleInterface::class));
             }
+
             $this->modules[] = $module;
         }
     }
@@ -97,6 +98,7 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
         if (! $value instanceof ModuleInterface) {
             throw new PrestaShopException(\sprintf('%s only accept %s elements.', self::class, ModuleInterface::class));
         }
+
         $this->modules[$offset] = $value;
     }
 

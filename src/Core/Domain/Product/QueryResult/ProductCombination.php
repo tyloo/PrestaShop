@@ -34,64 +34,16 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
  */
 class ProductCombination
 {
-    /**
-     * @var int
-     */
-    private $attributeCombinationId;
-
-    /**
-     * @var string
-     */
-    private $attribute;
-
-    /**
-     * @var string
-     */
-    private $location;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var int
-     */
-    private $stock;
-
-    /**
-     * @var float
-     */
-    private $priceTaxExcluded;
-
-    /**
-     * @var float
-     */
-    private $priceTaxIncluded;
-
-    /**
-     * @var string
-     */
-    private $formattedPrice;
-
     public function __construct(
-        int $attributeCombinationId,
-        string $attribute,
-        int $stock,
-        string $formattedPrice,
-        float $priceTaxExcluded,
-        float $priceTaxIncluded,
-        string $location,
-        string $reference,
+        private readonly int $attributeCombinationId,
+        private string $attribute,
+        private readonly int $stock,
+        private readonly string $formattedPrice,
+        private readonly float $priceTaxExcluded,
+        private readonly float $priceTaxIncluded,
+        private readonly string $location,
+        private readonly string $reference,
     ) {
-        $this->attributeCombinationId = $attributeCombinationId;
-        $this->attribute = $attribute;
-        $this->stock = $stock;
-        $this->formattedPrice = $formattedPrice;
-        $this->priceTaxExcluded = $priceTaxExcluded;
-        $this->priceTaxIncluded = $priceTaxIncluded;
-        $this->location = $location;
-        $this->reference = $reference;
     }
 
     public function getAttributeCombinationId(): int

@@ -37,7 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class GetCarrierRanges
 {
-    private CarrierId $carrierId;
+    private readonly CarrierId $carrierId;
 
     public function __construct(
         int $carrierId,

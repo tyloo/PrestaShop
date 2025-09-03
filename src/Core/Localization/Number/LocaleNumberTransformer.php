@@ -39,7 +39,7 @@ class LocaleNumberTransformer
     private const FORCED_LOCALES_TO_EN_NUMBERS = ['ar', 'bn', 'fa'];
 
     public function __construct(
-        private LocaleInterface $locale,
+        private readonly LocaleInterface $locale,
     ) {
     }
 

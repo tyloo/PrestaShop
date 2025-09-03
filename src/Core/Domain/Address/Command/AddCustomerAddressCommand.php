@@ -46,59 +46,9 @@ class AddCustomerAddressCommand
     private $customerId;
 
     /**
-     * @var string
-     */
-    private $addressAlias;
-
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $address;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var string|null
-     */
-    private $postCode;
-
-    /**
      * @var CountryId
      */
     private $countryId;
-
-    /**
-     * @var string|null
-     */
-    private $dni;
-
-    /**
-     * @var string|null
-     */
-    private $company;
-
-    /**
-     * @var string|null
-     */
-    private $vatNumber;
-
-    /**
-     * @var string|null
-     */
-    private $address2;
 
     /**
      * @var StateIdInterface
@@ -106,57 +56,29 @@ class AddCustomerAddressCommand
     private $stateId;
 
     /**
-     * @var string|null
-     */
-    private $homePhone;
-
-    /**
-     * @var string|null
-     */
-    private $mobilePhone;
-
-    /**
-     * @var string|null
-     */
-    private $other;
-
-    /**
      * @throws CountryConstraintException
      * @throws StateConstraintException
      */
     public function __construct(
         int $customerId,
-        string $addressAlias,
-        string $firstName,
-        string $lastName,
-        string $address,
-        string $city,
+        private readonly string $addressAlias,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly string $address,
+        private readonly string $city,
         int $countryId,
-        string $postcode,
-        ?string $dni = null,
-        ?string $company = null,
-        ?string $vat_number = null,
-        ?string $address2 = null,
+        private readonly string $postCode,
+        private readonly ?string $dni = null,
+        private readonly ?string $company = null,
+        private readonly ?string $vatNumber = null,
+        private readonly ?string $address2 = null,
         int $id_state = 0,
-        ?string $phone = null,
-        ?string $phone_mobile = null,
-        ?string $other = null,
+        private readonly ?string $homePhone = null,
+        private readonly ?string $mobilePhone = null,
+        private readonly ?string $other = null,
     ) {
         $this->customerId = new CustomerId($customerId);
-        $this->addressAlias = $addressAlias;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->address = $address;
-        $this->city = $city;
         $this->countryId = new CountryId($countryId);
-        $this->postCode = $postcode;
-        $this->dni = $dni;
-        $this->company = $company;
-        $this->vatNumber = $vat_number;
-        $this->address2 = $address2;
-        $this->homePhone = $phone;
-        $this->mobilePhone = $phone_mobile;
-        $this->other = $other;
         $this->stateId = $id_state === NoStateId::NO_STATE_ID_VALUE ? new NoStateId() : new StateId($id_state);
     }
 

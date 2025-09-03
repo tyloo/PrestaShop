@@ -36,14 +36,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class CustomerFieldsProvider implements EntityFieldsProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function getCollection()
@@ -65,7 +60,7 @@ final class CustomerFieldsProvider implements EntityFieldsProviderInterface
             new EntityField(
                 'id_shop',
                 $this->trans('ID / Name of the store', 'Admin.Advparameters.Feature'),
-                $this->trans('Ignore this field if you don\'t use the Multistore tool. If you leave this field empty, the default store will be used.', 'Admin.Advparameters.Help')
+                $this->trans("Ignore this field if you don't use the Multistore tool. If you leave this field empty, the default store will be used.", 'Admin.Advparameters.Help')
             ),
         ];
 

@@ -47,7 +47,7 @@ class SetCombinationImagesCommand
     public function __construct(int $combinationId, array $imageIds)
     {
         $this->combinationId = new CombinationId($combinationId);
-        $this->imageIds = array_map(function (int $imageId) { return new ImageId($imageId); }, $imageIds);
+        $this->imageIds = array_map(fn (int $imageId): ImageId => new ImageId($imageId), $imageIds);
     }
 
     public function getCombinationId(): CombinationId

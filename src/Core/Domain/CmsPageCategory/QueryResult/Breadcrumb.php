@@ -37,16 +37,11 @@ use Traversable;
 class Breadcrumb implements IteratorAggregate
 {
     /**
-     * @var BreadcrumbItem[]
-     */
-    private $cmsPageCategories;
-
-    /**
      * @param BreadcrumbItem[] $cmsPageCategories
      */
-    public function __construct(array $cmsPageCategories)
-    {
-        $this->cmsPageCategories = $cmsPageCategories;
+    public function __construct(
+        private readonly array $cmsPageCategories,
+    ) {
     }
 
     public function getIterator(): Traversable

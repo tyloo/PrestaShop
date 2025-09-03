@@ -40,50 +40,6 @@ class AddOrderStateCommand
      * @var string[]
      */
     private $localizedNames;
-    /**
-     * @var string
-     */
-    private $color;
-    /**
-     * @var bool
-     */
-    private $loggable;
-    /**
-     * @var bool
-     */
-    private $invoice;
-    /**
-     * @var bool
-     */
-    private $hidden;
-    /**
-     * @var bool
-     */
-    private $sendEmail;
-    /**
-     * @var bool
-     */
-    private $pdfInvoice;
-    /**
-     * @var bool
-     */
-    private $pdfDelivery;
-    /**
-     * @var bool
-     */
-    private $shipped;
-    /**
-     * @var bool
-     */
-    private $paid;
-    /**
-     * @var bool
-     */
-    private $delivery;
-    /**
-     * @var array
-     */
-    private $localizedTemplates;
 
     /**
      * @var string|null
@@ -111,30 +67,19 @@ class AddOrderStateCommand
      */
     public function __construct(
         array $localizedNames,
-        string $color,
-        bool $loggable,
-        bool $invoice,
-        bool $hidden,
-        bool $sendEmail,
-        bool $pdfInvoice,
-        bool $pdfDelivery,
-        bool $shipped,
-        bool $paid,
-        bool $delivery,
-        array $localizedTemplates,
+        private readonly string $color,
+        private readonly bool $loggable,
+        private readonly bool $invoice,
+        private readonly bool $hidden,
+        private readonly bool $sendEmail,
+        private readonly bool $pdfInvoice,
+        private readonly bool $pdfDelivery,
+        private readonly bool $shipped,
+        private readonly bool $paid,
+        private readonly bool $delivery,
+        private readonly array $localizedTemplates,
     ) {
         $this->setLocalizedNames($localizedNames);
-        $this->color = $color;
-        $this->loggable = $loggable;
-        $this->invoice = $invoice;
-        $this->hidden = $hidden;
-        $this->sendEmail = $sendEmail;
-        $this->pdfInvoice = $pdfInvoice;
-        $this->pdfDelivery = $pdfDelivery;
-        $this->shipped = $shipped;
-        $this->paid = $paid;
-        $this->delivery = $delivery;
-        $this->localizedTemplates = $localizedTemplates;
     }
 
     /**

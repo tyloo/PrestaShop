@@ -79,42 +79,42 @@ final class HookQueryBuilder extends AbstractDoctrineQueryBuilder
 
         foreach ($filters as $filterName => $filterValue) {
             if ($filterName === 'id_hook') {
-                $qb->andWhere("h.id_hook = :$filterName");
+                $qb->andWhere('h.id_hook = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
             if ($filterName === 'title') {
-                $qb->andWhere("h.title LIKE :$filterName");
+                $qb->andWhere('h.title LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
             if ($filterName === 'name') {
-                $qb->andWhere("h.name LIKE :$filterName");
+                $qb->andWhere('h.name LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
             if ($filterName === 'description') {
-                $qb->andWhere("h.description LIKE :$filterName");
+                $qb->andWhere('h.description LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
             if ($filterName === 'position') {
-                $qb->andWhere("h.position = :$filterName");
+                $qb->andWhere('h.position = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
             if ($filterName === 'active') {
-                $qb->andWhere("h.active = :$filterName");
+                $qb->andWhere('h.active = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;

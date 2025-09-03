@@ -44,28 +44,20 @@ class DefaultCurrencyInMultiShopException extends CurrencyException
     public const CANNOT_DISABLE_CURRENCY = 2;
 
     /**
-     * @var string
-     */
-    private $currencyName;
-
-    /**
-     * @var string
-     */
-    private $shopName;
-
-    /**
      * @param string $currencyName
      * @param string $shopName
      * @param string $message
      * @param int    $code
      * @param null   $previous
      */
-    public function __construct($currencyName, $shopName, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private $currencyName,
+        private $shopName,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->currencyName = $currencyName;
-        $this->shopName = $shopName;
     }
 
     /**

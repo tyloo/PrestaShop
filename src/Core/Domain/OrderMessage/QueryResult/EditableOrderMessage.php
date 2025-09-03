@@ -35,29 +35,14 @@ use PrestaShop\PrestaShop\Core\Domain\OrderMessage\ValueObject\OrderMessageId;
 class EditableOrderMessage
 {
     /**
-     * @var OrderMessageId
-     */
-    private $orderMessageId;
-
-    /**
-     * @var string[]
-     */
-    private $localizedName;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMessage;
-
-    /**
      * @param string[] $localizedName
      * @param string[] $localizedMessage
      */
-    public function __construct(OrderMessageId $orderMessageId, array $localizedName, array $localizedMessage)
-    {
-        $this->orderMessageId = $orderMessageId;
-        $this->localizedName = $localizedName;
-        $this->localizedMessage = $localizedMessage;
+    public function __construct(
+        private readonly OrderMessageId $orderMessageId,
+        private readonly array $localizedName,
+        private readonly array $localizedMessage,
+    ) {
     }
 
     public function getOrderMessageId(): OrderMessageId

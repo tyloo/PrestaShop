@@ -63,31 +63,35 @@ class ModuleManagerBuilder
      * @var ModuleRepository
      */
     protected static $modulesRepository;
+
     /**
      * Singleton of ModuleManager.
      *
      * @var ModuleManager
      */
     protected static $moduleManager;
+
     protected static $adminModuleDataProvider;
+
     protected static $legacyLogger;
+
     protected static $moduleDataProvider;
+
     protected static $translator;
+
     protected static $instance;
+
     protected static $cacheProvider;
+
     /**
      * @var ApiClientContext
      */
     protected static $apiClientContext;
+
     /**
      * @var LanguageContext|null
      */
     protected static $languageContext;
-
-    /**
-     * @var bool
-     */
-    private $isDebug;
 
     /**
      * @return ModuleManagerBuilder|null
@@ -157,9 +161,9 @@ class ModuleManagerBuilder
         return self::$modulesRepository;
     }
 
-    private function __construct(bool $isDebug = _PS_MODE_DEV_)
-    {
-        $this->isDebug = $isDebug;
+    private function __construct(
+        private $isDebug = _PS_MODE_DEV_,
+    ) {
         /**
          * If the Symfony container is available, it will be used for the other methods
          * build & buildRepository. No need to init manually all the dependancies.

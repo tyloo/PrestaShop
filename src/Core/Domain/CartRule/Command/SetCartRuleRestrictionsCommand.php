@@ -77,27 +77,21 @@ class SetCartRuleRestrictionsCommand
 
     public function setRestrictedCarrierIds(array $restrictedCarrierIds): self
     {
-        $this->restrictedCarrierIds = array_map(static function ($carrierId): CarrierId {
-            return new CarrierId($carrierId);
-        }, $restrictedCarrierIds);
+        $this->restrictedCarrierIds = array_map(static fn ($carrierId): CarrierId => new CarrierId($carrierId), $restrictedCarrierIds);
 
         return $this;
     }
 
     public function setRestrictedCountryIds(array $restrictedCountryIds): self
     {
-        $this->restrictedCountryIds = array_map(static function ($countryId): CountryId {
-            return new CountryId($countryId);
-        }, $restrictedCountryIds);
+        $this->restrictedCountryIds = array_map(static fn ($countryId): CountryId => new CountryId($countryId), $restrictedCountryIds);
 
         return $this;
     }
 
     public function setRestrictedGroupIds(array $restrictedGroupIds): self
     {
-        $this->restrictedGroupIds = array_map(static function ($groupId): GroupId {
-            return new GroupId($groupId);
-        }, $restrictedGroupIds);
+        $this->restrictedGroupIds = array_map(static fn ($groupId): GroupId => new GroupId($groupId), $restrictedGroupIds);
 
         return $this;
     }
@@ -143,6 +137,7 @@ class SetCartRuleRestrictionsCommand
             if ($restrictedCartRuleId === $this->getCartRuleId()->getValue()) {
                 throw new CartRuleConstraintException('Restricted CartRule ids cannot contain id of current cart rule', CartRuleConstraintException::INVALID_CART_RULE_RESTRICTION);
             }
+
             $this->restrictedCartRuleIds[] = new CartRuleId($restrictedCartRuleId);
         }
 

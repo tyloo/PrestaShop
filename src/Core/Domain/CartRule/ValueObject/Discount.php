@@ -44,11 +44,6 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 class Discount
 {
     /**
-     * @var DiscountApplicationType
-     */
-    private $discountApplicationType;
-
-    /**
      * @var Money|null
      */
     private $amountDiscount;
@@ -127,7 +122,7 @@ class Discount
      * @throws CartRuleConstraintException
      */
     private function __construct(
-        DiscountApplicationType $discountApplicationType,
+        private readonly DiscountApplicationType $discountApplicationType,
         ?Money $amountDiscount,
         ?PercentageDiscount $percentageDiscount,
     ) {
@@ -135,7 +130,6 @@ class Discount
             throw new CartRuleConstraintException(\sprintf('Only one of the following must be set for %s: $amountDiscount or $percentageDiscount', self::class), CartRuleConstraintException::INVALID_PRICE_DISCOUNT);
         }
 
-        $this->discountApplicationType = $discountApplicationType;
         $this->amountDiscount = $amountDiscount;
         $this->percentageDiscount = $percentageDiscount;
     }

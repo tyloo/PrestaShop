@@ -38,31 +38,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 final class FilterFormFactoryFormActionDecorator implements GridFilterFormFactoryInterface
 {
     /**
-     * @var GridFilterFormFactoryInterface
-     */
-    private $delegate;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
-     * @var string
-     */
-    private $formActionRoute;
-
-    /**
      * @param string $formActionRoute will change the form action of filters form to this
      */
     public function __construct(
-        GridFilterFormFactoryInterface $delegate,
-        UrlGeneratorInterface $urlGenerator,
-        string $formActionRoute,
+        private readonly GridFilterFormFactoryInterface $delegate,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly string $formActionRoute,
     ) {
-        $this->delegate = $delegate;
-        $this->urlGenerator = $urlGenerator;
-        $this->formActionRoute = $formActionRoute;
     }
 
     public function create(GridDefinitionInterface $definition)

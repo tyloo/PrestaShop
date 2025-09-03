@@ -35,22 +35,10 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
  */
 final class OptionsChecker implements OptionsCheckerInterface
 {
-    /**
-     * @var FeatureInterface
-     */
-    private $multistoreFeature;
-
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
     public function __construct(
-        FeatureInterface $multistoreFeature,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
+        private readonly FeatureInterface $multistoreFeature,
+        private readonly MultistoreContextCheckerInterface $multistoreContextChecker,
     ) {
-        $this->multistoreFeature = $multistoreFeature;
-        $this->multistoreContextChecker = $multistoreContextChecker;
     }
 
     public function canBeChanged(): bool

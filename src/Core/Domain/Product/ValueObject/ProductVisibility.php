@@ -37,8 +37,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Exception\ProductConstraintExcepti
 class ProductVisibility
 {
     public const VISIBLE_IN_CATALOG = 'catalog';
+
     public const VISIBLE_IN_SEARCH = 'search';
+
     public const VISIBLE_EVERYWHERE = 'both';
+
     public const INVISIBLE = 'none';
 
     public const AVAILABLE_VISIBILITY_VALUES = [

@@ -41,29 +41,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TitleGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $doctrineTitleDataFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ImageProviderInterface
-     */
-    private $titleImageThumbnailProvider;
-
     public function __construct(
-        GridDataFactoryInterface $doctrineTitleDataFactory,
-        TranslatorInterface $translator,
-        ImageProviderInterface $titleImageThumbnailProvider,
+        private readonly GridDataFactoryInterface $doctrineTitleDataFactory,
+        private readonly TranslatorInterface $translator,
+        private readonly ImageProviderInterface $titleImageThumbnailProvider,
     ) {
-        $this->doctrineTitleDataFactory = $doctrineTitleDataFactory;
-        $this->translator = $translator;
-        $this->titleImageThumbnailProvider = $titleImageThumbnailProvider;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)
@@ -84,17 +66,11 @@ class TitleGridDataFactory implements GridDataFactoryInterface
     private function applyModification(array $titles): array
     {
         foreach ($titles as $i => $title) {
-            switch ($title['type']) {
-                case Gender::TYPE_MALE:
-                    $titles[$i]['type'] = $this->translator->trans('Male', [], 'Admin.Shopparameters.Feature');
-                    break;
-                case Gender::TYPE_FEMALE:
-                    $titles[$i]['type'] = $this->translator->trans('Female', [], 'Admin.Shopparameters.Feature');
-                    break;
-                default:
-                    $titles[$i]['type'] = $this->translator->trans('Other', [], 'Admin.Shopparameters.Feature');
-                    break;
-            }
+            $titles[$i]['type'] = match ($title['type']) {
+                Gender::TYPE_MALE => $this->translator->trans('Male', [], 'Admin.Shopparameters.Feature'),
+                Gender::TYPE_FEMALE => $this->translator->trans('Female', [], 'Admin.Shopparameters.Feature'),
+                default => $this->translator->trans('Other', [], 'Admin.Shopparameters.Feature'),
+            };
 
             $titles[$i]['image'] = $this->titleImageThumbnailProvider->getPath($title['id_gender']);
         }

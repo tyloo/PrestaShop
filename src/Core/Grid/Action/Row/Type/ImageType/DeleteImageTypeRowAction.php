@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class DeleteImageTypeRowAction extends AbstractRowAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'delete_image_type';
     }

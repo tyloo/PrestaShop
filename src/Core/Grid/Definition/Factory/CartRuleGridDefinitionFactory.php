@@ -60,17 +60,11 @@ final class CartRuleGridDefinitionFactory extends AbstractGridDefinitionFactory 
 
     public const GRID_ID = 'cart_rule';
 
-    /**
-     * @var string
-     */
-    private $contextDateFormat;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        string $contextDateFormat,
+        private string $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
-        $this->contextDateFormat = $contextDateFormat;
     }
 
     public function getFilterId(): string

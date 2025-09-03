@@ -39,21 +39,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class SupplierFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-    /**
-     * @var ImageUploaderInterface
-     */
-    private $imageUploader;
-
     public function __construct(
-        CommandBusInterface $commandBus,
-        ImageUploaderInterface $imageUploader,
+        private readonly CommandBusInterface $commandBus,
+        private readonly ImageUploaderInterface $imageUploader,
     ) {
-        $this->commandBus = $commandBus;
-        $this->imageUploader = $imageUploader;
     }
 
     public function create(array $data)
@@ -115,39 +104,51 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
         if ($data['name'] !== null) {
             $command->setName($data['name']);
         }
+
         if ($data['description'] !== null) {
             $command->setLocalizedDescriptions($data['description']);
         }
+
         if ($data['phone'] !== null) {
             $command->setPhone($data['phone']);
         }
+
         if ($data['mobile_phone'] !== null) {
             $command->setMobilePhone($data['mobile_phone']);
         }
+
         if ($data['address'] !== null) {
             $command->setAddress($data['address']);
         }
+
         if ($data['address2'] !== null) {
             $command->setAddress2($data['address2']);
         }
+
         if ($data['post_code'] !== null) {
             $command->setPostCode($data['post_code']);
         }
+
         if ($data['city'] !== null) {
             $command->setCity($data['city']);
         }
+
         if ($data['id_country'] !== null) {
             $command->setCountryId((int) $data['id_country']);
         }
+
         if ($data['meta_title'] !== null) {
             $command->setLocalizedMetaTitles($data['meta_title']);
         }
+
         if ($data['meta_description'] !== null) {
             $command->setLocalizedMetaDescriptions($data['meta_description']);
         }
+
         if ($data['is_enabled'] !== null) {
             $command->setEnabled((bool) $data['is_enabled']);
         }
+
         if ($data['dni'] !== null) {
             $command->setDni($data['dni']);
         }
@@ -158,7 +159,7 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
 
         if (isset($data['shop_association'])) {
             $shopAssociation = $data['shop_association'] ?: [];
-            $shopAssociation = array_map(function ($shopId) { return (int) $shopId; }, $shopAssociation);
+            $shopAssociation = array_map(fn ($shopId): int => (int) $shopId, $shopAssociation);
 
             $command->setAssociatedShops($shopAssociation);
         }

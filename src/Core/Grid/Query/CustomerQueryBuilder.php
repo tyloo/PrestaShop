@@ -37,21 +37,6 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var int[]
-     */
-    private $contextShopIds;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $criteriaApplicator;
-
-    /**
      * @param string $dbPrefix
      * @param int    $contextLangId
      * @param int[]  $contextShopIds
@@ -59,15 +44,11 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
-        $contextLangId,
-        array $contextShopIds,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
+        private $contextLangId,
+        private readonly array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->contextLangId = $contextLangId;
-        $this->contextShopIds = $contextShopIds;
-        $this->criteriaApplicator = $criteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)

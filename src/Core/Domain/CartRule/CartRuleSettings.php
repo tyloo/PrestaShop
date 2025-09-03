@@ -34,7 +34,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\CartRule;
 class CartRuleSettings
 {
     public const NAME_MAX_LENGTH = 254;
+
     public const DESCRIPTION_MAX_LENGTH = 65534;
+
     public const CODE_MAX_LENGTH = 254;
 
     /**

@@ -42,22 +42,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class AddressZipCodeValidator extends ConstraintValidator
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var CountryZipCodeRequirementsProviderInterface
-     */
-    private $requirementsProvider;
-
     public function __construct(
-        TranslatorInterface $translator,
-        CountryZipCodeRequirementsProviderInterface $requirementsProvider,
+        private readonly TranslatorInterface $translator,
+        private readonly CountryZipCodeRequirementsProviderInterface $requirementsProvider,
     ) {
-        $this->translator = $translator;
-        $this->requirementsProvider = $requirementsProvider;
     }
 
     /**
@@ -68,6 +56,7 @@ final class AddressZipCodeValidator extends ConstraintValidator
         if (! ($constraint instanceof AddressZipCode)) {
             return;
         }
+
         $countryId = (int) $constraint->id_country;
 
         $requirements = $this->requirementsProvider->getCountryZipCodeRequirements(new CountryId($countryId));
@@ -86,7 +75,7 @@ final class AddressZipCodeValidator extends ConstraintValidator
             }
         }
 
-        if ($requirements->getPattern() !== null && ! (bool) preg_match($requirements->getPattern(), $value)) {
+        if ($requirements->getPattern() !== null && ! (bool) preg_match($requirements->getPattern(), (string) $value)) {
             $message = $this->translator->trans('Your Zip/Postal code is incorrect.', [], 'Admin.Notifications.Error') .
                 ' ' .
                 $this->translator->trans('It must be entered as follows:', [], 'Admin.Notifications.Error') . ' ' .

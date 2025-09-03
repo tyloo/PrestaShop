@@ -37,14 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\State\Exception\StateConstraintException;
 
 class OrderAddressFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    public function __construct(CommandBusInterface $commandBus)
-    {
-        $this->commandBus = $commandBus;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+    ) {
     }
 
     public function create(array $data)

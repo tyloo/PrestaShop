@@ -34,43 +34,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
  */
 class ProductDetails
 {
-    /**
-     * @var string
-     */
-    private $isbn;
-
-    /**
-     * @var string
-     */
-    private $upc;
-
-    /**
-     * @var string
-     */
-    private $gtin;
-
-    /**
-     * @var string
-     */
-    private $mpn;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
     public function __construct(
-        string $isbn,
-        string $upc,
-        string $gtin,
-        string $mpn,
-        string $reference,
+        private readonly string $isbn,
+        private readonly string $upc,
+        private readonly string $gtin,
+        private readonly string $mpn,
+        private readonly string $reference,
     ) {
-        $this->isbn = $isbn;
-        $this->upc = $upc;
-        $this->gtin = $gtin;
-        $this->mpn = $mpn;
-        $this->reference = $reference;
     }
 
     public function getIsbn(): string

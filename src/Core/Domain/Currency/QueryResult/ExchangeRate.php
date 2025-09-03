@@ -31,14 +31,9 @@ use PrestaShop\Decimal\DecimalNumber;
 
 class ExchangeRate
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $exchangeRate;
-
-    public function __construct(DecimalNumber $exchangeRate)
-    {
-        $this->exchangeRate = $exchangeRate;
+    public function __construct(
+        private readonly DecimalNumber $exchangeRate,
+    ) {
     }
 
     public function getValue(): DecimalNumber

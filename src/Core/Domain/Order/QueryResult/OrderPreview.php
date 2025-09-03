@@ -32,57 +32,18 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
  */
 class OrderPreview
 {
-    /**
-     * @var OrderPreviewInvoiceDetails
-     */
-    private $invoiceDetails;
-
-    /**
-     * @var OrderPreviewShippingDetails
-     */
-    private $shippingDetails;
-
-    /**
-     * @var OrderPreviewProductDetail[]
-     */
-    private $productDetails;
-
-    /**
-     * @var bool
-     */
-    private $taxIncluded;
-
-    /**
-     * @var bool
-     */
-    private $isVirtual;
-
-    /**
-     * @var string
-     */
-    private $invoiceAddressFormatted;
-
-    /**
-     * @var string
-     */
-    private $shippingAddressFormatted;
-
     public function __construct(
-        OrderPreviewInvoiceDetails $invoiceDetails,
-        OrderPreviewShippingDetails $shippingDetails,
-        array $productDetails,
-        bool $isVirtual,
-        bool $taxIncluded,
-        string $invoiceAddressFormatted = '',
-        string $shippingAddressFormatted = '',
+        private readonly OrderPreviewInvoiceDetails $invoiceDetails,
+        private readonly OrderPreviewShippingDetails $shippingDetails,
+        /**
+         * @var OrderPreviewProductDetail[]
+         */
+        private readonly array $productDetails,
+        private readonly bool $isVirtual,
+        private readonly bool $taxIncluded,
+        private readonly string $invoiceAddressFormatted = '',
+        private readonly string $shippingAddressFormatted = '',
     ) {
-        $this->invoiceDetails = $invoiceDetails;
-        $this->shippingDetails = $shippingDetails;
-        $this->productDetails = $productDetails;
-        $this->taxIncluded = $taxIncluded;
-        $this->isVirtual = $isVirtual;
-        $this->invoiceAddressFormatted = $invoiceAddressFormatted;
-        $this->shippingAddressFormatted = $shippingAddressFormatted;
     }
 
     public function getInvoiceDetails(): OrderPreviewInvoiceDetails

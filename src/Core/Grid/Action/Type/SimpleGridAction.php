@@ -31,7 +31,7 @@ use PrestaShop\PrestaShop\Core\Grid\Action\AbstractGridAction;
 
 final class SimpleGridAction extends AbstractGridAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'simple';
     }

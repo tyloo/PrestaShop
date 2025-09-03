@@ -35,21 +35,18 @@ use Exception;
 class EmailAlreadyUsedException extends EmployeeException
 {
     /**
-     * @var string
-     */
-    private $email;
-
-    /**
      * @param string         $email    the email that's being used
      * @param string         $message
      * @param int            $code
      * @param Exception|null $previous
      */
-    public function __construct($email, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private $email,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->email = $email;
     }
 
     /**

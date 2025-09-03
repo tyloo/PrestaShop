@@ -32,36 +32,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
  */
 class CartRule
 {
-    /**
-     * @var int
-     */
-    private $cartRuleId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var string
-     */
-    private $value;
-
     public function __construct(
-        int $cartRuleId,
-        string $name,
-        string $description,
-        string $value,
+        private readonly int $cartRuleId,
+        private readonly string $name,
+        private readonly string $description,
+        private readonly string $value,
     ) {
-        $this->cartRuleId = $cartRuleId;
-        $this->name = $name;
-        $this->description = $description;
-        $this->value = $value;
     }
 
     public function getCartRuleId(): int

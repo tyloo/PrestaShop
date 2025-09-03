@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
  */
 final class FiltersBuilderCollection extends AbstractTypedCollection
 {
-    protected function getType()
+    protected function getType(): string
     {
         return FiltersBuilderInterface::class;
     }

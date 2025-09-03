@@ -47,18 +47,17 @@ class AddCustomizationCommand
     private $productId;
 
     /**
-     * @var array key - value pairs where key is the id of customization field and the value is the customization value
-     */
-    private $customizationValuesByFieldIds;
-
-    /**
      * @throws CartConstraintException
      */
-    public function __construct(int $cartId, int $productId, array $customizationValuesByFieldIds)
-    {
+    public function __construct(
+        int $cartId,
+        int $productId, /**
+     * @var array key - value pairs where key is the id of customization field and the value is the customization value
+     */
+        private readonly array $customizationValuesByFieldIds,
+    ) {
         $this->cartId = new CartId($cartId);
         $this->productId = new ProductId($productId);
-        $this->customizationValuesByFieldIds = $customizationValuesByFieldIds;
     }
 
     public function getCartId(): CartId

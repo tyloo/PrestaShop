@@ -37,98 +37,28 @@ use SplFileInfo;
 class EditableOrderState
 {
     /**
-     * @var OrderStateId
-     */
-    private $orderStateId;
-    /**
-     * @var array
-     */
-    private $localizedNames;
-    /**
      * @var SplFileInfo|null
      */
     protected $icon;
-    /**
-     * @var string
-     */
-    private $color;
-    /**
-     * @var bool
-     */
-    private $loggable;
-    /**
-     * @var bool
-     */
-    private $invoice;
-    /**
-     * @var bool
-     */
-    private $hidden;
-    /**
-     * @var bool
-     */
-    private $sendEmail;
-    /**
-     * @var bool
-     */
-    private $pdfInvoice;
-    /**
-     * @var bool
-     */
-    private $pdfDelivery;
-    /**
-     * @var bool
-     */
-    private $shipped;
-    /**
-     * @var bool
-     */
-    private $paid;
-    /**
-     * @var bool
-     */
-    private $delivery;
-    /**
-     * @var array
-     */
-    private $localizedTemplates;
-    /**
-     * @var bool
-     */
-    private $isDeleted;
 
     public function __construct(
-        OrderStateId $orderStateId,
-        array $name,
+        private readonly OrderStateId $orderStateId,
+        private readonly array $localizedNames,
         ?SplFileInfo $icon,
-        string $color,
-        bool $loggable,
-        bool $invoice,
-        bool $hidden,
-        bool $sendEmail,
-        bool $pdfInvoice,
-        bool $pdfDelivery,
-        bool $shipped,
-        bool $paid,
-        bool $delivery,
-        array $localizedTemplates,
-        bool $isDeleted,
+        private readonly string $color,
+        private readonly bool $loggable,
+        private readonly bool $invoice,
+        private readonly bool $hidden,
+        private readonly bool $sendEmail,
+        private readonly bool $pdfInvoice,
+        private readonly bool $pdfDelivery,
+        private readonly bool $shipped,
+        private readonly bool $paid,
+        private readonly bool $delivery,
+        private readonly array $localizedTemplates,
+        private readonly bool $isDeleted,
     ) {
-        $this->orderStateId = $orderStateId;
-        $this->localizedNames = $name;
         $this->icon = $icon;
-        $this->color = $color;
-        $this->loggable = $loggable;
-        $this->invoice = $invoice;
-        $this->hidden = $hidden;
-        $this->sendEmail = $sendEmail;
-        $this->pdfInvoice = $pdfInvoice;
-        $this->pdfDelivery = $pdfDelivery;
-        $this->shipped = $shipped;
-        $this->paid = $paid;
-        $this->delivery = $delivery;
-        $this->localizedTemplates = $localizedTemplates;
-        $this->isDeleted = $isDeleted;
     }
 
     /**

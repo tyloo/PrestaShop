@@ -76,16 +76,6 @@ class AddPaymentCommand
     private $paymentCurrencyId;
 
     /**
-     * @var string|null
-     */
-    private $transactionId;
-
-    /**
-     * @var int|null
-     */
-    private $orderInvoiceId;
-
-    /**
      * @var EmployeeId
      */
     protected $employeeId;
@@ -100,8 +90,8 @@ class AddPaymentCommand
         string $paymentAmount,
         int $paymentCurrencyId,
         int $employeeId,
-        ?int $orderInvoiceId = null,
-        ?string $transactionId = null,
+        private readonly ?int $orderInvoiceId = null,
+        private readonly ?string $transactionId = null,
     ) {
         $amount = new DecimalNumber($paymentAmount);
         $this->assertAmountIsPositive($amount);
@@ -113,8 +103,6 @@ class AddPaymentCommand
         $this->paymentAmount = $amount;
         $this->paymentCurrencyId = new CurrencyId($paymentCurrencyId);
         $this->employeeId = new EmployeeId($employeeId);
-        $this->orderInvoiceId = $orderInvoiceId;
-        $this->transactionId = $transactionId;
     }
 
     /**

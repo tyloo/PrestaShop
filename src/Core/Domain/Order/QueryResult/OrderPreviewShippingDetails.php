@@ -44,113 +44,23 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
  */
 class OrderPreviewShippingDetails
 {
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $address1;
-
-    /**
-     * @var string
-     */
-    private $address2;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var string
-     */
-    private $country;
-
-    /**
-     * @var string
-     */
-    private $phone;
-
-    /**
-     * @var string|null
-     */
-    private $carrierName;
-
-    /**
-     * @var string|null
-     */
-    private $trackingNumber;
-
-    /**
-     * @var string
-     */
-    private $postalCode;
-
-    /**
-     * @var string|null
-     */
-    private $stateName;
-
-    /**
-     * @var string|null
-     */
-    private $company;
-
-    /**
-     * @var string|null
-     */
-    private $vatNumber;
-
-    /**
-     * @var string|null
-     */
-    private $dni;
-
-    /**
-     * @var string|null
-     */
-    private $trackingUrl;
-
     public function __construct(
-        string $firstName,
-        string $lastName,
-        ?string $company,
-        ?string $vatNumber,
-        string $address1,
-        string $address2,
-        string $city,
-        string $postalCode,
-        ?string $stateName,
-        string $country,
-        string $phone,
-        ?string $carrierName,
-        ?string $trackingNumber,
-        ?string $dni = null,
-        ?string $trackingUrl = null,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly ?string $company,
+        private readonly ?string $vatNumber,
+        private readonly string $address1,
+        private readonly string $address2,
+        private readonly string $city,
+        private readonly string $postalCode,
+        private readonly ?string $stateName,
+        private readonly string $country,
+        private readonly string $phone,
+        private readonly ?string $carrierName,
+        private readonly ?string $trackingNumber,
+        private readonly ?string $dni = null,
+        private readonly ?string $trackingUrl = null,
     ) {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->address1 = $address1;
-        $this->address2 = $address2;
-        $this->city = $city;
-        $this->country = $country;
-        $this->phone = $phone;
-        $this->carrierName = $carrierName;
-        $this->trackingNumber = $trackingNumber;
-        $this->postalCode = $postalCode;
-        $this->stateName = $stateName;
-        $this->company = $company;
-        $this->vatNumber = $vatNumber;
-        $this->dni = $dni;
-        $this->trackingUrl = $trackingUrl;
     }
 
     public function getFirstName(): string

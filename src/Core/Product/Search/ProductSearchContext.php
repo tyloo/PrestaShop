@@ -63,7 +63,7 @@ class ProductSearchContext
 
     public function __construct(?Context $context = null)
     {
-        if ($context) {
+        if ($context !== null) {
             $shopGroup = $context->shop->getGroup();
 
             $this->idShop = $context->shop->id;

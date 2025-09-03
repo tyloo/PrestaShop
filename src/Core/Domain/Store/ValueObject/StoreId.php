@@ -46,6 +46,7 @@ class StoreId
         if ($storeId <= 0) {
             throw new StoreConstraintException(\sprintf('Invalid store id "%d"', $storeId), StoreConstraintException::INVALID_ID);
         }
+
         $this->storeId = $storeId;
     }
 

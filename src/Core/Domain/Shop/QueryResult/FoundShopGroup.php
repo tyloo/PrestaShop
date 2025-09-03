@@ -34,26 +34,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Shop\QueryResult;
  */
 class FoundShopGroup
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $color;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    public function __construct(int $id, string $color, string $name)
-    {
-        $this->id = $id;
-        $this->color = $color;
-        $this->name = $name;
+    public function __construct(
+        private readonly int $id,
+        private readonly string $color,
+        private readonly string $name,
+    ) {
     }
 
     public function getId(): int

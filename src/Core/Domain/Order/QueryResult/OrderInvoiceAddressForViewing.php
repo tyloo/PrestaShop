@@ -43,108 +43,24 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 class OrderInvoiceAddressForViewing
 {
     /**
-     * @var int
-     */
-    private $addressId;
-
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $companyName;
-
-    /**
-     * @var string|null
-     */
-    private $vatNumber;
-
-    /**
-     * @var string
-     */
-    private $address1;
-
-    /**
-     * @var string
-     */
-    private $address2;
-
-    /**
-     * @var string
-     */
-    private $cityName;
-
-    /**
-     * @var string
-     */
-    private $stateName;
-
-    /**
-     * @var string
-     */
-    private $countryName;
-
-    /**
-     * @var string
-     */
-    private $postCode;
-
-    /**
-     * @var string
-     */
-    private $phoneNumber;
-
-    /**
-     * @var string
-     */
-    private $mobilePhoneNumber;
-
-    /**
-     * @var string|null
-     */
-    private $dni;
-
-    /**
      * @param string|null $dni If null the DNI is not required for the country, else string
      */
     public function __construct(
-        int $addressId,
-        string $firstName,
-        string $lastName,
-        string $companyName,
-        string $address1,
-        string $address2,
-        string $stateName,
-        string $cityName,
-        string $countryName,
-        string $postCode,
-        string $phone,
-        string $phoneMobile,
-        ?string $vatNumber = null,
-        ?string $dni = null,
+        private readonly int $addressId,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly string $companyName,
+        private readonly string $address1,
+        private readonly string $address2,
+        private readonly string $stateName,
+        private readonly string $cityName,
+        private readonly string $countryName,
+        private readonly string $postCode,
+        private readonly string $phoneNumber,
+        private readonly string $mobilePhoneNumber,
+        private readonly ?string $vatNumber = null,
+        private readonly ?string $dni = null,
     ) {
-        $this->addressId = $addressId;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->companyName = $companyName;
-        $this->vatNumber = $vatNumber;
-        $this->address1 = $address1;
-        $this->address2 = $address2;
-        $this->stateName = $stateName;
-        $this->cityName = $cityName;
-        $this->countryName = $countryName;
-        $this->postCode = $postCode;
-        $this->phoneNumber = $phone;
-        $this->mobilePhoneNumber = $phoneMobile;
-        $this->dni = $dni;
     }
 
     public function getAddressId(): int

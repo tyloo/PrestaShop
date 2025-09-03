@@ -30,22 +30,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryResult;
 
 class ProductCombination
 {
-    /**
-     * @var int
-     */
-    private $combinationId;
-
-    /**
-     * @var string
-     */
-    private $combinationName;
-
     public function __construct(
-        int $combinationId,
-        string $combinationName,
+        private readonly int $combinationId,
+        private readonly string $combinationName,
     ) {
-        $this->combinationId = $combinationId;
-        $this->combinationName = $combinationName;
     }
 
     public function getCombinationId(): int

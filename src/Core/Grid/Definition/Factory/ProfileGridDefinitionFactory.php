@@ -51,7 +51,7 @@ final class ProfileGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'profile';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

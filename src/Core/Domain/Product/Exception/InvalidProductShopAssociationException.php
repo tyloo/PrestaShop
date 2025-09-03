@@ -33,5 +33,6 @@ class InvalidProductShopAssociationException extends ProductException
     public const EMPTY_SHOPS_ASSOCIATION = 1;
 
     public const SOURCE_SHOP_MISSING_IN_SHOP_ASSOCIATION = 2;
+
     public const SOURCE_SHOP_NOT_ASSOCIATED = 3;
 }

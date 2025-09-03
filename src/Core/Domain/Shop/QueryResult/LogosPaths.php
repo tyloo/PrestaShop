@@ -33,41 +33,17 @@ namespace PrestaShop\PrestaShop\Core\Domain\Shop\QueryResult;
 class LogosPaths
 {
     /**
-     * @var string
-     */
-    private $headerLogoPath;
-
-    /**
-     * @var string
-     */
-    private $mailLogoPath;
-
-    /**
-     * @var string
-     */
-    private $invoiceLogoPath;
-
-    /**
-     * @var string
-     */
-    private $faviconPath;
-
-    /**
      * @param string $headerLogoPath
      * @param string $mailLogoPath
      * @param string $invoiceLogoPath
      * @param string $faviconPath
      */
     public function __construct(
-        $headerLogoPath,
-        $mailLogoPath,
-        $invoiceLogoPath,
-        $faviconPath,
+        private $headerLogoPath,
+        private $mailLogoPath,
+        private $invoiceLogoPath,
+        private $faviconPath,
     ) {
-        $this->headerLogoPath = $headerLogoPath;
-        $this->mailLogoPath = $mailLogoPath;
-        $this->invoiceLogoPath = $invoiceLogoPath;
-        $this->faviconPath = $faviconPath;
     }
 
     /**

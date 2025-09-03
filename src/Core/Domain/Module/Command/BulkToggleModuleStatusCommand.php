@@ -35,22 +35,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Module\Command;
 class BulkToggleModuleStatusCommand
 {
     /**
-     * @var array<string>
-     */
-    private $modules;
-
-    /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @param array<string> $modules Array of technical names for modules
      */
-    public function __construct(array $modules, bool $expectedStatus)
-    {
-        $this->modules = $modules;
-        $this->expectedStatus = $expectedStatus;
+    public function __construct(
+        private readonly array $modules,
+        private readonly bool $expectedStatus,
+    ) {
     }
 
     /**

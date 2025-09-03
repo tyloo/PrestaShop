@@ -36,25 +36,16 @@ class ProviderDefinitionFactory
         string $type,
         ?string $selectedValue = null,
     ): ProviderDefinitionInterface {
-        switch ($type) {
-            case ProviderDefinitionInterface::TYPE_MODULES:
-                return new ModuleProviderDefinition($selectedValue);
-            case ProviderDefinitionInterface::TYPE_THEMES:
-                return new ThemeProviderDefinition($selectedValue);
-            case ProviderDefinitionInterface::TYPE_CORE_DOMAIN:
-                return new CoreDomainProviderDefinition($selectedValue);
-            case ProviderDefinitionInterface::TYPE_BACK:
-                return new BackofficeProviderDefinition();
-            case ProviderDefinitionInterface::TYPE_FRONT:
-                return new FrontofficeProviderDefinition();
-            case ProviderDefinitionInterface::TYPE_MAILS:
-                return new MailsProviderDefinition();
-            case ProviderDefinitionInterface::TYPE_MAILS_BODY:
-                return new MailsBodyProviderDefinition();
-            case ProviderDefinitionInterface::TYPE_OTHERS:
-                return new OthersProviderDefinition();
-            default:
-                throw new RuntimeException(\sprintf('Unrecognized type: %s', $type));
-        }
+        return match ($type) {
+            ProviderDefinitionInterface::TYPE_MODULES => new ModuleProviderDefinition($selectedValue),
+            ProviderDefinitionInterface::TYPE_THEMES => new ThemeProviderDefinition($selectedValue),
+            ProviderDefinitionInterface::TYPE_CORE_DOMAIN => new CoreDomainProviderDefinition($selectedValue),
+            ProviderDefinitionInterface::TYPE_BACK => new BackofficeProviderDefinition(),
+            ProviderDefinitionInterface::TYPE_FRONT => new FrontofficeProviderDefinition(),
+            ProviderDefinitionInterface::TYPE_MAILS => new MailsProviderDefinition(),
+            ProviderDefinitionInterface::TYPE_MAILS_BODY => new MailsBodyProviderDefinition(),
+            ProviderDefinitionInterface::TYPE_OTHERS => new OthersProviderDefinition(),
+            default => throw new RuntimeException(\sprintf('Unrecognized type: %s', $type)),
+        };
     }
 }

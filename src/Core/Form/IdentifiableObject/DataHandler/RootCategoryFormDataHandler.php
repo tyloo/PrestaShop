@@ -41,15 +41,9 @@ use PrestaShop\PrestaShop\Core\Domain\Category\ValueObject\RedirectOption;
  */
 final class RootCategoryFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
     public function __construct(
-        CommandBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
     ) {
-        $this->commandBus = $commandBus;
     }
 
     public function create(array $data)

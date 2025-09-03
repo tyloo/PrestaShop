@@ -42,37 +42,38 @@ final class IdentifiableObjectHookByFormTypeProvider implements HookByFormTypePr
     public const FORM_TYPE_POSITION_IN_CONSTRUCTOR_OF_FORM_BUILDER = 0;
 
     public const FORM_BUILDER_HOOK_PREFIX = 'action';
+
     public const FORM_BUILDER_HOOK_SUFFIX = 'FormBuilderModifier';
+
     private const FORM_BUILDER_HOOK_SUFFIX_DATA_PROVIDER_DATA = 'FormDataProviderData';
+
     private const FORM_BUILDER_HOOK_SUFFIX_DATA_PROVIDER_DEFAULT_DATA = 'FormDataProviderDefaultData';
 
     public const FORM_HANDLER_UPDATE_BEFORE_PREFIX = 'actionBeforeUpdate';
+
     public const FORM_HANDLER_UPDATE_AFTER_PREFIX = 'actionAfterUpdate';
+
     public const FORM_HANDLER_CREATE_BEFORE_PREFIX = 'actionBeforeCreate';
+
     public const FORM_HANDLER_CREATE_AFTER_PREFIX = 'actionAfterCreate';
+
     public const FORM_HANDLER_SUFFIX = 'FormHandler';
 
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    public function __construct(FormFactoryInterface $formFactory)
-    {
-        $this->formFactory = $formFactory;
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory,
+    ) {
     }
 
     public function getHookNames(array $formTypes)
     {
         $formNames = $this->getFormNames($formTypes);
-
-        $formBuilderHookNames =
-            $formBuilderDataProviderDataHookNames =
-            $formBuilderDataProviderDefaultDataHookNames =
-            $formHandlerBeforeUpdateHookNames =
-            $formHandlerAfterUpdateHookNames =
-            $formHandlerBeforeCreateHookNames =
-            $formHandlerAfterCreateHookNames = [];
+        $formBuilderHookNames = [];
+        $formBuilderDataProviderDataHookNames = [];
+        $formBuilderDataProviderDefaultDataHookNames = [];
+        $formHandlerBeforeUpdateHookNames = [];
+        $formHandlerAfterUpdateHookNames = [];
+        $formHandlerBeforeCreateHookNames = [];
+        $formHandlerAfterCreateHookNames = [];
 
         foreach ($formNames as $formName) {
             $formBuilderHookNames[] = $this->formatHookName(

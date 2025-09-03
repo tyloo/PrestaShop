@@ -31,36 +31,12 @@ use PrestaShop\Decimal\DecimalNumber;
 
 class OrderDiscountForViewing
 {
-    /**
-     * @var int
-     */
-    private $orderCartRuleId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $amountFormatted;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $amountRaw;
-
     public function __construct(
-        int $orderCartRuleId,
-        string $name,
-        DecimalNumber $amountRaw,
-        string $amountFormatted,
+        private readonly int $orderCartRuleId,
+        private readonly string $name,
+        private readonly DecimalNumber $amountRaw,
+        private readonly string $amountFormatted,
     ) {
-        $this->orderCartRuleId = $orderCartRuleId;
-        $this->name = $name;
-        $this->amountFormatted = $amountFormatted;
-        $this->amountRaw = $amountRaw;
     }
 
     public function getOrderCartRuleId(): int

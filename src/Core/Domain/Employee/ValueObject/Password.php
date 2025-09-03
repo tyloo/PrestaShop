@@ -40,35 +40,14 @@ class Password
      */
     public const MIN_LENGTH = 8;
 
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var int
-     */
-    private $minScore;
-
-    /**
-     * @var int
-     */
-    private $minLength;
-
-    /**
-     * @var int
-     */
-    private $maxLength;
-
-    public function __construct(string $password, int $minLength, int $maxLength, int $minScore)
-    {
-        $this->password = $password;
-        $this->minLength = $minLength;
-        $this->maxLength = $maxLength;
-        $this->minScore = $minScore;
-
-        $this->assertPasswordIsWithinAllowedLength($password);
-        $this->assertPasswordScoreIsAllowed($password);
+    public function __construct(
+        private readonly string $password,
+        private readonly int $minLength,
+        private readonly int $maxLength,
+        private readonly int $minScore,
+    ) {
+        $this->assertPasswordIsWithinAllowedLength($this->password);
+        $this->assertPasswordScoreIsAllowed($this->password);
     }
 
     /**

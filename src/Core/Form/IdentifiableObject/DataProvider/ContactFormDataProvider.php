@@ -40,31 +40,13 @@ use Symfony\Component\Form\DataTransformerInterface;
 final class ContactFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
-     * @var DataTransformerInterface
-     */
-    private $stringArrayToIntegerArrayDataTransformer;
-
-    /**
      * @param int[] $contextShopIds
      */
     public function __construct(
-        CommandBusInterface $queryBus,
-        DataTransformerInterface $stringArrayToIntegerArrayDataTransformer,
-        array $contextShopIds,
+        private readonly CommandBusInterface $queryBus,
+        private readonly DataTransformerInterface $stringArrayToIntegerArrayDataTransformer,
+        private readonly array $contextShopIds,
     ) {
-        $this->queryBus = $queryBus;
-        $this->contextShopIds = $contextShopIds;
-        $this->stringArrayToIntegerArrayDataTransformer = $stringArrayToIntegerArrayDataTransformer;
     }
 
     /**

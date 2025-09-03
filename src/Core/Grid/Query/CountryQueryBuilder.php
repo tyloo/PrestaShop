@@ -49,11 +49,6 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
     protected $contextShopIds;
 
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param int[] $contextShopIds
      */
     public function __construct(
@@ -61,12 +56,11 @@ class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         array $contextShopIds,
-        int $contextLangId,
+        private readonly int $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
         $this->contextShopIds = $contextShopIds;
-        $this->contextLangId = $contextLangId;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder

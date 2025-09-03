@@ -43,22 +43,10 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class DatabaseTranslationLoader
 {
-    /**
-     * @var LanguageRepositoryInterface
-     */
-    private $languageRepository;
-
-    /**
-     * @var TranslationRepositoryInterface
-     */
-    private $translationRepository;
-
     public function __construct(
-        LanguageRepositoryInterface $languageRepository,
-        TranslationRepositoryInterface $translationRepository,
+        private readonly LanguageRepositoryInterface $languageRepository,
+        private readonly TranslationRepositoryInterface $translationRepository,
     ) {
-        $this->languageRepository = $languageRepository;
-        $this->translationRepository = $translationRepository;
     }
 
     /**

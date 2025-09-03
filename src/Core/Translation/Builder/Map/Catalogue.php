@@ -38,6 +38,7 @@ namespace PrestaShop\PrestaShop\Core\Translation\Builder\Map;
 class Catalogue
 {
     public const METADATA_KEY_NAME = '__metadata';
+
     public const EMPTY_META = [
         'count' => 0,
         'missing_translations' => 0,
@@ -79,16 +80,12 @@ class Catalogue
 
     public function getTranslationsCount(): int
     {
-        return array_reduce($this->domains, function ($carry, $domain) {
-            return $carry + $domain->getTranslationsCount();
-        }, 0);
+        return array_reduce($this->domains, fn ($carry, $domain): float|int => $carry + $domain->getTranslationsCount(), 0);
     }
 
     public function getMissingTranslationsCount(): int
     {
-        return array_reduce($this->domains, function ($carry, $domain) {
-            return $carry + $domain->getMissingTranslationsCount();
-        }, 0);
+        return array_reduce($this->domains, fn ($carry, $domain): float|int => $carry + $domain->getMissingTranslationsCount(), 0);
     }
 
     public function toArray(bool $withMetadata = true): array

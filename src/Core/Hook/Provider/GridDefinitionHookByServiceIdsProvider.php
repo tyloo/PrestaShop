@@ -40,20 +40,20 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsProviderInterface
 {
     public const HOOK_PREFIX = 'action';
+
     public const GRID_DEFINITION_HOOK_SUFFIX = 'GridDefinitionModifier';
+
     public const GRID_QUERY_BUILDER_HOOK_SUFFIX = 'GridQueryBuilderModifier';
+
     public const GRID_DATA_HOOK_SUFFIX = 'GridDataModifier';
+
     public const GRID_FILTER_FORM_SUFFIX = 'GridFilterFormModifier';
+
     public const GRID_PRESENTER_SUFFIX = 'GridPresenterModifier';
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        private readonly ContainerInterface $container,
+    ) {
     }
 
     public function getHookNames(array $gridDefinitionServiceIds)
@@ -121,6 +121,7 @@ final class GridDefinitionHookByServiceIdsProvider implements HookByServiceIdsPr
                 if (! $service instanceof GridDefinitionFactoryInterface) {
                     continue;
                 }
+
                 $definition = $service->getDefinition();
                 $definitionId = $definition->getId();
                 $camelizedDefinitionId = Container::camelize($definitionId);

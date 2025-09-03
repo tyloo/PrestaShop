@@ -40,18 +40,15 @@ use PrestaShop\PrestaShop\Core\Grid\Search\ShopSearchCriteriaInterface;
 abstract class ShopFilters extends Filters implements ShopSearchCriteriaInterface
 {
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @param array<string, mixed> $filters
      * @param string               $filterId
      */
-    public function __construct(ShopConstraint $shopConstraint, array $filters = [], $filterId = '')
-    {
+    public function __construct(
+        private readonly ShopConstraint $shopConstraint,
+        array $filters = [],
+        $filterId = '',
+    ) {
         parent::__construct($filters, $filterId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getShopConstraint(): ShopConstraint

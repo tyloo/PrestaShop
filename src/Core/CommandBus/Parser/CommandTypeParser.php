@@ -31,10 +31,8 @@ final class CommandTypeParser
 {
     /**
      * @param string $commandName Fully-qualified class name of command
-     *
-     * @return string
      */
-    public function parse($commandName)
+    public function parse($commandName): string
     {
         if (strpos($commandName, '\Command\\')) {
             return 'Command';

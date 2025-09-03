@@ -32,74 +32,20 @@ use DateTimeImmutable;
 class OrderCarrierForViewing
 {
     /**
-     * @var int
-     */
-    private $orderCarrierId;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $date;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $carrierId;
-
-    /**
-     * @var string
-     */
-    private $price;
-
-    /**
-     * @var string|null
-     */
-    private $trackingUrl;
-
-    /**
-     * @var string|null
-     */
-    private $trackingNumber;
-
-    /**
-     * @var bool
-     */
-    private $canEdit;
-
-    /**
-     * @var string
-     */
-    private $weight;
-
-    /**
      * @param string $name  Carrier name or null in case of virtual order
      * @param string $price Price or null in case of virtual order
      */
     public function __construct(
-        int $orderCarrierId,
-        DateTimeImmutable $date,
-        ?string $name,
-        string $weight,
-        int $carrierId,
-        ?string $price,
-        ?string $trackingUrl,
-        ?string $trackingNumber,
-        bool $canEdit,
+        private readonly int $orderCarrierId,
+        private readonly DateTimeImmutable $date,
+        private readonly ?string $name,
+        private readonly string $weight,
+        private readonly int $carrierId,
+        private readonly ?string $price,
+        private readonly ?string $trackingUrl,
+        private readonly ?string $trackingNumber,
+        private readonly bool $canEdit,
     ) {
-        $this->orderCarrierId = $orderCarrierId;
-        $this->date = $date;
-        $this->name = $name;
-        $this->carrierId = $carrierId;
-        $this->price = $price;
-        $this->trackingUrl = $trackingUrl;
-        $this->trackingNumber = $trackingNumber;
-        $this->canEdit = $canEdit;
-        $this->weight = $weight;
     }
 
     public function getOrderCarrierId(): int

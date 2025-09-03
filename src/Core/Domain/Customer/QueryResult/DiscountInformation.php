@@ -33,31 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class DiscountInformation
 {
     /**
-     * @var int
-     */
-    private $discountId;
-
-    /**
-     * @var string
-     */
-    private $code;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $isActive;
-
-    /**
-     * @var int
-     */
-    private $availableQuantity;
-
-    /**
      * @param int    $discountId
      * @param string $code
      * @param string $name
@@ -65,17 +40,12 @@ class DiscountInformation
      * @param int    $availableQuantity
      */
     public function __construct(
-        $discountId,
-        $code,
-        $name,
-        $isActive,
-        $availableQuantity,
+        private $discountId,
+        private $code,
+        private $name,
+        private $isActive,
+        private $availableQuantity,
     ) {
-        $this->discountId = $discountId;
-        $this->code = $code;
-        $this->name = $name;
-        $this->isActive = $isActive;
-        $this->availableQuantity = $availableQuantity;
     }
 
     /**

@@ -43,7 +43,10 @@ final class GridActionCollection extends AbstractCollection implements GridActio
         return $this;
     }
 
-    public function toArray()
+    /**
+     * @return list<array{id: mixed, name: mixed, icon: mixed, type: mixed, options: mixed}>
+     */
+    public function toArray(): array
     {
         $actionsArray = [];
 

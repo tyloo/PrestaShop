@@ -40,31 +40,6 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
 final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicator
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
-    /**
-     * @var int
-     */
-    private $rootCategoryId;
-
-    /**
      * @param string $dbPrefix
      * @param int    $contextLangId
      * @param int    $contextShopId
@@ -73,18 +48,13 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        $contextLangId,
-        $contextShopId,
-        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
-        $rootCategoryId,
+        private $contextLangId,
+        private $contextShopId,
+        private readonly DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
+        private readonly MultistoreContextCheckerInterface $multistoreContextChecker,
+        private $rootCategoryId,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->contextLangId = $contextLangId;
-        $this->contextShopId = $contextShopId;
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->multistoreContextChecker = $multistoreContextChecker;
-        $this->rootCategoryId = $rootCategoryId;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -174,13 +144,13 @@ final class EmptyCategoryQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             if ($filterName === 'active' || $filterName === 'id_category') {
-                $qb->andWhere($allowedFiltersAliasMap[$filterName] . " = :$filterName");
+                $qb->andWhere($allowedFiltersAliasMap[$filterName] . (' = :' . $filterName));
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
-            $qb->andWhere($allowedFiltersAliasMap[$filterName] . " LIKE :$filterName");
+            $qb->andWhere($allowedFiltersAliasMap[$filterName] . (' LIKE :' . $filterName));
             $qb->setParameter($filterName, '%' . $filterValue . '%');
         }
 

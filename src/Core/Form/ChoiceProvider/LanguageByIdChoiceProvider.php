@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceFormatter;
  */
 final class LanguageByIdChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var LanguageDataProvider
-     */
-    private $languageDataProvider;
-
-    public function __construct(LanguageDataProvider $languageDataProvider)
-    {
-        $this->languageDataProvider = $languageDataProvider;
+    public function __construct(
+        private readonly LanguageDataProvider $languageDataProvider,
+    ) {
     }
 
     /**

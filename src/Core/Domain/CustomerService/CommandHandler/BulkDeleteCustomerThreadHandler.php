@@ -39,14 +39,9 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\Repository\CustomerThreadR
 #[AsCommandHandler]
 class BulkDeleteCustomerThreadHandler implements BulkDeleteCustomerThreadHandlerInterface
 {
-    /**
-     * @var CustomerThreadRepository
-     */
-    private $customerThreadRepository;
-
-    public function __construct(CustomerThreadRepository $customerThreadRepository)
-    {
-        $this->customerThreadRepository = $customerThreadRepository;
+    public function __construct(
+        private readonly CustomerThreadRepository $customerThreadRepository,
+    ) {
     }
 
     public function handle(BulkDeleteCustomerThreadCommand $command): void

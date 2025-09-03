@@ -35,8 +35,11 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\Exception\CustomerServiceE
 final class CustomerThreadStatus
 {
     public const OPEN = 'open';
+
     public const CLOSED = 'closed';
+
     public const PENDING_1 = 'pending1';
+
     public const PENDING_2 = 'pending2';
 
     /**

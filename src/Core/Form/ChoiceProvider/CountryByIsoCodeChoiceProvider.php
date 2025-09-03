@@ -37,24 +37,12 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 final class CountryByIsoCodeChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var CountryDataProvider
-     */
-    private $countryDataProvider;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    /**
      * @param int $langId
      */
     public function __construct(
-        $langId,
-        CountryDataProvider $countryDataProvider,
+        private $langId,
+        private readonly CountryDataProvider $countryDataProvider,
     ) {
-        $this->countryDataProvider = $countryDataProvider;
-        $this->langId = $langId;
     }
 
     /**

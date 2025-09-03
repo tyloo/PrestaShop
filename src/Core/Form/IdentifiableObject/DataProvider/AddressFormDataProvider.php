@@ -37,26 +37,16 @@ use PrestaShop\PrestaShop\Core\Domain\Address\QueryResult\EditableCustomerAddres
  */
 final class AddressFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var int
-     */
-    private $defaultCountryId;
-
-    public function __construct(CommandBusInterface $queryBus, int $defaultCountryId)
-    {
-        $this->queryBus = $queryBus;
-        $this->defaultCountryId = $defaultCountryId;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+        private readonly int $defaultCountryId,
+    ) {
     }
 
     /**
      * @throws AddressConstraintException
      */
-    public function getData($addressId)
+    public function getData($addressId): array
     {
         /** @var EditableCustomerAddress $editableAddress */
         $editableAddress = $this->queryBus->handle(new GetCustomerAddressForEditing((int) $addressId));

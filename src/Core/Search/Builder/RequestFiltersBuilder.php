@@ -49,7 +49,7 @@ final class RequestFiltersBuilder extends AbstractFiltersBuilder
 
     public function setConfig(array $config)
     {
-        $this->request = isset($config['request']) ? $config['request'] : null;
+        $this->request = $config['request'] ?? null;
 
         return parent::setConfig($config);
     }
@@ -66,8 +66,8 @@ final class RequestFiltersBuilder extends AbstractFiltersBuilder
 
         // If filters have a filterId then parameters are sent in a namespace (eg: grid_id[limit]=10 instead of limit=10)
         if (! empty($filterId)) {
-            $queryParams = isset($queryParams[$filterId]) ? $queryParams[$filterId] : [];
-            $requestParams = isset($requestParams[$filterId]) ? $requestParams[$filterId] : [];
+            $queryParams = $queryParams[$filterId] ?? [];
+            $requestParams = $requestParams[$filterId] ?? [];
         }
 
         $parameters = [];

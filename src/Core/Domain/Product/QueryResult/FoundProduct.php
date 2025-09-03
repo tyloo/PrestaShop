@@ -33,88 +33,22 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
 class FoundProduct
 {
     /**
-     * @var bool
-     */
-    private $availableOutOfStock;
-
-    /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var float
-     */
-    private $taxRate;
-
-    /**
-     * @var string
-     */
-    private $formattedPrice;
-
-    /**
-     * @var float
-     */
-    private $priceTaxIncl;
-
-    /**
-     * @var float
-     */
-    private $priceTaxExcl;
-
-    /**
-     * @var int
-     */
-    private $stock;
-
-    /**
-     * @var string
-     */
-    private $location;
-
-    /**
-     * @var ProductCombination[]
-     */
-    private $combinations;
-
-    /**
-     * @var ProductCustomizationField[]
-     */
-    private $customizationFields;
-
-    /**
      * @param ProductCombination[]        $combinations
      * @param ProductCustomizationField[] $customizationFields
      */
     public function __construct(
-        int $productId,
-        string $name,
-        string $formattedPrice,
-        float $priceTaxIncl,
-        float $priceTaxExcl,
-        float $taxRate,
-        int $stock,
-        string $location,
-        bool $availableOutOfStock,
-        array $combinations = [],
-        array $customizationFields = [],
+        private readonly int $productId,
+        private readonly string $name,
+        private readonly string $formattedPrice,
+        private readonly float $priceTaxIncl,
+        private readonly float $priceTaxExcl,
+        private readonly float $taxRate,
+        private readonly int $stock,
+        private readonly string $location,
+        private readonly bool $availableOutOfStock,
+        private readonly array $combinations = [],
+        private readonly array $customizationFields = [],
     ) {
-        $this->productId = $productId;
-        $this->name = $name;
-        $this->formattedPrice = $formattedPrice;
-        $this->priceTaxIncl = $priceTaxIncl;
-        $this->priceTaxExcl = $priceTaxExcl;
-        $this->taxRate = $taxRate;
-        $this->stock = $stock;
-        $this->location = $location;
-        $this->availableOutOfStock = $availableOutOfStock;
-        $this->combinations = $combinations;
-        $this->customizationFields = $customizationFields;
     }
 
     public function getProductId(): int

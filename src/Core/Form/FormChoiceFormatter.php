@@ -58,8 +58,10 @@ class FormChoiceFormatter
                 unset($rawChoices[$k]);
                 continue;
             }
+
             $tmp[$rawChoice[$idKey]] = $rawChoice[$nameKey];
         }
+
         unset($tmp);
 
         // Final array with choices

@@ -36,10 +36,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class SubmitRowAction extends AbstractRowAction
 {
-    public const MESSAGE_TYPE_STATIC = 'static'; // Static confirmation message type is standard confirmation message type
+    public const MESSAGE_TYPE_STATIC = 'static';
+
+    // Static confirmation message type is standard confirmation message type
     public const MESSAGE_TYPE_DYNAMIC = 'dynamic'; // Dynamic confirmation message type enables dynamic confirmation message
 
-    public function getType()
+    public function getType(): string
     {
         return 'submit';
     }

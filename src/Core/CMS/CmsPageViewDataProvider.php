@@ -38,14 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
  */
 final class CmsPageViewDataProvider implements CmsPageViewDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    public function __construct(CommandBusInterface $queryBus)
-    {
-        $this->queryBus = $queryBus;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+    ) {
     }
 
     /**

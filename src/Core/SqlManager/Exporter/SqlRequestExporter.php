@@ -40,13 +40,10 @@ use SplFileInfo;
  */
 final class SqlRequestExporter implements SqlRequestExporterInterface
 {
-    private FileWriterInterface $csvFileWriter;
-    private ConfigurationInterface $configuration;
-
-    public function __construct(FileWriterInterface $csvFileWriter, ConfigurationInterface $configuration)
-    {
-        $this->csvFileWriter = $csvFileWriter;
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly FileWriterInterface $csvFileWriter,
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     public function exportToFile(SqlRequestId $sqlRequestId, SqlRequestExecutionResult $result): SplFileInfo

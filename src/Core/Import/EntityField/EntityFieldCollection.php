@@ -48,7 +48,10 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
         return $this;
     }
 
-    public function getRequiredFields()
+    /**
+     * @return list
+     */
+    public function getRequiredFields(): array
     {
         $requiredFields = [];
 
@@ -62,7 +65,10 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
         return $requiredFields;
     }
 
-    public function toArray()
+    /**
+     * @return list<array{label: mixed, description: mixed, required: mixed}>
+     */
+    public function toArray(): array
     {
         $array = [];
 

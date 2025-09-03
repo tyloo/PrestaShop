@@ -34,20 +34,10 @@ use DateTime;
  */
 final class GetCreditSlipIdsByDateRange
 {
-    /**
-     * @var DateTime
-     */
-    private $dateTimeFrom;
-
-    /**
-     * @var DateTime
-     */
-    private $dateTimeTo;
-
-    public function __construct(DateTime $dateTimeFrom, DateTime $dateTimeTo)
-    {
-        $this->dateTimeFrom = $dateTimeFrom;
-        $this->dateTimeTo = $dateTimeTo;
+    public function __construct(
+        private readonly DateTime $dateTimeFrom,
+        private readonly DateTime $dateTimeTo,
+    ) {
     }
 
     /**

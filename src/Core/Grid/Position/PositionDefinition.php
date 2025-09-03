@@ -34,48 +34,18 @@ namespace PrestaShop\PrestaShop\Core\Grid\Position;
 final class PositionDefinition implements PositionDefinitionInterface
 {
     /**
-     * @var string
-     */
-    private $table;
-
-    /**
-     * @var string
-     */
-    private $idField;
-
-    /**
-     * @var string
-     */
-    private $positionField;
-
-    /**
-     * @var string|null
-     */
-    private $parentIdField;
-
-    /**
-     * @var int
-     */
-    private $firstPosition;
-
-    /**
      * @param string      $table
      * @param string      $idField
      * @param string      $positionField
      * @param string|null $parentIdField
      */
     public function __construct(
-        $table,
-        $idField,
-        $positionField,
-        $parentIdField = null,
-        int $firstPosition = 0,
+        private $table,
+        private $idField,
+        private $positionField,
+        private $parentIdField = null,
+        private readonly int $firstPosition = 0,
     ) {
-        $this->table = $table;
-        $this->idField = $idField;
-        $this->positionField = $positionField;
-        $this->parentIdField = $parentIdField;
-        $this->firstPosition = $firstPosition;
     }
 
     public function getTable()

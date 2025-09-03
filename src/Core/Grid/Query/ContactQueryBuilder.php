@@ -37,36 +37,17 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class ContactQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
-     * @var array
-     */
-    private $contextShopsIds;
-
-    /**
      * @param string $dbPrefix
      * @param int    $languageId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $languageId,
-        array $contextShopsIds,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private $languageId,
+        private readonly array $contextShopsIds,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->languageId = $languageId;
-        $this->contextShopsIds = $contextShopsIds;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -127,7 +108,7 @@ final class ContactQueryBuilder extends AbstractDoctrineQueryBuilder
                 continue;
             }
 
-            $qb->andWhere("$name LIKE :$name");
+            $qb->andWhere(\sprintf('%s LIKE :%s', $name, $name));
             $qb->setParameter($name, '%' . $value . '%');
         }
 

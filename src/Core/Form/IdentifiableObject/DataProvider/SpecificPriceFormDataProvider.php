@@ -38,22 +38,10 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;
 
 class SpecificPriceFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
     public function __construct(
-        CommandBusInterface $queryBus,
-        int $contextShopId,
+        private readonly CommandBusInterface $queryBus,
+        private readonly int $contextShopId,
     ) {
-        $this->queryBus = $queryBus;
-        $this->contextShopId = $contextShopId;
     }
 
     /**

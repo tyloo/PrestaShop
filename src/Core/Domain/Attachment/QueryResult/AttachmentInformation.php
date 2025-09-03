@@ -31,50 +31,20 @@ namespace PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult;
 
 class AttachmentInformation
 {
-    /**
-     * @var int
-     */
-    private $attachmentId;
-
-    /**
-     * @var array<int, string>
-     */
-    private $localizedNames;
-
-    /**
-     * @var array<int, string>
-     */
-    private $localizedDescriptions;
-
-    /**
-     * @var string
-     */
-    private $fileName;
-
-    /**
-     * @var string
-     */
-    private $mimeType;
-
-    /**
-     * @var int
-     */
-    private $fileSize;
-
     public function __construct(
-        int $attachmentId,
-        array $localizedNames,
-        array $localizedDescriptions,
-        string $fileName,
-        string $mimeType,
-        int $fileSize,
+        private readonly int $attachmentId,
+        /**
+         * @var array<int, string>
+         */
+        private readonly array $localizedNames,
+        /**
+         * @var array<int, string>
+         */
+        private readonly array $localizedDescriptions,
+        private readonly string $fileName,
+        private readonly string $mimeType,
+        private readonly int $fileSize,
     ) {
-        $this->attachmentId = $attachmentId;
-        $this->localizedNames = $localizedNames;
-        $this->localizedDescriptions = $localizedDescriptions;
-        $this->fileName = $fileName;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
     }
 
     public function getAttachmentId(): int

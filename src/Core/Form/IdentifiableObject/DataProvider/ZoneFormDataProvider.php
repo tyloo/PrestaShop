@@ -38,29 +38,14 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\QueryResult\EditableZone;
  */
 final class ZoneFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var bool
-     */
-    private $multistoreEnabled;
-
-    /**
-     * @var int[]
-     */
-    private $defaultShopAssociation;
-
     public function __construct(
-        CommandBusInterface $queryBus,
-        bool $multistoreEnabled,
-        array $defaultShopAssociation,
+        private readonly CommandBusInterface $queryBus,
+        private readonly bool $multistoreEnabled,
+        /**
+         * @var int[]
+         */
+        private readonly array $defaultShopAssociation,
     ) {
-        $this->queryBus = $queryBus;
-        $this->multistoreEnabled = $multistoreEnabled;
-        $this->defaultShopAssociation = $defaultShopAssociation;
     }
 
     public function getData($id): array

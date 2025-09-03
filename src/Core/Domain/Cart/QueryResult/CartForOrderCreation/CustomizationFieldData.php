@@ -32,29 +32,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
  */
 class CustomizationFieldData
 {
-    /**
-     * @var int
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $value;
-
     public function __construct(
-        int $type,
-        string $name,
-        string $value,
+        private readonly int $type,
+        private readonly string $name,
+        private readonly string $value,
     ) {
-        $this->type = $type;
-        $this->name = $name;
-        $this->value = $value;
     }
 
     public function getType(): int

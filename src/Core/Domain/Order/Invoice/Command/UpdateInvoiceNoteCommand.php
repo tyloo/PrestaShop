@@ -39,15 +39,11 @@ class UpdateInvoiceNoteCommand
      */
     private $orderInvoiceId;
 
-    /**
-     * @var string|null
-     */
-    private $note;
-
-    public function __construct(int $orderInvoiceId, ?string $note)
-    {
+    public function __construct(
+        int $orderInvoiceId,
+        private readonly ?string $note,
+    ) {
         $this->orderInvoiceId = new OrderInvoiceId($orderInvoiceId);
-        $this->note = $note;
     }
 
     public function getOrderInvoiceId(): OrderInvoiceId

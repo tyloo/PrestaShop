@@ -34,20 +34,14 @@ use Shop;
 
 class HookRepository
 {
-    private $hookInfo;
-    private $shop;
-    private $db;
     private $db_prefix;
 
     public function __construct(
-        HookInformationProvider $hookInfo,
-        Shop $shop,
-        Db $db,
+        private readonly HookInformationProvider $hookInfo,
+        private readonly Shop $shop,
+        private readonly Db $db,
     ) {
-        $this->hookInfo = $hookInfo;
-        $this->shop = $shop;
-        $this->db = $db;
-        $this->db_prefix = $db->getPrefix();
+        $this->db_prefix = $this->db->getPrefix();
     }
 
     public function getIdByName($hook_name)
@@ -55,7 +49,7 @@ class HookRepository
         $escaped_hook_name = $this->db->escape($hook_name);
 
         $id_hook = $this->db->getValue(
-            "SELECT id_hook FROM {$this->db_prefix}hook WHERE name = '$escaped_hook_name'"
+            \sprintf("SELECT id_hook FROM %shook WHERE name = '%s'", $this->db_prefix, $escaped_hook_name)
         );
 
         return (int) $id_hook;
@@ -93,7 +87,7 @@ class HookRepository
         $escaped_module_name = $this->db->escape($module_name);
 
         $id_module = $this->db->getValue(
-            "SELECT id_module FROM {$this->db_prefix}module WHERE name = '$escaped_module_name'"
+            \sprintf("SELECT id_module FROM %smodule WHERE name = '%s'", $this->db_prefix, $escaped_module_name)
         );
 
         return (int) $id_module;
@@ -105,11 +99,11 @@ class HookRepository
         $id_shop = (int) $this->shop->id;
 
         $this->db->execute("DELETE FROM {$this->db_prefix}hook_module
-             WHERE id_hook = $id_hook AND id_shop = $id_shop
+             WHERE id_hook = {$id_hook} AND id_shop = {$id_shop}
         ");
 
         $this->db->execute("DELETE FROM {$this->db_prefix}hook_module_exceptions
-            WHERE id_hook = $id_hook AND id_shop = $id_shop
+            WHERE id_hook = {$id_hook} AND id_shop = {$id_shop}
         ");
 
         return $this;
@@ -141,6 +135,7 @@ class HookRepository
             if (! $id_hook) {
                 $id_hook = $this->createHook($hook_name);
             }
+
             if (! $id_hook) {
                 throw new Exception(\sprintf('Could not create hook `%1$s`.', $hook_name));
             }
@@ -192,9 +187,9 @@ class HookRepository
         $id_hook = (int) $id_hook;
 
         $this->db->execute("DELETE FROM {$this->db_prefix}hook_module_exceptions
-            WHERE id_shop = $id_shop
-            AND id_module = $id_module
-            AND id_hook = $id_hook
+            WHERE id_shop = {$id_shop}
+            AND id_module = {$id_module}
+            AND id_hook = {$id_hook}
         ");
 
         foreach ($pages as $page) {
@@ -217,18 +212,19 @@ class HookRepository
 
         $rows = $this->db->executeS("SELECT file_name
             FROM {$this->db_prefix}hook_module_exceptions
-            WHERE id_shop = $id_shop
-            AND id_module = $id_module
-            AND id_hook = $id_hook
+            WHERE id_shop = {$id_shop}
+            AND id_module = {$id_module}
+            AND id_hook = {$id_hook}
             ORDER BY file_name ASC
         ");
 
-        return array_map(function ($row) {
-            return $row['file_name'];
-        }, $rows);
+        return array_map(fn ($row) => $row['file_name'], $rows);
     }
 
-    public function getHooksWithModules()
+    /**
+     * @return non-empty-array[]
+     */
+    public function getHooksWithModules(): array
     {
         $id_shop = (int) $this->shop->id;
 
@@ -238,7 +234,7 @@ class HookRepository
                 ON h.id_hook = hm.id_hook
             INNER JOIN {$this->db_prefix}module m
                 ON m.id_module = hm.id_module
-            WHERE hm.id_shop = $id_shop
+            WHERE hm.id_shop = {$id_shop}
             ORDER BY h.name ASC, hm.position ASC
         ";
 
@@ -264,7 +260,10 @@ class HookRepository
         return $hooks;
     }
 
-    public function getDisplayHooksWithModules()
+    /**
+     * @return mixed[]
+     */
+    public function getDisplayHooksWithModules(): array
     {
         $hooks = [];
         foreach ($this->getHooksWithModules() as $hook_name => $modules) {

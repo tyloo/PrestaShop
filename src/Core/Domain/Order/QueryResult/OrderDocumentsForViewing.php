@@ -35,26 +35,16 @@ class OrderDocumentsForViewing
     private $documents = [];
 
     /**
-     * @var bool
-     */
-    private $canGenerateInvoice;
-
-    /**
-     * @var bool
-     */
-    private $canGenerateDeliverySlip;
-
-    /**
      * @param OrderDocumentForViewing[] $documents
      */
-    public function __construct(bool $canGenerateInvoice, bool $canGenerateDeliverySlip, array $documents)
-    {
+    public function __construct(
+        private readonly bool $canGenerateInvoice,
+        private readonly bool $canGenerateDeliverySlip,
+        array $documents,
+    ) {
         foreach ($documents as $document) {
             $this->add($document);
         }
-
-        $this->canGenerateInvoice = $canGenerateInvoice;
-        $this->canGenerateDeliverySlip = $canGenerateDeliverySlip;
     }
 
     /**

@@ -34,22 +34,10 @@ use PrestaShop\Decimal\DecimalNumber;
  */
 class PercentageDiscount
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $percentage;
-
-    /**
-     * @var bool
-     */
-    private $applyToDiscountedProducts;
-
     public function __construct(
-        DecimalNumber $percentage,
-        bool $includeDiscountedProducts,
+        private readonly DecimalNumber $percentage,
+        private readonly bool $applyToDiscountedProducts,
     ) {
-        $this->percentage = $percentage;
-        $this->applyToDiscountedProducts = $includeDiscountedProducts;
     }
 
     public function getPercentage(): DecimalNumber

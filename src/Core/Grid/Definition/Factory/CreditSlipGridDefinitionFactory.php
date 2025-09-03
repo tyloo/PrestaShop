@@ -49,20 +49,16 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
     public const GRID_ID = 'credit_slip';
 
     /**
-     * @var string
-     */
-    private $dateFormat;
-
-    /**
      * @param string $dateFormat The format in which date column values should be shown
      */
-    public function __construct(HookDispatcherInterface $hookDispatcher, $dateFormat)
-    {
+    public function __construct(
+        HookDispatcherInterface $hookDispatcher,
+        private $dateFormat,
+    ) {
         parent::__construct($hookDispatcher);
-        $this->dateFormat = $dateFormat;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

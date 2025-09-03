@@ -41,20 +41,16 @@ class UpdateCartCarrierCommand
     private $cartId;
 
     /**
-     * @var int
-     */
-    private $newCarrierId;
-
-    /**
      * @param int $cartId
      * @param int $newCarrierId
      *
      * @throws CartConstraintException
      */
-    public function __construct($cartId, $newCarrierId)
-    {
+    public function __construct(
+        $cartId,
+        private $newCarrierId,
+    ) {
         $this->cartId = new CartId($cartId);
-        $this->newCarrierId = $newCarrierId;
     }
 
     public function getCartId(): CartId

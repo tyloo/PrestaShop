@@ -58,10 +58,7 @@ class LanguageDefaultFontsCatalog
     public function getDefaultFontByLanguage(LanguageInterface $language)
     {
         $isoCode = $language->getIsoCode();
-        if (isset($this->languageDefaultFonts[$isoCode])) {
-            return $this->languageDefaultFonts[$isoCode];
-        }
 
-        return '';
+        return $this->languageDefaultFonts[$isoCode] ?? '';
     }
 }

@@ -32,20 +32,16 @@ namespace PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult;
  */
 class GetCarriersResult
 {
-    /**
-     * @var CarrierSummary[]
-     */
-    private array $availableCarriers;
-
-    /**
-     * @var FilteredCarrier[]
-     */
-    private array $filteredCarrier;
-
-    public function __construct(array $availableCarriers, array $filteredCarrier)
-    {
-        $this->availableCarriers = $availableCarriers;
-        $this->filteredCarrier = $filteredCarrier;
+    public function __construct(
+        /**
+         * @var CarrierSummary[]
+         */
+        private readonly array $availableCarriers,
+        /**
+         * @var FilteredCarrier[]
+         */
+        private readonly array $filteredCarrier,
+    ) {
     }
 
     /**

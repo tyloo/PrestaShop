@@ -63,11 +63,6 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
     public const GRID_ID = 'carrier';
 
     /**
-     * @var string
-     */
-    protected $dbPrefix;
-
-    /**
      * @var Connection
      */
     protected $connection;
@@ -77,19 +72,21 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
      */
     protected $showExternalModuleColumn;
 
+    /**
+     * @param string $dbPrefix
+     */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        $dbPrefix,
+        protected $dbPrefix,
         Connection $connection,
     ) {
         parent::__construct($hookDispatcher);
         $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
 
         $this->showExternalModuleColumn = $this->hasActiveExternalModuleCarriers();
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

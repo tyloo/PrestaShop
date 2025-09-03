@@ -36,36 +36,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class LocalizationPackImporter implements LocalizationPackImporterInterface
 {
-    /**
-     * @var LocalizationPackLoaderInterface
-     */
-    private $remoteLocalizationPackLoader;
-
-    /**
-     * @var LocalizationPackLoaderInterface
-     */
-    private $localLocalizationPackLoader;
-
-    /**
-     * @var LocalizationPackFactoryInterface
-     */
-    private $localizationPackFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
-        LocalizationPackLoaderInterface $remoteLocalizationPackLoader,
-        LocalizationPackLoaderInterface $localLocalizationPackLoader,
-        LocalizationPackFactoryInterface $localizationPackFactory,
-        TranslatorInterface $translator,
+        private readonly LocalizationPackLoaderInterface $remoteLocalizationPackLoader,
+        private readonly LocalizationPackLoaderInterface $localLocalizationPackLoader,
+        private readonly LocalizationPackFactoryInterface $localizationPackFactory,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->remoteLocalizationPackLoader = $remoteLocalizationPackLoader;
-        $this->localLocalizationPackLoader = $localLocalizationPackLoader;
-        $this->localizationPackFactory = $localizationPackFactory;
-        $this->translator = $translator;
     }
 
     public function import(LocalizationPackImportConfig $config)
@@ -112,7 +88,7 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
      *
      * @return array Errors if any
      */
-    private function checkConfig(LocalizationPackImportConfig $config)
+    private function checkConfig(LocalizationPackImportConfig $config): array
     {
         if (empty($config->getCountryIsoCode())) {
             $error = $this->trans('Invalid selection', 'Admin.Notifications.Error');

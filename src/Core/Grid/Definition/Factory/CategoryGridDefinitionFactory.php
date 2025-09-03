@@ -63,27 +63,15 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
 {
     public const GRID_ID = 'category';
 
-    /**
-     * @var AccessibilityCheckerInterface
-     */
-    private $categoryForViewAccessibilityChecker;
-
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
     private $categoryId;
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
-        AccessibilityCheckerInterface $categoryForViewAccessibilityChecker,
+        private readonly MultistoreContextCheckerInterface $multistoreContextChecker,
+        private readonly AccessibilityCheckerInterface $categoryForViewAccessibilityChecker,
         RequestStack $requestStack,
     ) {
         parent::__construct($hookDispatcher);
-        $this->categoryForViewAccessibilityChecker = $categoryForViewAccessibilityChecker;
-        $this->multistoreContextChecker = $multistoreContextChecker;
 
         $request = $requestStack->getCurrentRequest();
 
@@ -92,7 +80,7 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
         }
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

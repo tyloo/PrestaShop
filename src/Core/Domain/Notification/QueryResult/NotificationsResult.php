@@ -41,25 +41,16 @@ class NotificationsResult
     private $type;
 
     /**
-     * @var int
-     */
-    private $total;
-
-    /**
-     * @var NotificationResult[]
-     */
-    private $notifications = [];
-
-    /**
      * @param NotificationResult[] $notifications
      *
      * @throws NotificationException
      */
-    public function __construct(string $type, int $total, array $notifications)
-    {
+    public function __construct(
+        string $type,
+        private readonly int $total,
+        private readonly array $notifications,
+    ) {
         $this->type = new Type($type);
-        $this->total = $total;
-        $this->notifications = $notifications;
     }
 
     public function getType(): Type

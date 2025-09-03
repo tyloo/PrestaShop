@@ -39,14 +39,9 @@ use PrestaShop\PrestaShop\Core\Domain\Address\Query\GetRequiredFieldsForAddress;
  */
 class CustomerAddressFormOptionsProvider implements FormOptionsProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    public function __construct(CommandBusInterface $queryBus)
-    {
-        $this->queryBus = $queryBus;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+    ) {
     }
 
     public function getOptions(int $id, array $data): array

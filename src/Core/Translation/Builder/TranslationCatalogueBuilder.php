@@ -50,14 +50,9 @@ use PrestaShopBundle\Translation\Provider\AbstractProvider;
  */
 class TranslationCatalogueBuilder
 {
-    /**
-     * @var CatalogueProviderFactory
-     */
-    private $catalogueProviderFactory;
-
-    public function __construct(CatalogueProviderFactory $catalogueProviderFactory)
-    {
-        $this->catalogueProviderFactory = $catalogueProviderFactory;
+    public function __construct(
+        private readonly CatalogueProviderFactory $catalogueProviderFactory,
+    ) {
     }
 
     /**
@@ -164,9 +159,11 @@ class TranslationCatalogueBuilder
         } else {
             $defaultCatalogueMessages = [$domain => $defaultCatalogue->all($domain)];
         }
+
         if (empty($defaultCatalogueMessages)) {
             return new Catalogue();
         }
+
         $fileTranslatedCatalogue = $provider->getFileTranslatedCatalogue($locale);
         $userTranslatedCatalogue = $provider->getUserTranslatedCatalogue($locale);
 
@@ -181,12 +178,15 @@ class TranslationCatalogueBuilder
                 if ($locale === AbstractProvider::DEFAULT_LOCALE) {
                     $message->setFileTranslation($translationKey);
                 }
+
                 if ($fileTranslatedCatalogue->defines($translationKey, $domainName)) {
                     $message->setFileTranslation($fileTranslatedCatalogue->get($translationKey, $domainName));
                 }
+
                 if ($userTranslatedCatalogue->defines($translationKey, $domainName)) {
                     $message->setUserTranslation($userTranslatedCatalogue->get($translationKey, $domainName));
                 }
+
                 // if search is empty or is in catalog default|project|user
                 if (empty($search) || $message->contains($search)) {
                     $domainTranslation->addMessage($message);
@@ -209,10 +209,11 @@ class TranslationCatalogueBuilder
         ?string $domain = null,
     ): void {
         if (! \in_array($providerDefinition->getType(), ProviderDefinitionInterface::ALLOWED_TYPES, true)) {
-            throw new UnexpectedTranslationTypeException('This \'type\' param is not valid.');
+            throw new UnexpectedTranslationTypeException("This 'type' param is not valid.");
         }
+
         if ($domain !== null && empty($domain)) {
-            throw new InvalidArgumentException('The given \'domain\' is not valid.');
+            throw new InvalidArgumentException("The given 'domain' is not valid.");
         }
     }
 }

@@ -45,8 +45,11 @@ class ShopContextBuilder implements LegacyContextBuilderInterface
     use LegacyObjectCheckerTrait;
 
     private ?ShopConstraint $shopConstraint = null;
+
     private ?int $shopId = null;
+
     private ?LegacyShop $legacyShop = null;
+
     private bool $secureMode = false;
 
     public function __construct(

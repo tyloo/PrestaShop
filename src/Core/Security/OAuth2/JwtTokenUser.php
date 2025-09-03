@@ -77,7 +77,7 @@ class JwtTokenUser implements UserInterface, PasswordAuthenticatedUserInterface
     protected function convertScopesToRoles(): void
     {
         foreach ($this->scopes as $scope) {
-            $this->roles[] = 'ROLE_' . strtoupper($scope);
+            $this->roles[] = 'ROLE_' . strtoupper((string) $scope);
         }
     }
 }

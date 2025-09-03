@@ -31,43 +31,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\CartRule\QueryResult;
 
 class CartRuleActionForEditing
 {
-    /**
-     * @var bool
-     */
-    private $freeShipping;
-
-    /**
-     * @var CartRuleReductionForEditing
-     */
-    private $reduction;
-
-    /**
-     * @var int|null
-     */
-    private $giftProductId;
-
-    /**
-     * @var int|null
-     */
-    private $giftCombinationId;
-
-    /**
-     * @var string
-     */
-    private $discountApplicationType;
-
     public function __construct(
-        bool $freeShipping,
-        CartRuleReductionForEditing $reduction,
-        string $discountApplicationType,
-        ?int $giftProductId,
-        ?int $giftCombinationId,
+        private readonly bool $freeShipping,
+        private readonly CartRuleReductionForEditing $reduction,
+        private readonly string $discountApplicationType,
+        private readonly ?int $giftProductId,
+        private readonly ?int $giftCombinationId,
     ) {
-        $this->freeShipping = $freeShipping;
-        $this->reduction = $reduction;
-        $this->discountApplicationType = $discountApplicationType;
-        $this->giftProductId = $giftProductId;
-        $this->giftCombinationId = $giftCombinationId;
     }
 
     public function isFreeShipping(): bool

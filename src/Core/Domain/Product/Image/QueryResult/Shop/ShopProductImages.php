@@ -31,20 +31,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Image\QueryResult\Shop;
 
 class ShopProductImages
 {
-    /**
-     * @var ShopImageAssociationCollection
-     */
-    private $productImageCollection;
-
-    /**
-     * @var int
-     */
-    private $shopId;
-
-    public function __construct(int $shopId, ShopImageAssociationCollection $productImageCollection)
-    {
-        $this->shopId = $shopId;
-        $this->productImageCollection = $productImageCollection;
+    public function __construct(
+        private readonly int $shopId,
+        private readonly ShopImageAssociationCollection $productImageCollection,
+    ) {
     }
 
     public function getShopId(): int

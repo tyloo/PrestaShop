@@ -44,14 +44,9 @@ final class KpiRow implements KpiRowInterface
      */
     private $kpis = [];
 
-    /**
-     * @var array
-     */
-    private $options;
-
-    public function __construct(array $options = [])
-    {
-        $this->options = $options;
+    public function __construct(
+        private readonly array $options = [],
+    ) {
     }
 
     public function addKpi(KpiInterface $kpi)

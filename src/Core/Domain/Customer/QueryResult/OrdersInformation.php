@@ -33,30 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class OrdersInformation
 {
     /**
-     * @var array|OrderInformation[]
-     */
-    private $validOrders;
-
-    /**
-     * @var array|OrderInformation[]
-     */
-    private $invalidOrders;
-
-    /**
-     * @var string
-     */
-    private $totalSpent;
-
-    /**
      * @param string             $totalSpent
      * @param OrderInformation[] $validOrders
      * @param OrderInformation[] $invalidOrders
      */
-    public function __construct($totalSpent, array $validOrders, array $invalidOrders)
-    {
-        $this->validOrders = $validOrders;
-        $this->invalidOrders = $invalidOrders;
-        $this->totalSpent = $totalSpent;
+    public function __construct(
+        private $totalSpent,
+        private readonly array $validOrders,
+        private readonly array $invalidOrders,
+    ) {
     }
 
     /**

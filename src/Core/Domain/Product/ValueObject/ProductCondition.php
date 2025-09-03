@@ -37,7 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Exception\ProductConstraintExcepti
 class ProductCondition
 {
     public const NEW = 'new';
+
     public const USED = 'used';
+
     public const REFURBISHED = 'refurbished';
 
     /**

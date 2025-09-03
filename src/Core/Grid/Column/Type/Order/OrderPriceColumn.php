@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OrderPriceColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'order_price';
     }

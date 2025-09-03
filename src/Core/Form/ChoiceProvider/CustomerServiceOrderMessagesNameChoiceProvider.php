@@ -35,14 +35,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class CustomerServiceOrderMessagesNameChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $orderMessages;
-
-    public function __construct(array $orderMessages)
-    {
-        $this->orderMessages = $orderMessages;
+    public function __construct(
+        private readonly array $orderMessages,
+    ) {
     }
 
     public function getChoices(): array

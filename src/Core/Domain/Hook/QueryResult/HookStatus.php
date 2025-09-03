@@ -32,20 +32,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Hook\QueryResult;
  */
 class HookStatus
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var bool
-     */
-    private $isActive;
-
-    public function __construct(int $id, bool $isActive)
-    {
-        $this->id = $id;
-        $this->isActive = $isActive;
+    public function __construct(
+        private readonly int $id,
+        private readonly bool $isActive,
+    ) {
     }
 
     public function getId(): int

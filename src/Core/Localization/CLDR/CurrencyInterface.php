@@ -40,9 +40,13 @@ use PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException;
 interface CurrencyInterface
 {
     public const SYMBOL_TYPE_NARROW = 'narrow';
+
     public const DISPLAY_NAME_COUNT_DEFAULT = 'default';
+
     public const SYMBOL_TYPE_DEFAULT = 'default';
+
     public const DISPLAY_NAME_COUNT_ONE = 'one';
+
     public const DISPLAY_NAME_COUNT_OTHER = 'other';
 
     /**

@@ -28,20 +28,16 @@
 namespace PrestaShop\PrestaShop\Core\Export;
 
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
+use Stringable;
 
 /**
  * ImportDirectory class is responsible for returning export directory & data related to it.
  */
-final class ExportDirectory
+final class ExportDirectory implements Stringable
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     /**
@@ -56,10 +52,8 @@ final class ExportDirectory
 
     /**
      * Use export directory object as a string.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getDir();
     }

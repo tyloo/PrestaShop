@@ -33,18 +33,16 @@ use PrestaShop\PrestaShop\Core\Security\OpenSsl\OpenSSLInterface;
 class PasswordGenerator
 {
     public const PASSWORDGEN_FLAG_NUMERIC = 'NUMERIC';
+
     public const PASSWORDGEN_FLAG_NO_NUMERIC = 'NO_NUMERIC';
+
     public const PASSWORDGEN_FLAG_RANDOM = 'RANDOM';
+
     public const PASSWORDGEN_FLAG_ALPHANUMERIC = 'ALPHANUMERIC';
 
-    /**
-     * @var OpenSSLInterface
-     */
-    private $cryptography;
-
-    public function __construct(OpenSSLInterface $cryptography)
-    {
-        $this->cryptography = $cryptography;
+    public function __construct(
+        private readonly OpenSSLInterface $cryptography,
+    ) {
     }
 
     /**

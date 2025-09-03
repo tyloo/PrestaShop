@@ -38,29 +38,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class CmsPageFilterFormFactory implements GridFilterFormFactoryInterface
 {
-    /**
-     * @var GridFilterFormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
     public function __construct(
-        GridFilterFormFactoryInterface $formFactory,
-        UrlGeneratorInterface $urlGenerator,
-        RequestStack $requestStack,
+        private readonly GridFilterFormFactoryInterface $formFactory,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly RequestStack $requestStack,
     ) {
-        $this->formFactory = $formFactory;
-        $this->urlGenerator = $urlGenerator;
-        $this->requestStack = $requestStack;
     }
 
     public function create(GridDefinitionInterface $definition)

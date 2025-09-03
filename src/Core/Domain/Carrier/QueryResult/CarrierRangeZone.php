@@ -40,7 +40,7 @@ class CarrierRangeZone
     private array $ranges;
 
     public function __construct(
-        private int $zoneId,
+        private readonly int $zoneId,
 
         /** @var array{
          *     range_from: float,

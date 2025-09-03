@@ -43,24 +43,6 @@ class Locale implements LocaleInterface
     public const NUMBERING_SYSTEM_LATIN = LocaleInterface::NUMBERING_SYSTEM_LATIN;
 
     /**
-     * The locale code (simplified IETF tag syntax)
-     * Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
-     * eg: fr-FR, en-US.
-     */
-    protected string $code;
-
-    /**
-     * Number formatter.
-     * Used to format raw numbers in this locale context.
-     */
-    protected NumberFormatter $numberFormatter;
-
-    /**
-     * Number formatting specification.
-     */
-    protected NumberInterface $numberSpecification;
-
-    /**
      * Price formatting specifications collection (one spec per currency).
      *
      * @var NumberCollection
@@ -68,7 +50,7 @@ class Locale implements LocaleInterface
     protected $priceSpecifications;
 
     /**
-     * @param string           $localeCode
+     * @param string           $code
      *                                              The locale code (simplified IETF tag syntax)
      *                                              Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
      *                                              eg: fr-FR, en-US
@@ -76,19 +58,16 @@ class Locale implements LocaleInterface
      *                                              Number specification used when formatting a number
      * @param NumberCollection $priceSpecifications
      *                                              Collection of Price specifications (one per installed currency)
-     * @param NumberFormatter  $formatter
+     * @param NumberFormatter  $numberFormatter
      *                                              This number formatter will use stored number / price specs
      */
     public function __construct(
-        string $localeCode,
-        NumberInterface $numberSpecification,
+        protected string $code,
+        protected NumberInterface $numberSpecification,
         NumberCollection $priceSpecifications,
-        NumberFormatter $formatter,
+        protected NumberFormatter $numberFormatter,
     ) {
-        $this->code = $localeCode;
-        $this->numberSpecification = $numberSpecification;
         $this->priceSpecifications = $priceSpecifications;
-        $this->numberFormatter = $formatter;
     }
 
     /**
@@ -145,7 +124,6 @@ class Locale implements LocaleInterface
      */
     public function getPriceSpecification(string $currencyCode): NumberInterface
     {
-        $currencyCode = (string) $currencyCode;
         $priceSpec = $this->priceSpecifications->get($currencyCode);
         if ($priceSpec === null) {
             throw new LocalizationException('Price specification not found for currency: "' . $currencyCode . '"');

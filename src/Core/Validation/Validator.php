@@ -34,14 +34,9 @@ use PrestaShop\PrestaShop\Adapter\Validate;
  */
 final class Validator implements ValidatorInterface
 {
-    /**
-     * @var Validate
-     */
-    private $validate;
-
-    public function __construct(Validate $validate)
-    {
-        $this->validate = $validate;
+    public function __construct(
+        private readonly Validate $validate,
+    ) {
     }
 
     public function isCleanHtml($html, array $options = [])

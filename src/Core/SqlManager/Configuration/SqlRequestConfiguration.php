@@ -40,19 +40,15 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\SqlRequestSettings;
 final class SqlRequestConfiguration implements DataConfigurationInterface
 {
     private const DEFINES_FILE = _PS_ROOT_DIR_ . '/config/defines.inc.php';
+
     private const CUSTOM_DEFINES_FILE = _PS_ROOT_DIR_ . '/config/defines_custom.inc.php';
+
     private const PATTERN = '/(define\(\'_PS_ALLOW_MULTI_STATEMENTS_QUERIES_\', )([a-zA-Z]+)(\);)/Ui';
 
-    private CommandBusInterface $commandBus;
-
-    private CommandBusInterface $queryBus;
-
     public function __construct(
-        CommandBusInterface $commandBus,
-        CommandBusInterface $queryBus,
+        private readonly CommandBusInterface $commandBus,
+        private readonly CommandBusInterface $queryBus,
     ) {
-        $this->commandBus = $commandBus;
-        $this->queryBus = $queryBus;
     }
 
     public function getConfiguration(): array

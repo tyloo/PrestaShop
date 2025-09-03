@@ -107,6 +107,7 @@ class SetProductFeatureValuesCommand
         if (empty($featureValue['feature_id'])) {
             throw new InvalidProductFeatureValuesFormatException('Invalid input array, feature_id is expected');
         }
+
         if (empty($featureValue['feature_value_id']) && empty($featureValue['custom_values'])) {
             throw new InvalidProductFeatureValuesFormatException('Feature value missing, specify a feature_value_id or new custom_values');
         }

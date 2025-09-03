@@ -107,7 +107,7 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
      *
      * @throws InvalidArgumentException
      */
-    private function validateKpis(array $kpis)
+    private function validateKpis(array $kpis): bool
     {
         foreach ($kpis as $kpi) {
             if (! $kpi instanceof KpiInterface) {
@@ -123,7 +123,7 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
      *
      * @throws InvalidArgumentException
      */
-    private function validateIdentifier($identifier)
+    private function validateIdentifier($identifier): bool
     {
         if (! \is_string($identifier)) {
             throw InvalidArgumentException::invalidIdentifier($identifier);

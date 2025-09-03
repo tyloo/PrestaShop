@@ -34,15 +34,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class CustomizationFieldTypeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
-        TranslatorInterface $translator,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->translator = $translator;
     }
 
     public function getChoices()

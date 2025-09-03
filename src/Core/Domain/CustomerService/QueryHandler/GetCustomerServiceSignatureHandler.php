@@ -37,14 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\Query\GetCustomerServiceSi
 #[AsQueryHandler]
 final class GetCustomerServiceSignatureHandler implements GetCustomerServiceSignatureHandlerInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     public function handle(GetCustomerServiceSignature $query)

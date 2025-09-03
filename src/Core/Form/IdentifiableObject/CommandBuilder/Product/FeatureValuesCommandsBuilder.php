@@ -72,6 +72,7 @@ final class FeatureValuesCommandsBuilder implements ProductCommandsBuilderInterf
                 if (isset($featureValueData['feature_value_id'])) {
                     $formattedFeature['feature_value_id'] = (int) $featureValueData['feature_value_id'];
                 }
+
                 if ($this->hasCustomValues($featureValueData)) {
                     $formattedFeature['custom_values'] = $featureValueData['custom_value'];
                 }

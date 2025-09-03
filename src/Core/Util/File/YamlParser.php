@@ -40,23 +40,13 @@ use Symfony\Component\Yaml\Yaml;
 final class YamlParser
 {
     /**
-     * @var string
-     */
-    private $cacheDir;
-
-    /**
-     * @var bool
-     */
-    private $useCache;
-
-    /**
      * @param string $cacheDir
      * @param bool   $useCache
      */
-    public function __construct($cacheDir, $useCache = true)
-    {
-        $this->cacheDir = $cacheDir;
-        $this->useCache = $useCache;
+    public function __construct(
+        private $cacheDir,
+        private $useCache = true,
+    ) {
     }
 
     /**

@@ -31,17 +31,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryResult;
 class ProductCombinationsCollection
 {
     /**
-     * @var ProductCombination[]
-     */
-    private $productCombinations;
-
-    /**
      * @param ProductCombination[] $productCombinations
      */
     public function __construct(
-        array $productCombinations,
+        private readonly array $productCombinations,
     ) {
-        $this->productCombinations = $productCombinations;
     }
 
     /**

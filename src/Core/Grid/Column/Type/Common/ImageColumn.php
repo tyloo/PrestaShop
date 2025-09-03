@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ImageColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'image';
     }

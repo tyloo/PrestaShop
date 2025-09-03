@@ -62,6 +62,7 @@ class ConfigReader implements ConfigReaderInterface
         if (file_exists($this->themesDirectoryPath . $name . '/preview.png')) {
             $themeData['preview'] = 'themes/' . $name . '/preview.png';
         }
+
         $themeData = array_merge(self::DEFAULT_CONFIGURATION_THEME, $themeData);
 
         return new ArrayFinder($themeData);

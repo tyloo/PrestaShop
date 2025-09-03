@@ -36,7 +36,7 @@ use PrestaShop\Decimal\DecimalNumber;
  */
 class CurrencyContext
 {
-    private DecimalNumber $conversionRate;
+    private readonly DecimalNumber $conversionRate;
 
     public function __construct(
         protected int $id,

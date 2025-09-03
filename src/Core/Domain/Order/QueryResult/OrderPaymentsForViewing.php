@@ -37,37 +37,18 @@ class OrderPaymentsForViewing
     private $payments = [];
 
     /**
-     * @var string|null
-     */
-    private $amountToPay;
-
-    /**
-     * @var string|null
-     */
-    private $paidAmount;
-
-    /**
-     * @var array
-     */
-    private $paymentMismatchOrderIds;
-
-    /**
      * @param OrderPaymentForViewing[] $payments
      * @param int[]                    $paymentMismatchOrderIds
      */
     public function __construct(
         array $payments,
-        ?string $amountToPay,
-        ?string $paidAmount,
-        array $paymentMismatchOrderIds,
+        private readonly ?string $amountToPay,
+        private readonly ?string $paidAmount,
+        private readonly array $paymentMismatchOrderIds,
     ) {
         foreach ($payments as $payment) {
             $this->add($payment);
         }
-
-        $this->amountToPay = $amountToPay;
-        $this->paidAmount = $paidAmount;
-        $this->paymentMismatchOrderIds = $paymentMismatchOrderIds;
     }
 
     /**

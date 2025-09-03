@@ -28,21 +28,17 @@
 namespace PrestaShop\PrestaShop\Core\Import;
 
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
+use Stringable;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * ImportDirectory class is responsible for returning import directory & data related to it.
  */
-final class ImportDirectory
+final class ImportDirectory implements Stringable
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     /**
@@ -87,10 +83,8 @@ final class ImportDirectory
 
     /**
      * Use import directory object as a string.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getDir();
     }

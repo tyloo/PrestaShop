@@ -37,15 +37,13 @@ use PhpParser\PrettyPrinter\Standard;
 
 class HookParserVisitor extends NodeVisitorAbstract
 {
-    private string $filePath;
     private array $hooks;
-    private string $code;
 
-    public function __construct(string $filePath, string $code)
-    {
-        $this->filePath = $filePath;
+    public function __construct(
+        private readonly string $filePath,
+        private readonly string $code,
+    ) {
         $this->hooks = [];
-        $this->code = $code;
     }
 
     public function enterNode(Node $node): int|Node|null
@@ -96,10 +94,12 @@ class HookParserVisitor extends NodeVisitorAbstract
                 if ($index >= \count($parameterNames)) {
                     break;
                 }
+
                 $paramName = $parameterNames[$index];
                 if ($paramName === 'hook_name') {
                     continue;
                 }
+
                 $argValue = $this->getArgValue($arg->value);
                 $usedParameters[$paramName] = $argValue;
             }
@@ -126,27 +126,34 @@ class HookParserVisitor extends NodeVisitorAbstract
         if ($expr instanceof Node\Scalar\String_) {
             return "'" . $expr->value . "'";
         }
+
         if ($expr instanceof Node\Expr\ConstFetch) {
             return $expr->name->toString();
         }
+
         if ($expr instanceof Node\Scalar\LNumber || $expr instanceof Node\Scalar\DNumber) {
             return (string) $expr->value;
         }
+
         if ($expr instanceof Node\Expr\Array_) {
             $prettyPrinter = new Standard();
 
             return $prettyPrinter->prettyPrintExpr($expr);
         }
+
         if ($expr instanceof Node\Expr\Variable) {
             return '$' . $expr->name;
         }
+
         $prettyPrinter = new Standard();
         if ($expr instanceof Node\Stmt\Expression) {
             return $prettyPrinter->prettyPrint([$expr->expr]);
         }
+
         if ($expr instanceof Node\Expr) {
             return $prettyPrinter->prettyPrint([$expr]);
         }
+
         throw new InvalidArgumentException('Unsupported node type.');
     }
 
@@ -207,16 +214,19 @@ class HookParserVisitor extends NodeVisitorAbstract
 
                 return '<ClassName>';
             }
+
             if ($methodName === 'getId') {
                 $isDynamic = true;
 
                 return '<DefinitionId>';
             }
+
             if ($methodName === 'legacyControllerName' || $methodName === 'getLegacyControllerName') {
                 $isDynamic = true;
 
                 return '<LegacyControllerName>';
             }
+
             if ($methodName === 'getName' || $methodName === 'getFormName') {
                 $isDynamic = true;
 
@@ -287,11 +297,13 @@ class HookParserVisitor extends NodeVisitorAbstract
 
                 return '<DefinitionId>';
             }
+
             if ($propertyName === 'controller_name') {
                 $isDynamic = true;
 
                 return '<Controller>';
             }
+
             if ($propertyName === 'action') {
                 $isDynamic = true;
 
@@ -312,9 +324,11 @@ class HookParserVisitor extends NodeVisitorAbstract
             if ($varName === 'hookName') {
                 return '<HookName>';
             }
+
             if ($varName === 'gridId') {
                 return '<DefinitionId>';
             }
+
             if ($varName === 'action') {
                 return '<Action>';
             }
@@ -339,15 +353,18 @@ class HookParserVisitor extends NodeVisitorAbstract
         if ($startPos !== null && $endPos !== null) {
             return substr($this->code, $startPos, $endPos - $startPos + 1);
         }
+
         // Fallback to pretty printer if positions are not available
         $prettyPrinter = new Standard();
 
         if ($node instanceof Node\Stmt\Expression) {
             return $prettyPrinter->prettyPrint([$node->expr]);
         }
+
         if ($node instanceof Node\Expr) {
             return $prettyPrinter->prettyPrint([$node]);
         }
+
         throw new InvalidArgumentException('Unsupported node type.');
     }
 }

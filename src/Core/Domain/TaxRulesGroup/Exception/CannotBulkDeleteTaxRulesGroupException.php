@@ -34,16 +34,16 @@ use Exception;
  */
 class CannotBulkDeleteTaxRulesGroupException extends TaxRulesGroupException
 {
-    /**
-     * @var int[]
-     */
-    private $taxRulesGroupsIds;
-
-    public function __construct(array $taxRulesGroupsIds, $message = '', $code = 0, ?Exception $previous = null)
-    {
+    public function __construct(
+        /**
+         * @var int[]
+         */
+        private readonly array $taxRulesGroupsIds,
+        $message = '',
+        $code = 0,
+        ?Exception $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->taxRulesGroupsIds = $taxRulesGroupsIds;
     }
 
     /**

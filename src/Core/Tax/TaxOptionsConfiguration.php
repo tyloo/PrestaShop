@@ -41,16 +41,13 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
 {
     private const CONFIGURATION_FIELDS = ['enable_tax', 'display_tax_in_cart', 'tax_address_type', 'use_eco_tax', 'eco_tax_rule_group'];
 
-    /**
-     * @var ProductEcotaxResetterInterface
-     */
-    private $productEcotaxResetter;
-
-    public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, ProductEcotaxResetterInterface $productEcotaxResetter)
-    {
+    public function __construct(
+        Configuration $configuration,
+        Context $shopContext,
+        FeatureInterface $multistoreFeature,
+        private readonly ProductEcotaxResetterInterface $productEcotaxResetter,
+    ) {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
-
-        $this->productEcotaxResetter = $productEcotaxResetter;
     }
 
     public function getConfiguration()

@@ -39,11 +39,9 @@ use PrestaShop\PrestaShop\Core\Encoding\CharsetEncoding;
 #[AsQueryHandler]
 final class GetSqlRequestSettingsHandler implements GetSqlRequestSettingsHandlerInterface
 {
-    private ConfigurationInterface $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     public function handle(GetSqlRequestSettings $query): SqlRequestSettings
@@ -67,10 +65,6 @@ final class GetSqlRequestSettingsHandler implements GetSqlRequestSettingsHandler
             2 => CharsetEncoding::ISO_8859_1,
         ];
 
-        if (isset($valuesMapping[$rawValue])) {
-            return $valuesMapping[$rawValue];
-        }
-
-        return CharsetEncoding::UTF_8;
+        return $valuesMapping[$rawValue] ?? CharsetEncoding::UTF_8;
     }
 }

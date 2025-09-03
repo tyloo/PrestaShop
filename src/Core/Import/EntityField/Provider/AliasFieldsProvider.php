@@ -36,14 +36,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class AliasFieldsProvider implements EntityFieldsProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function getCollection()

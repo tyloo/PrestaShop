@@ -35,11 +35,6 @@ use PrestaShop\PrestaShop\Core\File\FileFinderInterface;
 final class CachedFileFinderProxy implements FileFinderInterface
 {
     /**
-     * @var FileFinderInterface
-     */
-    private $delegate;
-
-    /**
      * @var array
      */
     private $filesCache;
@@ -47,9 +42,9 @@ final class CachedFileFinderProxy implements FileFinderInterface
     /**
      * @param FileFinderInterface $delegate instance of file finder
      */
-    public function __construct(FileFinderInterface $delegate)
-    {
-        $this->delegate = $delegate;
+    public function __construct(
+        private readonly FileFinderInterface $delegate,
+    ) {
     }
 
     public function find()

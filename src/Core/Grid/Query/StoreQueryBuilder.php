@@ -39,31 +39,19 @@ use PrestaShop\PrestaShop\Core\Grid\Search\ShopSearchCriteriaInterface;
 class StoreQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
      * @var int
      */
     protected $languageId;
 
-    /**
-     * @var StoreRepository
-     */
-    private $storeRepository;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
         int $languageId,
-        StoreRepository $storeRepository,
+        private readonly StoreRepository $storeRepository,
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->languageId = $languageId;
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->storeRepository = $storeRepository;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
@@ -96,9 +84,7 @@ class StoreQueryBuilder extends AbstractDoctrineQueryBuilder
             throw new InvalidArgumentException(\sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
         }
 
-        $shopIds = array_map(static function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $this->storeRepository->getShopIdsByConstraint($searchCriteria->getShopConstraint()));
+        $shopIds = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $this->storeRepository->getShopIdsByConstraint($searchCriteria->getShopConstraint()));
 
         $qb = $this->connection->createQueryBuilder()
             ->from($this->dbPrefix . 'store', 's')

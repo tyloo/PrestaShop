@@ -39,21 +39,14 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicator
-     */
-    private $searchCriteriaApplicator;
-
-    /**
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
+        private readonly DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
@@ -189,7 +182,7 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
             if ($filterName === 'employee') {
                 $alias = $this->getEmployeeField(true);
 
-                $qb->andWhere("$alias LIKE :$filterName");
+                $qb->andWhere(\sprintf('%s LIKE :%s', $alias, $filterName));
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
@@ -205,9 +198,9 @@ final class LogQueryBuilder extends AbstractDoctrineQueryBuilder
     private function getEmployeeField(bool $includeFullFirstname = true): string
     {
         if ($includeFullFirstname) {
-            return 'CONCAT(e.`firstname`, \' \', e.`lastname`)';
+            return "CONCAT(e.`firstname`, ' ', e.`lastname`)";
         }
 
-        return 'CONCAT(LEFT(e.`firstname`, 1), \'. \', e.`lastname`)';
+        return "CONCAT(LEFT(e.`firstname`, 1), '. ', e.`lastname`)";
     }
 }

@@ -35,15 +35,9 @@ class LowStockThreshold
      */
     public const DISABLED_VALUE = 0;
 
-    /**
-     * @var int
-     */
-    private $value;
-
     public function __construct(
-        int $thresholdValue,
+        private readonly int $value,
     ) {
-        $this->value = $thresholdValue;
     }
 
     public function getValue(): int

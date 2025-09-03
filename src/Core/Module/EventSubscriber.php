@@ -35,20 +35,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class EventSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ModuleRepository
-     */
-    private $moduleRepository;
-
-    /**
-     * @var SymfonyCacheClearer
-     */
-    private $cacheClearer;
-
-    public function __construct(ModuleRepository $moduleRepository, SymfonyCacheClearer $cacheClearer)
-    {
-        $this->moduleRepository = $moduleRepository;
-        $this->cacheClearer = $cacheClearer;
+    public function __construct(
+        private readonly ModuleRepository $moduleRepository,
+        private readonly SymfonyCacheClearer $cacheClearer,
+    ) {
     }
 
     public static function getSubscribedEvents()

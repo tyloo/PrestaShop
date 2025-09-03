@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Search\Filters\ProductCombinationFilters;
 #[AsQueryHandler]
 class GetCombinationIdsHandler implements GetCombinationIdsHandlerInterface
 {
-    /**
-     * @var ProductCombinationQueryBuilder
-     */
-    private $productCombinationQueryBuilder;
-
     public function __construct(
-        ProductCombinationQueryBuilder $productCombinationQueryBuilder,
+        private readonly ProductCombinationQueryBuilder $productCombinationQueryBuilder,
     ) {
-        $this->productCombinationQueryBuilder = $productCombinationQueryBuilder;
     }
 
     /**
@@ -80,8 +74,6 @@ class GetCombinationIdsHandler implements GetCombinationIdsHandlerInterface
             ->fetchAllAssociative()
         ;
 
-        return array_map(static function (array $result): CombinationId {
-            return new CombinationId((int) $result['id_product_attribute']);
-        }, $results);
+        return array_map(static fn (array $result): CombinationId => new CombinationId((int) $result['id_product_attribute']), $results);
     }
 }

@@ -40,14 +40,9 @@ final class CleanHtmlValidator extends ConstraintValidator
 {
     private const EMBEDDABLE_HTML_PATTERN = '/<[\s]*(i?frame|form|input|embed|object)/ims';
 
-    /**
-     * @var bool
-     */
-    private $allowEmbeddableHtml;
-
-    public function __construct(bool $allowEmbeddableHtml)
-    {
-        $this->allowEmbeddableHtml = $allowEmbeddableHtml;
+    public function __construct(
+        private readonly bool $allowEmbeddableHtml,
+    ) {
     }
 
     public function validate($value, Constraint $constraint)

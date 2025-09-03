@@ -29,11 +29,9 @@ namespace PrestaShop\PrestaShop\Core\Foundation\Templating;
 
 class RenderableProxy
 {
-    private $renderable;
-
-    public function __construct(RenderableInterface $renderable)
-    {
-        $this->renderable = $renderable;
+    public function __construct(
+        private readonly RenderableInterface $renderable,
+    ) {
     }
 
     public function setTemplate($templatePath)

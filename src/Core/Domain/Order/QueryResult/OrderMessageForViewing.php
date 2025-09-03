@@ -29,76 +29,24 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
 
 class OrderMessageForViewing
 {
-    /**
-     * @var int
-     */
-    private $messageId;
-
-    /**
-     * @var string
-     */
-    private $message;
-
-    /**
-     * @var OrderMessageDateForViewing
-     */
-    private $messageDate;
-
-    /**
-     * @var string
-     */
-    private $employeeFirstName;
-
-    /**
-     * @var string
-     */
-    private $employeeLastName;
-
-    /**
-     * @var string
-     */
-    private $customerFirstName;
-
-    /**
-     * @var string
-     */
-    private $customerLastName;
-
-    /**
-     * @var int
-     */
-    private $employeeId;
-    /**
-     * @var bool
-     */
-    private $isPrivate;
-    /**
-     * @var bool
-     */
-    private $isCurrentEmployeesMessage;
-
     public function __construct(
-        int $messageId,
-        string $message,
-        OrderMessageDateForViewing $messageDate,
-        int $employeeId,
-        bool $isCurrentEmployeesMessage,
-        ?string $employeeFirstName,
-        ?string $employeeLastName,
-        string $customerFirstName,
-        string $customerLastName,
-        bool $isPrivate,
+        private readonly int $messageId,
+        private readonly string $message,
+        private readonly OrderMessageDateForViewing $messageDate,
+        private readonly int $employeeId,
+        private readonly bool $isCurrentEmployeesMessage,
+        /**
+         * @var string
+         */
+        private readonly ?string $employeeFirstName,
+        /**
+         * @var string
+         */
+        private readonly ?string $employeeLastName,
+        private readonly string $customerFirstName,
+        private readonly string $customerLastName,
+        private readonly bool $isPrivate,
     ) {
-        $this->messageId = $messageId;
-        $this->message = $message;
-        $this->messageDate = $messageDate;
-        $this->employeeFirstName = $employeeFirstName;
-        $this->employeeLastName = $employeeLastName;
-        $this->customerFirstName = $customerFirstName;
-        $this->customerLastName = $customerLastName;
-        $this->employeeId = $employeeId;
-        $this->isPrivate = $isPrivate;
-        $this->isCurrentEmployeesMessage = $isCurrentEmployeesMessage;
     }
 
     public function getMessageId(): int

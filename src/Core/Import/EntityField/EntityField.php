@@ -33,37 +33,17 @@ namespace PrestaShop\PrestaShop\Core\Import\EntityField;
 final class EntityField implements EntityFieldInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $label;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var bool
-     */
-    private $required;
-
-    /**
      * @param string $name
      * @param string $label
      * @param string $description
      * @param bool   $required
      */
-    public function __construct($name, $label, $description = '', $required = false)
-    {
-        $this->name = $name;
-        $this->label = $label;
-        $this->description = $description;
-        $this->required = $required;
+    public function __construct(
+        private $name,
+        private $label,
+        private $description = '',
+        private $required = false,
+    ) {
     }
 
     public function getName()

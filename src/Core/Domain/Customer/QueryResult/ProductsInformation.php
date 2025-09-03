@@ -33,23 +33,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class ProductsInformation
 {
     /**
-     * @var BoughtProductInformation[]
-     */
-    private $boughtProductsInformation;
-
-    /**
-     * @var ViewedProductInformation[]
-     */
-    private $viewedProductsInformation;
-
-    /**
      * @param BoughtProductInformation[] $boughtProductsInformation
      * @param ViewedProductInformation[] $viewedProductsInformation
      */
-    public function __construct(array $boughtProductsInformation, array $viewedProductsInformation)
-    {
-        $this->boughtProductsInformation = $boughtProductsInformation;
-        $this->viewedProductsInformation = $viewedProductsInformation;
+    public function __construct(
+        private readonly array $boughtProductsInformation,
+        private readonly array $viewedProductsInformation,
+    ) {
     }
 
     /**

@@ -39,20 +39,20 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupI
  */
 class EditAttributeCommand
 {
-    private AttributeId $attributeId;
+    private readonly AttributeId $attributeId;
 
-    private ?AttributeGroupId $attributeGroupId;
+    private ?AttributeGroupId $attributeGroupId = null;
 
-    private ?array $localizedNames;
+    private ?array $localizedNames = null;
 
-    private ?string $color;
+    private ?string $color = null;
 
-    private ?string $pathName;
+    private ?string $pathName = null;
 
     /**
      * @var int[]
      */
-    private ?array $associatedShopIds;
+    private ?array $associatedShopIds = null;
 
     /**
      * @throws AttributeConstraintException

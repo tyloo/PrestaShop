@@ -113,6 +113,7 @@ class Fees
                 )
             );
         }
+
         $this->finalShippingFees = clone $this->shippingFees;
 
         // wrapping fees
@@ -136,6 +137,7 @@ class Fees
         } else {
             $this->wrappingFees = new AmountImmutable();
         }
+
         $this->finalWrappingFees = clone $this->wrappingFees;
         $this->isProcessed = true;
     }
@@ -191,9 +193,11 @@ class Fees
         if ($taxIncluded < 0) {
             $taxIncluded = 0;
         }
+
         if ($taxExcluded < 0) {
             $taxExcluded = 0;
         }
+
         $this->finalShippingFees = new AmountImmutable(
             $taxIncluded,
             $taxExcluded

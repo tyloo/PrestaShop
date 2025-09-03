@@ -37,25 +37,18 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 final class CarrierByReferenceChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var CarrierDataProvider
-     */
-    private $carrierDataProvider;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    /**
      * @param int $langId
      */
-    public function __construct(CarrierDataProvider $carrierDataProvider, $langId)
-    {
-        $this->carrierDataProvider = $carrierDataProvider;
-        $this->langId = $langId;
+    public function __construct(
+        private readonly CarrierDataProvider $carrierDataProvider,
+        private $langId,
+    ) {
     }
 
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         $choices = [];
 

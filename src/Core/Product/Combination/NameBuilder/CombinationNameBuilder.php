@@ -46,19 +46,13 @@ class CombinationNameBuilder implements CombinationNameBuilderInterface
      */
     protected $attributesSeparator;
 
-    /**
-     * @var string
-     */
-    private $attributesInsideSeparator;
-
     public function __construct(
         TranslatorInterface $translator,
         string $attributesSeparator,
-        string $attributesInsideSeparator,
+        private readonly string $attributesInsideSeparator,
     ) {
         $this->translator = $translator;
         $this->attributesSeparator = $attributesSeparator;
-        $this->attributesInsideSeparator = $attributesInsideSeparator;
     }
 
     public function buildName(array $attributesInfo): string

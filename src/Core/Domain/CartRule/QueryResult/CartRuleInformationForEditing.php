@@ -31,57 +31,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\CartRule\QueryResult;
 
 class CartRuleInformationForEditing
 {
-    /**
-     * @var array
-     */
-    private $localizedNames;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var string
-     */
-    private $code;
-
-    /**
-     * @var bool
-     */
-    private $highlight;
-
-    /**
-     * @var bool
-     */
-    private $partialUse;
-
-    /**
-     * @var int
-     */
-    private $priority;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
     public function __construct(
-        array $localizedNames,
-        string $description,
-        string $code,
-        bool $highlight,
-        bool $partialUse,
-        int $priority,
-        bool $enabled,
+        private readonly array $localizedNames,
+        private readonly string $description,
+        private readonly string $code,
+        private readonly bool $highlight,
+        private readonly bool $partialUse,
+        private readonly int $priority,
+        private readonly bool $enabled,
     ) {
-        $this->localizedNames = $localizedNames;
-        $this->description = $description;
-        $this->code = $code;
-        $this->highlight = $highlight;
-        $this->partialUse = $partialUse;
-        $this->priority = $priority;
-        $this->enabled = $enabled;
     }
 
     public function getLocalizedNames(): array

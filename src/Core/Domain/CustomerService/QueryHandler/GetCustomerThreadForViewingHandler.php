@@ -60,11 +60,6 @@ use Validate;
 class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingHandlerInterface
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
@@ -74,10 +69,11 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
      */
     protected $locale;
 
-    public function __construct(Context $context, Locale $locale)
-    {
-        $this->context = $context;
-        $this->translator = $context->getTranslator();
+    public function __construct(
+        private readonly Context $context,
+        Locale $locale,
+    ) {
+        $this->translator = $this->context->getTranslator();
         $this->locale = $locale;
     }
 
@@ -101,7 +97,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
     /**
      * @return CustomerThreadMessage[]
      */
-    private function getCustomerThreadMessages(array $messages)
+    private function getCustomerThreadMessages(array $messages): array
     {
         $threadMessages = [];
 
@@ -256,7 +252,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
                     $item['icon'],
                     $item['arrow'],
                     $item['date'],
-                    isset($item['background_color']) ? $item['background_color'] : null,
+                    $item['background_color'] ?? null,
                     $item['related_order_id']
                 );
             }
@@ -265,10 +261,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
         return new CustomerThreadTimeline($timelineItems);
     }
 
-    /**
-     * @return array
-     */
-    private function getAvailableActions(CustomerThread $thread)
+    private function getAvailableActions(CustomerThread $thread): array
     {
         $actions = [];
 

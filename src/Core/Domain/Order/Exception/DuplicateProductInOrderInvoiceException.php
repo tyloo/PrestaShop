@@ -37,18 +37,16 @@ use Throwable;
 class DuplicateProductInOrderInvoiceException extends DuplicateProductInOrderException
 {
     /**
-     * @var string
-     */
-    private $orderInvoiceNumber;
-
-    /**
      * @param string $message
      * @param int    $code
      */
-    public function __construct(string $orderInvoiceId, $message = '', $code = 0, ?Throwable $previous = null)
-    {
+    public function __construct(
+        private readonly string $orderInvoiceNumber,
+        $message = '',
+        $code = 0,
+        ?Throwable $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-        $this->orderInvoiceNumber = $orderInvoiceId;
     }
 
     public function getOrderInvoiceNumber(): string

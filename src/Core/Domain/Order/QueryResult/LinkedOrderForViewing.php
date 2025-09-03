@@ -37,26 +37,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Order\QueryResult;
  */
 class LinkedOrderForViewing
 {
-    /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var string
-     */
-    private $statusName;
-
-    /**
-     * @var string
-     */
-    private $amount;
-
-    public function __construct(int $orderId, string $statusName, string $amount)
-    {
-        $this->orderId = $orderId;
-        $this->statusName = $statusName;
-        $this->amount = $amount;
+    public function __construct(
+        private readonly int $orderId,
+        private readonly string $statusName,
+        private readonly string $amount,
+    ) {
     }
 
     public function getOrderId(): int

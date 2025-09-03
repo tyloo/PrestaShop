@@ -44,6 +44,7 @@ class SearchAttachment
         if (empty($searchPhrase)) {
             throw new EmptySearchInputException('Search parameter cannot be empty');
         }
+
         $this->searchPhrase = $searchPhrase;
     }
 

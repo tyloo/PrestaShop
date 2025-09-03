@@ -67,32 +67,19 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
     private $cmsCategoryParentId;
 
     /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
-    /**
-     * @var bool
-     */
-    private $isMultiStoreFeatureUsed;
-
-    /**
      * @param bool $isMultiStoreFeatureUsed
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
         RequestStack $requestStack,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
-        $isMultiStoreFeatureUsed,
+        private MultistoreContextCheckerInterface $multistoreContextChecker,
+        private $isMultiStoreFeatureUsed,
     ) {
         parent::__construct($hookDispatcher);
         $this->setCmsPageCategoryParentId($requestStack);
-
-        $this->multistoreContextChecker = $multistoreContextChecker;
-        $this->isMultiStoreFeatureUsed = $isMultiStoreFeatureUsed;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

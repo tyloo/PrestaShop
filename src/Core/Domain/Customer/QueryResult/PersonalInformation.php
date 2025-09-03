@@ -33,76 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class PersonalInformation
 {
     /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var bool
-     */
-    private $isGuest;
-
-    /**
-     * @var string
-     */
-    private $socialTitle;
-
-    /**
-     * @var string
-     */
-    private $birthday;
-
-    /**
-     * @var string
-     */
-    private $registrationDate;
-
-    /**
-     * @var string
-     */
-    private $lastUpdateDate;
-
-    /**
-     * @var string
-     */
-    private $lastVisitDate;
-
-    /**
-     * @var int
-     */
-    private $rankBySales;
-
-    /**
-     * @var string
-     */
-    private $shopName;
-
-    /**
-     * @var string
-     */
-    private $languageName;
-
-    /**
-     * @var Subscriptions
-     */
-    private $subscriptions;
-
-    /**
-     * @var bool
-     */
-    private $isActive;
-
-    /**
      * @param string $firstName
      * @param string $lastName
      * @param string $email
@@ -118,35 +48,21 @@ class PersonalInformation
      * @param bool   $isActive
      */
     public function __construct(
-        $firstName,
-        $lastName,
-        $email,
-        $isGuest,
-        $socialTitle,
-        $birthday,
-        $registrationDate,
-        $lastUpdateDate,
-        $lastVisitDate,
-        $rankBySales,
-        $shopName,
-        $languageName,
-        Subscriptions $subscriptions,
-        $isActive,
+        private $firstName,
+        private $lastName,
+        private $email,
+        private $isGuest,
+        private $socialTitle,
+        private $birthday,
+        private $registrationDate,
+        private $lastUpdateDate,
+        private $lastVisitDate,
+        private $rankBySales,
+        private $shopName,
+        private $languageName,
+        private readonly Subscriptions $subscriptions,
+        private $isActive,
     ) {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->isGuest = $isGuest;
-        $this->socialTitle = $socialTitle;
-        $this->birthday = $birthday;
-        $this->registrationDate = $registrationDate;
-        $this->lastUpdateDate = $lastUpdateDate;
-        $this->lastVisitDate = $lastVisitDate;
-        $this->rankBySales = $rankBySales;
-        $this->shopName = $shopName;
-        $this->languageName = $languageName;
-        $this->subscriptions = $subscriptions;
-        $this->isActive = $isActive;
     }
 
     /**

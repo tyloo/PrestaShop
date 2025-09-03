@@ -33,61 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Import\Configuration;
 final class ImportConfig implements ImportConfigInterface
 {
     /**
-     * @var string
-     */
-    private $fileName;
-
-    /**
-     * @var int
-     */
-    private $entityType;
-
-    /**
-     * @var string
-     */
-    private $languageIso;
-
-    /**
-     * @var string
-     */
-    private $separator;
-
-    /**
-     * @var string
-     */
-    private $multipleValueSeparator;
-
-    /**
-     * @var bool
-     */
-    private $truncate;
-
-    /**
-     * @var bool
-     */
-    private $skipThumbnailRegeneration;
-
-    /**
-     * @var bool
-     */
-    private $matchReferences;
-
-    /**
-     * @var bool
-     */
-    private $forceIds;
-
-    /**
-     * @var bool
-     */
-    private $sendEmail;
-
-    /**
-     * @var int
-     */
-    private $skipRows;
-
-    /**
      * @param string $fileName
      * @param int    $entityType
      * @param string $languageIso
@@ -101,29 +46,18 @@ final class ImportConfig implements ImportConfigInterface
      * @param int    $skipRows
      */
     public function __construct(
-        $fileName,
-        $entityType,
-        $languageIso,
-        $separator,
-        $multipleValueSeparator,
-        $truncate,
-        $skipThumbnailRegeneration,
-        $matchReferences,
-        $forceIds,
-        $sendEmail,
-        $skipRows = 0,
+        private $fileName,
+        private $entityType,
+        private $languageIso,
+        private $separator,
+        private $multipleValueSeparator,
+        private $truncate,
+        private $skipThumbnailRegeneration,
+        private $matchReferences,
+        private $forceIds,
+        private $sendEmail,
+        private $skipRows = 0,
     ) {
-        $this->fileName = $fileName;
-        $this->entityType = $entityType;
-        $this->languageIso = $languageIso;
-        $this->separator = $separator;
-        $this->multipleValueSeparator = $multipleValueSeparator;
-        $this->truncate = $truncate;
-        $this->skipThumbnailRegeneration = $skipThumbnailRegeneration;
-        $this->matchReferences = $matchReferences;
-        $this->forceIds = $forceIds;
-        $this->sendEmail = $sendEmail;
-        $this->skipRows = $skipRows;
     }
 
     public function getFileName()

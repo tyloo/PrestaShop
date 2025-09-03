@@ -39,14 +39,17 @@ class SortOrder
      * @var string the SortOrder entity
      */
     private $entity;
+
     /**
      * @var string the SortOrder field
      */
     private $field;
+
     /**
      * @var string the SortOrder direction
      */
     private $direction;
+
     /**
      * @var string string The SortOrder label
      */
@@ -104,9 +107,9 @@ class SortOrder
     /**
      * @return string the string representation of a Sort Order
      */
-    public function toString()
+    public function toString(): string
     {
-        return "{$this->entity}.{$this->field}.{$this->direction}";
+        return \sprintf('%s.%s.%s', $this->entity, $this->field, $this->direction);
     }
 
     /**
@@ -221,15 +224,17 @@ class SortOrder
     /**
      * @return string Returns the order way using legacy prefix
      */
-    private function getLegacyPrefix()
+    private function getLegacyPrefix(): string
     {
         if ($this->entity === 'product') {
             if ($this->field === 'name') {
                 return 'pl.';
             }
+
             if ($this->field === 'position') {
                 return 'cp.';
             }
+
             if ($this->field === 'manufacturer_name') {
                 $this->setField('name');
 
@@ -238,6 +243,7 @@ class SortOrder
 
             return 'p.';
         }
+
         if ($this->entity === 'manufacturer') {
             return 'm.';
         }
@@ -255,6 +261,7 @@ class SortOrder
         if ($prefix) {
             return $this->getLegacyPrefix() . $this->field;
         }
+
         if ($this->entity === 'manufacturer' && $this->field === 'name') {
             return 'manufacturer_name';
         }

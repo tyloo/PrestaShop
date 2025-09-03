@@ -31,105 +31,22 @@ use PrestaShop\Decimal\DecimalNumber;
 
 class OrderPricesForViewing
 {
-    /**
-     * @var string
-     */
-    private $productsPriceFormatted;
-
-    /**
-     * @var string
-     */
-    private $discountsAmountFormatted;
-
-    /**
-     * @var string
-     */
-    private $wrappingPriceFormatted;
-
-    /**
-     * @var string
-     */
-    private $shippingPriceFormatted;
-
-    /**
-     * @var string
-     */
-    private $shippingRefundableAmountFormatted;
-
-    /**
-     * @var string
-     */
-    private $taxesAmountFormatted;
-
-    /**
-     * @var string
-     */
-    private $totalAmountFormatted;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $productsPriceRaw;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $discountsAmountRaw;
-    /**
-     * @var DecimalNumber
-     */
-    private $wrappingPriceRaw;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $shippingPriceRaw;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $shippingRefundableAmountRaw;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $taxesAmountRaw;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $totalAmountRaw;
-
     public function __construct(
-        DecimalNumber $productsPriceRaw,
-        DecimalNumber $discountsAmountRaw,
-        DecimalNumber $wrappingPriceRaw,
-        DecimalNumber $shippingPriceRaw,
-        DecimalNumber $shippingRefundableAmountRaw,
-        DecimalNumber $taxesAmountRaw,
-        DecimalNumber $totalAmountRaw,
-        string $productsPrice,
-        string $discountsAmount,
-        string $wrappingPrice,
-        string $shippingPrice,
-        string $shippingRefundableAmount,
-        string $taxesAmount,
-        string $totalAmount,
+        private readonly DecimalNumber $productsPriceRaw,
+        private readonly DecimalNumber $discountsAmountRaw,
+        private readonly DecimalNumber $wrappingPriceRaw,
+        private readonly DecimalNumber $shippingPriceRaw,
+        private readonly DecimalNumber $shippingRefundableAmountRaw,
+        private readonly DecimalNumber $taxesAmountRaw,
+        private readonly DecimalNumber $totalAmountRaw,
+        private readonly string $productsPriceFormatted,
+        private readonly string $discountsAmountFormatted,
+        private readonly string $wrappingPriceFormatted,
+        private readonly string $shippingPriceFormatted,
+        private readonly string $shippingRefundableAmountFormatted,
+        private readonly string $taxesAmountFormatted,
+        private readonly string $totalAmountFormatted,
     ) {
-        $this->productsPriceFormatted = $productsPrice;
-        $this->discountsAmountFormatted = $discountsAmount;
-        $this->wrappingPriceFormatted = $wrappingPrice;
-        $this->shippingPriceFormatted = $shippingPrice;
-        $this->shippingRefundableAmountFormatted = $shippingRefundableAmount;
-        $this->taxesAmountFormatted = $taxesAmount;
-        $this->totalAmountFormatted = $totalAmount;
-        $this->productsPriceRaw = $productsPriceRaw;
-        $this->discountsAmountRaw = $discountsAmountRaw;
-        $this->wrappingPriceRaw = $wrappingPriceRaw;
-        $this->shippingPriceRaw = $shippingPriceRaw;
-        $this->shippingRefundableAmountRaw = $shippingRefundableAmountRaw;
-        $this->taxesAmountRaw = $taxesAmountRaw;
-        $this->totalAmountRaw = $totalAmountRaw;
     }
 
     public function getProductsPriceFormatted(): string

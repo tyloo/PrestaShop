@@ -32,21 +32,18 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 class ThemeAlreadyExistsException extends CoreException
 {
     /**
-     * @var string
-     */
-    private $themeName;
-
-    /**
      * @param string $themeName
      * @param string $message
      * @param int    $code
      * @param null   $previous
      */
-    public function __construct($themeName, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private $themeName,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->themeName = $themeName;
     }
 
     /**

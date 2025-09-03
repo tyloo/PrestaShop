@@ -88,7 +88,7 @@ class QuickAccessGenerator
         }
 
         $url = preg_replace($patterns, '', $savedUrl);
-        $url = trim($url, '?&/');
+        $url = trim((string) $url, '?&/');
 
         return 'index.php' . (! empty($legacyEnvironment) ? '?' : '/') . $url;
     }
@@ -116,6 +116,7 @@ class QuickAccessGenerator
                     unset($quickAccesses[$index]);
                     continue;
                 }
+
                 // We create new product v2 modal popup link
                 $cleanLink = self::NEW_PRODUCT_V2_LINK;
                 $quick['class'] = 'new-product-button';

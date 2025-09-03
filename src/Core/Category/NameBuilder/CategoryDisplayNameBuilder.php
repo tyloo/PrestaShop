@@ -39,22 +39,10 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
  */
 class CategoryDisplayNameBuilder
 {
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @var string
-     */
-    private $breadcrumbSeparator;
-
     public function __construct(
-        CategoryRepository $categoryRepository,
-        string $breadcrumbSeparator,
+        private readonly CategoryRepository $categoryRepository,
+        private readonly string $breadcrumbSeparator,
     ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->breadcrumbSeparator = $breadcrumbSeparator;
     }
 
     /**
@@ -118,6 +106,7 @@ class CategoryDisplayNameBuilder
         if (! $useCache) {
             return $this->fetchBreadcrumbs($categoryIds, $languageId);
         }
+
         $cacheKey = $this->buildCacheKeyForBreadcrumbs($shopId, $languageId);
 
         //      @todo: consider using Symfony\Component\Cache\Adapter\AdapterInterface instead of legacy Cache

@@ -46,23 +46,40 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 class UpdateDiscountCommand
 {
     private ?array $localizedNames = null;
+
     private ?int $priority = null;
+
     private ?bool $active = null;
+
     private ?DateTimeImmutable $validFrom = null;
+
     private ?DateTimeImmutable $validTo = null;
+
     private ?int $totalQuantity = null;
+
     private ?int $quantityPerUser = null;
+
     private ?string $description = null;
+
     private ?string $code = null;
+
     private ?CustomerId $customerId = null;
+
     private ?bool $highlightInCart = null;
+
     private ?bool $allowPartialUse = null;
+
     private ?DecimalNumber $percentDiscount = null;
+
     private ?Money $amountDiscount = null;
+
     private ?ProductId $productId = null;
+
     private ?CombinationIdInterface $combinationId = null;
+
     private ?int $reductionProduct = null;
-    private DiscountId $discountId;
+
+    private readonly DiscountId $discountId;
 
     public function __construct(int $discountId)
     {

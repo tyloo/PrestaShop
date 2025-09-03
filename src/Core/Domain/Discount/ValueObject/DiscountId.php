@@ -31,7 +31,7 @@ use PrestaShop\PrestaShop\Core\Domain\Discount\Exception\DiscountConstraintExcep
 
 class DiscountId
 {
-    private int $discountId;
+    private readonly int $discountId;
 
     public function __construct(int $discountId)
     {

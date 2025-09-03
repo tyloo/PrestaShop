@@ -39,67 +39,22 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreation\Cart
 class CartForOrderCreation
 {
     /**
-     * @var int
-     */
-    private $cartId;
-
-    /**
-     * @var CartProduct[]
-     */
-    private $products;
-
-    /**
-     * @var int
-     */
-    private $currencyId;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    /**
-     * @var CartRule[]
-     */
-    private $cartRules;
-
-    /**
-     * @var CartAddress[]
-     */
-    private $addresses;
-
-    /**
-     * @var CartShipping|null
-     */
-    private $shipping;
-
-    /**
-     * @var CartSummary
-     */
-    private $summary;
-
-    /**
      * @param CartRule[]    $cartRules
      * @param CartAddress[] $addresses
      */
     public function __construct(
-        int $cartId,
-        array $products,
-        int $currencyId,
-        int $langId,
-        array $cartRules,
-        array $addresses,
-        CartSummary $summary,
-        ?CartShipping $shipping = null,
+        private readonly int $cartId,
+        /**
+         * @var CartProduct[]
+         */
+        private readonly array $products,
+        private readonly int $currencyId,
+        private readonly int $langId,
+        private readonly array $cartRules,
+        private readonly array $addresses,
+        private readonly CartSummary $summary,
+        private readonly ?CartShipping $shipping = null,
     ) {
-        $this->cartId = $cartId;
-        $this->products = $products;
-        $this->currencyId = $currencyId;
-        $this->langId = $langId;
-        $this->cartRules = $cartRules;
-        $this->addresses = $addresses;
-        $this->shipping = $shipping;
-        $this->summary = $summary;
     }
 
     public function getCartId(): int

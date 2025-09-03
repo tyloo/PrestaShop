@@ -34,20 +34,17 @@ use Exception;
 class BulkToggleCartRuleException extends CartRuleException
 {
     /**
-     * @var int[]
-     */
-    private $cartRuleIds;
-
-    /**
      * @param int[]  $cartRuleIds
      * @param string $message
      * @param int    $code
      */
-    public function __construct(array $cartRuleIds, $message = '', $code = 0, ?Exception $previous = null)
-    {
+    public function __construct(
+        private readonly array $cartRuleIds,
+        $message = '',
+        $code = 0,
+        ?Exception $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->cartRuleIds = $cartRuleIds;
     }
 
     /**

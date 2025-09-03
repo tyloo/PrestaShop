@@ -45,20 +45,18 @@ class AddOrderCustomerMessageCommand
      * @var OrderId
      */
     private $orderId;
-    /**
-     * @var bool
-     */
-    private $isPrivate;
 
     /**
      * @throws OrderException
      * @throws CustomerMessageConstraintException
      */
-    public function __construct(int $orderId, string $message, bool $isPrivate)
-    {
+    public function __construct(
+        int $orderId,
+        string $message,
+        private readonly bool $isPrivate,
+    ) {
         $this->orderId = new OrderId($orderId);
         $this->setMessage($message);
-        $this->isPrivate = $isPrivate;
     }
 
     public function getOrderId(): OrderId

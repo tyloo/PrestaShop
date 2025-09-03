@@ -33,30 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Meta\QueryResult;
 class LayoutCustomizationPage
 {
     /**
-     * @var string
-     */
-    private $page;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
      * @param string $page
      * @param string $title
      * @param string $description
      */
-    public function __construct($page, $title, $description)
-    {
-        $this->page = $page;
-        $this->description = $description;
-        $this->title = $title;
+    public function __construct(
+        private $page,
+        private $title,
+        private $description,
+    ) {
     }
 
     /**

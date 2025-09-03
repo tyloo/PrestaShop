@@ -50,19 +50,14 @@ use Validate;
 class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterface
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    public function __construct(Context $context)
-    {
-        $this->context = $context;
-        $this->translator = $context->getTranslator();
+    public function __construct(
+        private readonly Context $context,
+    ) {
+        $this->translator = $this->context->getTranslator();
     }
 
     public function handle(ReplyToCustomerThreadCommand $command)

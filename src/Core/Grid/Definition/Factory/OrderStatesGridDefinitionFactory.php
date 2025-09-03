@@ -59,21 +59,14 @@ final class OrderStatesGridDefinitionFactory extends AbstractGridDefinitionFacto
 
     public const GRID_ID = 'order_states';
 
-    /**
-     * @var AccessibilityCheckerInterface
-     */
-    protected $deleteOrderStatesAccessibilityChecker;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        AccessibilityCheckerInterface $deleteOrderStatesAccessibilityChecker,
+        protected AccessibilityCheckerInterface $deleteOrderStatesAccessibilityChecker,
     ) {
         parent::__construct($hookDispatcher);
-
-        $this->deleteOrderStatesAccessibilityChecker = $deleteOrderStatesAccessibilityChecker;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

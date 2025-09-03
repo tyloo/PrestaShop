@@ -51,7 +51,7 @@ final class ContactGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'contact';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

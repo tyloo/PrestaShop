@@ -33,15 +33,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
 class CartSummary
 {
     public function __construct(
-        private string $totalProductsPrice,
-        private string $totalDiscount,
-        private string $totalShippingPrice,
-        private string $totalShippingWithoutTaxes,
-        private string $totalTaxes,
-        private string $totalPriceWithTaxes,
-        private string $totalPriceWithoutTaxes,
-        private string $orderMessage,
-        private string $processOrderLink,
+        private readonly string $totalProductsPrice,
+        private readonly string $totalDiscount,
+        private readonly string $totalShippingPrice,
+        private readonly string $totalShippingWithoutTaxes,
+        private readonly string $totalTaxes,
+        private readonly string $totalPriceWithTaxes,
+        private readonly string $totalPriceWithoutTaxes,
+        private readonly string $orderMessage,
+        private readonly string $processOrderLink,
     ) {
     }
 

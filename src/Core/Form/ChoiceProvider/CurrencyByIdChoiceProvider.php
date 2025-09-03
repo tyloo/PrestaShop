@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class CurrencyByIdChoiceProvider implements FormChoiceProviderInterface, FormChoiceAttributeProviderInterface
 {
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
-    public function __construct(CurrencyDataProviderInterface $currencyDataProvider)
-    {
-        $this->currencyDataProvider = $currencyDataProvider;
+    public function __construct(
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
+    ) {
     }
 
     /**

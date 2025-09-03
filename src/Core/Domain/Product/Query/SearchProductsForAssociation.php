@@ -65,6 +65,7 @@ class SearchProductsForAssociation
         if ($limit !== null && $limit <= 0) {
             throw new ProductConstraintException('Search limit must be a positive integer or null', ProductConstraintException::INVALID_SEARCH_LIMIT);
         }
+
         if (mb_strlen($phrase) < static::SEARCH_PHRASE_MIN_LENGTH) {
             throw new ProductConstraintException(\sprintf('Search phase must have a minimum length of %d characters.', static::SEARCH_PHRASE_MIN_LENGTH), ProductConstraintException::INVALID_SEARCH_PHRASE_LENGTH);
         }

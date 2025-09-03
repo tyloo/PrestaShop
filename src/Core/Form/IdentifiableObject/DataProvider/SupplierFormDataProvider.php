@@ -39,46 +39,22 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\QueryResult\EditableSupplier;
 final class SupplierFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var bool
-     */
-    private $multistoreEnabled;
-
-    /**
-     * @var int[]
-     */
-    private $defaultShopAssociation;
-
-    /**
-     * @var int
-     */
-    private $contextCountryId;
-
-    /**
      * @param bool  $multistoreEnabled
      * @param int[] $defaultShopAssociation
      * @param int   $contextCountryId
      */
     public function __construct(
-        CommandBusInterface $queryBus,
-        $multistoreEnabled,
-        array $defaultShopAssociation,
-        $contextCountryId,
+        private readonly CommandBusInterface $queryBus,
+        private $multistoreEnabled,
+        private readonly array $defaultShopAssociation,
+        private $contextCountryId,
     ) {
-        $this->queryBus = $queryBus;
-        $this->multistoreEnabled = $multistoreEnabled;
-        $this->defaultShopAssociation = $defaultShopAssociation;
-        $this->contextCountryId = $contextCountryId;
     }
 
     /**
      * @throws SupplierException
      */
-    public function getData($supplierId)
+    public function getData($supplierId): array
     {
         /** @var EditableSupplier $editableSupplier */
         $editableSupplier = $this->queryBus->handle(new GetSupplierForEditing((int) $supplierId));

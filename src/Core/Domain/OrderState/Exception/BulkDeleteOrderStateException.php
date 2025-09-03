@@ -37,20 +37,17 @@ use Exception;
 class BulkDeleteOrderStateException extends OrderStateException
 {
     /**
-     * @var int[]
-     */
-    private $orderStatesId;
-
-    /**
      * @param int[]  $orderStatesId
      * @param string $message
      * @param int    $code
      */
-    public function __construct(array $orderStatesId, $message = '', $code = 0, ?Exception $previous = null)
-    {
+    public function __construct(
+        private readonly array $orderStatesId,
+        $message = '',
+        $code = 0,
+        ?Exception $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->orderStatesId = $orderStatesId;
     }
 
     /**

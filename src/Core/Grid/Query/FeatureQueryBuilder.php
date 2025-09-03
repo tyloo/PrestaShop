@@ -38,35 +38,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\ShopSearchCriteriaInterface;
 class FeatureQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
-     * @var FeatureRepository
-     */
-    private $featureRepository;
-
-    /**
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $contextLangId,
-        FeatureRepository $featureRepository,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly int $languageId,
+        private readonly FeatureRepository $featureRepository,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->languageId = $contextLangId;
-        $this->featureRepository = $featureRepository;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -109,9 +90,7 @@ class FeatureQueryBuilder extends AbstractDoctrineQueryBuilder
         }
 
         $filters = $searchCriteria->getFilters();
-        $shopIds = array_map(static function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $this->featureRepository->getShopIdsByConstraint($searchCriteria->getShopConstraint()));
+        $shopIds = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $this->featureRepository->getShopIdsByConstraint($searchCriteria->getShopConstraint()));
 
         $allowedFilters = ['id_feature', 'name', 'position'];
 

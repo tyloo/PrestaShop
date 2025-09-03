@@ -72,19 +72,9 @@ class AddSpecificPriceCommand
     private $reduction;
 
     /**
-     * @var bool
-     */
-    private $includesTax;
-
-    /**
      * @var FixedPriceInterface
      */
     private $fixedPrice;
-
-    /**
-     * @var int
-     */
-    private $fromQuantity;
 
     /**
      * @var ShopIdInterface
@@ -117,22 +107,6 @@ class AddSpecificPriceCommand
     private $customerId = 0;
 
     /**
-     * @var DateTimeInterface
-     *
-     * @see DateTime
-     * @see NullDateTime
-     */
-    private $dateTimeFrom;
-
-    /**
-     * @var DateTimeInterface
-     *
-     * @see DateTime
-     * @see NullDateTime
-     */
-    private $dateTimeTo;
-
-    /**
      * @throws DomainConstraintException
      * @throws ProductConstraintException
      */
@@ -140,24 +114,28 @@ class AddSpecificPriceCommand
         int $productId,
         string $reductionType,
         string $reductionValue,
-        bool $includeTax,
+        private readonly bool $includesTax,
         string $fixedPrice,
-        int $fromQuantity,
-        DateTimeInterface $dateTimeFrom,
-        DateTimeInterface $dateTimeTo,
+        private readonly int $fromQuantity,
+        /**
+         * @see DateTime
+         * @see NullDateTime
+         */
+        private DateTimeInterface $dateTimeFrom,
+        /**
+         * @see DateTime
+         * @see NullDateTime
+         */
+        private DateTimeInterface $dateTimeTo,
     ) {
         $this->productId = new ProductId($productId);
         $this->reduction = new Reduction($reductionType, $reductionValue);
         $this->setFixedPrice($fixedPrice);
-        $this->includesTax = $includeTax;
-        $this->fromQuantity = $fromQuantity;
         $this->shopId = new NoShopId();
         $this->combinationId = new NoCombinationId();
         $this->currencyId = new NoCurrencyId();
         $this->groupId = new NoGroupId();
         $this->countryId = new NoCountryId();
-        $this->dateTimeFrom = $dateTimeFrom;
-        $this->dateTimeTo = $dateTimeTo;
     }
 
     public function getProductId(): ProductId

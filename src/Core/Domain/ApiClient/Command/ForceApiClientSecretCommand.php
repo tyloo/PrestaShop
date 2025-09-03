@@ -32,9 +32,9 @@ use PrestaShop\PrestaShop\Core\Domain\ApiClient\ValueObject\ApiClientSecret;
 
 class ForceApiClientSecretCommand
 {
-    private ApiClientId $apiClientId;
+    private readonly ApiClientId $apiClientId;
 
-    private ApiClientSecret $secret;
+    private readonly ApiClientSecret $secret;
 
     public function __construct(
         int $apiClientId,

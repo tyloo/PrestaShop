@@ -44,6 +44,7 @@ class UniqueStateIsoCodeValidator extends ConstraintValidator
         if (! ($constraint instanceof UniqueStateIsoCode)) {
             return;
         }
+
         $countryStateByIsoCodeProvider = new CountryStateByIsoCodeProvider();
         $stateId = $countryStateByIsoCodeProvider->getStateIdByIsoCode($value);
 

@@ -35,59 +35,17 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Image\QueryResult;
 class ProductImage
 {
     /**
-     * @var int
-     */
-    private $imageId;
-
-    /**
-     * @var bool
-     */
-    private $cover;
-
-    /**
-     * @var int
-     */
-    private $position;
-
-    /**
-     * @var array
-     */
-    private $localizedLegends;
-
-    /**
-     * @var string
-     */
-    private $imageUrl;
-
-    /**
-     * @var string
-     */
-    private $thumbnailUrl;
-
-    /**
-     * @var int[]
-     */
-    private $shopIds;
-
-    /**
      * @param int[] $shopIds
      */
     public function __construct(
-        int $imageId,
-        bool $cover,
-        int $position,
-        array $localizedLegends,
-        string $imageUrl,
-        string $thumbnailUrl,
-        array $shopIds,
+        private readonly int $imageId,
+        private readonly bool $cover,
+        private readonly int $position,
+        private readonly array $localizedLegends,
+        private readonly string $imageUrl,
+        private readonly string $thumbnailUrl,
+        private readonly array $shopIds,
     ) {
-        $this->imageId = $imageId;
-        $this->cover = $cover;
-        $this->position = $position;
-        $this->localizedLegends = $localizedLegends;
-        $this->imageUrl = $imageUrl;
-        $this->thumbnailUrl = $thumbnailUrl;
-        $this->shopIds = $shopIds;
     }
 
     public function getImageId(): int

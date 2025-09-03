@@ -67,33 +67,6 @@ class Repository implements RepositoryInterface
     protected $currencyRepository;
 
     /**
-     * Rounding mode to use when formatting numbers
-     * Possible values are listed in PrestaShop\Decimal\Operation\Rounding::ROUND_* constants.
-     *
-     * @var string
-     */
-    protected $roundingMode;
-
-    /**
-     * Numbering system to use when formatting numbers.
-     * Default value: "latn".
-     *
-     * @see http://cldr.unicode.org/translation/numbering-systems
-     *
-     * @var string
-     */
-    protected $numberingSystem;
-
-    /**
-     * Currency display type
-     * Default is "symbol". But sometimes you may want to display the currency code instead.
-     * Possible values: PrestaShop\PrestaShop\Core\Localization\Specification\Price::CURRENCY_DISPLAY_*.
-     *
-     * @var string
-     */
-    protected $currencyDisplayType;
-
-    /**
      * Already instantiated Locale objects.
      *
      * @var Locale[]
@@ -101,40 +74,48 @@ class Repository implements RepositoryInterface
     protected $locales;
 
     /**
-     * Should we group digits in a number's integer part ?
-     *
-     * @var bool
-     */
-    protected $numberGroupingUsed;
-
-    /**
-     * Max number of digits to display in a number's decimal part.
-     *
-     * @var int
-     */
-    protected $maxFractionDigits;
-
-    /**
      * @var SpecificationFactory
      */
     protected $specificationFactory;
 
+    /**
+     * @param string $roundingMode
+     * @param string $numberingSystem
+     * @param string $currencyDisplayType
+     * @param int    $maxFractionDigits
+     */
     public function __construct(
         CldrLocaleRepository $cldrLocaleRepository,
         CurrencyRepositoryInterface $currencyRepository,
-        $roundingMode = Rounding::ROUND_HALF_UP,
-        $numberingSystem = Locale::NUMBERING_SYSTEM_LATIN,
-        $currencyDisplayType = PriceSpecification::CURRENCY_DISPLAY_SYMBOL,
-        $groupingUsed = true,
-        $maxFractionDigits = self::MAX_FRACTION_DIGITS,
+        /**
+         * Rounding mode to use when formatting numbers
+         * Possible values are listed in PrestaShop\Decimal\Operation\Rounding::ROUND_* constants.
+         */
+        protected $roundingMode = Rounding::ROUND_HALF_UP,
+        /**
+         * Numbering system to use when formatting numbers.
+         * Default value: "latn".
+         *
+         * @see http://cldr.unicode.org/translation/numbering-systems
+         */
+        protected $numberingSystem = Locale::NUMBERING_SYSTEM_LATIN,
+        /**
+         * Currency display type
+         * Default is "symbol". But sometimes you may want to display the currency code instead.
+         * Possible values: PrestaShop\PrestaShop\Core\Localization\Specification\Price::CURRENCY_DISPLAY_*.
+         */
+        protected $currencyDisplayType = PriceSpecification::CURRENCY_DISPLAY_SYMBOL,
+        /**
+         * Should we group digits in a number's integer part ?
+         */
+        protected $numberGroupingUsed = true,
+        /**
+         * Max number of digits to display in a number's decimal part.
+         */
+        protected $maxFractionDigits = self::MAX_FRACTION_DIGITS,
     ) {
         $this->cldrLocaleRepository = $cldrLocaleRepository;
         $this->currencyRepository = $currencyRepository;
-        $this->roundingMode = $roundingMode;
-        $this->numberingSystem = $numberingSystem;
-        $this->currencyDisplayType = $currencyDisplayType;
-        $this->numberGroupingUsed = $groupingUsed;
-        $this->maxFractionDigits = $maxFractionDigits;
         $this->specificationFactory = new SpecificationFactory();
     }
 

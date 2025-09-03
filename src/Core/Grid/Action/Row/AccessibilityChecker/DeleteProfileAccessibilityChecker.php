@@ -35,16 +35,11 @@ namespace PrestaShop\PrestaShop\Core\Grid\Action\Row\AccessibilityChecker;
 final class DeleteProfileAccessibilityChecker implements AccessibilityCheckerInterface
 {
     /**
-     * @var int
-     */
-    private $superAdminProfileId;
-
-    /**
      * @param int $superAdminProfileId
      */
-    public function __construct($superAdminProfileId)
-    {
-        $this->superAdminProfileId = $superAdminProfileId;
+    public function __construct(
+        private $superAdminProfileId,
+    ) {
     }
 
     public function isGranted(array $profile)

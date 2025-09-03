@@ -37,7 +37,9 @@ class ShopConstraint
      * These are the legacy values used to define the shop context, kept here for backward compatibility
      */
     public const SHOP = 1;
+
     public const SHOP_GROUP = 2;
+
     public const ALL_SHOPS = 4;
 
     protected ?ShopId $shopId = null;
@@ -104,7 +106,7 @@ class ShopConstraint
      */
     public function clone(?bool $strict = null): self
     {
-        return new static($this->shopId?->getValue(), $this->shopGroupId?->getValue(), $strict !== null ? $strict : $this->strict);
+        return new static($this->shopId?->getValue(), $this->shopGroupId?->getValue(), $strict ?? $this->strict);
     }
 
     public function getShopId(): ?ShopId

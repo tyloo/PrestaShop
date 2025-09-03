@@ -34,50 +34,14 @@ namespace PrestaShop\PrestaShop\Core\Domain\Shop\QueryResult;
  */
 class FoundShop
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $color;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $groupId;
-
-    /**
-     * @var string
-     */
-    private $groupName;
-
-    /**
-     * @var string
-     */
-    private $groupColor;
-
     public function __construct(
-        int $id,
-        string $color,
-        string $name,
-        int $groupId,
-        string $groupName,
-        string $groupColor,
+        private readonly int $id,
+        private readonly string $color,
+        private readonly string $name,
+        private readonly int $groupId,
+        private readonly string $groupName,
+        private readonly string $groupColor,
     ) {
-        $this->id = $id;
-        $this->color = $color;
-        $this->name = $name;
-        $this->groupId = $groupId;
-        $this->groupName = $groupName;
-        $this->groupColor = $groupColor;
     }
 
     public function getId(): int

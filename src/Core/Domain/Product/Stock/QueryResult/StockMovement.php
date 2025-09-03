@@ -35,6 +35,7 @@ use RuntimeException;
 class StockMovement
 {
     public const EDITION_TYPE = 'edition';
+
     public const ORDERS_TYPE = 'orders';
 
     /**
@@ -113,9 +114,7 @@ class StockMovement
         // Falsy values should get removed from array
         return array_filter(
             array_map(
-                static function ($id): int {
-                    return (int) $id;
-                },
+                static fn ($id): int => (int) $id,
                 $ids
             )
         );
@@ -129,9 +128,7 @@ class StockMovement
     protected function initializeDates(array $dates): array
     {
         return array_map(
-            static function (string $date): DateTimeImmutable {
-                return new DateTimeImmutable($date);
-            },
+            static fn (string $date): DateTimeImmutable => new DateTimeImmutable($date),
             $dates
         );
     }

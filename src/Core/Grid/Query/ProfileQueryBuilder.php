@@ -37,29 +37,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class ProfileQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
      * @param string $dbPrefix
-     * @param int    $contextLanguageId
+     * @param int    $languageId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $contextLanguageId,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private $languageId,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->languageId = $contextLanguageId;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -110,13 +97,13 @@ final class ProfileQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             if ($name === 'id_profile') {
-                $qb->andWhere("p.id_profile = :$name");
+                $qb->andWhere('p.id_profile = :' . $name);
                 $qb->setParameter($name, $value);
 
                 continue;
             }
 
-            $qb->andWhere("$name LIKE :$name");
+            $qb->andWhere(\sprintf('%s LIKE :%s', $name, $name));
             $qb->setParameter($name, '%' . $value . '%');
         }
 

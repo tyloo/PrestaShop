@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class EditCustomerGroupCommand
 {
-    private GroupId $customerGroupId;
+    private readonly GroupId $customerGroupId;
 
     /**
      * @var string[]|null
@@ -123,9 +123,7 @@ class EditCustomerGroupCommand
      */
     public function setShopIds(array $shopIds): self
     {
-        $this->shopIds = array_map(function (int $shopId) {
-            return new ShopId($shopId);
-        }, $shopIds);
+        $this->shopIds = array_map(fn (int $shopId): ShopId => new ShopId($shopId), $shopIds);
 
         return $this;
     }

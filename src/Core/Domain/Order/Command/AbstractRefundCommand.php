@@ -99,6 +99,7 @@ abstract class AbstractRefundCommand
                 throw new InvalidAmountException();
             }
         }
+
         $this->setOrderDetailRefunds($orderDetailRefunds);
         if (! $this->generateCreditSlip && ! $this->generateVoucher) {
             throw new InvalidCancelProductException(InvalidCancelProductException::NO_GENERATION);

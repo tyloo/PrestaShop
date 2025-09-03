@@ -39,17 +39,11 @@ class DeleteCombinationCommand
      */
     private $combinationId;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
     public function __construct(
         int $combinationId,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->combinationId = new CombinationId($combinationId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getCombinationId(): CombinationId

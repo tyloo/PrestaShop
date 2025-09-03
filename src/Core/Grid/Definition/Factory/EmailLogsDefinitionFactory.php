@@ -55,20 +55,14 @@ final class EmailLogsDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'email_logs';
 
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $languageChoiceProvider;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        ConfigurableFormChoiceProviderInterface $languageChoiceProvider,
+        private ConfigurableFormChoiceProviderInterface $languageChoiceProvider,
     ) {
         parent::__construct($hookDispatcher);
-        $this->languageChoiceProvider = $languageChoiceProvider;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

@@ -36,18 +36,14 @@ class CoreDomainProviderDefinition extends AbstractCoreProviderDefinition
     private const FILENAME_FILTERS_REGEX = [
         '#^%s([A-Za-z]|\.|$)#',
     ];
+
     private const TRANSLATION_DOMAINS_REGEX = [
         '^%s([A-Za-z]|$)',
     ];
 
-    /**
-     * @var string
-     */
-    private $domainName;
-
-    public function __construct(string $domainName)
-    {
-        $this->domainName = $domainName;
+    public function __construct(
+        private readonly string $domainName,
+    ) {
     }
 
     public function getType(): string
@@ -62,15 +58,11 @@ class CoreDomainProviderDefinition extends AbstractCoreProviderDefinition
 
     public function getFilenameFilters(): array
     {
-        return array_map(function (string $filenameFilter) {
-            return \sprintf($filenameFilter, preg_quote($this->domainName, '#'));
-        }, self::FILENAME_FILTERS_REGEX);
+        return array_map(fn (string $filenameFilter): string => \sprintf($filenameFilter, preg_quote($this->domainName, '#')), self::FILENAME_FILTERS_REGEX);
     }
 
     public function getTranslationDomains(): array
     {
-        return array_map(function (string $translationDomain) {
-            return \sprintf($translationDomain, preg_quote($this->domainName, '#'));
-        }, self::TRANSLATION_DOMAINS_REGEX);
+        return array_map(fn (string $translationDomain): string => \sprintf($translationDomain, preg_quote($this->domainName, '#')), self::TRANSLATION_DOMAINS_REGEX);
     }
 }

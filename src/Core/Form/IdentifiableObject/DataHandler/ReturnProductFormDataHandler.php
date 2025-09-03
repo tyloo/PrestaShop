@@ -33,14 +33,9 @@ use PrestaShop\PrestaShop\Core\Domain\Order\VoucherRefundType;
 
 class ReturnProductFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    public function __construct(CommandBusInterface $commandBus)
-    {
-        $this->commandBus = $commandBus;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+    ) {
     }
 
     public function create(array $data)
@@ -56,6 +51,7 @@ class ReturnProductFormDataHandler implements FormDataHandlerInterface
             if (! isset($data['selected_' . $orderDetailId]) || ! (bool) $data['selected_' . $orderDetailId]) {
                 continue;
             }
+
             $refunds[$orderDetailId]['quantity'] = $data['quantity_' . $orderDetailId] ?? 0;
         }
 

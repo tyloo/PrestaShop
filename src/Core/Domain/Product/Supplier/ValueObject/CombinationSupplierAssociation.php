@@ -87,7 +87,7 @@ class CombinationSupplierAssociation implements SupplierAssociationInterface
         return null;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return \sprintf(
             '[productId: null, combinationId: %d, supplierId: %d]',

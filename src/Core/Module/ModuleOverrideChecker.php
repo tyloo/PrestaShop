@@ -35,24 +35,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ModuleOverrideChecker
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @var array
      */
     private $errors = [];
 
-    /**
-     * @var string
-     */
-    private $psOverrideDir;
-
-    public function __construct(TranslatorInterface $translator, string $psOverrideDir)
-    {
-        $this->translator = $translator;
-        $this->psOverrideDir = $psOverrideDir;
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly string $psOverrideDir,
+    ) {
     }
 
     public function hasOverrideConflict(string $moduleOverridePath): bool

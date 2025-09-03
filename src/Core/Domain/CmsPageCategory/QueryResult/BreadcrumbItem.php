@@ -41,20 +41,16 @@ class BreadcrumbItem
     private $cmsPageCategoryId;
 
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @param int    $cmsPageCategoryId
      * @param string $name
      *
      * @throws CmsPageCategoryException
      */
-    public function __construct($cmsPageCategoryId, $name)
-    {
+    public function __construct(
+        $cmsPageCategoryId,
+        private $name,
+    ) {
         $this->cmsPageCategoryId = new CmsPageCategoryId($cmsPageCategoryId);
-        $this->name = $name;
     }
 
     /**

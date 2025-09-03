@@ -34,22 +34,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Store\QueryResult;
  */
 class StoreForEditing
 {
-    /**
-     * @var int
-     */
-    private $storeId;
-
-    /**
-     * @var bool
-     */
-    private $active;
-
     public function __construct(
-        int $storeId,
-        bool $isActive,
+        private readonly int $storeId,
+        private readonly bool $active,
     ) {
-        $this->storeId = $storeId;
-        $this->active = $isActive;
     }
 
     public function getStoreId(): int

@@ -60,39 +60,9 @@ class AddCustomerCommand
     private $password;
 
     /**
-     * @var int
-     */
-    private $defaultGroupId;
-
-    /**
-     * @var int[]
-     */
-    private $groupIds;
-
-    /**
-     * @var int|null
-     */
-    private $genderId;
-
-    /**
-     * @var bool
-     */
-    private $isEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isPartnerOffersSubscribed;
-
-    /**
      * @var Birthday
      */
     private $birthday;
-
-    /**
-     * @var int
-     */
-    private $shopId;
 
     /**
      * @var string|null Only for B2b customers
@@ -130,11 +100,6 @@ class AddCustomerCommand
     private $riskId;
 
     /**
-     * @var bool
-     */
-    private $isGuest;
-
-    /**
      * @param string      $firstName
      * @param string      $lastName
      * @param string      $email
@@ -153,27 +118,20 @@ class AddCustomerCommand
         $lastName,
         $email,
         $password,
-        $defaultGroupId,
-        array $groupIds,
-        $shopId,
-        $genderId = null,
-        $isEnabled = true,
-        $isPartnerOffersSubscribed = false,
+        private $defaultGroupId,
+        private readonly array $groupIds,
+        private $shopId,
+        private $genderId = null,
+        private $isEnabled = true,
+        private $isPartnerOffersSubscribed = false,
         $birthday = null,
-        $isGuest = false,
+        private $isGuest = false,
     ) {
         $this->firstName = new FirstName($firstName);
         $this->lastName = new LastName($lastName);
         $this->email = new Email($email);
         $this->password = new Password($password);
-        $this->defaultGroupId = $defaultGroupId;
-        $this->groupIds = $groupIds;
-        $this->shopId = $shopId;
-        $this->genderId = $genderId;
-        $this->isEnabled = $isEnabled;
-        $this->isPartnerOffersSubscribed = $isPartnerOffersSubscribed;
         $this->birthday = $birthday !== null ? new Birthday($birthday) : Birthday::createEmpty();
-        $this->isGuest = $isGuest;
     }
 
     /**

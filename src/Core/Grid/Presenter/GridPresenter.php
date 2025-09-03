@@ -42,17 +42,12 @@ use Symfony\Component\Form\FormView;
  */
 final class GridPresenter implements GridPresenterInterface
 {
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    public function __construct(HookDispatcherInterface $hookDispatcher)
-    {
-        $this->hookDispatcher = $hookDispatcher;
+    public function __construct(
+        private readonly HookDispatcherInterface $hookDispatcher,
+    ) {
     }
 
-    public function present(GridInterface $grid)
+    public function present(GridInterface $grid): array
     {
         $definition = $grid->getDefinition();
         $searchCriteria = $grid->getSearchCriteria();
@@ -117,10 +112,8 @@ final class GridPresenter implements GridPresenterInterface
 
             // If the required filter is not set the position column is not displayed
             if ($requiredFilter !== null && empty($searchCriteria->getFilters()[$requiredFilter])) {
-                $columns = array_filter($columns, function (array $column) use ($positionColumn) {
-                    return $column['id'] !== $positionColumn->getId();
-                });
-            } elseif (strtolower($positionColumn->getId()) === strtolower($searchCriteria->getOrderBy())) {
+                $columns = array_filter($columns, fn (array $column): bool => $column['id'] !== $positionColumn->getId());
+            } elseif (strtolower($positionColumn->getId()) === strtolower((string) $searchCriteria->getOrderBy())) {
                 array_unshift($columns, [
                     'id' => $positionColumn->getId() . '_handle',
                     'name' => $positionColumn->getName(),
@@ -138,10 +131,8 @@ final class GridPresenter implements GridPresenterInterface
 
     /**
      * Get filters that have associated columns.
-     *
-     * @return array
      */
-    private function getColumnFilters(GridDefinitionInterface $definition)
+    private function getColumnFilters(GridDefinitionInterface $definition): array
     {
         $columnFiltersMapping = [];
 

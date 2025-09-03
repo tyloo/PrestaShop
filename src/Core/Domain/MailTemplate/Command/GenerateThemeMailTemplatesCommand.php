@@ -35,31 +35,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\MailTemplate\Command;
 class GenerateThemeMailTemplatesCommand
 {
     /**
-     * @var string
-     */
-    private $themeName;
-
-    /**
-     * @var string
-     */
-    private $language;
-
-    /**
-     * @var bool
-     */
-    private $overwriteTemplates;
-
-    /**
-     * @var string
-     */
-    private $coreMailsFolder = '';
-
-    /**
-     * @var string
-     */
-    private $modulesMailFolder = '';
-
-    /**
      * @param string $themeName
      * @param string $language           locale, for example: 'en'
      * @param bool   $overwriteTemplates
@@ -67,17 +42,12 @@ class GenerateThemeMailTemplatesCommand
      * @param string $modulesMailFolder  Output folder for modules emails (if left empty the module mails folder will be used)
      */
     public function __construct(
-        $themeName,
-        $language,
-        $overwriteTemplates = false,
-        $coreMailsFolder = '',
-        $modulesMailFolder = '',
+        private $themeName,
+        private $language,
+        private $overwriteTemplates = false,
+        private $coreMailsFolder = '',
+        private $modulesMailFolder = '',
     ) {
-        $this->themeName = $themeName;
-        $this->language = $language;
-        $this->overwriteTemplates = $overwriteTemplates;
-        $this->coreMailsFolder = $coreMailsFolder;
-        $this->modulesMailFolder = $modulesMailFolder;
     }
 
     /**

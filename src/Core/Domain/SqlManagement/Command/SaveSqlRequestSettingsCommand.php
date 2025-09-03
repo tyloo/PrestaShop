@@ -37,6 +37,7 @@ use PrestaShop\PrestaShop\Core\Encoding\CharsetEncoding;
 class SaveSqlRequestSettingsCommand
 {
     private string $fileEncoding;
+
     private string $fileSeparator;
 
     /**

@@ -35,43 +35,18 @@ class OrderShippingForViewing
     private $carriers = [];
 
     /**
-     * @var bool
-     */
-    private $isRecycledPackaging;
-
-    /**
-     * @var bool
-     */
-    private $isGiftWrapping;
-
-    /**
-     * @var string|null
-     */
-    private $carrierModuleInfo;
-
-    /**
-     * @var string|null
-     */
-    private $giftMessage;
-
-    /**
      * @param OrderCarrierForViewing[] $carriers
      */
     public function __construct(
         array $carriers,
-        bool $isRecycledPackaging,
-        bool $isGiftWrapping,
-        ?string $giftMessage,
-        ?string $carrierModuleInfo,
+        private readonly bool $isRecycledPackaging,
+        private readonly bool $isGiftWrapping,
+        private readonly ?string $giftMessage,
+        private readonly ?string $carrierModuleInfo,
     ) {
         foreach ($carriers as $carrier) {
             $this->addCarrier($carrier);
         }
-
-        $this->isRecycledPackaging = $isRecycledPackaging;
-        $this->isGiftWrapping = $isGiftWrapping;
-        $this->carrierModuleInfo = $carrierModuleInfo;
-        $this->giftMessage = $giftMessage;
     }
 
     /**

@@ -40,66 +40,6 @@ class AddManufacturerAddressCommand
     private $manufacturerId;
 
     /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $address;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var string|null
-     */
-    private $address2;
-
-    /**
-     * @var int|null
-     */
-    private $countryId;
-
-    /**
-     * @var string|null
-     */
-    private $postCode;
-
-    /**
-     * @var int|null
-     */
-    private $stateId;
-
-    /**
-     * @var string|null
-     */
-    private $homePhone;
-
-    /**
-     * @var string|null
-     */
-    private $mobilePhone;
-
-    /**
-     * @var string|null
-     */
-    private $other;
-
-    /**
-     * @var string|null
-     */
-    private $dni;
-
-    /**
      * @param string      $lastName
      * @param string      $firstName
      * @param string      $address
@@ -117,34 +57,22 @@ class AddManufacturerAddressCommand
      * @throws AddressConstraintException
      */
     public function __construct(
-        $lastName,
-        $firstName,
-        $address,
-        $countryId,
-        $city,
+        private $lastName,
+        private $firstName,
+        private $address,
+        private $countryId,
+        private $city,
         $manufacturerId = null,
-        $address2 = null,
-        $postCode = null,
-        $stateId = null,
-        $homePhone = null,
-        $mobilePhone = null,
-        $other = null,
-        $dni = null,
+        private $address2 = null,
+        private $postCode = null,
+        private $stateId = null,
+        private $homePhone = null,
+        private $mobilePhone = null,
+        private $other = null,
+        private $dni = null,
     ) {
         $this->assertIsNullOrNonNegativeInt($manufacturerId);
         $this->manufacturerId = $manufacturerId;
-        $this->lastName = $lastName;
-        $this->firstName = $firstName;
-        $this->address = $address;
-        $this->countryId = $countryId;
-        $this->city = $city;
-        $this->address2 = $address2;
-        $this->postCode = $postCode;
-        $this->stateId = $stateId;
-        $this->homePhone = $homePhone;
-        $this->mobilePhone = $mobilePhone;
-        $this->other = $other;
-        $this->dni = $dni;
     }
 
     /**

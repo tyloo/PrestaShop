@@ -55,6 +55,7 @@ class InvalidOrderStateException extends OrderException
      * Used when the order has been delivered (and it shouldn't have)
      */
     public const UNEXPECTED_DELIVERY = 4;
+
     /**
      * Used when the order state is not found
      */

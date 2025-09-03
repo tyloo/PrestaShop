@@ -34,7 +34,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class AdditionalShipmentRowAction extends AbstractRowAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'additional_shipment_row_action';
     }

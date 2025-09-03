@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\Exception\Attribu
  */
 final class AttributeId
 {
-    private int $attributeId;
+    private readonly int $attributeId;
 
     /**
      * @throws AttributeConstraintException

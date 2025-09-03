@@ -34,11 +34,6 @@ abstract class AbstractGridAction implements GridActionInterface
     /**
      * @var string
      */
-    private $id;
-
-    /**
-     * @var string
-     */
     private $name;
 
     /**
@@ -54,9 +49,9 @@ abstract class AbstractGridAction implements GridActionInterface
     /**
      * @param string $id
      */
-    public function __construct($id)
-    {
-        $this->id = $id;
+    public function __construct(
+        private $id,
+    ) {
     }
 
     public function getId()

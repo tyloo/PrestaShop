@@ -41,31 +41,13 @@ use Symfony\Component\Finder\SplFileInfo;
 final class FolderThemeCatalog implements ThemeCatalogInterface
 {
     /**
-     * @var string
-     */
-    private $mailThemesFolder;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var FolderThemeScanner
-     */
-    private $scanner;
-
-    /**
      * @param string $mailThemesFolder
      */
     public function __construct(
-        $mailThemesFolder,
-        FolderThemeScanner $scanner,
-        HookDispatcherInterface $hookDispatcher,
+        private $mailThemesFolder,
+        private readonly FolderThemeScanner $scanner,
+        private readonly HookDispatcherInterface $hookDispatcher,
     ) {
-        $this->mailThemesFolder = $mailThemesFolder;
-        $this->scanner = $scanner;
-        $this->hookDispatcher = $hookDispatcher;
     }
 
     /**
@@ -121,6 +103,7 @@ final class FolderThemeCatalog implements ThemeCatalogInterface
             if ($theme === $availableTheme->getName()) {
                 return $availableTheme;
             }
+
             $themeNames[] = $availableTheme->getName();
         }
 

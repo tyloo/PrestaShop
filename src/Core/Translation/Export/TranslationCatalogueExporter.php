@@ -48,45 +48,14 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class TranslationCatalogueExporter
 {
-    /**
-     * @var TranslationCatalogueBuilder
-     */
-    private $translationCatalogueBuilder;
-    /**
-     * @var ProviderDefinitionFactory
-     */
-    private $providerDefinitionFactory;
-    /**
-     * @var XliffFileDumper
-     */
-    private $dumper;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var string
-     */
-    private $exportDir;
-    /**
-     * @var ZipManager
-     */
-    private $zipManager;
-
     public function __construct(
-        TranslationCatalogueBuilder $translationCatalogueBuilder,
-        ProviderDefinitionFactory $providerDefinitionFactory,
-        XliffFileDumper $dumper,
-        Filesystem $filesystem,
-        ZipManager $zipManager,
-        string $exportDir,
+        private readonly TranslationCatalogueBuilder $translationCatalogueBuilder,
+        private readonly ProviderDefinitionFactory $providerDefinitionFactory,
+        private readonly XliffFileDumper $dumper,
+        private readonly Filesystem $filesystem,
+        private readonly ZipManager $zipManager,
+        private readonly string $exportDir,
     ) {
-        $this->translationCatalogueBuilder = $translationCatalogueBuilder;
-        $this->providerDefinitionFactory = $providerDefinitionFactory;
-        $this->dumper = $dumper;
-        $this->filesystem = $filesystem;
-        $this->exportDir = $exportDir;
-        $this->zipManager = $zipManager;
     }
 
     /**
@@ -176,7 +145,7 @@ class TranslationCatalogueExporter
     ): void {
         foreach ($selections as $selection) {
             if (! \in_array($selection['type'], ProviderDefinitionInterface::ALLOWED_EXPORT_TYPES, true)) {
-                throw new UnexpectedTranslationTypeException('This \'type\' param is not valid.');
+                throw new UnexpectedTranslationTypeException("This 'type' param is not valid.");
             }
 
             if (

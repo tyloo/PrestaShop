@@ -35,30 +35,15 @@ use PrestaShop\PrestaShop\Core\Grid\Record\RecordCollectionInterface;
 final class GridData implements GridDataInterface
 {
     /**
-     * @var RecordCollectionInterface
-     */
-    private $records;
-
-    /**
-     * @var int
-     */
-    private $recordsTotal;
-
-    /**
-     * @var string
-     */
-    private $query;
-
-    /**
      * @param RecordCollectionInterface $records      Filtered & paginated rows data
      * @param int                       $recordsTotal Total number of rows (without pagination)
      * @param string                    $query        Query used to get rows
      */
-    public function __construct(RecordCollectionInterface $records, $recordsTotal, $query = '')
-    {
-        $this->records = $records;
-        $this->recordsTotal = $recordsTotal;
-        $this->query = $query;
+    public function __construct(
+        private readonly RecordCollectionInterface $records,
+        private $recordsTotal,
+        private $query = '',
+    ) {
     }
 
     public function getRecords()

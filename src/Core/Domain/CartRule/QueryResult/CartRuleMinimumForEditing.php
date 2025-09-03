@@ -33,36 +33,12 @@ use PrestaShop\Decimal\DecimalNumber;
 
 class CartRuleMinimumForEditing
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $amount;
-
-    /**
-     * @var bool
-     */
-    private $amountTax;
-
-    /**
-     * @var int
-     */
-    private $currencyId;
-
-    /**
-     * @var bool
-     */
-    private $shipping;
-
     public function __construct(
-        DecimalNumber $amount,
-        bool $amountTax,
-        int $currencyId,
-        bool $shipping,
+        private readonly DecimalNumber $amount,
+        private readonly bool $amountTax,
+        private readonly int $currencyId,
+        private readonly bool $shipping,
     ) {
-        $this->amount = $amount;
-        $this->amountTax = $amountTax;
-        $this->currencyId = $currencyId;
-        $this->shipping = $shipping;
     }
 
     public function getAmount(): DecimalNumber

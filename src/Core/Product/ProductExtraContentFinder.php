@@ -38,7 +38,8 @@ use Product;
 class ProductExtraContentFinder extends HookFinder
 {
     protected $hookName = 'displayProductExtraContent';
-    protected $expectedInstanceClasses = ['PrestaShop\PrestaShop\Core\Product\ProductExtraContent'];
+
+    protected $expectedInstanceClasses = [ProductExtraContent::class];
 
     /**
      * Execute hook to get all addionnal product content, and check if valid

@@ -39,30 +39,18 @@ class Money
     private $amount;
 
     /**
-     * @var CurrencyId
-     */
-    private $currencyId;
-
-    /**
-     * @var bool
-     */
-    private $taxIncluded;
-
-    /**
      * @throws DomainConstraintException
      */
     public function __construct(
         DecimalNumber $amount,
-        CurrencyId $currencyId,
-        bool $taxIncluded,
+        private readonly CurrencyId $currencyId,
+        private readonly bool $taxIncluded,
     ) {
         if (! $amount->isGreaterOrEqualThanZero()) {
             throw new DomainConstraintException(\sprintf('Money amount cannot be lower than zero, %f given', (string) $amount), DomainConstraintException::INVALID_MONEY_AMOUNT);
         }
 
         $this->amount = $amount;
-        $this->currencyId = $currencyId;
-        $this->taxIncluded = $taxIncluded;
     }
 
     public function getAmount(): DecimalNumber

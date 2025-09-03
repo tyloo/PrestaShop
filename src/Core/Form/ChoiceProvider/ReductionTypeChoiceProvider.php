@@ -33,15 +33,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 
 class ReductionTypeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
     public function __construct(
-        CurrencyDataProviderInterface $currencyDataProvider,
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
     ) {
-        $this->currencyDataProvider = $currencyDataProvider;
     }
 
     /**

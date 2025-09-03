@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class DeleteCustomerRowAction extends AbstractRowAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'delete_customer';
     }

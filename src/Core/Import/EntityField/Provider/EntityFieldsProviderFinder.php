@@ -34,20 +34,18 @@ use PrestaShop\PrestaShop\Core\Import\Exception\NotSupportedImportEntityExceptio
  */
 final class EntityFieldsProviderFinder implements EntityFieldsProviderFinderInterface
 {
-    /**
-     * @var array of entity fields providers
-     */
-    private $entityFieldsProviders;
-
-    public function __construct(array $entityFieldsProviders)
-    {
-        $this->entityFieldsProviders = $entityFieldsProviders;
+    public function __construct(
+        /**
+         * @var array of entity fields providers
+         */
+        private array $entityFieldsProviders,
+    ) {
     }
 
     public function find($importEntity)
     {
         if (! isset($this->entityFieldsProviders[$importEntity])) {
-            throw new NotSupportedImportEntityException("Entity fields provider does not exist for entity $importEntity.");
+            throw new NotSupportedImportEntityException(\sprintf('Entity fields provider does not exist for entity %d.', $importEntity));
         }
 
         return $this->entityFieldsProviders[$importEntity];

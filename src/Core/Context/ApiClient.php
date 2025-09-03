@@ -32,11 +32,11 @@ namespace PrestaShop\PrestaShop\Core\Context;
 class ApiClient
 {
     public function __construct(
-        private int $id,
-        private string $clientId,
-        private array $scopes,
-        private ?string $externalIssuer,
-        private int $shopId,
+        private readonly int $id,
+        private readonly string $clientId,
+        private readonly array $scopes,
+        private readonly ?string $externalIssuer,
+        private readonly int $shopId,
     ) {
     }
 

@@ -45,7 +45,7 @@ class DisableableLinkColumn extends AbstractColumn
         $this->linkColumn = new LinkColumn($id);
     }
 
-    public function getType()
+    public function getType(): string
     {
         return 'disableable_link';
     }

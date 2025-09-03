@@ -34,66 +34,18 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\Permission\ValueObject\ControllerP
 class ConfigurablePermissions
 {
     /**
-     * @var array
-     */
-    private $profilePermissionsForTabs;
-
-    /**
-     * @var array
-     */
-    private $profiles;
-
-    /**
-     * @var array
-     */
-    private $tabs;
-
-    /**
-     * @var array
-     */
-    private $bulkConfiguration;
-
-    /**
-     * @var array
-     */
-    private $profilePermissionsForModules;
-
-    /**
-     * @var array
-     */
-    private $permissions;
-
-    /**
-     * @var int
-     */
-    private $employeeProfileId;
-
-    /**
-     * @var bool
-     */
-    private $hasEmployeeEditPermission;
-
-    /**
      * @param string[] $permissions
      */
     public function __construct(
-        array $profilePermissionsForTabs,
-        array $profilePermissionsForModules,
-        array $profiles,
-        array $tabs,
-        array $bulkConfiguration,
-        array $permissions,
-        int $employeeProfileId,
-        bool $hasEmployeeEditPermission,
+        private readonly array $profilePermissionsForTabs,
+        private readonly array $profilePermissionsForModules,
+        private readonly array $profiles,
+        private readonly array $tabs,
+        private array $bulkConfiguration,
+        private readonly array $permissions,
+        private readonly int $employeeProfileId,
+        private readonly bool $hasEmployeeEditPermission,
     ) {
-        $this->profilePermissionsForTabs = $profilePermissionsForTabs;
-        $this->profiles = $profiles;
-        $this->tabs = $tabs;
-        $this->bulkConfiguration = $bulkConfiguration;
-        $this->profilePermissionsForModules = $profilePermissionsForModules;
-        $this->permissions = $permissions;
-        $this->employeeProfileId = $employeeProfileId;
-        $this->hasEmployeeEditPermission = $hasEmployeeEditPermission;
     }
 
     public function getProfilePermissionsForTabs(): array

@@ -38,20 +38,10 @@ use PrestaShop\PrestaShop\Core\Domain\ShowcaseCard\ConfigurationMap;
 #[AsCommandHandler]
 final class CloseShowcaseCardHandler implements CloseShowcaseCardHandlerInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var ConfigurationMap
-     */
-    private $configurationMap;
-
-    public function __construct(ConfigurationInterface $configuration, ConfigurationMap $configurationMap)
-    {
-        $this->configuration = $configuration;
-        $this->configurationMap = $configurationMap;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly ConfigurationMap $configurationMap,
+    ) {
     }
 
     public function handle(CloseShowcaseCardCommand $command)

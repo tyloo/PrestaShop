@@ -76,7 +76,7 @@ final class StringModifier implements StringModifierInterface
             $return_str = preg_replace('/[^a-zA-Z0-9\s\'\:\/\[\]\-]/', '', $return_str);
         }
 
-        $return_str = preg_replace('/[\s\'\:\/\[\]\-]+/', ' ', $return_str);
+        $return_str = preg_replace('/[\s\'\:\/\[\]\-]+/', ' ', (string) $return_str);
 
         return str_replace([' ', '/'], '-', $return_str);
     }

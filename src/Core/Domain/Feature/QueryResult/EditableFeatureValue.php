@@ -38,31 +38,13 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureValueId;
 class EditableFeatureValue
 {
     /**
-     * @var FeatureValueId
-     */
-    private $featureValueId;
-
-    /**
-     * @var FeatureId
-     */
-    private $featureId;
-
-    /**
-     * @var string[]
-     */
-    private $localizedValues;
-
-    /**
      * @param string[] $localizedValues
      */
     public function __construct(
-        FeatureValueId $featureValueId,
-        FeatureId $featureId,
-        array $localizedValues,
+        private readonly FeatureValueId $featureValueId,
+        private readonly FeatureId $featureId,
+        private readonly array $localizedValues,
     ) {
-        $this->featureValueId = $featureValueId;
-        $this->featureId = $featureId;
-        $this->localizedValues = $localizedValues;
     }
 
     public function getFeatureValueId(): FeatureValueId

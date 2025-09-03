@@ -34,57 +34,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
  */
 class ProductOptions
 {
-    /**
-     * @var string
-     */
-    private $visibility;
-
-    /**
-     * @var bool
-     */
-    private $availableForOrder;
-
-    /**
-     * @var bool
-     */
-    private $onlineOnly;
-
-    /**
-     * @var bool
-     */
-    private $showPrice;
-
-    /**
-     * @var string
-     */
-    private $condition;
-
-    /**
-     * @var bool
-     */
-    private $showCondition;
-
-    /**
-     * @var int
-     */
-    private $manufacturerId;
-
     public function __construct(
-        string $visibility,
-        bool $availableForOrder,
-        bool $onlineOnly,
-        bool $showPrice,
-        string $condition,
-        bool $showCondition,
-        int $manufacturerId,
+        private readonly string $visibility,
+        private readonly bool $availableForOrder,
+        private readonly bool $onlineOnly,
+        private readonly bool $showPrice,
+        private readonly string $condition,
+        private readonly bool $showCondition,
+        private readonly int $manufacturerId,
     ) {
-        $this->visibility = $visibility;
-        $this->availableForOrder = $availableForOrder;
-        $this->onlineOnly = $onlineOnly;
-        $this->showPrice = $showPrice;
-        $this->condition = $condition;
-        $this->showCondition = $showCondition;
-        $this->manufacturerId = $manufacturerId;
     }
 
     public function getVisibility(): string

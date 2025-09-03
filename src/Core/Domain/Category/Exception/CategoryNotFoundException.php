@@ -36,20 +36,17 @@ use PrestaShop\PrestaShop\Core\Domain\Category\ValueObject\CategoryId;
 class CategoryNotFoundException extends CategoryException
 {
     /**
-     * @var CategoryId
-     */
-    private $categoryId;
-
-    /**
      * @param string    $message
      * @param int       $code
      * @param Exception $previous
      */
-    public function __construct(CategoryId $categoryId, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private readonly CategoryId $categoryId,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->categoryId = $categoryId;
     }
 
     /**

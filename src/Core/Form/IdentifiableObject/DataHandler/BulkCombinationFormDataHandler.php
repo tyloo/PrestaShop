@@ -36,43 +36,13 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataFormatter\BulkCombina
 
 class BulkCombinationFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var BulkCombinationFormDataFormatter
-     */
-    private $bulkCombinationFormDataFormatter;
-
-    /**
-     * @var CombinationCommandsBuilderInterface
-     */
-    private $commandsBuilder;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var int
-     */
-    private $defaultShopId;
-
     public function __construct(
-        CommandBusInterface $commandBus,
-        BulkCombinationFormDataFormatter $bulkCombinationFormDataFormatter,
-        CombinationCommandsBuilderInterface $commandsBuilder,
-        int $contextShopId,
-        int $defaultShopId,
+        private readonly CommandBusInterface $commandBus,
+        private readonly BulkCombinationFormDataFormatter $bulkCombinationFormDataFormatter,
+        private readonly CombinationCommandsBuilderInterface $commandsBuilder,
+        private readonly int $contextShopId,
+        private readonly int $defaultShopId,
     ) {
-        $this->commandBus = $commandBus;
-        $this->commandsBuilder = $commandsBuilder;
-        $this->bulkCombinationFormDataFormatter = $bulkCombinationFormDataFormatter;
-        $this->contextShopId = $contextShopId;
-        $this->defaultShopId = $defaultShopId;
     }
 
     public function create(array $data)

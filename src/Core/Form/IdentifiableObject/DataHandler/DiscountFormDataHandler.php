@@ -87,6 +87,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                 } else {
                     throw new RuntimeException('Unknown discount value type ' . $data['value']['reduction']['type']);
                 }
+
                 break;
             case DiscountType::PRODUCT_LEVEL:
                 $command->setPercentDiscount(new DecimalNumber('50'));
@@ -141,6 +142,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                 } else {
                     throw new RuntimeException('Unknown discount value type ' . $data['value']['reduction']['type']);
                 }
+
                 break;
             case DiscountType::PRODUCT_LEVEL:
                 break;
@@ -151,6 +153,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
             default:
                 throw new RuntimeException('Unknown discount type ' . $discountType);
         }
+
         $command->setLocalizedNames($data['information']['names']);
 
         if ($data['usability']['mode']['children_selector'] === DiscountUsabilityModeType::CODE_MODE) {
@@ -219,6 +222,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                         ]
                     );
                 }
+
                 if (! empty($category)) {
                     $productRuleGroups[] = new ProductRuleGroup(
                         $data['conditions']['cart_conditions']['product_segment']['quantity'],
@@ -227,6 +231,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                         ]
                     );
                 }
+
                 if (! empty($supplier)) {
                     $productRuleGroups[] = new ProductRuleGroup(
                         $data['conditions']['cart_conditions']['product_segment']['quantity'],
@@ -244,6 +249,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
             if ($data['conditions'][DiscountConditionsType::DELIVERY_CONDITIONS]['children_selector'] === DeliveryConditionsType::CARRIERS) {
                 $conditionsCommand->setCarrierIds($data['conditions'][DiscountConditionsType::DELIVERY_CONDITIONS][DeliveryConditionsType::CARRIERS]);
             }
+
             if ($data['conditions'][DiscountConditionsType::DELIVERY_CONDITIONS]['children_selector'] === DeliveryConditionsType::COUNTRY) {
                 $conditionsCommand->setCountryIds($data['conditions'][DiscountConditionsType::DELIVERY_CONDITIONS][DeliveryConditionsType::COUNTRY]);
             }

@@ -59,18 +59,14 @@ class TitleGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'title';
 
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $genderChoiceProvider;
-
-    public function __construct(HookDispatcherInterface $hookDispatcher, FormChoiceProviderInterface $genderChoiceProvider)
-    {
+    public function __construct(
+        HookDispatcherInterface $hookDispatcher,
+        private FormChoiceProviderInterface $genderChoiceProvider,
+    ) {
         parent::__construct($hookDispatcher);
-        $this->genderChoiceProvider = $genderChoiceProvider;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

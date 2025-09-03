@@ -35,30 +35,30 @@ namespace PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult;
 class EditableCarrier
 {
     public function __construct(
-        private int $carrierId,
-        private string $name,
-        private int $grade,
-        private string $trackingUrl,
-        private int $position,
-        private bool $active,
+        private readonly int $carrierId,
+        private readonly string $name,
+        private readonly int $grade,
+        private readonly string $trackingUrl,
+        private readonly int $position,
+        private readonly bool $active,
         /**
          * @var string[]
          */
-        private array $delay,
-        private int $max_width,
-        private int $max_height,
-        private int $max_depth,
-        private float $max_weight,
-        private array $associatedGroupIds,
-        private bool $hasAdditionalHandlingFee,
-        private bool $isFree,
-        private int $shippingMethod,
-        private int $idTaxRuleGroup,
-        private int $rangeBehavior,
-        private array $associatedShopIds,
-        private array $zones,
-        private ?string $logoPath = null,
-        private int $ordersCount = 0,
+        private readonly array $delay,
+        private readonly int $max_width,
+        private readonly int $max_height,
+        private readonly int $max_depth,
+        private readonly float $max_weight,
+        private readonly array $associatedGroupIds,
+        private readonly bool $hasAdditionalHandlingFee,
+        private readonly bool $isFree,
+        private readonly int $shippingMethod,
+        private readonly int $idTaxRuleGroup,
+        private readonly int $rangeBehavior,
+        private readonly array $associatedShopIds,
+        private readonly array $zones,
+        private readonly ?string $logoPath = null,
+        private readonly int $ordersCount = 0,
     ) {
     }
 

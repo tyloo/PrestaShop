@@ -32,20 +32,13 @@ namespace PrestaShop\PrestaShop\Core\Hook;
  */
 final class RenderedHook implements RenderedHookInterface
 {
-    /**
-     * @var HookInterface
-     */
-    private $hook;
-
-    /**
-     * @var array ['module_name' => 'rendered_content', ...]
-     */
-    private $content;
-
-    public function __construct(HookInterface $hook, array $content = [])
-    {
-        $this->hook = $hook;
-        $this->content = $content;
+    public function __construct(
+        private readonly HookInterface $hook,
+        /**
+         * @var array ['module_name' => 'rendered_content', ...]
+         */
+        private readonly array $content = [],
+    ) {
     }
 
     public function getHook()

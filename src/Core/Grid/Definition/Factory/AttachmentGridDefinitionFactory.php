@@ -58,7 +58,7 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
         parent::__construct($hookDispatcher);
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

@@ -38,24 +38,12 @@ use PrestaShop\PrestaShop\Core\Domain\Address\QueryResult\EditableManufacturerAd
 final class ManufacturerAddressFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var int
-     */
-    private $defaultCountryId;
-
-    /**
      * @param int $defaultCountryId
      */
     public function __construct(
-        CommandBusInterface $queryBus,
-        $defaultCountryId,
+        private readonly CommandBusInterface $queryBus,
+        private $defaultCountryId,
     ) {
-        $this->queryBus = $queryBus;
-        $this->defaultCountryId = $defaultCountryId;
     }
 
     /**

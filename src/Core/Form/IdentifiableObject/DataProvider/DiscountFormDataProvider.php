@@ -296,9 +296,11 @@ class DiscountFormDataProvider implements FormDataProviderInterface
                         $productSegment['manufacturer'] = $manufacturerId;
                     }
                 }
+
                 if ($rule->getType() === ProductRuleType::CATEGORIES) {
                     $productSegment['category'] = $rule->getItemIds()[0];
                 }
+
                 if ($rule->getType() === ProductRuleType::SUPPLIERS) {
                     foreach ($rule->getItemIds() as $supplierId) {
                         $productSegment['supplier'] = $supplierId;

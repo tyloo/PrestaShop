@@ -36,14 +36,9 @@ use PrestaShopBundle\Entity\Repository\TimezoneRepository;
  */
 final class TimezoneByNameChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var TimezoneRepository
-     */
-    private $timezoneRepository;
-
-    public function __construct(TimezoneRepository $timezoneRepository)
-    {
-        $this->timezoneRepository = $timezoneRepository;
+    public function __construct(
+        private readonly TimezoneRepository $timezoneRepository,
+    ) {
     }
 
     /**

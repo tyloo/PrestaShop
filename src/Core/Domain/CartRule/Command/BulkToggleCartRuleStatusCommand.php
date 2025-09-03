@@ -38,11 +38,6 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\CartRuleId;
 class BulkToggleCartRuleStatusCommand
 {
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @var CartRuleId[]
      */
     private $cartRuleIds;
@@ -52,9 +47,10 @@ class BulkToggleCartRuleStatusCommand
      *
      * @throws CartRuleConstraintException
      */
-    public function __construct(array $cartRuleIds, bool $expectedStatus)
-    {
-        $this->expectedStatus = $expectedStatus;
+    public function __construct(
+        array $cartRuleIds,
+        private readonly bool $expectedStatus,
+    ) {
         $this->setCartRuleIds($cartRuleIds);
     }
 

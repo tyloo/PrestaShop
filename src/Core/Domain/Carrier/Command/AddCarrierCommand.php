@@ -39,13 +39,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
  */
 class AddCarrierCommand
 {
-    private ShippingMethod $shippingMethod;
-    private OutOfRangeBehavior $rangeBehavior;
+    private readonly ShippingMethod $shippingMethod;
+
+    private readonly OutOfRangeBehavior $rangeBehavior;
 
     /**
      * @var ShopId[]
      */
-    private array $associatedShopIds;
+    private readonly array $associatedShopIds;
 
     private ?int $position = null;
 
@@ -53,34 +54,34 @@ class AddCarrierCommand
      * @throws CarrierConstraintException
      */
     public function __construct(
-        private string $name,
+        private readonly string $name,
         /**
          * @var string[]
          */
-        private array $localizedDelay,
-        private int $grade,
-        private string $trackingUrl,
-        private bool $active,
-        private array $associatedGroupIds,
-        private bool $hasAdditionalHandlingFee,
-        private bool $isFree,
+        private readonly array $localizedDelay,
+        private readonly int $grade,
+        private readonly string $trackingUrl,
+        private readonly bool $active,
+        private readonly array $associatedGroupIds,
+        private readonly bool $hasAdditionalHandlingFee,
+        private readonly bool $isFree,
         int $shippingMethod,
         int $rangeBehavior,
         /**
          * @var int[]
          */
-        private array $zones,
+        private readonly array $zones,
         array $associatedShopIds,
-        private int $max_width = 0,
-        private int $max_height = 0,
-        private int $max_depth = 0,
-        private float $max_weight = 0,
-        private ?string $logoPathName = null,
+        private readonly int $max_width = 0,
+        private readonly int $max_height = 0,
+        private readonly int $max_depth = 0,
+        private readonly float $max_weight = 0,
+        private readonly ?string $logoPathName = null,
     ) {
         $this->assertCarrierHasAtLeastOneZone($zones);
         $this->shippingMethod = new ShippingMethod($shippingMethod);
         $this->rangeBehavior = new OutOfRangeBehavior($rangeBehavior);
-        $this->associatedShopIds = array_map(fn (int $shopId) => new ShopId($shopId), $associatedShopIds);
+        $this->associatedShopIds = array_map(fn (int $shopId): ShopId => new ShopId($shopId), $associatedShopIds);
     }
 
     /**

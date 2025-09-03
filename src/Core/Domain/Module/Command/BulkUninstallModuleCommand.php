@@ -39,7 +39,7 @@ class BulkUninstallModuleCommand
     /**
      * @var array<ModuleTechnicalName>
      */
-    private array $modules;
+    private readonly array $modules;
 
     /**
      * @param array<string> $modules     Array of technical names for modules
@@ -49,7 +49,7 @@ class BulkUninstallModuleCommand
         array $modules,
         private readonly bool $deleteFiles = false,
     ) {
-        $this->modules = array_map(fn (string $technicalName) => new ModuleTechnicalName($technicalName), $modules);
+        $this->modules = array_map(fn (string $technicalName): ModuleTechnicalName => new ModuleTechnicalName($technicalName), $modules);
     }
 
     /**

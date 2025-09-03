@@ -38,7 +38,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ShopListColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'shop_list';
     }

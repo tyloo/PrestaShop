@@ -37,35 +37,17 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\QueryResult\EditableManufactu
 final class ManufacturerFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $bus;
-
-    /**
-     * @var bool
-     */
-    private $multistoreEnabled;
-
-    /**
-     * @var int[]
-     */
-    private $defaultShopAssociation;
-
-    /**
      * @param bool  $multistoreEnabled
      * @param int[] $defaultShopAssociation
      */
     public function __construct(
-        CommandBusInterface $bus,
-        $multistoreEnabled,
-        array $defaultShopAssociation,
+        private readonly CommandBusInterface $bus,
+        private $multistoreEnabled,
+        private readonly array $defaultShopAssociation,
     ) {
-        $this->bus = $bus;
-        $this->multistoreEnabled = $multistoreEnabled;
-        $this->defaultShopAssociation = $defaultShopAssociation;
     }
 
-    public function getData($manufacturerId)
+    public function getData($manufacturerId): array
     {
         /** @var EditableManufacturer $editableManufacturer */
         $editableManufacturer = $this->bus->handle(new GetManufacturerForEditing((int) $manufacturerId));

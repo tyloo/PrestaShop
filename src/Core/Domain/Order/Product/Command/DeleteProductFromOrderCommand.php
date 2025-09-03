@@ -40,18 +40,14 @@ class DeleteProductFromOrderCommand
     private $orderId;
 
     /**
-     * @var int
-     */
-    private $orderDetailId;
-
-    /**
      * @param int $orderId
      * @param int $orderDetailId
      */
-    public function __construct($orderId, $orderDetailId)
-    {
+    public function __construct(
+        $orderId,
+        private $orderDetailId,
+    ) {
         $this->orderId = new OrderId($orderId);
-        $this->orderDetailId = $orderDetailId;
     }
 
     /**

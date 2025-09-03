@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ModalFormSubmitBulkAction extends AbstractBulkAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'modal_form_submit';
     }

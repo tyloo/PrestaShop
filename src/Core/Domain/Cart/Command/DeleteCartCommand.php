@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\ValueObject\CartId;
  */
 class DeleteCartCommand
 {
-    private CartId $cartId;
+    private readonly CartId $cartId;
 
     public function __construct(int $cartId)
     {

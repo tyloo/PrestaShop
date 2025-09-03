@@ -52,6 +52,7 @@ abstract class AbstractProfileCommand
         foreach ($localizedNames as $localizedName) {
             $this->assertNameIsStringAndRequiredLength($localizedName);
         }
+
         $this->localizedNames = $localizedNames;
     }
 
@@ -65,7 +66,7 @@ abstract class AbstractProfileCommand
 
     protected function assertNameIsStringAndRequiredLength($name)
     {
-        if ($name !== null && ! \is_string($name) || \strlen($name) > ProfileSettings::NAME_MAX_LENGTH) {
+        if ($name !== null && ! \is_string($name) || \strlen((string) $name) > ProfileSettings::NAME_MAX_LENGTH) {
             throw new ProfileConstraintException(\sprintf('Profile name should not exceed %d characters length but %s given', ProfileSettings::NAME_MAX_LENGTH, var_export($name, true)), ProfileConstraintException::INVALID_NAME);
         }
     }

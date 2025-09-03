@@ -29,14 +29,9 @@ namespace PrestaShop\PrestaShop\Core\Configuration;
 
 class UploadSizeConfiguration implements UploadSizeConfigurationInterface
 {
-    /**
-     * @var IniConfiguration
-     */
-    private $iniConfiguration;
-
-    public function __construct(IniConfiguration $iniConfiguration)
-    {
-        $this->iniConfiguration = $iniConfiguration;
+    public function __construct(
+        private readonly IniConfiguration $iniConfiguration,
+    ) {
     }
 
     public function getMaxUploadSizeInBytes(): int

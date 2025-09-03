@@ -59,15 +59,11 @@ class UpdateProductImageCommand
      */
     private $position;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    public function __construct(int $imageId, ShopConstraint $shopConstraint)
-    {
+    public function __construct(
+        int $imageId,
+        private readonly ShopConstraint $shopConstraint,
+    ) {
         $this->imageId = new ImageId($imageId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getImageId(): ImageId

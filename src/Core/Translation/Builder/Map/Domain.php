@@ -40,19 +40,14 @@ use PrestaShop\PrestaShop\Core\Util\Inflector;
 class Domain
 {
     /**
-     * @var string
-     */
-    private $domainName;
-
-    /**
      * @var Message[]
      */
     private $messages;
 
-    public function __construct(string $domainName)
-    {
+    public function __construct(
+        private readonly string $domainName,
+    ) {
         $this->messages = [];
-        $this->domainName = $domainName;
     }
 
     public function getDomainName(): string
@@ -90,9 +85,7 @@ class Domain
 
     public function getMissingTranslationsCount(): int
     {
-        $missingTranslations = array_filter($this->messages, function (Message $message) {
-            return ! $message->isTranslated();
-        });
+        $missingTranslations = array_filter($this->messages, fn (Message $message): bool => ! $message->isTranslated());
 
         return \count($missingTranslations);
     }

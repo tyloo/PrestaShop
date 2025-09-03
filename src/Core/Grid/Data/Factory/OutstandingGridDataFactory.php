@@ -38,29 +38,11 @@ use Validate;
 
 final class OutstandingGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $outstandingDataFactory;
-
-    /**
-     * @var RepositoryInterface
-     */
-    private $repositoryLocale;
-
-    /**
-     * @var string
-     */
-    private $contextLocale;
-
     public function __construct(
-        GridDataFactoryInterface $outstandingDataFactory,
-        RepositoryInterface $repositoryLocale,
-        string $contextLocale,
+        private readonly GridDataFactoryInterface $outstandingDataFactory,
+        private readonly RepositoryInterface $repositoryLocale,
+        private readonly string $contextLocale,
     ) {
-        $this->outstandingDataFactory = $outstandingDataFactory;
-        $this->repositoryLocale = $repositoryLocale;
-        $this->contextLocale = $contextLocale;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

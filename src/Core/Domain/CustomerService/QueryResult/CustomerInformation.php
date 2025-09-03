@@ -33,41 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\CustomerService\QueryResult;
 class CustomerInformation
 {
     /**
-     * @var int|null
-     */
-    private $customerId;
-
-    /**
-     * @var string|null
-     */
-    private $firstName;
-
-    /**
-     * @var string|null
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var int|null
-     */
-    private $validatedOrdersCount;
-
-    /**
-     * @var string|null
-     */
-    private $validatedOrdersAmount;
-
-    /**
-     * @var string|null
-     */
-    private $customerSinceDate;
-
-    /**
      * @param string $email
      *
      * @return self
@@ -87,21 +52,14 @@ class CustomerInformation
      * @param string|null $customerSinceDate
      */
     public function __construct(
-        $customerId,
-        $firstName,
-        $lastName,
-        $email,
-        $validatedOrdersCount,
-        $validatedOrdersAmount,
-        $customerSinceDate,
+        private $customerId,
+        private $firstName,
+        private $lastName,
+        private $email,
+        private $validatedOrdersCount,
+        private $validatedOrdersAmount,
+        private $customerSinceDate,
     ) {
-        $this->customerId = $customerId;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->validatedOrdersCount = $validatedOrdersCount;
-        $this->validatedOrdersAmount = $validatedOrdersAmount;
-        $this->customerSinceDate = $customerSinceDate;
     }
 
     /**

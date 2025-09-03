@@ -36,21 +36,6 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
 class ChangeOrderStatusException extends OrderException
 {
     /**
-     * @var OrderId[]
-     */
-    private $ordersWithFailedToUpdateStatus;
-
-    /**
-     * @var OrderId[]
-     */
-    private $ordersWithFailedToSendEmail;
-
-    /**
-     * @var OrderId[]
-     */
-    private $ordersWithAssignedStatus;
-
-    /**
      * @param OrderId[]      $ordersWithFailedToUpdateStatus
      * @param OrderId[]      $ordersWithFailedToSendEmail
      * @param OrderId[]      $ordersWithAssignedStatus
@@ -59,17 +44,13 @@ class ChangeOrderStatusException extends OrderException
      * @param Exception|null $previous
      */
     public function __construct(
-        array $ordersWithFailedToUpdateStatus,
-        array $ordersWithFailedToSendEmail,
-        array $ordersWithAssignedStatus,
+        private readonly array $ordersWithFailedToUpdateStatus,
+        private readonly array $ordersWithFailedToSendEmail,
+        private readonly array $ordersWithAssignedStatus,
         $message = '',
         $code = 0,
         $previous = null,
     ) {
-        $this->ordersWithFailedToUpdateStatus = $ordersWithFailedToUpdateStatus;
-        $this->ordersWithFailedToSendEmail = $ordersWithFailedToSendEmail;
-        $this->ordersWithAssignedStatus = $ordersWithAssignedStatus;
-
         parent::__construct($message, $code, $previous);
     }
 

@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\ApiClient\Exception\ApiClientConstraintExc
 
 class ApiClientId
 {
-    private int $apiClientId;
+    private readonly int $apiClientId;
 
     public function __construct(int $apiClientId)
     {

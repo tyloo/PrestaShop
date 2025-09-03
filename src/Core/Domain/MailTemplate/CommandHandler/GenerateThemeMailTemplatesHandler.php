@@ -44,46 +44,16 @@ use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
 class GenerateThemeMailTemplatesHandler implements GenerateThemeMailTemplatesHandlerInterface
 {
     /**
-     * @var LanguageRepositoryInterface
-     */
-    private $languageRepository;
-
-    /**
-     * @var ThemeCatalogInterface
-     */
-    private $themeCatalog;
-
-    /**
-     * @var MailTemplateGenerator
-     */
-    private $generator;
-
-    /**
-     * @var string
-     */
-    private $defaultCoreMailsFolder;
-
-    /**
-     * @var string
-     */
-    private $defaultModulesMailFolder;
-
-    /**
      * @param string $defaultCoreMailsFolder
      * @param string $defaultModulesMailFolder
      */
     public function __construct(
-        LanguageRepositoryInterface $languageRepository,
-        ThemeCatalogInterface $themeCatalog,
-        MailTemplateGenerator $generator,
-        $defaultCoreMailsFolder,
-        $defaultModulesMailFolder,
+        private readonly LanguageRepositoryInterface $languageRepository,
+        private readonly ThemeCatalogInterface $themeCatalog,
+        private readonly MailTemplateGenerator $generator,
+        private $defaultCoreMailsFolder,
+        private $defaultModulesMailFolder,
     ) {
-        $this->languageRepository = $languageRepository;
-        $this->themeCatalog = $themeCatalog;
-        $this->generator = $generator;
-        $this->defaultCoreMailsFolder = $defaultCoreMailsFolder;
-        $this->defaultModulesMailFolder = $defaultModulesMailFolder;
     }
 
     public function handle(GenerateThemeMailTemplatesCommand $command)

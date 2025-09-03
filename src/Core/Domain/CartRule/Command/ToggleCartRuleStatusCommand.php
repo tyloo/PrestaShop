@@ -41,14 +41,10 @@ class ToggleCartRuleStatusCommand
      */
     private $cartRuleId;
 
-    /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    public function __construct(int $cartRuleId, bool $expectedStatus)
-    {
-        $this->expectedStatus = $expectedStatus;
+    public function __construct(
+        int $cartRuleId,
+        private readonly bool $expectedStatus,
+    ) {
         $this->cartRuleId = new CartRuleId($cartRuleId);
     }
 

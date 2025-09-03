@@ -41,33 +41,51 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
  */
 class EditCarrierCommand
 {
-    private CarrierId $carrierId;
-    private ?string $name;
+    private readonly CarrierId $carrierId;
+
+    private ?string $name = null;
+
     /**
      * @var string[]
      */
-    private ?array $localizedDelay;
-    private ?int $grade;
-    private ?string $trackingUrl;
-    private ?int $position;
-    private ?bool $active;
-    private ?int $max_width;
-    private ?int $max_height;
-    private ?int $max_depth;
-    private ?float $max_weight;
-    private ?array $associatedGroupIds;
-    private ?string $logoPathName;
-    private ?bool $hasAdditionalHandlingFee;
-    private ?bool $isFree;
-    private ?ShippingMethod $shippingMethod;
-    private ?int $idTaxRuleGroup;
-    private ?OutOfRangeBehavior $rangeBehavior;
+    private ?array $localizedDelay = null;
+
+    private ?int $grade = null;
+
+    private ?string $trackingUrl = null;
+
+    private ?int $position = null;
+
+    private ?bool $active = null;
+
+    private ?int $max_width = null;
+
+    private ?int $max_height = null;
+
+    private ?int $max_depth = null;
+
+    private ?float $max_weight = null;
+
+    private ?array $associatedGroupIds = null;
+
+    private ?string $logoPathName = null;
+
+    private ?bool $hasAdditionalHandlingFee = null;
+
+    private ?bool $isFree = null;
+
+    private ?ShippingMethod $shippingMethod = null;
+
+    private ?int $idTaxRuleGroup = null;
+
+    private ?OutOfRangeBehavior $rangeBehavior = null;
+
     /**
      * @var int[]
      */
-    private ?array $zones;
+    private ?array $zones = null;
 
-    private ?array $associatedShopIds;
+    private ?array $associatedShopIds = null;
 
     public function __construct(int $carrierId)
     {
@@ -301,7 +319,7 @@ class EditCarrierCommand
      */
     public function setAssociatedShopIds(array $associatedShopIds): void
     {
-        $this->associatedShopIds = array_map(fn (int $shopId) => new ShopId($shopId), $associatedShopIds);
+        $this->associatedShopIds = array_map(fn (int $shopId): ShopId => new ShopId($shopId), $associatedShopIds);
     }
 
     public function getZones(): ?array

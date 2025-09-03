@@ -38,14 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\Exception\DomainException;
  */
 final class ContactFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    public function __construct(CommandBusInterface $commandBus)
-    {
-        $this->commandBus = $commandBus;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+    ) {
     }
 
     /**

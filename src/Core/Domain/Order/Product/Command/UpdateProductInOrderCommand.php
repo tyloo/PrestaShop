@@ -44,11 +44,6 @@ class UpdateProductInOrderCommand
     private $orderId;
 
     /**
-     * @var int
-     */
-    private $orderDetailId;
-
-    /**
      * @var DecimalNumber
      */
     private $priceTaxIncluded;
@@ -63,29 +58,23 @@ class UpdateProductInOrderCommand
      */
     private $quantity;
 
-    /**
-     * @var int|null
-     */
-    private $orderInvoiceId;
-
     public function __construct(
         int $orderId,
-        int $orderDetailId,
+        private readonly int $orderDetailId,
         string $priceTaxIncluded,
         string $priceTaxExcluded,
         int $quantity,
-        ?int $orderInvoiceId = null,
+        private readonly ?int $orderInvoiceId = null,
     ) {
         $this->orderId = new OrderId($orderId);
-        $this->orderDetailId = $orderDetailId;
         try {
             $this->priceTaxIncluded = new DecimalNumber($priceTaxIncluded);
             $this->priceTaxExcluded = new DecimalNumber($priceTaxExcluded);
         } catch (InvalidArgumentException) {
             throw new InvalidAmountException();
         }
+
         $this->setQuantity($quantity);
-        $this->orderInvoiceId = $orderInvoiceId;
     }
 
     /**
@@ -144,6 +133,7 @@ class UpdateProductInOrderCommand
         if ($quantity <= 0) {
             throw new InvalidProductQuantityException('When adding a product quantity must be strictly positive');
         }
+
         $this->quantity = $quantity;
     }
 }

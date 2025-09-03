@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Localization\RTL\StyleSheetProcessorFactoryInterf
 #[AsCommandHandler]
 final class AdaptThemeToRTLLanguagesHandler implements AdaptThemeToRTLLanguagesHandlerInterface
 {
-    /**
-     * @var StyleSheetProcessorFactoryInterface
-     */
-    private $stylesheetProcessorFactory;
-
-    public function __construct(StyleSheetProcessorFactoryInterface $stylesheetProcessorFactory)
-    {
-        $this->stylesheetProcessorFactory = $stylesheetProcessorFactory;
+    public function __construct(
+        private readonly StyleSheetProcessorFactoryInterface $stylesheetProcessorFactory,
+    ) {
     }
 
     public function handle(AdaptThemeToRTLLanguagesCommand $command)
@@ -56,8 +51,8 @@ final class AdaptThemeToRTLLanguagesHandler implements AdaptThemeToRTLLanguagesH
                 ->setProcessFOThemes([$plainThemeName])
                 ->process()
             ;
-        } catch (GenerationException $e) {
-            throw new CannotAdaptThemeToRTLLanguagesException(\sprintf('Cannot adapt "%s" theme to RTL languages.', $plainThemeName), 0, $e);
+        } catch (GenerationException $generationException) {
+            throw new CannotAdaptThemeToRTLLanguagesException(\sprintf('Cannot adapt "%s" theme to RTL languages.', $plainThemeName), 0, $generationException);
         }
     }
 }

@@ -55,19 +55,9 @@ class FormHandler implements FormHandlerInterface
     protected $hookDispatcher;
 
     /**
-     * @var string the hook name
-     */
-    protected $hookName;
-
-    /**
      * @var array the list of Form Types
      */
     protected $formTypes;
-
-    /**
-     * @var string the form name
-     */
-    protected $formName;
 
     /**
      * @param string $hookName
@@ -78,15 +68,13 @@ class FormHandler implements FormHandlerInterface
         HookDispatcherInterface $hookDispatcher,
         FormDataProviderInterface $formDataProvider,
         array $formTypes,
-        $hookName,
-        $formName = 'form',
+        protected $hookName,
+        protected $formName = 'form',
     ) {
-        $this->formName = $formName;
-        $this->formBuilder = $formBuilder->getFormFactory()->createNamedBuilder($formName);
+        $this->formBuilder = $formBuilder->getFormFactory()->createNamedBuilder($this->formName);
         $this->hookDispatcher = $hookDispatcher;
         $this->formDataProvider = $formDataProvider;
         $this->formTypes = $formTypes;
-        $this->hookName = $hookName;
     }
 
     /**
@@ -100,7 +88,7 @@ class FormHandler implements FormHandlerInterface
 
         $this->formBuilder->setData($this->formDataProvider->getData());
         $this->hookDispatcher->dispatchWithParameters(
-            "action{$this->hookName}Form",
+            \sprintf('action%sForm', $this->hookName),
             [
                 'form_builder' => &$this->formBuilder,
             ]
@@ -118,7 +106,7 @@ class FormHandler implements FormHandlerInterface
         $errors = $this->formDataProvider->setData($data);
 
         $this->hookDispatcher->dispatchWithParameters(
-            "action{$this->hookName}Save",
+            \sprintf('action%sSave', $this->hookName),
             [
                 'errors' => &$errors,
                 'form_data' => &$data,

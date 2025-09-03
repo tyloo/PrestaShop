@@ -51,11 +51,6 @@ abstract class AbstractRepositoryFiltersBuilder extends AbstractFiltersBuilder
     protected $employeeProvider;
 
     /**
-     * @var int
-     */
-    protected $shopId;
-
-    /**
      * @var string
      */
     protected $controller;
@@ -71,23 +66,23 @@ abstract class AbstractRepositoryFiltersBuilder extends AbstractFiltersBuilder
     public function __construct(
         AdminFilterRepository $adminFilterRepository,
         ContextEmployeeProviderInterface $employeeProvider,
-        $shopId,
+        protected $shopId,
     ) {
         $this->adminFilterRepository = $adminFilterRepository;
         $this->employeeProvider = $employeeProvider;
-        $this->shopId = $shopId;
     }
 
     public function setConfig(array $config)
     {
-        $defaultController = $defaultAction = '';
+        $defaultController = '';
+        $defaultAction = '';
         if (isset($config['request']) && $config['request'] instanceof Request) {
             $request = $config['request'];
             [$defaultController, $defaultAction] = ControllerAction::fromString($request->get('_controller'));
         }
 
-        $this->controller = isset($config['controller']) ? $config['controller'] : $defaultController;
-        $this->action = isset($config['action']) ? $config['action'] : $defaultAction;
+        $this->controller = $config['controller'] ?? $defaultController;
+        $this->action = $config['action'] ?? $defaultAction;
 
         return parent::setConfig($config);
     }

@@ -29,20 +29,10 @@ namespace PrestaShop\PrestaShop\Core\Addon\Theme;
 
 final class ThemeProvider implements ThemeProviderInterface
 {
-    /**
-     * @var ThemeRepository
-     */
-    private $themeRepository;
-
-    /**
-     * @var Theme
-     */
-    private $theme;
-
-    public function __construct(ThemeRepository $themeRepository, Theme $theme)
-    {
-        $this->themeRepository = $themeRepository;
-        $this->theme = $theme;
+    public function __construct(
+        private readonly ThemeRepository $themeRepository,
+        private readonly Theme $theme,
+    ) {
     }
 
     public function getCurrentlyUsedTheme()

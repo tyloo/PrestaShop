@@ -38,18 +38,19 @@ use Throwable;
 class CannotBulkDeleteCustomizationFieldException extends ProductException
 {
     /**
-     * @var int[]
-     */
-    private $customizationFieldIds;
-
-    /**
      * @param string $message
      * @param int    $code
      */
-    public function __construct(array $customizationFieldIds, $message = '', $code = 0, ?Throwable $previous = null)
-    {
+    public function __construct(
+        /**
+         * @var int[]
+         */
+        private readonly array $customizationFieldIds,
+        $message = '',
+        $code = 0,
+        ?Throwable $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-        $this->customizationFieldIds = $customizationFieldIds;
     }
 
     /**

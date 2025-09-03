@@ -38,29 +38,11 @@ use Symfony\Component\Form\FormRegistryInterface;
  */
 final class FormBuilderFactory implements FormBuilderFactoryInterface
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var FormRegistryInterface
-     */
-    private $registry;
-
     public function __construct(
-        FormFactoryInterface $formFactory,
-        HookDispatcherInterface $hookDispatcher,
-        FormRegistryInterface $registry,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly FormRegistryInterface $registry,
     ) {
-        $this->formFactory = $formFactory;
-        $this->hookDispatcher = $hookDispatcher;
-        $this->registry = $registry;
     }
 
     /**

@@ -35,24 +35,12 @@ use PrestaShop\PrestaShop\Core\Employee\EmployeeDataProviderInterface;
 final class ProfileAccessChecker implements ProfileAccessCheckerInterface
 {
     /**
-     * @var EmployeeDataProviderInterface
-     */
-    private $employeeDataProvider;
-
-    /**
-     * @var int
-     */
-    private $superAdminProfileId;
-
-    /**
      * @param int $superAdminProfileId
      */
     public function __construct(
-        EmployeeDataProviderInterface $employeeDataProvider,
-        $superAdminProfileId,
+        private readonly EmployeeDataProviderInterface $employeeDataProvider,
+        private $superAdminProfileId,
     ) {
-        $this->employeeDataProvider = $employeeDataProvider;
-        $this->superAdminProfileId = $superAdminProfileId;
     }
 
     public function canEmployeeAccessProfile($employeeId, $profileId)

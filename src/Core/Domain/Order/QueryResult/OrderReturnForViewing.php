@@ -31,50 +31,14 @@ use DateTimeImmutable;
 
 class OrderReturnForViewing
 {
-    /**
-     * @var int
-     */
-    private $orderInvoiceId;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $date;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $stateName;
-
-    /**
-     * @var string
-     */
-    private $orderReturnNumber;
-
-    /**
-     * @var int
-     */
-    private $idOrderReturn;
-
     public function __construct(
-        int $idOrderReturn,
-        int $orderInvoiceId,
-        DateTimeImmutable $date,
-        string $type,
-        string $stateName,
-        string $orderReturnNumber,
+        private readonly int $idOrderReturn,
+        private readonly int $orderInvoiceId,
+        private readonly DateTimeImmutable $date,
+        private readonly string $type,
+        private readonly string $stateName,
+        private readonly string $orderReturnNumber,
     ) {
-        $this->orderInvoiceId = $orderInvoiceId;
-        $this->date = $date;
-        $this->type = $type;
-        $this->stateName = $stateName;
-        $this->idOrderReturn = $idOrderReturn;
-        $this->orderReturnNumber = $orderReturnNumber;
     }
 
     public function getOrderInvoiceId(): int

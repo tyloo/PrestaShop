@@ -37,17 +37,15 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class ThemeZipChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         $themeZipsFinder = (new Finder())
             ->in($this->configuration->get('_PS_ALL_THEMES_DIR_'))

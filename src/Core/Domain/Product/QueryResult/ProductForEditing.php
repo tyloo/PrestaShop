@@ -38,22 +38,22 @@ use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\QueryResult\Vir
 class ProductForEditing
 {
     public function __construct(
-        private int $productId,
-        private string $type,
-        private bool $isActive,
-        private ProductCustomizationOptions $customizationOptions,
-        private ProductBasicInformation $basicInformation,
-        private CategoriesInformation $categoriesInformation,
-        private ProductPricesInformation $pricesInformation,
-        private ProductOptions $options,
-        private ProductDetails $details,
-        private ProductShippingInformation $shippingInformation,
-        private ProductSeoOptions $productSeoOptions,
-        private array $associatedAttachments,
-        private ProductStockInformation $stockInformation,
-        private ?VirtualProductFileForEditing $virtualProductFile,
-        private string $coverThumbnailUrl,
-        private array $shopIds,
+        private readonly int $productId,
+        private readonly string $type,
+        private readonly bool $isActive,
+        private readonly ProductCustomizationOptions $customizationOptions,
+        private readonly ProductBasicInformation $basicInformation,
+        private readonly CategoriesInformation $categoriesInformation,
+        private readonly ProductPricesInformation $pricesInformation,
+        private readonly ProductOptions $options,
+        private readonly ProductDetails $details,
+        private readonly ProductShippingInformation $shippingInformation,
+        private readonly ProductSeoOptions $productSeoOptions,
+        private readonly array $associatedAttachments,
+        private readonly ProductStockInformation $stockInformation,
+        private readonly ?VirtualProductFileForEditing $virtualProductFile,
+        private readonly string $coverThumbnailUrl,
+        private readonly array $shopIds,
     ) {
     }
 

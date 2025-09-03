@@ -93,8 +93,6 @@ class AddFeatureCommand
             throw new FeatureConstraintException('Shop association cannot be empty', FeatureConstraintException::INVALID_SHOP_ASSOCIATION);
         }
 
-        $this->associatedShopIds = array_map(static function (int $shopId): ShopId {
-            return new ShopId($shopId);
-        }, $associatedShopIds);
+        $this->associatedShopIds = array_map(static fn (int $shopId): ShopId => new ShopId($shopId), $associatedShopIds);
     }
 }

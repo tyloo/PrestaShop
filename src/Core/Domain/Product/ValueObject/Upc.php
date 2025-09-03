@@ -45,6 +45,7 @@ class Upc
      * Maximum allowed symbols
      */
     public const MAX_LENGTH = 12;
+
     /**
      * @var string
      */

@@ -61,7 +61,7 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
      */
     public const GRID_ID = 'supplier';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

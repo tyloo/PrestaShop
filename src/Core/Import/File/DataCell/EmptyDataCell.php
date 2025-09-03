@@ -32,12 +32,12 @@ namespace PrestaShop\PrestaShop\Core\Import\File\DataCell;
  */
 final class EmptyDataCell implements DataCellInterface
 {
-    public function getValue()
+    public function getValue(): string
     {
         return '';
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return '';
     }

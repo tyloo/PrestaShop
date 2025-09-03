@@ -61,28 +61,28 @@ class StockManager
     {
         /** @TODO We should call the needed classes with the Symfony dependency injection instead of the Homemade Service Locator */
         $serviceLocator = new ServiceLocator();
-        $configuration = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface');
+        $configuration = $serviceLocator::get(\PrestaShop\PrestaShop\Core\ConfigurationInterface::class);
 
         if ($product->pack_stock_type === Pack::STOCK_TYPE_PRODUCTS_ONLY
             || $product->pack_stock_type === Pack::STOCK_TYPE_PACK_BOTH
             || ($product->pack_stock_type === Pack::STOCK_TYPE_DEFAULT
                 && $configuration->get('PS_PACK_STOCK_TYPE') > 0)
         ) {
-            $packItemsManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\Product\\PackItemsManager');
-            $stockManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\StockManager');
-            $cacheManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\CacheManager');
+            $packItemsManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\Product\PackItemsManager::class);
+            $stockManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\StockManager::class);
+            $cacheManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\CacheManager::class);
 
             $products_pack = $packItemsManager->getPackItems($product);
             foreach ($products_pack as $product_pack) {
                 $productStockAvailable = $stockManager->getStockAvailableByProduct($product_pack, $product_pack->id_pack_product_attribute, $id_shop);
-                $productStockAvailable->quantity = $productStockAvailable->quantity + ($delta_quantity * $product_pack->pack_quantity);
+                $productStockAvailable->quantity += $delta_quantity * $product_pack->pack_quantity;
                 $productStockAvailable->update();
 
                 $cacheManager->clean('StockAvailable::getQuantityAvailableByProduct_' . (int) $product_pack->id . '*');
             }
         }
 
-        $stock_available->quantity = $stock_available->quantity + $delta_quantity;
+        $stock_available->quantity += $delta_quantity;
 
         if ($product->pack_stock_type === Pack::STOCK_TYPE_PACK_ONLY
             || $product->pack_stock_type === Pack::STOCK_TYPE_PACK_BOTH
@@ -110,15 +110,15 @@ class StockManager
         /** @TODO We should call the needed classes with the Symfony dependency injection instead of the Homemade Service Locator */
         $serviceLocator = new ServiceLocator();
 
-        $configuration = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface');
-        $packItemsManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\Product\\PackItemsManager');
-        $stockManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\StockManager');
-        $cacheManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\CacheManager');
+        $configuration = $serviceLocator::get(\PrestaShop\PrestaShop\Core\ConfigurationInterface::class);
+        $packItemsManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\Product\PackItemsManager::class);
+        $stockManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\StockManager::class);
+        $cacheManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\CacheManager::class);
 
         $packs = $packItemsManager->getPacksContainingItem($product, $id_product_attribute);
         foreach ($packs as $pack) {
             // Decrease stocks of the pack only if pack is in linked stock mode (option called 'Decrement both')
-            if (! ((int) $pack->pack_stock_type === Pack::STOCK_TYPE_PACK_BOTH)
+            if ((int) $pack->pack_stock_type !== Pack::STOCK_TYPE_PACK_BOTH
                 && ! ((int) $pack->pack_stock_type === Pack::STOCK_TYPE_DEFAULT
                     && $configuration->get('PS_PACK_STOCK_TYPE') === Pack::STOCK_TYPE_PACK_BOTH)
             ) {
@@ -156,10 +156,10 @@ class StockManager
     {
         /** @TODO We should call the needed classes with the Symfony dependency injection instead of the Homemade Service Locator */
         $serviceLocator = new ServiceLocator();
-        $stockManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\StockManager');
-        $packItemsManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\Product\\PackItemsManager');
-        $cacheManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\CacheManager');
-        $hookManager = $serviceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\HookManager');
+        $stockManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\StockManager::class);
+        $packItemsManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\Product\PackItemsManager::class);
+        $cacheManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\CacheManager::class);
+        $hookManager = $serviceLocator::get(\PrestaShop\PrestaShop\Adapter\HookManager::class);
 
         $stockAvailable = $stockManager->getStockAvailableByProduct($product, $id_product_attribute, $id_shop);
 
@@ -169,7 +169,7 @@ class StockManager
             $this->updatePackQuantity($product, $stockAvailable, $delta_quantity, $id_shop);
         } else {
             // The product is not a pack
-            $stockAvailable->quantity = $stockAvailable->quantity + $delta_quantity;
+            $stockAvailable->quantity += $delta_quantity;
             $stockAvailable->update();
 
             // Decrease case only: the stock of linked packs should be decreased too.
@@ -228,6 +228,7 @@ class StockManager
 
             return $this->isCombinationQuantityUnderAlertThreshold($combination, $newQuantity);
         }
+
         if (! $productHasAttributes && ! $id_product_attribute) {
             return $this->isProductQuantityUnderAlertThreshold($product, $newQuantity);
         }
@@ -238,10 +239,8 @@ class StockManager
     /**
      * @param Product $product
      * @param int     $newQuantity
-     *
-     * @return bool
      */
-    protected function isProductQuantityUnderAlertThreshold($product, $newQuantity)
+    protected function isProductQuantityUnderAlertThreshold($product, $newQuantity): bool
     {
         // low_stock_threshold empty to disable (can be negative, null or zero)
         if ($product->low_stock_alert
@@ -257,10 +256,8 @@ class StockManager
 
     /**
      * @param int $newQuantity
-     *
-     * @return bool
      */
-    protected function isCombinationQuantityUnderAlertThreshold(Combination $combination, $newQuantity)
+    protected function isCombinationQuantityUnderAlertThreshold(Combination $combination, $newQuantity): bool
     {
         // low_stock_threshold empty to disable (can be negative, null or zero)
         if ($combination->low_stock_alert
@@ -305,6 +302,7 @@ class StockManager
         } else {
             $lowStockThreshold = $product->low_stock_threshold;
         }
+
         $templateVars = [
             '{qty}' => $newQuantity,
             '{product_id}' => $product->id,
@@ -387,7 +385,7 @@ class StockManager
         $product = new Product($productId);
 
         if ($product->id) {
-            $stockManager = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\StockManager');
+            $stockManager = ServiceLocator::get(\PrestaShop\PrestaShop\Adapter\StockManager::class);
             $stockAvailable = $stockManager->getStockAvailableByProduct($product, $productAttributeId, $params['id_shop'] ?? null);
 
             if ($stockAvailable->id) {

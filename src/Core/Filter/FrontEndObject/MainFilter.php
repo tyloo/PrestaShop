@@ -36,16 +36,11 @@ use PrestaShop\PrestaShop\Core\Filter\FilterInterface;
 class MainFilter implements FilterInterface
 {
     /**
-     * @var FilterInterface[] filters, indexed by key to filter
-     */
-    private $filters;
-
-    /**
      * @param array $filters FilterInterface[] filters, indexed by key to filter
      */
-    public function __construct(array $filters)
-    {
-        $this->filters = $filters;
+    public function __construct(
+        private readonly array $filters,
+    ) {
     }
 
     /**

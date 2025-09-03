@@ -38,44 +38,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class LocalizationPackByIsoCodeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var LocalizationPackLoaderInterface
-     */
-    private $remoteLocalizationPackLoader;
-
-    /**
-     * @var LocalizationPackLoaderInterface
-     */
-    private $localLocalizationPackLoader;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
-        LocalizationPackLoaderInterface $remoteLocalizationPackLoader,
-        LocalizationPackLoaderInterface $localLocalizationPackLoader,
-        ConfigurationInterface $configuration,
-        TranslatorInterface $translator,
+        private readonly LocalizationPackLoaderInterface $remoteLocalizationPackLoader,
+        private readonly LocalizationPackLoaderInterface $localLocalizationPackLoader,
+        private readonly ConfigurationInterface $configuration,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->remoteLocalizationPackLoader = $remoteLocalizationPackLoader;
-        $this->localLocalizationPackLoader = $localLocalizationPackLoader;
-        $this->configuration = $configuration;
-        $this->translator = $translator;
     }
 
     /**
      * Get localization pack choices.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         $localizationPacks = $this->remoteLocalizationPackLoader->getLocalizationPackList();
         if ($localizationPacks === null) {

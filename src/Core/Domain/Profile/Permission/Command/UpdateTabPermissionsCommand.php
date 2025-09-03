@@ -57,17 +57,15 @@ class UpdateTabPermissionsCommand
      */
     private $permission;
 
-    /**
-     * @var bool
-     */
-    private $isActive;
-
-    public function __construct(int $profileId, int $tabId, string $permission, bool $isActive)
-    {
+    public function __construct(
+        int $profileId,
+        int $tabId,
+        string $permission,
+        private readonly bool $isActive,
+    ) {
         $this->profileId = new ProfileId($profileId);
         $this->tabId = $tabId === AllTab::ALL_TAB_ID ? new AllTab() : new TabId($tabId);
         $this->permission = $permission === ControllerAllPermissions::ALL ? new ControllerAllPermissions() : new ControllerPermission($permission);
-        $this->isActive = $isActive;
     }
 
     public function getProfileId(): ProfileId

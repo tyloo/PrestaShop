@@ -33,37 +33,17 @@ namespace PrestaShop\PrestaShop\Core\Language\Copier;
 final class LanguageCopierConfig implements LanguageCopierConfigInterface
 {
     /**
-     * @var string the theme name from which the language will be copied
-     */
-    private $themeFrom;
-
-    /**
-     * @var string the language iso code, which will be copied from
-     */
-    private $languageFrom;
-
-    /**
-     * @var string the theme name to which the language will be copied
-     */
-    private $themeTo;
-
-    /**
-     * @var string the language iso code, which will be copied to
-     */
-    private $languageTo;
-
-    /**
      * @param string $themeFrom
      * @param string $languageFrom
      * @param string $themeTo
      * @param string $languageTo
      */
-    public function __construct($themeFrom, $languageFrom, $themeTo, $languageTo)
-    {
-        $this->themeFrom = $themeFrom;
-        $this->languageFrom = $languageFrom;
-        $this->themeTo = $themeTo;
-        $this->languageTo = $languageTo;
+    public function __construct(
+        private $themeFrom,
+        private $languageFrom,
+        private $themeTo,
+        private $languageTo,
+    ) {
     }
 
     public function getThemeFrom()

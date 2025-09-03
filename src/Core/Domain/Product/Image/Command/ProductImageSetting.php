@@ -51,9 +51,7 @@ class ProductImageSetting
     {
         $this->productImageId = new ImageId($productImageId);
         $this->shopIds = array_map(
-            static function (int $shopId): ShopId {
-                return new ShopId($shopId);
-            },
+            static fn (int $shopId): ShopId => new ShopId($shopId),
             $shopIds
         );
     }

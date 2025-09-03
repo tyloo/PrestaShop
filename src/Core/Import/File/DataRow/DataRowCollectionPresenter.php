@@ -34,17 +34,12 @@ use PrestaShop\PrestaShop\Core\Import\File\DataCell\EmptyDataCell;
  */
 final class DataRowCollectionPresenter implements DataRowCollectionPresenterInterface
 {
-    /**
-     * @var DataRowPresenterInterface
-     */
-    private $dataRowPresenter;
-
-    public function __construct(DataRowPresenterInterface $dataRowPresenter)
-    {
-        $this->dataRowPresenter = $dataRowPresenter;
+    public function __construct(
+        private readonly DataRowPresenterInterface $dataRowPresenter,
+    ) {
     }
 
-    public function present(DataRowCollectionInterface $dataRowCollection)
+    public function present(DataRowCollectionInterface $dataRowCollection): array
     {
         $presentedCollection = [
             'rows' => [],

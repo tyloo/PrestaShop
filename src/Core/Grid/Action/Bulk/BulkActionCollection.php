@@ -43,7 +43,10 @@ final class BulkActionCollection extends AbstractCollection implements BulkActio
         return $this;
     }
 
-    public function toArray()
+    /**
+     * @return list<array{id: mixed, name: mixed, type: mixed, icon: mixed, options: mixed}>
+     */
+    public function toArray(): array
     {
         $bulkActionsArray = [];
 

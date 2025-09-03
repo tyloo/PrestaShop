@@ -63,6 +63,7 @@ class MerchandiseReturnOptionsConfiguration extends AbstractMultistoreConfigurat
                 ],
             ];
         }
+
         $shopConstraint = $this->getShopConstraint();
         $this->updateConfigurationValue(
             'PS_ORDER_RETURN',

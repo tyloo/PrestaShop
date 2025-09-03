@@ -53,39 +53,9 @@ class AddEmployeeCommand
     private $email;
 
     /**
-     * @var int
-     */
-    private $defaultPageId;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
-     * @var bool
-     */
-    private $active;
-
-    /**
-     * @var int
-     */
-    private $profileId;
-
-    /**
-     * @var array
-     */
-    private $shopAssociation;
-
-    /**
      * @var Password
      */
     private $plainPassword;
-
-    /**
-     * @var bool
-     */
-    private $hasEnabledGravatar;
 
     /**
      * @param string $firstName
@@ -102,12 +72,12 @@ class AddEmployeeCommand
         $lastName,
         $email,
         $plainPassword,
-        $defaultPageId,
-        $languageId,
-        $active,
-        $profileId,
-        array $shopAssociation,
-        bool $hasEnabledGravatar,
+        private $defaultPageId,
+        private $languageId,
+        private $active,
+        private $profileId,
+        private readonly array $shopAssociation,
+        private readonly bool $hasEnabledGravatar,
         int $minLength,
         int $maxLength,
         int $minScore,
@@ -115,13 +85,7 @@ class AddEmployeeCommand
         $this->firstName = new FirstName($firstName);
         $this->lastName = new LastName($lastName);
         $this->email = new Email($email);
-        $this->defaultPageId = $defaultPageId;
-        $this->languageId = $languageId;
-        $this->active = $active;
-        $this->profileId = $profileId;
-        $this->shopAssociation = $shopAssociation;
         $this->plainPassword = new Password($plainPassword, $minLength, $maxLength, $minScore);
-        $this->hasEnabledGravatar = $hasEnabledGravatar;
     }
 
     /**

@@ -37,29 +37,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param string $dbPrefix
      * @param int    $contextLangId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        $contextLangId,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextLangId = $contextLangId;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -138,13 +125,13 @@ final class ManufacturerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
                     continue;
                 }
 
-                $qb->andWhere($allowedFiltersMap[$filterName] . " = :$filterName")
+                $qb->andWhere($allowedFiltersMap[$filterName] . (' = :' . $filterName))
                     ->setParameter($filterName, $value);
 
                 continue;
             }
 
-            $qb->andWhere($allowedFiltersMap[$filterName] . " LIKE :$filterName")
+            $qb->andWhere($allowedFiltersMap[$filterName] . (' LIKE :' . $filterName))
                 ->setParameter($filterName, '%' . $value . '%');
         }
     }

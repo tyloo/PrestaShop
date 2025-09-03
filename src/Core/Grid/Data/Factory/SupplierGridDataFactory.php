@@ -37,22 +37,10 @@ use PrestaShop\PrestaShop\Core\Image\ImageProviderInterface;
  */
 final class SupplierGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $supplierDataFactory;
-
-    /**
-     * @var ImageProviderInterface
-     */
-    private $supplierLogoImageProvider;
-
     public function __construct(
-        GridDataFactoryInterface $supplierDataFactory,
-        ImageProviderInterface $supplierLogoImageProvider,
+        private readonly GridDataFactoryInterface $supplierDataFactory,
+        private readonly ImageProviderInterface $supplierLogoImageProvider,
     ) {
-        $this->supplierDataFactory = $supplierDataFactory;
-        $this->supplierLogoImageProvider = $supplierLogoImageProvider;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

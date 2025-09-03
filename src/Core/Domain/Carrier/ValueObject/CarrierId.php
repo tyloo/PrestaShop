@@ -46,6 +46,7 @@ class CarrierId
         if ($carrierId <= 0) {
             throw new CarrierConstraintException(\sprintf('Invalid carrier id "%d"', $carrierId), CarrierConstraintException::INVALID_ID);
         }
+
         $this->carrierId = $carrierId;
     }
 

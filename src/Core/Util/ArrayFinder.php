@@ -47,21 +47,16 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class ArrayFinder implements ArrayAccess, Countable
 {
     /**
-     * @var array
-     */
-    private $array;
-
-    /**
      * @var PropertyAccessor
      */
     private $propertyAccessor;
 
     /**
-     * @param array $content the array to be searched and manager by ArrayFinder
+     * @param array $array the array to be searched and manager by ArrayFinder
      */
-    public function __construct(array $content = [])
-    {
-        $this->array = $content;
+    public function __construct(
+        private array $array = [],
+    ) {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
@@ -86,6 +81,7 @@ class ArrayFinder implements ArrayAccess, Countable
         if ($path === null) {
             return $this->array;
         }
+
         $path = $this->convertDotPathToArrayPath($path);
 
         try {

@@ -40,18 +40,14 @@ class DeleteCartRuleFromOrderCommand
     private $orderId;
 
     /**
-     * @var int
-     */
-    private $orderCartRuleId;
-
-    /**
      * @param int $orderId
      * @param int $orderCartRuleId
      */
-    public function __construct($orderId, $orderCartRuleId)
-    {
+    public function __construct(
+        $orderId,
+        private $orderCartRuleId,
+    ) {
         $this->orderId = new OrderId($orderId);
-        $this->orderCartRuleId = $orderCartRuleId;
     }
 
     /**

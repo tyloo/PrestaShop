@@ -60,11 +60,7 @@ final class FilterCollection implements FilterCollectionInterface
      */
     public function get($filterName)
     {
-        if (isset($this->filters[$filterName])) {
-            return $this->filters[$filterName];
-        }
-
-        return null;
+        return $this->filters[$filterName] ?? null;
     }
 
     public function all()

@@ -42,11 +42,6 @@ class GetProductForEditing
     private $productId;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @var LanguageId some data from this class is only used for reading and is not expected to be edited, so it
      *                 is provided only in the language of the user interface, which is defined by this parameter
      */
@@ -54,11 +49,10 @@ class GetProductForEditing
 
     public function __construct(
         int $productId,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
         int $displayLanguageId,
     ) {
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
         $this->displayLanguageId = new LanguageId($displayLanguageId);
     }
 

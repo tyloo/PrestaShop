@@ -40,22 +40,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TaxRuleGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $doctrineTaxRuleDataFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
-        GridDataFactoryInterface $doctrineTaxRuleDataFactory,
-        TranslatorInterface $translator,
+        private readonly GridDataFactoryInterface $doctrineTaxRuleDataFactory,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->doctrineTaxRuleDataFactory = $doctrineTaxRuleDataFactory;
-        $this->translator = $translator;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

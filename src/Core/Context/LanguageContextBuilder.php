@@ -44,6 +44,7 @@ class LanguageContextBuilder implements LegacyContextBuilderInterface
     use LegacyObjectCheckerTrait;
 
     private ?int $languageId = null;
+
     private ?int $defaultLanguageId = null;
 
     private ?LegacyLanguage $legacyLanguage = null;
@@ -110,12 +111,12 @@ class LanguageContextBuilder implements LegacyContextBuilderInterface
         $localizationLocale = $this->getLocaleByLanguage($language);
 
         return new LanguageContext(
-            id: (int) $language->getId(),
+            id: $language->getId(),
             name: $language->getName(),
             isoCode: $language->getIsoCode(),
             locale: $language->getLocale(),
             languageCode: $language->getLanguageCode(),
-            isRTL: (bool) $language->isRTL(),
+            isRTL: $language->isRTL(),
             dateFormat: $language->getDateFormat(),
             dateTimeFormat: $language->getDateTimeFormat(),
             localizationLocale: $localizationLocale,

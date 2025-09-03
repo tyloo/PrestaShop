@@ -35,41 +35,17 @@ namespace PrestaShop\PrestaShop\Core\MailTemplate\Layout;
 class Layout implements LayoutInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $htmlPath;
-
-    /**
-     * @var string
-     */
-    private $txtPath;
-
-    /**
-     * @var string
-     */
-    private $moduleName;
-
-    /**
      * @param string $name       Name of the layout to describe its purpose
      * @param string $htmlPath   Absolute path of the html layout file
      * @param string $txtPath    Absolute path of the txt layout file
      * @param string $moduleName Which module this layout is associated to (if any)
      */
     public function __construct(
-        $name,
-        $htmlPath,
-        $txtPath,
-        $moduleName = '',
+        private $name,
+        private $htmlPath,
+        private $txtPath,
+        private $moduleName = '',
     ) {
-        $this->name = $name;
-        $this->htmlPath = $htmlPath;
-        $this->txtPath = $txtPath;
-        $this->moduleName = $moduleName;
     }
 
     /**

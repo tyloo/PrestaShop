@@ -38,14 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\Address\ValueObject\AddressId;
  */
 final class ManufacturerAddressFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    public function __construct(CommandBusInterface $commandBus)
-    {
-        $this->commandBus = $commandBus;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+    ) {
     }
 
     public function create(array $data)
@@ -88,39 +83,51 @@ final class ManufacturerAddressFormDataHandler implements FormDataHandlerInterfa
         if ($data['id_manufacturer'] !== null) {
             $command->setManufacturerId($data['id_manufacturer']);
         }
+
         if ($data['last_name'] !== null) {
             $command->setLastName($data['last_name']);
         }
+
         if ($data['first_name'] !== null) {
             $command->setFirstName($data['first_name']);
         }
+
         if ($data['address'] !== null) {
             $command->setAddress($data['address']);
         }
+
         if ($data['id_country'] !== null) {
             $command->setCountryId($data['id_country']);
         }
+
         if ($data['city'] !== null) {
             $command->setCity($data['city']);
         }
+
         if ($data['address2'] !== null) {
             $command->setAddress2($data['address2']);
         }
+
         if ($data['post_code'] !== null) {
             $command->setPostCode($data['post_code']);
         }
+
         if ($data['id_state'] !== null) {
             $command->setStateId($data['id_state']);
         }
+
         if ($data['home_phone'] !== null) {
             $command->setHomePhone($data['home_phone']);
         }
+
         if ($data['mobile_phone'] !== null) {
             $command->setMobilePhone($data['mobile_phone']);
         }
+
         if ($data['other'] !== null) {
             $command->setOther($data['other']);
         }
+
         if ($data['dni'] !== null) {
             $command->setDni($data['dni']);
         }

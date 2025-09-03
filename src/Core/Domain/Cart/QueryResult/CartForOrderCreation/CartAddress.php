@@ -32,43 +32,19 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
  */
 class CartAddress
 {
-    /**
-     * @var int
-     */
-    private $addressId;
-
-    /**
-     * @var string
-     */
-    private $alias;
-
-    /**
-     * @var string
-     */
-    private $formattedAddress;
-
-    /**
-     * @var bool is it used as delivery address
-     */
-    private $delivery;
-
-    /**
-     * @var bool is it used as invoice address
-     */
-    private $invoice;
-
     public function __construct(
-        int $addressId,
-        string $alias,
-        string $formattedAddress,
-        bool $delivery,
-        bool $invoice,
+        private readonly int $addressId,
+        private readonly string $alias,
+        private readonly string $formattedAddress,
+        /**
+         * @var bool is it used as delivery address
+         */
+        private readonly bool $delivery,
+        /**
+         * @var bool is it used as invoice address
+         */
+        private readonly bool $invoice,
     ) {
-        $this->addressId = $addressId;
-        $this->alias = $alias;
-        $this->formattedAddress = $formattedAddress;
-        $this->delivery = $delivery;
-        $this->invoice = $invoice;
     }
 
     public function getAddressId(): int

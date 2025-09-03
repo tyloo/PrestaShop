@@ -45,7 +45,7 @@ class ProfileId
     {
         $this->assertProfileIdIsGreaterThanZero($profileId);
 
-        $this->profileId = (int) $profileId;
+        $this->profileId = $profileId;
     }
 
     /**

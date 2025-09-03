@@ -42,39 +42,15 @@ use PrestaShop\PrestaShop\Core\Security\PasswordGenerator;
 final class CustomerFormDataHandler implements FormDataHandlerInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $bus;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var bool
-     */
-    private $isB2bFeatureEnabled;
-
-    /**
-     * @var DefaultGroupsProviderInterface
-     */
-    private $defaultGroupsProvider;
-
-    /**
      * @param int  $contextShopId
      * @param bool $isB2bFeatureEnabled
      */
     public function __construct(
-        CommandBusInterface $bus,
-        $contextShopId,
-        $isB2bFeatureEnabled,
-        DefaultGroupsProviderInterface $defaultGroupsProvider,
+        private readonly CommandBusInterface $bus,
+        private $contextShopId,
+        private $isB2bFeatureEnabled,
+        private readonly DefaultGroupsProviderInterface $defaultGroupsProvider,
     ) {
-        $this->bus = $bus;
-        $this->contextShopId = $contextShopId;
-        $this->isB2bFeatureEnabled = $isB2bFeatureEnabled;
-        $this->defaultGroupsProvider = $defaultGroupsProvider;
     }
 
     public function create(array $data)
@@ -102,9 +78,7 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
         // Default data from the form
         $password = $data['password'];
         $defaultGroupId = (int) $data['default_group_id'];
-        $groupIds = array_map(function ($groupId) {
-            return (int) $groupId;
-        }, $data['group_ids']);
+        $groupIds = array_map(fn ($groupId): int => (int) $groupId, $data['group_ids']);
         $isEnabled = (bool) $data['is_enabled'];
 
         /*
@@ -162,9 +136,7 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
      */
     private function buildCustomerEditCommand($customerId, array $data)
     {
-        $groupIds = array_map(function ($groupId) {
-            return (int) $groupId;
-        }, $data['group_ids']);
+        $groupIds = array_map(fn ($groupId): int => (int) $groupId, $data['group_ids']);
 
         $command = (new EditCustomerCommand($customerId))
             ->setGenderId($data['gender_id'])

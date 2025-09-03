@@ -54,7 +54,10 @@ class AliasFormDataHandler implements FormDataHandlerInterface
         return $this->commandBus->handle(new UpdateSearchTermAliasesCommand((string) $id, $aliases, $searchTerm));
     }
 
-    protected function formatAliases(array $aliases)
+    /**
+     * @return list<array{alias: string, active: mixed}>
+     */
+    protected function formatAliases(array $aliases): array
     {
         $formattedAliases = [];
 
@@ -62,8 +65,9 @@ class AliasFormDataHandler implements FormDataHandlerInterface
             if (empty($alias['alias'])) {
                 continue;
             }
+
             $formattedAliases[] = [
-                'alias' => trim($alias['alias']),
+                'alias' => trim((string) $alias['alias']),
                 'active' => $alias['active'],
             ];
         }

@@ -36,7 +36,7 @@ class OrderDetailQuantity
     /**
      * @var array<int, array{id_order_detail: int, quantity: int}>
      */
-    private array $items;
+    private readonly array $items;
 
     /**
      * @param array<int, array{id_order_detail: int, quantity: int}> $items

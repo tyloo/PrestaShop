@@ -38,22 +38,10 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\ComputingPrecision;
  */
 final class CancelProductFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
     public function __construct(
-        CommandBusInterface $queryBus,
-        CurrencyDataProviderInterface $currencyDataProvider,
+        private readonly CommandBusInterface $queryBus,
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
     ) {
-        $this->queryBus = $queryBus;
-        $this->currencyDataProvider = $currencyDataProvider;
     }
 
     public function getData($orderId)

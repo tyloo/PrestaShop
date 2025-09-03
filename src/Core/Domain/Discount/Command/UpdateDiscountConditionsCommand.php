@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 
 class UpdateDiscountConditionsCommand
 {
-    private DiscountId $discountId;
+    private readonly DiscountId $discountId;
 
     private ?int $minimumProductsQuantity = null;
 
@@ -126,6 +126,7 @@ class UpdateDiscountConditionsCommand
             if (! $productCondition instanceof ProductRuleGroup) {
                 throw new DiscountConstraintException(\sprintf('Product conditions must be an array of %s', ProductRuleGroup::class), DiscountConstraintException::INVALID_PRODUCTS_CONDITIONS);
             }
+
             if (empty($productCondition->getRules())) {
                 throw new DiscountConstraintException(\sprintf('Product conditions rules cannot be empty'), DiscountConstraintException::INVALID_PRODUCTS_CONDITIONS);
             }
@@ -139,7 +140,8 @@ class UpdateDiscountConditionsCommand
                     if (! \is_int($itemId)) {
                         throw new DiscountConstraintException(\sprintf('Product conditions rule item ID must be an integer'), DiscountConstraintException::INVALID_PRODUCTS_CONDITIONS);
                     }
-                    if ((int) $itemId <= 0) {
+
+                    if ($itemId <= 0) {
                         throw new DiscountConstraintException(\sprintf('Product conditions rule item ID must be strictly positive'), DiscountConstraintException::INVALID_PRODUCTS_CONDITIONS);
                     }
                 }
@@ -166,7 +168,7 @@ class UpdateDiscountConditionsCommand
      */
     public function setCarrierIds(?array $carrierIds): self
     {
-        $this->carrierIds = array_map(fn (int $carrierId) => new CarrierId($carrierId), $carrierIds);
+        $this->carrierIds = array_map(fn (int $carrierId): CarrierId => new CarrierId($carrierId), $carrierIds);
 
         return $this;
     }
@@ -178,7 +180,7 @@ class UpdateDiscountConditionsCommand
 
     public function setCountryIds(?array $countryIds): self
     {
-        $this->countryIds = array_map(fn (int $countryId) => new CountryId($countryId), $countryIds);
+        $this->countryIds = array_map(fn (int $countryId): CountryId => new CountryId($countryId), $countryIds);
 
         return $this;
     }

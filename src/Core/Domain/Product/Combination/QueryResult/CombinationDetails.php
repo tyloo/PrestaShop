@@ -37,52 +37,16 @@ use PrestaShop\Decimal\DecimalNumber;
 class CombinationDetails
 {
     /**
-     * @var string
-     */
-    private $gtin;
-
-    /**
-     * @var string
-     */
-    private $isbn;
-
-    /**
-     * @var string
-     */
-    private $mpn;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $upc;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $impactOnWeight;
-
-    /**
      * @param string $gtin this is the new renamed ean13
      */
     public function __construct(
-        string $gtin,
-        string $isbn,
-        string $mpn,
-        string $reference,
-        string $upc,
-        DecimalNumber $impactOnWeight,
+        private readonly string $gtin,
+        private readonly string $isbn,
+        private readonly string $mpn,
+        private readonly string $reference,
+        private readonly string $upc,
+        private readonly DecimalNumber $impactOnWeight,
     ) {
-        $this->gtin = $gtin;
-        $this->isbn = $isbn;
-        $this->mpn = $mpn;
-        $this->reference = $reference;
-        $this->upc = $upc;
-        $this->impactOnWeight = $impactOnWeight;
     }
 
     public function getGtin(): string

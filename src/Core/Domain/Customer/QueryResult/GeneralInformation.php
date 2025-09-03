@@ -33,23 +33,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class GeneralInformation
 {
     /**
-     * @var string
-     */
-    private $privateNote;
-
-    /**
-     * @var bool
-     */
-    private $customerBySameEmailExists;
-
-    /**
      * @param string $privateNote
      * @param bool   $customerBySameEmailExists
      */
-    public function __construct($privateNote, $customerBySameEmailExists)
-    {
-        $this->privateNote = $privateNote;
-        $this->customerBySameEmailExists = $customerBySameEmailExists;
+    public function __construct(
+        private $privateNote,
+        private $customerBySameEmailExists,
+    ) {
     }
 
     /**

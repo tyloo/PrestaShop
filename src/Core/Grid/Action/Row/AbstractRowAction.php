@@ -37,11 +37,6 @@ abstract class AbstractRowAction implements RowActionInterface
     /**
      * @var string
      */
-    private $id;
-
-    /**
-     * @var string
-     */
     private $name;
 
     /**
@@ -57,9 +52,9 @@ abstract class AbstractRowAction implements RowActionInterface
     /**
      * @param string $id
      */
-    public function __construct($id)
-    {
-        $this->id = $id;
+    public function __construct(
+        private $id,
+    ) {
     }
 
     public function getId()

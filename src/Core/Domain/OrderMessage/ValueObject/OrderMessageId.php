@@ -32,14 +32,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\OrderMessage\ValueObject;
  */
 class OrderMessageId
 {
-    /**
-     * @var int
-     */
-    private $orderMessageId;
-
-    public function __construct(int $orderMessageId)
-    {
-        $this->orderMessageId = $orderMessageId;
+    public function __construct(
+        private readonly int $orderMessageId,
+    ) {
     }
 
     public function getValue(): int

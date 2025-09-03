@@ -42,14 +42,9 @@ class MailThemeChoiceProvider implements FormChoiceProviderInterface
      */
     private $choices;
 
-    /**
-     * @var ThemeCatalogInterface
-     */
-    private $themeCatalog;
-
-    public function __construct(ThemeCatalogInterface $themeCatalog)
-    {
-        $this->themeCatalog = $themeCatalog;
+    public function __construct(
+        private readonly ThemeCatalogInterface $themeCatalog,
+    ) {
     }
 
     public function getChoices()

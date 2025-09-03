@@ -32,6 +32,7 @@ namespace PrestaShop\PrestaShop\Core\Util;
 class Sorter
 {
     public const ORDER_ASC = 'ASC';
+
     public const ORDER_DESC = 'DESC';
 
     /**
@@ -45,7 +46,8 @@ class Sorter
                 if (! isset($a[$criteria]) || ! isset($b[$criteria])) {
                     return 0;
                 }
-                $cmp = strnatcmp($a[$criteria], $b[$criteria]);
+
+                $cmp = strnatcmp((string) $a[$criteria], (string) $b[$criteria]);
                 if ($cmp !== 0) {
                     break;
                 }

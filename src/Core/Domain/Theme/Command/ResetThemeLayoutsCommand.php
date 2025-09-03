@@ -34,14 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\ValueObject\ThemeName;
  */
 class ResetThemeLayoutsCommand
 {
-    /**
-     * @var ThemeName
-     */
-    private $themeName;
-
-    public function __construct(ThemeName $themeName)
-    {
-        $this->themeName = $themeName;
+    public function __construct(
+        private readonly ThemeName $themeName,
+    ) {
     }
 
     /**

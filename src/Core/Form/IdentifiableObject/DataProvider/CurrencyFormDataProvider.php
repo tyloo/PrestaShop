@@ -34,20 +34,10 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\Precision;
 
 final class CurrencyFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    public function __construct(CommandBusInterface $queryBus, array $contextShopIds)
-    {
-        $this->contextShopIds = $contextShopIds;
-        $this->queryBus = $queryBus;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+        private readonly array $contextShopIds,
+    ) {
     }
 
     public function getData($id)

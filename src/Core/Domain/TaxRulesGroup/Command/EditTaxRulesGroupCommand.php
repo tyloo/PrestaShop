@@ -120,9 +120,7 @@ class EditTaxRulesGroupCommand
 
     protected function assertArrayContainsOnlyIntegerValues(array $values): bool
     {
-        $filterAllIntegers = function ($value) {
-            return \is_int($value);
-        };
+        $filterAllIntegers = (fn ($value): bool => \is_int($value));
 
         return ! empty($values) && \count($values) === \count(array_filter($values, $filterAllIntegers));
     }

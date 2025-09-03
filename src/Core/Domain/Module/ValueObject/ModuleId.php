@@ -33,14 +33,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\Module\ValueObject;
  */
 class ModuleId
 {
-    /**
-     * @var int
-     */
-    private $moduleId;
-
-    public function __construct(int $moduleId)
-    {
-        $this->moduleId = $moduleId;
+    public function __construct(
+        private readonly int $moduleId,
+    ) {
     }
 
     public function getValue(): int

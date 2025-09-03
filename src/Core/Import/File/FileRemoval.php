@@ -35,14 +35,9 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 final class FileRemoval
 {
-    /**
-     * @var ImportDirectory
-     */
-    private $importDirectory;
-
-    public function __construct(ImportDirectory $importDirectory)
-    {
-        $this->importDirectory = $importDirectory;
+    public function __construct(
+        private readonly ImportDirectory $importDirectory,
+    ) {
     }
 
     /**

@@ -34,7 +34,10 @@ use PrestaShop\PrestaShop\Core\Import\File\DataCell\DataCellInterface;
  */
 final class DataRowPresenter implements DataRowPresenterInterface
 {
-    public function present(DataRowInterface $dataRow)
+    /**
+     * @return list<array{value: mixed}>
+     */
+    public function present(DataRowInterface $dataRow): array
     {
         $presentedRow = [];
 

@@ -34,30 +34,15 @@ use PrestaShop\PrestaShop\Adapter\Entity\Product;
 class OrderProductCustomizationForViewing
 {
     /**
-     * @var int
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
      * @var string
      */
     private $image;
 
-    public function __construct(int $type, string $name, string $value)
-    {
-        $this->type = $type;
-        $this->name = $name;
-        $this->value = $value;
+    public function __construct(
+        private readonly int $type,
+        private readonly string $name,
+        private readonly string $value,
+    ) {
         if ($this->type === Product::CUSTOMIZE_FILE) {
             $this->image = _THEME_PROD_PIC_DIR_ . $this->value . '_small';
         }

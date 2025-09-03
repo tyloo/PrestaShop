@@ -39,35 +39,17 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\ValueObject\SupplierAssoc
 class ProductSupplierUpdate
 {
     /**
-     * @var SupplierAssociationInterface
-     */
-    private $association;
-
-    /**
      * @var CurrencyId
      */
     private $currencyId;
 
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $priceTaxExcluded;
-
     public function __construct(
-        SupplierAssociationInterface $association,
+        private readonly SupplierAssociationInterface $association,
         int $currencyId,
-        string $reference,
-        string $priceTaxExcluded,
+        private readonly string $reference,
+        private readonly string $priceTaxExcluded,
     ) {
-        $this->association = $association;
         $this->currencyId = new CurrencyId($currencyId);
-        $this->reference = $reference;
-        $this->priceTaxExcluded = $priceTaxExcluded;
     }
 
     public function getAssociation(): SupplierAssociationInterface

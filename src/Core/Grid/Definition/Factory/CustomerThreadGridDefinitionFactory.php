@@ -62,31 +62,13 @@ class CustomerThreadGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'customer_thread';
 
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $contactTypeProvider;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $shopNameByIdChoiceProvider;
-
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $customerThreadStatusesChoiceProvider;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        FormChoiceProviderInterface $contactTypeProvider,
-        FormChoiceProviderInterface $shopNameByIdChoiceProvider,
-        ConfigurableFormChoiceProviderInterface $customerThreadStatusesChoiceProvider,
+        private FormChoiceProviderInterface $contactTypeProvider,
+        private FormChoiceProviderInterface $shopNameByIdChoiceProvider,
+        private ConfigurableFormChoiceProviderInterface $customerThreadStatusesChoiceProvider,
     ) {
         parent::__construct($hookDispatcher);
-        $this->contactTypeProvider = $contactTypeProvider;
-        $this->shopNameByIdChoiceProvider = $shopNameByIdChoiceProvider;
-        $this->customerThreadStatusesChoiceProvider = $customerThreadStatusesChoiceProvider;
     }
 
     protected function getId(): string

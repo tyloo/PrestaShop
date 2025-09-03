@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PreviewColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'preview';
     }

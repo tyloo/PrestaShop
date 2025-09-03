@@ -68,37 +68,21 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
     private $cmsCategoryParentId;
 
     /**
-     * @var CommandBusInterface
+     * @param bool $isMultiStoreFeatureUsed
      */
-    private $queryBus;
-
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
-    /**
-     * @var bool
-     */
-    private $isMultiStoreFeatureUsed;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        CommandBusInterface $queryBus,
+        private CommandBusInterface $queryBus,
         RequestStack $requestStack,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
-        $isMultiStoreFeatureUsed,
+        private MultistoreContextCheckerInterface $multistoreContextChecker,
+        private $isMultiStoreFeatureUsed,
     ) {
         parent::__construct($hookDispatcher);
 
-        $this->queryBus = $queryBus;
-
         $this->setCmsPageCategoryParentId($requestStack);
-        $this->multistoreContextChecker = $multistoreContextChecker;
-        $this->isMultiStoreFeatureUsed = $isMultiStoreFeatureUsed;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

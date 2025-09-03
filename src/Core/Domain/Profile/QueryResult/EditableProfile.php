@@ -35,31 +35,13 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\ValueObject\ProfileId;
 class EditableProfile
 {
     /**
-     * @var ProfileId
-     */
-    private $profileId;
-
-    /**
-     * @var string[] As langId => name
-     */
-    private $localizedNames;
-
-    /**
-     * @var string|null
-     */
-    private $avatarUrl;
-
-    /**
      * @param string[] $localizedNames
      */
     public function __construct(
-        ProfileId $profileId,
-        array $localizedNames,
-        ?string $avatarUrl = null,
+        private readonly ProfileId $profileId,
+        private readonly array $localizedNames,
+        private readonly ?string $avatarUrl = null,
     ) {
-        $this->profileId = $profileId;
-        $this->localizedNames = $localizedNames;
-        $this->avatarUrl = $avatarUrl;
     }
 
     /**

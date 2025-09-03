@@ -35,36 +35,16 @@ use PrestaShop\PrestaShop\Core\Domain\Tax\ValueObject\TaxId;
 class EditableTax
 {
     /**
-     * @var TaxId
-     */
-    private $taxId;
-
-    /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
-     * @var float
-     */
-    private $rate;
-
-    /**
-     * @var bool
-     */
-    private $active;
-
-    /**
      * @param string[] $localizedNames
      * @param float    $rate
      * @param bool     $active
      */
-    public function __construct(TaxId $taxId, array $localizedNames, $rate, $active)
-    {
-        $this->taxId = $taxId;
-        $this->localizedNames = $localizedNames;
-        $this->rate = $rate;
-        $this->active = $active;
+    public function __construct(
+        private readonly TaxId $taxId,
+        private readonly array $localizedNames,
+        private $rate,
+        private $active,
+    ) {
     }
 
     /**

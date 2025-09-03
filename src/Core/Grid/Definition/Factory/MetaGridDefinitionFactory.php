@@ -52,7 +52,7 @@ final class MetaGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'meta';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

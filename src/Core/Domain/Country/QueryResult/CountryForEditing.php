@@ -36,109 +36,31 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryZipCodeFormat;
 class CountryForEditing
 {
     /**
-     * @var CountryId
-     */
-    private $countryId;
-
-    /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
-     * @var string
-     */
-    private $isoCode;
-
-    /**
-     * @var int
-     */
-    private $callPrefix;
-
-    /**
-     * @var int
-     */
-    private $defaultCurrency;
-
-    /**
-     * @var int
-     */
-    private $zone;
-
-    /**
-     * @var bool
-     */
-    private $needZipCode;
-
-    /**
      * @var ?CountryZipCodeFormat
      */
     private $zipCodeFormat;
 
     /**
-     * @var string
-     */
-    private $addressFormat;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var bool
-     */
-    private $containsStates;
-
-    /**
-     * @var bool
-     */
-    private $needIdNumber;
-
-    /**
-     * @var bool
-     */
-    private $displayTaxLabel;
-
-    /**
-     * @var int[]
-     */
-    private $shopAssociation;
-
-    /**
-     * @param string[] $localisedNames
+     * @param string[] $localizedNames
      * @param int[]    $shopAssociation
      */
     public function __construct(
-        CountryId $countryId,
-        array $localisedNames,
-        string $isoCode,
-        int $callPrefix,
-        int $defaultCurrency,
-        int $zone,
-        bool $needZipCode,
+        private readonly CountryId $countryId,
+        private readonly array $localizedNames,
+        private readonly string $isoCode,
+        private readonly int $callPrefix,
+        private readonly int $defaultCurrency,
+        private readonly int $zone,
+        private readonly bool $needZipCode,
         ?string $zipCodeFormat,
-        string $addressFormat,
-        bool $enabled,
-        bool $containsStates,
-        bool $needIdNumber,
-        bool $displayTaxLabel,
-        array $shopAssociation,
+        private readonly string $addressFormat,
+        private readonly bool $enabled,
+        private readonly bool $containsStates,
+        private readonly bool $needIdNumber,
+        private readonly bool $displayTaxLabel,
+        private readonly array $shopAssociation,
     ) {
-        $this->countryId = $countryId;
-        $this->localizedNames = $localisedNames;
-        $this->isoCode = $isoCode;
-        $this->callPrefix = $callPrefix;
-        $this->defaultCurrency = $defaultCurrency;
-        $this->zone = $zone;
-        $this->needZipCode = $needZipCode;
         $this->zipCodeFormat = $zipCodeFormat ? new CountryZipCodeFormat($zipCodeFormat) : null;
-        $this->addressFormat = $addressFormat;
-        $this->enabled = $enabled;
-        $this->containsStates = $containsStates;
-        $this->needIdNumber = $needIdNumber;
-        $this->displayTaxLabel = $displayTaxLabel;
-        $this->shopAssociation = $shopAssociation;
     }
 
     public function getCountryId(): CountryId

@@ -38,36 +38,17 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
-     * @var int
-     */
-    private $contextIdLang;
-
-    /**
      * @param string $dbPrefix
      * @param int    $contextIdLang
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds,
-        $contextIdLang,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly array $contextShopIds,
+        private $contextIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextShopIds = $contextShopIds;
-        $this->contextIdLang = $contextIdLang;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -179,6 +160,7 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
                     $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' >= :' . $filterName . '_from');
                     $qb->setParameter($filterName . '_from', $value['from']);
                 }
+
                 if (isset($value['to'])) {
                     $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' <= :' . $filterName . '_to');
                     $qb->setParameter($filterName . '_to', $value['to']);
@@ -200,7 +182,7 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             $qb->andWhere($allowedFiltersAliasMap[$filterName] . ' LIKE :' . $filterName);
-            $qb->setParameter($filterName, "%$value%");
+            $qb->setParameter($filterName, \sprintf('%%%s%%', $value));
         }
     }
 

@@ -40,14 +40,9 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  */
 class AddressDniRequiredValidator extends ConstraintValidator
 {
-    /**
-     * @var CountryRequiredFieldsProviderInterface
-     */
-    private $countryRequiredFieldsProvider;
-
-    public function __construct(CountryRequiredFieldsProviderInterface $countryRequiredFieldsProvider)
-    {
-        $this->countryRequiredFieldsProvider = $countryRequiredFieldsProvider;
+    public function __construct(
+        private readonly CountryRequiredFieldsProviderInterface $countryRequiredFieldsProvider,
+    ) {
     }
 
     public function validate($value, Constraint $constraint)
@@ -55,6 +50,7 @@ class AddressDniRequiredValidator extends ConstraintValidator
         if (! ($constraint instanceof AddressDniRequired)) {
             return;
         }
+
         $countryId = new CountryId((int) $constraint->id_country);
 
         if ($this->countryRequiredFieldsProvider->isDniRequired($countryId) || $constraint->required) {

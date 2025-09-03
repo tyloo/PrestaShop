@@ -36,9 +36,11 @@ use PrestaShop\Decimal\DecimalNumber;
  */
 class CarrierRangePrice
 {
-    private DecimalNumber $from;
-    private DecimalNumber $to;
-    private DecimalNumber $price;
+    private readonly DecimalNumber $from;
+
+    private readonly DecimalNumber $to;
+
+    private readonly DecimalNumber $price;
 
     public function __construct(
         string $from,

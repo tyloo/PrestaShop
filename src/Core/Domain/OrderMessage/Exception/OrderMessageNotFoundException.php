@@ -35,20 +35,13 @@ use Throwable;
  */
 class OrderMessageNotFoundException extends OrderMessageException
 {
-    /**
-     * @var OrderMessageId
-     */
-    private $orderMessageId;
-
     public function __construct(
-        OrderMessageId $orderMessageId,
+        private readonly OrderMessageId $orderMessageId,
         string $message = '',
         int $code = 0,
         ?Throwable $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
-
-        $this->orderMessageId = $orderMessageId;
     }
 
     public function getOrderMessageId(): OrderMessageId

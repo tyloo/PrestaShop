@@ -34,10 +34,15 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\Exception\CartRuleConstraintExcep
 class RestrictionRule
 {
     public const TYPE_PRODUCT = 'products';
+
     public const TYPE_CATEGORY = 'categories';
+
     public const TYPE_ATTRIBUTE = 'attributes';
+
     public const TYPE_MANUFACTURERS = 'manufacturers';
+
     public const TYPE_SUPPLIER = 'suppliers';
+
     public const VALID_TYPES = [
         self::TYPE_PRODUCT => self::TYPE_PRODUCT,
         self::TYPE_CATEGORY => self::TYPE_CATEGORY,
@@ -90,6 +95,7 @@ class RestrictionRule
         if (empty($ids)) {
             throw new CartRuleConstraintException(\sprintf('%s item ids cannot be empty', self::class), CartRuleConstraintException::EMPTY_RESTRICTION_RULE_IDS);
         }
+
         foreach ($ids as $id) {
             if (! \is_int($id) || $id <= 0) {
                 throw new CartRuleConstraintException(\sprintf('%s item id must be positive integer', self::class), CartRuleConstraintException::INVALID_RESTRICTION_RULE_ID);

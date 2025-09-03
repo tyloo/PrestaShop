@@ -51,7 +51,7 @@ class ProductShopsQueryBuilder extends ProductQueryBuilder
         ;
 
         // In case only group shops are request we add a condition to filter only shops from group
-        if ($searchCriteria->getShopConstraint()->getShopGroupId()) {
+        if ($searchCriteria->getShopConstraint()->getShopGroupId() !== null) {
             $qb
                 ->innerJoin(
                     'ps',

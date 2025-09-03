@@ -34,14 +34,12 @@ use PrestaShop\PrestaShop\Core\Routing\Exception\BuilderNotFoundException;
  */
 class EntityLinkBuilderFactory
 {
-    /**
-     * @var EntityLinkBuilderInterface[]
-     */
-    private $builders;
-
-    public function __construct(array $builders)
-    {
-        $this->builders = $builders;
+    public function __construct(
+        /**
+         * @var EntityLinkBuilderInterface[]
+         */
+        private readonly array $builders,
+    ) {
     }
 
     /**

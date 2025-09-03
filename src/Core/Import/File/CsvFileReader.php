@@ -37,48 +37,18 @@ use SplFileInfo;
 final class CsvFileReader implements FileReaderInterface
 {
     /**
-     * @var string the data delimiter in the CSV row
-     */
-    private $delimiter;
-
-    /**
-     * @var int
-     */
-    private $length;
-
-    /**
-     * @var string
-     */
-    private $enclosure;
-
-    /**
-     * @var string
-     */
-    private $escape;
-
-    /**
-     * @var FileOpenerInterface
-     */
-    private $fileOpener;
-
-    /**
      * @param string $delimiter
      * @param int    $length
      * @param string $enclosure
      * @param string $escape
      */
     public function __construct(
-        FileOpenerInterface $fileOpener,
-        $delimiter = ';',
-        $length = 0,
-        $enclosure = '"',
-        $escape = '\\',
+        private readonly FileOpenerInterface $fileOpener,
+        private $delimiter = ';',
+        private $length = 0,
+        private $enclosure = '"',
+        private $escape = '\\',
     ) {
-        $this->delimiter = $delimiter;
-        $this->length = $length;
-        $this->enclosure = $enclosure;
-        $this->escape = $escape;
-        $this->fileOpener = $fileOpener;
     }
 
     public function read(SplFileInfo $file)

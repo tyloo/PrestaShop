@@ -41,18 +41,14 @@ use Traversable;
 class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
-     * An array containing the addons of this collection.
-     *
-     * @var array
-     */
-    private $addons;
-
-    /**
      * Initializes a new AddonsCollection.
      */
-    public function __construct(array $addons = [])
-    {
-        $this->addons = $addons;
+    public function __construct(
+        /**
+         * An array containing the addons of this collection.
+         */
+        private array $addons = [],
+    ) {
     }
 
     /**
@@ -156,7 +152,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
 
     public function get($key)
     {
-        return $this->addons[$key] ? $this->addons[$key] : null;
+        return $this->addons[$key] ?: null;
     }
 
     public function getKeys()
@@ -184,10 +180,8 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      * Add an Addon in the collection.
      *
      * @param AddonTheme $addon the specified addon
-     *
-     * @return bool
      */
-    public function add(AddonTheme $addon)
+    public function add(AddonTheme $addon): bool
     {
         $this->addons[] = $addon;
 
@@ -220,7 +214,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return bool true if the addon has been found and removed
      */
-    public function remove(AddonTheme $addon)
+    public function remove(AddonTheme $addon): bool
     {
         $key = array_search($addon, $this->addons, true);
 

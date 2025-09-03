@@ -32,83 +32,23 @@ use DateTimeImmutable;
 class OrderPaymentForViewing
 {
     /**
-     * @var int
-     */
-    private $paymentId;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $date;
-
-    /**
-     * @var string
-     */
-    private $paymentMethod;
-
-    /**
-     * @var string
-     */
-    private $transactionId;
-
-    /**
-     * @var string
-     */
-    private $amount;
-
-    /**
-     * @var string|null
-     */
-    private $invoiceNumber;
-
-    /**
-     * @var string
-     */
-    private $cardNumber;
-
-    /**
-     * @var string
-     */
-    private $cardBrand;
-
-    /**
-     * @var string
-     */
-    private $cardExpiration;
-
-    /**
-     * @var string
-     */
-    private $cardHolder;
-
-    /**
      * @var string|null
      */
     protected $employeeName;
 
     public function __construct(
-        int $paymentId,
-        DateTimeImmutable $date,
-        string $paymentMethod,
-        string $transactionId,
-        string $amount,
-        ?string $invoiceNumber,
-        string $cardNumber,
-        string $cardBrand,
-        string $cardExpiration,
-        string $cardHolder,
+        private readonly int $paymentId,
+        private readonly DateTimeImmutable $date,
+        private readonly string $paymentMethod,
+        private readonly string $transactionId,
+        private readonly string $amount,
+        private readonly ?string $invoiceNumber,
+        private readonly string $cardNumber,
+        private readonly string $cardBrand,
+        private readonly string $cardExpiration,
+        private readonly string $cardHolder,
         ?string $employeeName = null,
     ) {
-        $this->paymentId = $paymentId;
-        $this->date = $date;
-        $this->paymentMethod = $paymentMethod;
-        $this->transactionId = $transactionId;
-        $this->amount = $amount;
-        $this->invoiceNumber = $invoiceNumber;
-        $this->cardNumber = $cardNumber;
-        $this->cardBrand = $cardBrand;
-        $this->cardExpiration = $cardExpiration;
-        $this->cardHolder = $cardHolder;
         $this->employeeName = $employeeName;
     }
 

@@ -31,20 +31,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Tab\Command;
 
 class UpdateTabStatusByClassNameCommand
 {
-    /**
-     * @var bool
-     */
-    private $status;
-
-    /**
-     * @var string
-     */
-    private $className;
-
-    public function __construct(string $className, bool $status)
-    {
-        $this->className = $className;
-        $this->status = $status;
+    public function __construct(
+        private readonly string $className,
+        private readonly bool $status,
+    ) {
     }
 
     public function isStatus(): bool

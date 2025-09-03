@@ -55,17 +55,11 @@ class UpdateCombinationStockAvailableCommand
      */
     private $location;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
     public function __construct(
         int $combinationId,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->combinationId = new CombinationId($combinationId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getCombinationId(): CombinationId
@@ -86,6 +80,7 @@ class UpdateCombinationStockAvailableCommand
         if ($this->fixedQuantity !== null) {
             throw new ProductStockConstraintException('Cannot set $deltaQuantity, because $fixedQuantity is already set', ProductStockConstraintException::FIXED_AND_DELTA_QUANTITY_PROVIDED);
         }
+
         $this->deltaQuantity = $deltaQuantity;
 
         return $this;
@@ -104,6 +99,7 @@ class UpdateCombinationStockAvailableCommand
         if ($this->deltaQuantity) {
             throw new ProductStockConstraintException('Cannot set $fixedQuantity, because $deltaQuantity is already set', ProductStockConstraintException::FIXED_AND_DELTA_QUANTITY_PROVIDED);
         }
+
         $this->fixedQuantity = $fixedQuantity;
 
         return $this;

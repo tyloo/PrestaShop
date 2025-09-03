@@ -34,14 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\ValueObject\ThemeImportSource;
  */
 class ImportThemeCommand
 {
-    /**
-     * @var ThemeImportSource
-     */
-    private $importSource;
-
-    public function __construct(ThemeImportSource $importSource)
-    {
-        $this->importSource = $importSource;
+    public function __construct(
+        private readonly ThemeImportSource $importSource,
+    ) {
     }
 
     /**

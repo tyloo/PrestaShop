@@ -39,14 +39,9 @@ class ModuleProviderDefinition extends AbstractCoreProviderDefinition
 
     private const TRANSLATION_DOMAINS_REGEX = ['^%s([A-Z]|$)'];
 
-    /**
-     * @var string
-     */
-    private $moduleName;
-
-    public function __construct(string $moduleName)
-    {
-        $this->moduleName = $moduleName;
+    public function __construct(
+        private readonly string $moduleName,
+    ) {
     }
 
     public function getType(): string
@@ -61,15 +56,11 @@ class ModuleProviderDefinition extends AbstractCoreProviderDefinition
 
     public function getFilenameFilters(): array
     {
-        return array_map(function (string $filenameFilter) {
-            return \sprintf($filenameFilter, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)));
-        }, self::FILENAME_FILTERS_REGEX);
+        return array_map(fn (string $filenameFilter): string => \sprintf($filenameFilter, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName))), self::FILENAME_FILTERS_REGEX);
     }
 
     public function getTranslationDomains(): array
     {
-        return array_map(function (string $translationDomain) {
-            return \sprintf($translationDomain, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)));
-        }, self::TRANSLATION_DOMAINS_REGEX);
+        return array_map(fn (string $translationDomain): string => \sprintf($translationDomain, preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName))), self::TRANSLATION_DOMAINS_REGEX);
     }
 }

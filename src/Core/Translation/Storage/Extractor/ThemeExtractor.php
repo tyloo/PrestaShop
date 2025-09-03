@@ -42,14 +42,12 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class ThemeExtractor
 {
-    /**
-     * @var SmartyExtractor the Smarty Extractor
-     */
-    private $smartyExtractor;
-
-    public function __construct(SmartyExtractor $smartyExtractor)
-    {
-        $this->smartyExtractor = $smartyExtractor;
+    public function __construct(
+        /**
+         * @var SmartyExtractor the Smarty Extractor
+         */
+        private readonly SmartyExtractor $smartyExtractor,
+    ) {
     }
 
     /**
@@ -64,7 +62,7 @@ class ThemeExtractor
         $catalogue = new MessageCatalogue($locale);
 
         $this->smartyExtractor->extract(
-            rtrim($theme->getDirectory(), '/'),
+            rtrim((string) $theme->getDirectory(), '/'),
             $catalogue
         );
 

@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 class ManufacturerAddressGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $manufacturerAddressDataFactory;
-
-    public function __construct(GridDataFactoryInterface $manufacturerAddressDataFactory)
-    {
-        $this->manufacturerAddressDataFactory = $manufacturerAddressDataFactory;
+    public function __construct(
+        private readonly GridDataFactoryInterface $manufacturerAddressDataFactory,
+    ) {
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)
@@ -61,16 +56,14 @@ class ManufacturerAddressGridDataFactory implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return array
-     */
-    private function applyModification(array $addresses)
+    private function applyModification(array $addresses): array
     {
         $modifiedAddresses = [];
         foreach ($addresses as $address) {
             if ($address['name'] === null) {
                 $address['name'] = '--';
             }
+
             $modifiedAddresses[] = $address;
         }
 

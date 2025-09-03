@@ -42,60 +42,18 @@ use PrestaShop\PrestaShop\Core\Grid\Filter\FilterCollectionInterface;
 final class GridDefinition implements GridDefinitionInterface
 {
     /**
-     * @var string Unique grid identifier
-     */
-    private $id;
-
-    /**
-     * @var string Grid name
-     */
-    private $name;
-
-    /**
-     * @var ColumnCollectionInterface
-     */
-    private $columns;
-
-    /**
-     * @var GridActionCollectionInterface
-     */
-    private $gridActions;
-
-    /**
-     * @var BulkActionCollectionInterface
-     */
-    private $bulkActions;
-
-    /**
-     * @var ViewOptionsCollectionInterface
-     */
-    private $viewOptions;
-
-    /**
-     * @var FilterCollectionInterface
-     */
-    private $filters;
-
-    /**
      * @param string $id   Unique grid identifier
      * @param string $name
      */
     public function __construct(
-        $id,
-        $name,
-        ColumnCollectionInterface $columns,
-        FilterCollectionInterface $filters,
-        GridActionCollectionInterface $gridActions,
-        BulkActionCollectionInterface $bulkActions,
-        ViewOptionsCollectionInterface $viewOptions,
+        private $id,
+        private $name,
+        private ColumnCollectionInterface $columns,
+        private FilterCollectionInterface $filters,
+        private GridActionCollectionInterface $gridActions,
+        private BulkActionCollectionInterface $bulkActions,
+        private readonly ViewOptionsCollectionInterface $viewOptions,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->columns = $columns;
-        $this->filters = $filters;
-        $this->gridActions = $gridActions;
-        $this->bulkActions = $bulkActions;
-        $this->viewOptions = $viewOptions;
     }
 
     public function getId()

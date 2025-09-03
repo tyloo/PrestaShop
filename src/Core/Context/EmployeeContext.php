@@ -51,7 +51,7 @@ class EmployeeContext
 
     public function hasAuthorizationOnShopGroup(int $shopGroupId): bool
     {
-        if (! $this->getEmployee()) {
+        if ($this->getEmployee() === null) {
             return false;
         }
 
@@ -60,7 +60,7 @@ class EmployeeContext
 
     public function hasAuthorizationOnShop(int $shopId): bool
     {
-        if (! $this->getEmployee()) {
+        if ($this->getEmployee() === null) {
             return false;
         }
 
@@ -69,7 +69,7 @@ class EmployeeContext
 
     public function hasAuthorizationForAllShops(): bool
     {
-        if (! $this->getEmployee()) {
+        if ($this->getEmployee() === null) {
             return false;
         }
 
@@ -88,7 +88,7 @@ class EmployeeContext
 
     public function getDefaultShopId(): int
     {
-        if (! $this->getEmployee()) {
+        if ($this->getEmployee() === null) {
             return 0;
         }
 

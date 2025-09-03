@@ -48,21 +48,6 @@ class EditableMeta
     private $pageName;
 
     /**
-     * @var string[]
-     */
-    private $localisedPageTitles;
-
-    /**
-     * @var string[]
-     */
-    private $localisedMetaDescriptions;
-
-    /**
-     * @var string[]
-     */
-    private $localisedUrlRewrites;
-
-    /**
      * @param int      $metaId
      * @param string   $pageName
      * @param string[] $localisedPageTitles
@@ -75,15 +60,12 @@ class EditableMeta
     public function __construct(
         $metaId,
         $pageName,
-        array $localisedPageTitles,
-        array $localisedMetaDescriptions,
-        array $localisedUrlRewrites,
+        private readonly array $localisedPageTitles,
+        private readonly array $localisedMetaDescriptions,
+        private readonly array $localisedUrlRewrites,
     ) {
         $this->metaId = new MetaId($metaId);
         $this->pageName = new Name($pageName);
-        $this->localisedPageTitles = $localisedPageTitles;
-        $this->localisedMetaDescriptions = $localisedMetaDescriptions;
-        $this->localisedUrlRewrites = $localisedUrlRewrites;
     }
 
     /**

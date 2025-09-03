@@ -39,22 +39,10 @@ use Symfony\Component\Form\FormFactoryInterface;
  */
 final class GridFilterFormFactory implements GridFilterFormFactoryInterface
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
     public function __construct(
-        FormFactoryInterface $formFactory,
-        HookDispatcherInterface $hookDispatcher,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly HookDispatcherInterface $hookDispatcher,
     ) {
-        $this->formFactory = $formFactory;
-        $this->hookDispatcher = $hookDispatcher;
     }
 
     public function create(GridDefinitionInterface $definition)

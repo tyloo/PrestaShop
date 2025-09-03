@@ -37,26 +37,13 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class OrderReturnStatesQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $criteriaApplicator;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
-        int $contextLangId,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
+        private readonly int $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->contextLangId = $contextLangId;
-        $this->criteriaApplicator = $criteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)

@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\OrderMessage\QueryResult\EditableOrderMess
  */
 final class OrderMessageFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    public function __construct(CommandBusInterface $queryBus)
-    {
-        $this->queryBus = $queryBus;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+    ) {
     }
 
     public function getData($orderMessageId)

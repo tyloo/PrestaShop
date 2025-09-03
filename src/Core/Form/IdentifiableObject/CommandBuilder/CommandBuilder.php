@@ -87,11 +87,6 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 class CommandBuilder
 {
     /**
-     * @var CommandBuilderConfig
-     */
-    private $config;
-
-    /**
      * @var PropertyAccessorInterface
      */
     private $propertyAccessor;
@@ -100,9 +95,9 @@ class CommandBuilder
      * @param CommandBuilderConfig $config contains all the configuration of the fields that need to be handled by the
      *                                     builder along with the multishop prefix, if needed
      */
-    public function __construct(CommandBuilderConfig $config)
-    {
-        $this->config = $config;
+    public function __construct(
+        private readonly CommandBuilderConfig $config,
+    ) {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
             ->enableExceptionOnInvalidIndex()
             ->enableExceptionOnInvalidPropertyPath()
@@ -159,11 +154,13 @@ class CommandBuilder
                 $updatedCommands[] = $command;
             }
         }
+
         // Make sure the order of returned commands is always consistent (single shop comes first)
         $commands = [];
         if (\in_array($singleShopCommand, $updatedCommands, true)) {
             $commands[] = $singleShopCommand;
         }
+
         if (\in_array($allShopsCommand, $updatedCommands, true)) {
             $commands[] = $allShopsCommand;
         }
@@ -184,11 +181,13 @@ class CommandBuilder
             // Data has no value for this field, this is acceptable since partial data can be submitted
             return false;
         }
+
         $setterMethod = $commandField->getCommandSetter();
 
         if (! method_exists($command, $setterMethod)) {
             throw new InvalidArgumentException(\sprintf('Setter method "%s" not found in command "%s"', $setterMethod, $command::class));
         }
+
         $command->{$setterMethod}(...$setterArguments);
 
         return true;
@@ -206,6 +205,7 @@ class CommandBuilder
         if ($allShopsCommand === null || ! $commandField->isMultiShopField()) {
             return $singleShopCommand;
         }
+
         // Search multi-shop checkbox in data fields
         foreach ($commandField->getDataFields() as $dataField) {
             $propertyPath = $dataField->getPropertyPath();
@@ -257,6 +257,7 @@ class CommandBuilder
                     throw $exception;
                 }
             }
+
             $dataValues[] = $value;
         }
 
@@ -268,19 +269,13 @@ class CommandBuilder
      */
     private function castValue($value, string $type)
     {
-        switch ($type) {
-            case DataField::TYPE_STRING:
-                return (string) $value;
-            case DataField::TYPE_BOOL:
-                return (bool) $value;
-            case DataField::TYPE_INT:
-                return (int) $value;
-            case DataField::TYPE_ARRAY:
-                return (array) $value;
-            case DataField::TYPE_DATETIME:
-                return DateTime::buildNullableDateTime($value);
-            default:
-                return $value;
-        }
+        return match ($type) {
+            DataField::TYPE_STRING => (string) $value,
+            DataField::TYPE_BOOL => (bool) $value,
+            DataField::TYPE_INT => (int) $value,
+            DataField::TYPE_ARRAY => (array) $value,
+            DataField::TYPE_DATETIME => DateTime::buildNullableDateTime($value),
+            default => $value,
+        };
     }
 }

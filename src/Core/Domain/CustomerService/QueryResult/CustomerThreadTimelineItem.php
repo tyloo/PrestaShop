@@ -33,36 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\CustomerService\QueryResult;
 class CustomerThreadTimelineItem
 {
     /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $icon;
-
-    /**
-     * @var string
-     */
-    private $arrow;
-
-    /**
-     * @var string
-     */
-    private $date;
-
-    /**
-     * @var string|null
-     */
-    private $color;
-
-    /**
-     * @var int|null
-     */
-    private $relatedOrderId;
-
-    /**
      * @param string      $content
      * @param string      $icon
      * @param string      $arrow
@@ -71,19 +41,13 @@ class CustomerThreadTimelineItem
      * @param int|null    $relatedOrderId
      */
     public function __construct(
-        $content,
-        $icon,
-        $arrow,
-        $date,
-        $color = null,
-        $relatedOrderId = null,
+        private $content,
+        private $icon,
+        private $arrow,
+        private $date,
+        private $color = null,
+        private $relatedOrderId = null,
     ) {
-        $this->content = $content;
-        $this->icon = $icon;
-        $this->arrow = $arrow;
-        $this->date = $date;
-        $this->color = $color;
-        $this->relatedOrderId = $relatedOrderId;
     }
 
     /**

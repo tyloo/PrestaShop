@@ -37,22 +37,15 @@ use Throwable;
 class CannotBulkDeleteSessionException extends SessionException
 {
     /**
-     * @var array<int, int>
-     */
-    private $sessionIds;
-
-    /**
      * @param array<int, int> $sessionIds
      */
     public function __construct(
-        array $sessionIds,
+        private readonly array $sessionIds,
         string $message = '',
         int $code = 0,
         ?Throwable $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
-
-        $this->sessionIds = $sessionIds;
     }
 
     /**

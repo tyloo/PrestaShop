@@ -38,15 +38,9 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;
 
 class SpecificPriceFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
     public function __construct(
-        CommandBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
     ) {
-        $this->commandBus = $commandBus;
     }
 
     public function create(array $data): int
@@ -83,9 +77,11 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
         if (isset($data['from_quantity'])) {
             $command->setFromQuantity((int) $data['from_quantity']);
         }
+
         if (isset($data['date_range']) && \array_key_exists('from', $data['date_range'])) {
             $command->setDateTimeFrom(DateTime::buildNullableDateTime($data['date_range']['from']));
         }
+
         if (isset($data['date_range']) && \array_key_exists('to', $data['date_range'])) {
             $command->setDateTimeTo(DateTime::buildNullableDateTime($data['date_range']['to']));
         }
@@ -102,6 +98,7 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
             if (isset($data['impact']['reduction']['type'], $data['impact']['reduction']['value'])) {
                 $command->setReduction((string) $data['impact']['reduction']['type'], (string) $data['impact']['reduction']['value']);
             }
+
             if (isset($data['impact']['reduction']['include_tax'])) {
                 $command->setIncludesTax((bool) $data['impact']['reduction']['include_tax']);
             }
@@ -122,18 +119,23 @@ class SpecificPriceFormDataHandler implements FormDataHandlerInterface
         if (isset($data['groups']['currency_id'])) {
             $command->setCurrencyId((int) $data['groups']['currency_id']);
         }
+
         if (isset($data['groups']['group_id'])) {
             $command->setGroupId((int) $data['groups']['group_id']);
         }
+
         if (\array_key_exists('combination_id', $data)) {
             $command->setCombinationId((int) $data['combination_id']);
         }
+
         if (isset($data['groups']['country_id'])) {
             $command->setCountryId((int) $data['groups']['country_id']);
         }
+
         if (\array_key_exists('shop_id', $data['groups'])) {
             $command->setShopId((int) $data['groups']['shop_id']);
         }
+
         if (isset($data['customer'])) {
             $command->setCustomerId($this->getCustomerId($data));
         }

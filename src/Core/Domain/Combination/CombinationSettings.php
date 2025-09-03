@@ -46,5 +46,6 @@ class CombinationSettings
      * Bellow constants define maximum allowed length of combination properties
      */
     public const MAX_AVAILABLE_NOW_LABEL_LENGTH = 255;
+
     public const MAX_AVAILABLE_LATER_LABEL_LENGTH = 255;
 }

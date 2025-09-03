@@ -38,24 +38,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class DefaultMetaPageNameChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
-     * @var MetaDataProviderInterface
-     */
-    private $dataProvider;
-
-    /**
      * @todo: get rid of request stack by creating new interface.
      */
     public function __construct(
-        RequestStack $requestStack,
-        MetaDataProviderInterface $dataProvider,
+        private readonly RequestStack $requestStack,
+        private readonly MetaDataProviderInterface $dataProvider,
     ) {
-        $this->requestStack = $requestStack;
-        $this->dataProvider = $dataProvider;
     }
 
     public function getChoices()

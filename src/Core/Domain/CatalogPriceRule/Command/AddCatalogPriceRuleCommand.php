@@ -40,44 +40,9 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Reduction;
 class AddCatalogPriceRuleCommand
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $shopId;
-
-    /**
-     * @var int
-     */
-    private $currencyId;
-
-    /**
-     * @var int
-     */
-    private $countryId;
-
-    /**
-     * @var int
-     */
-    private $groupId;
-
-    /**
-     * @var int
-     */
-    private $fromQuantity;
-
-    /**
      * @var Reduction
      */
     private $reduction;
-
-    /**
-     * @var bool
-     */
-    private $includeTax;
 
     /**
      * @var DecimalNumber
@@ -98,26 +63,19 @@ class AddCatalogPriceRuleCommand
      * @throws DomainConstraintException
      */
     public function __construct(
-        string $name,
-        int $currencyId,
-        int $countryId,
-        int $groupId,
-        int $fromQuantity,
+        private readonly string $name,
+        private readonly int $currencyId,
+        private readonly int $countryId,
+        private readonly int $groupId,
+        private readonly int $fromQuantity,
         string $reductionType,
         string $reductionValue,
-        int $shopId,
-        bool $includeTax,
+        private readonly int $shopId,
+        private readonly bool $includeTax,
         float $price,
     ) {
-        $this->name = $name;
-        $this->currencyId = $currencyId;
-        $this->countryId = $countryId;
-        $this->groupId = $groupId;
-        $this->fromQuantity = $fromQuantity;
         $this->reduction = new Reduction($reductionType, $reductionValue);
-        $this->shopId = $shopId;
         $this->price = new DecimalNumber((string) $price);
-        $this->includeTax = $includeTax;
     }
 
     public function getName(): string
@@ -198,8 +156,8 @@ class AddCatalogPriceRuleCommand
     {
         try {
             return new DateTime($dateTime);
-        } catch (Exception $e) {
-            throw new CatalogPriceRuleConstraintException('An error occured when creating DateTime object for catalog price rule', CatalogPriceRuleConstraintException::INVALID_DATETIME, $e);
+        } catch (Exception $exception) {
+            throw new CatalogPriceRuleConstraintException('An error occured when creating DateTime object for catalog price rule', CatalogPriceRuleConstraintException::INVALID_DATETIME, $exception);
         }
     }
 }

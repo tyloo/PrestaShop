@@ -37,31 +37,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class FormHandlerFactory implements FormHandlerFactoryInterface
 {
     /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var bool
-     */
-    private $isDemoModeEnabled;
-
-    /**
      * @param bool $isDemoModeEnabled
      */
     public function __construct(
-        HookDispatcherInterface $hookDispatcher,
-        TranslatorInterface $translator,
-        $isDemoModeEnabled,
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly TranslatorInterface $translator,
+        private $isDemoModeEnabled,
     ) {
-        $this->hookDispatcher = $hookDispatcher;
-        $this->translator = $translator;
-        $this->isDemoModeEnabled = $isDemoModeEnabled;
     }
 
     public function create(FormDataHandlerInterface $dataHandler)

@@ -37,8 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\ValueObject\SearchTerm;
  */
 class UpdateSearchTermAliasesCommand
 {
-    private SearchTerm $oldSearchTerm;
-    private SearchTerm $newSearchTerm;
+    private readonly SearchTerm $oldSearchTerm;
+
+    private readonly SearchTerm $newSearchTerm;
 
     /**
      * @param array{
@@ -50,14 +51,14 @@ class UpdateSearchTermAliasesCommand
      */
     public function __construct(
         string $oldSearchTerm,
-        private array $aliases,
+        private readonly array $aliases,
         ?string $newSearchTerm = null,
     ) {
         $this->assertAliasesNotEmpty($aliases);
         $this->assertStringNotEmpty($oldSearchTerm);
 
         $this->oldSearchTerm = new SearchTerm($oldSearchTerm);
-        $this->newSearchTerm = new SearchTerm(($newSearchTerm === null) ? $oldSearchTerm : $newSearchTerm);
+        $this->newSearchTerm = new SearchTerm($newSearchTerm ?? $oldSearchTerm);
     }
 
     public function getOldSearchTerm(): SearchTerm

@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\ApiClient\ValueObject\ApiClientId;
 
 class GetApiClientForEditing
 {
-    private ApiClientId $apiClientId;
+    private readonly ApiClientId $apiClientId;
 
     public function __construct(int $apiClientId)
     {

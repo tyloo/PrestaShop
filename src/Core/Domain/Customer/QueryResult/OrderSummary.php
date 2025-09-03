@@ -32,49 +32,14 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
  */
 class OrderSummary
 {
-    /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var string
-     */
-    private $orderPlacedDate;
-
-    /**
-     * @var string
-     */
-    private $paymentMethodName;
-
-    /**
-     * @var string
-     */
-    private $orderStatus;
-
-    /**
-     * @var int
-     */
-    private $orderProductsCount;
-
-    /**
-     * @var string
-     */
-    private $totalPaid;
-
     public function __construct(
-        int $orderId, string $orderPlacedDate,
-        string $paymentMethodName,
-        string $orderStatus,
-        int $orderProductsCount,
-        string $totalPaid,
+        private readonly int $orderId,
+        private readonly string $orderPlacedDate,
+        private readonly string $paymentMethodName,
+        private readonly string $orderStatus,
+        private readonly int $orderProductsCount,
+        private readonly string $totalPaid,
     ) {
-        $this->orderId = $orderId;
-        $this->orderPlacedDate = $orderPlacedDate;
-        $this->paymentMethodName = $paymentMethodName;
-        $this->orderStatus = $orderStatus;
-        $this->orderProductsCount = $orderProductsCount;
-        $this->totalPaid = $totalPaid;
     }
 
     public function getOrderId(): int

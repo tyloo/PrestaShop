@@ -32,20 +32,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Country\QueryResult;
  */
 class CountryRequiredFields
 {
-    /**
-     * @var bool
-     */
-    private $stateRequired;
-
-    /**
-     * @var bool
-     */
-    private $dniRequired;
-
-    public function __construct(bool $stateRequired, bool $dniRequired)
-    {
-        $this->stateRequired = $stateRequired;
-        $this->dniRequired = $dniRequired;
+    public function __construct(
+        private readonly bool $stateRequired,
+        private readonly bool $dniRequired,
+    ) {
     }
 
     public function isStateRequired(): bool

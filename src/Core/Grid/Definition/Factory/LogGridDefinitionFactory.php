@@ -51,20 +51,17 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
 {
     public const GRID_ID = 'logs';
 
-    /**
-     * @var string Date format for the current user
-     */
-    private $contextDateFormat;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        string $contextDateFormat,
+        /**
+         * @var string Date format for the current user
+         */
+        private readonly string $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
-        $this->contextDateFormat = $contextDateFormat;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

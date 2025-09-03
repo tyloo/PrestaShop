@@ -40,16 +40,6 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
 abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var int
-     */
-    protected $contextLangId;
-
-    /**
-     * @var int
-     */
-    protected $contextShopId;
-
-    /**
      * @var DoctrineSearchCriteriaApplicator
      */
     protected $searchCriteriaApplicator;
@@ -67,14 +57,12 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        $contextLangId,
-        $contextShopId,
+        protected $contextLangId,
+        protected $contextShopId,
         DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
         MultistoreContextCheckerInterface $multistoreContextChecker,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->contextLangId = $contextLangId;
-        $this->contextShopId = $contextShopId;
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
         $this->multistoreContextChecker = $multistoreContextChecker;
     }
@@ -132,28 +120,28 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             if ($filterName === 'id_product') {
-                $qb->andWhere("p.id_product = :$filterName");
+                $qb->andWhere('p.id_product = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
             if ($filterName === 'reference') {
-                $qb->andWhere("p.reference LIKE :$filterName");
+                $qb->andWhere('p.reference LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
             if ($filterName === 'name') {
-                $qb->andWhere("pl.name LIKE :$filterName");
+                $qb->andWhere('pl.name LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
             if ($filterName === 'active') {
-                $qb->andWhere("p.active = :$filterName");
+                $qb->andWhere('p.active = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
             }
         }

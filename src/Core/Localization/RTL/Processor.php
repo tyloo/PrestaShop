@@ -57,35 +57,20 @@ class Processor
     private $processPaths = [];
 
     /**
-     * @var string[] Path to the default modules to process
-     */
-    private $defaultModulesToProcess = [];
-
-    /**
      * @var bool Indicates if the default modules should be processed
      */
     private $processDefaultModules = false;
-
-    /**
-     * @var string Path to PrestaShop's admin directory
-     */
-    private $adminDir = '';
-
-    /**
-     * @var string Path to the themes directory
-     */
-    private $themesDir = '';
 
     /**
      * @param string   $adminDir                Path to PrestaShop's admin directory
      * @param string   $themesDir               Path to the FO themes directory
      * @param string[] $defaultModulesToProcess Path to the default modules to process
      */
-    public function __construct($adminDir, $themesDir, array $defaultModulesToProcess)
-    {
-        $this->adminDir = $adminDir;
-        $this->themesDir = $themesDir;
-        $this->defaultModulesToProcess = $defaultModulesToProcess;
+    public function __construct(
+        private $adminDir,
+        private $themesDir,
+        private readonly array $defaultModulesToProcess,
+    ) {
     }
 
     /**
@@ -175,7 +160,7 @@ class Processor
         // generate stylesheets for BO themes
         if ($this->processBOTheme) {
             if (! is_dir($this->adminDir)) {
-                throw new GenerationException("Cannot generate BO themes: \"{$this->adminDir}\" is not a directory");
+                throw new GenerationException(\sprintf('Cannot generate BO themes: "%s" is not a directory', $this->adminDir));
             }
 
             $generator->generateInDirectory($this->adminDir . \DIRECTORY_SEPARATOR . 'themes');

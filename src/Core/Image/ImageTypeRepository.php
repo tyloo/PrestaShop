@@ -32,18 +32,14 @@ use Db;
 class ImageTypeRepository
 {
     /**
-     * @var Db
-     */
-    private $db;
-    /**
      * @var string
      */
     private $db_prefix;
 
-    public function __construct(Db $db)
-    {
-        $this->db = $db;
-        $this->db_prefix = $db->getPrefix();
+    public function __construct(
+        private readonly Db $db,
+    ) {
+        $this->db_prefix = $this->db->getPrefix();
     }
 
     public function setTypes(array $types, ?string $theme_name = null)
@@ -101,11 +97,11 @@ class ImageTypeRepository
         if ($theme_name) {
             $escaped_theme_name = $this->db->escape($theme_name);
             $id_image_type = $this->db->getValue(
-                "SELECT id_image_type FROM {$this->db_prefix}image_type WHERE name = '$escaped_name' AND theme_name = '$escaped_theme_name'"
+                \sprintf("SELECT id_image_type FROM %simage_type WHERE name = '%s' AND theme_name = '%s'", $this->db_prefix, $escaped_name, $escaped_theme_name)
             );
         } else {
             $id_image_type = $this->db->getValue(
-                "SELECT id_image_type FROM {$this->db_prefix}image_type WHERE name = '$escaped_name' AND theme_name IS NULL"
+                \sprintf("SELECT id_image_type FROM %simage_type WHERE name = '%s' AND theme_name IS NULL", $this->db_prefix, $escaped_name)
             );
         }
 
@@ -115,7 +111,7 @@ class ImageTypeRepository
     protected function removeAllTypes()
     {
         Db::getInstance()->execute(
-            "TRUNCATE TABLE {$this->db_prefix}image_type"
+            \sprintf('TRUNCATE TABLE %simage_type', $this->db_prefix)
         );
     }
 
@@ -123,7 +119,7 @@ class ImageTypeRepository
     {
         $escaped_theme_name = $this->db->escape($theme_name);
         Db::getInstance()->execute(
-            "DELETE FROM {$this->db_prefix}image_type WHERE theme_name = '$escaped_theme_name'"
+            \sprintf("DELETE FROM %simage_type WHERE theme_name = '%s'", $this->db_prefix, $escaped_theme_name)
         );
     }
 }

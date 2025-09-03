@@ -38,19 +38,19 @@ class SearchForSearchTerm
 {
     public const DEFAULT_LIMIT = 20;
 
-    private string $searchTerm;
-
-    private ?int $limit;
+    private readonly ?int $limit;
 
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(string $searchTerm, ?int $limit = null)
-    {
+    public function __construct(
+        private readonly string $searchTerm,
+        ?int $limit = null,
+    ) {
         if ($limit !== null && $limit <= 0) {
             throw new InvalidArgumentException('Search limit must be a positive integer or null');
         }
-        $this->searchTerm = $searchTerm;
+
         $this->limit = $limit;
     }
 

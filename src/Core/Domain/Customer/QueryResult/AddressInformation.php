@@ -33,41 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class AddressInformation
 {
     /**
-     * @var string
-     */
-    private $company;
-
-    /**
-     * @var string
-     */
-    private $fullName;
-
-    /**
-     * @var string
-     */
-    private $fullAddress;
-
-    /**
-     * @var string
-     */
-    private $countryName;
-
-    /**
-     * @var string
-     */
-    private $phone;
-
-    /**
-     * @var string
-     */
-    private $phoneMobile;
-
-    /**
-     * @var int
-     */
-    private $addressId;
-
-    /**
      * @param int    $addressId
      * @param string $company
      * @param string $fullName
@@ -76,15 +41,15 @@ class AddressInformation
      * @param string $phone
      * @param string $phoneMobile
      */
-    public function __construct($addressId, $company, $fullName, $fullAddress, $countryName, $phone, $phoneMobile)
-    {
-        $this->addressId = $addressId;
-        $this->company = $company;
-        $this->fullName = $fullName;
-        $this->fullAddress = $fullAddress;
-        $this->countryName = $countryName;
-        $this->phone = $phone;
-        $this->phoneMobile = $phoneMobile;
+    public function __construct(
+        private $addressId,
+        private $company,
+        private $fullName,
+        private $fullAddress,
+        private $countryName,
+        private $phone,
+        private $phoneMobile,
+    ) {
     }
 
     /**

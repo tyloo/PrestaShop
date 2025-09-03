@@ -37,22 +37,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductTypeChoiceProvider implements FormChoiceProviderInterface, FormChoiceAttributeProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $combinationFeature;
-
     public function __construct(
-        TranslatorInterface $translator,
-        FeatureInterface $combinationFeature,
+        private readonly TranslatorInterface $translator,
+        private readonly FeatureInterface $combinationFeature,
     ) {
-        $this->translator = $translator;
-        $this->combinationFeature = $combinationFeature;
     }
 
     public function getChoicesAttributes()
@@ -71,13 +59,16 @@ class ProductTypeChoiceProvider implements FormChoiceProviderInterface, FormChoi
                 'icon' => 'grid_view',
             ],
             $this->trans('Virtual product', 'Admin.Catalog.Feature') => [
-                'data-description' => $this->trans('An intangible product that doesn\'t require shipping. You can also add a downloadable file.', 'Admin.Catalog.Feature'),
+                'data-description' => $this->trans("An intangible product that doesn't require shipping. You can also add a downloadable file.", 'Admin.Catalog.Feature'),
                 'icon' => 'qr_code',
             ],
         ];
     }
 
-    public function getChoices()
+    /**
+     * @return 'standard'[]|'combinations'[]|'pack'[]|'virtual'[]
+     */
+    public function getChoices(): array
     {
         $choices = [
             $this->trans('Standard product', 'Admin.Catalog.Feature') => ProductType::TYPE_STANDARD,

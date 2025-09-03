@@ -35,6 +35,7 @@ use Configuration;
 final class TokenInUrls
 {
     public const DISABLED = 'disabled';
+
     public const ENV_VAR = '_TOKEN_';
 
     /**

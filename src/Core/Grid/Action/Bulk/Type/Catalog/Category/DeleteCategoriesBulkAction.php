@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class DeleteCategoriesBulkAction extends AbstractBulkAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'delete_categories';
     }

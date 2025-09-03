@@ -40,25 +40,18 @@ use PrestaShop\PrestaShop\Core\Search\Filters\ApiClientFilters;
  */
 class ApiClientQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicator
-     */
-    private $searchCriteriaApplicator;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
+        private readonly DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         if (! $searchCriteria instanceof ApiClientFilters) {
-            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ApiClientFilters::class, \get_class($searchCriteria)));
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ApiClientFilters::class, $searchCriteria::class));
         }
 
         $queryBuilder = $this->getQueryBuilder()
@@ -75,7 +68,7 @@ class ApiClientQueryBuilder extends AbstractDoctrineQueryBuilder
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         if (! $searchCriteria instanceof ApiClientFilters) {
-            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ApiClientFilters::class, \get_class($searchCriteria)));
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ApiClientFilters::class, $searchCriteria::class));
         }
 
         return $this->getQueryBuilder()

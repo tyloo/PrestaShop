@@ -37,7 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\ApiClient\ValueObject\CreatedApiClient;
 class ApiClientFormDataHandler implements FormDataHandlerInterface
 {
     public function __construct(
-        private CommandBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
     ) {
     }
 

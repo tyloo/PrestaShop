@@ -52,7 +52,7 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
 
     public const GRID_ID = 'sql_request';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

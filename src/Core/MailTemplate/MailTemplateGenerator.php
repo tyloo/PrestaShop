@@ -46,21 +46,15 @@ class MailTemplateGenerator
     use LoggerAwareTrait;
 
     /**
-     * @var MailTemplateRendererInterface
-     */
-    private $renderer;
-
-    /**
      * @var Filesystem
      */
     private $fileSystem;
 
     public function __construct(
-        MailTemplateRendererInterface $renderer,
+        private MailTemplateRendererInterface $renderer,
         ?LoggerInterface $logger = null,
     ) {
-        $this->renderer = $renderer;
-        $this->logger = $logger !== null ? $logger : new NullLogger();
+        $this->logger = $logger ?? new NullLogger();
         $this->fileSystem = new Filesystem();
     }
 

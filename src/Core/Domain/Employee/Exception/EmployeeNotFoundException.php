@@ -36,20 +36,17 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\EmployeeId;
 class EmployeeNotFoundException extends EmployeeException
 {
     /**
-     * @var EmployeeId
-     */
-    private $employeeId;
-
-    /**
      * @param string         $message
      * @param int            $code
      * @param Exception|null $previous
      */
-    public function __construct(EmployeeId $employeeId, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private readonly EmployeeId $employeeId,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->employeeId = $employeeId;
     }
 
     /**

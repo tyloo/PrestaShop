@@ -38,19 +38,16 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnSt
 class OrderReturnStateNotFoundException extends OrderReturnStateException
 {
     /**
-     * @var OrderReturnStateId
-     */
-    private $orderReturnStateId;
-
-    /**
      * @param string         $message
      * @param int            $code
      * @param Exception|null $previous
      */
-    public function __construct(OrderReturnStateId $orderReturnStateId, $message = '', $code = 0, $previous = null)
-    {
-        $this->orderReturnStateId = $orderReturnStateId;
-
+    public function __construct(
+        private readonly OrderReturnStateId $orderReturnStateId,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
     }
 

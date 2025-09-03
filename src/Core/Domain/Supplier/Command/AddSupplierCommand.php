@@ -34,116 +34,30 @@ namespace PrestaShop\PrestaShop\Core\Domain\Supplier\Command;
 class AddSupplierCommand
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $address;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var int|null
-     */
-    private $countryId;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var string[]
-     */
-    private $localizedDescriptions;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMetaTitles;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMetaDescriptions;
-
-    /**
-     * @var int[]
-     */
-    private $shopAssociation;
-
-    /**
-     * @var string|null
-     */
-    private $address2;
-
-    /**
-     * @var string|null
-     */
-    private $postCode;
-    /**
-     * @var int|null
-     */
-    private $stateId;
-
-    /**
-     * @var string|null
-     */
-    private $phone;
-
-    /**
-     * @var string|null
-     */
-    private $mobilePhone;
-
-    /**
-     * @var string|null
-     */
-    private $dni;
-
-    /**
      * @param string[] $localizedDescriptions
      * @param string[] $localizedMetaTitles
      * @param string[] $localizedMetaDescriptions
      */
     public function __construct(
-        string $name,
-        string $address,
-        string $city,
-        int $countryId,
-        bool $enabled,
-        array $localizedDescriptions,
-        array $localizedMetaTitles,
-        array $localizedMetaDescriptions,
-        array $shopAssociation,
-        ?string $address2 = null,
-        ?string $postCode = null,
-        ?int $stateId = null,
-        ?string $phone = null,
-        ?string $mobilePhone = null,
-        ?string $dni = null,
+        private readonly string $name,
+        private readonly string $address,
+        private readonly string $city,
+        private readonly int $countryId,
+        private readonly bool $enabled,
+        private readonly array $localizedDescriptions,
+        private readonly array $localizedMetaTitles,
+        private readonly array $localizedMetaDescriptions,
+        /**
+         * @var int[]
+         */
+        private readonly array $shopAssociation,
+        private readonly ?string $address2 = null,
+        private readonly ?string $postCode = null,
+        private readonly ?int $stateId = null,
+        private readonly ?string $phone = null,
+        private readonly ?string $mobilePhone = null,
+        private readonly ?string $dni = null,
     ) {
-        $this->name = $name;
-        $this->address = $address;
-        $this->city = $city;
-        $this->countryId = $countryId;
-        $this->enabled = $enabled;
-        $this->localizedDescriptions = $localizedDescriptions;
-        $this->localizedMetaTitles = $localizedMetaTitles;
-        $this->localizedMetaDescriptions = $localizedMetaDescriptions;
-        $this->shopAssociation = $shopAssociation;
-        $this->address2 = $address2;
-        $this->postCode = $postCode;
-        $this->stateId = $stateId;
-        $this->phone = $phone;
-        $this->mobilePhone = $mobilePhone;
-        $this->dni = $dni;
     }
 
     public function getName(): string

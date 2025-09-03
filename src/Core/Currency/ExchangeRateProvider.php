@@ -49,33 +49,16 @@ class ExchangeRateProvider
     public const CURRENCY_FEED_URL = 'http://api.prestashop.com/xml/currencies.xml';
 
     public const CLOSED_ALLOWED_FAILURES = 3;
+
     public const CLOSED_TIMEOUT_SECONDS = 1;
 
     public const OPEN_ALLOWED_FAILURES = 3;
+
     public const OPEN_TIMEOUT_SECONDS = 2;
+
     public const OPEN_THRESHOLD_SECONDS = 3600; // 1 hour
 
     public const CACHE_KEY_XML = 'currency_feed.xml';
-
-    /**
-     * @var string
-     */
-    private $currencyFeedUrl;
-
-    /**
-     * @var string
-     */
-    private $defaultCurrencyIsoCode;
-
-    /**
-     * @var CircuitBreakerInterface
-     */
-    private $remoteServiceProvider;
-
-    /**
-     * @var CacheInterface
-     */
-    private $cache;
 
     /**
      * @var string
@@ -92,15 +75,11 @@ class ExchangeRateProvider
      * @param string $defaultCurrencyIsoCode
      */
     public function __construct(
-        $currencyFeedUrl,
-        $defaultCurrencyIsoCode,
-        CircuitBreakerInterface $remoteServiceProvider,
-        CacheInterface $cache,
+        private $currencyFeedUrl,
+        private $defaultCurrencyIsoCode,
+        private readonly CircuitBreakerInterface $remoteServiceProvider,
+        private readonly CacheInterface $cache,
     ) {
-        $this->currencyFeedUrl = $currencyFeedUrl;
-        $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
-        $this->remoteServiceProvider = $remoteServiceProvider;
-        $this->cache = $cache;
     }
 
     /**

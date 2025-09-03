@@ -33,42 +33,9 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
 class EditableCmsPageCategory
 {
     /**
-     * @var array
-     */
-    private $localisedName;
-
-    /**
-     * @var bool
-     */
-    private $isDisplayed;
-
-    /**
      * @var CmsPageCategoryId
      */
     private $parentId;
-
-    /**
-     * @var array
-     */
-    private $localisedDescription;
-
-    /**
-     * @var array
-     */
-    private $localisedMetaDescription;
-
-    /**
-     * @var array
-     */
-    private $localisedFriendlyUrl;
-    /**
-     * @var array
-     */
-    private $metaTitle;
-    /**
-     * @var array
-     */
-    private $shopIds;
 
     /**
      * @param bool $isDisplayed
@@ -77,23 +44,16 @@ class EditableCmsPageCategory
      * @throws CmsPageCategoryException
      */
     public function __construct(
-        array $localisedName,
-        $isDisplayed,
+        private readonly array $localisedName,
+        private $isDisplayed,
         $parentId,
-        array $localisedDescription,
-        array $localisedMetaDescription,
-        array $metaTitle,
-        array $localisedFriendlyUrl,
-        array $shopIds,
+        private readonly array $localisedDescription,
+        private readonly array $localisedMetaDescription,
+        private readonly array $metaTitle,
+        private readonly array $localisedFriendlyUrl,
+        private readonly array $shopIds,
     ) {
-        $this->localisedName = $localisedName;
-        $this->isDisplayed = $isDisplayed;
         $this->parentId = new CmsPageCategoryId($parentId);
-        $this->localisedDescription = $localisedDescription;
-        $this->localisedMetaDescription = $localisedMetaDescription;
-        $this->localisedFriendlyUrl = $localisedFriendlyUrl;
-        $this->metaTitle = $metaTitle;
-        $this->shopIds = $shopIds;
     }
 
     /**

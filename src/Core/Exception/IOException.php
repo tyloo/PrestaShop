@@ -34,17 +34,18 @@ use Throwable;
  */
 class IOException extends CoreException
 {
-    private $path;
-
     /**
      * @param string      $message
      * @param int         $code
      * @param string|null $path
      */
-    public function __construct($message = '', $code = 0, ?Throwable $previous = null, $path = null)
-    {
+    public function __construct(
+        $message = '',
+        $code = 0,
+        ?Throwable $previous = null,
+        private $path = null,
+    ) {
         parent::__construct($message, $code, $previous);
-        $this->path = $path;
     }
 
     /**

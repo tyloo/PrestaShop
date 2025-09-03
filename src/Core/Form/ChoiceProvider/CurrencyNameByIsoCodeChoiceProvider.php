@@ -36,19 +36,17 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\CurrencyData;
 final class CurrencyNameByIsoCodeChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var CurrencyData[]
-     */
-    private $cldrAllCurrencies;
-
-    /**
      * @param CurrencyData[] $cldrAllCurrencies
      */
-    public function __construct(array $cldrAllCurrencies)
-    {
-        $this->cldrAllCurrencies = $cldrAllCurrencies;
+    public function __construct(
+        private readonly array $cldrAllCurrencies,
+    ) {
     }
 
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         $result = [];
         foreach ($this->cldrAllCurrencies as $cldrCurrency) {
@@ -57,6 +55,7 @@ final class CurrencyNameByIsoCodeChoiceProvider implements FormChoiceProviderInt
             if (! $cldrCurrency->isActive()) {
                 continue;
             }
+
             $currencyNames = $cldrCurrency->getDisplayNames();
             $isoCode = $cldrCurrency->getIsoCode();
             if (! empty($currencyNames['default'])) {
@@ -67,6 +66,7 @@ final class CurrencyNameByIsoCodeChoiceProvider implements FormChoiceProviderInt
 
             $result[$displayName] = $isoCode;
         }
+
         ksort($result);
 
         return $result;

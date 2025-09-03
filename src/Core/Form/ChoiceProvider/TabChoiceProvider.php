@@ -36,17 +36,15 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class TabChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $tabs;
-
-    public function __construct(array $tabs)
-    {
-        $this->tabs = $tabs;
+    public function __construct(
+        private readonly array $tabs,
+    ) {
     }
 
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         $choices = [];
 

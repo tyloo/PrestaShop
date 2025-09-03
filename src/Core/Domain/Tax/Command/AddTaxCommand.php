@@ -33,29 +33,14 @@ namespace PrestaShop\PrestaShop\Core\Domain\Tax\Command;
 class AddTaxCommand
 {
     /**
-     * @var array
-     */
-    private $localizedNames;
-
-    /**
-     * @var float
-     */
-    private $rate;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
      * @param float $rate
      * @param bool  $enabled
      */
-    public function __construct(array $localizedNames, $rate, $enabled)
-    {
-        $this->localizedNames = $localizedNames;
-        $this->rate = $rate;
-        $this->enabled = $enabled;
+    public function __construct(
+        private readonly array $localizedNames,
+        private $rate,
+        private $enabled,
+    ) {
     }
 
     /**

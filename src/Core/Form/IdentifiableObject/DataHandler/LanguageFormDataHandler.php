@@ -38,14 +38,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class LanguageFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $bus;
-
-    public function __construct(CommandBusInterface $bus)
-    {
-        $this->bus = $bus;
+    public function __construct(
+        private readonly CommandBusInterface $bus,
+    ) {
     }
 
     public function create(array $data)
@@ -98,7 +93,7 @@ final class LanguageFormDataHandler implements FormDataHandlerInterface
 
         if (isset($data['shop_association'])) {
             $shopAssociation = $data['shop_association'] ?: [];
-            $shopAssociation = array_map(function ($shopId) { return (int) $shopId; }, $shopAssociation);
+            $shopAssociation = array_map(fn ($shopId): int => (int) $shopId, $shopAssociation);
 
             $command->setShopAssociation($shopAssociation);
         }

@@ -39,28 +39,15 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 class TaxRuleQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var int
-     */
-    private $employeeIdLang;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $employeeIdLang,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly int $employeeIdLang,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->employeeIdLang = $employeeIdLang;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -72,10 +59,10 @@ class TaxRuleQueryBuilder extends AbstractDoctrineQueryBuilder
                 'tr.`id_tax_rule`',
                 'tr.`description`',
                 'cl.`name` AS country_name',
-                'IFNULL(s.`name`, \'--\') AS state_name',
+                "IFNULL(s.`name`, '--') AS state_name",
                 'CASE '
-                    . ' WHEN CONCAT_WS(\' - \', tr.`zipcode_from`, tr.`zipcode_to`) = \'0 - 0\''
-                    . ' THEN \'--\' ELSE CONCAT_WS(\' - \', tr.`zipcode_from`, tr.`zipcode_to`)'
+                    . " WHEN CONCAT_WS(' - ', tr.`zipcode_from`, tr.`zipcode_to`) = '0 - 0'"
+                    . " THEN '--' ELSE CONCAT_WS(' - ', tr.`zipcode_from`, tr.`zipcode_to`)"
                 . ' END AS zipcode',
                 'tr.behavior',
                 't.rate',

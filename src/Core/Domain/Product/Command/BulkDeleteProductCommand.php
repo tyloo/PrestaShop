@@ -44,23 +44,17 @@ class BulkDeleteProductCommand
     private $productIds;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @param int[] $productIds
      *
      * @throws ProductConstraintException
      */
     public function __construct(
         array $productIds,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         foreach ($productIds as $productId) {
             $this->productIds[] = new ProductId($productId);
         }
-        $this->shopConstraint = $shopConstraint;
     }
 
     /**

@@ -36,36 +36,18 @@ use PrestaShop\PrestaShop\Core\Util\String\StringValidatorInterface;
  */
 final class HookDescriptionGenerator implements HookDescriptionGeneratorInterface
 {
-    /**
-     * @var array
-     */
-    private $hookDescriptions;
-
-    /**
-     * @var StringValidatorInterface
-     */
-    private $stringValidator;
-
-    /**
-     * @var StringModifierInterface
-     */
-    private $stringModifier;
-
     public function __construct(
-        array $hookDescriptions,
-        StringValidatorInterface $stringValidator,
-        StringModifierInterface $stringModifier,
+        private readonly array $hookDescriptions,
+        private readonly StringValidatorInterface $stringValidator,
+        private readonly StringModifierInterface $stringModifier,
     ) {
-        $this->hookDescriptions = $hookDescriptions;
-        $this->stringValidator = $stringValidator;
-        $this->stringModifier = $stringModifier;
     }
 
     public function generate($hookName)
     {
         foreach ($this->hookDescriptions as $hookDescription) {
-            $prefix = isset($hookDescription['prefix']) ? $hookDescription['prefix'] : '';
-            $suffix = isset($hookDescription['suffix']) ? $hookDescription['suffix'] : '';
+            $prefix = $hookDescription['prefix'] ?? '';
+            $suffix = $hookDescription['suffix'] ?? '';
 
             if ($this->stringValidator->startsWithAndEndsWith($hookName, $prefix, $suffix)
                 && ! $this->stringValidator->doesContainsWhiteSpaces($hookName)

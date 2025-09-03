@@ -37,29 +37,11 @@ use PrestaShop\PrestaShop\Core\Form\ConfigurableFormChoiceProviderInterface;
 
 final class ProductImagesChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var int
-     */
-    private $defaultShopId;
-
-    /**
-     * @var int|null
-     */
-    private $contextShopId;
-
     public function __construct(
-        CommandBusInterface $queryBus,
-        int $defaultShopId,
-        ?int $contextShopId,
+        private readonly CommandBusInterface $queryBus,
+        private readonly int $defaultShopId,
+        private readonly ?int $contextShopId,
     ) {
-        $this->queryBus = $queryBus;
-        $this->defaultShopId = $defaultShopId;
-        $this->contextShopId = $contextShopId;
     }
 
     public function getChoices(array $options): array

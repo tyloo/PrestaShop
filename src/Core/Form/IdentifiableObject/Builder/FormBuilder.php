@@ -40,50 +40,14 @@ use Symfony\Component\Form\FormRegistryInterface;
  */
 final class FormBuilder implements FormBuilderInterface
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var FormDataProviderInterface
-     */
-    private $dataProvider;
-
-    /**
-     * @var string
-     */
-    private $formType;
-
-    /**
-     * @var FormOptionsProviderInterface|null
-     */
-    private $optionsProvider;
-
-    /**
-     * @var FormRegistryInterface|null
-     */
-    private $registry;
-
     public function __construct(
-        FormFactoryInterface $formFactory,
-        HookDispatcherInterface $hookDispatcher,
-        FormDataProviderInterface $dataProvider,
-        string $formType,
-        FormRegistryInterface $registry,
-        ?FormOptionsProviderInterface $optionsProvider = null,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly FormDataProviderInterface $dataProvider,
+        private readonly string $formType,
+        private readonly FormRegistryInterface $registry,
+        private readonly ?FormOptionsProviderInterface $optionsProvider = null,
     ) {
-        $this->formFactory = $formFactory;
-        $this->hookDispatcher = $hookDispatcher;
-        $this->dataProvider = $dataProvider;
-        $this->formType = $formType;
-        $this->registry = $registry;
-        $this->optionsProvider = $optionsProvider;
     }
 
     public function getForm(array $data = [], array $options = [])

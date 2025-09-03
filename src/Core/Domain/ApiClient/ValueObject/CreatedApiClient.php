@@ -33,8 +33,9 @@ use PrestaShop\PrestaShop\Core\Domain\ApiClient\Exception\ApiClientConstraintExc
 
 class CreatedApiClient
 {
-    private ApiClientId $apiClientId;
-    private string $secret;
+    private readonly ApiClientId $apiClientId;
+
+    private readonly string $secret;
 
     public function __construct(int $apiClientId, ?string $secret = null)
     {
@@ -42,6 +43,7 @@ class CreatedApiClient
         if (empty($secret)) {
             throw new ApiClientConstraintException(\sprintf('Invalid api client secret "%s".', var_export($secret, true)), ApiClientConstraintException::INVALID_SECRET);
         }
+
         $this->secret = $secret;
     }
 

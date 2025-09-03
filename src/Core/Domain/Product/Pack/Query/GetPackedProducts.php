@@ -79,7 +79,7 @@ class GetPackedProducts
 
     private function assertShopConstraintIsSupported(ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopId()) {
+        if ($shopConstraint->getShopId() !== null) {
             return;
         }
 

@@ -119,7 +119,7 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
             ->createQueryBuilder()
             ->select('DISTINCT co.`id_guest`')
             ->from($this->dbPrefix . 'connections', 'co')
-            ->where('TIME_TO_SEC(TIMEDIFF(\'' . pSQL(date('Y-m-d H:i:00', time())) . '\', `date_add`)) < ' . self::CUSTOMER_ONLINE_TIME);
+            ->where("TIME_TO_SEC(TIMEDIFF('" . pSQL(date('Y-m-d H:i:00', time())) . "', `date_add`)) < " . self::CUSTOMER_ONLINE_TIME);
 
         $qb = $this->connection
             ->createQueryBuilder()
@@ -248,6 +248,7 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
                 } else {
                     $qb->andWhere('co.id_guest is null');
                 }
+
                 continue;
             }
 

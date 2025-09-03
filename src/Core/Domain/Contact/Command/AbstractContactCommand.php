@@ -37,9 +37,7 @@ abstract class AbstractContactCommand
      */
     protected function assertIsNotEmptyAndContainsAllNonEmptyStringValues(array $values)
     {
-        $filterNonEmptyStrings = function ($value) {
-            return \is_string($value) && $value;
-        };
+        $filterNonEmptyStrings = (fn ($value): bool => \is_string($value) && $value);
 
         return ! empty($values) && \count($values) === \count(array_filter($values, $filterNonEmptyStrings));
     }
@@ -59,9 +57,7 @@ abstract class AbstractContactCommand
      */
     protected function assertArrayContainsAllIntegerValues(array $values)
     {
-        $filterAllIntegers = function ($value) {
-            return \is_int($value);
-        };
+        $filterAllIntegers = (fn ($value): bool => \is_int($value));
 
         return ! empty($values) && \count($values) === \count(array_filter($values, $filterAllIntegers));
     }

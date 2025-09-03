@@ -34,36 +34,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Combination;
  */
 class CombinationAttributeInformation
 {
-    /**
-     * @var int
-     */
-    private $attributeGroupId;
-
-    /**
-     * @var string
-     */
-    private $attributeGroupName;
-
-    /**
-     * @var int
-     */
-    private $attributeId;
-
-    /**
-     * @var string
-     */
-    private $attributeName;
-
     public function __construct(
-        int $attributeGroupId,
-        string $attributeGroupName,
-        int $attributeId,
-        string $attributeName,
+        private readonly int $attributeGroupId,
+        private readonly string $attributeGroupName,
+        private readonly int $attributeId,
+        private readonly string $attributeName,
     ) {
-        $this->attributeGroupId = $attributeGroupId;
-        $this->attributeGroupName = $attributeGroupName;
-        $this->attributeId = $attributeId;
-        $this->attributeName = $attributeName;
     }
 
     public function getAttributeGroupId(): int

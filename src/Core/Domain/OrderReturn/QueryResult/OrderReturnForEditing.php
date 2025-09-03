@@ -33,64 +33,16 @@ use DateTimeImmutable;
 
 class OrderReturnForEditing
 {
-    /**
-     * @var int
-     */
-    private $orderReturnId;
-
-    /**
-     * @var int
-     */
-    private $customerId;
-
-    /**
-     * @var string
-     */
-    private $customerFirstName;
-
-    /**
-     * @var string
-     */
-    private $customerLastName;
-
-    /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $orderDate;
-
-    /**
-     * @var int
-     */
-    private $orderReturnStateId;
-
-    /**
-     * @var string
-     */
-    private $question;
-
     public function __construct(
-        int $orderReturnId,
-        int $customerId,
-        string $customerFirstName,
-        string $customerLastName,
-        int $orderId,
-        DateTimeImmutable $orderDate,
-        int $orderReturnStateId,
-        string $question,
+        private readonly int $orderReturnId,
+        private readonly int $customerId,
+        private readonly string $customerFirstName,
+        private readonly string $customerLastName,
+        private readonly int $orderId,
+        private readonly DateTimeImmutable $orderDate,
+        private readonly int $orderReturnStateId,
+        private readonly string $question,
     ) {
-        $this->orderReturnId = $orderReturnId;
-        $this->customerId = $customerId;
-        $this->customerFirstName = $customerFirstName;
-        $this->customerLastName = $customerLastName;
-        $this->orderId = $orderId;
-        $this->orderDate = $orderDate;
-        $this->orderReturnStateId = $orderReturnStateId;
-        $this->question = $question;
     }
 
     public function getOrderReturnId(): int

@@ -45,7 +45,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class LinkColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'link';
     }

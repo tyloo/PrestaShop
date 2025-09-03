@@ -44,14 +44,9 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
 
     private $formatsToGenerate = [];
 
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     public function getGenerationFormats(): array
@@ -67,7 +62,7 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
         // If it is enabled, we check for configured formats.
         $configuration = $this->configuration->get(self::IMAGE_FORMAT_CONFIGURATION_KEY);
         if (! empty($configuration)) {
-            foreach (explode(self::SEPARATOR, $configuration) as $format) {
+            foreach (explode(self::SEPARATOR, (string) $configuration) as $format) {
                 if (\in_array($format, self::SUPPORTED_FORMATS, true) && ! \in_array($format, $this->formatsToGenerate, true)) {
                     $this->formatsToGenerate[] = $format;
                 }

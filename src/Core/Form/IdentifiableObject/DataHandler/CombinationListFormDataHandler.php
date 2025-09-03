@@ -40,46 +40,16 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataFormatter\Combination
  */
 class CombinationListFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var CombinationListFormDataFormatter
-     */
-    private $combinationListFormDataFormatter;
-
-    /**
-     * @var CombinationCommandsBuilderInterface
-     */
-    private $commandsBuilder;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var int
-     */
-    private $defaultShopId;
-
     public function __construct(
-        CommandBusInterface $commandBus,
-        CombinationListFormDataFormatter $combinationListFormDataFormatter,
-        CombinationCommandsBuilderInterface $commandsBuilder,
-        int $contextShopId,
-        int $defaultShopId,
+        private readonly CommandBusInterface $commandBus,
+        private readonly CombinationListFormDataFormatter $combinationListFormDataFormatter,
+        private readonly CombinationCommandsBuilderInterface $commandsBuilder,
+        private readonly int $contextShopId,
+        private readonly int $defaultShopId,
     ) {
-        $this->commandBus = $commandBus;
-        $this->combinationListFormDataFormatter = $combinationListFormDataFormatter;
-        $this->commandsBuilder = $commandsBuilder;
-        $this->contextShopId = $contextShopId;
-        $this->defaultShopId = $defaultShopId;
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         // Does not handle creation. Combinations are created using different approach
         return 0;

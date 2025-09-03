@@ -33,52 +33,19 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult\CarrierSummary;
 
 class OrderShipment
 {
-    private int $id;
-
-    private int $orderId;
-
-    private CarrierSummary $carrierSummary;
-
-    private int $addressId;
-
-    private DecimalNumber $shippingCostTaxExcluded;
-
-    private DecimalNumber $shippingCostTaxIncluded;
-
-    private ?string $trackingNumber;
-
-    private ?DateTime $shippedAt;
-
-    private ?DateTime $deliveredAt;
-
-    private ?DateTime $cancelledAt;
-
-    private int $productsCount;
-
     public function __construct(
-        int $id,
-        int $orderId,
-        CarrierSummary $carrierSummary,
-        int $addressId,
-        DecimalNumber $shippingCostTaxExcluded,
-        DecimalNumber $shippingCostTaxIncluded,
-        int $productsCount,
-        ?string $trackingNumber,
-        ?DateTime $shippedAt,
-        ?DateTime $deliveredAt,
-        ?DateTime $cancelledAt,
+        private readonly int $id,
+        private readonly int $orderId,
+        private readonly CarrierSummary $carrierSummary,
+        private readonly int $addressId,
+        private readonly DecimalNumber $shippingCostTaxExcluded,
+        private readonly DecimalNumber $shippingCostTaxIncluded,
+        private readonly int $productsCount,
+        private readonly ?string $trackingNumber,
+        private readonly ?DateTime $shippedAt,
+        private readonly ?DateTime $deliveredAt,
+        private readonly ?DateTime $cancelledAt,
     ) {
-        $this->id = $id;
-        $this->orderId = $orderId;
-        $this->carrierSummary = $carrierSummary;
-        $this->addressId = $addressId;
-        $this->shippingCostTaxExcluded = $shippingCostTaxExcluded;
-        $this->shippingCostTaxIncluded = $shippingCostTaxIncluded;
-        $this->productsCount = $productsCount;
-        $this->trackingNumber = $trackingNumber;
-        $this->shippedAt = $shippedAt;
-        $this->deliveredAt = $deliveredAt;
-        $this->cancelledAt = $cancelledAt;
     }
 
     public function getId(): int

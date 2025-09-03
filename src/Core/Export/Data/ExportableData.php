@@ -33,22 +33,12 @@ namespace PrestaShop\PrestaShop\Core\Export\Data;
 final class ExportableData implements ExportableDataInterface
 {
     /**
-     * @var string[]
-     */
-    private $titles;
-
-    /**
-     * @var array
-     */
-    private $rows;
-
-    /**
      * @param string[] $titles
      */
-    public function __construct(array $titles, array $rows)
-    {
-        $this->titles = $titles;
-        $this->rows = $rows;
+    public function __construct(
+        private readonly array $titles,
+        private readonly array $rows,
+    ) {
     }
 
     public function getTitles()

@@ -38,29 +38,11 @@ use PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\ValueObject\CatalogPriceR
  */
 final class CatalogPriceRuleFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var bool
-     */
-    private $isMultishopEnabled;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
     public function __construct(
-        CommandBusInterface $commandBus,
-        bool $isMultishopEnabled,
-        int $contextShopId,
+        private readonly CommandBusInterface $commandBus,
+        private readonly bool $isMultishopEnabled,
+        private readonly int $contextShopId,
     ) {
-        $this->commandBus = $commandBus;
-        $this->contextShopId = $contextShopId;
-        $this->isMultishopEnabled = $isMultishopEnabled;
     }
 
     public function create(array $data): int

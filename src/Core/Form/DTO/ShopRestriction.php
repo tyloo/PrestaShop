@@ -34,23 +34,13 @@ namespace PrestaShop\PrestaShop\Core\Form\DTO;
 class ShopRestriction
 {
     /**
-     * @var int[]
-     */
-    private $shopIds;
-
-    /**
-     * @var ShopRestrictionField[]
-     */
-    private $shopRestrictionFields;
-
-    /**
      * @param int[]                  $shopIds
      * @param ShopRestrictionField[] $shopRestrictionFields
      */
-    public function __construct(array $shopIds, array $shopRestrictionFields)
-    {
-        $this->shopIds = $shopIds;
-        $this->shopRestrictionFields = $shopRestrictionFields;
+    public function __construct(
+        private readonly array $shopIds,
+        private readonly array $shopRestrictionFields,
+    ) {
     }
 
     /**

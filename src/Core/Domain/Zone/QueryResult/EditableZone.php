@@ -35,32 +35,12 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId;
  */
 class EditableZone
 {
-    /**
-     * @var ZoneId
-     */
-    private $zoneId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var array
-     */
-    private $associatedShops;
-
-    public function __construct(ZoneId $zoneId, string $name, bool $enabled, array $associatedShops)
-    {
-        $this->zoneId = $zoneId;
-        $this->name = $name;
-        $this->enabled = $enabled;
-        $this->associatedShops = $associatedShops;
+    public function __construct(
+        private readonly ZoneId $zoneId,
+        private readonly string $name,
+        private readonly bool $enabled,
+        private readonly array $associatedShops,
+    ) {
     }
 
     public function getZoneId(): ZoneId

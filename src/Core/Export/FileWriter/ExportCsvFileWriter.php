@@ -39,11 +39,9 @@ use SplFileObject;
  */
 final class ExportCsvFileWriter implements FileWriterInterface
 {
-    private ExportDirectory $exportDirectory;
-
-    public function __construct(ExportDirectory $exportDirectory)
-    {
-        $this->exportDirectory = $exportDirectory;
+    public function __construct(
+        private readonly ExportDirectory $exportDirectory,
+    ) {
     }
 
     /**

@@ -55,7 +55,7 @@ final class TaxRulesGroupGridDefinitionFactory extends AbstractFilterableGridDef
 
     public const GRID_ID = 'tax_rules_group';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

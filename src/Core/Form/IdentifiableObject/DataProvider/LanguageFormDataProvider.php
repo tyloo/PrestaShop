@@ -43,7 +43,7 @@ final class LanguageFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var EditableLanguage $editableLanguage */
         $editableLanguage = $this->bus->handle(new GetLanguageForEditing($id));
@@ -66,7 +66,7 @@ final class LanguageFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         $data = [
             'short_date_format' => 'Y-m-d',

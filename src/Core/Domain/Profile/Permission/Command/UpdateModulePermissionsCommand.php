@@ -53,17 +53,15 @@ class UpdateModulePermissionsCommand
      */
     private $permission;
 
-    /**
-     * @var bool
-     */
-    private $isActive;
-
-    public function __construct(int $profileId, int $moduleId, string $permission, bool $isActive)
-    {
+    public function __construct(
+        int $profileId,
+        int $moduleId,
+        string $permission,
+        private readonly bool $isActive,
+    ) {
         $this->profileId = new ProfileId($profileId);
         $this->moduleId = new ModuleId($moduleId);
         $this->permission = new ModulePermission($permission);
-        $this->isActive = $isActive;
     }
 
     public function getProfileId(): ProfileId

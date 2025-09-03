@@ -32,26 +32,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
  */
 class CartDeliveryOption
 {
-    /**
-     * @var int
-     */
-    private $carrierId;
-
-    /**
-     * @var string
-     */
-    private $carrierName;
-
-    /**
-     * @var string
-     */
-    private $carrierDelay;
-
-    public function __construct(int $carrierId, string $carrierName, string $carrierDelay)
-    {
-        $this->carrierId = $carrierId;
-        $this->carrierName = $carrierName;
-        $this->carrierDelay = $carrierDelay;
+    public function __construct(
+        private readonly int $carrierId,
+        private readonly string $carrierName,
+        private readonly string $carrierDelay,
+    ) {
     }
 
     public function getCarrierId(): int

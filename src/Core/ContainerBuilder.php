@@ -42,11 +42,11 @@ class ContainerBuilder
     {
         $container = new Container();
 
-        $container->bind('\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface', '\\PrestaShop\\PrestaShop\\Adapter\\Configuration', true);
-        $container->bind('PrestaShop\\PrestaShop\\Core\\ConfigurationInterface', '\\PrestaShop\\PrestaShop\\Adapter\\Configuration', true);
-        $container->bind('\\PrestaShop\\PrestaShop\\Core\\Foundation\\Database\\DatabaseInterface', '\\PrestaShop\\PrestaShop\\Adapter\\Database', true);
-        $container->bind('PrestaShop\\PrestaShop\\Core\\Foundation\\Database\\DatabaseInterface', '\\PrestaShop\\PrestaShop\\Adapter\\Database', true);
-        $container->bind('PrestaShop\\PrestaShop\\Core\\Image\\ImageFormatConfiguration', 'PrestaShop\\PrestaShop\\Core\\Image\\ImageFormatConfiguration', true);
+        $container->bind(ConfigurationInterface::class, \PrestaShop\PrestaShop\Adapter\Configuration::class, true);
+        $container->bind(ConfigurationInterface::class, \PrestaShop\PrestaShop\Adapter\Configuration::class, true);
+        $container->bind(Foundation\Database\DatabaseInterface::class, \PrestaShop\PrestaShop\Adapter\Database::class, true);
+        $container->bind(Foundation\Database\DatabaseInterface::class, \PrestaShop\PrestaShop\Adapter\Database::class, true);
+        $container->bind(Image\ImageFormatConfiguration::class, Image\ImageFormatConfiguration::class, true);
 
         return $container;
     }

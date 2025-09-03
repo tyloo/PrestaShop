@@ -60,7 +60,7 @@ class Precision
      */
     private function assertIsPositiveInteger(int $precision)
     {
-        if ((int) $precision < 0) {
+        if ($precision < 0) {
             throw new CurrencyConstraintException(\sprintf('Given precision "%s" is not valid. It must be a positive integer', var_export($precision, true)), CurrencyConstraintException::INVALID_PRECISION);
         }
     }

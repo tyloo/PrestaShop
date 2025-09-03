@@ -58,7 +58,7 @@ final class LanguageGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'language';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

@@ -38,24 +38,12 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId;
 final class CurrencyFormDataHandler implements FormDataHandlerInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var CacheClearerInterface[]
-     */
-    private $cacheClearerCollection;
-
-    /**
      * @param CacheClearerInterface[] $cacheClearerCollection
      */
     public function __construct(
-        CommandBusInterface $commandBus,
-        array $cacheClearerCollection,
+        private readonly CommandBusInterface $commandBus,
+        private readonly array $cacheClearerCollection,
     ) {
-        $this->commandBus = $commandBus;
-        $this->cacheClearerCollection = $cacheClearerCollection;
     }
 
     public function create(array $data)

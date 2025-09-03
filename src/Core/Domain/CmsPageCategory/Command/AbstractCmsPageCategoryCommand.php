@@ -32,6 +32,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\Exception\CmsPageCategoryC
 abstract class AbstractCmsPageCategoryCommand
 {
     public const CATEGORY_NAME_REGEX_PATTERN = '/^[^<>{}]*$/u';
+
     public const GENERIC_NAME_REGEX_PATTERN = '/^[^<>{}]*$/u';
 
     /**
@@ -42,7 +43,7 @@ abstract class AbstractCmsPageCategoryCommand
     protected function assertCategoryName(array $names)
     {
         foreach ($names as $name) {
-            if (! preg_match(self::CATEGORY_NAME_REGEX_PATTERN, $name)) {
+            if (! preg_match(self::CATEGORY_NAME_REGEX_PATTERN, (string) $name)) {
                 throw new CmsPageCategoryConstraintException(\sprintf('Given category name "%s" does not match pattern "%s"', $name, self::CATEGORY_NAME_REGEX_PATTERN), CmsPageCategoryConstraintException::INVALID_CATEGORY_NAME);
             }
         }
@@ -78,7 +79,7 @@ abstract class AbstractCmsPageCategoryCommand
     private function assertIsGenericName(array $localisedNames)
     {
         foreach ($localisedNames as $localisedName) {
-            if (! preg_match(self::GENERIC_NAME_REGEX_PATTERN, $localisedName)) {
+            if (! preg_match(self::GENERIC_NAME_REGEX_PATTERN, (string) $localisedName)) {
                 return $localisedName;
             }
         }

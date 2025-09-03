@@ -38,20 +38,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class CatalogPriceRuleGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $priceRuleDataFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(GridDataFactoryInterface $priceRuleDataFactory, TranslatorInterface $translator)
-    {
-        $this->priceRuleDataFactory = $priceRuleDataFactory;
-        $this->translator = $translator;
+    public function __construct(
+        private readonly GridDataFactoryInterface $priceRuleDataFactory,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

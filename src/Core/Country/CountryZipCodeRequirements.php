@@ -33,11 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Country;
 class CountryZipCodeRequirements
 {
     /**
-     * @var bool
-     */
-    private $isRequired;
-
-    /**
      * @var string|null
      */
     private $pattern;
@@ -52,9 +47,9 @@ class CountryZipCodeRequirements
      */
     private $countryName;
 
-    public function __construct(bool $isRequired)
-    {
-        $this->isRequired = $isRequired;
+    public function __construct(
+        private readonly bool $isRequired,
+    ) {
     }
 
     public function isRequired(): bool

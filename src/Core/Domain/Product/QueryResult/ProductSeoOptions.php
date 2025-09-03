@@ -38,47 +38,17 @@ use PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation;
 class ProductSeoOptions
 {
     /**
-     * @var string[]
-     */
-    private $localizedMetaTitles;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMetaDescriptions;
-
-    /**
-     * @var string[]
-     */
-    private $localizedLinkRewrites;
-
-    /**
-     * @var string
-     */
-    private $redirectType;
-
-    /**
-     * @var RedirectTargetInformation
-     */
-    private $redirectTarget;
-
-    /**
      * @param string[] $localizedMetaTitles
      * @param string[] $localizedMetaDescriptions
      * @param string[] $localizedLinkRewrites
      */
     public function __construct(
-        array $localizedMetaTitles,
-        array $localizedMetaDescriptions,
-        array $localizedLinkRewrites,
-        string $redirectType,
-        ?RedirectTargetInformation $redirectTarget,
+        private readonly array $localizedMetaTitles,
+        private readonly array $localizedMetaDescriptions,
+        private readonly array $localizedLinkRewrites,
+        private readonly string $redirectType,
+        private readonly ?RedirectTargetInformation $redirectTarget,
     ) {
-        $this->localizedMetaTitles = $localizedMetaTitles;
-        $this->localizedMetaDescriptions = $localizedMetaDescriptions;
-        $this->localizedLinkRewrites = $localizedLinkRewrites;
-        $this->redirectType = $redirectType;
-        $this->redirectTarget = $redirectTarget;
     }
 
     /**

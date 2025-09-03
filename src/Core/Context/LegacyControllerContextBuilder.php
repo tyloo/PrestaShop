@@ -43,6 +43,7 @@ use Twig\Environment;
 class LegacyControllerContextBuilder
 {
     private ?string $controllerName = null;
+
     private ?string $redirectionUrl = null;
 
     public function __construct(
@@ -66,12 +67,13 @@ class LegacyControllerContextBuilder
         $id = $this->getTabId($this->getControllerName());
         $employeeId = '';
         $employeeLanguageId = (int) $this->configuration->get('PS_LANG_DEFAULT');
-        if ($this->employeeContext->getEmployee()) {
+        if ($this->employeeContext->getEmployee() !== null) {
             $employeeId = $this->employeeContext->getEmployee()->getId();
             if ($this->configuration->get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG')) {
                 $employeeLanguageId = $this->employeeContext->getEmployee()->getLanguageId();
             }
         }
+
         $token = Tools::getAdminToken($this->getControllerName() . $id . $employeeId);
         $overrideFolder = Tools::toUnderscoreCase(substr($this->getControllerName(), 5)) . '/';
         $controllerType = 'admin';
@@ -104,8 +106,9 @@ class LegacyControllerContextBuilder
         if (str_ends_with($controllerName, 'ControllerOverride')) {
             $controllerName = preg_replace('/ControllerOverride$/', '', $controllerName);
         }
-        if (str_ends_with($controllerName, 'Controller')) {
-            $controllerName = preg_replace('/Controller$/', '', $controllerName);
+
+        if (str_ends_with((string) $controllerName, 'Controller')) {
+            $controllerName = preg_replace('/Controller$/', '', (string) $controllerName);
         }
 
         $this->controllerName = $controllerName;
@@ -195,6 +198,7 @@ class LegacyControllerContextBuilder
         if (! empty($this->controllerName)) {
             $parameters[] = 'controller=' . $this->controllerName;
         }
+
         if (! empty($this->redirectionUrl)) {
             $parameters[] = 'back=' . urlencode($this->redirectionUrl);
         }

@@ -37,11 +37,6 @@ use PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateId;
 class BulkToggleStateStatusCommand
 {
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @var array<int, StateId>
      */
     private $stateIds;
@@ -49,10 +44,11 @@ class BulkToggleStateStatusCommand
     /**
      * @param array<int, int> $stateIds
      */
-    public function __construct(bool $expectedStatus, array $stateIds)
-    {
+    public function __construct(
+        private readonly bool $expectedStatus,
+        array $stateIds,
+    ) {
         $this->setStateIds($stateIds);
-        $this->expectedStatus = $expectedStatus;
     }
 
     public function getExpectedStatus(): bool

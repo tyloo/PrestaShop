@@ -33,7 +33,9 @@ use PrestaShop\PrestaShop\Core\Grid\Exception\InvalidFilterDataException;
 final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterface
 {
     private const CASE_BOTH_FIELDS_EXIST = 1;
+
     private const CASE_ONLY_MIN_FIELD_EXISTS = 2;
+
     private const CASE_ONLY_MAX_FIELD_EXISTS = 3;
 
     public function apply(QueryBuilder $qb, SqlFilters $filters, array $filterValues)
@@ -54,17 +56,17 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
 
             switch ($filter['comparison']) {
                 case SqlFilters::WHERE_STRICT:
-                    $qb->andWhere("$sqlField = :$filterName");
+                    $qb->andWhere(\sprintf('%s = :%s', $sqlField, $filterName));
                     $qb->setParameter($filterName, $value);
 
                     break;
                 case SqlFilters::WHERE_LIKE:
-                    $qb->andWhere("$sqlField LIKE :$filterName");
+                    $qb->andWhere(\sprintf('%s LIKE :%s', $sqlField, $filterName));
                     $qb->setParameter($filterName, '%' . $value . '%');
 
                     break;
                 case SqlFilters::HAVING_LIKE:
-                    $qb->andHaving("$sqlField LIKE :$filterName");
+                    $qb->andHaving(\sprintf('%s LIKE :%s', $sqlField, $filterName));
                     $qb->setParameter($filterName, '%' . $value . '%');
 
                     break;
@@ -72,14 +74,14 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
                     if (isset($value['from'])) {
                         $name = \sprintf('%s_from', $filterName);
 
-                        $qb->andWhere("$sqlField >= :$name");
+                        $qb->andWhere(\sprintf('%s >= :%s', $sqlField, $name));
                         $qb->setParameter($name, \sprintf('%s %s', $value['from'], '0:0:0'));
                     }
 
                     if (isset($value['to'])) {
                         $name = \sprintf('%s_to', $filterName);
 
-                        $qb->andWhere("$sqlField <= :$name");
+                        $qb->andWhere(\sprintf('%s <= :%s', $sqlField, $name));
                         $qb->setParameter($name, \sprintf('%s %s', $value['to'], '23:59:59'));
                     }
 
@@ -103,6 +105,7 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
                             $qb->setParameter(\sprintf('%s_max', $filterName), $value['max_field']);
                             break;
                     }
+
                     break;
             }
         }
@@ -119,6 +122,7 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
         if ($minFieldExists && $maxFieldExists) {
             return self::CASE_BOTH_FIELDS_EXIST;
         }
+
         if ($minFieldExists) {
             return self::CASE_ONLY_MIN_FIELD_EXISTS;
         }
@@ -127,6 +131,6 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
             return self::CASE_ONLY_MAX_FIELD_EXISTS;
         }
 
-        throw new InvalidFilterDataException('Min max filter wasn\'t applied correctly');
+        throw new InvalidFilterDataException("Min max filter wasn't applied correctly");
     }
 }

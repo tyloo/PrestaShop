@@ -29,11 +29,9 @@ namespace PrestaShop\PrestaShop\Core\Module;
 
 class HookConfigurator
 {
-    private $hookRepository;
-
-    public function __construct(HookRepository $hookRepository)
-    {
-        $this->hookRepository = $hookRepository;
+    public function __construct(
+        private readonly HookRepository $hookRepository,
+    ) {
     }
 
     /**
@@ -53,8 +51,10 @@ class HookConfigurator
      *         ]
      *     ]
      * ].
+     *
+     * @return mixed[]
      */
-    public function getThemeHooksConfiguration(array $hooks)
+    public function getThemeHooksConfiguration(array $hooks): array
     {
         $hooks = array_filter($hooks, 'is_array');
         $uniqueModuleList = $this->getUniqueModuleToHookList($hooks);
@@ -70,9 +70,7 @@ class HookConfigurator
 
         foreach ($hooks as $hookName => $modules) {
             $firstNullValueFound = true;
-            $existing = isset($currentHooks[$hookName]) ?
-                $currentHooks[$hookName] :
-                [];
+            $existing = $currentHooks[$hookName] ?? [];
             $currentHooks[$hookName] = [];
             foreach ($modules as $key => $module) {
                 if ($module === null && $firstNullValueFound) {
@@ -107,7 +105,10 @@ class HookConfigurator
         return $this;
     }
 
-    private function getUniqueModuleToHookList(array $hooks)
+    /**
+     * @return mixed[]
+     */
+    private function getUniqueModuleToHookList(array $hooks): array
     {
         $list = [];
         foreach ($hooks as $modules) {

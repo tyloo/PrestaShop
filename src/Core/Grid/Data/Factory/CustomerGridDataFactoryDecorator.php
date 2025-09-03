@@ -40,31 +40,13 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 final class CustomerGridDataFactoryDecorator implements GridDataFactoryInterface
 {
     /**
-     * @var GridDataFactoryInterface
-     */
-    private $customerDoctrineGridDataFactory;
-
-    /**
-     * @var LocaleInterface
-     */
-    private $locale;
-
-    /**
-     * @var string
-     */
-    private $contextCurrencyIsoCode;
-
-    /**
      * @param string $contextCurrencyIsoCode
      */
     public function __construct(
-        GridDataFactoryInterface $customerDoctrineGridDataFactory,
-        LocaleInterface $locale,
-        $contextCurrencyIsoCode,
+        private readonly GridDataFactoryInterface $customerDoctrineGridDataFactory,
+        private readonly LocaleInterface $locale,
+        private $contextCurrencyIsoCode,
     ) {
-        $this->customerDoctrineGridDataFactory = $customerDoctrineGridDataFactory;
-        $this->locale = $locale;
-        $this->contextCurrencyIsoCode = $contextCurrencyIsoCode;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

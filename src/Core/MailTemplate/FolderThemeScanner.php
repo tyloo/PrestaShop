@@ -49,7 +49,7 @@ final class FolderThemeScanner
     private $themeTwigNamespace;
 
     public function __construct(
-        private string $moduleDirectory = _PS_MODULE_DIR_,
+        private readonly string $moduleDirectory = _PS_MODULE_DIR_,
     ) {
     }
 
@@ -161,6 +161,7 @@ final class FolderThemeScanner
                     MailTemplateInterface::TXT_TYPE => '',
                 ];
             }
+
             $templateType = $this->getTemplateType($fileInfo);
             $layoutFiles[$layoutName][$templateType] = $this->getTemplatePath($fileInfo);
         }
@@ -175,10 +176,7 @@ final class FolderThemeScanner
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getTemplateType(SplFileInfo $fileInfo)
+    private function getTemplateType(SplFileInfo $fileInfo): string
     {
         $ext = ! empty($fileInfo->getExtension()) ? '.' . $fileInfo->getExtension() : '';
         $htmlTypeRegexp = \sprintf('/.+\.%s%s/', MailTemplateInterface::HTML_TYPE, $ext);

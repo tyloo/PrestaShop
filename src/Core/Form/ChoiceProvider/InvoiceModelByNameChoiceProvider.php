@@ -35,22 +35,15 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class InvoiceModelByNameChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var FileFinderInterface
-     */
-    private $invoiceModelFinder;
-
-    public function __construct(FileFinderInterface $invoiceModelFinder)
-    {
-        $this->invoiceModelFinder = $invoiceModelFinder;
+    public function __construct(
+        private readonly FileFinderInterface $invoiceModelFinder,
+    ) {
     }
 
     /**
      * Get invoice model choices.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         $choices = [
             'invoice' => 'invoice',
@@ -59,7 +52,7 @@ final class InvoiceModelByNameChoiceProvider implements FormChoiceProviderInterf
         $invoiceModels = $this->invoiceModelFinder->find();
 
         foreach ($invoiceModels as $invoiceModel) {
-            $modelName = basename($invoiceModel, '.tpl');
+            $modelName = basename((string) $invoiceModel, '.tpl');
             $choices[$modelName] = $modelName;
         }
 

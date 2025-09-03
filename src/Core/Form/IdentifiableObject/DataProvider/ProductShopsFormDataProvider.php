@@ -39,30 +39,16 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
  */
 class ProductShopsFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var int|null
-     */
-    private $contextShopId;
-
     public function __construct(
-        ProductRepository $productRepository,
-        ?int $contextShopId,
+        private readonly ProductRepository $productRepository,
+        private readonly ?int $contextShopId,
     ) {
-        $this->productRepository = $productRepository;
-        $this->contextShopId = $contextShopId;
     }
 
     public function getData($id)
     {
         $associatedShopIds = $this->productRepository->getAssociatedShopIds(new ProductId($id));
-        $selectedShops = array_map(static function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $associatedShopIds);
+        $selectedShops = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $associatedShopIds);
 
         return [
             'source_shop_id' => $this->contextShopId,

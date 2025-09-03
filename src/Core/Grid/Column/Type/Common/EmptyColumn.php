@@ -38,7 +38,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EmptyColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'empty';
     }

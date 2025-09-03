@@ -36,26 +36,11 @@ use PrestaShop\PrestaShop\Core\Domain\SearchEngine\ValueObject\SearchEngineId;
  */
 class SearchEngineForEditing
 {
-    /**
-     * @var SearchEngineId
-     */
-    private $searchEngineId;
-
-    /**
-     * @var string
-     */
-    private $server;
-
-    /**
-     * @var string
-     */
-    private $queryKey;
-
-    public function __construct(SearchEngineId $searchEngineId, string $server, string $queryKey)
-    {
-        $this->searchEngineId = $searchEngineId;
-        $this->server = $server;
-        $this->queryKey = $queryKey;
+    public function __construct(
+        private readonly SearchEngineId $searchEngineId,
+        private readonly string $server,
+        private readonly string $queryKey,
+    ) {
     }
 
     public function getSearchEngineId(): SearchEngineId

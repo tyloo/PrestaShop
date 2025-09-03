@@ -34,23 +34,13 @@ namespace PrestaShop\PrestaShop\Core\Form\DTO;
 class ShopRestrictionField
 {
     /**
-     * @var string
-     */
-    private $fieldName;
-
-    /**
-     * @var bool
-     */
-    private $isRestrictedToContextShop;
-
-    /**
      * @param string $fieldName
      * @param bool   $isRestrictedToContextShop
      */
-    public function __construct($fieldName, $isRestrictedToContextShop)
-    {
-        $this->fieldName = $fieldName;
-        $this->isRestrictedToContextShop = $isRestrictedToContextShop;
+    public function __construct(
+        private $fieldName,
+        private $isRestrictedToContextShop,
+    ) {
     }
 
     /**

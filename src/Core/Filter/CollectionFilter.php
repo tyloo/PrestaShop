@@ -88,6 +88,7 @@ class CollectionFilter implements FilterInterface
             foreach ($this->filters as $filter) {
                 $value = $filter->filter($value);
             }
+
             $subject[$k] = $value;
         }
 

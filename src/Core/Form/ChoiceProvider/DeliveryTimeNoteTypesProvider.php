@@ -40,36 +40,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class DeliveryTimeNoteTypesProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
     public function __construct(
-        TranslatorInterface $translator,
-        RouterInterface $router,
-        ConfigurationInterface $configuration,
-        int $langId,
+        private readonly TranslatorInterface $translator,
+        private readonly RouterInterface $router,
+        private readonly ConfigurationInterface $configuration,
+        private readonly int $langId,
     ) {
-        $this->translator = $translator;
-        $this->router = $router;
-        $this->configuration = $configuration;
-        $this->langId = $langId;
     }
 
     public function getChoices()

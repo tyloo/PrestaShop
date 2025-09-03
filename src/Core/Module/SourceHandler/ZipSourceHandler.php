@@ -77,6 +77,7 @@ class ZipSourceHandler implements SourceHandlerInterface
                     return $matches[1];
                 }
             }
+
             $zip->close();
         }
 

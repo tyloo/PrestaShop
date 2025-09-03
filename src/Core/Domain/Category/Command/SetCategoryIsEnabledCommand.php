@@ -40,18 +40,14 @@ class SetCategoryIsEnabledCommand
     private $categoryId;
 
     /**
-     * @var bool
-     */
-    private $isEnabled;
-
-    /**
      * @param int  $categoryId
      * @param bool $isEnabled
      */
-    public function __construct($categoryId, $isEnabled)
-    {
+    public function __construct(
+        $categoryId,
+        private $isEnabled,
+    ) {
         $this->categoryId = new CategoryId($categoryId);
-        $this->isEnabled = $isEnabled;
     }
 
     /**

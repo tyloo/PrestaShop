@@ -37,6 +37,7 @@ class OrderReturnStateConstraintException extends OrderReturnStateException
      * @var int Code is used when invalid name is provided for order return state
      */
     public const INVALID_NAME = 1;
+
     /**
      * @var int Code is used when empty name is provided for order return state
      */

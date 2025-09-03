@@ -33,28 +33,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Manufacturer\QueryResult;
 class ViewableManufacturer
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var array
-     */
-    private $manufacturerAddresses;
-
-    /**
-     * @var array
-     */
-    private $manufacturerProducts;
-
-    /**
      * @param string $name
      */
-    public function __construct($name, array $manufacturerAddresses, array $manufacturerProducts)
-    {
-        $this->name = $name;
-        $this->manufacturerAddresses = $manufacturerAddresses;
-        $this->manufacturerProducts = $manufacturerProducts;
+    public function __construct(
+        private $name,
+        private readonly array $manufacturerAddresses,
+        private readonly array $manufacturerProducts,
+    ) {
     }
 
     /**

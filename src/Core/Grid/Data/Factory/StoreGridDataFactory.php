@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 
 class StoreGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $storeDataFactory;
-
     public function __construct(
-        GridDataFactoryInterface $storeDataFactory,
+        private readonly GridDataFactoryInterface $storeDataFactory,
     ) {
-        $this->storeDataFactory = $storeDataFactory;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria): GridDataInterface

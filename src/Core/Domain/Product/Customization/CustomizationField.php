@@ -35,26 +35,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Customization;
 class CustomizationField
 {
     /**
-     * @var int
-     */
-    private $type;
-
-    /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
-     * @var bool
-     */
-    private $required;
-
-    /**
-     * @var bool
-     */
-    private $addedByModule;
-
-    /**
      * @var int|null
      */
     private $customizationFieldId;
@@ -64,16 +44,12 @@ class CustomizationField
      * @param int|null $customizationFieldId If provided, means that its existing CustomizationField and should be updated
      */
     public function __construct(
-        int $type,
-        array $localizedNames,
-        bool $required,
-        bool $addedByModule = false,
+        private readonly int $type,
+        private readonly array $localizedNames,
+        private readonly bool $required,
+        private readonly bool $addedByModule = false,
         ?int $customizationFieldId = null,
     ) {
-        $this->type = $type;
-        $this->localizedNames = $localizedNames;
-        $this->required = $required;
-        $this->addedByModule = $addedByModule;
         $this->customizationFieldId = $customizationFieldId ?? null;
     }
 

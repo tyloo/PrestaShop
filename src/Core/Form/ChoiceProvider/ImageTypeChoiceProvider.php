@@ -60,15 +60,19 @@ class ImageTypeChoiceProvider implements FormChoiceProviderInterface
             if ($dbImageType->isProducts()) {
                 $imageTypes['products'][] = $dbImageType->getId();
             }
+
             if ($dbImageType->isCategories()) {
                 $imageTypes['categories'][] = $dbImageType->getId();
             }
+
             if ($dbImageType->isManufacturers()) {
                 $imageTypes['manufacturers'][] = $dbImageType->getId();
             }
+
             if ($dbImageType->isSuppliers()) {
                 $imageTypes['suppliers'][] = $dbImageType->getId();
             }
+
             if ($dbImageType->isStores()) {
                 $imageTypes['stores'][] = $dbImageType->getId();
             }

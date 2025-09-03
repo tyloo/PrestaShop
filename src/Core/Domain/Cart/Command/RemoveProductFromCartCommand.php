@@ -47,28 +47,16 @@ class RemoveProductFromCartCommand
     private $productId;
 
     /**
-     * @var int|null
-     */
-    private $combinationId;
-
-    /**
-     * @var int|null
-     */
-    private $customizationId;
-
-    /**
      * @throws CartConstraintException
      */
     public function __construct(
         int $cartId,
         int $productId,
-        ?int $combinationId = null,
-        ?int $customizationId = null,
+        private readonly ?int $combinationId = null,
+        private readonly ?int $customizationId = null,
     ) {
         $this->cartId = new CartId($cartId);
         $this->productId = new ProductId($productId);
-        $this->combinationId = $combinationId;
-        $this->customizationId = $customizationId;
     }
 
     /**

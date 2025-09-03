@@ -36,39 +36,15 @@ use PrestaShop\PrestaShop\Core\Module\DataProvider\PaymentModuleListProviderInte
 final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfiguratorInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $databasePrefix;
-
-    /**
-     * @var int
-     */
-    private $shopId;
-
-    /**
-     * @var PaymentModuleListProviderInterface
-     */
-    private $paymentModuleProvider;
-
-    /**
      * @param string $databasePrefix
      * @param int    $shopId
      */
     public function __construct(
-        Connection $connection,
-        $databasePrefix,
-        $shopId,
-        PaymentModuleListProviderInterface $paymentModuleProvider,
+        private readonly Connection $connection,
+        private $databasePrefix,
+        private $shopId,
+        private readonly PaymentModuleListProviderInterface $paymentModuleProvider,
     ) {
-        $this->connection = $connection;
-        $this->databasePrefix = $databasePrefix;
-        $this->shopId = $shopId;
-        $this->paymentModuleProvider = $paymentModuleProvider;
     }
 
     /**

@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class CustomerAddressGridDataFactoryDecorator implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $customerAddressDoctrineGridDataFactory;
-
     public function __construct(
-        GridDataFactoryInterface $customerAddressDoctrineGridDataFactory,
+        private readonly GridDataFactoryInterface $customerAddressDoctrineGridDataFactory,
     ) {
-        $this->customerAddressDoctrineGridDataFactory = $customerAddressDoctrineGridDataFactory;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

@@ -34,113 +34,23 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\FixedPri
 
 class SpecificPriceForListing
 {
-    /**
-     * @var int
-     */
-    private $specificPriceId;
-
-    /**
-     * @var string
-     */
-    private $reductionType;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $reductionValue;
-
-    /**
-     * @var bool
-     */
-    private $includesTax;
-
-    /**
-     * @var FixedPriceInterface
-     */
-    private $fixedPrice;
-
-    /**
-     * @var int
-     */
-    private $fromQuantity;
-
-    /**
-     * @var string|null
-     */
-    private $shopName;
-
-    /**
-     * @var string|null
-     */
-    private $currencyName;
-
-    /**
-     * @var string|null
-     */
-    private $currencyISOCode;
-
-    /**
-     * @var string|null
-     */
-    private $countryName;
-
-    /**
-     * @var string|null
-     */
-    private $groupName;
-
-    /**
-     * @var string|null
-     */
-    private $customerName;
-
-    /**
-     * @var string|null
-     */
-    private $combinationName;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $dateTimeFrom;
-
-    /**
-     * @var DateTimeInterface
-     */
-    private $dateTimeTo;
-
     public function __construct(
-        int $specificPriceId,
-        string $reductionType,
-        DecimalNumber $reductionValue,
-        bool $includesTax,
-        FixedPriceInterface $fixedPrice,
-        int $fromQuantity,
-        DateTimeInterface $dateTimeFrom,
-        DateTimeInterface $dateTimeTo,
-        ?string $combinationName,
-        ?string $shop,
-        ?string $currencyName,
-        ?string $currencyISOCode,
-        ?string $country,
-        ?string $group,
-        ?string $customer,
+        private readonly int $specificPriceId,
+        private readonly string $reductionType,
+        private readonly DecimalNumber $reductionValue,
+        private readonly bool $includesTax,
+        private readonly FixedPriceInterface $fixedPrice,
+        private readonly int $fromQuantity,
+        private readonly DateTimeInterface $dateTimeFrom,
+        private readonly DateTimeInterface $dateTimeTo,
+        private readonly ?string $combinationName,
+        private readonly ?string $shopName,
+        private readonly ?string $currencyName,
+        private readonly ?string $currencyISOCode,
+        private readonly ?string $countryName,
+        private readonly ?string $groupName,
+        private readonly ?string $customerName,
     ) {
-        $this->specificPriceId = $specificPriceId;
-        $this->reductionType = $reductionType;
-        $this->reductionValue = $reductionValue;
-        $this->includesTax = $includesTax;
-        $this->fixedPrice = $fixedPrice;
-        $this->fromQuantity = $fromQuantity;
-        $this->dateTimeFrom = $dateTimeFrom;
-        $this->dateTimeTo = $dateTimeTo;
-        $this->combinationName = $combinationName;
-        $this->shopName = $shop;
-        $this->currencyName = $currencyName;
-        $this->currencyISOCode = $currencyISOCode;
-        $this->countryName = $country;
-        $this->groupName = $group;
-        $this->customerName = $customer;
     }
 
     public function getSpecificPriceId(): int

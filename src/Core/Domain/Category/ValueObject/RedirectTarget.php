@@ -38,7 +38,7 @@ class RedirectTarget
 {
     public const NO_TARGET = 0;
 
-    private int $value;
+    private readonly int $value;
 
     /**
      * @throws CategoryConstraintException

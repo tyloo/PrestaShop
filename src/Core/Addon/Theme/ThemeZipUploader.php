@@ -36,14 +36,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class ThemeZipUploader implements ThemeUploaderInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     public function upload(UploadedFile $uploadedTheme)
@@ -87,7 +82,7 @@ final class ThemeZipUploader implements ThemeUploaderInterface
      */
     private function assertUploadedFileIsZip(UploadedFile $uploadedTheme)
     {
-        preg_match('#application/zip#', $uploadedTheme->getMimeType(), $matches);
+        preg_match('#application/zip#', (string) $uploadedTheme->getMimeType(), $matches);
 
         if (empty($matches)) {
             throw new ThemeUploadException('Invalid mime type of theme zip. Allowed mime type is application/zip.', ThemeUploadException::INVALID_MIME_TYPE);

@@ -46,14 +46,9 @@ final class ExecutedCommandRegistry
         'queries' => [],
     ];
 
-    /**
-     * @var CommandTypeParser
-     */
-    private $commandTypeParser;
-
-    public function __construct(CommandTypeParser $commandTypeParser)
-    {
-        $this->commandTypeParser = $commandTypeParser;
+    public function __construct(
+        private readonly CommandTypeParser $commandTypeParser,
+    ) {
     }
 
     /**

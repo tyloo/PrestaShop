@@ -35,22 +35,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
 class CategoriesInformation
 {
     /**
-     * @var int
-     */
-    private $defaultCategoryId;
-
-    /**
-     * @var CategoryInformation[]
-     */
-    private $categoriesInformation;
-
-    /**
      * @param CategoryInformation[] $categoriesInformation
      */
-    public function __construct(array $categoriesInformation, int $defaultCategoryId)
-    {
-        $this->categoriesInformation = $categoriesInformation;
-        $this->defaultCategoryId = $defaultCategoryId;
+    public function __construct(
+        private readonly array $categoriesInformation,
+        private readonly int $defaultCategoryId,
+    ) {
     }
 
     /**

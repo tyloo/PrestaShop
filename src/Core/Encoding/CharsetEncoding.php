@@ -33,6 +33,7 @@ namespace PrestaShop\PrestaShop\Core\Encoding;
 final class CharsetEncoding
 {
     public const UTF_8 = 'utf-8';
+
     public const ISO_8859_1 = 'iso-8859-1';
 
     /**

@@ -46,22 +46,10 @@ use Store;
  */
 class StoreRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
     public function __construct(
-        Connection $connection,
-        string $dbPrefix,
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
     ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
     }
 
     /**
@@ -104,14 +92,12 @@ class StoreRepository extends AbstractObjectModelRepository
      */
     public function getShopIdsByConstraint(ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint->getShopGroupId() !== null) {
             return $this->getAssociatedShopIdsFromGroup($shopConstraint->getShopGroupId());
         }
 
         if ($shopConstraint->forAllShops()) {
-            return array_map(static function (array $result): ShopId {
-                return new ShopId((int) $result['id_shop']);
-            }, $this->connection->createQueryBuilder()
+            return array_map(static fn (array $result): ShopId => new ShopId((int) $result['id_shop']), $this->connection->createQueryBuilder()
                 ->select('id_shop')
                 ->from($this->dbPrefix . 'store_shop', 'ss')
                 ->executeQuery()
@@ -142,8 +128,6 @@ class StoreRepository extends AbstractObjectModelRepository
             ->groupBy('id_shop')
         ;
 
-        return array_map(static function (array $result): ShopId {
-            return new ShopId((int) $result['id_shop']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $result): ShopId => new ShopId((int) $result['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 }

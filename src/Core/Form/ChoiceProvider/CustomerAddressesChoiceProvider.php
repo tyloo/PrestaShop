@@ -36,23 +36,16 @@ use PrestaShop\PrestaShop\Core\Form\ConfigurableFormChoiceProviderInterface;
  */
 final class CustomerAddressesChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var CustomerDataProvider
-     */
-    private $customerDataProvider;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    public function __construct(CustomerDataProvider $customerDataProvider, int $langId)
-    {
-        $this->customerDataProvider = $customerDataProvider;
-        $this->langId = $langId;
+    public function __construct(
+        private readonly CustomerDataProvider $customerDataProvider,
+        private readonly int $langId,
+    ) {
     }
 
-    public function getChoices(array $options)
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(array $options): array
     {
         if (! isset($options['customer_id'])) {
             throw new InvalidArgumentException('Expected a customer_id option, none found');

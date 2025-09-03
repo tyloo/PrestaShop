@@ -35,74 +35,6 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
 class ViewableCustomer
 {
     /**
-     * @var CustomerId
-     */
-    private $customerId;
-
-    /**
-     * @var PersonalInformation
-     */
-    private $personalInformation;
-
-    /**
-     * @var OrdersInformation
-     */
-    private $ordersInformation;
-
-    /**
-     * @deprecated Since 9.0.0 for performance reasons and returns only empty array.
-     *
-     * @var CartInformation[]
-     */
-    private $cartsInformation;
-
-    /**
-     * @deprecated Since 9.0.0, returns empty ProductsInformation object with no data.
-     *
-     * @var ProductsInformation
-     */
-    private $productsInformation;
-
-    /**
-     * @var MessageInformation[]
-     */
-    private $messagesInformation;
-
-    /**
-     * @deprecated Since 9.0.0, returns only empty array.
-     *
-     * @var DiscountInformation[]
-     */
-    private $discountsInformation;
-
-    /**
-     * @var SentEmailInformation[]
-     */
-    private $sentEmailsInformation;
-
-    /**
-     * @var LastConnectionInformation[]
-     */
-    private $lastConnectionsInformation;
-
-    /**
-     * @var GroupInformation[]
-     */
-    private $groupsInformation;
-
-    /**
-     * @deprecated Since 9.0.0, returns only empty array.
-     *
-     * @var AddressInformation[]
-     */
-    private $addressesInformation;
-
-    /**
-     * @var GeneralInformation
-     */
-    private $generalInformation;
-
-    /**
      * @param CartInformation[]           $cartsInformation
      * @param MessageInformation[]        $messagesInformation
      * @param DiscountInformation[]       $discountsInformation
@@ -112,31 +44,31 @@ class ViewableCustomer
      * @param AddressInformation[]        $addressesInformation
      */
     public function __construct(
-        CustomerId $customerId,
-        GeneralInformation $generalInformation,
-        PersonalInformation $personalInformation,
-        OrdersInformation $ordersInformation,
-        array $cartsInformation,
-        ProductsInformation $productsInformation,
-        array $messagesInformation,
-        array $discountsInformation,
-        array $sentEmailsInformation,
-        array $lastConnectionsInformation,
-        array $groupsInformation,
-        array $addressesInformation,
+        private readonly CustomerId $customerId,
+        private readonly GeneralInformation $generalInformation,
+        private readonly PersonalInformation $personalInformation,
+        private readonly OrdersInformation $ordersInformation,
+        /**
+         * @deprecated Since 9.0.0 for performance reasons and returns only empty array.
+         */
+        private readonly array $cartsInformation,
+        /**
+         * @deprecated Since 9.0.0, returns empty ProductsInformation object with no data.
+         */
+        private readonly ProductsInformation $productsInformation,
+        private readonly array $messagesInformation,
+        /**
+         * @deprecated Since 9.0.0, returns only empty array.
+         */
+        private readonly array $discountsInformation,
+        private readonly array $sentEmailsInformation,
+        private readonly array $lastConnectionsInformation,
+        private readonly array $groupsInformation,
+        /**
+         * @deprecated Since 9.0.0, returns only empty array.
+         */
+        private readonly array $addressesInformation,
     ) {
-        $this->customerId = $customerId;
-        $this->personalInformation = $personalInformation;
-        $this->ordersInformation = $ordersInformation;
-        $this->cartsInformation = $cartsInformation;
-        $this->productsInformation = $productsInformation;
-        $this->messagesInformation = $messagesInformation;
-        $this->discountsInformation = $discountsInformation;
-        $this->sentEmailsInformation = $sentEmailsInformation;
-        $this->lastConnectionsInformation = $lastConnectionsInformation;
-        $this->groupsInformation = $groupsInformation;
-        $this->addressesInformation = $addressesInformation;
-        $this->generalInformation = $generalInformation;
     }
 
     /**

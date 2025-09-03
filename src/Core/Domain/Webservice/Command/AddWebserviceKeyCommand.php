@@ -40,26 +40,6 @@ class AddWebserviceKeyCommand
     private $key;
 
     /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var bool
-     */
-    private $status;
-
-    /**
-     * @var array
-     */
-    private $permissions;
-
-    /**
-     * @var array
-     */
-    private $associatedShops;
-
-    /**
      * @param string $key
      * @param string $description
      * @param bool   $status
@@ -67,16 +47,12 @@ class AddWebserviceKeyCommand
      */
     public function __construct(
         $key,
-        $description,
-        $status,
-        array $permissions,
-        array $associatedShops,
+        private $description,
+        private $status,
+        private readonly array $permissions,
+        private readonly array $associatedShops,
     ) {
         $this->key = new Key($key);
-        $this->description = $description;
-        $this->status = $status;
-        $this->permissions = $permissions;
-        $this->associatedShops = $associatedShops;
     }
 
     /**

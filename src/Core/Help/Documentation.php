@@ -31,20 +31,10 @@ use PrestaShop\PrestaShop\Core\Foundation\Version;
 
 class Documentation
 {
-    /**
-     * @var Version
-     */
-    private $version;
-
-    /**
-     * @var string
-     */
-    private $host;
-
-    public function __construct(Version $version, string $host)
-    {
-        $this->version = $version;
-        $this->host = $host;
+    public function __construct(
+        private readonly Version $version,
+        private readonly string $host,
+    ) {
     }
 
     public function generateLink(string $section, string $langIsoCode): string

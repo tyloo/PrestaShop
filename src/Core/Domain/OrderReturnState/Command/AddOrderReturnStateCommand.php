@@ -39,17 +39,12 @@ class AddOrderReturnStateCommand
      * @var string[]
      */
     private $localizedNames;
-    /**
-     * @var string
-     */
-    private $color;
 
     public function __construct(
         array $localizedNames,
-        string $color,
+        private readonly string $color,
     ) {
         $this->setLocalizedNames($localizedNames);
-        $this->color = $color;
     }
 
     /**

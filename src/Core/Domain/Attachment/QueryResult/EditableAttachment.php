@@ -35,21 +35,6 @@ use SplFileInfo;
 class EditableAttachment
 {
     /**
-     * @var string
-     */
-    private $fileName;
-
-    /**
-     * @var string[]
-     */
-    private $name;
-
-    /**
-     * @var string[]
-     */
-    private $description;
-
-    /**
      * @var SplFileInfo|null
      */
     private $file;
@@ -59,13 +44,10 @@ class EditableAttachment
      * @param string[] $description
      */
     public function __construct(
-        string $fileName,
-        array $name,
-        array $description,
+        private readonly string $fileName,
+        private readonly array $name,
+        private readonly array $description,
     ) {
-        $this->fileName = $fileName;
-        $this->name = $name;
-        $this->description = $description;
     }
 
     public function getFileName(): string

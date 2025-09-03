@@ -34,14 +34,14 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\ValueObject\TaxRulesGroupId;
 
 class SetCarrierTaxRuleGroupCommand
 {
-    private CarrierId $carrierId;
+    private readonly CarrierId $carrierId;
 
-    private TaxRulesGroupId $carrierTaxRuleGroupId;
+    private readonly TaxRulesGroupId $carrierTaxRuleGroupId;
 
     public function __construct(
         int $carrierId,
         int $carrierTaxRuleGroupId,
-        private ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->assertShopConstraint($this->shopConstraint);
         $this->carrierId = new CarrierId($carrierId);
@@ -66,7 +66,7 @@ class SetCarrierTaxRuleGroupCommand
     private function assertShopConstraint(ShopConstraint $shopConstraint): void
     {
         if (! $shopConstraint->forAllShops()) {
-            throw new CarrierConstraintException('Shop constraint isn\'t supported yet.', CarrierConstraintException::INVALID_SHOP_CONSTRAINT);
+            throw new CarrierConstraintException("Shop constraint isn't supported yet.", CarrierConstraintException::INVALID_SHOP_CONSTRAINT);
         }
     }
 }

@@ -34,22 +34,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Alias\QueryResult;
  */
 class AliasForEditing
 {
-    /**
-     * @var string[]
-     */
-    private $aliases;
-
-    /**
-     * @var string
-     */
-    private $searchTerm;
-
     public function __construct(
-        array $aliases,
-        string $searchTerm,
+        /**
+         * @var string[]
+         */
+        private readonly array $aliases,
+        private readonly string $searchTerm,
     ) {
-        $this->aliases = $aliases;
-        $this->searchTerm = $searchTerm;
     }
 
     /**

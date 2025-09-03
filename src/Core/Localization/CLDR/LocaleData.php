@@ -123,6 +123,7 @@ class LocaleData
             if ($this->numberingSystems === null) {
                 $this->numberingSystems = [];
             }
+
             $this->setNumberingSystems(array_merge($this->numberingSystems, $localeData->getNumberingSystems()));
         }
 
@@ -141,6 +142,7 @@ class LocaleData
 
                     continue;
                 }
+
                 $this->numberSymbols[$numberingSystem]->overrideWith($symbolsData);
             }
         }
@@ -149,6 +151,7 @@ class LocaleData
             if ($this->decimalPatterns === null) {
                 $this->decimalPatterns = [];
             }
+
             $this->setDecimalPatterns(array_merge($this->decimalPatterns, $localeData->getDecimalPatterns()));
         }
 
@@ -156,6 +159,7 @@ class LocaleData
             if ($this->percentPatterns === null) {
                 $this->percentPatterns = [];
             }
+
             $this->setPercentPatterns(array_merge($this->numberingSystems, $localeData->getPercentPatterns()));
         }
 
@@ -163,6 +167,7 @@ class LocaleData
             if ($this->currencyPatterns === null) {
                 $this->currencyPatterns = [];
             }
+
             $this->setCurrencyPatterns(array_merge($this->currencyPatterns, $localeData->getCurrencyPatterns()));
         }
 
@@ -172,6 +177,7 @@ class LocaleData
                     $this->currencies[$code] = $currencyData;
                     continue;
                 }
+
                 $this->currencies[$code]->overrideWith($currencyData);
             }
         }

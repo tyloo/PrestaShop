@@ -32,193 +32,51 @@ use JsonSerializable;
 class OrderProductForViewing implements JsonSerializable
 {
     public const TYPE_PACK = 'pack';
+
     public const TYPE_PRODUCT_WITH_COMBINATIONS = 'product_with_combinations';
+
     public const TYPE_PRODUCT_WITHOUT_COMBINATIONS = 'product_without_combinations';
 
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var int
-     */
-    private $combinationId;
-
-    /**
-     * @var string
-     */
-    private $location;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var OrderProductForViewing[]
-     */
-    private $packItems;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $supplierReference;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var string
-     */
-    private $unitPrice;
-
-    /**
-     * @var string
-     */
-    private $totalPrice;
-
-    /**
-     * @var int
-     */
-    private $availableQuantity;
-
-    /**
-     * @var string|null
-     */
-    private $imagePath;
-
-    /**
-     * @var string
-     */
-    private $unitPriceTaxExclRaw;
-
-    /**
-     * @var string
-     */
-    private $unitPriceTaxInclRaw;
-
-    /**
-     * @var string
-     */
-    private $taxRate;
-
-    /**
-     * @var int
-     */
-    private $orderDetailId;
-
-    /**
-     * @var string
-     */
-    private $amountRefunded;
-
-    /**
-     * @var int
-     */
-    private $quantityRefunded;
-
-    /**
-     * @var string
-     */
-    private $amountRefundable;
-
-    /**
-     * @var string
-     */
-    private $amountRefundableRaw;
-
-    /**
-     * @var int
-     */
-    private $orderInvoiceId;
-
-    /**
-     * @var string
-     */
-    private $orderInvoiceNumber;
-
-    /**
-     * @var bool
-     */
-    private $availableOutOfStock;
-
-    /**
-     * @var OrderProductCustomizationsForViewing
-     */
-    private $customizations;
-
-    /**
-     * @var string
-     */
-    private $mpn;
-
     public function __construct(
-        ?int $orderDetailId,
-        int $id,
-        int $combinationId,
-        string $name,
-        string $reference,
-        string $supplierReference,
-        int $quantity,
-        string $unitPrice,
-        string $totalPrice,
-        int $availableQuantity,
-        ?string $imagePath,
-        string $unitPriceTaxExclRaw,
-        string $unitPriceTaxInclRaw,
-        string $taxRate,
-        string $amountRefunded,
-        int $quantityRefunded,
-        string $amountRefundable,
-        string $amountRefundableRaw,
-        string $location,
-        ?int $orderInvoiceId,
-        string $orderInvoiceNumber,
-        string $type,
-        bool $availableOutOfStock,
-        array $packItems = [],
-        ?OrderProductCustomizationsForViewing $customizations = null,
-        string $mpn = '',
+        /**
+         * @var int
+         */
+        private readonly ?int $orderDetailId,
+        private readonly int $id,
+        private readonly int $combinationId,
+        private readonly string $name,
+        private readonly string $reference,
+        private readonly string $supplierReference,
+        private readonly int $quantity,
+        private readonly string $unitPrice,
+        private readonly string $totalPrice,
+        private readonly int $availableQuantity,
+        private readonly ?string $imagePath,
+        private readonly string $unitPriceTaxExclRaw,
+        private readonly string $unitPriceTaxInclRaw,
+        private readonly string $taxRate,
+        private readonly string $amountRefunded,
+        private readonly int $quantityRefunded,
+        private readonly string $amountRefundable,
+        private readonly string $amountRefundableRaw,
+        private readonly string $location,
+        /**
+         * @var int
+         */
+        private readonly ?int $orderInvoiceId,
+        private readonly string $orderInvoiceNumber,
+        private readonly string $type,
+        private readonly bool $availableOutOfStock,
+        /**
+         * @var OrderProductForViewing[]
+         */
+        private readonly array $packItems = [],
+        /**
+         * @var OrderProductCustomizationsForViewing
+         */
+        private readonly ?OrderProductCustomizationsForViewing $customizations = null,
+        private readonly string $mpn = '',
     ) {
-        $this->id = $id;
-        $this->combinationId = $combinationId;
-        $this->name = $name;
-        $this->reference = $reference;
-        $this->supplierReference = $supplierReference;
-        $this->quantity = $quantity;
-        $this->unitPrice = $unitPrice;
-        $this->totalPrice = $totalPrice;
-        $this->availableQuantity = $availableQuantity;
-        $this->imagePath = $imagePath;
-        $this->unitPriceTaxExclRaw = $unitPriceTaxExclRaw;
-        $this->unitPriceTaxInclRaw = $unitPriceTaxInclRaw;
-        $this->taxRate = $taxRate;
-        $this->orderDetailId = $orderDetailId;
-        $this->amountRefunded = $amountRefunded;
-        $this->quantityRefunded = $quantityRefunded;
-        $this->amountRefundable = $amountRefundable;
-        $this->amountRefundableRaw = $amountRefundableRaw;
-        $this->location = $location;
-        $this->orderInvoiceId = $orderInvoiceId;
-        $this->orderInvoiceNumber = $orderInvoiceNumber;
-        $this->type = $type;
-        $this->availableOutOfStock = $availableOutOfStock;
-        $this->packItems = $packItems;
-        $this->customizations = $customizations;
-        $this->mpn = $mpn;
     }
 
     /**

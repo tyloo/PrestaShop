@@ -34,14 +34,9 @@ use PrestaShop\PrestaShop\Core\ConfigurationInterface;
  */
 final class GeoLiteCityChecker implements GeoLiteCityCheckerInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     public function isAvailable()

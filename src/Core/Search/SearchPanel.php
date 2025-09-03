@@ -50,23 +50,18 @@ class SearchPanel implements SearchPanelInterface
      * @var array
      */
     protected $queryParams;
-    /**
-     * @var bool|null
-     */
-    private $isExternalLink;
 
     public function __construct(
         string $title,
         string $buttonLabel,
         string $link,
         array $queryParams,
-        ?bool $isExternalLink = true,
+        private readonly ?bool $isExternalLink = true,
     ) {
         $this->title = $title;
         $this->buttonLabel = $buttonLabel;
         $this->link = $link;
         $this->queryParams = $queryParams;
-        $this->isExternalLink = $isExternalLink;
     }
 
     public function getTitle(): string

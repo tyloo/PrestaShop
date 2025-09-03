@@ -60,17 +60,14 @@ final class EmployeeGridDefinitionFactory extends AbstractGridDefinitionFactory
     use BulkDeleteActionTrait;
     use DeleteActionTrait;
 
-    /**
-     * @var string Date format for the current user
-     */
-    private $contextDateFormat;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        string $contextDateFormat,
+        /**
+         * @var string Date format for the current user
+         */
+        private string $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
-        $this->contextDateFormat = $contextDateFormat;
     }
 
     /**

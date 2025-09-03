@@ -74,52 +74,16 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'product';
 
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $multistoreFeature;
-
-    /**
-     * @var ShopConstraintContextInterface
-     */
-    private $shopConstraintContext;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var AccessibilityCheckerInterface
-     */
-    private $singleShopChecker;
-
-    /**
-     * @var AccessibilityCheckerInterface
-     */
-    private $multipleShopsChecker;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        ConfigurationInterface $configuration,
-        FeatureInterface $multistoreFeature,
-        ShopConstraintContextInterface $shopConstraintContext,
-        FormFactoryInterface $formFactory,
-        AccessibilityCheckerInterface $singleShopChecker,
-        AccessibilityCheckerInterface $multipleShopsChecker,
+        private ConfigurationInterface $configuration,
+        private FeatureInterface $multistoreFeature,
+        private ShopConstraintContextInterface $shopConstraintContext,
+        private FormFactoryInterface $formFactory,
+        private AccessibilityCheckerInterface $singleShopChecker,
+        private AccessibilityCheckerInterface $multipleShopsChecker,
     ) {
         parent::__construct($hookDispatcher);
-        $this->configuration = $configuration;
-        $this->multistoreFeature = $multistoreFeature;
-        $this->shopConstraintContext = $shopConstraintContext;
-        $this->formFactory = $formFactory;
-        $this->singleShopChecker = $singleShopChecker;
-        $this->multipleShopsChecker = $multipleShopsChecker;
     }
 
     protected function getId(): string
@@ -137,7 +101,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         $editAttributes = $this->getMultiShopEditionAttributes();
 
         $shopId = null;
-        if ($this->shopConstraintContext->getShopConstraint()->getShopId()) {
+        if ($this->shopConstraintContext->getShopConstraint()->getShopId() !== null) {
             $shopId = $this->shopConstraintContext->getShopConstraint()->getShopId()->getValue();
         }
 
@@ -390,7 +354,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
     {
         // We use only one variable for extra params because they happen to match for all use cases, they may need to be split in the future
         $extraRouteParams = [];
-        if ($this->shopConstraintContext->getShopConstraint()->getShopGroupId()) {
+        if ($this->shopConstraintContext->getShopConstraint()->getShopGroupId() !== null) {
             $deleteRouteName = 'admin_products_delete_from_shop_group';
             $duplicateRouteName = 'admin_products_duplicate_shop_group';
             $enableRouteName = 'admin_products_enable_for_shop_group';
@@ -643,7 +607,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     protected function getBulkActions()
     {
-        if ($this->shopConstraintContext->getShopConstraint()->getShopId()) {
+        if ($this->shopConstraintContext->getShopConstraint()->getShopId() !== null) {
             $bulkEnableRoute = 'admin_products_bulk_enable_shop';
             $bulkDisableRoute = 'admin_products_bulk_disable_shop';
             $bulkDuplicateRoute = 'admin_products_bulk_duplicate_shop';

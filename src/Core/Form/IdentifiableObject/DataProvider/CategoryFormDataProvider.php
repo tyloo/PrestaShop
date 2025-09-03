@@ -53,8 +53,8 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
     {
         /** @var EditableCategory $editableCategory */
         $editableCategory = $this->queryBus->handle(new GetCategoryForEditing($categoryId));
-
-        $coverImages = $thumbnailImages = [];
+        $coverImages = [];
+        $thumbnailImages = [];
         $categoryId = (int) $categoryId;
         $categoryUrl = $this->categoryProvider->getUrl($categoryId, '{friendly-url}');
         $coverImage = $editableCategory->getCoverImage();
@@ -70,6 +70,7 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
                 ),
             ];
         }
+
         $thumbnailImage = $editableCategory->getThumbnailImage();
         if ($thumbnailImage) {
             $thumbnailImages[] =

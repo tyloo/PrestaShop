@@ -31,11 +31,9 @@ use PrestaShop\PrestaShop\Core\Foundation\Database\Exception;
 
 class QueryBuilder
 {
-    private $db;
-
-    public function __construct(\PrestaShop\PrestaShop\Core\Foundation\Database\DatabaseInterface $db)
-    {
-        $this->db = $db;
+    public function __construct(
+        private readonly \PrestaShop\PrestaShop\Core\Foundation\Database\DatabaseInterface $db,
+    ) {
     }
 
     public function quote($value)
@@ -51,7 +49,7 @@ class QueryBuilder
 
     public function buildWhereConditions($andOrOr, array $conditions)
     {
-        $operator = strtoupper($andOrOr);
+        $operator = strtoupper((string) $andOrOr);
 
         if ($operator !== 'AND' && $operator !== 'OR') {
             throw new Exception(\sprintf('Invalid operator %s - must be "and" or "or".', $andOrOr));
@@ -67,10 +65,11 @@ class QueryBuilder
                 foreach ($value as $item) {
                     $list[] = $this->quote($item);
                 }
+
                 $parts[] = $key . ' IN (' . implode(', ', $list) . ')';
             }
         }
 
-        return implode(" $operator ", $parts);
+        return implode(\sprintf(' %s ', $operator), $parts);
     }
 }

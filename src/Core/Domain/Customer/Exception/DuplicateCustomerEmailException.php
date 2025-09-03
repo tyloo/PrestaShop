@@ -45,20 +45,17 @@ class DuplicateCustomerEmailException extends CustomerException
     public const EDIT = 2;
 
     /**
-     * @var Email
-     */
-    private $email;
-
-    /**
      * @param string $message
      * @param int    $code
      * @param null   $previous
      */
-    public function __construct(Email $email, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private readonly Email $email,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->email = $email;
     }
 
     /**

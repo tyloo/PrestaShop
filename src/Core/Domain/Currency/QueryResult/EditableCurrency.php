@@ -38,51 +38,6 @@ class EditableCurrency
     private $currencyId;
 
     /**
-     * @var array
-     */
-    private $names;
-
-    /**
-     * @var array
-     */
-    private $symbols;
-
-    /**
-     * @var array
-     */
-    private $transformations;
-
-    /**
-     * @var string
-     */
-    private $isoCode;
-
-    /**
-     * @var float
-     */
-    private $exchangeRate;
-
-    /**
-     * @var int
-     */
-    private $precision;
-
-    /**
-     * @var bool
-     */
-    private $isEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isUnofficial;
-
-    /**
-     * @var int[]
-     */
-    private $associatedShopIds;
-
-    /**
      * @param int    $currencyId
      * @param string $isoCode
      * @param float  $exchangeRate
@@ -93,26 +48,17 @@ class EditableCurrency
      */
     public function __construct(
         $currencyId,
-        $isoCode,
-        array $names,
-        array $symbols,
-        array $transformations,
-        $exchangeRate,
-        int $precision,
-        $isEnabled,
-        bool $isUnofficial,
-        array $associatedShopIds,
+        private $isoCode,
+        private readonly array $names,
+        private readonly array $symbols,
+        private readonly array $transformations,
+        private $exchangeRate,
+        private readonly int $precision,
+        private $isEnabled,
+        private readonly bool $isUnofficial,
+        private readonly array $associatedShopIds,
     ) {
         $this->currencyId = new CurrencyId($currencyId);
-        $this->isoCode = $isoCode;
-        $this->names = $names;
-        $this->symbols = $symbols;
-        $this->transformations = $transformations;
-        $this->exchangeRate = $exchangeRate;
-        $this->precision = $precision;
-        $this->isEnabled = $isEnabled;
-        $this->isUnofficial = $isUnofficial;
-        $this->associatedShopIds = $associatedShopIds;
     }
 
     /**

@@ -37,18 +37,19 @@ use Throwable;
 class MissingZoneRequiredFieldsException extends ZoneException
 {
     /**
-     * @var string[]
-     */
-    private $missingRequiredFields;
-
-    /**
      * @param string $message
      * @param int    $code
      */
-    public function __construct(array $missingRequiredFields, $message = '', $code = 0, ?Throwable $previous = null)
-    {
+    public function __construct(
+        /**
+         * @var string[]
+         */
+        private readonly array $missingRequiredFields,
+        $message = '',
+        $code = 0,
+        ?Throwable $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-        $this->missingRequiredFields = $missingRequiredFields;
     }
 
     /**

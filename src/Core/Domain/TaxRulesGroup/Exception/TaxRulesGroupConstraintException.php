@@ -43,8 +43,12 @@ class TaxRulesGroupConstraintException extends TaxRulesGroupException
     public const INVALID_SHOP_ASSOCIATION = 2;
 
     public const INVALID_NAME = 3;
+
     public const INVALID_ACTIVE = 4;
+
     public const INVALID_DELETED = 5;
+
     public const INVALID_CREATION_DATE = 6;
+
     public const INVALID_UPDATE_DATE = 7;
 }

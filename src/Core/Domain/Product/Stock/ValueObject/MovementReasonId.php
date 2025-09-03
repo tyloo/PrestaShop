@@ -42,6 +42,7 @@ class MovementReasonId
      * @todo: add other keys
      */
     public const INCREASE_BY_EMPLOYEE_EDITION_CONFIG_KEY = 'PS_STOCK_MVT_INC_EMPLOYEE_EDITION';
+
     public const DECREASE_BY_EMPLOYEE_EDITION_CONFIG_KEY = 'PS_STOCK_MVT_DEC_EMPLOYEE_EDITION';
 
     /**

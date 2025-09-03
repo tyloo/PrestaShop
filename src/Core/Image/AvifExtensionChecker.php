@@ -53,7 +53,7 @@ class AvifExtensionChecker
         // @see https://stackoverflow.com/questions/71739530/php-8-1-imageavif-avif-image-support-has-been-disabled
         if (\function_exists('imageavif')) {
             set_error_handler(
-                function ($severity, $message) { /* @phpstan-ignore-line */
+                function ($severity, $message): void { /* @phpstan-ignore-line */
                     if (str_contains($message, 'imageavif(): AVIF image support has been disabled')) {
                         throw new AvifUnavailableException($message);
                     }

@@ -53,26 +53,6 @@ class Price extends NumberSpecification
     public const PATTERN_BASE_PLACEHOLDER = '#,##0.00';
 
     /**
-     * Type of display for currency symbol
-     * cf. self::CURRENCY_DISPLAY_SYMBOL and self::CURRENCY_DISPLAY_CODE constants.
-     *
-     * @var string
-     */
-    protected $currencyDisplay;
-
-    /**
-     * @var string The currency symbol
-     *             eg : €
-     */
-    protected $currencySymbol;
-
-    /**
-     * @var string The currency code
-     *             eg : EUR
-     */
-    protected $currencyCode;
-
-    /**
      * Price specification constructor.
      *
      * @param string             $positivePattern    CLDR formatting pattern for positive amounts
@@ -99,14 +79,14 @@ class Price extends NumberSpecification
         $groupingUsed,
         $primaryGroupSize,
         $secondaryGroupSize,
-        $currencyDisplay,
-        $currencySymbol,
-        $currencyCode,
+        /**
+         * Type of display for currency symbol
+         * cf. self::CURRENCY_DISPLAY_SYMBOL and self::CURRENCY_DISPLAY_CODE constants.
+         */
+        protected $currencyDisplay,
+        protected $currencySymbol,
+        protected $currencyCode,
     ) {
-        $this->currencyDisplay = $currencyDisplay;
-        $this->currencySymbol = $currencySymbol;
-        $this->currencyCode = $currencyCode;
-
         parent::__construct(
             $positivePattern,
             $negativePattern,

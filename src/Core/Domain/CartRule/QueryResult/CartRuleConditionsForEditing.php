@@ -34,57 +34,15 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerIdInterface;
 
 class CartRuleConditionsForEditing
 {
-    /**
-     * @var CustomerIdInterface
-     */
-    private $customerId;
-
-    /**
-     * @var DateTime|null
-     */
-    private $dateFrom;
-
-    /**
-     * @var DateTime|null
-     */
-    private $dateTo;
-
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var int
-     */
-    private $quantityPerUser;
-
-    /**
-     * @var CartRuleMinimumForEditing|null
-     */
-    private $minimum;
-
-    /**
-     * @var CartRuleRestrictionsForEditing
-     */
-    private $restrictions;
-
     public function __construct(
-        CustomerIdInterface $customerId,
-        ?DateTime $dateFrom,
-        ?DateTime $dateTo,
-        int $quantity,
-        int $quantityPerUser,
-        ?CartRuleMinimumForEditing $minimum,
-        CartRuleRestrictionsForEditing $restrictions,
+        private readonly CustomerIdInterface $customerId,
+        private readonly ?DateTime $dateFrom,
+        private readonly ?DateTime $dateTo,
+        private readonly int $quantity,
+        private readonly int $quantityPerUser,
+        private readonly ?CartRuleMinimumForEditing $minimum,
+        private readonly CartRuleRestrictionsForEditing $restrictions,
     ) {
-        $this->customerId = $customerId;
-        $this->dateFrom = $dateFrom;
-        $this->dateTo = $dateTo;
-        $this->quantity = $quantity;
-        $this->quantityPerUser = $quantityPerUser;
-        $this->minimum = $minimum;
-        $this->restrictions = $restrictions;
     }
 
     public function getCustomerId(): CustomerIdInterface

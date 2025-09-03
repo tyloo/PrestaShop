@@ -35,22 +35,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
 class LocalizedTags
 {
     /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
-     * @var string[]
-     */
-    private $tags;
-
-    /**
      * @param string[] $tags
      */
-    public function __construct(int $languageId, array $tags)
-    {
-        $this->languageId = $languageId;
-        $this->tags = $tags;
+    public function __construct(
+        private readonly int $languageId,
+        private readonly array $tags,
+    ) {
     }
 
     public function getLanguageId(): int

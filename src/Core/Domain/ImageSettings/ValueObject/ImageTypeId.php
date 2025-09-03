@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\ImageSettings\Exception\ImageTypeException
  */
 class ImageTypeId
 {
-    private int $imageTypeId;
+    private readonly int $imageTypeId;
 
     /**
      * @throws ImageTypeException

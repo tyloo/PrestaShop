@@ -38,16 +38,6 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, FormChoiceAttributeProviderInterface
 {
     /**
-     * @var CountryDataProvider
-     */
-    private $countryDataProvider;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    /**
      * @var array
      */
     private $countries;
@@ -66,13 +56,11 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
      * @param int $langId
      */
     public function __construct(
-        $langId,
-        CountryDataProvider $countryDataProvider,
-        private string $psImageDir,
-        private string $psImageBaseUrl,
+        private $langId,
+        private readonly CountryDataProvider $countryDataProvider,
+        private readonly string $psImageDir,
+        private readonly string $psImageBaseUrl,
     ) {
-        $this->langId = $langId;
-        $this->countryDataProvider = $countryDataProvider;
     }
 
     /**
@@ -89,10 +77,7 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getChoicesAttributes()
+    public function getChoicesAttributes(): array
     {
         $countries = $this->getCountries();
         $dniCountriesId = $this->getDniCountriesId();
@@ -103,11 +88,12 @@ final class CountryByIdChoiceProvider implements FormChoiceProviderInterface, Fo
             if (\in_array($country['id_country'], $dniCountriesId, true)) {
                 $choicesAttributes[$country['name']]['need_dni'] = 1;
             }
+
             if (\in_array($country['id_country'], $postcodeCountriesId, true)) {
                 $choicesAttributes[$country['name']]['need_postcode'] = 1;
             }
 
-            $flagPath = 'flags/' . strtolower($country['iso_code']) . '.jpg';
+            $flagPath = 'flags/' . strtolower((string) $country['iso_code']) . '.jpg';
 
             if (file_exists($this->psImageDir . $flagPath)) {
                 $choicesAttributes[$country['name']]['data-logo'] = $this->psImageBaseUrl . $flagPath;

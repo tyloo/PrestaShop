@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class LinkGroupColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'link_group';
     }

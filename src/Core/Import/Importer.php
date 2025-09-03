@@ -43,43 +43,13 @@ use SplFileInfo;
  */
 final class Importer implements ImporterInterface
 {
-    /**
-     * @var ImportEntityDeleterInterface
-     */
-    private $entityDeleter;
-
-    /**
-     * @var ImportAccessCheckerInterface
-     */
-    private $accessChecker;
-
-    /**
-     * @var FileReaderInterface
-     */
-    private $fileReader;
-
-    /**
-     * @var ImportDirectory
-     */
-    private $importDir;
-
-    /**
-     * @var IniConfiguration
-     */
-    private $iniConfiguration;
-
     public function __construct(
-        ImportAccessCheckerInterface $accessChecker,
-        ImportEntityDeleterInterface $entityDeleter,
-        FileReaderInterface $fileReader,
-        ImportDirectory $importDir,
-        IniConfiguration $iniConfiguration,
+        private readonly ImportAccessCheckerInterface $accessChecker,
+        private readonly ImportEntityDeleterInterface $entityDeleter,
+        private readonly FileReaderInterface $fileReader,
+        private readonly ImportDirectory $importDir,
+        private readonly IniConfiguration $iniConfiguration,
     ) {
-        $this->entityDeleter = $entityDeleter;
-        $this->accessChecker = $accessChecker;
-        $this->fileReader = $fileReader;
-        $this->importDir = $importDir;
-        $this->iniConfiguration = $iniConfiguration;
     }
 
     public function import(
@@ -121,6 +91,7 @@ final class Importer implements ImporterInterface
                 if ($isFirstIteration) {
                     continue;
                 }
+
                 break;
             }
 
@@ -131,9 +102,7 @@ final class Importer implements ImporterInterface
                     $runtimeConfig,
                     $dataRow
                 );
-            } catch (InvalidDataRowException) {
-                continue;
-            } catch (SkippedIterationException) {
+            } catch (InvalidDataRowException|SkippedIterationException) {
                 continue;
             } finally {
                 ++$processedRows;

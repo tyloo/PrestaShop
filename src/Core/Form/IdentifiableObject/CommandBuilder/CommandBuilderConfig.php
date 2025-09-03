@@ -59,21 +59,17 @@ namespace PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder;
 class CommandBuilderConfig
 {
     public const FIELD_TYPE_OPTION = 'type';
-    public const FIELD_DEFAULT_VALUE_OPTION = 'default';
 
-    /**
-     * @var string
-     */
-    private $modifyAllNamePrefix;
+    public const FIELD_DEFAULT_VALUE_OPTION = 'default';
 
     /**
      * @var array<int, CommandField>
      */
     private $fields = [];
 
-    public function __construct(string $modifyAllNamePrefix = '')
-    {
-        $this->modifyAllNamePrefix = $modifyAllNamePrefix;
+    public function __construct(
+        private readonly string $modifyAllNamePrefix = '',
+    ) {
     }
 
     /**
@@ -189,6 +185,7 @@ class CommandBuilderConfig
         } elseif (! \is_array($dataFieldDescription)) {
             throw new DataFieldException(\sprintf('Type "%s" is not supported as configuration of data field "%s", expected array or string', $path, \gettype($dataFieldDescription)));
         }
+
         $dataFieldArguments = [
             $path,
             $dataFieldDescription[static::FIELD_TYPE_OPTION],

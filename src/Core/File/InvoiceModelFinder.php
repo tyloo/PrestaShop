@@ -35,22 +35,15 @@ use Symfony\Component\Finder\Finder;
  */
 final class InvoiceModelFinder implements FileFinderInterface
 {
-    /**
-     * @var array
-     */
-    private $invoiceModelDirectories;
-
-    public function __construct(array $invoiceModelDirectories)
-    {
-        $this->invoiceModelDirectories = $invoiceModelDirectories;
+    public function __construct(
+        private readonly array $invoiceModelDirectories,
+    ) {
     }
 
     /**
      * Finds all invoice model files.
-     *
-     * @return array
      */
-    public function find()
+    public function find(): array
     {
         $directories = $this->invoiceModelDirectories;
         $filesystem = new Filesystem();

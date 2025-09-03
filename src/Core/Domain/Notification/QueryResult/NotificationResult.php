@@ -33,66 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Notification\QueryResult;
 class NotificationResult
 {
     /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var int
-     */
-    private $customerId;
-
-    /**
-     * @var string
-     */
-    private $customerName;
-
-    /**
-     * @var int
-     */
-    private $customerMessageId;
-
-    /**
-     * @var int
-     */
-    private $customerThreadId;
-
-    /**
-     * @var string
-     */
-    private $customerViewUrl;
-
-    /**
-     * @var string
-     */
-    private $totalPaid;
-
-    /**
-     * @var string
-     */
-    private $carrier;
-
-    /**
-     * @var string
-     */
-    private $isoCode;
-
-    /**
-     * @var string
-     */
-    private $company;
-
-    /**
-     * @var string
-     */
-    private $status;
-
-    /**
-     * @var string
-     */
-    private $dateAdd;
-
-    /**
      * @var string
      */
     protected $customerThreadViewUrl;
@@ -103,33 +43,21 @@ class NotificationResult
     protected $orderViewUrl;
 
     public function __construct(
-        int $orderId,
-        int $customerId,
-        string $customerName,
-        int $customerMessageId,
-        int $customerThreadId,
-        string $customerViewUrl,
-        string $totalPaid,
-        string $carrier,
-        string $isoCode,
-        string $company,
-        string $status,
-        string $dateAdd,
+        private readonly int $orderId,
+        private readonly int $customerId,
+        private readonly string $customerName,
+        private readonly int $customerMessageId,
+        private readonly int $customerThreadId,
+        private readonly string $customerViewUrl,
+        private readonly string $totalPaid,
+        private readonly string $carrier,
+        private readonly string $isoCode,
+        private readonly string $company,
+        private readonly string $status,
+        private readonly string $dateAdd,
         string $customerThreadViewUrl,
         string $orderViewUrl,
     ) {
-        $this->orderId = $orderId;
-        $this->customerId = $customerId;
-        $this->customerName = $customerName;
-        $this->customerMessageId = $customerMessageId;
-        $this->customerThreadId = $customerThreadId;
-        $this->customerViewUrl = $customerViewUrl;
-        $this->totalPaid = $totalPaid;
-        $this->carrier = $carrier;
-        $this->isoCode = $isoCode;
-        $this->company = $company;
-        $this->status = $status;
-        $this->dateAdd = $dateAdd;
         $this->customerThreadViewUrl = $customerThreadViewUrl;
         $this->orderViewUrl = $orderViewUrl;
     }

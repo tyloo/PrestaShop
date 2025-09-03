@@ -37,6 +37,8 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 class ApiClientSettings
 {
     public const MAX_CLIENT_ID_LENGTH = 255;
+
     public const MAX_CLIENT_NAME_LENGTH = 255;
+
     public const MAX_DESCRIPTION_LENGTH = FormattedTextareaType::LIMIT_TEXT_UTF8;
 }

@@ -48,16 +48,6 @@ class AddAttributeCommand
     private $localizedNames;
 
     /**
-     * @var string
-     */
-    private $color;
-
-    /**
-     * @var int[]
-     */
-    private $associatedShopIds;
-
-    /**
      * @var string|null
      */
     private $pathName;
@@ -67,13 +57,15 @@ class AddAttributeCommand
      *
      * @throws AttributeConstraintException
      */
-    public function __construct(int $attributeGroupId, array $localizedValue, string $color, array $associatedShopIds = [])
-    {
+    public function __construct(
+        int $attributeGroupId,
+        array $localizedValue,
+        private readonly string $color,
+        private readonly array $associatedShopIds = [],
+    ) {
         $this->assertValuesAreValid($localizedValue);
         $this->attributeGroupId = new AttributeGroupId($attributeGroupId);
         $this->localizedNames = $localizedValue;
-        $this->color = $color;
-        $this->associatedShopIds = $associatedShopIds;
     }
 
     public function getAttributeGroupId(): AttributeGroupId

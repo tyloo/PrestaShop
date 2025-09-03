@@ -43,29 +43,9 @@ class EditableContact
     private $contactId;
 
     /**
-     * @var array|string[]
-     */
-    private $localisedTitles;
-
-    /**
      * @var Email|null
      */
     private $email;
-
-    /**
-     * @var bool
-     */
-    private $isMessagesSavingEnabled;
-
-    /**
-     * @var string[]
-     */
-    private $localisedDescription;
-
-    /**
-     * @var int[]
-     */
-    private $shopAssociation;
 
     /**
      * @param int      $contactId
@@ -80,17 +60,13 @@ class EditableContact
      */
     public function __construct(
         $contactId,
-        array $localisedTitles,
+        private readonly array $localisedTitles,
         $email,
-        $isMessagesSavingEnabled,
-        $localisedDescription,
-        array $shopAssociation,
+        private $isMessagesSavingEnabled,
+        private $localisedDescription,
+        private readonly array $shopAssociation,
     ) {
         $this->contactId = new ContactId($contactId);
-        $this->localisedTitles = $localisedTitles;
-        $this->isMessagesSavingEnabled = $isMessagesSavingEnabled;
-        $this->localisedDescription = $localisedDescription;
-        $this->shopAssociation = $shopAssociation;
         $this->email = $email ? new Email($email) : null;
     }
 

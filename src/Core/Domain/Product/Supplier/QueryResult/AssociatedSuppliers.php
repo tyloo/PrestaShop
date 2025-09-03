@@ -35,22 +35,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Supplier\QueryResult;
 class AssociatedSuppliers
 {
     /**
-     * @var int
-     */
-    private $defaultSupplierId;
-
-    /**
-     * @var int[]
-     */
-    private $supplierIds;
-
-    /**
      * @param int[] $supplierIds
      */
-    public function __construct(int $defaultSupplierId, array $supplierIds)
-    {
-        $this->defaultSupplierId = $defaultSupplierId;
-        $this->supplierIds = $supplierIds;
+    public function __construct(
+        private readonly int $defaultSupplierId,
+        private readonly array $supplierIds,
+    ) {
     }
 
     public function getDefaultSupplierId(): int

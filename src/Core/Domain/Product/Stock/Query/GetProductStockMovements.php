@@ -73,11 +73,13 @@ class GetProductStockMovements
         if ($offset < 0) {
             throw new InvalidArgumentException('Offset should be a positive integer');
         }
+
         $this->offset = $offset;
 
         if ($limit < 0) {
             throw new InvalidArgumentException('Limit should be a positive integer');
         }
+
         $this->limit = $limit;
         $this->productId = new ProductId($productId);
     }

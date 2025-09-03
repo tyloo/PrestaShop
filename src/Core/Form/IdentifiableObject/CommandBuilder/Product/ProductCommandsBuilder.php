@@ -38,16 +38,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 class ProductCommandsBuilder implements ProductCommandsBuilderInterface
 {
     /**
-     * @var iterable<ProductCommandsBuilderInterface>
-     */
-    private $commandBuilders;
-
-    /**
      * @param iterable<ProductCommandsBuilderInterface> $commandBuilders
      */
-    public function __construct(iterable $commandBuilders)
-    {
-        $this->commandBuilders = $commandBuilders;
+    public function __construct(
+        private readonly iterable $commandBuilders,
+    ) {
     }
 
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array

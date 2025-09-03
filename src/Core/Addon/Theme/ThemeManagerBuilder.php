@@ -44,11 +44,12 @@ use Symfony\Component\Finder\Finder;
 
 class ThemeManagerBuilder
 {
-    private LoggerInterface $logger;
-    private ApiClientContext $apiClientContext;
+    private readonly LoggerInterface $logger;
+
+    private readonly ApiClientContext $apiClientContext;
 
     public function __construct(
-        private Context $context,
+        private readonly Context $context,
         private readonly Db $db,
         private ?ThemeValidator $themeValidator = null,
         ?LoggerInterface $logger = null,
@@ -65,6 +66,7 @@ class ThemeManagerBuilder
         if ($this->themeValidator === null) {
             $this->themeValidator = new ThemeValidator($this->context->getTranslator(), new Configuration());
         }
+
         if ($this->context->employee === null) {
             $this->context->employee = new Employee();
         }

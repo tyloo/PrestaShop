@@ -47,33 +47,15 @@ class AddStateCommand
      */
     private $zoneId;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $isoCode;
-
-    /**
-     * @var bool
-     */
-    private $active;
-
     public function __construct(
         int $countryId,
         int $zoneId,
-        string $name,
-        string $isoCode,
-        bool $active,
+        private readonly string $name,
+        private readonly string $isoCode,
+        private readonly bool $active,
     ) {
         $this->countryId = new CountryId($countryId);
         $this->zoneId = new ZoneId($zoneId);
-        $this->name = $name;
-        $this->isoCode = $isoCode;
-        $this->active = $active;
     }
 
     public function getCountryId(): CountryId

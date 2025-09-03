@@ -53,43 +53,6 @@ use Symfony\Component\Translation\MessageCatalogue;
 class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
 {
     /**
-     * We need a connection to DB to load user translated catalogue.
-     *
-     * @var DatabaseTranslationLoader
-     */
-    private $databaseTranslationLoader;
-
-    /**
-     * @var string
-     */
-    private $themeName;
-
-    /**
-     * @var CatalogueLayersProviderInterface
-     */
-    private $coreFrontProvider;
-
-    /**
-     * @var ThemeExtractor
-     */
-    private $themeExtractor;
-
-    /**
-     * @var ThemeRepository
-     */
-    private $themeRepository;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var string
-     */
-    private $themeResourcesDir;
-
-    /**
      * @var Theme
      */
     private $theme;
@@ -99,30 +62,19 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
      */
     private $defaultCatalogue;
 
-    /**
-     * @var ModuleCatalogueProviderFactory
-     */
-    private $moduleCatalogueProviderFactory;
-
     public function __construct(
-        ModuleCatalogueProviderFactory $moduleCatalogueProviderFactory,
-        CatalogueLayersProviderInterface $coreFrontProvider,
-        DatabaseTranslationLoader $databaseTranslationLoader,
-        ThemeExtractor $themeExtractor,
-        ThemeRepository $themeRepository,
-        Filesystem $filesystem,
-        string $themeResourcesDir,
-        string $themeName,
+        private readonly ModuleCatalogueProviderFactory $moduleCatalogueProviderFactory,
+        private readonly CatalogueLayersProviderInterface $coreFrontProvider,
+        /**
+         * We need a connection to DB to load user translated catalogue.
+         */
+        private readonly DatabaseTranslationLoader $databaseTranslationLoader,
+        private readonly ThemeExtractor $themeExtractor,
+        private readonly ThemeRepository $themeRepository,
+        private readonly Filesystem $filesystem,
+        private readonly string $themeResourcesDir,
+        private readonly string $themeName,
     ) {
-        $this->databaseTranslationLoader = $databaseTranslationLoader;
-        $this->moduleCatalogueProviderFactory = $moduleCatalogueProviderFactory;
-        $this->coreFrontProvider = $coreFrontProvider;
-        $this->themeExtractor = $themeExtractor;
-        $this->themeRepository = $themeRepository;
-        $this->filesystem = $filesystem;
-        $this->themeResourcesDir = $themeResourcesDir;
-        $this->themeName = $themeName;
-
         $this->assertThemeIsValid();
     }
 
@@ -187,9 +139,10 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
             if (! $theme instanceof Theme) {
                 throw new InvalidThemeException();
             }
+
             $this->theme = $theme;
-        } catch (Exception $e) {
-            throw new RuntimeException(\sprintf('The theme "%s" doesn\'t exist', $this->themeName), 0, $e);
+        } catch (Exception $exception) {
+            throw new RuntimeException(\sprintf('The theme "%s" doesn\'t exist', $this->themeName), 0, $exception);
         }
     }
 
@@ -249,7 +202,7 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
 
         $catalogue = $this->getDefaultCatalogue($locale);
         foreach ($catalogue->getDomains() as $domain) {
-            if (preg_match('/^Modules([A-Z]([^A-Z]+))/', $domain, $matches)) {
+            if (preg_match('/^Modules([A-Z]([^A-Z]+))/', (string) $domain, $matches)) {
                 $modules[] = strtolower($matches[1]);
             }
         }

@@ -46,33 +46,15 @@ class SearchProductCombinations
      */
     private $languageId;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
-     * @var string
-     */
-    private $searchPhrase;
-
-    /**
-     * @var int
-     */
-    private $limit;
-
     public function __construct(
         int $productId,
         int $languageId,
-        ShopConstraint $shopConstraint,
-        string $searchPhrase,
-        int $limit = self::DEFAULT_RESULTS_LIMIT,
+        private readonly ShopConstraint $shopConstraint,
+        private readonly string $searchPhrase,
+        private readonly int $limit = self::DEFAULT_RESULTS_LIMIT,
     ) {
         $this->productId = new ProductId($productId);
         $this->languageId = new LanguageId($languageId);
-        $this->shopConstraint = $shopConstraint;
-        $this->searchPhrase = $searchPhrase;
-        $this->limit = $limit;
     }
 
     public function getProductId(): ProductId

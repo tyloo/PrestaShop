@@ -37,8 +37,8 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class AliasGridDataFactoryDecorator implements GridDataFactoryInterface
 {
     public function __construct(
-        private GridDataFactoryInterface $aliasGridDataFactory,
-        private AliasRepository $aliasRepository,
+        private readonly GridDataFactoryInterface $aliasGridDataFactory,
+        private readonly AliasRepository $aliasRepository,
     ) {
     }
 

@@ -33,66 +33,18 @@ namespace PrestaShop\PrestaShop\Core\Domain\Cart\QueryResult\CartForOrderCreatio
 class CartShipping
 {
     /**
-     * @var ?int
-     */
-    private $selectedCarrierId;
-
-    /**
-     * @var string
-     */
-    private $shippingPrice;
-
-    /**
-     * @var bool
-     */
-    private $freeShipping;
-
-    /**
-     * @var CartDeliveryOption[]
-     */
-    private $deliveryOptions;
-
-    /**
-     * @var bool
-     */
-    private $isRecycledPackaging;
-
-    /**
-     * @var bool
-     */
-    private $isGift;
-
-    /**
-     * @var string
-     */
-    private $giftMessage;
-
-    /**
-     * @var bool
-     */
-    private $isVirtual;
-
-    /**
      * @param CartDeliveryOption[] $deliveryOptions
      */
     public function __construct(
-        string $shippingPrice,
-        bool $freeShipping,
-        array $deliveryOptions,
-        ?int $selectedCarrierId,
-        bool $isGift,
-        bool $isRecycledPackaging,
-        string $giftMessage,
-        bool $isVirtual,
+        private readonly string $shippingPrice,
+        private readonly bool $freeShipping,
+        private readonly array $deliveryOptions,
+        private readonly ?int $selectedCarrierId,
+        private readonly bool $isGift,
+        private readonly bool $isRecycledPackaging,
+        private readonly string $giftMessage,
+        private readonly bool $isVirtual,
     ) {
-        $this->shippingPrice = $shippingPrice;
-        $this->freeShipping = $freeShipping;
-        $this->deliveryOptions = $deliveryOptions;
-        $this->selectedCarrierId = $selectedCarrierId;
-        $this->isGift = $isGift;
-        $this->isRecycledPackaging = $isRecycledPackaging;
-        $this->giftMessage = $giftMessage;
-        $this->isVirtual = $isVirtual;
     }
 
     public function getShippingPrice(): string

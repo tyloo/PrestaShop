@@ -40,6 +40,7 @@ class GetShowcaseCardIsClosed
      * @var int
      */
     private $employeeId;
+
     /**
      * @var ShowcaseCard
      */

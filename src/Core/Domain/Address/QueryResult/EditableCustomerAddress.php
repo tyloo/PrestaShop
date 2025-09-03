@@ -40,144 +40,30 @@ use PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateIdInterface;
 class EditableCustomerAddress
 {
     /**
-     * @var AddressId
-     */
-    private $addressId;
-
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
-
-    /**
-     * @var string
-     */
-    private $customerEmail;
-
-    /**
-     * @var string
-     */
-    private $addressAlias;
-
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $address;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var CountryId
-     */
-    private $countryId;
-
-    /**
-     * @var string|null
-     */
-    private $postCode;
-
-    /**
-     * @var string|null
-     */
-    private $dni;
-
-    /**
-     * @var string|null
-     */
-    private $company;
-
-    /**
-     * @var string|null
-     */
-    private $vatNumber;
-
-    /**
-     * @var string|null
-     */
-    private $address2;
-
-    /**
-     * @var StateIdInterface
-     */
-    private $stateId;
-
-    /**
-     * @var string|null
-     */
-    private $homePhone;
-
-    /**
-     * @var string|null
-     */
-    private $mobilePhone;
-
-    /**
-     * @var string|null
-     */
-    private $other;
-
-    /**
-     * @var string[]
-     */
-    private $requiredFields;
-
-    /**
      * @param StateId  $stateId
      * @param string[] $requiredFields
      */
     public function __construct(
-        AddressId $addressId,
-        CustomerId $customerId,
-        string $customerEmail,
-        string $addressAlias,
-        string $firstName,
-        string $lastName,
-        string $address,
-        string $city,
-        CountryId $countryId,
-        string $postCode,
-        string $dni,
-        string $company,
-        string $vatNumber,
-        string $address2,
-        StateIdInterface $stateId,
-        string $homePhone,
-        string $mobilePhone,
-        string $other,
-        array $requiredFields,
+        private readonly AddressId $addressId,
+        private readonly CustomerId $customerId,
+        private readonly string $customerEmail,
+        private readonly string $addressAlias,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly string $address,
+        private readonly string $city,
+        private readonly CountryId $countryId,
+        private readonly string $postCode,
+        private readonly string $dni,
+        private readonly string $company,
+        private readonly string $vatNumber,
+        private readonly string $address2,
+        private readonly StateIdInterface $stateId,
+        private readonly string $homePhone,
+        private readonly string $mobilePhone,
+        private readonly string $other,
+        private readonly array $requiredFields,
     ) {
-        $this->addressId = $addressId;
-        $this->customerId = $customerId;
-        $this->customerEmail = $customerEmail;
-        $this->addressAlias = $addressAlias;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->address = $address;
-        $this->city = $city;
-        $this->countryId = $countryId;
-        $this->postCode = $postCode;
-        $this->dni = $dni;
-        $this->company = $company;
-        $this->vatNumber = $vatNumber;
-        $this->address2 = $address2;
-        $this->stateId = $stateId;
-        $this->homePhone = $homePhone;
-        $this->mobilePhone = $mobilePhone;
-        $this->other = $other;
-        $this->requiredFields = $requiredFields;
     }
 
     public function getAddressId(): AddressId

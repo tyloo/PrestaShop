@@ -33,22 +33,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Supplier\QueryResult;
 class ViewableSupplier
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var array
-     */
-    private $supplierProducts;
-
-    /**
      * @param string $name
      */
-    public function __construct($name, array $supplierProducts)
-    {
-        $this->name = $name;
-        $this->supplierProducts = $supplierProducts;
+    public function __construct(
+        private $name,
+        private readonly array $supplierProducts,
+    ) {
     }
 
     /**

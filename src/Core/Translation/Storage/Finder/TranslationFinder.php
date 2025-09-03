@@ -43,6 +43,7 @@ use Symfony\Component\Translation\MessageCatalogueInterface;
 class TranslationFinder
 {
     private const ERR_NO_FILES_IN_DIRECTORY = 1;
+
     private const ERR_DIRECTORY_NOT_FOUND = 2;
 
     /**
@@ -67,8 +68,8 @@ class TranslationFinder
         $suffixLength = \strlen($localeSuffix);
 
         foreach ($catalogue->getDomains() as $domain) {
-            if (substr($domain, -$suffixLength) === $localeSuffix) {
-                $cleanDomain = substr($domain, 0, -$suffixLength);
+            if (substr((string) $domain, -$suffixLength) === $localeSuffix) {
+                $cleanDomain = substr((string) $domain, 0, -$suffixLength);
                 $messages[$cleanDomain] = $messages[$domain];
                 unset($messages[$domain]);
             }
@@ -92,8 +93,8 @@ class TranslationFinder
 
         try {
             $translationFiles = $finder->files()->notName('index.php')->in($paths);
-        } catch (InvalidArgumentException $e) {
-            throw new TranslationFilesNotFoundException(\sprintf('Could not crawl for translation files: %s', $e->getMessage()), self::ERR_DIRECTORY_NOT_FOUND, $e);
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            throw new TranslationFilesNotFoundException(\sprintf('Could not crawl for translation files: %s', $invalidArgumentException->getMessage()), self::ERR_DIRECTORY_NOT_FOUND, $invalidArgumentException);
         }
 
         if (\count($translationFiles) === 0) {

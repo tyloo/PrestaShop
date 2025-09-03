@@ -39,22 +39,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CountryByIdConfigurableChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var CountryDataProvider
-     */
-    private $countryDataProvider;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
     public function __construct(
-        int $langId,
-        CountryDataProvider $countryDataProvider,
+        private readonly int $langId,
+        private readonly CountryDataProvider $countryDataProvider,
     ) {
-        $this->langId = $langId;
-        $this->countryDataProvider = $countryDataProvider;
     }
 
     /**

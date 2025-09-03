@@ -31,14 +31,9 @@ use PrestaShop\PrestaShop\Core\Foundation\Filesystem\FileSystem;
 
 class EmailLister
 {
-    /**
-     * @var FileSystem
-     */
-    private $filesystem;
-
-    public function __construct(FileSystem $fs)
-    {
-        $this->filesystem = $fs;
+    public function __construct(
+        private readonly FileSystem $filesystem,
+    ) {
     }
 
     /**
@@ -84,8 +79,8 @@ class EmailLister
      */
     public function getCleanedMailName($mail_name)
     {
-        if (str_contains($mail_name, '.')) {
-            $tmp = explode('.', $mail_name);
+        if (str_contains((string) $mail_name, '.')) {
+            $tmp = explode('.', (string) $mail_name);
 
             if (! isset($tmp[0])) {
                 return $mail_name;

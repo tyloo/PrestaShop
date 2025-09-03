@@ -37,28 +37,15 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextShopIds = $contextShopIds;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -125,7 +112,7 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             if ($filterName === 'id_credit_slip' || $filterName === 'id_order') {
-                $qb->andWhere($availableFiltersMap[$filterName] . "= :$filterName");
+                $qb->andWhere($availableFiltersMap[$filterName] . ('= :' . $filterName));
                 $qb->setParameter($filterName, $value);
 
                 continue;
@@ -136,10 +123,12 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
                     $qb->andWhere($availableFiltersMap[$filterName] . ' >= :date_from');
                     $qb->setParameter('date_from', \sprintf('%s 0:0:0', $value['from']));
                 }
+
                 if (isset($value['to'])) {
                     $qb->andWhere($availableFiltersMap[$filterName] . ' <= :date_to');
                     $qb->setParameter('date_to', \sprintf('%s 23:59:59', $value['to']));
                 }
+
                 continue;
             }
         }

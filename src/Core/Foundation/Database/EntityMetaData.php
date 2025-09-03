@@ -33,10 +33,12 @@ class EntityMetaData
      * @var string|null
      */
     public $entityClassName;
+
     /**
      * @var array|null
      */
     private $primaryKeyFieldnames;
+
     /**
      * @var string|null
      */

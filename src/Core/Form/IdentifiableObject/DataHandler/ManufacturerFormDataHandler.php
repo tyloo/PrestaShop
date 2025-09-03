@@ -39,21 +39,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class ManufacturerFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $bus;
-    /**
-     * @var ManufacturerImageUploader
-     */
-    private $imageUploader;
-
     public function __construct(
-        CommandBusInterface $bus,
-        ManufacturerImageUploader $imageUploader,
+        private readonly CommandBusInterface $bus,
+        private readonly ManufacturerImageUploader $imageUploader,
     ) {
-        $this->bus = $bus;
-        $this->imageUploader = $imageUploader;
     }
 
     public function create(array $data)
@@ -107,7 +96,7 @@ final class ManufacturerFormDataHandler implements FormDataHandlerInterface
 
         if (isset($data['shop_association'])) {
             $shopAssociation = $data['shop_association'] ?: [];
-            $shopAssociation = array_map(function ($shopId) { return (int) $shopId; }, $shopAssociation);
+            $shopAssociation = array_map(fn ($shopId): int => (int) $shopId, $shopAssociation);
 
             $command->setAssociatedShops($shopAssociation);
         }

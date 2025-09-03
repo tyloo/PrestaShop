@@ -40,14 +40,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 final class EventFiltersBuilder extends AbstractFiltersBuilder
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-
-    public function __construct(EventDispatcherInterface $dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
+    public function __construct(
+        private readonly EventDispatcherInterface $dispatcher,
+    ) {
     }
 
     public function buildFilters(?Filters $filters = null)

@@ -36,13 +36,19 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 class PatternTransformer
 {
     public const NO_BREAK_SPACE = "\u{00A0}";
+
     public const RTL_CHARACTER = "\u{200F}";
+
     public const REGULAR_SPACE = ' ';
+
     public const CURRENCY_SYMBOL = '¤';
 
     public const TYPE_LEFT_SYMBOL_WITH_SPACE = 'leftWithSpace';
+
     public const TYPE_LEFT_SYMBOL_WITHOUT_SPACE = 'leftWithoutSpace';
+
     public const TYPE_RIGHT_SYMBOL_WITH_SPACE = 'rightWithSpace';
+
     public const TYPE_RIGHT_SYMBOL_WITHOUT_SPACE = 'rightWithoutSpace';
 
     public const ALLOWED_TRANSFORMATIONS = [

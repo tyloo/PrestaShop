@@ -43,16 +43,6 @@ class AddAttachmentCommand
     private $fileSize;
 
     /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
-     * @var string[]
-     */
-    private $localizedDescriptions = [];
-
-    /**
      * @var string|null
      */
     private $mimeType;
@@ -63,11 +53,15 @@ class AddAttachmentCommand
     private $originalName;
 
     public function __construct(
-        array $localizedNames,
-        array $localizedDescriptions,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedNames,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedDescriptions,
     ) {
-        $this->localizedNames = $localizedNames;
-        $this->localizedDescriptions = $localizedDescriptions;
     }
 
     public function setFileInformation(

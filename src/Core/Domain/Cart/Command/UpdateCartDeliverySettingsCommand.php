@@ -36,38 +36,23 @@ class UpdateCartDeliverySettingsCommand
      */
     private $cartId;
 
-    /**
-     * @var bool
-     */
-    private $allowFreeShipping;
-
-    /**
-     * @var bool
-     */
-    private $isAGift;
-
-    /**
-     * @var bool
-     */
-    private $useRecycledPackaging;
-
-    /**
-     * @var string
-     */
-    private $giftMessage;
-
     public function __construct(
         int $cartId,
-        bool $allowFreeShipping,
-        ?bool $isAGift = null,
-        ?bool $useRecycledPackaging = null,
-        ?string $giftMessage = null,
+        private readonly bool $allowFreeShipping,
+        /**
+         * @var bool
+         */
+        private readonly ?bool $isAGift = null,
+        /**
+         * @var bool
+         */
+        private readonly ?bool $useRecycledPackaging = null,
+        /**
+         * @var string
+         */
+        private readonly ?string $giftMessage = null,
     ) {
         $this->cartId = new CartId($cartId);
-        $this->allowFreeShipping = $allowFreeShipping;
-        $this->isAGift = $isAGift;
-        $this->useRecycledPackaging = $useRecycledPackaging;
-        $this->giftMessage = $giftMessage;
     }
 
     public function getCartId(): CartId

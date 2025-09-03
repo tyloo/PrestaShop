@@ -35,13 +35,21 @@ use PrestaShop\PrestaShop\Core\Import\Exception\NotSupportedImportTypeException;
 final class Entity
 {
     public const TYPE_CATEGORIES = 0;
+
     public const TYPE_PRODUCTS = 1;
+
     public const TYPE_COMBINATIONS = 2;
+
     public const TYPE_CUSTOMERS = 3;
+
     public const TYPE_ADDRESSES = 4;
+
     public const TYPE_MANUFACTURERS = 5;
+
     public const TYPE_SUPPLIERS = 6;
+
     public const TYPE_ALIAS = 7;
+
     public const TYPE_STORE_CONTACTS = 8;
 
     public const AVAILABLE_TYPES = [

@@ -40,18 +40,12 @@ use StockAvailable;
 
 final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -153,8 +147,8 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
         $shopParams = [];
         try {
             StockAvailable::addSqlShopParams($shopParams, $shopId);
-        } catch (PrestaShopException $e) {
-            throw new CoreException('Error occurred when trying to add StockAvailable shop condition', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException('Error occurred when trying to add StockAvailable shop condition', 0, $prestaShopException);
         }
 
         foreach ($shopParams as $key => $value) {
@@ -183,6 +177,7 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
         foreach ($attributeGroups as $attributeIds) {
             $allAttributes = array_merge($allAttributes, $attributeIds);
         }
+
         $qb->select('pac.id_product_attribute, pac.id_attribute')
             ->from($this->dbPrefix . 'product_attribute_combination', 'pac')
             ->leftJoin(

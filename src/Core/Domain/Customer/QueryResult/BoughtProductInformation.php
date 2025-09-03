@@ -33,41 +33,17 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class BoughtProductInformation
 {
     /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var string
-     */
-    private $boughtDate;
-
-    /**
-     * @var string
-     */
-    private $productName;
-
-    /**
-     * @var int
-     */
-    private $boughtQuantity;
-
-    /**
      * @param int    $orderId
      * @param string $boughtDate
      * @param string $productName
      * @param int    $boughtQuantity
      */
     public function __construct(
-        $orderId,
-        $boughtDate,
-        $productName,
-        $boughtQuantity,
+        private $orderId,
+        private $boughtDate,
+        private $productName,
+        private $boughtQuantity,
     ) {
-        $this->orderId = $orderId;
-        $this->boughtDate = $boughtDate;
-        $this->productName = $productName;
-        $this->boughtQuantity = $boughtQuantity;
     }
 
     /**

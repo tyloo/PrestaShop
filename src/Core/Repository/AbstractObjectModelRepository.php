@@ -51,8 +51,8 @@ abstract class AbstractObjectModelRepository
             if (! ObjectModel::existsInDatabase($id, $objectTableName)) {
                 throw new $exceptionClass(\sprintf('%s #%d does not exist', $objectTableName, $id), $errorCode);
             }
-        } catch (PrestaShopException $e) {
-            throw new CoreException(\sprintf('Error occurred when trying to check if %s #%d exists [%s]', $objectTableName, $id, $e->getMessage()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException(\sprintf('Error occurred when trying to check if %s #%d exists [%s]', $objectTableName, $id, $prestaShopException->getMessage()), 0, $prestaShopException);
         }
     }
 
@@ -72,8 +72,8 @@ abstract class AbstractObjectModelRepository
             }
 
             return (int) $objectModel->id;
-        } catch (PrestaShopException $e) {
-            throw new CoreException(\sprintf('Error occurred when trying to add %s [%s]', $objectModel::class, $e->getMessage()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException(\sprintf('Error occurred when trying to add %s [%s]', $objectModel::class, $prestaShopException->getMessage()), 0, $prestaShopException);
         }
     }
 
@@ -90,8 +90,8 @@ abstract class AbstractObjectModelRepository
             if (! $objectModel->update()) {
                 throw new $exceptionClass(\sprintf('Failed to update %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
-        } catch (PrestaShopException $e) {
-            throw new CoreException(\sprintf('Error occurred when trying to update %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException(\sprintf('Error occurred when trying to update %s #%d [%s]', $objectModel::class, $objectModel->id, $prestaShopException->getMessage()), 0, $prestaShopException);
         } finally {
             $objectModel->setFieldsToUpdate(null);
         }
@@ -119,8 +119,8 @@ abstract class AbstractObjectModelRepository
             if (! $objectModel->delete()) {
                 throw new $exceptionClass(\sprintf('Failed to delete %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
-        } catch (PrestaShopException $e) {
-            throw new CoreException(\sprintf('Error occurred when trying to delete %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException(\sprintf('Error occurred when trying to delete %s #%d [%s]', $objectModel::class, $objectModel->id, $prestaShopException->getMessage()), 0, $prestaShopException);
         }
     }
 
@@ -133,8 +133,8 @@ abstract class AbstractObjectModelRepository
             if (! $objectModel->softDelete()) {
                 throw new $exceptionClass(\sprintf('Failed to soft delete %s #%d', $objectModel::class, $objectModel->id), $errorCode);
             }
-        } catch (PrestaShopException $e) {
-            throw new CoreException(\sprintf('Error occurred when trying to soft delete %s #%d [%s]', $objectModel::class, $objectModel->id, $e->getMessage()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException(\sprintf('Error occurred when trying to soft delete %s #%d [%s]', $objectModel::class, $objectModel->id, $prestaShopException->getMessage()), 0, $prestaShopException);
         }
     }
 
@@ -184,8 +184,8 @@ abstract class AbstractObjectModelRepository
             if ((int) $objectModel->id !== $id) {
                 throw ExceptionBuilder::buildException($exceptionClass, \sprintf('%s #%d was not found', $objectModelClass, $id), 0, null, $id);
             }
-        } catch (PrestaShopException $e) {
-            throw new CoreException(\sprintf('Error occurred when trying to get %s #%d [%s]', $objectModelClass, $id, $e->getMessage()), 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CoreException(\sprintf('Error occurred when trying to get %s #%d [%s]', $objectModelClass, $id, $prestaShopException->getMessage()), 0, $prestaShopException);
         }
 
         return $objectModel;

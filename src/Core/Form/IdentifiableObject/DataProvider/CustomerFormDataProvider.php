@@ -39,41 +39,20 @@ use PrestaShop\PrestaShop\Core\Group\Provider\DefaultGroupsProviderInterface;
 final class CustomerFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var DefaultGroupsProviderInterface
-     */
-    private $defaultGroupsProvider;
-
-    /**
-     * @var bool
-     */
-    private $isB2bFeatureEnabled;
-
-    /**
      * @param bool $isB2bFeatureEnabled
      */
     public function __construct(
-        CommandBusInterface $queryBus,
-        ConfigurationInterface $configuration,
-        DefaultGroupsProviderInterface $defaultGroupsProvider,
-        $isB2bFeatureEnabled,
+        private readonly CommandBusInterface $queryBus,
+        private readonly ConfigurationInterface $configuration,
+        private readonly DefaultGroupsProviderInterface $defaultGroupsProvider,
+        private $isB2bFeatureEnabled,
     ) {
-        $this->queryBus = $queryBus;
-        $this->configuration = $configuration;
-        $this->defaultGroupsProvider = $defaultGroupsProvider;
-        $this->isB2bFeatureEnabled = $isB2bFeatureEnabled;
     }
 
-    public function getData($customerId)
+    /**
+     * @return mixed[]
+     */
+    public function getData($customerId): array
     {
         /** @var EditableCustomer $editableCustomer */
         $editableCustomer = $this->queryBus->handle(new GetCustomerForEditing((int) $customerId));
@@ -107,7 +86,10 @@ final class CustomerFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    public function getDefaultData()
+    /**
+     * @return mixed[]
+     */
+    public function getDefaultData(): array
     {
         $defaultGroups = $this->defaultGroupsProvider->getGroups();
 

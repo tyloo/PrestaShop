@@ -34,29 +34,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Pack\QueryResult;
  */
 class PackedProduct
 {
-    /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var int
-     */
-    private $combinationId;
-
     public function __construct(
-        int $productId,
-        int $quantity,
-        int $combinationId,
+        private readonly int $productId,
+        private readonly int $quantity,
+        private readonly int $combinationId,
     ) {
-        $this->productId = $productId;
-        $this->quantity = $quantity;
-        $this->combinationId = $combinationId;
     }
 
     public function getProductId(): int

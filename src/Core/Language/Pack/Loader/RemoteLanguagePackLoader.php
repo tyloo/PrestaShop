@@ -39,14 +39,9 @@ final class RemoteLanguagePackLoader implements LanguagePackLoaderInterface
      */
     public const PACK_LINK = 'http://i18n.prestashop-project.org/translations/%ps_version%/available_languages.json';
 
-    /**
-     * @var Version
-     */
-    private $version;
-
-    public function __construct(Version $version)
-    {
-        $this->version = $version;
+    public function __construct(
+        private readonly Version $version,
+    ) {
     }
 
     public function getLanguagePackList()

@@ -60,6 +60,6 @@ final class AddImageTypeHandler implements AddImageTypeHandlerInterface
 
         $this->imageTypeRepository->save($imageType);
 
-        return new ImageTypeId((int) $imageType->getId());
+        return new ImageTypeId($imageType->getId());
     }
 }

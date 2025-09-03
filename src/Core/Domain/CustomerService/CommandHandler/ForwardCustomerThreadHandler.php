@@ -50,25 +50,15 @@ use Validate;
 class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterface
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(Context $context, ConfigurationInterface $configuration)
-    {
-        $this->context = $context;
+    public function __construct(
+        private readonly Context $context,
+        private readonly ConfigurationInterface $configuration,
+    ) {
         $this->translator = $this->context->getTranslator();
-        $this->configuration = $configuration;
     }
 
     public function handle(ForwardCustomerThreadCommand $command)
@@ -226,7 +216,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
         }
 
         $message['date_add'] = Tools::displayDate($message['date_add'], true);
-        $message['user_agent'] = strip_tags($message['user_agent']);
+        $message['user_agent'] = strip_tags((string) $message['user_agent']);
         $message['message'] = $this->replaceUrlsWithTags($message['message']);
 
         $isValidOrderId = true;
@@ -250,7 +240,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
                 'AdminCustomerThreads' . (int) $message['id_customer_thread'] . (int) $this->context->employee->id
             ),
             'message' => $message,
-            'id_order_product' => isset($id_order_product) ? $id_order_product : null,
+            'id_order_product' => $id_order_product ?? null,
             'email' => true,
             'id_employee' => $id_employee,
             'PS_SHOP_NAME' => $this->configuration->get('PS_SHOP_NAME'),
@@ -279,7 +269,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
                 ON e.id_employee = cm.id_employee
             LEFT OUTER JOIN ' . _DB_PREFIX_ . 'customer c
                 ON (c.email = ct.email)
-            WHERE ct.id_customer_thread = ' . (int) $customerThreadId->getValue() . '
+            WHERE ct.id_customer_thread = ' . $customerThreadId->getValue() . '
             ORDER BY cm.date_add DESC
 		');
     }

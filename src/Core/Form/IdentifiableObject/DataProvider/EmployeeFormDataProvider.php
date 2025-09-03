@@ -37,38 +37,14 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\QueryResult\EditableEmployee;
 final class EmployeeFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var bool
-     */
-    private $isMultistoreFeatureActive;
-
-    /**
-     * @var array
-     */
-    private $defaultShopAssociation;
-
-    /**
-     * @var string
-     */
-    private $defaultAvatarUrl;
-
-    /**
      * @param bool $isMultistoreFeatureActive
      */
     public function __construct(
-        CommandBusInterface $queryBus,
-        $isMultistoreFeatureActive,
-        array $defaultShopAssociation,
-        string $defaultAvatarUrl,
+        private readonly CommandBusInterface $queryBus,
+        private $isMultistoreFeatureActive,
+        private readonly array $defaultShopAssociation,
+        private readonly string $defaultAvatarUrl,
     ) {
-        $this->queryBus = $queryBus;
-        $this->isMultistoreFeatureActive = $isMultistoreFeatureActive;
-        $this->defaultShopAssociation = $defaultShopAssociation;
-        $this->defaultAvatarUrl = $defaultAvatarUrl;
     }
 
     public function getData($employeeId)
@@ -90,7 +66,7 @@ final class EmployeeFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         $data = [
             'active' => true,

@@ -29,13 +29,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult;
 
 class CarrierSummary
 {
-    private int $id;
-    private string $name;
-
-    public function __construct(int $id, string $name)
-    {
-        $this->id = $id;
-        $this->name = $name;
+    public function __construct(
+        private readonly int $id,
+        private readonly string $name,
+    ) {
     }
 
     public function getId(): int

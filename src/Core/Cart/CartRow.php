@@ -95,26 +95,6 @@ class CartRow
     protected $cacheAdapter;
 
     /**
-     * @var bool calculation will use ecotax
-     */
-    protected $useEcotax;
-
-    /**
-     * @var int calculation precision (decimals count)
-     */
-    protected $precision;
-
-    /**
-     * @var string round mode : see self::ROUND_MODE_xxx
-     */
-    protected $roundType;
-
-    /**
-     * @var int|null
-     */
-    protected $orderId;
-
-    /**
      * @var array previous data for product: array given by Cart::getProducts()
      */
     protected $rowData = [];
@@ -159,10 +139,10 @@ class CartRow
         CacheAdapter $cacheAdapter,
         GroupDataProvider $groupDataProvider,
         Database $databaseAdapter,
-        $useEcotax,
-        $precision,
-        $roundType,
-        $orderId = null,
+        protected $useEcotax,
+        protected $precision,
+        protected $roundType,
+        protected $orderId = null,
     ) {
         $this->setRowData($rowData);
         $this->priceCalculator = $priceCalculator;
@@ -171,10 +151,6 @@ class CartRow
         $this->cacheAdapter = $cacheAdapter;
         $this->groupDataProvider = $groupDataProvider;
         $this->databaseAdapter = $databaseAdapter;
-        $this->useEcotax = $useEcotax;
-        $this->precision = $precision;
-        $this->roundType = $roundType;
-        $this->orderId = $orderId;
     }
 
     /**
@@ -301,6 +277,7 @@ class CartRow
         if (! $addressId) {
             $addressId = $cart->getTaxAddressId();
         }
+
         $address = $this->addressFactory->findOrCreate($addressId, true);
         $countryId = (int) $address->id_country;
         $stateId = (int) $address->id_state;
@@ -313,19 +290,20 @@ class CartRow
         if ($cart->id_customer) {
             $groupId = $this->customerDataProvider->getDefaultGroupId((int) $cart->id_customer);
         }
+
         if (! $groupId) {
             $groupId = (int) $this->groupDataProvider->getCurrent()->id;
         }
 
         $cartQuantity = 0;
         if ((int) $cart->id) {
-            $cacheId = \sprintf(self::PRODUCT_PRICE_CACHE_ID_PATTERN, (int) $productId, (int) $cart->id);
+            $cacheId = \sprintf(self::PRODUCT_PRICE_CACHE_ID_PATTERN, $productId, (int) $cart->id);
             if (! $this->cacheAdapter->isStored($cacheId)
                 || ($cartQuantity = $this->cacheAdapter->retrieve($cacheId)
-                                    !== (int) $quantity)) {
+                                    !== $quantity)) {
                 $sql = 'SELECT SUM(`quantity`)
 				FROM `' . _DB_PREFIX_ . 'cart_product`
-				WHERE `id_product` = ' . (int) $productId . '
+				WHERE `id_product` = ' . $productId . '
 				AND `id_cart` = ' . (int) $cart->id;
                 $cartQuantity = (int) $this->databaseAdapter->getValue($sql, _PS_USE_SQL_SLAVE_);
                 $this->cacheAdapter->store($cacheId, (string) $cartQuantity);
@@ -352,7 +330,7 @@ class CartRow
             if ($this->orderId !== null) {
                 $productPrices[$productPrice]['value'] = $this->priceCalculator->getOrderPrice(
                     $this->orderId,
-                    (int) $productId,
+                    $productId,
                     (int) $rowData['id_product_attribute'],
                     $computationParameters['withTaxes'],
                     true,
@@ -360,10 +338,11 @@ class CartRow
                     (int) $rowData['id_customization']
                 );
             }
+
             if ($productPrices[$productPrice]['value'] === null) {
                 $productPrices[$productPrice]['value'] = $this->priceCalculator->priceCalculation(
                     $shopId,
-                    (int) $productId,
+                    $productId,
                     (int) $rowData['id_product_attribute'],
                     $countryId,
                     $stateId,
@@ -378,7 +357,7 @@ class CartRow
                     $this->useEcotax,
                     $specificPriceOutput,
                     true,
-                    (int) $cart->id_customer ? (int) $cart->id_customer : null,
+                    (int) $cart->id_customer ?: null,
                     true,
                     (int) $cart->id,
                     $cartQuantity,
@@ -448,9 +427,11 @@ class CartRow
         if ($taxIncluded < 0) {
             $taxIncluded = 0;
         }
+
         if ($taxExcluded < 0) {
             $taxExcluded = 0;
         }
+
         $this->finalTotalPrice = new AmountImmutable(
             $taxIncluded,
             $taxExcluded
@@ -470,6 +451,7 @@ class CartRow
         if ($percent < 0 || $percent > 100) {
             throw new Exception('Invalid percentage discount given: ' . $percent);
         }
+
         $discountTaxIncluded = $this->finalTotalPrice->getTaxIncluded() * $percent / 100;
         $discountTaxExcluded = $this->finalTotalPrice->getTaxExcluded() * $percent / 100;
         $amount = new AmountImmutable($discountTaxIncluded, $discountTaxExcluded);

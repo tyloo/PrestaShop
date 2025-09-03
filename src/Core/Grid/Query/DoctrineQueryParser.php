@@ -41,6 +41,7 @@ final class DoctrineQueryParser implements QueryParserInterface
             if (! \is_string($key)) {
                 throw new UnsupportedParameterException('Only named parameters are supported in prepared queries.');
             }
+
             $values[':' . $key] = $this->parseValue($value);
         }
 

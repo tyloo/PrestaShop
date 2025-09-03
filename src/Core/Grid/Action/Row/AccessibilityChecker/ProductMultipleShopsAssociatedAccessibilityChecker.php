@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
  */
 class ProductMultipleShopsAssociatedAccessibilityChecker implements AccessibilityCheckerInterface
 {
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multiStoreContext;
-
     public function __construct(
-        MultistoreContextCheckerInterface $multiStoreContext,
+        private readonly MultistoreContextCheckerInterface $multiStoreContext,
     ) {
-        $this->multiStoreContext = $multiStoreContext;
     }
 
     /**

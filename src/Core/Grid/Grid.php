@@ -37,36 +37,12 @@ use Symfony\Component\Form\FormInterface;
  */
 final class Grid implements GridInterface
 {
-    /**
-     * @var GridDefinitionInterface
-     */
-    private $definition;
-
-    /**
-     * @var GridDataInterface
-     */
-    private $data;
-
-    /**
-     * @var SearchCriteriaInterface
-     */
-    private $searchCriteria;
-
-    /**
-     * @var FormInterface
-     */
-    private $filtersForm;
-
     public function __construct(
-        GridDefinitionInterface $definition,
-        GridDataInterface $data,
-        SearchCriteriaInterface $searchCriteria,
-        FormInterface $filtersForm,
+        private readonly GridDefinitionInterface $definition,
+        private readonly GridDataInterface $data,
+        private readonly SearchCriteriaInterface $searchCriteria,
+        private readonly FormInterface $filtersForm,
     ) {
-        $this->definition = $definition;
-        $this->data = $data;
-        $this->searchCriteria = $searchCriteria;
-        $this->filtersForm = $filtersForm;
     }
 
     public function getDefinition()

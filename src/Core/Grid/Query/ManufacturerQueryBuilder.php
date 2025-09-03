@@ -37,27 +37,18 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class ManufacturerQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-    /**
-     * @var int[]
-     */
-    private $contextShopIds;
-
-    /**
      * @param string $dbPrefix
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        /**
+         * @var int[]
+         */
+        private readonly array $contextShopIds,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->contextShopIds = $contextShopIds;
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -131,6 +122,7 @@ final class ManufacturerQueryBuilder extends AbstractDoctrineQueryBuilder
                     ->setParameter($filterName, '%' . $value . '%');
                 continue;
             }
+
             $qb->andWhere('m.`' . $filterName . '` = :' . $filterName)
                 ->setParameter($filterName, $value);
         }

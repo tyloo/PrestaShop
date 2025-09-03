@@ -33,16 +33,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\Query;
 class GetCustomerForAddressCreation
 {
     /**
-     * @var string
-     */
-    private $customerEmail;
-
-    /**
      * Query is used for customer search so email string might not be complete so no email validation
      */
-    public function __construct(string $customerEmail)
-    {
-        $this->customerEmail = $customerEmail;
+    public function __construct(
+        private readonly string $customerEmail,
+    ) {
     }
 
     public function getCustomerEmail(): string

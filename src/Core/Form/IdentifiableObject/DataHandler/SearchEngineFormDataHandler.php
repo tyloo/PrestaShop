@@ -39,14 +39,9 @@ use PrestaShop\PrestaShop\Core\Domain\SearchEngine\ValueObject\SearchEngineId;
  */
 final class SearchEngineFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    public function __construct(CommandBusInterface $commandBus)
-    {
-        $this->commandBus = $commandBus;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+    ) {
     }
 
     public function create(array $data): int

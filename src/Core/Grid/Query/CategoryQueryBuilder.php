@@ -39,38 +39,6 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreContextCheckerInterface;
 final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var int|null
-     *
-     * Can be null for backward-compatibility
-     */
-    private $rootCategoryId;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicator
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $multistoreFeature;
-
-    /**
      * @param string   $dbPrefix
      * @param int      $contextLangId
      * @param int      $contextShopId
@@ -79,21 +47,14 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
     public function __construct(
         Connection $connection,
         $dbPrefix,
-        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
-        $contextLangId,
-        $contextShopId,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
-        FeatureInterface $multistoreFeature,
-        $rootCategoryId = null,
+        private readonly DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
+        private $contextLangId,
+        private $contextShopId,
+        private readonly MultistoreContextCheckerInterface $multistoreContextChecker,
+        private readonly FeatureInterface $multistoreFeature,
+        private $rootCategoryId = null,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->contextLangId = $contextLangId;
-        $this->contextShopId = $contextShopId;
-        $this->rootCategoryId = $rootCategoryId;
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->multistoreContextChecker = $multistoreContextChecker;
-        $this->multistoreFeature = $multistoreFeature;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -156,7 +117,7 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
 
         foreach ($filters as $filterName => $filterValue) {
             if ($filterName === 'id_category') {
-                $qb->andWhere("c.id_category = :$filterName");
+                $qb->andWhere('c.id_category = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
@@ -169,14 +130,14 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
             }
 
             if ($filterName === 'name') {
-                $qb->andWhere("cl.name LIKE :$filterName");
+                $qb->andWhere('cl.name LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
             }
 
             if ($filterName === 'description') {
-                $qb->andWhere("cl.description LIKE :$filterName");
+                $qb->andWhere('cl.description LIKE :' . $filterName);
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
@@ -193,14 +154,14 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
                     $filterValue = null;
                 }
 
-                $qb->andWhere("cs.position = :$filterName");
+                $qb->andWhere('cs.position = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
             }
 
             if ($filterName === 'active') {
-                $qb->andWhere("c.active = :$filterName");
+                $qb->andWhere('c.active = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
@@ -211,7 +172,7 @@ final class CategoryQueryBuilder extends AbstractDoctrineQueryBuilder
                     continue;
                 }
 
-                $qb->andWhere("c.id_parent = :$filterName");
+                $qb->andWhere('c.id_parent = :' . $filterName);
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;

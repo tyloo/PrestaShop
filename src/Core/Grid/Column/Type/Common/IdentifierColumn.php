@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class IdentifierColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'identifier';
     }
@@ -58,9 +58,7 @@ final class IdentifierColumn extends AbstractColumn
             ->setAllowedTypes('with_bulk_field', 'bool')
             ->setAllowedTypes('bulk_field', ['string', 'null'])
             ->setAllowedTypes('clickable', 'bool')
-            ->setAllowedValues('preview', function ($previewColumn) {
-                return $previewColumn instanceof PreviewColumn || $previewColumn === null;
-            })
+            ->setAllowedValues('preview', fn ($previewColumn): bool => $previewColumn instanceof PreviewColumn || $previewColumn === null)
         ;
     }
 }

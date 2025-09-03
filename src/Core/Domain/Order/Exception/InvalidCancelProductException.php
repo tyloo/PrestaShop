@@ -35,11 +35,6 @@ use Throwable;
 class InvalidCancelProductException extends OrderException
 {
     /**
-     * @var int
-     */
-    private $refundableQuantity;
-
-    /**
      * Used when the quantity refunded is not strictly positive
      */
     public const INVALID_QUANTITY = 1;
@@ -68,10 +63,13 @@ class InvalidCancelProductException extends OrderException
      * @param int    $code
      * @param string $message
      */
-    public function __construct($code = 0, int $refundableQuantity = 0, $message = '', ?Throwable $previous = null)
-    {
+    public function __construct(
+        $code = 0,
+        private readonly int $refundableQuantity = 0,
+        $message = '',
+        ?Throwable $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-        $this->refundableQuantity = $refundableQuantity;
     }
 
     public function getRefundableQuantity(): int

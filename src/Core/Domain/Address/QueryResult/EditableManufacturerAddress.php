@@ -35,76 +35,6 @@ use PrestaShop\PrestaShop\Core\Domain\Address\ValueObject\AddressId;
 class EditableManufacturerAddress
 {
     /**
-     * @var AddressId
-     */
-    private $addressId;
-
-    /**
-     * @var int
-     */
-    private $manufacturerId;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $address;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var string
-     */
-    private $address2;
-
-    /**
-     * @var int
-     */
-    private $countryId;
-
-    /**
-     * @var string
-     */
-    private $postCode;
-
-    /**
-     * @var int
-     */
-    private $stateId;
-
-    /**
-     * @var string
-     */
-    private $homePhone;
-
-    /**
-     * @var string
-     */
-    private $mobilePhone;
-
-    /**
-     * @var string
-     */
-    private $other;
-
-    /**
-     * @var string
-     */
-    private $dni;
-
-    /**
      * @param string $lastName
      * @param string $firstName
      * @param string $address
@@ -120,35 +50,21 @@ class EditableManufacturerAddress
      * @param string $dni
      */
     public function __construct(
-        AddressId $addressId,
-        $lastName,
-        $firstName,
-        $address,
-        $city,
-        $manufacturerId,
-        $countryId,
-        $address2 = null,
-        $postCode = null,
-        $stateId = null,
-        $homePhone = null,
-        $mobilePhone = null,
-        $other = null,
-        $dni = null,
+        private readonly AddressId $addressId,
+        private $lastName,
+        private $firstName,
+        private $address,
+        private $city,
+        private $manufacturerId,
+        private $countryId,
+        private $address2 = null,
+        private $postCode = null,
+        private $stateId = null,
+        private $homePhone = null,
+        private $mobilePhone = null,
+        private $other = null,
+        private $dni = null,
     ) {
-        $this->addressId = $addressId;
-        $this->lastName = $lastName;
-        $this->firstName = $firstName;
-        $this->address = $address;
-        $this->city = $city;
-        $this->manufacturerId = $manufacturerId;
-        $this->countryId = $countryId;
-        $this->address2 = $address2;
-        $this->postCode = $postCode;
-        $this->stateId = $stateId;
-        $this->homePhone = $homePhone;
-        $this->mobilePhone = $mobilePhone;
-        $this->other = $other;
-        $this->dni = $dni;
     }
 
     /**

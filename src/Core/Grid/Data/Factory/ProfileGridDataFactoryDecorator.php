@@ -41,22 +41,10 @@ use Symfony\Bundle\SecurityBundle\Security;
  */
 final class ProfileGridDataFactoryDecorator implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $profileGridDataFactory;
-
-    /**
-     * @var Security
-     */
-    private $security;
-
     public function __construct(
-        GridDataFactoryInterface $profileGridDataFactory,
-        Security $security,
+        private readonly GridDataFactoryInterface $profileGridDataFactory,
+        private readonly Security $security,
     ) {
-        $this->profileGridDataFactory = $profileGridDataFactory;
-        $this->security = $security;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

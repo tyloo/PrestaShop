@@ -31,14 +31,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 
 final class CmsCategoriesChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $nestedCategories;
-
-    public function __construct(array $nestedCategories)
-    {
-        $this->nestedCategories = $nestedCategories;
+    public function __construct(
+        private readonly array $nestedCategories,
+    ) {
     }
 
     public function getChoices()
@@ -48,10 +43,7 @@ final class CmsCategoriesChoiceProvider implements FormChoiceProviderInterface
         return $choices;
     }
 
-    /**
-     * @return array
-     */
-    private function buildChoiceTree(array $category)
+    private function buildChoiceTree(array $category): array
     {
         $tree = [
             'id_cms_category' => $category['id_cms_category'],

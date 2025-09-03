@@ -30,36 +30,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\QueryResult;
 
 class CustomerInfo
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $firstname;
-
-    /**
-     * @var string
-     */
-    private $lastname;
-
-    /**
-     * @var string
-     */
-    private $email;
-
     public function __construct(
-        int $id,
-        string $firstname,
-        string $lastname,
-        string $email,
+        private readonly int $id,
+        private readonly string $firstname,
+        private readonly string $lastname,
+        private readonly string $email,
     ) {
-        $this->id = $id;
-        $this->firstname = $firstname;
-        $this->lastname = $lastname;
-        $this->email = $email;
     }
 
     public function getId(): int

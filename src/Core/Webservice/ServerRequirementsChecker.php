@@ -39,40 +39,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class ServerRequirementsChecker implements ServerRequirementsCheckerInterface
 {
     public const ISSUE_APACHE_MOD_AUTH_BASIC_NOT_AVAILABLE = 'issue_apache_mod_auth_basic_not_available';
+
     public const ISSUE_APACHE_MOD_AUTH_REWRITE_NOT_AVAILABLE = 'issue_apache_mod_auth_rewrite_not_available';
+
     public const ISSUE_EXT_SIMPLEXML_NOT_AVAILABLE = 'issue_ext_simplexml_not_available';
+
     public const ISSUE_HTTPS_NOT_AVAILABLE = 'issue_https_not_available';
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var HostingInformation
-     */
-    private $hostingInformation;
-
-    /**
-     * @var PhpExtensionCheckerInterface
-     */
-    private $phpExtensionChecker;
-
     public function __construct(
-        TranslatorInterface $translator,
-        Configuration $configuration,
-        HostingInformation $hostingInformation,
-        PhpExtensionCheckerInterface $phpExtensionChecker,
+        private readonly TranslatorInterface $translator,
+        private readonly Configuration $configuration,
+        private readonly HostingInformation $hostingInformation,
+        private readonly PhpExtensionCheckerInterface $phpExtensionChecker,
     ) {
-        $this->translator = $translator;
-        $this->configuration = $configuration;
-        $this->hostingInformation = $hostingInformation;
-        $this->phpExtensionChecker = $phpExtensionChecker;
     }
 
     /**
@@ -106,7 +85,7 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
     /**
      * @return string[]
      */
-    private function lookForIssues()
+    private function lookForIssues(): array
     {
         $issues = [];
 
@@ -118,7 +97,7 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
             $issues[] = self::ISSUE_HTTPS_NOT_AVAILABLE;
         }
 
-        if (! str_contains($this->hostingInformation->getServerInformation()['version'], 'Apache')) {
+        if (! str_contains((string) $this->hostingInformation->getServerInformation()['version'], 'Apache')) {
             return $issues;
         }
 
@@ -144,17 +123,17 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
     {
         return [
             self::ISSUE_APACHE_MOD_AUTH_BASIC_NOT_AVAILABLE => $this->translator->trans(
-                'Please activate the \'mod_auth_basic\' Apache module to allow the use of the PrestaShop webservice.',
+                "Please activate the 'mod_auth_basic' Apache module to allow the use of the PrestaShop webservice.",
                 [],
                 'Install'
             ),
             self::ISSUE_APACHE_MOD_AUTH_REWRITE_NOT_AVAILABLE => $this->translator->trans(
-                'We could not check to see if basic authentication and rewrite extensions have been activated. Please manually check if they\'ve been activated in order to use the PrestaShop webservice.',
+                "We could not check to see if basic authentication and rewrite extensions have been activated. Please manually check if they've been activated in order to use the PrestaShop webservice.",
                 [],
                 'Install'
             ),
             self::ISSUE_EXT_SIMPLEXML_NOT_AVAILABLE => $this->translator->trans(
-                'Please activate the \'SimpleXML\' PHP extension to allow testing of PrestaShop\'s webservice.',
+                "Please activate the 'SimpleXML' PHP extension to allow testing of PrestaShop's webservice.",
                 [],
                 'Install'
             ),

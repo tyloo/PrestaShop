@@ -47,11 +47,6 @@ class UpdateProductPriceInCartCommand
     private $productId;
 
     /**
-     * @var int
-     */
-    private $combinationId;
-
-    /**
      * @var float
      */
     private $price;
@@ -62,13 +57,16 @@ class UpdateProductPriceInCartCommand
      * @param int   $combinationId
      * @param float $price
      */
-    public function __construct($cartId, $productId, $combinationId, $price)
-    {
+    public function __construct(
+        $cartId,
+        $productId,
+        private $combinationId,
+        $price,
+    ) {
         $this->assertPriceIsPositiveFloat($price);
 
         $this->cartId = new CartId($cartId);
         $this->productId = new ProductId($productId);
-        $this->combinationId = $combinationId;
         $this->price = $price;
     }
 

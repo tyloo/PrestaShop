@@ -43,38 +43,14 @@ use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 final class CustomerCartGridDataFactoryDecorator implements GridDataFactoryInterface
 {
     /**
-     * @var GridDataFactoryInterface
-     */
-    private $customerCartDoctrineGridDataFactory;
-
-    /**
-     * @var LocaleInterface
-     */
-    private $locale;
-
-    /**
-     * @var string
-     */
-    private $contextCurrencyIsoCode;
-
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
      * @param string $contextCurrencyIsoCode
      */
     public function __construct(
-        GridDataFactoryInterface $customerCartDoctrineGridDataFactory,
-        LocaleInterface $locale,
-        $contextCurrencyIsoCode,
-        CommandBusInterface $queryBus,
+        private readonly GridDataFactoryInterface $customerCartDoctrineGridDataFactory,
+        private readonly LocaleInterface $locale,
+        private $contextCurrencyIsoCode,
+        private readonly CommandBusInterface $queryBus,
     ) {
-        $this->customerCartDoctrineGridDataFactory = $customerCartDoctrineGridDataFactory;
-        $this->locale = $locale;
-        $this->contextCurrencyIsoCode = $contextCurrencyIsoCode;
-        $this->queryBus = $queryBus;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

@@ -33,37 +33,17 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class SentEmailInformation
 {
     /**
-     * @var string
-     */
-    private $date;
-
-    /**
-     * @var string
-     */
-    private $language;
-
-    /**
-     * @var string
-     */
-    private $subject;
-
-    /**
-     * @var string
-     */
-    private $template;
-
-    /**
      * @param string $date
      * @param string $language
      * @param string $subject
      * @param string $template
      */
-    public function __construct($date, $language, $subject, $template)
-    {
-        $this->date = $date;
-        $this->language = $language;
-        $this->subject = $subject;
-        $this->template = $template;
+    public function __construct(
+        private $date,
+        private $language,
+        private $subject,
+        private $template,
+    ) {
     }
 
     /**

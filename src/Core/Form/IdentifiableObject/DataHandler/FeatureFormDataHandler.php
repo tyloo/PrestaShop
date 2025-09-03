@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
  */
 final class FeatureFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
     public function __construct(
-        CommandBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
     ) {
-        $this->commandBus = $commandBus;
     }
 
     public function create(array $data)

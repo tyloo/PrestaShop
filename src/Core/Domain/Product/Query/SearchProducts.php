@@ -44,11 +44,6 @@ class SearchProducts
     private $phrase;
 
     /**
-     * @var int
-     */
-    private $resultsLimit;
-
-    /**
      * @var AlphaIsoCode
      */
     private $alphaIsoCode;
@@ -64,13 +59,12 @@ class SearchProducts
      */
     public function __construct(
         string $phrase,
-        int $resultsLimit,
+        private readonly int $resultsLimit,
         string $isoCode,
         ?int $orderId = null,
     ) {
         $this->assertIsNotEmptyString($phrase);
         $this->phrase = $phrase;
-        $this->resultsLimit = $resultsLimit;
         $this->alphaIsoCode = new AlphaIsoCode($isoCode);
         if ($orderId !== null) {
             $this->setOrderId($orderId);

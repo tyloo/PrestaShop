@@ -38,46 +38,17 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $criteriaApplicator;
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
      * @param string $dbPrefix
      * @param int    $contextLangId
      * @param int[]  $contextShopIds
      */
     public function __construct(
-        Connection $connection,
-        $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
-        $contextLangId,
-        array $contextShopIds,
+        private readonly Connection $connection,
+        private $dbPrefix,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $criteriaApplicator,
+        private $contextLangId,
+        private readonly array $contextShopIds,
     ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->contextLangId = $contextLangId;
-        $this->criteriaApplicator = $criteriaApplicator;
-        $this->contextShopIds = $contextShopIds;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria)
@@ -168,7 +139,7 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
             if (isset($strictComparisonFilters[$filterName])) {
                 $alias = $strictComparisonFilters[$filterName];
 
-                $qb->andWhere("$alias = :$filterName");
+                $qb->andWhere(\sprintf('%s = :%s', $alias, $filterName));
                 $qb->setParameter($filterName, $filterValue);
 
                 continue;
@@ -177,7 +148,7 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
             if (isset($likeComparisonFilters[$filterName])) {
                 $alias = $likeComparisonFilters[$filterName];
 
-                $qb->andWhere("$alias LIKE :$filterName");
+                $qb->andWhere(\sprintf('%s LIKE :%s', $alias, $filterName));
                 $qb->setParameter($filterName, '%' . $filterValue . '%');
 
                 continue;
@@ -189,14 +160,14 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
                 if (isset($filterValue['from'])) {
                     $name = \sprintf('%s_from', $filterName);
 
-                    $qb->andWhere("$alias >= :$name");
+                    $qb->andWhere(\sprintf('%s >= :%s', $alias, $name));
                     $qb->setParameter($name, \sprintf('%s %s', $filterValue['from'], '0:0:0'));
                 }
 
                 if (isset($filterValue['to'])) {
                     $name = \sprintf('%s_to', $filterName);
 
-                    $qb->andWhere("$alias <= :$name");
+                    $qb->andWhere(\sprintf('%s <= :%s', $alias, $name));
                     $qb->setParameter($name, \sprintf('%s %s', $filterValue['to'], '23:59:59'));
                 }
 
@@ -228,12 +199,9 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
         $qb->addSelect('(' . $this->getNewCustomerSubSelect() . ') AS new');
     }
 
-    /**
-     * @return string
-     */
-    private function getCustomerField()
+    private function getCustomerField(): string
     {
-        return 'CONCAT(LEFT(cu.`firstname`, 1), \'. \', cu.`lastname`)';
+        return "CONCAT(LEFT(cu.`firstname`, 1), '. ', cu.`lastname`)";
     }
 
     /**

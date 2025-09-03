@@ -40,29 +40,11 @@ use PrestaShop\PrestaShop\Core\Image\ImageProviderInterface;
  */
 class CarrierGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $carrierDataFactory;
-
-    /**
-     * @var ImageProviderInterface
-     */
-    private $carrierLogoProvider;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
     public function __construct(
-        GridDataFactoryInterface $carrierDataFactory,
-        ImageProviderInterface $carrierLogoProvider,
-        ConfigurationInterface $configuration,
+        private readonly GridDataFactoryInterface $carrierDataFactory,
+        private readonly ImageProviderInterface $carrierLogoProvider,
+        private readonly ConfigurationInterface $configuration,
     ) {
-        $this->carrierDataFactory = $carrierDataFactory;
-        $this->carrierLogoProvider = $carrierLogoProvider;
-        $this->configuration = $configuration;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

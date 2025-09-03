@@ -32,26 +32,11 @@ namespace PrestaShop\PrestaShop\Core\Group\Provider;
  */
 class DefaultGroups
 {
-    /**
-     * @var DefaultGroup
-     */
-    private $visitorsGroup;
-
-    /**
-     * @var DefaultGroup
-     */
-    private $guestsGroup;
-
-    /**
-     * @var DefaultGroup
-     */
-    private $customersGroup;
-
-    public function __construct(DefaultGroup $visitorsGroup, DefaultGroup $guestsGroup, DefaultGroup $customersGroup)
-    {
-        $this->visitorsGroup = $visitorsGroup;
-        $this->guestsGroup = $guestsGroup;
-        $this->customersGroup = $customersGroup;
+    public function __construct(
+        private readonly DefaultGroup $visitorsGroup,
+        private readonly DefaultGroup $guestsGroup,
+        private readonly DefaultGroup $customersGroup,
+    ) {
     }
 
     /**

@@ -66,7 +66,7 @@ class Hashing
      *
      * @return bool `true` is returned if the function find a match else false
      */
-    public function checkHash($passwd, $hash, $staticSalt = _COOKIE_KEY_)
+    public function checkHash($passwd, $hash, $staticSalt = _COOKIE_KEY_): bool
     {
         if (! \count($this->hashMethods)) {
             $this->initHashMethods();
@@ -109,10 +109,9 @@ class Hashing
         $this->hashMethods = [
             'bcrypt' => [
                 'option' => [],
-                'hash' => function ($passwd, $staticSalt, $option) {
+                'hash' => fn ($passwd, $staticSalt, $option): string =>
                     /* @phpstan-ignore-next-line */
-                    return password_hash($passwd, \PASSWORD_BCRYPT);
-                },
+                    password_hash((string) $passwd, \PASSWORD_BCRYPT),
                 'verify' => function ($passwd, $hash, $staticSalt) {
                     /*
                      * Prevent enumeration because nothing happens
@@ -131,12 +130,8 @@ class Hashing
             ],
             'md5' => [
                 'option' => [],
-                'hash' => function ($passwd, $staticSalt, $option) {
-                    return md5($staticSalt . $passwd);
-                },
-                'verify' => function ($passwd, $hash, $staticSalt) {
-                    return md5($staticSalt . $passwd) === $hash;
-                },
+                'hash' => fn ($passwd, $staticSalt, $option): string => md5($staticSalt . $passwd),
+                'verify' => fn ($passwd, $hash, $staticSalt): bool => md5($staticSalt . $passwd) === $hash,
             ],
         ];
     }

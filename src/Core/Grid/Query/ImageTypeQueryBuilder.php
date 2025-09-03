@@ -40,22 +40,18 @@ use PrestaShop\PrestaShop\Core\Search\Filters\ImageTypeFilters;
  */
 class ImageTypeQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    private DoctrineSearchCriteriaApplicator $searchCriteriaApplicator;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
+        private readonly DoctrineSearchCriteriaApplicator $searchCriteriaApplicator,
     ) {
         parent::__construct($connection, $dbPrefix);
-
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         if (! $searchCriteria instanceof ImageTypeFilters) {
-            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ImageTypeFilters::class, \get_class($searchCriteria)));
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ImageTypeFilters::class, $searchCriteria::class));
         }
 
         $queryBuilder = $this->getQueryBuilder($searchCriteria)
@@ -72,7 +68,7 @@ class ImageTypeQueryBuilder extends AbstractDoctrineQueryBuilder
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
         if (! $searchCriteria instanceof ImageTypeFilters) {
-            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ImageTypeFilters::class, \get_class($searchCriteria)));
+            throw new InvalidArgumentException(\sprintf('Expected %s, but got %s', ImageTypeFilters::class, $searchCriteria::class));
         }
 
         return $this->getQueryBuilder($searchCriteria)

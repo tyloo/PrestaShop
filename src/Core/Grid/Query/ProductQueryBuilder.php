@@ -46,46 +46,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\ShopSearchCriteriaInterface;
  */
 class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    private $searchCriteriaApplicator;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var DoctrineFilterApplicatorInterface
-     */
-    private $filterApplicator;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var ShopGroupRepository
-     */
-    private $shopGroupRepository;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $contextLanguageId,
-        DoctrineFilterApplicatorInterface $filterApplicator,
-        Configuration $configuration,
-        ShopGroupRepository $shopGroupRepository,
+        private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        private readonly int $contextLanguageId,
+        private readonly DoctrineFilterApplicatorInterface $filterApplicator,
+        private readonly Configuration $configuration,
+        private readonly ShopGroupRepository $shopGroupRepository,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->filterApplicator = $filterApplicator;
-        $this->configuration = $configuration;
-        $this->shopGroupRepository = $shopGroupRepository;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
@@ -109,7 +79,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         }
 
         if ($this->configuration->getBoolean('PS_STOCK_MANAGEMENT')) {
-            $qb->addSelect('IF(sa.`quantity` IS NULL OR sa.`quantity` = \'\', 0, sa.`quantity`) AS quantity');
+            $qb->addSelect("IF(sa.`quantity` IS NULL OR sa.`quantity` = '', 0, sa.`quantity`) AS quantity");
         }
 
         $this->searchCriteriaApplicator
@@ -147,7 +117,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         $shopId = null;
         $filteredShopGroupId = null;
         $sharedStockGroupId = null;
-        if ($searchCriteria->getShopConstraint()->getShopId()) {
+        if ($searchCriteria->getShopConstraint()->getShopId() !== null) {
             $shopId = $searchCriteria->getShopConstraint()->getShopId()->getValue();
             $shopGroup = $this->shopGroupRepository->getByShop($searchCriteria->getShopConstraint()->getShopId());
             $sharedStockGroupId = (bool) $shopGroup->share_stock ? (int) $shopGroup->id : null;
@@ -274,6 +244,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         if ($shopId) {
             $qb->setParameter('shopId', $shopId);
         }
+
         if ($filteredShopGroupId) {
             $qb->setParameter('filteredShopGroupId', $filteredShopGroupId);
         }
@@ -315,6 +286,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
             // Single shop context simple left join on a single shopId
             return $sql . ' AND ' . $tableAlias . '.`id_shop` = :shopId';
         }
+
         if ($filteredShopGroupId) {
             // Group shop context, we add a condition on the left join that the id_shop must be part of the group shop AND be associated with the product
             // And we only select the MIN because we only need the first id_shop which will be used as the default display thus we don't need to use a group by on id_product

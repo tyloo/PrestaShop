@@ -33,36 +33,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class OrderInformation
 {
     /**
-     * @var int
-     */
-    private $orderId;
-
-    /**
-     * @var string
-     */
-    private $orderPlacedDate;
-
-    /**
-     * @var string
-     */
-    private $paymentMethodName;
-
-    /**
-     * @var string
-     */
-    private $orderStatus;
-
-    /**
-     * @var int
-     */
-    private $orderProductsCount;
-
-    /**
-     * @var string
-     */
-    private $totalPaid;
-
-    /**
      * @param int    $orderId
      * @param string $orderPlacedDate
      * @param string $paymentMethodName
@@ -70,14 +40,14 @@ class OrderInformation
      * @param int    $orderProductsCount
      * @param string $totalPaid
      */
-    public function __construct($orderId, $orderPlacedDate, $paymentMethodName, $orderStatus, $orderProductsCount, $totalPaid)
-    {
-        $this->orderId = $orderId;
-        $this->orderPlacedDate = $orderPlacedDate;
-        $this->paymentMethodName = $paymentMethodName;
-        $this->orderStatus = $orderStatus;
-        $this->orderProductsCount = $orderProductsCount;
-        $this->totalPaid = $totalPaid;
+    public function __construct(
+        private $orderId,
+        private $orderPlacedDate,
+        private $paymentMethodName,
+        private $orderStatus,
+        private $orderProductsCount,
+        private $totalPaid,
+    ) {
     }
 
     /**

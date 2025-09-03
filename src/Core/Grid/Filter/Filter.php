@@ -33,19 +33,9 @@ namespace PrestaShop\PrestaShop\Core\Grid\Filter;
 final class Filter implements FilterInterface
 {
     /**
-     * @var string Fully qualified filter type class name
-     */
-    private $type;
-
-    /**
      * @var array Filter type options
      */
     private $typeOptions = [];
-
-    /**
-     * @var string Filter name
-     */
-    private $name;
 
     /**
      * @var string|null Column ID if filter is associated with columns
@@ -54,12 +44,12 @@ final class Filter implements FilterInterface
 
     /**
      * @param string $name
-     * @param string $filterFormType
+     * @param string $type
      */
-    public function __construct($name, $filterFormType)
-    {
-        $this->type = $filterFormType;
-        $this->name = $name;
+    public function __construct(
+        private $name,
+        private $type,
+    ) {
     }
 
     public function getType()

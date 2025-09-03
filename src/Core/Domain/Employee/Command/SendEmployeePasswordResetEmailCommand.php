@@ -31,7 +31,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 
 class SendEmployeePasswordResetEmailCommand
 {
-    private Email $email;
+    private readonly Email $email;
 
     public function __construct(
         string $email,

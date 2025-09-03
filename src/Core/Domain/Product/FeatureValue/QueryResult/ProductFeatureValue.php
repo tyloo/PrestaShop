@@ -34,36 +34,15 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\QueryResult;
  */
 class ProductFeatureValue
 {
-    /**
-     * @var int
-     */
-    private $featureId;
-
-    /**
-     * @var int
-     */
-    private $featureValueId;
-
-    /**
-     * @var string[]
-     */
-    private $localizedValues;
-
-    /**
-     * @var bool
-     */
-    private $custom;
-
     public function __construct(
-        int $featureId,
-        int $featureValueId,
-        array $localizedValues,
-        bool $custom,
+        private readonly int $featureId,
+        private readonly int $featureValueId,
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedValues,
+        private readonly bool $custom,
     ) {
-        $this->featureId = $featureId;
-        $this->featureValueId = $featureValueId;
-        $this->localizedValues = $localizedValues;
-        $this->custom = $custom;
     }
 
     public function getFeatureId(): int

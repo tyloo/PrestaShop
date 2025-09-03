@@ -35,22 +35,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class PackStockTypeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $shopConfiguration;
-
     public function __construct(
-        TranslatorInterface $translator,
-        ShopConfigurationInterface $shopConfiguration,
+        private readonly TranslatorInterface $translator,
+        private readonly ShopConfigurationInterface $shopConfiguration,
     ) {
-        $this->translator = $translator;
-        $this->shopConfiguration = $shopConfiguration;
     }
 
     public function getChoices(): array

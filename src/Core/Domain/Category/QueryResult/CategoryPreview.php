@@ -34,36 +34,12 @@ namespace PrestaShop\PrestaShop\Core\Domain\Category\QueryResult;
  */
 class CategoryPreview
 {
-    /**
-     * @var int
-     */
-    private $categoryId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $breadcrumb;
-
-    /**
-     * @var string
-     */
-    private $image;
-
     public function __construct(
-        int $categoryId,
-        string $name,
-        string $breadcrumb,
-        string $imageUrl,
+        private readonly int $categoryId,
+        private readonly string $name,
+        private readonly string $breadcrumb,
+        private readonly string $image,
     ) {
-        $this->categoryId = $categoryId;
-        $this->name = $name;
-        $this->breadcrumb = $breadcrumb;
-        $this->image = $imageUrl;
     }
 
     public function getCategoryId(): int

@@ -68,11 +68,6 @@ class UpdateProductCommand
     private $productId;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @var string[]|null
      */
     private $localizedNames;
@@ -274,10 +269,11 @@ class UpdateProductCommand
      */
     private $active;
 
-    public function __construct(int $productId, ShopConstraint $shopConstraint)
-    {
+    public function __construct(
+        int $productId,
+        private readonly ShopConstraint $shopConstraint,
+    ) {
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getProductId(): ProductId
@@ -878,8 +874,8 @@ class UpdateProductCommand
 
         try {
             $this->{$propertyName} = new Dimension($value);
-        } catch (DomainConstraintException $e) {
-            throw new ProductConstraintException(\sprintf('Invalid product %s.', $propertyName), $codeByDimension[$propertyName], $e);
+        } catch (DomainConstraintException $domainConstraintException) {
+            throw new ProductConstraintException(\sprintf('Invalid product %s.', $propertyName), $codeByDimension[$propertyName], $domainConstraintException);
         }
     }
 }

@@ -41,16 +41,12 @@ class BulkSetTaxRulesGroupStatusCommand
     private $taxRulesGroupIds = [];
 
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @throws TaxRulesGroupConstraintException
      */
-    public function __construct(array $taxRulesGroupIds, bool $expectedStatus)
-    {
-        $this->expectedStatus = $expectedStatus;
+    public function __construct(
+        array $taxRulesGroupIds,
+        private readonly bool $expectedStatus,
+    ) {
         $this->setTaxRulesGroupIds($taxRulesGroupIds);
     }
 

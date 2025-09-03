@@ -40,32 +40,17 @@ use PrestaShop\PrestaShop\Core\Language\LanguageInterface;
  */
 class LayoutVariablesBuilder implements LayoutVariablesBuilderInterface
 {
-    /**
-     * @var array
-     */
-    private $defaultVariables;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var LanguageDefaultFontsCatalog
-     */
-    private $languageDefaultFonts;
-
     public function __construct(
-        HookDispatcherInterface $hookDispatcher,
-        LanguageDefaultFontsCatalog $languageDefaultFonts,
-        array $defaultVariables = [],
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly LanguageDefaultFontsCatalog $languageDefaultFonts,
+        private readonly array $defaultVariables = [],
     ) {
-        $this->hookDispatcher = $hookDispatcher;
-        $this->languageDefaultFonts = $languageDefaultFonts;
-        $this->defaultVariables = $defaultVariables;
     }
 
-    public function buildVariables(LayoutInterface $mailLayout, LanguageInterface $language)
+    /**
+     * @return mixed[]
+     */
+    public function buildVariables(LayoutInterface $mailLayout, LanguageInterface $language): array
     {
         $languageDefaultFont = $this->languageDefaultFonts->getDefaultFontByLanguage($language);
         if (! empty($languageDefaultFont)) {

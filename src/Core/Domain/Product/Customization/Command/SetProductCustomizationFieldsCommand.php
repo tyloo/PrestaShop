@@ -104,7 +104,7 @@ class SetProductCustomizationFieldsCommand
                 $customizationField['localized_names'],
                 (bool) $customizationField['is_required'],
                 (bool) $customizationField['added_by_module'],
-                isset($customizationField['id']) ? (int) $customizationField['id'] : null
+                $customizationField['id'] ?? null
             );
         }
     }

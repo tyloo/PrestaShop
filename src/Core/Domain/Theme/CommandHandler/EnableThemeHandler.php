@@ -38,31 +38,13 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\ThemeConstraintException;
 final class EnableThemeHandler implements EnableThemeHandlerInterface
 {
     /**
-     * @var ThemeManager
-     */
-    private $themeManager;
-
-    /**
-     * @var CacheClearerInterface
-     */
-    private $smartyCacheClearer;
-
-    /**
-     * @var bool
-     */
-    private $isSingleShopContext;
-
-    /**
      * @param bool $isSingleShopContext
      */
     public function __construct(
-        ThemeManager $themeManager,
-        CacheClearerInterface $smartyCacheClearer,
-        $isSingleShopContext,
+        private readonly ThemeManager $themeManager,
+        private readonly CacheClearerInterface $smartyCacheClearer,
+        private $isSingleShopContext,
     ) {
-        $this->themeManager = $themeManager;
-        $this->smartyCacheClearer = $smartyCacheClearer;
-        $this->isSingleShopContext = $isSingleShopContext;
     }
 
     /**

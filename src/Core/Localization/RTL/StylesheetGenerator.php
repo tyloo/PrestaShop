@@ -60,23 +60,13 @@ class StylesheetGenerator
     public const RTLFIX_EXTENSION = 'rtlfix';
 
     /**
-     * @var string
-     */
-    private $fileType;
-
-    /**
-     * @var string
-     */
-    private $rtlSuffix;
-
-    /**
      * @param string $fileType  [default='css'] File type (CSS or SCSS)
      * @param string $rtlSuffix [default='_rtl'] Suffix to add to transformed RTL files
      */
-    public function __construct($fileType = self::DEFAULT_FILE_TYPE, $rtlSuffix = self::DEFAULT_RTL_SUFFIX)
-    {
-        $this->fileType = $fileType;
-        $this->rtlSuffix = $rtlSuffix;
+    public function __construct(
+        private $fileType = self::DEFAULT_FILE_TYPE,
+        private $rtlSuffix = self::DEFAULT_RTL_SUFFIX,
+    ) {
     }
 
     /**

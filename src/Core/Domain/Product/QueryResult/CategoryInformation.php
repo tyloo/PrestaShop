@@ -33,29 +33,11 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
  */
 class CategoryInformation
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $displayName;
-
     public function __construct(
-        int $id,
-        string $name,
-        string $displayName,
+        private readonly int $id,
+        private readonly string $name,
+        private readonly string $displayName,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->displayName = $displayName;
     }
 
     public function getId(): int

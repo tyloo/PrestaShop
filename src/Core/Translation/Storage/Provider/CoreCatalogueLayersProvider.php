@@ -47,22 +47,6 @@ use Symfony\Component\Translation\MessageCatalogue;
 class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
 {
     /**
-     * We need a connection to DB to load user translated catalogue.
-     *
-     * @var DatabaseTranslationLoader
-     */
-    private $databaseTranslationLoader;
-
-    /**
-     * This is the directory where Default and FileTranslated translations are stored.
-     *   - Default catalogue is within resourceDirectory/default
-     *   - FileTranslated catalogue is in resourceDirectory/locale
-     *
-     * @var string
-     */
-    private $resourceDirectory;
-
-    /**
      * @var DefaultCatalogueFinder
      */
     private $defaultCatalogueFinder;
@@ -78,29 +62,23 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
     private $userTranslatedCatalogueFinder;
 
     /**
-     * @var array
-     */
-    private $filenameFilters;
-
-    /**
-     * @var array
-     */
-    private $translationDomains;
-
-    /**
      * @param array<int, string> $filenameFilters
      * @param array<int, string> $translationDomains
      */
     public function __construct(
-        DatabaseTranslationLoader $databaseTranslationLoader,
-        string $resourceDirectory,
-        array $filenameFilters,
-        array $translationDomains,
+        /**
+         * We need a connection to DB to load user translated catalogue.
+         */
+        private readonly DatabaseTranslationLoader $databaseTranslationLoader,
+        /**
+         * This is the directory where Default and FileTranslated translations are stored.
+         *   - Default catalogue is within resourceDirectory/default
+         *   - FileTranslated catalogue is in resourceDirectory/locale
+         */
+        private readonly string $resourceDirectory,
+        private readonly array $filenameFilters,
+        private readonly array $translationDomains,
     ) {
-        $this->databaseTranslationLoader = $databaseTranslationLoader;
-        $this->resourceDirectory = $resourceDirectory;
-        $this->filenameFilters = $filenameFilters;
-        $this->translationDomains = $translationDomains;
     }
 
     /**

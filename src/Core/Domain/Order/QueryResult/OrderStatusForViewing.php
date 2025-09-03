@@ -31,68 +31,23 @@ use DateTimeImmutable;
 
 class OrderStatusForViewing
 {
-    /**
-     * @var int
-     */
-    private $orderStatusId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $color;
-
-    /**
-     * @var DateTimeImmutable
-     */
-    private $createdAt;
-
-    /**
-     * @var bool
-     */
-    private $withEmail;
-
-    /**
-     * @var string|null First name of employee who updated order status or null otherwise
-     */
-    private $employeeFirstName;
-
-    /**
-     * @var string|null Last name of employee who updated order status or null otherwise
-     */
-    private $employeeLastName;
-
-    /**
-     * @var int
-     */
-    private $orderHistoryId;
-
-    private ?string $apiClientId;
-
     public function __construct(
-        int $orderHistoryId,
-        int $orderStatusId,
-        string $name,
-        string $color,
-        DateTimeImmutable $createdAt,
-        bool $withEmail,
-        ?string $employeeFirstName,
-        ?string $employeeLastName,
-        ?string $apiClientId,
+        private readonly int $orderHistoryId,
+        private readonly int $orderStatusId,
+        private readonly string $name,
+        private readonly string $color,
+        private readonly DateTimeImmutable $createdAt,
+        private readonly bool $withEmail,
+        /**
+         * @var string|null First name of employee who updated order status or null otherwise
+         */
+        private readonly ?string $employeeFirstName,
+        /**
+         * @var string|null Last name of employee who updated order status or null otherwise
+         */
+        private readonly ?string $employeeLastName,
+        private readonly ?string $apiClientId,
     ) {
-        $this->orderStatusId = $orderStatusId;
-        $this->name = $name;
-        $this->color = $color;
-        $this->createdAt = $createdAt;
-        $this->withEmail = $withEmail;
-        $this->employeeFirstName = $employeeFirstName;
-        $this->employeeLastName = $employeeLastName;
-        $this->orderHistoryId = $orderHistoryId;
-        $this->apiClientId = $apiClientId;
     }
 
     public function getOrderHistoryId(): int

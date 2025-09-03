@@ -36,11 +36,6 @@ use PrestaShop\PrestaShop\Core\MailTemplate\Layout\LayoutCollectionInterface;
 class Theme implements ThemeInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @var LayoutCollectionInterface
      */
     private $layouts;
@@ -48,9 +43,9 @@ class Theme implements ThemeInterface
     /**
      * @param string $name
      */
-    public function __construct($name)
-    {
-        $this->name = $name;
+    public function __construct(
+        private $name,
+    ) {
         $this->layouts = new LayoutCollection();
     }
 

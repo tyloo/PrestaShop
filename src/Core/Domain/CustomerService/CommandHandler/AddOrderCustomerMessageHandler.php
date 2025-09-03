@@ -50,43 +50,13 @@ use Tools;
 #[AsCommandHandler]
 class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerInterface
 {
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var int
-     */
-    private $contextEmployeeId;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
     public function __construct(
-        TranslatorInterface $translator,
-        ValidatorInterface $validator,
-        int $contextShopId,
-        int $contextLanguageId,
-        int $contextEmployeeId,
+        private readonly TranslatorInterface $translator,
+        private readonly ValidatorInterface $validator,
+        private readonly int $contextShopId,
+        private readonly int $contextLanguageId,
+        private readonly int $contextEmployeeId,
     ) {
-        $this->contextShopId = $contextShopId;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->contextEmployeeId = $contextEmployeeId;
-        $this->translator = $translator;
-        $this->validator = $validator;
     }
 
     /**
@@ -100,13 +70,13 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
         $order = new Order($command->getOrderId()->getValue());
 
         if ($order->id <= 0) {
-            throw new OrderNotFoundException($command->getOrderId(), "Order with id {$command->getOrderId()->getValue()} was not found");
+            throw new OrderNotFoundException($command->getOrderId(), \sprintf('Order with id %d was not found', $command->getOrderId()->getValue()));
         }
 
         $customer = new Customer($order->id_customer);
 
         if ($customer->id <= 0) {
-            throw new CustomerMessageException("Associated order customer with id {$command->getOrderId()->getValue()} was not found", CustomerMessageException::ORDER_CUSTOMER_NOT_FOUND);
+            throw new CustomerMessageException(\sprintf('Associated order customer with id %d was not found', $command->getOrderId()->getValue()), CustomerMessageException::ORDER_CUSTOMER_NOT_FOUND);
         }
 
         $customerServiceThreadId = CustomerThread::getIdCustomerThreadByEmailAndIdOrder(
@@ -124,8 +94,8 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
 
         try {
             $this->createMessage($customerServiceThreadId, $command);
-        } catch (PrestaShopException $e) {
-            throw new CustomerMessageException('An unexpected error occurred when creating customer message', 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CustomerMessageException('An unexpected error occurred when creating customer message', 0, $prestaShopException);
         }
 
         $failedMailSentMessage = 'An unexpected error occurred when sending the email';
@@ -136,8 +106,8 @@ class AddOrderCustomerMessageHandler implements AddOrderCustomerMessageHandlerIn
             if (! $isSent) {
                 throw new CannotSendEmailException($failedMailSentMessage);
             }
-        } catch (PrestaShopException $e) {
-            throw new CannotSendEmailException($failedMailSentMessage, 0, $e);
+        } catch (PrestaShopException $prestaShopException) {
+            throw new CannotSendEmailException($failedMailSentMessage, 0, $prestaShopException);
         }
     }
 

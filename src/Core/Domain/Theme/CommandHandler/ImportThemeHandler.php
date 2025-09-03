@@ -40,29 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\ValueObject\ThemeName;
 #[AsCommandHandler]
 final class ImportThemeHandler implements ImportThemeHandlerInterface
 {
-    /**
-     * @var ThemeUploaderInterface
-     */
-    private $themeUploader;
-
-    /**
-     * @var ThemeManager
-     */
-    private $themeManager;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
     public function __construct(
-        ThemeUploaderInterface $themeUploader,
-        ThemeManager $themeManager,
-        ConfigurationInterface $configuration,
+        private readonly ThemeUploaderInterface $themeUploader,
+        private readonly ThemeManager $themeManager,
+        private readonly ConfigurationInterface $configuration,
     ) {
-        $this->themeUploader = $themeUploader;
-        $this->themeManager = $themeManager;
-        $this->configuration = $configuration;
     }
 
     public function handle(ImportThemeCommand $command)
@@ -81,8 +63,8 @@ final class ImportThemeHandler implements ImportThemeHandlerInterface
 
         try {
             $this->themeManager->install($themePath);
-        } catch (ThemeAlreadyExistsException $e) {
-            throw new ImportedThemeAlreadyExistsException(new ThemeName($e->getThemeName()), \sprintf('Imported theme "%s" already exists.', $e->getThemeName()), 0, $e);
+        } catch (ThemeAlreadyExistsException $themeAlreadyExistsException) {
+            throw new ImportedThemeAlreadyExistsException(new ThemeName($themeAlreadyExistsException->getThemeName()), \sprintf('Imported theme "%s" already exists.', $themeAlreadyExistsException->getThemeName()), 0, $themeAlreadyExistsException);
         } finally {
             if ($type === ThemeImportSource::FROM_ARCHIVE) {
                 @unlink($themePath);

@@ -35,31 +35,16 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Supplier\QueryResult;
 class ProductSupplierOptions
 {
     /**
-     * @var int
-     */
-    private $defaultSupplierId;
-
-    /**
-     * @var int[]
-     */
-    private $supplierIds;
-
-    /**
-     * @var ProductSupplierForEditing[]
-     */
-    private $productSuppliers;
-
-    /**
      * @param ProductSupplierForEditing[] $productSuppliers
      */
     public function __construct(
-        int $defaultSupplierId,
-        array $supplierIds,
-        array $productSuppliers,
+        private readonly int $defaultSupplierId,
+        /**
+         * @var int[]
+         */
+        private readonly array $supplierIds,
+        private readonly array $productSuppliers,
     ) {
-        $this->defaultSupplierId = $defaultSupplierId;
-        $this->supplierIds = $supplierIds;
-        $this->productSuppliers = $productSuppliers;
     }
 
     public function getDefaultSupplierId(): int

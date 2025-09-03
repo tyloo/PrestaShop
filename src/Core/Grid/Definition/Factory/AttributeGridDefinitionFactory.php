@@ -60,29 +60,17 @@ final class AttributeGridDefinitionFactory extends AbstractFilterableGridDefinit
     public const GRID_ID = 'attribute';
 
     /**
-     * @var int
-     */
-    private $attributeGroupId;
-
-    /**
-     * @var AttributeGroupViewDataProviderInterface
-     */
-    private $attributeGroupViewDataProvider;
-
-    /**
      * @param int $attributeGroupId
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        $attributeGroupId,
-        AttributeGroupViewDataProviderInterface $attributeGroupViewDataProvider,
+        private $attributeGroupId,
+        private AttributeGroupViewDataProviderInterface $attributeGroupViewDataProvider,
     ) {
         parent::__construct($hookDispatcher);
-        $this->attributeGroupId = $attributeGroupId;
-        $this->attributeGroupViewDataProvider = $attributeGroupViewDataProvider;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

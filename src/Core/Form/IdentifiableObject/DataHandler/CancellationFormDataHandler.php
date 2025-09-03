@@ -32,14 +32,9 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Command\CancelOrderProductCommand;
 
 final class CancellationFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    public function __construct(CommandBusInterface $commandBus)
-    {
-        $this->commandBus = $commandBus;
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+    ) {
     }
 
     public function create(array $data)

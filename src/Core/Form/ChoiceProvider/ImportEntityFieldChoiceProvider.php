@@ -37,27 +37,18 @@ use PrestaShop\PrestaShop\Core\Import\Exception\NotSupportedImportEntityExceptio
 final class ImportEntityFieldChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var EntityFieldsProviderFinderInterface
-     */
-    private $entityFieldsProviderFinder;
-
-    /**
-     * @var int selected import entity
-     */
-    private $selectedEntity;
-
-    /**
      * @param int $selectedEntity
      */
     public function __construct(
-        EntityFieldsProviderFinderInterface $entityFieldsProviderFinder,
-        $selectedEntity,
+        private readonly EntityFieldsProviderFinderInterface $entityFieldsProviderFinder,
+        private $selectedEntity,
     ) {
-        $this->entityFieldsProviderFinder = $entityFieldsProviderFinder;
-        $this->selectedEntity = $selectedEntity;
     }
 
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         try {
             $entityFieldCollection = $this->entityFieldsProviderFinder->find($this->selectedEntity)->getCollection();

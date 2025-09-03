@@ -35,14 +35,23 @@ namespace PrestaShop\PrestaShop\Core\Domain\ImageSettings\Command;
 class EditImageSettingsCommand
 {
     private array $formats;
+
     private string $baseFormat;
+
     private int $avifQuality;
+
     private int $jpegQuality;
+
     private int $pngQuality;
+
     private int $webpQuality;
+
     private int $generationMethod;
+
     private int $pictureMaxSize;
+
     private int $pictureMaxWidth;
+
     private int $pictureMaxHeight;
 
     public function setFormats(array $formats): void

@@ -36,7 +36,8 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CategoryConstraintExcep
  */
 class RedirectOption
 {
-    private RedirectType $redirectType;
+    private readonly RedirectType $redirectType;
+
     private RedirectTarget $redirectTarget;
 
     /**

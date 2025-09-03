@@ -42,19 +42,9 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     private $localisedName;
 
     /**
-     * @var array
-     */
-    private $localisedFriendlyUrl;
-
-    /**
      * @var CmsPageCategoryId
      */
     private $parentId;
-
-    /**
-     * @var bool
-     */
-    private $isDisplayed;
 
     /**
      * @var string[]
@@ -84,16 +74,14 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
      */
     public function __construct(
         array $localisedName,
-        array $localisedFriendlyUrl,
+        private readonly array $localisedFriendlyUrl,
         $parentId,
-        $isDisplayed,
+        private $isDisplayed,
     ) {
         $this->assertCategoryName($localisedName);
 
         $this->localisedName = $localisedName;
-        $this->localisedFriendlyUrl = $localisedFriendlyUrl;
         $this->parentId = new CmsPageCategoryId($parentId);
-        $this->isDisplayed = $isDisplayed;
     }
 
     /**

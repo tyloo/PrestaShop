@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\GroupId;
 
 class DeleteCustomerGroupCommand
 {
-    private GroupId $customerGroupId;
+    private readonly GroupId $customerGroupId;
 
     public function __construct(int $groupId)
     {

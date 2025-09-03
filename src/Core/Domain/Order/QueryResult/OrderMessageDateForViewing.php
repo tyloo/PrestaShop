@@ -34,20 +34,10 @@ use DateTimeImmutable;
  */
 class OrderMessageDateForViewing
 {
-    /**
-     * @var DateTimeImmutable
-     */
-    private $date;
-
-    /**
-     * @var string
-     */
-    private $dateFormat;
-
-    public function __construct(DateTimeImmutable $date, string $dateFormat)
-    {
-        $this->date = $date;
-        $this->dateFormat = $dateFormat;
+    public function __construct(
+        private readonly DateTimeImmutable $date,
+        private readonly string $dateFormat,
+    ) {
     }
 
     public function getDate(): DateTimeImmutable

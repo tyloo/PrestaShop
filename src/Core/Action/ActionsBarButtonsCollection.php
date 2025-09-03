@@ -32,7 +32,7 @@ use PrestaShop\PrestaShop\Core\Data\AbstractTypedCollection;
 
 class ActionsBarButtonsCollection extends AbstractTypedCollection
 {
-    protected function getType()
+    protected function getType(): string
     {
         return ActionsBarButtonInterface::class;
     }

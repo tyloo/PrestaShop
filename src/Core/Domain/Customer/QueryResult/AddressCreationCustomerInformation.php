@@ -40,25 +40,16 @@ class AddressCreationCustomerInformation
     private $customerId;
 
     /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
      * @var string|null
      */
     private $company;
 
-    public function __construct(int $customerId, string $firstName, string $lastName)
-    {
+    public function __construct(
+        int $customerId,
+        private readonly string $firstName,
+        private readonly string $lastName,
+    ) {
         $this->customerId = new CustomerId($customerId);
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
     }
 
     public function getCustomerId(): CustomerId

@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\ImageSettings\Command\EditImageTypeCommand
 class ImageTypeFormDataHandler implements FormDataHandlerInterface
 {
     public function __construct(
-        private CommandBusInterface $commandBus,
+        private readonly CommandBusInterface $commandBus,
     ) {
     }
 

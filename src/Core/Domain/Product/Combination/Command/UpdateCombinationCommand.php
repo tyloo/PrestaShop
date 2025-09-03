@@ -136,19 +136,13 @@ class UpdateCombinationCommand
     private $localizedAvailableLaterLabels;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @throws ProductConstraintException
      */
     public function __construct(
         int $combinationId,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->combinationId = new CombinationId($combinationId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getCombinationId(): CombinationId

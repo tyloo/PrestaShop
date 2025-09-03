@@ -43,24 +43,23 @@ class CommandField
      */
     private $dataFields;
 
-    /**
-     * @var bool
-     */
-    private $isMultiShopField;
-
-    protected function __construct(string $commandSetter, array $dataFields, bool $isMultiShopField)
-    {
+    protected function __construct(
+        string $commandSetter,
+        array $dataFields,
+        private readonly bool $isMultiShopField,
+    ) {
         if (empty($dataFields)) {
             throw new InvalidArgumentException(\sprintf('No data field provided to command setter "%s"', $commandSetter));
         }
+
         foreach ($dataFields as $dataField) {
             if (! $dataField instanceof DataField) {
                 throw new InvalidArgumentException(\sprintf('Invalid data field type "%s", expected "%s"', get_debug_type($dataField), DataField::class));
             }
         }
+
         $this->commandSetter = $commandSetter;
         $this->dataFields = array_values($dataFields);
-        $this->isMultiShopField = $isMultiShopField;
     }
 
     /**

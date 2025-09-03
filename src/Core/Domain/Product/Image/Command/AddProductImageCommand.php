@@ -42,24 +42,12 @@ class AddProductImageCommand
      */
     private $productId;
 
-    /**
-     * @var string
-     */
-    private $filePath;
-
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
     public function __construct(
         int $productId,
-        string $pathName,
-        ShopConstraint $shopConstraint,
+        private readonly string $filePath,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
-        $this->filePath = $pathName;
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getProductId(): ProductId

@@ -33,41 +33,17 @@ namespace PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult;
 class CartInformation
 {
     /**
-     * @var string
-     */
-    private $cartId;
-
-    /**
-     * @var string
-     */
-    private $cartCreationDate;
-
-    /**
-     * @var string
-     */
-    private $cartTotal;
-
-    /**
-     * @var string
-     */
-    private $carrierName;
-
-    /**
      * @param string $cartId
      * @param string $cartCreationDate
      * @param string $cartTotal
      * @param string $carrierName
      */
     public function __construct(
-        $cartId,
-        $cartCreationDate,
-        $cartTotal,
-        $carrierName,
+        private $cartId,
+        private $cartCreationDate,
+        private $cartTotal,
+        private $carrierName,
     ) {
-        $this->cartId = $cartId;
-        $this->cartCreationDate = $cartCreationDate;
-        $this->cartTotal = $cartTotal;
-        $this->carrierName = $carrierName;
     }
 
     /**

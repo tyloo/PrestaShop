@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class AttributeColorColumn extends AbstractColumn
 {
-    public function getType()
+    public function getType(): string
     {
         return 'attribute_color';
     }

@@ -40,27 +40,15 @@ use Symfony\Component\Yaml\Parser;
 class ThemeRepository implements AddonRepositoryInterface
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $appConfiguration;
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var Shop|null
-     */
-    private $shop;
-    /**
      * @var array|null
      */
     public $themes;
 
-    public function __construct(ConfigurationInterface $configuration, Filesystem $filesystem, ?Shop $shop = null)
-    {
-        $this->appConfiguration = $configuration;
-        $this->filesystem = $filesystem;
-        $this->shop = $shop;
+    public function __construct(
+        private readonly ConfigurationInterface $appConfiguration,
+        private readonly Filesystem $filesystem,
+        private readonly ?Shop $shop = null,
+    ) {
     }
 
     /**
@@ -76,7 +64,7 @@ class ThemeRepository implements AddonRepositoryInterface
 
         $confDir = $this->appConfiguration->get('_PS_CONFIG_DIR_') . 'themes/' . $name;
         $jsonConf = $confDir . '/theme.json';
-        if ($this->shop) {
+        if ($this->shop !== null) {
             $jsonConf = $confDir . '/shop' . $this->shop->id . '.json';
         }
 
@@ -123,7 +111,10 @@ class ThemeRepository implements AddonRepositoryInterface
         return $this->getFilteredList($filter);
     }
 
-    public function getFilteredList(AddonListFilter $filter)
+    /**
+     * @return mixed[]
+     */
+    public function getFilteredList(AddonListFilter $filter): array
     {
         $filter->setType(AddonListFilterType::THEME);
 
@@ -140,7 +131,10 @@ class ThemeRepository implements AddonRepositoryInterface
         return $themes;
     }
 
-    private function getThemesOnDisk()
+    /**
+     * @return mixed[]
+     */
+    private function getThemesOnDisk(): array
     {
         $suffix = 'config/theme.yml';
         $themeDirectories = glob($this->appConfiguration->get('_PS_ALL_THEMES_DIR_') . '*/' . $suffix, \GLOB_NOSORT);
@@ -162,10 +156,11 @@ class ThemeRepository implements AddonRepositoryInterface
 
         $content = file_get_contents($file);
 
-        if (preg_match('/.\.(yml|yaml)$/', $file)) {
+        if (preg_match('/.\.(yml|yaml)$/', (string) $file)) {
             return (new Parser())->parse($content);
         }
-        if (preg_match('/.\.json$/', $file)) {
+
+        if (preg_match('/.\.json$/', (string) $file)) {
             return json_decode($content, true);
         }
     }

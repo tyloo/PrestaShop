@@ -56,7 +56,7 @@ class ShopCollection extends ShopConstraint
     protected function __construct(?int $shopId, ?int $shopGroupId, bool $strict = false, ?array $shopIds = null)
     {
         parent::__construct($shopId, $shopGroupId, $strict);
-        $this->shopIds = $shopIds !== null ? array_map(fn (int $shopId) => new ShopId($shopId), $shopIds) : null;
+        $this->shopIds = $shopIds !== null ? array_map(fn (int $shopId): ShopId => new ShopId($shopId), $shopIds) : null;
     }
 
     /**
@@ -97,8 +97,8 @@ class ShopCollection extends ShopConstraint
 
         if ($this->getShopIds() !== null && $constraint->getShopIds() !== null && \count($this->getShopIds()) === \count($constraint->getShopIds())) {
             return empty(array_diff(
-                array_map(fn (ShopId $shopId) => $shopId->getValue(), $this->getShopIds()),
-                array_map(fn (ShopId $shopId) => $shopId->getValue(), $constraint->getShopIds()),
+                array_map(fn (ShopId $shopId): int => $shopId->getValue(), $this->getShopIds()),
+                array_map(fn (ShopId $shopId): int => $shopId->getValue(), $constraint->getShopIds()),
             ));
         }
 

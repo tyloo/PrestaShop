@@ -41,17 +41,11 @@ class ProductLightGridDefinitionFactory extends AbstractGridDefinitionFactory
      */
     public const GRID_ID = ProductGridDefinitionFactory::GRID_ID;
 
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        ConfigurationInterface $configuration,
+        private readonly ConfigurationInterface $configuration,
     ) {
         parent::__construct($hookDispatcher);
-        $this->configuration = $configuration;
     }
 
     protected function getId(): string

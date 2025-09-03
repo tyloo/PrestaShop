@@ -32,20 +32,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\SqlManagement;
  */
 class SqlRequestExecutionResult
 {
-    /**
-     * @var array
-     */
-    private $columns;
-
-    /**
-     * @var array
-     */
-    private $rows;
-
-    public function __construct(array $columns, array $rows)
-    {
-        $this->columns = $columns;
-        $this->rows = $rows;
+    public function __construct(
+        private readonly array $columns,
+        private readonly array $rows,
+    ) {
     }
 
     /**

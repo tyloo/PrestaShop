@@ -35,16 +35,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 class CombinationCommandsBuilder implements CombinationCommandsBuilderInterface
 {
     /**
-     * @var iterable<CombinationCommandsBuilderInterface>
-     */
-    private $commandBuilders;
-
-    /**
      * @param iterable<CombinationCommandsBuilderInterface> $commandBuilders
      */
-    public function __construct(iterable $commandBuilders)
-    {
-        $this->commandBuilders = $commandBuilders;
+    public function __construct(
+        private readonly iterable $commandBuilders,
+    ) {
     }
 
     public function buildCommands(CombinationId $combinationId, array $formData, ShopConstraint $singleShopConstraint): array

@@ -33,50 +33,14 @@ use PrestaShop\Decimal\DecimalNumber;
 
 class CartRuleReductionForEditing
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $percent;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $amount;
-
-    /**
-     * @var bool
-     */
-    private $tax;
-
-    /**
-     * @var int|null
-     */
-    private $currencyId;
-
-    /**
-     * @var int|null
-     */
-    private $productId;
-
-    /**
-     * @var bool
-     */
-    private $applyToDiscountedProducts;
-
     public function __construct(
-        DecimalNumber $percent,
-        DecimalNumber $amount,
-        bool $tax,
-        ?int $currencyId,
-        ?int $productId,
-        bool $applyToDiscountedProducts,
+        private readonly DecimalNumber $percent,
+        private readonly DecimalNumber $amount,
+        private readonly bool $tax,
+        private readonly ?int $currencyId,
+        private readonly ?int $productId,
+        private readonly bool $applyToDiscountedProducts,
     ) {
-        $this->percent = $percent;
-        $this->amount = $amount;
-        $this->tax = $tax;
-        $this->currencyId = $currencyId;
-        $this->productId = $productId;
-        $this->applyToDiscountedProducts = $applyToDiscountedProducts;
     }
 
     public function getPercent(): DecimalNumber

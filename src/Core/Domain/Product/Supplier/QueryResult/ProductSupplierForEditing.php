@@ -35,69 +35,21 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Supplier\QueryResult;
 class ProductSupplierForEditing
 {
     /**
-     * @var int
-     */
-    private $productSupplierId;
-
-    /**
-     * @var int
-     */
-    private $productId;
-
-    /**
-     * @var int
-     */
-    private $supplierId;
-
-    /**
-     * @var string
-     */
-    private $supplierName;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $priceTaxExcluded;
-
-    /**
-     * @var int
-     */
-    private $currencyId;
-
-    /**
-     * @var int|null
-     */
-    private $combinationId;
-
-    /**
      * @param int    $productSupplierId ProductSupplier entity record id
      * @param int    $productId         the associated product id
      * @param int    $supplierId        the associated supplier id
      * @param string $reference         the reference for this product supplier
      */
     public function __construct(
-        int $productSupplierId,
-        int $productId,
-        int $supplierId,
-        string $supplierName,
-        string $reference,
-        string $priceTaxExcluded,
-        int $currencyId,
-        ?int $combinationId = null,
+        private readonly int $productSupplierId,
+        private readonly int $productId,
+        private readonly int $supplierId,
+        private readonly string $supplierName,
+        private readonly string $reference,
+        private readonly string $priceTaxExcluded,
+        private readonly int $currencyId,
+        private readonly ?int $combinationId = null,
     ) {
-        $this->productSupplierId = $productSupplierId;
-        $this->productId = $productId;
-        $this->supplierId = $supplierId;
-        $this->supplierName = $supplierName;
-        $this->reference = $reference;
-        $this->priceTaxExcluded = $priceTaxExcluded;
-        $this->currencyId = $currencyId;
-        $this->combinationId = $combinationId;
     }
 
     public function getProductSupplierId(): int

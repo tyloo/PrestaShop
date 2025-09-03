@@ -35,14 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Theme\Exception\CannotDeleteThemeException
 #[AsCommandHandler]
 final class DeleteThemeHandler implements DeleteThemeHandlerInterface
 {
-    /**
-     * @var ThemeManager
-     */
-    private $themeManager;
-
-    public function __construct(ThemeManager $themeManager)
-    {
-        $this->themeManager = $themeManager;
+    public function __construct(
+        private readonly ThemeManager $themeManager,
+    ) {
     }
 
     public function handle(DeleteThemeCommand $command)

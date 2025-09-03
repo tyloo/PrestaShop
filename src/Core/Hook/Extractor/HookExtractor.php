@@ -38,6 +38,7 @@ use Symfony\Component\Finder\Finder;
 final class HookExtractor
 {
     private array $hooks = [];
+
     private array $excludedDirectories = [
         'var/cache',
         'vendor',
@@ -57,6 +58,7 @@ final class HookExtractor
         'node_modules',
         'tests',
     ];
+
     private array $regexList = [
         'smarty' => [
             '/(?P<fullImplementation>\{hook\s+h\s*=\s*(["\'])(?P<hookName>.*?)\2(.*?)\})/i',
@@ -70,9 +72,11 @@ final class HookExtractor
     ];
 
     private string $hookAliasesReferenceXml = 'https://raw.githubusercontent.com/PrestaShop/PrestaShop/develop/install-dev/data/xml/hook_alias.xml';
+
     private array $hookAliases = [];
 
     private string $hookInfosReferenceXml = 'https://raw.githubusercontent.com/PrestaShop/PrestaShop/develop/install-dev/data/xml/hook.xml';
+
     private array $hookInfos = [];
 
     public function findHooks(): array
@@ -99,7 +103,7 @@ final class HookExtractor
 
     private function getAliasesForHook($hookName): array
     {
-        $hookNameLower = strtolower($hookName);
+        $hookNameLower = strtolower((string) $hookName);
 
         return $this->hookAliases[$hookNameLower] ?? [];
     }
@@ -121,7 +125,7 @@ final class HookExtractor
 
     private function getHookInfo($hookName): array
     {
-        $hookNameLower = strtolower($hookName);
+        $hookNameLower = strtolower((string) $hookName);
 
         return $this->hookInfos[$hookNameLower] ?? [];
     }
@@ -174,8 +178,8 @@ final class HookExtractor
             $visitedHooks = $this->enrichVisitedHooks($visitor->getHooks());
 
             $this->hooks = array_merge($this->hooks, $visitedHooks);
-        } catch (Error $e) {
-            echo "Error parsing $filePath: ", $e->getMessage(), "\n";
+        } catch (Error $error) {
+            echo \sprintf('Error parsing %s: ', $filePath), $error->getMessage(), "\n";
         }
     }
 
@@ -205,7 +209,7 @@ final class HookExtractor
     private function scanFileForRegexHooks($filePath): void
     {
         $fileContent = file_get_contents($filePath);
-        $fileExtension = pathinfo($filePath, \PATHINFO_EXTENSION);
+        $fileExtension = pathinfo((string) $filePath, \PATHINFO_EXTENSION);
 
         switch ($fileExtension) {
             case 'tpl':
@@ -223,7 +227,7 @@ final class HookExtractor
     private function matchRegex($patterns, $content, $filePath): void
     {
         foreach ($patterns as $pattern) {
-            if (preg_match_all($pattern, $content, $allMatches, \PREG_SET_ORDER)) {
+            if (preg_match_all($pattern, (string) $content, $allMatches, \PREG_SET_ORDER)) {
                 foreach ($allMatches as $matches) {
                     $fullImplementation = $matches['fullImplementation'] ?? '';
                     $hookName = $matches['hookName'] ?? '';
@@ -277,11 +281,11 @@ final class HookExtractor
     {
         $types = [];
 
-        if (stripos($hookName, 'Admin') !== false) {
+        if (stripos((string) $hookName, 'Admin') !== false) {
             $types[] = 'back office';
         }
 
-        if (stripos($hookName, 'actionObject') !== false) {
+        if (stripos((string) $hookName, 'actionObject') !== false) {
             $types[] = 'back office';
             $types[] = 'front office';
 
@@ -289,7 +293,7 @@ final class HookExtractor
         }
 
         foreach ($locatedIn as $file) {
-            if (stripos($file, 'admin') !== false) {
+            if (stripos((string) $file, 'admin') !== false) {
                 $types[] = 'back office';
             }
         }

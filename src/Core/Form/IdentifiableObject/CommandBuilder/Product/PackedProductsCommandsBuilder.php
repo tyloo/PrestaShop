@@ -48,6 +48,7 @@ class PackedProductsCommandsBuilder implements ProductCommandsBuilderInterface
         if (empty($packedProducts)) {
             return [new RemoveAllProductsFromPackCommand($productId->getValue())];
         }
+
         $command = new SetPackProductsCommand(
             $productId->getValue(),
             $packedProducts

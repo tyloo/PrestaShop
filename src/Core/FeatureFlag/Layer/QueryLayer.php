@@ -38,8 +38,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class QueryLayer implements TypeLayerInterface
 {
     public function __construct(
-        private EnvironmentInterface $environment,
-        private RequestStack $requestStack,
+        private readonly EnvironmentInterface $environment,
+        private readonly RequestStack $requestStack,
     ) {
     }
 

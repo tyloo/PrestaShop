@@ -44,11 +44,6 @@ class AddAttributeGroupCommand
     private $localizedNames;
 
     /**
-     * @var int[]
-     */
-    private $associatedShopIds;
-
-    /**
      * @var array
      */
     private $localizedPublicNames;
@@ -69,7 +64,7 @@ class AddAttributeGroupCommand
         array $localizedNames,
         array $localizedPublicNames,
         string $type,
-        array $associatedShopIds,
+        private readonly array $associatedShopIds,
     ) {
         $this->assertNamesAreValid(
             $localizedNames,
@@ -85,7 +80,6 @@ class AddAttributeGroupCommand
         $this->localizedNames = $localizedNames;
         $this->localizedPublicNames = $localizedPublicNames;
         $this->type = new AttributeGroupType($type);
-        $this->associatedShopIds = $associatedShopIds;
     }
 
     /**

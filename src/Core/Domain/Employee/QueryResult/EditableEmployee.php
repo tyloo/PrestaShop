@@ -38,61 +38,6 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 class EditableEmployee
 {
     /**
-     * @var EmployeeId
-     */
-    private $employeeId;
-
-    /**
-     * @var FirstName
-     */
-    private $firstName;
-
-    /**
-     * @var LastName
-     */
-    private $lastName;
-
-    /**
-     * @var Email
-     */
-    private $email;
-
-    /**
-     * @var int
-     */
-    private $defaultPageId;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
-    /**
-     * @var bool
-     */
-    private $active;
-
-    /**
-     * @var int
-     */
-    private $profileId;
-
-    /**
-     * @var array
-     */
-    private $shopAssociation;
-
-    /**
-     * @var string
-     */
-    private $avatarUrl;
-
-    /**
-     * @var bool
-     */
-    private $hasEnabledGravatar;
-
-    /**
      * @param string $avatarUrl
      * @param int    $defaultPageId
      * @param int    $languageId
@@ -100,29 +45,18 @@ class EditableEmployee
      * @param int    $profileId
      */
     public function __construct(
-        EmployeeId $employeeId,
-        FirstName $firstName,
-        LastName $lastName,
-        Email $email,
-        $avatarUrl,
-        $defaultPageId,
-        $languageId,
-        $active,
-        $profileId,
-        array $shopAssociation,
-        bool $hasEnabledGravatar = false,
+        private readonly EmployeeId $employeeId,
+        private readonly FirstName $firstName,
+        private readonly LastName $lastName,
+        private readonly Email $email,
+        private $avatarUrl,
+        private $defaultPageId,
+        private $languageId,
+        private $active,
+        private $profileId,
+        private readonly array $shopAssociation,
+        private readonly bool $hasEnabledGravatar = false,
     ) {
-        $this->employeeId = $employeeId;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->defaultPageId = $defaultPageId;
-        $this->languageId = $languageId;
-        $this->active = $active;
-        $this->profileId = $profileId;
-        $this->shopAssociation = $shopAssociation;
-        $this->avatarUrl = $avatarUrl;
-        $this->hasEnabledGravatar = $hasEnabledGravatar;
     }
 
     /**

@@ -37,22 +37,12 @@ use PrestaShop\PrestaShop\Core\Domain\Webservice\QueryResult\EditableWebserviceK
 final class WebserviceKeyFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
-
-    /**
-     * @var int[]
-     */
-    private $shopIds;
-
-    /**
      * @param int[] $shopIds
      */
-    public function __construct(CommandBusInterface $queryBus, array $shopIds)
-    {
-        $this->queryBus = $queryBus;
-        $this->shopIds = $shopIds;
+    public function __construct(
+        private readonly CommandBusInterface $queryBus,
+        private readonly array $shopIds,
+    ) {
     }
 
     public function getData($webserviceKeyId)
@@ -81,10 +71,8 @@ final class WebserviceKeyFormDataProvider implements FormDataProviderInterface
 
     /**
      * Normalizes resource permissions to be in format that is accepted by form
-     *
-     * @return array
      */
-    private function normalizeResourcePermissions(array $resourcePermissions)
+    private function normalizeResourcePermissions(array $resourcePermissions): array
     {
         $normalizedResourcePermissions = [];
 

@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 final class CarriersCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * @var string
-     */
-    private $modifyAllNamePrefix;
-
     public function __construct(
-        string $modifyAllNamePrefix,
+        private readonly string $modifyAllNamePrefix,
     ) {
-        $this->modifyAllNamePrefix = $modifyAllNamePrefix;
     }
 
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array

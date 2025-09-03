@@ -42,14 +42,9 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class NumberExtractor
 {
-    /**
-     * @var PropertyAccessorInterface
-     */
-    private $propertyAccessor;
-
-    public function __construct(PropertyAccessorInterface $propertyAccessor)
-    {
-        $this->propertyAccessor = $propertyAccessor;
+    public function __construct(
+        private readonly PropertyAccessorInterface $propertyAccessor,
+    ) {
     }
 
     /**

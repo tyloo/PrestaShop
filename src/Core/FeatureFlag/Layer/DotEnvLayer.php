@@ -37,8 +37,8 @@ use RuntimeException;
 class DotEnvLayer implements TypeLayerInterface
 {
     public function __construct(
-        private EnvironmentInterface $environment,
-        private string $rootDir,
+        private readonly EnvironmentInterface $environment,
+        private readonly string $rootDir,
     ) {
     }
 
@@ -64,7 +64,7 @@ class DotEnvLayer implements TypeLayerInterface
     public function canBeUsed(string $featureFlagName): bool
     {
         return isset($_ENV['SYMFONY_DOTENV_VARS'])
-            && str_contains($_ENV['SYMFONY_DOTENV_VARS'], $this->getVarName($featureFlagName));
+            && str_contains((string) $_ENV['SYMFONY_DOTENV_VARS'], $this->getVarName($featureFlagName));
     }
 
     public function isEnabled(string $featureFlagName): bool
@@ -89,7 +89,7 @@ class DotEnvLayer implements TypeLayerInterface
     private function locateDotEnvFile(string $featureFlagName): string
     {
         $env = $this->environment->getName();
-        $filesToCheck = [".env.$env.local", ".env.$env", '.env'];
+        $filesToCheck = [\sprintf('.env.%s.local', $env), '.env.' . $env, '.env'];
 
         foreach ($filesToCheck as $file) {
             $path = $this->rootDir . '/' . $file;
@@ -110,8 +110,8 @@ class DotEnvLayer implements TypeLayerInterface
             file_put_contents(
                 $pathDotenv,
                 preg_replace(
-                    "/({$this->getVarName($featureFlagName)})=(.*)/",
-                    "$1={$this->boolLabel($status)}",
+                    \sprintf('/(%s)=(.*)/', $this->getVarName($featureFlagName)),
+                    '$1=' . $this->boolLabel($status),
                     file_get_contents($pathDotenv)
                 )
             );

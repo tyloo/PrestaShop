@@ -34,20 +34,10 @@ namespace PrestaShop\PrestaShop\Core\Domain\SearchEngine\Command;
  */
 class AddSearchEngineCommand
 {
-    /**
-     * @var string
-     */
-    private $server;
-
-    /**
-     * @var string
-     */
-    private $queryKey;
-
-    public function __construct(string $server, string $queryKey)
-    {
-        $this->server = $server;
-        $this->queryKey = $queryKey;
+    public function __construct(
+        private readonly string $server,
+        private readonly string $queryKey,
+    ) {
     }
 
     public function getServer(): string

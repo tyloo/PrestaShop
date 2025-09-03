@@ -62,44 +62,20 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
     public const GRID_ID = 'customer';
 
     /**
-     * @var bool
-     */
-    private $isB2bFeatureEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isMultistoreFeatureEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isGroupsFeatureEnabled;
-
-    /**
-     * @var string
-     */
-    private $contextDateFormat;
-
-    /**
      * @param bool $isB2bFeatureEnabled
      * @param bool $isMultistoreFeatureEnabled
      */
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        $isB2bFeatureEnabled,
-        $isMultistoreFeatureEnabled,
-        string $contextDateFormat,
-        bool $isGroupsFeatureEnabled = true,
+        private $isB2bFeatureEnabled,
+        private $isMultistoreFeatureEnabled,
+        private readonly string $contextDateFormat,
+        private readonly bool $isGroupsFeatureEnabled = true,
     ) {
         parent::__construct($hookDispatcher);
-        $this->isB2bFeatureEnabled = $isB2bFeatureEnabled;
-        $this->isMultistoreFeatureEnabled = $isMultistoreFeatureEnabled;
-        $this->contextDateFormat = $contextDateFormat;
-        $this->isGroupsFeatureEnabled = $isGroupsFeatureEnabled;
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

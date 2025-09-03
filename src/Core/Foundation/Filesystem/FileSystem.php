@@ -66,6 +66,7 @@ class FileSystem
         if (\func_num_args() < 2) {
             throw new Exception('joinPaths requires at least 2 arguments.');
         }
+
         if (\func_num_args() === 2) {
             $arg_O = func_get_arg(0);
             $arg_1 = func_get_arg(1);
@@ -79,8 +80,7 @@ class FileSystem
         return $this->joinPaths(
             $arg_0,
             \call_user_func_array(
-                [$this,
-                    'joinPaths', ],
+                $this->joinPaths(...),
                 \array_slice($func_args, 1)
             )
         );
@@ -96,7 +96,7 @@ class FileSystem
      *
      * @return SplFileInfo[] Array of SplFileInfo object indexed by file path
      */
-    public function listEntriesRecursively($path)
+    public function listEntriesRecursively($path): array
     {
         if (! file_exists($path)) {
             throw new Exception(\sprintf('No such file or directory: %s', $path));

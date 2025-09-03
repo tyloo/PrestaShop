@@ -44,30 +44,18 @@ class BulkUpdateProductStatusCommand
     private $productIds;
 
     /**
-     * @var bool
-     */
-    private $newStatus;
-
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @param int[] $productIds
      *
      * @throws ProductConstraintException
      */
     public function __construct(
         array $productIds,
-        bool $newStatus,
-        ShopConstraint $shopConstraint,
+        private readonly bool $newStatus,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         foreach ($productIds as $productId) {
             $this->productIds[] = new ProductId($productId);
         }
-        $this->newStatus = $newStatus;
-        $this->shopConstraint = $shopConstraint;
     }
 
     /**

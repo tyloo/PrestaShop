@@ -45,11 +45,6 @@ class SetCarriersCommand
     private $productId;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @var CarrierReferenceId[]|null
      */
     private $carrierReferenceIds;
@@ -62,10 +57,9 @@ class SetCarriersCommand
     public function __construct(
         int $productId,
         array $carrierReferenceIds,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
         $this->setCarrierReferenceIds($carrierReferenceIds);
     }
 

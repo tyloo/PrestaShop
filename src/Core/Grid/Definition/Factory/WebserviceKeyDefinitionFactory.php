@@ -54,7 +54,7 @@ final class WebserviceKeyDefinitionFactory extends AbstractGridDefinitionFactory
 
     public const GRID_ID = 'webservice_key';
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

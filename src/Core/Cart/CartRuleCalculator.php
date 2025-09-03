@@ -108,6 +108,7 @@ class CartRuleCalculator
         if (! CartRule::isFeatureActive()) {
             return;
         }
+
         if ($cartRule->type === DiscountType::ORDER_LEVEL && (float) $cartRule->reduction_percent > 0 && $cartRule->reduction_product === 0) {
             if ($this->featureFlagManager !== null && $this->featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_DISCOUNT)) {
                 $initialShippingFees = $this->calculator->getFees()->getInitialShippingFees();
@@ -224,6 +225,7 @@ class CartRuleCalculator
                         $cartRowCheapest = $cartRow;
                     }
                 }
+
                 if ($cartRowCheapest !== null) {
                     // apply only on one product of the cheapest row
                     $discountTaxIncluded = $cartRowCheapest->getInitialUnitPrice()->getTaxIncluded()
@@ -269,22 +271,23 @@ class CartRuleCalculator
                 // Discount (¤) on the whole order
                 $concernedRows = $this->cartRows;
             }
+
             /*
              * Reduction on the cheapest or on the selection is not really meaningful and has been disabled in the backend
              * Please keep this code, so it won't be considered as a bug
              * elseif ($this->reduction_product == -1)
              * elseif ($this->reduction_product == -2)
              */
-
             // currency conversion
-            $totalDiscountConverted = $discountConverted = $this->convertAmountBetweenCurrencies(
+            $totalDiscountConverted = $this->convertAmountBetweenCurrencies(
                 $cartRule->reduction_amount,
                 new Currency($cartRule->reduction_currency),
                 new Currency($cart->id_currency)
             );
-
+            $discountConverted = $totalDiscountConverted;
             // Get total sum of concerned rows
-            $totalTaxIncl = $totalTaxExcl = 0;
+            $totalTaxIncl = 0;
+            $totalTaxExcl = 0;
             foreach ($concernedRows as $concernedRow) {
                 $totalTaxIncl += $concernedRow->getFinalTotalPrice()->getTaxIncluded();
                 $totalTaxExcl += $concernedRow->getFinalTotalPrice()->getTaxExcluded();
@@ -305,6 +308,7 @@ class CartRuleCalculator
                     if ($totalTaxIncl !== 0) {
                         $weightFactor = $concernedRow->getFinalTotalPrice()->getTaxIncluded() / $totalTaxIncl;
                     }
+
                     $discountAmountTaxIncl = $discountConverted * $weightFactor;
                     // recalculate tax included
                     $discountAmountTaxExcl = $discountAmountTaxIncl / (1 + $taxRate);
@@ -313,10 +317,12 @@ class CartRuleCalculator
                     if ($totalTaxExcl !== 0) {
                         $weightFactor = $concernedRow->getFinalTotalPrice()->getTaxExcluded() / $totalTaxExcl;
                     }
+
                     $discountAmountTaxExcl = $discountConverted * $weightFactor;
                     // recalculate tax excluded
                     $discountAmountTaxIncl = $discountAmountTaxExcl * (1 + $taxRate);
                 }
+
                 $amount = new AmountImmutable($discountAmountTaxIncl, $discountAmountTaxExcl);
 
                 // Update the unit prices of the items, they will be needed for possible next rules to be calculated
@@ -344,6 +350,7 @@ class CartRuleCalculator
                             $shippingDiscountTaxIncluded = $shippingDiscount * (1 + $taxRate);
                             $shippingDiscountTaxExcluded = $shippingDiscount;
                         }
+
                         $shippingDiscountAmount = new AmountImmutable($shippingDiscountTaxIncluded, $shippingDiscountTaxExcluded);
 
                         $this->calculator->getFees()->subDiscountValueShipping($shippingDiscountAmount);

@@ -43,22 +43,16 @@ class QuantifiedProduct
     private $productId;
 
     /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
      * @var CombinationId
      */
     private $combinationId;
 
     public function __construct(
         int $productId,
-        int $quantity,
+        private readonly int $quantity,
         ?int $combinationId = null,
     ) {
         $this->productId = new ProductId($productId);
-        $this->quantity = $quantity;
         $this->combinationId = $combinationId ? new CombinationId($combinationId) : null;
     }
 

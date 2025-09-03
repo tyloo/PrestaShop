@@ -41,32 +41,12 @@ class LegacyTranslationKey
      */
     public const LEGACY_TRANSLATION_FORMAT = '#\<\{(?<module>[\w-]+)\}(?<theme>[\w-]+)\>(?<source>[\.\w_-]+)_(?<hash>[0-9a-f]+)#';
 
-    /**
-     * @var string
-     */
-    private $module;
-
-    /**
-     * @var string
-     */
-    private $theme;
-
-    /**
-     * @var string
-     */
-    private $source;
-
-    /**
-     * @var string
-     */
-    private $hash;
-
-    public function __construct(string $module, string $theme, string $source, string $hash)
-    {
-        $this->module = $module;
-        $this->theme = $theme;
-        $this->source = $source;
-        $this->hash = $hash;
+    public function __construct(
+        private readonly string $module,
+        private readonly string $theme,
+        private readonly string $source,
+        private readonly string $hash,
+    ) {
     }
 
     public function getModule(): string

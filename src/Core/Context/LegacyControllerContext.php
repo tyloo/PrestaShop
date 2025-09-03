@@ -183,12 +183,14 @@ class LegacyControllerContext
         }
 
         foreach ($js_uri as $js_file) {
-            $js_file = explode('?', $js_file);
+            $js_file = explode('?', (string) $js_file);
             $version = '';
             if (isset($js_file[1]) && $js_file[1]) {
                 $version = $js_file[1];
             }
-            $js_path = $js_file = $js_file[0];
+
+            $js_path = $js_file[0];
+            $js_file = $js_file[0];
             if ($check_path) {
                 $js_path = Media::getJSPath($js_file);
             }
@@ -230,6 +232,7 @@ class LegacyControllerContext
             if (! empty($plugin_path['js'])) {
                 $this->addJS($plugin_path['js'], false);
             }
+
             if ($css && ! empty($plugin_path['css'])) {
                 $this->addCSS(key($plugin_path['css']), 'all', null, false);
             }

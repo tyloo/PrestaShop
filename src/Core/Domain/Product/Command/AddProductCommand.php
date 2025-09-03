@@ -38,11 +38,6 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 class AddProductCommand
 {
     /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
      * @var ProductType
      */
     private $productType;
@@ -55,11 +50,13 @@ class AddProductCommand
     public function __construct(
         string $productType,
         int $shopId,
-        array $localizedNames = [],
+        /**
+         * @var string[]
+         */
+        private readonly array $localizedNames = [],
     ) {
         $this->productType = new ProductType($productType);
         $this->shopId = new ShopId($shopId);
-        $this->localizedNames = $localizedNames;
     }
 
     /**

@@ -88,6 +88,7 @@ class CSSInlineTransformation extends AbstractTransformation
                 $cssUrls[] = $hrefAttr->nodeValue;
             }
         }
+
         $cssContents = '';
         foreach ($cssUrls as $cssUrl) {
             $cssContent = @file_get_contents($cssUrl);

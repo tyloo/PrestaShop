@@ -54,37 +54,24 @@ final class OutstandingGridDefinitionFactory extends AbstractGridDefinitionFacto
     public const GRID_ID = 'outstanding';
 
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @var array<string, int>
      */
     private $risks;
 
-    /**
-     * @var string
-     */
-    private $contextDateFormat;
-
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        ConfigurationInterface $configuration,
+        private readonly ConfigurationInterface $configuration,
         int $languageId,
-        string $contextDateFormat,
+        private readonly string $contextDateFormat,
     ) {
         parent::__construct($hookDispatcher);
-
-        $this->configuration = $configuration;
-        $this->contextDateFormat = $contextDateFormat;
         foreach (Risk::getRisks($languageId) as $risk) {
             /** @var Risk $risk */
             $this->risks[$risk->name] = $risk->id;
         }
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

@@ -39,11 +39,6 @@ namespace PrestaShop\PrestaShop\Core\Translation\Builder\Map;
 class Message
 {
     /**
-     * @var string
-     */
-    private $defaultTranslation;
-
-    /**
      * @var string|null
      */
     private $fileTranslation;
@@ -53,9 +48,9 @@ class Message
      */
     private $userTranslation;
 
-    public function __construct(string $defaultTranslation)
-    {
-        $this->defaultTranslation = $defaultTranslation;
+    public function __construct(
+        private readonly string $defaultTranslation,
+    ) {
     }
 
     public function getKey(): string

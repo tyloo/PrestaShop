@@ -38,31 +38,6 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
     public const POSITION_KEY = 'Invalid position %i data, missing %s field.';
 
     /**
-     * @var string
-     */
-    private $positionsField;
-
-    /**
-     * @var string
-     */
-    private $rowIdField;
-
-    /**
-     * @var string
-     */
-    private $oldPositionField;
-
-    /**
-     * @var string
-     */
-    private $newPositionField;
-
-    /**
-     * @var string
-     */
-    private $parentIdField;
-
-    /**
      * @param string $positionsField
      * @param string $rowIdField
      * @param string $oldPositionField
@@ -70,17 +45,12 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
      * @param string $parentIdField
      */
     public function __construct(
-        $positionsField,
-        $rowIdField,
-        $oldPositionField,
-        $newPositionField,
-        $parentIdField,
+        private $positionsField,
+        private $rowIdField,
+        private $oldPositionField,
+        private $newPositionField,
+        private $parentIdField,
     ) {
-        $this->positionsField = $positionsField;
-        $this->rowIdField = $rowIdField;
-        $this->oldPositionField = $oldPositionField;
-        $this->newPositionField = $newPositionField;
-        $this->parentIdField = $parentIdField;
     }
 
     public function buildPositionUpdate(array $data, PositionDefinition $positionDefinition)
@@ -101,7 +71,7 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
         $positionUpdate = new PositionUpdate(
             $updates,
             $positionDefinition,
-            isset($data[$this->parentIdField]) ? $data[$this->parentIdField] : null
+            $data[$this->parentIdField] ?? null
         );
 
         return $positionUpdate;
@@ -133,9 +103,11 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
         if (! isset($position[$this->rowIdField])) {
             throw new PositionDataException(self::POSITION_KEY, 'Admin.Notifications.Failure', [$index, $this->rowIdField]);
         }
+
         if (! isset($position[$this->oldPositionField])) {
             throw new PositionDataException(self::POSITION_KEY, 'Admin.Notifications.Failure', [$index, $this->oldPositionField]);
         }
+
         if (! isset($position[$this->newPositionField])) {
             throw new PositionDataException(self::POSITION_KEY, 'Admin.Notifications.Failure', [$index, $this->newPositionField]);
         }

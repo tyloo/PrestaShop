@@ -32,7 +32,7 @@ namespace PrestaShop\PrestaShop\Core\Image\Deleter;
  */
 final class ImageFileDeleter implements ImageFileDeleterInterface
 {
-    public function deleteFromPath($path, $recursively = false, $deleteSubdirectories = false, $format = 'jpg')
+    public function deleteFromPath($path, $recursively = false, $deleteSubdirectories = false, $format = 'jpg'): bool
     {
         if (! $path || ! $format || ! is_dir($path)) {
             return false;
@@ -70,6 +70,7 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
                 if (file_exists($path . 'index.php')) {
                     unlink($path . 'index.php');
                 }
+
                 rmdir($path);
             }
         }

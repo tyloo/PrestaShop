@@ -37,11 +37,6 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId;
 class BulkToggleZoneStatusCommand
 {
     /**
-     * @var bool
-     */
-    private $expectedStatus;
-
-    /**
      * @var array<int, ZoneId>
      */
     private $zoneIds;
@@ -49,10 +44,11 @@ class BulkToggleZoneStatusCommand
     /**
      * @param array<int, int> $zoneIds
      */
-    public function __construct(bool $expectedStatus, array $zoneIds)
-    {
+    public function __construct(
+        private readonly bool $expectedStatus,
+        array $zoneIds,
+    ) {
         $this->setZoneIds($zoneIds);
-        $this->expectedStatus = $expectedStatus;
     }
 
     public function getExpectedStatus(): bool

@@ -34,26 +34,11 @@ use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerInterface;
  */
 class ThemePageLayoutsCustomizer implements ThemePageLayoutsCustomizerInterface
 {
-    /**
-     * @var Theme
-     */
-    private $theme;
-
-    /**
-     * @var ThemeManager
-     */
-    private $themeManager;
-
-    /**
-     * @var CacheClearerInterface
-     */
-    private $smartyCacheClearer;
-
-    public function __construct(Theme $theme, ThemeManager $themeManager, CacheClearerInterface $smartyCacheClearer)
-    {
-        $this->theme = $theme;
-        $this->themeManager = $themeManager;
-        $this->smartyCacheClearer = $smartyCacheClearer;
+    public function __construct(
+        private readonly Theme $theme,
+        private readonly ThemeManager $themeManager,
+        private readonly CacheClearerInterface $smartyCacheClearer,
+    ) {
     }
 
     public function customize(array $pageLayouts)

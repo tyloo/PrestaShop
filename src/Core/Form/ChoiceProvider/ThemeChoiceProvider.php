@@ -35,17 +35,15 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class ThemeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var ThemeProviderInterface
-     */
-    private $themeProvider;
-
-    public function __construct(ThemeProviderInterface $themeProvider)
-    {
-        $this->themeProvider = $themeProvider;
+    public function __construct(
+        private readonly ThemeProviderInterface $themeProvider,
+    ) {
     }
 
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         $usedTheme = $this->themeProvider->getCurrentlyUsedTheme();
         $notUsedThemes = $this->themeProvider->getNotUsedThemes();

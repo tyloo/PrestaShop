@@ -43,44 +43,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class BackupGridDataFactory implements GridDataFactoryInterface
 {
     /**
-     * @var BackupRepositoryInterface
-     */
-    private $backupRepository;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var string
-     */
-    private $languageDateTimeFormat;
-
-    /**
-     * @var BackupComparatorInterface
-     */
-    private $backupByDateComparator;
-
-    /**
      * @param string $languageDateTimeFormat
      */
     public function __construct(
-        BackupRepositoryInterface $backupRepository,
-        BackupComparatorInterface $backupByDateComparator,
-        TranslatorInterface $translator,
-        $languageDateTimeFormat,
+        private readonly BackupRepositoryInterface $backupRepository,
+        private readonly BackupComparatorInterface $backupByDateComparator,
+        private readonly TranslatorInterface $translator,
+        private $languageDateTimeFormat,
     ) {
-        $this->backupRepository = $backupRepository;
-        $this->translator = $translator;
-        $this->languageDateTimeFormat = $languageDateTimeFormat;
-        $this->backupByDateComparator = $backupByDateComparator;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)
     {
         $backups = $this->backupRepository->retrieveBackups()->all();
-        usort($backups, [$this->backupByDateComparator, 'compare']);
+        usort($backups, $this->backupByDateComparator->compare(...));
 
         $paginatedBackups = $searchCriteria->getOffset() !== null && $searchCriteria->getLimit() !== null ?
             \array_slice($backups, $searchCriteria->getOffset(), $searchCriteria->getLimit()) :

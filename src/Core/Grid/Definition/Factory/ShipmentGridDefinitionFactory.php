@@ -44,12 +44,12 @@ final class ShipmentGridDefinitionFactory extends AbstractFilterableGridDefiniti
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,
-        private LanguageContext $languageContext,
+        private readonly LanguageContext $languageContext,
     ) {
         parent::__construct($hookDispatcher);
     }
 
-    protected function getId()
+    protected function getId(): string
     {
         return self::GRID_ID;
     }

@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceFormatter;
  */
 final class CustomerServiceOrderMessagesChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var OrderMessageProvider
-     */
-    private $orderMessageProvider;
-
-    public function __construct(OrderMessageProvider $orderMessageProvider)
-    {
-        $this->orderMessageProvider = $orderMessageProvider;
+    public function __construct(
+        private readonly OrderMessageProvider $orderMessageProvider,
+    ) {
     }
 
     public function getChoices(array $options): array

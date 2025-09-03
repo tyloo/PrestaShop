@@ -36,20 +36,17 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\ValueObject\Name;
 class DuplicateOrderStateNameException extends OrderStateException
 {
     /**
-     * @var Name
-     */
-    private $name;
-
-    /**
      * @param string $message
      * @param int    $code
      * @param null   $previous
      */
-    public function __construct(Name $name, $message = '', $code = 0, $previous = null)
-    {
+    public function __construct(
+        private readonly Name $name,
+        $message = '',
+        $code = 0,
+        $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->name = $name;
     }
 
     /**

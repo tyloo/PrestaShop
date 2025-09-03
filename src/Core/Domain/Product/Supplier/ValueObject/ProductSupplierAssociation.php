@@ -92,7 +92,7 @@ class ProductSupplierAssociation implements SupplierAssociationInterface
         return $this->productSupplierId;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return \sprintf(
             '[productId: %d, combinationId: %d, supplierId: %d]',

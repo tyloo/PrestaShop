@@ -103,13 +103,15 @@ abstract class AbstractMultistoreConfiguration implements DataConfigurationInter
     public function validateConfiguration(array $configurationInputValues): bool
     {
         $resolver = $this->buildResolver();
-        $definedOptions = $fields = $resolver->getDefinedOptions();
+        $definedOptions = $resolver->getDefinedOptions();
+        $fields = $definedOptions;
 
         if ($this->multistoreFeature->isUsed() && ! $this->shopContext->isAllShopContext()) {
             // add multistore fields in list of defined fields
             foreach ($definedOptions as $value) {
                 $fields[] = MultistoreCheckboxEnabler::MULTISTORE_FIELD_PREFIX . $value;
             }
+
             $resolver->setDefined($fields);
         } else {
             // all fields are mandatory in all shop context. (not in single or group shop context because fields

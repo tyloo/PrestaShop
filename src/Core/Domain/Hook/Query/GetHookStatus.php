@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Hook\ValueObject\HookId;
  */
 class GetHookStatus
 {
-    private HookId $id;
+    private readonly HookId $id;
 
     public function __construct(int $id)
     {

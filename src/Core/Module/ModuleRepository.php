@@ -57,31 +57,6 @@ class ModuleRepository implements ModuleRepositoryInterface
     ];
 
     /**
-     * @var ModuleDataProvider
-     */
-    private $moduleDataProvider;
-
-    /**
-     * @var AdminModuleDataProvider
-     */
-    private $adminModuleDataProvider;
-
-    /**
-     * @var HookManager
-     */
-    private $hookManager;
-
-    /**
-     * @var CacheProvider
-     */
-    private $cacheProvider;
-
-    /**
-     * @var string
-     */
-    private $modulePath;
-
-    /**
      * @var array|null
      */
     private $installedModules;
@@ -92,18 +67,13 @@ class ModuleRepository implements ModuleRepositoryInterface
     private $modulesFromHook;
 
     public function __construct(
-        ModuleDataProvider $moduleDataProvider,
-        AdminModuleDataProvider $adminModuleDataProvider,
-        CacheProvider $cacheProvider,
-        HookManager $hookManager,
-        string $modulePath,
-        private LanguageContext $languageContext,
+        private readonly ModuleDataProvider $moduleDataProvider,
+        private readonly AdminModuleDataProvider $adminModuleDataProvider,
+        private readonly CacheProvider $cacheProvider,
+        private readonly HookManager $hookManager,
+        private readonly string $modulePath,
+        private readonly LanguageContext $languageContext,
     ) {
-        $this->moduleDataProvider = $moduleDataProvider;
-        $this->adminModuleDataProvider = $adminModuleDataProvider;
-        $this->cacheProvider = $cacheProvider;
-        $this->hookManager = $hookManager;
-        $this->modulePath = $modulePath;
     }
 
     public function getList(): ModuleCollection
@@ -129,16 +99,12 @@ class ModuleRepository implements ModuleRepositoryInterface
 
     public function getInstalledModules(): ModuleCollection
     {
-        return $this->getList()->filter(static function (Module $module) {
-            return $module->isInstalled();
-        });
+        return $this->getList()->filter(static fn (Module $module): bool => $module->isInstalled());
     }
 
     public function getMustBeConfiguredModules(): ModuleCollection
     {
-        return $this->getList()->filter(static function (Module $module) {
-            return $module->isConfigurable() && $module->isActive() && $module->hasValidInstance() && ! empty($module->getInstance()->warning);
-        });
+        return $this->getList()->filter(static fn (Module $module): bool => $module->isConfigurable() && $module->isActive() && $module->hasValidInstance() && ! empty($module->getInstance()->warning));
     }
 
     /**
@@ -156,9 +122,7 @@ class ModuleRepository implements ModuleRepositoryInterface
 
     public function getUpgradableModules(): ModuleCollection
     {
-        return $this->getList()->filter(static function (Module $module) {
-            return $module->canBeUpgraded();
-        });
+        return $this->getList()->filter(static fn (Module $module) => $module->canBeUpgraded());
     }
 
     /**
@@ -187,6 +151,7 @@ class ModuleRepository implements ModuleRepositoryInterface
         if (empty($attributes)) {
             $isValid = false;
         }
+
         $attributes = array_merge(['name' => $moduleName], $attributes);
         $disk = $this->getModuleDiskAttributes($moduleName, $isValid, $filemtime);
         $database = $this->getModuleDatabaseAttributes($moduleName);
@@ -261,11 +226,13 @@ class ModuleRepository implements ModuleRepositoryInterface
             } catch (Throwable) {
                 return $attributes;
             }
+
             foreach (self::MODULE_ATTRIBUTES as $attribute) {
                 if (isset($tmpModule->{$attribute})) {
                     $attributes[$attribute] = $tmpModule->{$attribute};
                 }
             }
+
             $attributes['parent_class'] = get_parent_class($tmpModule);
             $attributes['is_paymentModule'] = is_subclass_of($tmpModule, 'PaymentModule');
             $attributes['is_configurable'] = method_exists($tmpModule, 'getContent');
@@ -313,7 +280,7 @@ class ModuleRepository implements ModuleRepositoryInterface
             $modulesFromHook = array_values($modulesFromHook ?? []);
 
             // Merge hooks from modules if it's an array and not empty
-            $filteredModulesFromHook = array_filter($modulesFromHook, function ($item) { return \is_array($item); });
+            $filteredModulesFromHook = array_filter($modulesFromHook, fn ($item): bool => \is_array($item));
             $this->modulesFromHook = empty($filteredModulesFromHook) ? [] : array_merge(...$filteredModulesFromHook);
         }
 
@@ -324,8 +291,8 @@ class ModuleRepository implements ModuleRepositoryInterface
     {
         try {
             $externalModules = $this->getModulesFromHook();
-        } catch (Throwable $e) {
-            $modules->addError($e);
+        } catch (Throwable $throwable) {
+            $modules->addError($throwable);
 
             return $modules;
         }
@@ -338,6 +305,7 @@ class ModuleRepository implements ModuleRepositoryInterface
                     break;
                 }
             }
+
             if (! $merged) {
                 $modules->add(new Module($externalModule));
             }
@@ -370,6 +338,7 @@ class ModuleRepository implements ModuleRepositoryInterface
                 if ($module->attributes->has('displayName') && ! empty($module->attributes->get('displayName'))) {
                     unset($moduleFromHook['displayName']);
                 }
+
                 if ($module->attributes->has('description') && ! empty($module->attributes->get('description'))) {
                     unset($moduleFromHook['description']);
                 }

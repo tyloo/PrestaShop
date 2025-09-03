@@ -99,6 +99,7 @@ class TokenAuthenticator extends AbstractAuthenticator
                 $this->logger->error('TokenAuthenticator: No Authorization header provided');
                 throw new CustomUserMessageAuthenticationException(json_encode('No Authorization header provided'));
             }
+
             if (! str_starts_with($authorization, 'Bearer ')) {
                 $this->logger->error('TokenAuthenticator: Bearer token missing');
                 throw new CustomUserMessageAuthenticationException(json_encode('Bearer token missing'));
@@ -121,12 +122,13 @@ class TokenAuthenticator extends AbstractAuthenticator
                 $this->logger->error('TokenAuthenticator: No external issuer specified');
                 throw new CustomUserMessageAuthenticationException(json_encode('No external issuer specified'));
             }
+
             $this->autoSaveApiClient($jwtTokenUser);
         }
 
         // Returns passport purely based on JWT token here, we set a specific loader that returns the
         // user object directly since it was already resolved by our authorization server
-        return new SelfValidatingPassport(new UserBadge($jwtTokenUser->getUserIdentifier(), fn () => $jwtTokenUser));
+        return new SelfValidatingPassport(new UserBadge($jwtTokenUser->getUserIdentifier(), fn (): JwtTokenUser => $jwtTokenUser));
     }
 
     /**
@@ -155,7 +157,7 @@ class TokenAuthenticator extends AbstractAuthenticator
     {
         foreach ($this->authorizationServers as $authorizationServer) {
             $isTokenValid = $authorizationServer->isTokenValid($request);
-            $this->logger->debug('TokenAuthenticator check token via ' . \get_class($authorizationServer) . ' => ' . ($isTokenValid ? 'valid token' : 'invalid token'));
+            $this->logger->debug('TokenAuthenticator check token via ' . $authorizationServer::class . ' => ' . ($isTokenValid ? 'valid token' : 'invalid token'));
             if ($isTokenValid) {
                 return $authorizationServer;
             }

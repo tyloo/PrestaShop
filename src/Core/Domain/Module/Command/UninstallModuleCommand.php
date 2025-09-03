@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Module\ValueObject\ModuleTechnicalName;
  */
 class UninstallModuleCommand
 {
-    private ModuleTechnicalName $technicalName;
+    private readonly ModuleTechnicalName $technicalName;
 
     /**
      * @param string $technicalName Array of technical names for modules

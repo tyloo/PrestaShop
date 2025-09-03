@@ -34,14 +34,9 @@ use PrestaShop\PrestaShop\Core\Employee\ContextEmployeeProviderInterface;
  */
 final class ImportAccessChecker implements ImportAccessCheckerInterface
 {
-    /**
-     * @var ContextEmployeeProviderInterface
-     */
-    private $contextEmployeeProvider;
-
-    public function __construct(ContextEmployeeProviderInterface $contextEmployeeProvider)
-    {
-        $this->contextEmployeeProvider = $contextEmployeeProvider;
+    public function __construct(
+        private readonly ContextEmployeeProviderInterface $contextEmployeeProvider,
+    ) {
     }
 
     public function canTruncateData()

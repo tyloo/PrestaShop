@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class AttributeGroupGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $attributeDataFactory;
-
-    public function __construct(GridDataFactoryInterface $attributeDataFactory)
-    {
-        $this->attributeDataFactory = $attributeDataFactory;
+    public function __construct(
+        private readonly GridDataFactoryInterface $attributeDataFactory,
+    ) {
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

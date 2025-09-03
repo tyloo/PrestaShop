@@ -37,92 +37,20 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\Priority
  */
 class ProductPricesInformation
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $price;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $priceTaxIncluded;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $ecotax;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $ecotaxTaxIncluded;
-
-    /**
-     * @var int
-     */
-    private $taxRulesGroupId;
-
-    /**
-     * @var bool
-     */
-    private $onSale;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $wholesalePrice;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $unitPrice;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $unitPriceTaxIncluded;
-
-    /**
-     * @var string
-     */
-    private $unity;
-
-    /**
-     * @var DecimalNumber
-     */
-    private $unitPriceRatio;
-
-    /**
-     * @var PriorityList|null
-     */
-    private $specificPricePriorities;
-
     public function __construct(
-        DecimalNumber $price,
-        DecimalNumber $priceTaxIncluded,
-        DecimalNumber $ecotax,
-        DecimalNumber $ecotaxTaxIncluded,
-        int $taxRulesGroupId,
-        bool $onSale,
-        DecimalNumber $wholesalePrice,
-        DecimalNumber $unitPrice,
-        DecimalNumber $unitPriceTaxIncluded,
-        string $unity,
-        DecimalNumber $unitPriceRatio,
-        ?PriorityList $specificPricePriorities,
+        private readonly DecimalNumber $price,
+        private readonly DecimalNumber $priceTaxIncluded,
+        private readonly DecimalNumber $ecotax,
+        private readonly DecimalNumber $ecotaxTaxIncluded,
+        private readonly int $taxRulesGroupId,
+        private readonly bool $onSale,
+        private readonly DecimalNumber $wholesalePrice,
+        private readonly DecimalNumber $unitPrice,
+        private readonly DecimalNumber $unitPriceTaxIncluded,
+        private readonly string $unity,
+        private readonly DecimalNumber $unitPriceRatio,
+        private readonly ?PriorityList $specificPricePriorities,
     ) {
-        $this->price = $price;
-        $this->priceTaxIncluded = $priceTaxIncluded;
-        $this->ecotax = $ecotax;
-        $this->ecotaxTaxIncluded = $ecotaxTaxIncluded;
-        $this->taxRulesGroupId = $taxRulesGroupId;
-        $this->onSale = $onSale;
-        $this->wholesalePrice = $wholesalePrice;
-        $this->unitPrice = $unitPrice;
-        $this->unitPriceTaxIncluded = $unitPriceTaxIncluded;
-        $this->unity = $unity;
-        $this->unitPriceRatio = $unitPriceRatio;
-        $this->specificPricePriorities = $specificPricePriorities;
     }
 
     public function getPrice(): DecimalNumber

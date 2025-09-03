@@ -38,59 +38,17 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId;
 class EditableState
 {
     /**
-     * @var StateId
-     */
-    private $stateId;
-
-    /**
-     * @var CountryId
-     */
-    private $countryId;
-
-    /**
-     * @var ZoneId
-     */
-    private $zoneId;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $isoCode;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var array<int, int>
-     */
-    private $associatedShops;
-
-    /**
      * @param array<int, int> $associatedShops
      */
     public function __construct(
-        StateId $stateId,
-        CountryId $countryId,
-        ZoneId $zoneId,
-        string $name,
-        string $isoCode,
-        bool $enabled,
-        array $associatedShops,
+        private readonly StateId $stateId,
+        private readonly CountryId $countryId,
+        private readonly ZoneId $zoneId,
+        private readonly string $name,
+        private readonly string $isoCode,
+        private readonly bool $enabled,
+        private readonly array $associatedShops,
     ) {
-        $this->stateId = $stateId;
-        $this->countryId = $countryId;
-        $this->zoneId = $zoneId;
-        $this->name = $name;
-        $this->isoCode = $isoCode;
-        $this->enabled = $enabled;
-        $this->associatedShops = $associatedShops;
     }
 
     public function getStateId(): StateId

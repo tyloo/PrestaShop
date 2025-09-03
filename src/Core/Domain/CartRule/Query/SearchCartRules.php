@@ -32,14 +32,9 @@ namespace PrestaShop\PrestaShop\Core\Domain\CartRule\Query;
  */
 class SearchCartRules
 {
-    /**
-     * @var string
-     */
-    private $searchPhrase;
-
-    public function __construct(string $searchPhrase)
-    {
-        $this->searchPhrase = $searchPhrase;
+    public function __construct(
+        private readonly string $searchPhrase,
+    ) {
     }
 
     public function getSearchPhrase(): string

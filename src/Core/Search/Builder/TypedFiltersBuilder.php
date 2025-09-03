@@ -42,11 +42,6 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
 class TypedFiltersBuilder extends AbstractFiltersBuilder
 {
     /**
-     * @var FiltersBuilderInterface
-     */
-    private $defaultBuilder;
-
-    /**
      * @var TypedFiltersBuilderInterface[]
      */
     private $typedBuilders = [];
@@ -65,11 +60,9 @@ class TypedFiltersBuilder extends AbstractFiltersBuilder
      * @param iterable|TypedFiltersBuilderInterface[]|null $typedBuilders
      */
     public function __construct(
-        FiltersBuilderInterface $defaultBuilder,
+        private readonly FiltersBuilderInterface $defaultBuilder,
         ?iterable $typedBuilders = null,
     ) {
-        $this->defaultBuilder = $defaultBuilder;
-
         if (! empty($typedBuilders)) {
             foreach ($typedBuilders as $typedBuilder) {
                 $this->addTypedBuilder($typedBuilder);

@@ -35,41 +35,17 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\QueryResult;
 class ProductBasicInformation
 {
     /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
-     * @var string[]
-     */
-    private $localizedDescriptions;
-
-    /**
-     * @var string[]
-     */
-    private $localizedShortDescriptions;
-
-    /**
-     * @var LocalizedTags[]
-     */
-    private $localizedTags;
-
-    /**
      * @param string[]        $localizedNames
      * @param string[]        $localizedDescriptions
      * @param string[]        $localizedShortDescriptions
      * @param LocalizedTags[] $localizedTags
      */
     public function __construct(
-        array $localizedNames,
-        array $localizedDescriptions,
-        array $localizedShortDescriptions,
-        array $localizedTags,
+        private readonly array $localizedNames,
+        private readonly array $localizedDescriptions,
+        private readonly array $localizedShortDescriptions,
+        private readonly array $localizedTags,
     ) {
-        $this->localizedNames = $localizedNames;
-        $this->localizedDescriptions = $localizedDescriptions;
-        $this->localizedShortDescriptions = $localizedShortDescriptions;
-        $this->localizedTags = $localizedTags;
     }
 
     /**

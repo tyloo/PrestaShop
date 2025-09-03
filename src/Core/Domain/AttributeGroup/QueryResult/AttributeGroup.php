@@ -34,61 +34,19 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\QueryResult\Attri
 class AttributeGroup
 {
     /**
-     * @var int
-     */
-    private $attributeGroupId;
-
-    /**
-     * @var string[]
-     */
-    private $localizedNames;
-
-    /**
-     * @var string[]
-     */
-    private $localizedPublicNames;
-
-    /**
-     * @var string
-     */
-    private $groupType;
-
-    /**
-     * @var bool
-     */
-    private $isColorGroup;
-
-    /**
-     * @var int
-     */
-    private $position;
-
-    /**
-     * @var Attribute[]|null
-     */
-    private $attributes;
-
-    /**
      * @param string[]         $localizedNames
      * @param string[]         $localizedPublicNames
      * @param Attribute[]|null $attributes
      */
     public function __construct(
-        int $attributeGroupId,
-        array $localizedNames,
-        array $localizedPublicNames,
-        string $groupType,
-        bool $isColorGroup,
-        int $position,
-        ?array $attributes = null,
+        private readonly int $attributeGroupId,
+        private readonly array $localizedNames,
+        private readonly array $localizedPublicNames,
+        private readonly string $groupType,
+        private readonly bool $isColorGroup,
+        private readonly int $position,
+        private readonly ?array $attributes = null,
     ) {
-        $this->attributeGroupId = $attributeGroupId;
-        $this->localizedNames = $localizedNames;
-        $this->localizedPublicNames = $localizedPublicNames;
-        $this->groupType = $groupType;
-        $this->isColorGroup = $isColorGroup;
-        $this->position = $position;
-        $this->attributes = $attributes;
     }
 
     public function getAttributeGroupId(): int

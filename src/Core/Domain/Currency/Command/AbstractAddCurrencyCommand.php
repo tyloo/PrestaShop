@@ -50,8 +50,6 @@ abstract class AbstractAddCurrencyCommand
      */
     protected array $localizedSymbols = [];
 
-    protected bool $isEnabled;
-
     /**
      * @var int[]
      */
@@ -68,11 +66,10 @@ abstract class AbstractAddCurrencyCommand
     public function __construct(
         string $isoCode,
         float $exchangeRate,
-        bool $isEnabled,
+        protected bool $isEnabled,
     ) {
         $this->isoCode = new AlphaIsoCode($isoCode);
         $this->exchangeRate = new ExchangeRate($exchangeRate);
-        $this->isEnabled = $isEnabled;
     }
 
     public function getIsoCode(): AlphaIsoCode

@@ -43,31 +43,45 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 
 class AddDiscountCommand
 {
-    private array $localizedNames = [];
     private int $priority = 1;
+
     private bool $active = false;
+
     private ?DateTimeImmutable $validFrom = null;
+
     private ?DateTimeImmutable $validTo = null;
+
     private int $totalQuantity = 1;
+
     private int $quantityPerUser = 1;
+
     private string $description = '';
+
     private string $code = '';
+
     private ?CustomerId $customerId = null;
+
     private bool $highlightInCart = false;
+
     private bool $allowPartialUse = true;
-    private DiscountType $type;
+
+    private readonly DiscountType $type;
+
     private ?DecimalNumber $percentDiscount = null;
+
     private ?Money $amountDiscount = null;
+
     private ?ProductId $productId = null;
+
     private ?CombinationIdInterface $combinationId = null;
+
     private int $reductionProduct = 0;
 
     public function __construct(
         string $type,
-        array $localizedNames,
+        private array $localizedNames,
     ) {
         $this->type = new DiscountType($type);
-        $this->localizedNames = $localizedNames;
     }
 
     /**

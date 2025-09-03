@@ -38,14 +38,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 final class ExistingCustomerEmailValidator extends ConstraintValidator
 {
-    /**
-     * @var CustomerDataSourceInterface
-     */
-    private $customerDataSource;
-
-    public function __construct(CustomerDataSourceInterface $customerDataSource)
-    {
-        $this->customerDataSource = $customerDataSource;
+    public function __construct(
+        private readonly CustomerDataSourceInterface $customerDataSource,
+    ) {
     }
 
     public function validate($value, Constraint $constraint)

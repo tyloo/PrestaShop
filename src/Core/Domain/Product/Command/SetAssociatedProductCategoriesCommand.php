@@ -55,23 +55,17 @@ class SetAssociatedProductCategoriesCommand
     private $categoryIds;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @param int[] $categoryIds
      */
     public function __construct(
         int $productId,
         int $defaultCategoryId,
         array $categoryIds,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->setCategoryIds($categoryIds);
         $this->defaultCategoryId = new CategoryId($defaultCategoryId);
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getDefaultCategoryId(): CategoryId
@@ -105,9 +99,7 @@ class SetAssociatedProductCategoriesCommand
         $this->assertCategoryIdsAreNotEmpty($categoryIds);
 
         $this->categoryIds = array_map(
-            function ($id) {
-                return new CategoryId($id);
-            }, $categoryIds
+            fn ($id): CategoryId => new CategoryId($id), $categoryIds
         );
     }
 

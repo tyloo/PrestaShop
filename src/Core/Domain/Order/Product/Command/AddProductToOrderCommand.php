@@ -167,6 +167,7 @@ class AddProductToOrderCommand
         } catch (InvalidArgumentException) {
             throw new InvalidAmountException();
         }
+
         $this->setProductQuantity($productQuantity);
     }
 
@@ -218,6 +219,7 @@ class AddProductToOrderCommand
         if ($productQuantity <= 0) {
             throw new InvalidProductQuantityException('When adding a product quantity must be strictly positive');
         }
+
         $this->productQuantity = $productQuantity;
     }
 }

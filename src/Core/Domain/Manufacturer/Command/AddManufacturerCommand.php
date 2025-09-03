@@ -33,62 +33,20 @@ namespace PrestaShop\PrestaShop\Core\Domain\Manufacturer\Command;
 class AddManufacturerCommand
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string[]
-     */
-    private $localizedShortDescriptions;
-
-    /**
-     * @var string[]
-     */
-    private $localizedDescriptions;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMetaTitles;
-
-    /**
-     * @var string[]
-     */
-    private $localizedMetaDescriptions;
-
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @var array
-     */
-    private $shopAssociation;
-
-    /**
      * @param string[] $localizedShortDescriptions
      * @param string[] $localizedDescriptions
      * @param string[] $localizedMetaTitles
      * @param string[] $localizedMetaDescriptions
      */
     public function __construct(
-        string $name,
-        bool $enabled,
-        array $localizedShortDescriptions,
-        array $localizedDescriptions,
-        array $localizedMetaTitles,
-        array $localizedMetaDescriptions,
-        array $shopAssociation,
+        private readonly string $name,
+        private readonly bool $enabled,
+        private readonly array $localizedShortDescriptions,
+        private readonly array $localizedDescriptions,
+        private readonly array $localizedMetaTitles,
+        private readonly array $localizedMetaDescriptions,
+        private readonly array $shopAssociation,
     ) {
-        $this->name = $name;
-        $this->enabled = $enabled;
-        $this->localizedShortDescriptions = $localizedShortDescriptions;
-        $this->localizedDescriptions = $localizedDescriptions;
-        $this->localizedMetaTitles = $localizedMetaTitles;
-        $this->localizedMetaDescriptions = $localizedMetaDescriptions;
-        $this->shopAssociation = $shopAssociation;
     }
 
     /**

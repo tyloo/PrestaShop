@@ -44,19 +44,13 @@ class GetProductAttributeGroups
     private $productId;
 
     /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    /**
      * @throws ProductConstraintException
      */
     public function __construct(
         int $productId,
-        ShopConstraint $shopConstraint,
+        private readonly ShopConstraint $shopConstraint,
     ) {
         $this->productId = new ProductId($productId);
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getProductId(): ProductId

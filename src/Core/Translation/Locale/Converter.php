@@ -36,14 +36,12 @@ use Exception;
  */
 final class Converter
 {
-    /**
-     * @var string the path to the JSON file responsible of mapping between lang and locale
-     */
-    private $translationsMappingFile;
-
-    public function __construct(string $translationsMappingFile)
-    {
-        $this->translationsMappingFile = $translationsMappingFile;
+    public function __construct(
+        /**
+         * @var string the path to the JSON file responsible of mapping between lang and locale
+         */
+        private readonly string $translationsMappingFile,
+    ) {
     }
 
     /**
@@ -69,7 +67,7 @@ final class Converter
     {
         $mappingLocales = $this->getLangToLocalesMapping();
 
-        return isset($mappingLocales[$legacyLocale]) ? $mappingLocales[$legacyLocale] : false;
+        return $mappingLocales[$legacyLocale] ?? false;
     }
 
     /**

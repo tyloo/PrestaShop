@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class SubmitGridAction extends AbstractGridAction
 {
-    public function getType()
+    public function getType(): string
     {
         return 'submit';
     }

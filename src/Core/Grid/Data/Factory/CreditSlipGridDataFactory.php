@@ -37,22 +37,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class CreditSlipGridDataFactory implements GridDataFactoryInterface
 {
-    /**
-     * @var GridDataFactoryInterface
-     */
-    private $creditSlipDataFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
-        GridDataFactoryInterface $creditSlipDataFactory,
-        TranslatorInterface $translator,
+        private readonly GridDataFactoryInterface $creditSlipDataFactory,
+        private readonly TranslatorInterface $translator,
     ) {
-        $this->creditSlipDataFactory = $creditSlipDataFactory;
-        $this->translator = $translator;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

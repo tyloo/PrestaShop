@@ -51,6 +51,7 @@ class HtaccessFolderGuard implements FolderGuardInterface
         if (! file_exists($htaccessTemplatePath)) {
             throw new FileNotFoundException(\sprintf('Could not find file %s', $htaccessTemplatePath));
         }
+
         $this->htaccessContent = file_get_contents($htaccessTemplatePath);
     }
 
