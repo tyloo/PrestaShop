@@ -96,7 +96,7 @@ class QuickAccess
     public function getActiveQuickAccess(): array|false
     {
         if ($this->activeQuickAccess === null) {
-            $this->activeQuickAccess = current(array_filter($this->getQuickAccesses(), fn ($data) => $data['active']));
+            $this->activeQuickAccess = current(array_filter($this->getQuickAccesses(), fn (array $data) => $data['active']));
         }
 
         return $this->activeQuickAccess;
