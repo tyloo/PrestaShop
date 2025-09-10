@@ -107,14 +107,14 @@ describe('API : Internal Auth Server - Authorization Endpoint', async () => {
       await testContext.addContextItem(this, 'testIdentifier', 'requestAuthWithMethodGET', baseContext);
 
       const apiResponse = await apiContext.get('access_token');
-      expect(apiResponse.status()).to.eq(405);
+      expect(apiResponse.status(), await apiResponse.text()).to.eq(405);
     });
 
     it('should request the endpoint /access_token with method POST', async function () {
       await testContext.addContextItem(this, 'testIdentifier', 'requestAuthWithMethodPOST', baseContext);
 
       const apiResponse = await apiContext.post('access_token');
-      expect(apiResponse.status()).to.eq(400);
+      expect(apiResponse.status(), await apiResponse.text()).to.eq(400);
     });
 
     it('should request the endpoint /access_token with method POST with unuseful data', async function () {
@@ -125,7 +125,7 @@ describe('API : Internal Auth Server - Authorization Endpoint', async () => {
           notUsed: 'notUsed',
         },
       });
-      expect(apiResponse.status()).to.eq(400);
+      expect(apiResponse.status(), await apiResponse.text()).to.eq(400);
     });
 
     it('should request the endpoint /access_token with method POST with invalid data', async function () {
@@ -138,7 +138,7 @@ describe('API : Internal Auth Server - Authorization Endpoint', async () => {
           grant_type: 'client_credentials',
         },
       });
-      expect(apiResponse.status()).to.eq(401);
+      expect(apiResponse.status(), await apiResponse.text()).to.eq(401);
     });
 
     it('should request the endpoint /access_token with method POST with valid + unuseful data', async function () {
@@ -152,7 +152,7 @@ describe('API : Internal Auth Server - Authorization Endpoint', async () => {
           notUsed: 'notUsed',
         },
       });
-      expect(apiResponse.status()).to.eq(200);
+      expect(apiResponse.status(), await apiResponse.text()).to.eq(200);
     });
 
     it('should request the endpoint /access_token with method POST with valid data', async function () {
@@ -165,7 +165,7 @@ describe('API : Internal Auth Server - Authorization Endpoint', async () => {
           grant_type: 'client_credentials',
         },
       });
-      expect(apiResponse.status()).to.eq(200);
+      expect(apiResponse.status(), await apiResponse.text()).to.eq(200);
       expect(utilsAPI.hasResponseHeader(apiResponse, 'Content-Type')).to.eq(true);
       expect(utilsAPI.getResponseHeader(apiResponse, 'Content-Type')).to.contains('application/json');
 
