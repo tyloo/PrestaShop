@@ -254,11 +254,23 @@ class ImageRetriever
                 $baseUrl = reset($sources);
             }
 
+            // Get actual dimensions of the generated image
+            $generatedImagePath = implode(DIRECTORY_SEPARATOR, [
+                $imageFolderPath,
+                sprintf('%s-%s.jpg', $id_image, $image_type['name']),
+            ]);
+
+            $dimensions = $this->getActualImageDimensions(
+                $generatedImagePath,
+                (int) $image_type['width'],
+                (int) $image_type['height']
+            );
+
             // And add this size to our list
             $urls[$image_type['name']] = [
                 'url' => $baseUrl,
-                'width' => (int) $image_type['width'],
-                'height' => (int) $image_type['height'],
+                'width' => $dimensions['width'],
+                'height' => $dimensions['height'],
                 'sources' => $sources,
             ];
         }
@@ -421,11 +433,18 @@ class ImageRetriever
                     $imageType['name']
                 );
 
+                // Get actual dimensions of the generated image
+                $dimensions = $this->getActualImageDimensions(
+                    $resizedImagePath,
+                    (int) $imageType['width'],
+                    (int) $imageType['height']
+                );
+
                 // And add it to the list
                 $urls[$imageType['name']] = [
                     'url' => $imageUrl,
-                    'width' => (int) $imageType['width'],
-                    'height' => (int) $imageType['height'],
+                    'width' => $dimensions['width'],
+                    'height' => $dimensions['height'],
                 ];
             }
         }
@@ -446,6 +465,28 @@ class ImageRetriever
             'medium' => $medium,
             'large' => $large,
             'legend' => '',
+        ];
+    }
+
+    /**
+     * Get actual dimensions of a generated image file
+     */
+    private function getActualImageDimensions(string $imagePath, int $defaultWidth, int $defaultHeight): array
+    {
+        $actualWidth = $defaultWidth;
+        $actualHeight = $defaultHeight;
+
+        if (file_exists($imagePath)) {
+            $imageInfo = getimagesize($imagePath);
+            if ($imageInfo !== false) {
+                $actualWidth = $imageInfo[0];
+                $actualHeight = $imageInfo[1];
+            }
+        }
+
+        return [
+            'width' => $actualWidth,
+            'height' => $actualHeight,
         ];
     }
 }
