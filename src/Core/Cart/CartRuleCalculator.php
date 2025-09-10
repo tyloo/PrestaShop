@@ -283,8 +283,8 @@ class CartRuleCalculator
                         $weightFactor = $concernedRow->getFinalTotalPrice()->getTaxIncluded() / $totalTaxIncl;
                     }
                     $discountAmountTaxIncl = $discountConverted * $weightFactor;
-                    // recalculate tax included
-                    $discountAmountTaxExcl = $discountAmountTaxIncl / (1 + $taxRate);
+                    // recalculate tax excluded - prevent division by zero
+                    $discountAmountTaxExcl = (1 + $taxRate) != 0 ? $discountAmountTaxIncl / (1 + $taxRate) : $discountAmountTaxIncl;
                 } else {
                     // if cart rule amount is set tax excluded : calculate weight tax excluded
                     if ($totalTaxExcl != 0) {
