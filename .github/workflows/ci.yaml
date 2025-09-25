@@ -1,0 +1,51 @@
+name: Code Quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  format:
+    name: Formatter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Setup Mago
+        uses: nhedger/setup-mago@v1
+        with:
+          version: "1.0.0-beta.24"
+
+      - name: Run Formatter
+        run: mago fmt -c
+
+  lint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Setup Mago
+        uses: nhedger/setup-mago@v1
+        with:
+          version: "1.0.0-beta.24"
+
+      - name: Run Linter
+        run: mago lint --reporting-format=github
+
+  analyze:
+    name: Analyzer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Setup Mago
+        uses: nhedger/setup-mago@v1
+        with:
+          version: "1.0.0-beta.24"
+
+      - name: Run Analyzer
+        run: mago analyze --reporting-format=github
