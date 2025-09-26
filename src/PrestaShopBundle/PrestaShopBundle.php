@@ -41,6 +41,7 @@ use PrestaShopBundle\DependencyInjection\Compiler\OverrideTranslatorServiceCompi
 use PrestaShopBundle\DependencyInjection\Compiler\PopulateTranslationProvidersPass;
 use PrestaShopBundle\DependencyInjection\Compiler\RemoveXmlCompiledContainerPass;
 use PrestaShopBundle\DependencyInjection\Compiler\RouterPass;
+use PrestaShopBundle\DependencyInjection\Compiler\SkipDevOptionalCacheCompilerPass;
 use PrestaShopBundle\DependencyInjection\Compiler\TestEnvironmentPass;
 use PrestaShopBundle\DependencyInjection\PrestaShopExtension;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -95,5 +96,8 @@ class PrestaShopBundle extends Bundle
         $container->addCompilerPass(new IdentifiableObjectFormTypesCollectorPass());
         $container->addCompilerPass(new TestEnvironmentPass());
         $container->addCompilerPass(new ApiPlatformCompilerPass());
+        if ($container->hasParameter('kernel.debug') === true) {
+            $container->addCompilerPass(new SkipDevOptionalCacheCompilerPass());
+        }
     }
 }
