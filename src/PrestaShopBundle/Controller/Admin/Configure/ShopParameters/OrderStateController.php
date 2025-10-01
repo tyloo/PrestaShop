@@ -599,12 +599,7 @@ class OrderStateController extends PrestaShopAdminController
         }, $orderReturnStateIds);
     }
 
-    /**
-     * Get errors that can be used to translate exceptions into user-friendly messages
-     *
-     * @return array
-     */
-    private function getErrorMessages(Exception $e)
+    private function getErrorMessages(Exception $e): array
     {
         return [
             OrderStateNotFoundException::class => $this->trans(

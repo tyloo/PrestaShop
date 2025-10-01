@@ -61,13 +61,6 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class ImportController extends PrestaShopAdminController
 {
-    /**
-     * Show import form & handle forwarding to legacy controller.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/import',
         name: 'admin_import',
@@ -133,13 +126,6 @@ class ImportController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Handle import file upload via AJAX, sending authorization errors in JSON.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/import/file/upload',
         name: 'admin_import_file_upload',
@@ -192,13 +178,6 @@ class ImportController extends PrestaShopAdminController
         return $this->json($response);
     }
 
-    /**
-     * Delete import file.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[Route(
         path: '/configure/advanced-parameters/import/file/delete',
@@ -222,13 +201,6 @@ class ImportController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_import');
     }
 
-    /**
-     * Download import file from history.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|BinaryFileResponse
-     */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[Route(
         path: '/configure/advanced-parameters/import/file/download',
@@ -254,13 +226,6 @@ class ImportController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_import');
     }
 
-    /**
-     * Download import sample file.
-     *
-     * @param string $sampleName
-     *
-     * @return RedirectResponse|BinaryFileResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/import/sample/download/{sampleName}',
         name: 'admin_import_sample_download',
@@ -287,13 +252,6 @@ class ImportController extends PrestaShopAdminController
         return $response;
     }
 
-    /**
-     * Get available entity fields.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/import/fields',
         name: 'admin_import_get_available_fields',
@@ -319,13 +277,6 @@ class ImportController extends PrestaShopAdminController
         return $this->json($entityFields);
     }
 
-    /**
-     * Process the import.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[Route(
         path: '/configure/advanced-parameters/import/process',
@@ -370,13 +321,6 @@ class ImportController extends PrestaShopAdminController
         return $this->json($runtimeConfig->toArray());
     }
 
-    /**
-     * Get generic template parameters.
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
     protected function getTemplateParams(Request $request): array
     {
         $legacyController = $request->attributes->get('_legacy_controller');
@@ -391,14 +335,7 @@ class ImportController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * Checks permissions of import form in step 1.
-     *
-     * @param string $legacyController
-     *
-     * @return bool
-     */
-    private function checkImportFormSubmitPermissions($legacyController): bool
+    private function checkImportFormSubmitPermissions(string $legacyController): bool
     {
         if ($this->isDemoModeEnabled()) {
             $this->addFlash(
@@ -433,13 +370,6 @@ class ImportController extends PrestaShopAdminController
         return true;
     }
 
-    /**
-     * Check if the import directory exists and is accessible.
-     *
-     * @param ImportDirectory $importDir
-     *
-     * @return bool
-     */
     private function checkImportDirectory(ImportDirectory $importDir): bool
     {
         if (!$importDir->exists()) {
@@ -471,11 +401,7 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Forwards submitted form data to legacy import page.
-     * To be removed in 1.7.7 version.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
+     * @TODO: To be removed in 1.7.7 version.
      */
     private function forwardRequestToLegacyResponse(Request $request, LegacyContext $legacyContext): RedirectResponse
     {

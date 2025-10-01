@@ -237,11 +237,6 @@ class SearchEnginesController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_search_engines_index');
     }
 
-    /**
-     * Gets error messages for exceptions.
-     *
-     * @return array
-     */
     private function getErrorMessages(): array
     {
         return [
@@ -267,8 +262,6 @@ class SearchEnginesController extends PrestaShopAdminController
 
     /**
      * Get search engine IDs from request for bulk actions.
-     *
-     * @param Request $request
      *
      * @return int[]
      */

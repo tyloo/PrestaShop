@@ -48,8 +48,6 @@ class ShowcaseCardController extends PrestaShopAdminController
      * - string $name Name of the showcase card to close
      *
      * @see ShowcaseCard
-     *
-     * @return JsonResponse
      */
     #[Route(
         path: '/configure/showcase-card/close',

@@ -63,11 +63,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[AllShopContext]
 class SecurityController extends PrestaShopAdminController
 {
-    /**
-     * Show sessions listing page.
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/security',
         name: 'admin_security',
@@ -107,13 +102,6 @@ class SecurityController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Security general configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/security/general',
         name: 'admin_security_general_save',
@@ -136,13 +124,6 @@ class SecurityController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Security password policy configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/security/password-policy',
         name: 'admin_security_password_policy_save',
@@ -165,15 +146,6 @@ class SecurityController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Security configuration form.
-     *
-     * @param Request $request
-     * @param FormHandlerInterface $formHandler
-     * @param string $hookName
-     *
-     * @return RedirectResponse
-     */
     protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
     {
         $this->dispatchHookWithParameters(
@@ -200,13 +172,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security');
     }
 
-    /**
-     * Show Employees sessions listing page.
-     *
-     * @param EmployeeFilters $filters
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/security/session/employee',
         name: 'admin_security_sessions_employee_list',
@@ -240,13 +205,6 @@ class SecurityController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Show Customers sessions listing page.
-     *
-     * @param CustomerFilters $filters
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/security/session/customer',
         name: 'admin_security_sessions_customer_list',
@@ -280,9 +238,6 @@ class SecurityController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function clearCustomerSessionAction(): RedirectResponse
     {
@@ -299,9 +254,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security_sessions_customer_list');
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function clearEmployeeSessionAction(): RedirectResponse
     {
@@ -318,13 +270,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security_sessions_employee_list');
     }
 
-    /**
-     * Delete an employee session.
-     *
-     * @param int $sessionId
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security_sessions_employee_list')]
     public function deleteEmployeeSessionAction(int $sessionId): RedirectResponse
     {
@@ -341,13 +286,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security_sessions_employee_list');
     }
 
-    /**
-     * Delete a customer session.
-     *
-     * @param int $sessionId
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security_sessions_customer_list')]
     public function deleteCustomerSessionAction(int $sessionId): RedirectResponse
     {
@@ -364,13 +302,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security_sessions_customer_list');
     }
 
-    /**
-     * Bulk delete customer session.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteCustomerSessionAction(Request $request): RedirectResponse
     {
@@ -389,13 +320,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security_sessions_customer_list');
     }
 
-    /**
-     * Bulk delete employee session.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteEmployeeSessionAction(Request $request): RedirectResponse
     {
@@ -414,13 +338,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security_sessions_employee_list');
     }
 
-    /**
-     * Get human-readable error for exception.
-     *
-     * @param Exception $e
-     *
-     * @return array
-     */
     protected function getErrorMessages(Exception $e): array
     {
         return [

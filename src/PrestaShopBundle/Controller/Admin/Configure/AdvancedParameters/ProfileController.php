@@ -297,11 +297,6 @@ class ProfileController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_profiles_index');
     }
 
-    /**
-     * Get human-readable error for exception.
-     *
-     * @return array
-     */
     protected function getErrorMessages(): array
     {
         return [

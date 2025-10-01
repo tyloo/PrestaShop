@@ -40,18 +40,11 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class ShopController extends PrestaShopAdminController
 {
-    /**
-     * Search for shops by query.
-     *
-     * @param string $searchTerm
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/shops/search/{searchTerm}',
         name: 'admin_shops_search',
-        methods: 'GET',
         options: ['expose' => true],
+        methods: 'GET',
     )]
     public function searchAction(string $searchTerm): JsonResponse
     {

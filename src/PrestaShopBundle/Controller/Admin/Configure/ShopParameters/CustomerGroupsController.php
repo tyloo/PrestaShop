@@ -43,14 +43,6 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class CustomerGroupsController extends PrestaShopAdminController
 {
-    /**
-     * Show Groups tab.
-     *
-     * @param Request $request
-     * @param CustomerGroupsFilters $filters
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/shop/customer-groups',
         name: 'admin_customer_groups_index',
@@ -78,11 +70,6 @@ class CustomerGroupsController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Displays and handles customer group form.
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/shop/customer-groups/new',
         name: 'admin_customer_groups_create',
@@ -107,13 +94,6 @@ class CustomerGroupsController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Displays title form.
-     *
-     * @param int $groupId
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/shop/customer-groups/{groupId}/edit',
         name: 'admin_customer_groups_edit',

@@ -51,13 +51,6 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class ImportDataConfigurationController extends PrestaShopAdminController
 {
-    /**
-     * Shows import data page where the configuration of importable data and the final step of import is handled.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/import/data',
         name: 'admin_import_data_configuration_index',
@@ -112,13 +105,6 @@ class ImportDataConfigurationController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Create import data match configuration.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/import/match',
         name: 'admin_import_data_configuration_create',
@@ -158,13 +144,6 @@ class ImportDataConfigurationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Delete import data match configuration.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/import/match',
         name: 'admin_import_data_configuration_delete',
@@ -185,13 +164,6 @@ class ImportDataConfigurationController extends PrestaShopAdminController
         return $this->json([]);
     }
 
-    /**
-     * Get import data match configuration.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/import/match',
         name: 'admin_import_data_configuration_get',

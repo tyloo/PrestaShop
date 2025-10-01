@@ -26,6 +26,8 @@
 
 namespace PrestaShopBundle\Controller\Admin\Configure\AdvancedParameters;
 
+use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Exception\InvalidArgumentException;
 use PrestaShop\PrestaShop\Core\Form\FormHandlerInterface;
 use PrestaShop\PrestaShop\Core\Grid\Definition\Factory\GridDefinitionFactoryInterface;
 use PrestaShop\PrestaShop\Core\Grid\Definition\Factory\LogGridDefinitionFactory;
@@ -46,11 +48,6 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class LogsController extends PrestaShopAdminController
 {
-    /**
-     * @param LogsFilters $filters the list of filters from the request
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/logs',
         name: 'admin_logs_index',
@@ -87,11 +84,6 @@ class LogsController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/logs',
         name: 'admin_logs_search',
@@ -117,11 +109,6 @@ class LogsController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/logs/settings',
         name: 'admin_logs_save_settings',
@@ -160,11 +147,6 @@ class LogsController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_logs_index');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/logs/database-settings',
         name: 'admin_logs_save_database_settings',
@@ -202,9 +184,8 @@ class LogsController extends PrestaShopAdminController
     }
 
     /**
-     * @return RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
+     * @throws Exception
      */
     #[Route(
         path: '/configure/advanced-parameters/logs/delete-all',

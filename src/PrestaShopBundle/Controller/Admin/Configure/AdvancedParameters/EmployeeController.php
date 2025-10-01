@@ -114,13 +114,6 @@ class EmployeeController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Save employee options.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/employees/save-options',
         name: 'admin_employees_save_options',
@@ -477,13 +470,6 @@ class EmployeeController extends PrestaShopAdminController
         return new Response('', Response::HTTP_NO_CONTENT);
     }
 
-    /**
-     * Get tabs which are accessible for given profile.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/employees/tabs',
         name: 'admin_employees_get_tabs',
@@ -519,13 +505,6 @@ class EmployeeController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Get human readable error messages.
-     *
-     * @param Exception $e
-     *
-     * @return array
-     */
     protected function getErrorMessages(Exception $e): array
     {
         return [

@@ -66,11 +66,6 @@ class MetaController extends PrestaShopAdminController
      *
      * So we have to inject them in the constructor to use the Autowire attribute and define the specific
      * service name, this way they are usable in all the shared protected/public methods in this controller.
-     *
-     * @param FormHandlerInterface $setUpUrlsFormHandler
-     * @param FormHandlerInterface $shopUrlsFormHandler
-     * @param FormHandlerInterface $seoOptionsFormHandler
-     * @param FormHandlerInterface $urlSchemaFormHandler
      */
     public function __construct(
         #[Autowire(service: 'prestashop.admin.meta_settings.set_up_urls.form_handler')]

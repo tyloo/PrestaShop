@@ -115,22 +115,14 @@ class TitleController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Displays title form.
-     *
-     * @param int $titleId
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/shop/titles/{titleId}/edit',
         name: 'admin_title_edit',
+        requirements: ['titleId' => '\d+'],
         defaults: [
             '_legacy_controller' => 'AdminGenders',
             '_legacy_link' => 'AdminGenders:updategender'
         ],
-        requirements: ['titleId' => '\d+'],
         methods: ['GET', 'POST'],
     )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You need permission to edit this.', redirectRoute: 'admin_title_index')]

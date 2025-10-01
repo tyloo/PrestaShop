@@ -47,11 +47,6 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class PerformanceController extends PrestaShopAdminController
 {
-    /**
-     * Displays the Performance main page.
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/performance',
         name: 'admin_performance',
@@ -115,13 +110,6 @@ class PerformanceController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Process the Performance Smarty configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/performance/smarty',
         name: 'admin_performance_smarty_save',
@@ -145,13 +133,6 @@ class PerformanceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Performance Debug Mode configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/performance/debug-mode',
         name: 'admin_performance_debug_mode_save',
@@ -175,13 +156,6 @@ class PerformanceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Performance Optional Features configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/performance/optional-features',
         name: 'admin_performance_optional_features_save',
@@ -205,13 +179,6 @@ class PerformanceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Performance Combine Compress Cache configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/performance/combine-compress-cache',
         name: 'admin_performance_combine_compress_cache_save',
@@ -235,13 +202,6 @@ class PerformanceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Performance Media Servers configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/performance/media-servers',
         name: 'admin_performance_media_servers_save',
@@ -265,13 +225,6 @@ class PerformanceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Performance Caching configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/performance/caching',
         name: 'admin_performance_caching_save',
@@ -295,15 +248,6 @@ class PerformanceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Performance configuration form.
-     *
-     * @param Request $request
-     * @param FormHandlerInterface $formHandler
-     * @param string $hookName
-     *
-     * @return RedirectResponse
-     */
     protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
     {
         $this->dispatchHookWithParameters(

@@ -318,9 +318,6 @@ class AdminAPIController extends PrestaShopAdminController
         $this->addFlash('client_secret', $secret);
     }
 
-    /**
-     * @return array
-     */
     private function getApiClientsToolbarButtons(): array
     {
         $toolbarButtons = [];
@@ -335,12 +332,7 @@ class AdminAPIController extends PrestaShopAdminController
         return $toolbarButtons;
     }
 
-    /**
-     * Provides translated error messages for exceptions
-     *
-     * @return array
-     */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             ApiClientNotFoundException::class => $this->trans(

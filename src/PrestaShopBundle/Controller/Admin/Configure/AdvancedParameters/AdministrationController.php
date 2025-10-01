@@ -91,13 +91,6 @@ class AdministrationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Process the Administration general configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/administration/general',
         name: 'admin_administration_general_save',
@@ -165,15 +158,6 @@ class AdministrationController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Process the Administration configuration form.
-     *
-     * @param Request $request
-     * @param FormHandlerInterface $formHandler
-     * @param string $hookName
-     *
-     * @return RedirectResponse
-     */
     protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
     {
         $this->dispatchHookWithParameters(
@@ -203,9 +187,9 @@ class AdministrationController extends PrestaShopAdminController
     }
 
     /**
-     * @param InvalidConfigurationDataErrorCollection $errors
-     *
      * @return array<int, string>
+     *
+     * @throws FieldNotFoundException
      */
     private function getErrorMessages(InvalidConfigurationDataErrorCollection $errors): array
     {
@@ -219,10 +203,6 @@ class AdministrationController extends PrestaShopAdminController
     }
 
     /**
-     * @param InvalidConfigurationDataError $error
-     *
-     * @return string
-     *
      * @throws FieldNotFoundException
      */
     private function getErrorMessage(InvalidConfigurationDataError $error): string
@@ -271,11 +251,6 @@ class AdministrationController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
     private function getFieldLabel(string $fieldName): string
     {
         /*

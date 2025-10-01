@@ -59,14 +59,6 @@ class WebserviceController extends PrestaShopAdminController
 {
     private const WEBSERVICE_ENTRY_ENDPOINT = '/api';
 
-    /**
-     * Displays the Webservice main page.
-     *
-     * @param WebserviceKeyFilters $filters - filters for webservice list
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/webservice-keys',
         name: 'admin_webservice_keys_index',
@@ -90,13 +82,6 @@ class WebserviceController extends PrestaShopAdminController
         return $this->renderPage($request, $filters, $formHandler->getForm(), $gridFactory, $serverRequirementsChecker, $webserviceFormDataProvider);
     }
 
-    /**
-     * Shows Webservice Key form and handles its submit
-     *
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/webservice-keys/new',
         name: 'admin_webservice_keys_create',
@@ -140,24 +125,16 @@ class WebserviceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Redirects to webservice account form where existing webservice account record can be edited.
-     *
-     * @param int $webserviceKeyId
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/webservice-keys/{webserviceKeyId}/edit',
         name: 'admin_webservice_keys_edit',
+        requirements: ['webserviceKeyId' => '\d+'],
         defaults: [
             '_legacy_controller' => 'AdminWebservice',
             '_legacy_link' => 'AdminWebservice:updatewebservice_account',
             '_legacy_parameters' => ['id_webservice_account' => 'webserviceKeyId'],
         ],
         methods: ['GET', 'POST'],
-        requirements: ['webserviceKeyId' => '\d+'],
     )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_webservice_keys_index')]
     public function editAction(
@@ -198,23 +175,16 @@ class WebserviceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Deletes single record.
-     *
-     * @param int $webserviceKeyId
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/webservice-keys/{webserviceKeyId}/delete',
         name: 'admin_webservice_keys_delete',
+        requirements: ['webserviceKeyId' => '\d+'],
         defaults: [
             '_legacy_controller' => 'AdminWebservice',
             '_legacy_link' => 'AdminWebservice:deletewebservice_account',
             '_legacy_parameters' => ['id_webservice_account' => 'webserviceKeyId'],
         ],
         methods: ['DELETE', 'POST'],
-        requirements: ['webserviceKeyId' => '\d+'],
     )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.')]
@@ -320,23 +290,16 @@ class WebserviceController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_webservice_keys_index');
     }
 
-    /**
-     * Toggles webservice account status.
-     *
-     * @param int $webserviceKeyId
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/webservice-keys/{webserviceKeyId}/toggle-status',
         name: 'admin_webservice_keys_toggle_status',
+        requirements: ['webserviceKeyId' => '\d+'],
         defaults: [
             '_legacy_controller' => 'AdminWebservice',
             '_legacy_link' => 'AdminWebservice:statuswebservice_account',
             '_legacy_parameters' => ['id_webservice_account' => 'webserviceKeyId'],
         ],
         methods: 'POST',
-        requirements: ['webserviceKeyId' => '\d+'],
     )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -358,14 +321,6 @@ class WebserviceController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_webservice_keys_index');
     }
 
-    /**
-     * Process the Webservice configuration form.
-     *
-     * @param Request $request
-     * @param WebserviceKeyFilters $filters
-     *
-     * @return Response|RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/webservice-keys/settings',
         name: 'admin_webservice_save_settings',
@@ -399,9 +354,9 @@ class WebserviceController extends PrestaShopAdminController
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_webservice_keys_index');
-            } else {
-                $this->addFlashErrors($saveErrors);
             }
+
+            $this->addFlashErrors($saveErrors);
         }
 
         return $this->renderPage($request, $filters, $form, $gridFactory, $serverRequirementsChecker, $webserviceFormDataProvider);
@@ -430,9 +385,6 @@ class WebserviceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @return array
-     */
     private function getErrorMessages(): array
     {
         return [
@@ -450,8 +402,6 @@ class WebserviceController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     *
      * @return array<string, bool|string|null>
      */
     private function getWebServiceStatus(
@@ -475,11 +425,6 @@ class WebserviceController extends PrestaShopAdminController
         return $webserviceStatus;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
     private function checkWebserviceEndpoint(string $url): bool
     {
         $client = HttpClient::create();
@@ -497,7 +442,9 @@ class WebserviceController extends PrestaShopAdminController
 
         if ($statusCode >= Response::HTTP_OK && $statusCode < Response::HTTP_MULTIPLE_CHOICES) {
             return true;
-        } elseif ($statusCode == Response::HTTP_UNAUTHORIZED) {
+        }
+
+        if ($statusCode === Response::HTTP_UNAUTHORIZED) {
             return true;
         }
 

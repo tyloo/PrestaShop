@@ -47,11 +47,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[AllShopContext]
 class PermissionController extends PrestaShopAdminController
 {
-    /**
-     * Show permissions configuration page
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/permissions',
         name: 'admin_permissions_index',
@@ -89,13 +84,6 @@ class PermissionController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Update tab permissions for profile
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/permissions/update/permissions/tab',
         name: 'admin_permissions_update_tab_permissions',
@@ -133,13 +121,6 @@ class PermissionController extends PrestaShopAdminController
         return $this->json($response, $responseCode);
     }
 
-    /**
-     * Updates module permissions for profile
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/permissions/update/permissions/module',
         name: 'admin_permissions_update_module_permissions',

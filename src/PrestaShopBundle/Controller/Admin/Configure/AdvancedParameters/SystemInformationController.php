@@ -41,11 +41,6 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class SystemInformationController extends PrestaShopAdminController
 {
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/system-information',
         name: 'admin_system_information',
@@ -80,9 +75,6 @@ class SystemInformationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/system-information/files',
         name: 'admin_system_information_check_files',

@@ -96,13 +96,6 @@ class EmailController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Process email configuration saving.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[Route(
         path: '/configure/advanced-parameters/emails/options',
         name: 'admin_emails_save_options_get',
@@ -243,13 +236,6 @@ class EmailController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_emails_index');
     }
 
-    /**
-     * Processes test email sending.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[Route(
         path: '/configure/advanced-parameters/emails/send-testing-email',
         name: 'admin_emails_send_test',
