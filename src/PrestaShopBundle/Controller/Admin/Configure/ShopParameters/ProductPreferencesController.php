@@ -33,12 +33,22 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Shop Parameters > Product Settings" page.
  */
 class ProductPreferencesController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/shop/product-preferences/',
+        name: 'admin_product_preferences',
+        defaults: [
+            '_legacy_controller' => 'AdminPPreferences',
+            '_legacy_link' => 'AdminPPreferences'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -73,6 +83,15 @@ class ProductPreferencesController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/product-preferences/general',
+        name: 'admin_product_preferences_general_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPPreferences',
+            '_legacy_link' => 'AdminPPreferences:update'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_product_preferences')]
     public function processGeneralFormAction(
         Request $request,
@@ -86,6 +105,15 @@ class ProductPreferencesController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/shop/product-preferences/page',
+        name: 'admin_product_preferences_page_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPPreferences',
+            '_legacy_link' => 'AdminPPreferences:update'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_product_preferences')]
     public function processPageFormAction(
         Request $request,
@@ -99,6 +127,15 @@ class ProductPreferencesController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/shop/product-preferences/pagination',
+        name: 'admin_product_preferences_pagination_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPPreferences',
+            '_legacy_link' => 'AdminPPreferences:update'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_product_preferences')]
     public function processPaginationFormAction(
         Request $request,
@@ -112,6 +149,15 @@ class ProductPreferencesController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/shop/product-preferences/stock',
+        name: 'admin_product_preferences_stock_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPPreferences',
+            '_legacy_link' => 'AdminPPreferences:update'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_product_preferences')]
     public function processStockFormAction(
         Request $request,

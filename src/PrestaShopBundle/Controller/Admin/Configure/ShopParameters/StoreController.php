@@ -43,6 +43,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * StoreController is responsible for actions and rendering
@@ -52,6 +53,16 @@ class StoreController extends PrestaShopAdminController
 {
     use BulkActionsTrait;
 
+    #[Route(
+        path: '/configure/shop/stores',
+        name: 'admin_stores_index',
+        defaults: [
+            '_legacy_controller' => 'AdminStores',
+            '_legacy_link' => 'AdminStores',
+            '_legacy_feature_flag' => 'store'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -76,6 +87,20 @@ class StoreController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/stores/{storeId}/toggle-status',
+        name: 'admin_stores_toggle_status',
+        defaults: [
+            '_legacy_controller' => 'AdminStores',
+            '_legacy_link' => 'AdminStores:statusstore',
+            '_legacy_feature_flag' => 'store',
+            '_legacy_parameters' => [
+                'id_store' => 'storeId'
+            ]
+        ],
+        requirements: ['storeId' => '\d+'],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function toggleStatusAction(int $storeId): RedirectResponse
     {
@@ -93,6 +118,20 @@ class StoreController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_stores_index');
     }
 
+    #[Route(
+        path: '/configure/shop/stores/{storeId}/delete',
+        name: 'admin_stores_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminStores',
+            '_legacy_link' => 'AdminStores:deletestore',
+            '_legacy_feature_flag' => 'store',
+            '_legacy_parameters' => [
+                'id_store' => 'storeId'
+            ]
+        ],
+        requirements: ['storeId' => '\d+'],
+        methods: ['POST', 'DELETE'],
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function deleteAction(int $storeId): RedirectResponse
     {
@@ -107,6 +146,16 @@ class StoreController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_stores_index');
     }
 
+    #[Route(
+        path: '/configure/shop/stores/bulk-delete',
+        name: 'admin_stores_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminStores',
+            '_legacy_link' => 'AdminStores:submitBulkdeletestore',
+            '_legacy_feature_flag' => 'store'
+        ],
+        methods: ['POST', 'DELETE'],
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteAction(Request $request): RedirectResponse
     {
@@ -124,12 +173,32 @@ class StoreController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_stores_index');
     }
 
+    #[Route(
+        path: '/configure/shop/stores/bulk-enable',
+        name: 'admin_stores_bulk_enable',
+        defaults: [
+            '_legacy_controller' => 'AdminStores',
+            '_legacy_link' => 'AdminStores:submitBulkenableSelectionstore',
+            '_legacy_feature_flag' => 'store'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function bulkEnableAction(Request $request): RedirectResponse
     {
         return $this->bulkUpdateStatus($request, true);
     }
 
+    #[Route(
+        path: '/configure/shop/stores/bulk-disable',
+        name: 'admin_stores_bulk_disable',
+        defaults: [
+            '_legacy_controller' => 'AdminStores',
+            '_legacy_link' => 'AdminStores:submitBulkdisableSelectionstore',
+            '_legacy_feature_flag' => 'store'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function bulkDisableAction(Request $request): RedirectResponse
     {

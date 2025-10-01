@@ -1,0 +1,71 @@
+admin_customer_groups_search:
+  path: /customer-groups
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.customer_groups
+    redirectRoute: admin_customer_groups_index
+    _legacy_controller: AdminGroups
+    _legacy_link: AdminGroups:submitFiltergroup
+    _legacy_feature_flag: customer_group
+
+admin_metas_search:
+  path: /seo-urls
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.meta
+    redirectRoute: admin_metas_index
+    _legacy_controller: AdminMeta
+    _legacy_link: AdminMeta:submitFiltermeta
+
+admin_contacts_search:
+  path: /contacts
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.contacts
+    redirectRoute: admin_contacts_index
+    _legacy_controller: AdminContacts
+    _legacy_link: AdminContacts:submitFiltercontact
+
+admin_stores_search:
+  path: /stores
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: PrestaShop\PrestaShop\Core\Grid\Definition\Factory\StoreGridDefinitionFactory
+    redirectRoute: admin_stores_index
+    _legacy_controller: AdminStores
+    _legacy_link: AdminStores:submitFiltersstore
+    _legacy_feature_flag: store
+
+admin_search_engines_search:
+  path: /search-engines
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.search_engines
+    redirectRoute: admin_search_engines_index
+    _legacy_controller: AdminSearchEngines
+    _legacy_link: AdminSearchEngines:submitFiltersearch_engine
+
+admin_search_alias_search:
+  path: /search
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: PrestaShop\PrestaShop\Core\Grid\Definition\Factory\AliasGridDefinitionFactory
+    redirectRoute: admin_search_alias_index
+    _legacy_controller: AdminAliases
+    _legacy_link: AdminAliases:submitFilteralias
+
+admin_title_search:
+  path: /titles
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.title
+    redirectRoute: admin_title_index
+    _legacy_controller: AdminGenders
+    _legacy_link: AdminGenders:submitFiltergenders

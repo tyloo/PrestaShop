@@ -57,6 +57,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controller responsible for "Configure > Shop Parameters > Order states Settings" page.
@@ -72,6 +73,15 @@ class OrderStateController extends PrestaShopAdminController
         ];
     }
 
+    #[Route(
+        path: '/configure/shop/order-states',
+        name: 'admin_order_states',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -99,6 +109,17 @@ class OrderStateController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/order-states',
+        name: 'admin_order_states_filter',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            'gridDefinitionFactoryServiceId' => 'prestashop.core.grid.definition.factory.order_states',
+            'redirectRoute' => 'admin_order_states',
+            '_legacy_link' => 'AdminStatuses:submitFilterstate'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchGridAction(
         Request $request
@@ -119,6 +140,15 @@ class OrderStateController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/shop/order-states/new',
+        name: 'admin_order_states_create',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:addorderstate'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
         Request $request,
@@ -165,6 +195,18 @@ class OrderStateController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/order-states/{orderStateId}/edit',
+        name: 'admin_order_states_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:updateorderstate',
+            '_legacy_parameters' => [
+                'id_order_state' => 'orderStateId'
+            ]
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function editAction(
         int $orderStateId,
@@ -219,6 +261,15 @@ class OrderStateController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/order-return-states/new',
+        name: 'admin_order_return_states_create',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:addorderreturnstate'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createOrderReturnStateAction(
         Request $request,
@@ -256,6 +307,18 @@ class OrderStateController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/order-return-states/{orderReturnStateId}/edit',
+        name: 'admin_order_return_states_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:updateorderreturnstate',
+            '_legacy_parameters' => [
+                'id_order_return_state' => 'orderReturnStateId'
+            ]
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function editOrderReturnStateAction(
         int $orderReturnStateId,
@@ -302,6 +365,18 @@ class OrderStateController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/order-return-states/{orderReturnStateId}/delete',
+        name: 'admin_order_return_states_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:deleteorderreturnstate',
+            '_legacy_parameters' => [
+                'id_order_return_state' => 'orderReturnStateId'
+            ]
+        ],
+        methods: ['POST', 'DELETE'],
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_order_states')]
     public function deleteOrderReturnStateAction(Request $request, int $orderReturnStateId): RedirectResponse
     {
@@ -338,6 +413,19 @@ class OrderStateController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_order_states');
     }
 
+    #[Route(
+        path: '/configure/shop/order-states/{orderStateId}/toggle-delivery',
+        name: 'admin_order_states_toggle_delivery',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:deliveryorderstate',
+            '_legacy_parameters' => [
+                'id_order_state' => 'orderStateId'
+            ]
+        ],
+        requirements: ['orderStateId' => '\d+'],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_order_states', message: 'You do not have permission to edit this.')]
     public function toggleDeliveryAction(int $orderStateId): RedirectResponse
     {
@@ -361,6 +449,19 @@ class OrderStateController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_order_states');
     }
 
+    #[Route(
+        path: '/configure/shop/order-states/{orderStateId}/toggle-invoice',
+        name: 'admin_order_states_toggle_invoice',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:invoiceorderstate',
+            '_legacy_parameters' => [
+                'id_order_state' => 'orderStateId'
+            ]
+        ],
+        requirements: ['orderStateId' => '\d+'],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_order_states', message: 'You do not have permission to edit this.')]
     public function toggleInvoiceAction(int $orderStateId): RedirectResponse
     {
@@ -384,6 +485,19 @@ class OrderStateController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_order_states');
     }
 
+    #[Route(
+        path: '/configure/shop/order-states/{orderStateId}/toggle-send-email',
+        name: 'admin_order_states_toggle_send_email',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:sendemailorderstate',
+            '_legacy_parameters' => [
+                'id_order_state' => 'orderStateId'
+            ]
+        ],
+        requirements: ['orderStateId' => '\d+'],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_order_states', message: 'You do not have permission to edit this.')]
     public function toggleSendEmailAction(int $orderStateId): RedirectResponse
     {
@@ -407,6 +521,18 @@ class OrderStateController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_order_states');
     }
 
+    #[Route(
+        path: '/configure/shop/order-states/{orderStateId}/delete',
+        name: 'admin_order_states_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:deleteorderstate',
+            '_legacy_parameters' => [
+                'id_order_state' => 'orderStateId'
+            ]
+        ],
+        methods: ['POST', 'DELETE'],
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_order_states')]
     public function deleteAction(Request $request, int $orderStateId): RedirectResponse
     {
@@ -425,6 +551,15 @@ class OrderStateController extends PrestaShopAdminController
             $this->redirectToRoute('admin_order_states');
     }
 
+    #[Route(
+        path: '/configure/shop/order-states/delete-bulk',
+        name: 'admin_order_states_delete_bulk',
+        defaults: [
+            '_legacy_controller' => 'AdminStatuses',
+            '_legacy_link' => 'AdminStatuses:submitBulkdeleteorderstate'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_order_states', message: 'You do not have permission to delete this.')]
     public function deleteBulkAction(Request $request): RedirectResponse
     {

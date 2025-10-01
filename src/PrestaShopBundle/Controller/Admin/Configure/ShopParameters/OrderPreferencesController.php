@@ -32,12 +32,22 @@ use PrestaShopBundle\Security\Attribute\AdminSecurity;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controller responsible for "Configure > Shop Parameters > Order Settings" page.
  */
 class OrderPreferencesController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/shop/order-preferences/',
+        name: 'admin_order_preferences',
+        defaults: [
+            '_legacy_controller' => 'AdminOrderPreferences',
+            '_legacy_link' => 'AdminOrderPreferences'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -61,6 +71,15 @@ class OrderPreferencesController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/order-preferences/general',
+        name: 'admin_order_preferences_general_save',
+        defaults: [
+            '_legacy_controller' => 'AdminOrderPreferences',
+            '_legacy_link' => 'AdminOrderPreferences:update'
+        ],
+        methods: ['PATCH', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_order_preferences')]
     public function processGeneralFormAction(
         Request $request,
@@ -74,6 +93,14 @@ class OrderPreferencesController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/shop/order-preferences/gift-options',
+        name: 'admin_order_preferences_gift_options_save',
+        defaults: [
+            '_legacy_controller' => 'AdminOrderPreferences',
+        ],
+        methods: ['PATCH', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_order_preferences')]
     public function processGiftOptionsFormAction(
         Request $request,

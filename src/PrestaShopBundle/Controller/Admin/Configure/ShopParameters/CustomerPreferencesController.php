@@ -33,12 +33,22 @@ use PrestaShopBundle\Security\Attribute\DemoRestricted;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controller responsible for "Configure > Shop Parameters > Customer Settings" page.
  */
 class CustomerPreferencesController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/shop/customer-preferences/',
+        name: 'admin_customer_preferences',
+        defaults: [
+            '_legacy_controller' => 'AdminCustomerPreferences',
+            '_legacy_link' => 'AdminCustomerPreferences'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,
@@ -57,6 +67,15 @@ class CustomerPreferencesController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/customer-preferences/',
+        name: 'admin_customer_preferences_process',
+        defaults: [
+            '_legacy_controller' => 'AdminCustomerPreferences',
+            '_legacy_link' => 'AdminCustomerPreferences:update'
+        ],
+        methods: ['PATCH', 'POST'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_customer_preferences')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_customer_preferences')]
     public function processAction(

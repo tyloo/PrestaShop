@@ -44,12 +44,22 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controller responsible for "Configure > Shop Parameters > Customer Settings > Titles" page.
  */
 class TitleController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/shop/titles',
+        name: 'admin_title_index',
+        defaults: [
+            '_legacy_controller' => 'AdminGenders',
+            '_legacy_link' => 'AdminGenders'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,
@@ -67,6 +77,15 @@ class TitleController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/titles/new',
+        name: 'admin_title_create',
+        defaults: [
+            '_legacy_controller' => 'AdminGenders',
+            '_legacy_link' => 'AdminGenders:addgender'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You need permission to create this.', redirectRoute: 'admin_title_index')]
     public function createAction(
         Request $request,
@@ -104,6 +123,16 @@ class TitleController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/shop/titles/{titleId}/edit',
+        name: 'admin_title_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminGenders',
+            '_legacy_link' => 'AdminGenders:updategender'
+        ],
+        requirements: ['titleId' => '\d+'],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You need permission to edit this.', redirectRoute: 'admin_title_index')]
     public function editAction(
         int $titleId,
@@ -144,6 +173,16 @@ class TitleController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/titles/{titleId}/delete',
+        name: 'admin_title_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminGenders',
+            '_legacy_link' => 'AdminGenders:deletegender'
+        ],
+        requirements: ['titleId' => '\d+'],
+        methods: ['POST', 'DELETE'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_title_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You need permission to delete this.', redirectRoute: 'admin_title_index')]
     public function deleteAction(int $titleId): RedirectResponse
@@ -161,6 +200,15 @@ class TitleController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_title_index');
     }
 
+    #[Route(
+        path: '/configure/shop/titles/bulk-delete',
+        name: 'admin_title_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminGenders',
+            '_legacy_link' => 'AdminGenders:submitBulkdeletegender'
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_title_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_title_index')]
     public function bulkDeleteAction(Request $request): RedirectResponse

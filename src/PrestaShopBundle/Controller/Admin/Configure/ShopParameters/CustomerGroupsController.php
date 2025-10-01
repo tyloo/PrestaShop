@@ -36,6 +36,7 @@ use PrestaShopBundle\Security\Attribute\AdminSecurity;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controller responsible for "Configure > Shop Parameters > Customer Settings > Groups" page.
@@ -50,6 +51,16 @@ class CustomerGroupsController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/shop/customer-groups/',
+        name: 'admin_customer_groups_index',
+        defaults: [
+            '_legacy_controller' => 'AdminGroups',
+            '_legacy_link' => 'AdminGroups',
+            '_legacy_feature_flag' => 'customer_group'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,
@@ -72,6 +83,16 @@ class CustomerGroupsController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/shop/customer-groups/new',
+        name: 'admin_customer_groups_create',
+        defaults: [
+            '_legacy_controller' => 'AdminGroups',
+            '_legacy_link' => 'AdminGroups:addgroup',
+            '_legacy_feature_flag' => 'customer_group'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_customer_groups_index', message: 'You need permission to create this.')]
     public function createAction(LegacyContext $legacyContext): Response
     {
@@ -93,6 +114,17 @@ class CustomerGroupsController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/shop/customer-groups/{groupId}/edit',
+        name: 'admin_customer_groups_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminGroups',
+            '_legacy_link' => 'AdminGroups:updategroup',
+            '_legacy_feature_flag' => 'customer_group'
+        ],
+        requirements: ['groupId' => '\d+'],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customer_groups_index', message: 'You need permission to edit this.')]
     public function editAction(
         int $groupId,

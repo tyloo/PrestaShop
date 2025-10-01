@@ -52,6 +52,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class MetaController is responsible for page display and all actions used in Configure -> Shop parameters ->
@@ -104,6 +105,15 @@ class MetaController extends PrestaShopAdminController
         ];
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/',
+        name: 'admin_metas_index',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+            '_legacy_link' => 'AdminMeta'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(MetaFilters $filters, Request $request): Response
     {
@@ -120,6 +130,15 @@ class MetaController extends PrestaShopAdminController
         return $this->doRenderForm($request, $filters, $setUpUrlsForm, $shopUrlsForm, $seoOptionsForm, $urlSchemaForm);
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/new',
+        name: 'admin_metas_create',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+            '_legacy_link' => 'AdminMeta:addmeta'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to add this.')]
     public function createAction(
         Request $request,
@@ -156,6 +175,18 @@ class MetaController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/{metaId}/edit',
+        name: 'admin_metas_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+            '_legacy_link' => 'AdminMeta:updatemeta',
+            '_legacy_parameters' => [
+                'id_meta' => 'metaId'
+            ]
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_metas_index')]
     public function editAction(
         int $metaId,
@@ -194,6 +225,18 @@ class MetaController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/{metaId}/delete',
+        name: 'admin_metas_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+            '_legacy_link' => 'AdminMeta:deletemeta',
+            '_legacy_parameters' => [
+                'id_meta' => 'metaId'
+            ]
+        ],
+        methods: 'DELETE',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.')]
     public function deleteAction(
@@ -214,6 +257,15 @@ class MetaController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_metas_index');
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/delete',
+        name: 'admin_metas_delete_bulk',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+            '_legacy_link' => 'AdminMeta:submitBulkdeletemeta'
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.')]
     public function deleteBulkAction(
@@ -235,6 +287,15 @@ class MetaController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_metas_index');
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/set-up-urls',
+        name: 'admin_metas_set_up_urls_save',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+            '_legacy_link' => 'AdminMeta:submitOptionsmeta'
+        ],
+        methods: ['POST', 'PATCH'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_metas_index')]
     public function processSetUpUrlsFormAction(MetaFilters $filters, Request $request): Response|RedirectResponse
@@ -261,6 +322,14 @@ class MetaController extends PrestaShopAdminController
         return $this->doRenderForm($request, $filters, $formProcessResult, $shopUrlsForm, $seoOptionsForm, $urlSchemaForm);
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/shop-urls',
+        name: 'admin_metas_shop_urls_save',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_metas_index')]
     public function processShopUrlsFormAction(MetaFilters $filters, Request $request): Response|RedirectResponse
@@ -287,6 +356,14 @@ class MetaController extends PrestaShopAdminController
         return $this->doRenderForm($request, $filters, $setUpUrlsForm, $formProcessResult, $seoOptionsForm, $urlSchemaForm);
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/url-schema',
+        name: 'admin_metas_url_schema_save',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+        ],
+        methods: ['POST', 'PATCH'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_metas_index')]
     public function processUrlSchemaFormAction(MetaFilters $filters, Request $request): Response|RedirectResponse
@@ -308,6 +385,14 @@ class MetaController extends PrestaShopAdminController
         return $this->doRenderForm($request, $filters, $setUpUrlsForm, $shopUrlsForm, $seoOptionsForm, $formProcessResult);
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/seo-options',
+        name: 'admin_metas_seo_options_save',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+        ],
+        methods: ['POST', 'PATCH'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_metas_index')]
     public function processSeoOptionsFormAction(MetaFilters $filters, Request $request): Response|RedirectResponse
@@ -334,6 +419,15 @@ class MetaController extends PrestaShopAdminController
         return $this->doRenderForm($request, $filters, $setUpUrlsForm, $shopUrlsForm, $formProcessResult, $urlSchemaForm);
     }
 
+    #[Route(
+        path: '/configure/shop/seo-urls/generate/robots',
+        name: 'admin_metas_generate_robots_text_file',
+        defaults: [
+            '_legacy_controller' => 'AdminMeta',
+            '_legacy_link' => 'AdminMeta:submitRobots'
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_metas_index')]
     public function generateRobotsFileAction(RobotsTextFileGenerator $robotsTextFileGenerator): RedirectResponse

@@ -47,12 +47,22 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controller responsible for "Configure > Shop Parameters > Search" page.
  */
 class SearchAliasController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/shop/search',
+        name: 'admin_search_alias_index',
+        defaults: [
+            '_legacy_controller' => 'AdminAliases',
+            '_legacy_link' => 'AdminAliases'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -75,6 +85,15 @@ class SearchAliasController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/search/new',
+        name: 'admin_search_alias_create',
+        defaults: [
+            '_legacy_controller' => 'AdminAliases',
+            '_legacy_link' => 'AdminAliases:addalias'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_search_alias_index', message: 'You need permission to create new aliases.')]
     public function createAction(
         Request $request,
@@ -106,6 +125,19 @@ class SearchAliasController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/search/{searchTerm}/edit',
+        name: 'admin_search_alias_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminAliases',
+            '_legacy_link' => 'AdminAliases:updatealias',
+            '_legacy_parameters' => [
+                'searchTerm' => 'searchTerm'
+            ]
+        ],
+        requirements: ['searchTerm' => '[^\/]+'],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_search_alias_index', message: 'You need permission to edit this.')]
     public function editAction(
         string $searchTerm,
@@ -148,6 +180,16 @@ class SearchAliasController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/search/{searchTerm}/delete',
+        name: 'admin_search_alias_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminAliases',
+            '_legacy_link' => 'AdminAliases:deletealias'
+        ],
+        requirements: ['searchTerm' => '[^\/]+'],
+        methods: ['POST', 'DELETE'],
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_search_alias_index')]
     public function deleteAction(string $searchTerm): RedirectResponse
     {
@@ -163,6 +205,15 @@ class SearchAliasController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_search_alias_index');
     }
 
+    #[Route(
+        path: '/configure/shop/search/bulk-delete',
+        name: 'admin_search_alias_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminAliases',
+            '_legacy_link' => 'AdminAliases:submitBulkdeletealias'
+        ],
+        methods: ['POST', 'DELETE'],
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_search_alias_index')]
     public function bulkDeleteAction(Request $request): RedirectResponse
     {

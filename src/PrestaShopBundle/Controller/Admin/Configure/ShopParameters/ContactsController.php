@@ -42,6 +42,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * ContactsController is responsible for actions and rendering
@@ -49,6 +50,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ContactsController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/shop/contacts',
+        name: 'admin_contacts_index',
+        defaults: [
+            '_legacy_controller' => 'AdminContacts',
+            '_legacy_link' => 'AdminContacts'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -76,6 +86,15 @@ class ContactsController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/shop/contacts/new',
+        name: 'admin_contacts_create',
+        defaults: [
+            '_legacy_controller' => 'AdminContacts',
+            '_legacy_link' => 'AdminContacts:addcontact'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to add this.', redirectRoute: 'admin_contacts_index')]
     public function createAction(
         Request $request,
@@ -113,6 +132,16 @@ class ContactsController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/contacts/{contactId}/edit',
+        name: 'admin_contacts_edit',
+        requirements: ['contactId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminContacts',
+            '_legacy_link' => 'AdminContacts:updatecontact'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_contacts_index')]
     public function editAction(
         int $contactId,
@@ -155,6 +184,16 @@ class ContactsController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/contacts/{contactId}/delete',
+        name: 'admin_contacts_delete',
+        requirements: ['contactId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminContacts',
+            '_legacy_link' => 'AdminContacts:deletecontact'
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_contacts_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_contacts_index')]
     public function deleteAction(
@@ -173,6 +212,15 @@ class ContactsController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_contacts_index');
     }
 
+    #[Route(
+        path: '/configure/shop/contacts/delete/bulk',
+        name: 'admin_contacts_delete_bulk',
+        defaults: [
+            '_legacy_controller' => 'AdminContacts',
+            '_legacy_link' => 'AdminContacts:submitBulkdeletecontact'
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_contacts_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_contacts_index', message: 'You do not have permission to delete this.')]
     public function deleteBulkAction(

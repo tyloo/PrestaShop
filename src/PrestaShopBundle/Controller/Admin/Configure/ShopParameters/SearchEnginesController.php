@@ -46,12 +46,22 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for handling "Configure > Shop Parameters > Traffic & SEO > Search Engines" page.
  */
 class SearchEnginesController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/shop/search-engines',
+        name: 'admin_search_engines_index',
+        defaults: [
+            '_legacy_controller' => 'AdminSearchEngines',
+            '_legacy_link' => 'AdminSearchEngines'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -68,6 +78,15 @@ class SearchEnginesController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/search-engines/new',
+        name: 'admin_search_engines_create',
+        defaults: [
+            '_legacy_controller' => 'AdminSearchEngines',
+            '_legacy_link' => 'AdminSearchEngines:addsearch_engine'
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
         Request $request,
@@ -104,6 +123,16 @@ class SearchEnginesController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/search-engines/{searchEngineId}/edit',
+        name: 'admin_search_engines_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminSearchEngines',
+            '_legacy_link' => 'AdminSearchEngines:updatesearch_engine'
+        ],
+        requirements: ['searchEngineId' => '\d+'],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function editAction(
         int $searchEngineId,
@@ -156,6 +185,16 @@ class SearchEnginesController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/search-engines/{searchEngineId}/delete',
+        name: 'admin_search_engines_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminSearchEngines',
+            '_legacy_link' => 'AdminSearchEngines:deletesearch_engine'
+        ],
+        requirements: ['searchEngineId' => '\d+'],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_search_engines_index')]
     public function deleteAction(int $searchEngineId): RedirectResponse
     {
@@ -170,6 +209,15 @@ class SearchEnginesController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_search_engines_index');
     }
 
+    #[Route(
+        path: '/configure/shop/search-engines/bulk-delete',
+        name: 'admin_search_engines_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminSearchEngines',
+            '_legacy_link' => 'AdminSearchEngines:submitBulkdeletesearch_engine'
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_search_engines_index')]
     public function bulkDeleteAction(Request $request): RedirectResponse
     {

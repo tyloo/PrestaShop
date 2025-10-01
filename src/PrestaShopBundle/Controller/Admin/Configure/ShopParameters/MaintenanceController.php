@@ -34,6 +34,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Shop Parameters > General > Maintenance" page.
@@ -42,6 +43,15 @@ class MaintenanceController extends PrestaShopAdminController
 {
     public const CONTROLLER_NAME = 'AdminMaintenance';
 
+    #[Route(
+        path: '/configure/shop/maintenance/',
+        name: 'admin_maintenance',
+        defaults: [
+            '_legacy_controller' => 'AdminMaintenance',
+            '_legacy_link' => 'AdminMaintenance'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         #[Autowire(service: 'prestashop.adapter.maintenance.form_handler')]
@@ -61,6 +71,15 @@ class MaintenanceController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/shop/maintenance/',
+        name: 'admin_maintenance_save',
+        defaults: [
+            '_legacy_controller' => 'AdminMaintenance',
+            '_legacy_link' => 'AdminMaintenance:update'
+        ],
+        methods: ['POST', 'PATCH'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_maintenance')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_maintenance')]
     public function processFormAction(
