@@ -49,8 +49,7 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__) . '/Resources/config'));
-        $env = $container->getParameter('kernel.environment');
-        $loader->load('services_' . $env . '.yml');
+        $loader->load('services.yml');
 
         // Automatically tag services that implements this interface
         $container->registerForAutoconfiguration(AuthorisationServerInterface::class)
