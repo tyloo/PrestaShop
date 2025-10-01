@@ -1,0 +1,23 @@
+_api_oauth2_routing:
+    resource: "@PrestaShopBundle/Resources/config/routing/admin-api.yml"
+
+_api_platform_routing:
+    resource: .
+    type: api_platform
+
+when@dev:
+    _wdt:
+        resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+        prefix: /_wdt
+
+    _profiler:
+        resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+        prefix: /_profiler
+
+    _errors:
+        resource: "@FrameworkBundle/Resources/config/routing/errors.xml"
+        prefix: /_error
+
+when@test:
+    test:
+        resource: "%kernel.project_dir%/tests/Resources/config/routes.yaml"

@@ -1,0 +1,8 @@
+# Dedicated config for Oauth Endpoint, these are the common rules for all environments (dev, prod, test)
+# They specify the dedicated security rules and routing mostly
+imports:
+    - { resource: ../config.yaml }
+    - { resource: packages/api_platform.yaml }
+    - { resource: packages/routing.yaml }
+    - { resource: packages/security.yaml }
+    - { resource: services.yaml }

@@ -1,0 +1,63 @@
+# Doctrine Configuration
+doctrine:
+    dbal:
+        url: 'mysql://%database_user%:%database_password%@%database_host%:%database_port%/%database_name%?serverVersion=8.4.6&charset=utf8mb4'
+
+        # IMPORTANT: You MUST configure your server version,
+        # either here or in the DATABASE_URL env var (see .env file)
+        #server_version: '16'
+
+        profiling_collect_backtrace: '%kernel.debug%'
+        use_savepoints: true
+
+        wrapper_class: PrestaShopBundle\Doctrine\DatabaseConnection
+        mapping_types:
+            enum: string
+        options:
+            # PDO::MYSQL_ATTR_INIT_COMMAND
+            !php/const PDO::MYSQL_ATTR_INIT_COMMAND: "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))"
+            # PDO::MYSQL_ATTR_MULTI_STATEMENTS
+            !php/const PDO::MYSQL_ATTR_MULTI_STATEMENTS: '%env(const:runtime:_PS_ALLOW_MULTI_STATEMENTS_QUERIES_)%'
+
+    orm:
+        auto_generate_proxy_classes: true
+        # enable_lazy_ghost_objects: true
+        # report_fields_where_declared: true
+        # validate_xml_mapping: true
+        naming_strategy: prestashop.database.naming_strategy
+        auto_mapping: true
+        mappings:
+            PrestaShop:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/PrestaShopBundle/Entity'
+                prefix: 'PrestaShopBundle\Entity'
+                alias: PrestaShop
+        dql:
+            string_functions:
+                regexp: DoctrineExtensions\Query\Mysql\Regexp
+                binary: DoctrineExtensions\Query\Mysql\Binary
+when@test:
+    doctrine:
+        dbal:
+            dbname: "test_%database_name%"
+
+when@prod:
+    doctrine:
+        orm:
+            auto_generate_proxy_classes: false
+            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+        framework:
+            cache:
+                pools:
+                    doctrine.result_cache_pool:
+                        adapter: cache.app
+                    doctrine.system_cache_pool:
+                        adapter: cache.system

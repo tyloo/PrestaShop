@@ -39,7 +39,6 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -51,7 +50,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
     public const CAST_BOOL = 'cast_bool';
 
     public function __construct(
-        protected readonly Serializer $decorated,
+        protected readonly SerializerInterface $decorated,
         protected readonly ContextParametersProvider $contextParametersProvider,
         protected readonly ClassMetadataFactoryInterface $classMetadataFactory,
         protected readonly LocalizedValueUpdater $localizedValueUpdater,

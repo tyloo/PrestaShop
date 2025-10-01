@@ -1,0 +1,5 @@
+when@dev:
+    prestashop:
+        addons:
+            api_client:
+                ttl: 300  # 5min
