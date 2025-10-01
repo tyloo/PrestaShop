@@ -45,23 +45,23 @@ class StateQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * @var int
      */
-    private $employeeIdLang;
+    private $contextLanguageId;
 
     /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $employeeIdLang
+     * @param int $contextLanguageId
      */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $employeeIdLang
+        int $contextLanguageId
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->employeeIdLang = $employeeIdLang;
+        $this->contextLanguageId = $contextLanguageId;
     }
 
     /**
@@ -134,7 +134,7 @@ class StateQueryBuilder extends AbstractDoctrineQueryBuilder
             's.`id_country` = cl.`id_country` AND cl.`id_lang` = :idLang '
         );
 
-        $qb->setParameter('idLang', $this->employeeIdLang);
+        $qb->setParameter('idLang', $this->contextLanguageId);
         $this->applyFilters($qb, $filters);
 
         return $qb;

@@ -40,7 +40,7 @@ class TaxRuleQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * @var int
      */
-    private $employeeIdLang;
+    private $contextLanguageId;
 
     /**
      * @var DoctrineSearchCriteriaApplicatorInterface
@@ -51,18 +51,18 @@ class TaxRuleQueryBuilder extends AbstractDoctrineQueryBuilder
      * @param Connection $connection
      * @param string $dbPrefix
      * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
-     * @param int $employeeIdLang
+     * @param int $contextLanguageId
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $employeeIdLang
+        int $contextLanguageId
     ) {
         parent::__construct($connection, $dbPrefix);
 
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->employeeIdLang = $employeeIdLang;
+        $this->contextLanguageId = $contextLanguageId;
     }
 
     /**
@@ -142,7 +142,7 @@ class TaxRuleQueryBuilder extends AbstractDoctrineQueryBuilder
                 'tr.`id_tax` = t.`id_tax`'
             )
             ->andWhere('tr.`id_tax_rules_group` = :idTaxRulesGroup')
-            ->setParameter('idLang', $this->employeeIdLang)
+            ->setParameter('idLang', $this->contextLanguageId)
             ->setParameter('idTaxRulesGroup', $filters['taxRulesGroupId']);
     }
 }
