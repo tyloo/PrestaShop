@@ -1,3 +1,9 @@
+admin:
+    resource:
+        path: ../../../src/PrestaShopBundle/Controller/
+        namespace: PrestaShopBundle\Controller
+    type: attribute
+
 app:
     # The main bundle is PrestaShopCoreBundle which will load other dependencies.
     resource: "@PrestaShopBundle/Resources/config/routing.yml"

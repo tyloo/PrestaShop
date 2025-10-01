@@ -35,6 +35,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Shop Parameters > General" page.
@@ -43,6 +44,15 @@ class PreferencesController extends PrestaShopAdminController
 {
     public const CONTROLLER_NAME = 'AdminPreferences';
 
+    #[Route(
+        path: '/configure/shop/preferences/preferences',
+        name: 'admin_preferences',
+        defaults: [
+            '_legacy_controller' => 'AdminPreferences',
+            '_legacy_link' => 'AdminPreferences'
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -54,6 +64,15 @@ class PreferencesController extends PrestaShopAdminController
         return $this->doRenderForm($request, $form);
     }
 
+    #[Route(
+        path: '/configure/shop/preferences/preferences',
+        name: 'admin_preferences_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPreferences',
+            '_legacy_link' => 'AdminPreferences:update'
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_preferences')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_preferences')]
     public function processFormAction(

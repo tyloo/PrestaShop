@@ -1,7 +1,3 @@
-_preferences:
-  resource: "preferences.yml"
-  prefix: /preferences/
-
 _order_preferences:
   resource: "order_preferences.yml"
   prefix: /order-preferences/
