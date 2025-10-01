@@ -39,6 +39,7 @@ use PrestaShopBundle\Security\Attribute\AdminSecurity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Allows permissions configuration for employee profiles in "Configure > Advanced Parameters > Team > Permissions"
@@ -51,6 +52,16 @@ class PermissionController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/permissions',
+        name: 'admin_permissions_index',
+        defaults: [
+            '_legacy_controller' => 'AdminAccess',
+            '_legacy_link' => 'AdminAccess',
+            '_legacy_feature_flag' => 'permission',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(): Response
     {
@@ -85,6 +96,16 @@ class PermissionController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/permissions/update/permissions/tab',
+        name: 'admin_permissions_update_tab_permissions',
+        defaults: [
+            '_legacy_controller' => 'AdminAccess',
+            '_legacy_link' => 'AdminAccess:updateAccess',
+            '_legacy_feature_flag' => 'permission',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
     public function updateTabPermissionsAction(Request $request): JsonResponse
     {
@@ -119,6 +140,16 @@ class PermissionController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/permissions/update/permissions/module',
+        name: 'admin_permissions_update_module_permissions',
+        defaults: [
+            '_legacy_controller' => 'AdminAccess',
+            '_legacy_link' => 'AdminAccess:updateModuleAccess',
+            '_legacy_feature_flag' => 'permission',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
     public function updateModulePermissionsAction(Request $request): JsonResponse
     {

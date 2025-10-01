@@ -42,12 +42,22 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class EmailController is responsible for handling "Configure > Advanced Parameters > E-mail" page.
  */
 class EmailController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/advanced-parameters/emails',
+        name: 'admin_emails_index',
+        defaults: [
+            '_legacy_controller' => 'AdminEmails',
+            '_legacy_link' => 'AdminEmails',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,
@@ -93,6 +103,37 @@ class EmailController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/emails/options',
+        name: 'admin_emails_save_options_get',
+        defaults: [
+            '_legacy_controller' => 'AdminEmails',
+            '_legacy_link' => 'AdminEmails:update',
+        ],
+        methods: 'GET',
+    )]
+    #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
+    public function saveOptionsGetAction(
+        Request $request,
+        EmailLogsFilter $filters,
+        PhpExtensionCheckerInterface $phpExtensionChecker,
+        #[Autowire(service: 'prestashop.core.grid.factory.email_logs')]
+        GridFactoryInterface $emailLogsGridFactory,
+        #[Autowire(service: 'prestashop.admin.email_configuration.form_handler')]
+        FormHandlerInterface $emailConfigurationFormHandler,
+    ): Response {
+        return $this->indexAction($request, $filters, $phpExtensionChecker, $emailLogsGridFactory, $emailConfigurationFormHandler);
+    }
+
+    #[Route(
+        path: '/configure/advanced-parameters/emails/options',
+        name: 'admin_emails_save_options',
+        defaults: [
+            '_legacy_controller' => 'AdminEmails',
+            '_legacy_link' => 'AdminEmails:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_emails_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.', redirectRoute: 'admin_emails_index')]
     public function saveOptionsAction(
@@ -119,6 +160,15 @@ class EmailController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_emails_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/emails/delete-bulk',
+        name: 'admin_emails_delete_bulk',
+        defaults: [
+            '_legacy_controller' => 'AdminEmails',
+            '_legacy_link' => 'AdminEmails:submitBulkdeletemail',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_emails_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.', redirectRoute: 'admin_emails_index')]
     public function deleteBulkAction(
@@ -141,6 +191,15 @@ class EmailController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_emails_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/emails/delete-all',
+        name: 'admin_emails_delete_all',
+        defaults: [
+            '_legacy_controller' => 'AdminEmails',
+            '_legacy_link' => 'AdminEmails:deleteAll',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_emails_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function deleteAllAction(
@@ -153,6 +212,17 @@ class EmailController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_emails_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/emails/delete/{mailId}',
+        name: 'admin_emails_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminEmails',
+            '_legacy_link' => 'AdminEmails:deletemail',
+            '_legacy_parameters' => ['id_mail' => 'mailId'],
+        ],
+        methods: 'POST',
+        requirements: ['mailId' => '\d+'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_emails_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function deleteAction(
@@ -180,6 +250,16 @@ class EmailController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/emails/send-testing-email',
+        name: 'admin_emails_send_test',
+        defaults: [
+            '_legacy_controller' => 'AdminEmails',
+            '_legacy_link' => 'AdminEmails:testEmail',
+        ],
+        methods: 'POST',
+        condition: 'request.isXmlHttpRequest()',
+    )]
     public function sendTestAction(
         Request $request,
         EmailConfigurationTesterInterface $emailConfigurationTester,

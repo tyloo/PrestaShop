@@ -68,12 +68,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class EmployeeController handles pages under "Configure > Advanced Parameters > Team > Employees".
  */
 class EmployeeController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/advanced-parameters/employees',
+        name: 'admin_employees_index',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -111,6 +121,15 @@ class EmployeeController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/employees/save-options',
+        name: 'admin_employees_save_options',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:submitOptionsemployee',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
     public function saveOptionsAction(
@@ -136,6 +155,17 @@ class EmployeeController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_employees_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/{employeeId}/toggle-status',
+        name: 'admin_employees_toggle_status',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:statusemployee',
+            '_legacy_parameters' => ['id_employee' => 'employeeId'],
+        ],
+        methods: 'POST',
+        requirements: ['employeeId' => '\d+'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_employees_index')]
     public function toggleStatusAction(int $employeeId): RedirectResponse
@@ -154,6 +184,15 @@ class EmployeeController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_employees_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/bulk-enable-status',
+        name: 'admin_employees_bulk_enable_status',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:submitBulkenableSelectionemployee',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function bulkStatusEnableAction(Request $request): RedirectResponse
@@ -176,6 +215,15 @@ class EmployeeController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_employees_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/bulk-disable-status',
+        name: 'admin_employees_bulk_disable_status',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:submitBulkdisableSelectionemployee',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function bulkStatusDisableAction(Request $request): RedirectResponse
@@ -198,6 +246,17 @@ class EmployeeController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_employees_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/{employeeId}/delete',
+        name: 'admin_employees_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:deleteemployee',
+            '_legacy_parameters' => ['id_employee' => 'employeeId'],
+        ],
+        methods: 'POST',
+        requirements: ['employeeId' => '\d+'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function deleteAction(int $employeeId): RedirectResponse
@@ -213,6 +272,15 @@ class EmployeeController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_employees_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/bulk-delete',
+        name: 'admin_employees_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:submitBulkdeleteemployee',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function bulkDeleteAction(Request $request): RedirectResponse
@@ -233,6 +301,15 @@ class EmployeeController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_employees_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/new',
+        name: 'admin_employees_create',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:addemployee',
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -270,6 +347,17 @@ class EmployeeController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/{employeeId}/edit',
+        name: 'admin_employees_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+            '_legacy_link' => 'AdminEmployees:updateemployee',
+            '_legacy_parameters' => ['id_employee' => 'employeeId'],
+        ],
+        methods: ['GET', 'POST'],
+        requirements: ['employeeId' => '\d+'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     public function editAction(
         int $employeeId,
@@ -359,6 +447,11 @@ class EmployeeController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/toggle-navigation',
+        name: 'admin_employees_toggle_navigation',
+        methods: 'POST',
+    )]
     public function toggleNavigationMenuAction(
         Request $request,
         NavigationMenuTogglerInterface $navigationMenuToggler,
@@ -368,6 +461,11 @@ class EmployeeController extends PrestaShopAdminController
         return new Response('', Response::HTTP_NO_CONTENT);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/change-form-language',
+        name: 'admin_employees_change_form_language',
+        methods: 'POST',
+    )]
     public function changeFormLanguageAction(
         Request $request,
         FormLanguageChangerInterface $formLanguageChanger,
@@ -386,6 +484,14 @@ class EmployeeController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/employees/tabs',
+        name: 'admin_employees_get_tabs',
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_employees_index')]
     public function getAccessibleTabsAction(
         Request $request,
@@ -396,6 +502,15 @@ class EmployeeController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/employees/password_generated',
+        name: 'admin_employees_get_password_generated',
+        options: ['expose' => true],
+        defaults: [
+            '_legacy_controller' => 'AdminEmployees',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function generatePasswordAction(): JsonResponse
     {

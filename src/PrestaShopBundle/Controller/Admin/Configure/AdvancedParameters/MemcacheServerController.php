@@ -35,6 +35,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Advanced Parameters > Performance" servers block management.
@@ -43,6 +44,15 @@ class MemcacheServerController extends PrestaShopAdminController
 {
     public const CONTROLLER_NAME = 'AdminPerformance';
 
+    #[Route(
+        path: '/configure/advanced-parameters/performance/memcache/servers',
+        name: 'admin_servers',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+        ],
+        methods: 'GET',
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function listAction(
         #[Autowire(service: 'prestashop.adapter.memcache_server.manager')]
@@ -51,6 +61,16 @@ class MemcacheServerController extends PrestaShopAdminController
         return new JsonResponse($memcacheServerManager->getServers());
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/performance/memcache/servers/test',
+        name: 'admin_servers_test',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:test_server',
+        ],
+        methods: 'GET',
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_servers_test')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function testAction(
@@ -73,6 +93,16 @@ class MemcacheServerController extends PrestaShopAdminController
         return new JsonResponse(['errors' => 'error'], Response::HTTP_BAD_REQUEST);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/performance/memcache/servers',
+        name: 'admin_servers_add',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:submitAddServer',
+        ],
+        methods: 'POST',
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_servers_test')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function addAction(
@@ -129,6 +159,16 @@ class MemcacheServerController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/performance/memcache/servers',
+        name: 'admin_servers_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:deleteMemcachedServer',
+        ],
+        methods: 'DELETE',
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_servers_test')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function deleteAction(

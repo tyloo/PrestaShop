@@ -37,6 +37,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Manages the "Configure > Advanced Parameters > Experimental Features" page.
@@ -44,6 +45,15 @@ use Symfony\Component\HttpFoundation\Response;
 #[AllShopContext]
 class FeatureFlagController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/advanced-parameters/feature-flags',
+        name: 'admin_feature_flags_index',
+        defaults: [
+            '_legacy_controller' => 'AdminFeatureFlag',
+            '_legacy_link' => 'AdminFeatureFlag',
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,

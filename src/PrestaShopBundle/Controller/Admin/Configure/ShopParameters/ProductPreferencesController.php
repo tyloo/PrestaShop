@@ -41,7 +41,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProductPreferencesController extends PrestaShopAdminController
 {
     #[Route(
-        path: '/configure/shop/product-preferences/',
+        path: '/configure/shop/product-preferences',
         name: 'admin_product_preferences',
         defaults: [
             '_legacy_controller' => 'AdminPPreferences',

@@ -60,20 +60,22 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible of "Configure > Advanced Parameters > Database -> SQL Manager" page.
  */
 class SqlManagerController extends PrestaShopAdminController
 {
-    /**
-     * Show list of saved SQL's.
-     *
-     * @param Request $request
-     * @param RequestSqlFilters $filters
-     *
-     * @return Response
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests',
+        name: 'admin_sql_requests_index',
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -107,13 +109,15 @@ class SqlManagerController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Process Request SQL settings save.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/process-settings',
+        name: 'admin_sql_requests_process_settings',
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_sql_requests_index')]
     public function processFormAction(
@@ -135,13 +139,15 @@ class SqlManagerController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_sql_requests_index');
     }
 
-    /**
-     * Show Request SQL create page.
-     *
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/new',
+        name: 'admin_sql_requests_create',
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:addrequest_sql',
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to create this.', redirectRoute: 'admin_sql_requests_index')]
     public function createAction(
         Request $request,
@@ -182,14 +188,17 @@ class SqlManagerController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Show Request SQL edit page.
-     *
-     * @param int $sqlRequestId
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/{sqlRequestId}/edit',
+        name: 'admin_sql_requests_edit',
+        requirements: ['sqlRequestId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:updaterequest_sql',
+            '_legacy_parameters' => ['id_request_sql' => 'sqlRequestId'],
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_sql_requests_index')]
     public function editAction(
@@ -231,13 +240,17 @@ class SqlManagerController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Delete selected Request SQL.
-     *
-     * @param int $sqlRequestId ID of selected Request SQL
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/{sqlRequestId}/delete',
+        name: 'admin_sql_requests_delete',
+        requirements: ['sqlRequestId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:deleterequest_sql',
+            '_legacy_parameters' => ['id_request_sql' => 'sqlRequestId'],
+        ],
+        methods: ['GET', 'DELETE'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_sql_requests_index')]
     public function deleteAction(int $sqlRequestId): RedirectResponse
@@ -257,13 +270,15 @@ class SqlManagerController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_sql_requests_index');
     }
 
-    /**
-     * Process bulk action delete of RequestSql's.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/delete-bulk',
+        name: 'admin_sql_requests_delete_bulk',
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:submitBulkdeleterequest_sql',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_sql_requests_index')]
     public function deleteBulkAction(Request $request): RedirectResponse
@@ -285,14 +300,17 @@ class SqlManagerController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_sql_requests_index');
     }
 
-    /**
-     * View Request SQL query data.
-     *
-     * @param Request $request
-     * @param int $sqlRequestId
-     *
-     * @return Response
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/{sqlRequestId}/view',
+        name: 'admin_sql_requests_view',
+        requirements: ['sqlRequestId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:viewsql_request',
+            '_legacy_parameters' => ['id_request_sql' => 'sqlRequestId'],
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to view this.', redirectRoute: 'admin_sql_requests_index')]
     public function viewAction(Request $request, int $sqlRequestId): Response
     {
@@ -315,13 +333,17 @@ class SqlManagerController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Export Request SQL data.
-     *
-     * @param int $sqlRequestId Request SQL id
-     *
-     * @return RedirectResponse|BinaryFileResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/{sqlRequestId}/export',
+        name: 'admin_sql_requests_export',
+        requirements: ['sqlRequestId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:exportsql_request',
+            '_legacy_parameters' => ['id_request_sql' => 'sqlRequestId'],
+        ],
+        methods: 'GET',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_sql_requests_index')]
     public function exportAction(
@@ -354,13 +376,16 @@ class SqlManagerController extends PrestaShopAdminController
         return $response;
     }
 
-    /**
-     * Get MySQL table columns data.
-     *
-     * @param string $mySqlTableName Database table name
-     *
-     * @return JsonResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/sql-requests/tables/{mySqlTableName}/columns',
+        name: 'admin_sql_requests_table_columns',
+        defaults: [
+            '_legacy_controller' => 'AdminRequestSql',
+            '_legacy_link' => 'AdminRequestSql:ajax',
+            '_legacy_parameters' => ['table' => 'mySqlTableName'],
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_sql_requests_index')]
     public function ajaxTableColumnsAction(string $mySqlTableName): JsonResponse
     {
@@ -376,10 +401,6 @@ class SqlManagerController extends PrestaShopAdminController
      * it adds "name" and "sql" to request's POST data
      * which is used as default form data
      * when creating SqlRequest.
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     protected function getSqlRequestDataFromRequest(Request $request): array
     {
@@ -393,13 +414,6 @@ class SqlManagerController extends PrestaShopAdminController
         return [];
     }
 
-    /**
-     * Get human readable error for exception.
-     *
-     * @param SqlRequestException $e
-     *
-     * @return string Error message
-     */
     protected function handleException(SqlRequestException $e): string
     {
         $code = $e->getCode();
@@ -429,13 +443,6 @@ class SqlManagerController extends PrestaShopAdminController
         return $this->getErrorMessageForException($e);
     }
 
-    /**
-     * Get error message when exception occurs on View action.
-     *
-     * @param SqlRequestException $e
-     *
-     * @return string
-     */
     protected function handleViewException(SqlRequestException $e): string
     {
         $type = $e::class;
@@ -451,11 +458,6 @@ class SqlManagerController extends PrestaShopAdminController
         return $this->getErrorMessageForException($e);
     }
 
-    /**
-     * @param Exception $e
-     *
-     * @return string Error message
-     */
     protected function handleExportException(Exception $e): string
     {
         $type = $e::class;
@@ -471,11 +473,6 @@ class SqlManagerController extends PrestaShopAdminController
         return $this->getErrorMessageForException($e);
     }
 
-    /**
-     * @param FileWritingException $e
-     *
-     * @return string Error message
-     */
     protected function handleApplicationExportException(FileWritingException $e): string
     {
         $code = $e->getCode();
@@ -491,11 +488,6 @@ class SqlManagerController extends PrestaShopAdminController
         return $this->getErrorMessageForException($e);
     }
 
-    /**
-     * @param SqlRequestException $e
-     *
-     * @return string
-     */
     protected function handleDomainExportException(SqlRequestException $e): string
     {
         $type = $e::class;
@@ -524,8 +516,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Get SQL Request IDs from request for bulk actions.
-     *
-     * @param Request $request
      *
      * @return int[]
      */

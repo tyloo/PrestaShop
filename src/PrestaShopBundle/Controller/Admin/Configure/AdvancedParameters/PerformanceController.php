@@ -40,6 +40,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Advanced Parameters > Performance" page display.
@@ -51,6 +52,15 @@ class PerformanceController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/performance',
+        name: 'admin_performance',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         #[Autowire(service: 'prestashop.adapter.memcache_server.manager')]
@@ -112,6 +122,15 @@ class PerformanceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/performance/smarty',
+        name: 'admin_performance_smarty_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_performance')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_performance')]
     public function processSmartyFormAction(
@@ -133,6 +152,15 @@ class PerformanceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/performance/debug-mode',
+        name: 'admin_performance_debug_mode_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_performance')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_performance')]
     public function processDebugModeFormAction(
@@ -154,6 +182,15 @@ class PerformanceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/performance/optional-features',
+        name: 'admin_performance_optional_features_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_performance')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_performance')]
     public function processOptionalFeaturesFormAction(
@@ -175,6 +212,15 @@ class PerformanceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/performance/combine-compress-cache',
+        name: 'admin_performance_combine_compress_cache_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_performance')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_performance')]
     public function processCombineCompressCacheFormAction(
@@ -196,6 +242,15 @@ class PerformanceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/performance/media-servers',
+        name: 'admin_performance_media_servers_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_performance')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_performance')]
     public function processMediaServersFormAction(
@@ -217,6 +272,15 @@ class PerformanceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/performance/caching',
+        name: 'admin_performance_caching_save',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_performance')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_performance')]
     public function processCachingFormAction(
@@ -266,6 +330,15 @@ class PerformanceController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_performance');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/performance/disable-non-builtin',
+        name: 'admin_performance_module_disable_non_builtin',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:update',
+        ],
+        methods: 'GET',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_performance')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'Access denied.', redirectRoute: 'admin_performance')]
     public function disableNonBuiltInAction(ModuleRepository $moduleRepository): RedirectResponse
@@ -286,6 +359,15 @@ class PerformanceController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_performance');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/performance/clear-cache',
+        name: 'admin_clear_cache',
+        defaults: [
+            '_legacy_controller' => 'AdminPerformance',
+            '_legacy_link' => 'AdminPerformance:empty_smarty_cache',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_performance')]
     public function clearCacheAction(
         #[Autowire(service: 'prestashop.core.cache.clearer.cache_clearer_chain')]

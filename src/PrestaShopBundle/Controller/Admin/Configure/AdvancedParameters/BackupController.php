@@ -42,12 +42,22 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class BackupController is responsible for "Configure > Advanced Parameters > Database > Backup" page.
  */
 class BackupController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/advanced-parameters/backups',
+        name: 'admin_backups_index',
+        defaults: [
+            '_legacy_controller' => 'AdminBackup',
+            '_legacy_link' => 'AdminBackup',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_products_index')]
     public function indexAction(
         Request $request,
@@ -91,6 +101,14 @@ class BackupController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/backups/view/{downloadFileName}',
+        name: 'admin_backups_download_view',
+        defaults: [
+            '_legacy_controller' => 'AdminBackup',
+        ],
+        methods: 'GET',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_backups_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function downloadViewAction(Request $request, string $downloadFileName): Response
@@ -108,6 +126,14 @@ class BackupController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/backups/download/{downloadFileName}',
+        name: 'admin_backup_download',
+        defaults: [
+            '_legacy_controller' => 'AdminBackup',
+        ],
+        methods: 'GET',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_backup')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function downloadContentAction(string $downloadFileName): BinaryFileResponse
@@ -117,6 +143,15 @@ class BackupController extends PrestaShopAdminController
         return new BinaryFileResponse($backup->getFilePath());
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/backups',
+        name: 'admin_backups_save_options',
+        defaults: [
+            '_legacy_controller' => 'AdminBackup',
+            '_legacy_link' => 'AdminBackup:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_backups_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_backups_index')]
     public function saveOptionsAction(
@@ -140,6 +175,15 @@ class BackupController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_backups_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/backups/new',
+        name: 'admin_backups_create',
+        defaults: [
+            '_legacy_controller' => 'AdminBackup',
+            '_legacy_link' => 'AdminBackup:addbackup',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_backups_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to create this.', redirectRoute: 'admin_backups_index')]
     public function createAction(
@@ -174,6 +218,18 @@ class BackupController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_backups_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/backups/{deleteFileName}',
+        name: 'admin_backups_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminBackup',
+            '_legacy_link' => 'AdminBackup:delete',
+            '_legacy_parameters' => [
+                'filename' => 'deleteFileName',
+            ],
+        ],
+        methods: ['DELETE', 'POST'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_backups_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_backups_index')]
     public function deleteAction(
@@ -200,6 +256,15 @@ class BackupController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_backups_index');
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/backups/bulk-delete',
+        name: 'admin_backups_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminBackup',
+            '_legacy_link' => 'AdminBackup:submitBulkdeletebackup',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_backups_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_backups_index')]
     public function bulkDeleteAction(

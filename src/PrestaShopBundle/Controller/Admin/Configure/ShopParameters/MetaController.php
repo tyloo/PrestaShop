@@ -106,7 +106,7 @@ class MetaController extends PrestaShopAdminController
     }
 
     #[Route(
-        path: '/configure/shop/seo-urls/',
+        path: '/configure/shop/seo-urls',
         name: 'admin_metas_index',
         defaults: [
             '_legacy_controller' => 'AdminMeta',

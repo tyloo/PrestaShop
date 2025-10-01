@@ -54,6 +54,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class SecurityController is responsible for displaying the
@@ -67,6 +68,15 @@ class SecurityController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/security',
+        name: 'admin_security',
+        defaults: [
+            '_legacy_controller' => 'AdminSecurity',
+            '_legacy_link' => 'AdminSecurity',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
@@ -104,6 +114,15 @@ class SecurityController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/security/general',
+        name: 'admin_security_general_save',
+        defaults: [
+            '_legacy_controller' => 'AdminSecurity',
+            '_legacy_link' => 'AdminSecurity',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security')]
     public function processGeneralFormAction(
         Request $request,
@@ -124,6 +143,15 @@ class SecurityController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/security/password-policy',
+        name: 'admin_security_password_policy_save',
+        defaults: [
+            '_legacy_controller' => 'AdminSecurity',
+            '_legacy_link' => 'AdminSecurity',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security')]
     public function processPasswordPolicyFormAction(
         Request $request,
@@ -179,6 +207,15 @@ class SecurityController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/security/session/employee',
+        name: 'admin_security_sessions_employee_list',
+        defaults: [
+            '_legacy_controller' => 'AdminSecuritySessionEmployee',
+            '_legacy_link' => 'AdminSecuritySessionEmployee',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function employeeSessionAction(
         Request $request,
@@ -210,6 +247,15 @@ class SecurityController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/security/session/customer',
+        name: 'admin_security_sessions_customer_list',
+        defaults: [
+            '_legacy_controller' => 'AdminSecuritySessionCustomer',
+            '_legacy_link' => 'AdminSecuritySessionCustomer',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function customerSessionAction(
         Request $request,

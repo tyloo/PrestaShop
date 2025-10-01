@@ -44,6 +44,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Advanced Parameters > Import" step 2 page display.
@@ -57,6 +58,14 @@ class ImportDataConfigurationController extends PrestaShopAdminController
      *
      * @return RedirectResponse|Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import/data',
+        name: 'admin_import_data_configuration_index',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -110,6 +119,15 @@ class ImportDataConfigurationController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import/match',
+        name: 'admin_import_data_configuration_create',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:saveImportMatch',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
     public function createAction(
@@ -147,6 +165,15 @@ class ImportDataConfigurationController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import/match',
+        name: 'admin_import_data_configuration_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:deleteImportMatch',
+        ],
+        methods: 'DELETE',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
     public function deleteAction(
@@ -165,6 +192,15 @@ class ImportDataConfigurationController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import/match',
+        name: 'admin_import_data_configuration_get',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:getImportMatch',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
     public function getAction(
         Request $request,

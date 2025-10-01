@@ -54,6 +54,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Advanced Parameters > Import" page display.
@@ -67,6 +68,15 @@ class ImportController extends PrestaShopAdminController
      *
      * @return RedirectResponse|Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import',
+        name: 'admin_import',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport',
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function importAction(
         Request $request,
@@ -130,6 +140,15 @@ class ImportController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import/file/upload',
+        name: 'admin_import_file_upload',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:uploadCsv',
+        ],
+        methods: 'POST',
+    )]
     public function uploadAction(
         Request $request,
         FileUploader $fileUploader,
@@ -181,6 +200,15 @@ class ImportController extends PrestaShopAdminController
      * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
+    #[Route(
+        path: '/configure/advanced-parameters/import/file/delete',
+        name: 'admin_import_file_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:delete',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
     public function deleteAction(
         Request $request,
@@ -202,6 +230,15 @@ class ImportController extends PrestaShopAdminController
      * @return RedirectResponse|BinaryFileResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
+    #[Route(
+        path: '/configure/advanced-parameters/import/file/download',
+        name: 'admin_import_file_download',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:download',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
     public function downloadAction(
         Request $request,
@@ -224,6 +261,15 @@ class ImportController extends PrestaShopAdminController
      *
      * @return RedirectResponse|BinaryFileResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import/sample/download/{sampleName}',
+        name: 'admin_import_sample_download',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:sampleDownload',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
     public function downloadSampleAction(
         string $sampleName,
@@ -248,6 +294,15 @@ class ImportController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/import/fields',
+        name: 'admin_import_get_available_fields',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+            '_legacy_link' => 'AdminImport:getAvailableEntityFields',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
     public function getAvailableEntityFieldsAction(
         Request $request,
@@ -272,6 +327,14 @@ class ImportController extends PrestaShopAdminController
      * @return JsonResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
+    #[Route(
+        path: '/configure/advanced-parameters/import/process',
+        name: 'admin_import_process',
+        defaults: [
+            '_legacy_controller' => 'AdminImport',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
     public function processImportAction(
         Request $request,

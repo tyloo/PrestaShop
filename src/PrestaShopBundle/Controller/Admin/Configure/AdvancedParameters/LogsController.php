@@ -39,6 +39,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Advanced Parameters > Logs" page display.
@@ -50,6 +51,15 @@ class LogsController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/logs',
+        name: 'admin_logs_index',
+        defaults: [
+            '_legacy_controller' => 'AdminLogs',
+            '_legacy_link' => 'AdminLogs',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         LogsFilters $filters,
@@ -82,6 +92,14 @@ class LogsController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/logs',
+        name: 'admin_logs_search',
+        defaults: [
+            '_legacy_controller' => 'AdminLogs',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_logs_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_logs_index')]
     public function searchAction(
@@ -104,6 +122,15 @@ class LogsController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/logs/settings',
+        name: 'admin_logs_save_settings',
+        defaults: [
+            '_legacy_controller' => 'AdminLogs',
+            '_legacy_link' => 'AdminLogs:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_logs_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_logs_index')]
     public function saveSettingsAction(
@@ -138,6 +165,15 @@ class LogsController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/logs/database-settings',
+        name: 'admin_logs_save_database_settings',
+        defaults: [
+            '_legacy_controller' => 'AdminLogs',
+            '_legacy_link' => 'AdminLogs:updateDatabase',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_logs_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_logs_index')]
     public function saveDatabaseSettingsAction(
@@ -170,6 +206,15 @@ class LogsController extends PrestaShopAdminController
      *
      * @throws \Doctrine\DBAL\Exception\InvalidArgumentException
      */
+    #[Route(
+        path: '/configure/advanced-parameters/logs/delete-all',
+        name: 'admin_logs_delete_all',
+        defaults: [
+            '_legacy_controller' => 'AdminLogs',
+            '_legacy_link' => 'AdminLogs:deletelog',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_logs_index')]
     public function deleteAllAction(
         LogRepository $logRepository,

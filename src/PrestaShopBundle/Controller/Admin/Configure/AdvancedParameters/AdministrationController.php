@@ -43,6 +43,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Advanced Parameters > Administration" page display.
@@ -53,6 +54,15 @@ class AdministrationController extends PrestaShopAdminController
     {
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/administration',
+        name: 'admin_administration',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminPreferences',
+            '_legacy_link' => 'AdminAdminPreferences',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         #[Autowire(service: 'prestashop.adapter.administration.general.form_handler')]
@@ -88,6 +98,15 @@ class AdministrationController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/administration/general',
+        name: 'admin_administration_general_save',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminPreferences',
+            '_legacy_link' => 'AdminAdminPreferences:update',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_administration')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_administration')]
     public function processGeneralFormAction(
@@ -102,6 +121,14 @@ class AdministrationController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/administration/upload-quota',
+        name: 'admin_administration_upload_quota_save',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminPreferences',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_administration')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_administration')]
     public function processUploadQuotaFormAction(
@@ -116,6 +143,14 @@ class AdministrationController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/administration/notifications',
+        name: 'admin_administration_notifications_save',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminPreferences',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_administration')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_administration')]
     public function processNotificationsFormAction(

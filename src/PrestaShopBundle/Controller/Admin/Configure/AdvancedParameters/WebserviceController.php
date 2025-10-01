@@ -48,6 +48,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible for "Configure > Advanced Parameters > Webservice" page.
@@ -66,6 +67,15 @@ class WebserviceController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys',
+        name: 'admin_webservice_keys_index',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         WebserviceKeyFilters $filters,
@@ -87,6 +97,15 @@ class WebserviceController extends PrestaShopAdminController
      *
      * @return Response|RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/new',
+        name: 'admin_webservice_keys_create',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:addwebservice_account',
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
         Request $request,
@@ -129,6 +148,17 @@ class WebserviceController extends PrestaShopAdminController
      *
      * @return Response|RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/{webserviceKeyId}/edit',
+        name: 'admin_webservice_keys_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:updatewebservice_account',
+            '_legacy_parameters' => ['id_webservice_account' => 'webserviceKeyId'],
+        ],
+        methods: ['GET', 'POST'],
+        requirements: ['webserviceKeyId' => '\d+'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_webservice_keys_index')]
     public function editAction(
         int $webserviceKeyId,
@@ -175,6 +205,17 @@ class WebserviceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/{webserviceKeyId}/delete',
+        name: 'admin_webservice_keys_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:deletewebservice_account',
+            '_legacy_parameters' => ['id_webservice_account' => 'webserviceKeyId'],
+        ],
+        methods: ['DELETE', 'POST'],
+        requirements: ['webserviceKeyId' => '\d+'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.')]
     public function deleteAction(
@@ -195,13 +236,15 @@ class WebserviceController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_webservice_keys_index');
     }
 
-    /**
-     * Deletes selected records.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/bulk-delete',
+        name: 'admin_webservice_keys_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:submitBulkdeletewebservice_account',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.')]
     public function bulkDeleteAction(
@@ -223,13 +266,15 @@ class WebserviceController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_webservice_keys_index');
     }
 
-    /**
-     * Enables status for selected rows.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/bulk-enable',
+        name: 'admin_webservice_keys_bulk_enable',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:submitBulkenableSelectionwebservice_account',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function bulkEnableAction(
@@ -248,13 +293,15 @@ class WebserviceController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_webservice_keys_index');
     }
 
-    /**
-     * Disables status for selected rows.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/bulk-disable',
+        name: 'admin_webservice_keys_bulk_disable',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:submitBulkdisableSelectionwebservice_account',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function bulkDisableAction(
@@ -280,6 +327,17 @@ class WebserviceController extends PrestaShopAdminController
      *
      * @return RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/{webserviceKeyId}/toggle-status',
+        name: 'admin_webservice_keys_toggle_status',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:statuswebservice_account',
+            '_legacy_parameters' => ['id_webservice_account' => 'webserviceKeyId'],
+        ],
+        methods: 'POST',
+        requirements: ['webserviceKeyId' => '\d+'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function toggleStatusAction(
@@ -308,6 +366,15 @@ class WebserviceController extends PrestaShopAdminController
      *
      * @return Response|RedirectResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/webservice-keys/settings',
+        name: 'admin_webservice_save_settings',
+        defaults: [
+            '_legacy_controller' => 'AdminWebservice',
+            '_legacy_link' => 'AdminWebservice:submitOptionswebservice_account',
+        ],
+        methods: ['PATCH', 'POST'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function saveSettingsAction(

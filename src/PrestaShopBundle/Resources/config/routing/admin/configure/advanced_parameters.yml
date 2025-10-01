@@ -1,0 +1,97 @@
+# API Platform routes
+api_platform_doc:
+  # We only load the routing for the API Swagger documentation, not the whole bundle routing
+  # because we don't want the API endpoints to be accessible from the back-office but via its
+  # dedicated admin-api base endpoint
+  resource: "@ApiPlatformBundle/Resources/config/routing/docs.xml"
+
+api_platform_jsonld:
+  # We only load the routing for JSON-LD as it's used by OpenApi
+  resource: "@ApiPlatformBundle/Resources/config/routing/jsonld.xml"
+
+# Routes that cannot be migrated to attributes (CommonController::searchGridAction)
+
+# Email Management - Search Grid Action
+admin_emails_search:
+  path: /emails
+  methods: [ POST ]
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.email_logs
+    redirectRoute: admin_emails_index
+    _legacy_controller: AdminEmails
+    _legacy_link: AdminEmails:search
+
+# Employee Management - Search Grid Action
+admin_employees_search:
+  path: /employees
+  methods: [ POST ]
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.employee
+    redirectRoute: admin_employees_index
+    _legacy_controller: AdminEmployees
+    _legacy_link: AdminEmployees:submitFilteremployee
+
+# Profile Management - Search Grid Action
+admin_profiles_search:
+  path: /profiles
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.profile
+    redirectRoute: admin_profiles_index
+    _legacy_controller: AdminProfiles
+    _legacy_link: AdminProfiles:submitFilterprofile
+
+# Security Management - Search Grid Actions
+admin_security_sessions_customer_search:
+  path: /security/session/customer
+  methods: [ POST ]
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    _legacy_controller: AdminSecuritySessionCustomer
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.security.session.customer
+    redirectRoute: admin_security_sessions_customer_list
+
+admin_security_sessions_employee_search:
+  path: /security/session/employee
+  methods: [ POST ]
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    _legacy_controller: AdminSecuritySessionEmployee
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.security.session.employee
+    redirectRoute: admin_security_sessions_employee_list
+
+# SQL Manager - Search Grid Action
+admin_sql_requests_search:
+  path: /sql-requests
+  methods: [ POST ]
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.request_sql
+    redirectRoute: admin_sql_requests_index
+    _legacy_controller: AdminRequestSql
+    _legacy_link: AdminRequestSql:search
+
+# Webservice Management - Search Grid Action
+admin_webservice_keys_search:
+  path: /webservice-keys
+  methods: POST
+  defaults:
+    _controller: PrestaShopBundle\Controller\Admin\CommonController::searchGridAction
+    gridDefinitionFactoryServiceId: prestashop.core.grid.definition.factory.webservice_key
+    redirectRoute: admin_webservice_keys_index
+    _legacy_controller: AdminWebservice
+    _legacy_link: AdminWebservice:submitFilterwebservice_account
+
+# This redirect prevents an error (redirects to import first page instead) when
+# trying to access import data page with GET http method.
+# It happens on direct access or when the session token expires and
+# the user clicks "I understand the risk" in the warning page.
+admin_import_data_configuration_index_redirect:
+  path: /data
+  methods: [ GET ]
+  controller: 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction'
+  defaults:
+    route: 'admin_import'

@@ -34,6 +34,7 @@ use PrestaShopBundle\Security\Attribute\AdminSecurity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Responsible of "Configure > Advanced Parameters > Information" page display.
@@ -45,6 +46,15 @@ class SystemInformationController extends PrestaShopAdminController
      *
      * @return Response
      */
+    #[Route(
+        path: '/configure/advanced-parameters/system-information',
+        name: 'admin_system_information',
+        defaults: [
+            '_legacy_controller' => 'AdminInformation',
+            '_legacy_link' => 'AdminInformation',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,
@@ -73,6 +83,16 @@ class SystemInformationController extends PrestaShopAdminController
     /**
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/system-information/files',
+        name: 'admin_system_information_check_files',
+        defaults: [
+            '_legacy_controller' => 'AdminInformation',
+            '_legacy_link' => 'AdminInformation:checkFiles',
+        ],
+        methods: 'POST',
+        condition: 'request.isXmlHttpRequest()',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function displayCheckFilesAction(
         CheckMissingOrUpdatedFiles $requiredFilesChecker,

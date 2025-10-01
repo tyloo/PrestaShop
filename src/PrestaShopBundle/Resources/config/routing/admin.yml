@@ -10,9 +10,13 @@ _admin_sell_routing:
   resource: "admin/sell/_sell.yml"
   prefix: /sell
 
-_admin_configure_routing:
-  resource: "admin/configure/_configure.yml"
-  prefix: /configure
+admin_configure_shop_parameters_routing:
+  resource: "admin/configure/shop_parameters.yml"
+  prefix: /configure/shop
+
+admin_configure_advanced_parameters_routing:
+  resource: "admin/configure/advanced_parameters.yml"
+  prefix: /configure/advanced-parameters
 
 _admin_improve_routing:
   resource: "admin/improve/_improve.yml"

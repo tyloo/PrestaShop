@@ -40,7 +40,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class OrderPreferencesController extends PrestaShopAdminController
 {
     #[Route(
-        path: '/configure/shop/order-preferences/',
+        path: '/configure/shop/order-preferences',
         name: 'admin_order_preferences',
         defaults: [
             '_legacy_controller' => 'AdminOrderPreferences',

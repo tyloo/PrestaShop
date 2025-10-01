@@ -36,6 +36,7 @@ use PrestaShopBundle\Security\Attribute\DemoRestricted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ShowcaseCardController extends PrestaShopAdminController
 {
@@ -50,6 +51,15 @@ class ShowcaseCardController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/showcase-card/close',
+        name: 'admin_close_showcase_card',
+        methods: 'POST',
+        requirements: [
+            'close' => '\d+',
+            'name' => '\w+',
+        ],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('create', 'CONFIGURE') && is_granted('update', 'CONFIGURE')")]
     public function closeShowcaseCardAction(Request $request): JsonResponse

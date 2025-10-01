@@ -33,6 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\Query\SearchShops;
 use PrestaShopBundle\Controller\Admin\PrestaShopAdminController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Admin controller to manage shops.
@@ -46,6 +47,12 @@ class ShopController extends PrestaShopAdminController
      *
      * @return JsonResponse
      */
+    #[Route(
+        path: '/configure/advanced-parameters/shops/search/{searchTerm}',
+        name: 'admin_shops_search',
+        methods: 'GET',
+        options: ['expose' => true],
+    )]
     public function searchAction(string $searchTerm): JsonResponse
     {
         try {

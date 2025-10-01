@@ -53,6 +53,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class ProfileController is responsible for displaying the
@@ -61,6 +62,15 @@ use Symfony\Component\HttpFoundation\Response;
 #[AllShopContext]
 class ProfileController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/advanced-parameters/profiles',
+        name: 'admin_profiles_index',
+        defaults: [
+            '_legacy_controller' => 'AdminProfiles',
+            '_legacy_link' => 'AdminProfiles',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         ProfileFilters $filters,
@@ -91,13 +101,15 @@ class ProfileController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * Used for applying filtering actions.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/profiles',
+        name: 'admin_profiles_search',
+        defaults: [
+            '_legacy_controller' => 'AdminProfiles',
+            '_legacy_link' => 'AdminProfiles:submitFilterprofile',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(
         Request $request,
@@ -118,13 +130,15 @@ class ProfileController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_profiles_index', ['filters' => $filters]);
     }
 
-    /**
-     * Show profile's create page
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/profiles/new',
+        name: 'admin_profiles_create',
+        defaults: [
+            '_legacy_controller' => 'AdminProfiles',
+            '_legacy_link' => 'AdminProfiles:addprofile',
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -163,14 +177,17 @@ class ProfileController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Shows profile edit form.
-     *
-     * @param int $profileId
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/profiles/{profileId}/edit',
+        name: 'admin_profiles_edit',
+        requirements: ['profileId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminProfiles',
+            '_legacy_link' => 'AdminProfiles:updateprofile',
+            '_legacy_parameters' => ['id_profile' => 'profileId'],
+        ],
+        methods: ['GET', 'POST'],
+    )]
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function editAction(
@@ -226,13 +243,17 @@ class ProfileController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * Delete a profile.
-     *
-     * @param int $profileId
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/profiles/{profileId}/delete',
+        name: 'admin_profiles_delete',
+        requirements: ['profileId' => '\d+'],
+        defaults: [
+            '_legacy_controller' => 'AdminProfiles',
+            '_legacy_link' => 'AdminProfiles:deleteprofile',
+            '_legacy_parameters' => ['id_profile' => 'profileId'],
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function deleteAction(int $profileId): RedirectResponse
@@ -250,13 +271,15 @@ class ProfileController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_profiles_index');
     }
 
-    /**
-     * Bulk delete profiles.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
+    #[Route(
+        path: '/configure/advanced-parameters/profiles/delete/bulk',
+        name: 'admin_profiles_bulk_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminProfiles',
+            '_legacy_link' => 'AdminProfiles:submitBulkdeleteprofile',
+        ],
+        methods: 'POST',
+    )]
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function bulkDeleteAction(Request $request): RedirectResponse

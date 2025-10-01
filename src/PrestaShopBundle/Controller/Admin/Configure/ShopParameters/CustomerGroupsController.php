@@ -52,7 +52,7 @@ class CustomerGroupsController extends PrestaShopAdminController
      * @return Response
      */
     #[Route(
-        path: '/configure/shop/customer-groups/',
+        path: '/configure/shop/customer-groups',
         name: 'admin_customer_groups_index',
         defaults: [
             '_legacy_controller' => 'AdminGroups',

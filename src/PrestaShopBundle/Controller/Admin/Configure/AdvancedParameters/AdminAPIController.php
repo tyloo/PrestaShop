@@ -54,12 +54,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Manages the "Configure > Advanced Parameters > Admin API" page.
  */
 class AdminAPIController extends PrestaShopAdminController
 {
+    #[Route(
+        path: '/configure/advanced-parameters/admin-api',
+        name: 'admin_api_index',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminAPI',
+        ],
+        methods: 'GET',
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller')) || is_granted('delete', request.get('_legacy_controller')) || is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         ApiClientFilters $apiClientFilters,
@@ -71,6 +80,14 @@ class AdminAPIController extends PrestaShopAdminController
         return $this->renderIndex($apiClientFilters, $formHandler->getForm(), $gridFactory);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/admin-api',
+        name: 'admin_api_clients_process_configuration',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminAPI',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function processConfigurationAction(
         ApiClientFilters $apiClientFilters,
@@ -99,6 +116,14 @@ class AdminAPIController extends PrestaShopAdminController
         return $this->renderIndex($apiClientFilters, $configurationForm, $gridFactory);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/admin-api/api-clients/create',
+        name: 'admin_api_clients_create',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminAPI',
+        ],
+        methods: ['GET', 'POST', 'PATCH'],
+    )]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_api_index')]
     public function createAction(
         Request $request,
@@ -139,6 +164,14 @@ class AdminAPIController extends PrestaShopAdminController
         );
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/admin-api/api-clients/{apiClientId}/edit',
+        name: 'admin_api_clients_edit',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminAPI',
+        ],
+        methods: ['GET', 'POST', 'PATCH'],
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_api_index')]
     public function editAction(
         Request $request,
@@ -175,6 +208,14 @@ class AdminAPIController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/admin-api/api-clients/{apiClientId}/regenerate-secret',
+        name: 'admin_api_clients_regenerate_secret',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminAPI',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_api_clients_edit')]
     public function regenerateSecretAction(int $apiClientId): RedirectResponse
     {
@@ -191,6 +232,14 @@ class AdminAPIController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_api_clients_edit', ['apiClientId' => $apiClientId]);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/admin-api/api-clients/{apiClientId}/toggle-active',
+        name: 'admin_api_clients_toggle_active',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminAPI',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_api_index')]
     public function toggleStatusAction(int $apiClientId): JsonResponse
     {
@@ -214,6 +263,14 @@ class AdminAPIController extends PrestaShopAdminController
         ]);
     }
 
+    #[Route(
+        path: '/configure/advanced-parameters/admin-api/api-clients/{apiClientId}/delete',
+        name: 'admin_api_clients_delete',
+        defaults: [
+            '_legacy_controller' => 'AdminAdminAPI',
+        ],
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_api_index')]
     public function deleteAction(int $apiClientId): RedirectResponse
     {

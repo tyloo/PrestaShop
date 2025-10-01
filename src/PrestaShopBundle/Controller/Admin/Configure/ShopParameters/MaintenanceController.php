@@ -44,7 +44,7 @@ class MaintenanceController extends PrestaShopAdminController
     public const CONTROLLER_NAME = 'AdminMaintenance';
 
     #[Route(
-        path: '/configure/shop/maintenance/',
+        path: '/configure/shop/maintenance',
         name: 'admin_maintenance',
         defaults: [
             '_legacy_controller' => 'AdminMaintenance',
@@ -72,7 +72,7 @@ class MaintenanceController extends PrestaShopAdminController
     }
 
     #[Route(
-        path: '/configure/shop/maintenance/',
+        path: '/configure/shop/maintenance',
         name: 'admin_maintenance_save',
         defaults: [
             '_legacy_controller' => 'AdminMaintenance',
