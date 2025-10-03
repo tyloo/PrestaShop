@@ -1,21 +1,8 @@
 imports:
-    - { resource: packages/api_platform.yaml }
-    - { resource: packages/cache.yaml }
-    - { resource: packages/debug.yaml }
-    - { resource: packages/doctrine.yaml }
-    - { resource: packages/framework.yaml }
-    - { resource: packages/messenger.yaml }
-    - { resource: packages/monolog.yaml }
-    - { resource: packages/prestashop.yaml }
-    - { resource: packages/routing.yaml }
-    - { resource: packages/translation.yaml }
-    - { resource: packages/twig.yaml }
-    - { resource: packages/ux_icons.yaml }
-    - { resource: packages/validator.yaml }
-    - { resource: packages/web_profiler.yaml }
+    - { resource: addons/*.yml }
+    - { resource: packages/*.yaml }
     - { resource: services.yaml }
     - { resource: set_parameters.php }
-    - { resource: addons/*.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

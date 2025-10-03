@@ -32,6 +32,7 @@ use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
 /**
@@ -41,11 +42,12 @@ class ErrorController extends PrestaShopAdminController
 {
     /**
      * Enables debug mode from error page (500 for example)
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
+    #[Route(
+        path: '/error/enable-debug-mode',
+        name: 'admin_error_enable_debug_mode',
+        methods: 'POST',
+    )]
     #[AdminSecurity("is_granted('update', 'AdminPerformance') && is_granted('create', 'AdminPerformance') && is_granted('delete', 'AdminPerformance')")]
     public function enableDebugModeAction(Request $request): RedirectResponse
     {

@@ -42,6 +42,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -62,11 +63,19 @@ class LoginController extends PrestaShopAdminController
      * internally by the FormLoginAuthenticator
      *
      * See https://symfony.com/doc/current/security.html#form-login
-     *
-     * @param Security $security
-     *
-     * @return Response
      */
+    #[Route(
+        path: '/login',
+        name: 'admin_login',
+        defaults: [
+            '_legacy_controller' => 'AdminLogin',
+            '_legacy_link' => [
+                'AdminLogin',
+                'AdminLogin:login'
+            ],
+        ],
+        methods: ['GET', 'POST'],
+    )]
     public function loginAction(
         Request $request,
         Security $security,
@@ -102,11 +111,16 @@ class LoginController extends PrestaShopAdminController
      * doesn't hurt to have a consistent controller here anyway.
      *
      * See https://symfony.com/doc/current/security.html#logging-out
-     *
-     * @param Security $security
-     *
-     * @return RedirectResponse
      */
+    #[Route(
+        path: '/logout',
+        name: 'admin_logout',
+        defaults: [
+            '_legacy_controller' => 'AdminLogin',
+            '_legacy_link' => 'AdminLogin:logout',
+        ],
+        methods: 'GET'
+    )]
     public function logoutAction(Security $security): RedirectResponse
     {
         if ($security->getUser()) {
@@ -120,6 +134,12 @@ class LoginController extends PrestaShopAdminController
      * Automatically redirects to the Employee configured homepage, or AdminDashboard
      * as a fallback, or to the login in case the employee is not logged in.
      */
+    #[Route(
+        path: '/',
+        name: 'admin_homepage',
+        methods: 'GET',
+        condition: "request.getMethod() == 'GET' and not request.query.has('controller')",
+    )]
     public function homepageAction(Security $security, EmployeeHomepageProvider $employeeHomepageProvider): RedirectResponse
     {
         $loggedUser = $security->getUser();
@@ -130,6 +150,15 @@ class LoginController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_login');
     }
 
+    #[Route(
+        path: '/request-password-reset',
+        name: 'admin_request_password_reset',
+        defaults: [
+            '_legacy_controller' => 'AdminLogin',
+            '_legacy_link' => 'AdminLogin:submitForgot',
+        ],
+        methods: 'POST',
+    )]
     public function requestPasswordResetAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.login.form_handler')]
@@ -177,6 +206,15 @@ class LoginController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_login');
     }
 
+    #[Route(
+        path: '/reset-password/{resetToken}',
+        name: 'admin_reset_password',
+        defaults: [
+            '_legacy_controller' => 'AdminLogin',
+            '_legacy_link' => 'AdminLogin:submitReset',
+        ],
+        methods: ['GET', 'POST'],
+    )]
     public function resetPasswordAction(
         #[Autowire(service: 'prestashop.admin.reset_password.form_handler')]
         FormHandlerInterface $resetPasswordFormHandler,

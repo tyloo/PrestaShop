@@ -2,10 +2,6 @@ _admin_common_routing:
   resource: "admin/_common.yml"
   prefix: /common
 
-_admin_security_routing:
-  resource: "admin/_security.yml"
-  prefix: /security
-
 _admin_sell_routing:
   resource: "admin/sell/_sell.yml"
   prefix: /sell
@@ -21,14 +17,3 @@ admin_configure_advanced_parameters_routing:
 _admin_improve_routing:
   resource: "admin/improve/_improve.yml"
   prefix: /improve
-
-_admin_errors:
-  resource: "admin/_errors.yml"
-  prefix: /errors
-
-_admin_login:
-  resource: "admin/_login.yml"
-  prefix: /
-
-_legacy:
-  resource: "admin/_legacy.yml"

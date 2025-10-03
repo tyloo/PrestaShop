@@ -30,6 +30,7 @@ use PrestaShopBundle\Service\Routing\Router as PrestaShopRouter;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -48,6 +49,7 @@ class SecurityController extends PrestaShopAdminController
     ) {
     }
 
+    #[Route('/security/compromised', name: 'admin_compromised_access', methods: 'GET')]
     public function compromisedAccessAction(Request $request): Response
     {
         $requestUri = urldecode($request->query->get('uri'));

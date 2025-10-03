@@ -45,6 +45,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
+use Symfony\Component\Routing\Attribute\Route;
 use function Symfony\Component\String\u;
 
 /**
@@ -79,12 +80,12 @@ class LegacyController extends PrestaShopAdminController
     /**
      * This mimics/adapts the Dispatcher::dispatch method, detect the controller, initialize it and display it
      *
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @throws SmartyException
      */
+    #[Route(
+        path: '/',
+        condition: 'service("PrestaShopBundle\\Routing\\LegacyRouterChecker").check(request)'
+    )]
     public function legacyPageAction(Request $request): Response
     {
         // These parameters have already been set as request attributes by LegacyRouterChecker
