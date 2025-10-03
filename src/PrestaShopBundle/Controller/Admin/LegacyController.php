@@ -83,7 +83,7 @@ class LegacyController extends PrestaShopAdminController
      *
      * @return Response
      *
-     * @throws CoreException
+     * @throws SmartyException
      */
     public function legacyPageAction(Request $request): Response
     {
