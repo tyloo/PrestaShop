@@ -48,7 +48,7 @@ install-prestashop: ## Install fresh PrestaShop database (requires containers to
 
 ## —— Assets 🎨 ———————————————————————————————————————————————————————————————
 assets: admin front ## Build all assets
-	@echo "DOCKER_RUNNING: $(DOCKER_RUNNING)"
+	echo "DOCKER_RUNNING: $(DOCKER_RUNNING)"
 	$(PHP_CONT) ./tools/assets/build.sh all --force
 
 wait-assets: ## Wait for assets to be built
