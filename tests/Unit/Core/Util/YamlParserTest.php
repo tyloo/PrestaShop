@@ -147,7 +147,7 @@ class YamlParserTest extends TestCase
     public function getYamlFilesProvider(): array
     {
         return [
-            [$this->getConfigDir() . '/config_test.yml'],
+            [$this->getConfigDir() . '/services.yml'],
         ];
     }
 }

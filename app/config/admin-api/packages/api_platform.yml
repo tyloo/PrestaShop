@@ -1,14 +1,3 @@
-# Dedicated config for Oauth Endpoint, these are the common rules for all environments (dev, prod, test)
-# They specify the dedicated security rules and routing mostly
-imports:
-  - { resource: security.yml }
-  - { resource: services.yml }
-
-framework:
-  router:
-    resource: "%kernel.project_dir%/app/config/admin-api/routing.yml"
-    strict_requirements: ~
-
 api_platform:
   formats:
     json: [ 'application/json', 'application/merge-patch+json' ]

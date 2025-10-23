@@ -1,12 +1,19 @@
-# Dedicated services for OAuth app
+# Dedicated config for Oauth Endpoint, these are the common rules for all environments (dev, prod, test)
+# They specify the dedicated security rules and routing mostly
+imports:
+  - { resource: ../services.yml }
+  - { resource: packages/*.yml }
+
 services:
+  # default configuration for services in *this* file
   _defaults:
-    public: false
-    autowire: true
-    autoconfigure: true
+    autowire: true       # Automatically injects dependencies in your services.
+    autoconfigure: true  # Automatically registers your services as commands, event subscribers, etc.
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
 
   PrestaShopBundle\EventListener\API\AdminAPIFeatureListener:
-    autowire: true
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 8 }
 
@@ -14,7 +21,6 @@ services:
   # but it must be run AFTER the Firewall listener or the Security token won't be initialized yet (which has a
   # priority of 8)
   PrestaShopBundle\EventListener\API\ScopeCheckerListener:
-    autowire: true
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 7 }
 
@@ -34,6 +40,7 @@ services:
   PrestaShopBundle\EventListener\API\Context\LanguageContextListener:
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 5 }
+
   # We set a high priority so this listener has a bigger one than ReadListener ApiPlatform (which has a priority of 4)
   # but lower than the ShopContextListener because the listener depends on it
   PrestaShopBundle\EventListener\API\Context\CurrencyContextListener:
@@ -51,7 +58,6 @@ services:
 
   # SSL middleware
   PrestaShopBundle\EventListener\API\SSLMiddlewareListener:
-    autowire: true
     arguments:
       $isDebug: '%kernel.debug%'
     tags:
@@ -62,12 +68,8 @@ services:
 
   # This normalizer disables the denormalization process of File fields
   PrestaShopBundle\ApiPlatform\Normalizer\UploadedFileNormalizer:
-    autowire: true
-    autoconfigure: true
     # Tag to be injected in the DomainSerializer
     tags: [ 'prestashop.api.normalizers' ]
 
   # This is the encoder to handle multipart requests for API
-  PrestaShopBundle\ApiPlatform\Encoder\MultipartDecoder:
-    autowire: true
-    autoconfigure: true
+  PrestaShopBundle\ApiPlatform\Encoder\MultipartDecoder: ~

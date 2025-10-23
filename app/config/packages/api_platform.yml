@@ -1,0 +1,22 @@
+api_platform:
+  # API docs is disabled in the Admin environment, it is accessible via the oauth dedicated endpoint
+  enable_docs: false
+  enable_entrypoint: false
+  enable_swagger: false
+  enable_swagger_ui: false
+  # We define mapping in this common config because even though the API routes are only accessible via the admin-api endpoint we still need
+  # to parse the Api Platform resources to extract the scopes in the back-office
+  mapping:
+    paths:
+      - '%kernel.project_dir%/src/PrestaShopBundle/ApiPlatform/Resources'
+  defaults:
+    stateless: true
+    cache_headers:
+      vary: [ 'Content-Type', 'Authorization', 'Origin' ]
+
+when@test:
+  api_platform:
+    mapping:
+      paths:
+        - '%kernel.project_dir%/src/PrestaShopBundle/ApiPlatform/Resources'
+        - '%kernel.project_dir%/tests/Resources/ApiPlatform/Resources'

@@ -1,10 +1,57 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+imports:
+  - { resource: addons/*.yml }
+  - { resource: packages/*.yml }
+  - { resource: set_parameters.php }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-#  parameter_name: value
+  env(PS_THEME_NAME): "classic"
+  translator.class: PrestaShopBundle\Translation\Translator
+  translator.data_collector: PrestaShopBundle\Translation\DataCollectorTranslator
+  prestashop_views: "%kernel.project_dir%/src/PrestaShopBundle/Resources/views"
+  admin_page: "%prestashop_views%/Admin"
+  env(PS_LOG_OUTPUT): "%kernel.logs_dir%/%kernel.environment%.log"
+  env(PS_LOG_MAX_FILES): '30'
+  env(PS_TRUSTED_PROXIES): ''
+  mail_themes_uri: "/mails/themes"
+  mail_themes_dir: "%kernel.project_dir%%mail_themes_uri%"
+  modules_translation_paths: [ ]
+  prestashop.controllers_all_shop_context:
+    - AdminAccess
+    - AdminFeatureFlag
+    - AdminLanguages
+    - AdminProfiles
+    - AdminSpecificPriceRule
+    - AdminStatuses
+    - AdminSecurity
+    - AdminSecuritySessionEmployee
+    - AdminSecuritySessionCustomer
+    - AdminTranslations
 
 services:
+  # default configuration for services in *this* file
   _defaults:
-    autowire: false
-    autoconfigure: false
+    autowire: true       # Automatically injects dependencies in your services.
+    autoconfigure: true  # Automatically registers your services as commands, event subscribers, etc.
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
+
+  logger:
+    alias: monolog.logger
     public: true
+
+when@test:
+  parameters:
+    resources_dir: "%kernel.project_dir%/tests/Resources"
+    test_translations_dir: "%resources_dir%/translations"
+    translations_theme_dir: "%resources_dir%/themes"
+    translations_modules_dir: "%resources_dir%/modules"
+    prestashop.security.voter.product.class: Tests\Integration\Utility\PageVoter
+
+  imports:
+    - { resource: "../../tests/Resources/config/services.yml" }

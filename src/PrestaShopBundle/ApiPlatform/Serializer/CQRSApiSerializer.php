@@ -37,21 +37,20 @@ use Symfony\Component\Serializer\Encoder\ContextAwareEncoderInterface;
 use Symfony\Component\Serializer\Exception\UnsupportedFormatException;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * This serializer decorates the API Platform one, it handles PrestaShop custom modifications like updating the localized values indexes,
  * or apply the mapping between CQRS object and API resources.
  */
-class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerInterface, ContextAwareDenormalizerInterface, ContextAwareEncoderInterface, ContextAwareDecoderInterface
+class CQRSApiSerializer implements SerializerInterface, NormalizerInterface, DenormalizerInterface, ContextAwareEncoderInterface, ContextAwareDecoderInterface
 {
     public const CAST_BOOL = 'cast_bool';
 
     public function __construct(
-        protected readonly Serializer $decorated,
+        protected readonly SerializerInterface $decorated,
         protected readonly ContextParametersProvider $contextParametersProvider,
         protected readonly ClassMetadataFactoryInterface $classMetadataFactory,
         protected readonly LocalizedValueUpdater $localizedValueUpdater,

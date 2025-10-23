@@ -1,21 +1,26 @@
-# Dedicated services for Admin app
+# Dedicated config for Admin Endpoint, these are the common rules for all environments (dev, prod, test)
+# They specify the dedicated security rules and routing mostly
+imports:
+  - { resource: ../services.yml }
+  - { resource: packages/*.yml }
+
 services:
+  # default configuration for services in *this* file
   _defaults:
-    public: false
-    autowire: true
-    autoconfigure: true
+    autowire: true       # Automatically injects dependencies in your services.
+    autoconfigure: true  # Automatically registers your services as commands, event subscribers, etc.
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
 
   # SECURITY
   PrestaShopBundle\EventListener\Admin\TokenizedUrlsListener:
-    autowire: true
     arguments:
       $map: '@security.access_map'
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
   PrestaShopBundle\EventListener\Admin\EmployeeSessionSubscriber:
-    autowire: true
-    autoconfigure: true
     arguments:
       $entityManager: '@doctrine.orm.default_entity_manager'
 
@@ -34,12 +39,10 @@ services:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 30 }
 
   PrestaShopBundle\EventListener\Admin\AccessDeniedListener:
-    autowire: true
     tags:
       - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
   PrestaShopBundle\EventListener\Admin\AdminSecurityListener:
-    autowire: true
     tags:
       - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
@@ -64,13 +67,10 @@ services:
   PrestaShopBundle\EventListener\Admin\Context\LegacyControllerContextSubscriber: ~
 
   PrestaShopBundle\EventListener\Admin\Context\LegacyContextSubscriber:
-    autowire: true
-    autoconfigure: true
     arguments:
       $legacyBuilders: !tagged_iterator core.legacy_context_builder
 
   # SSL middleware
   PrestaShopBundle\EventListener\Admin\SSLMiddlewareListener:
-    autowire: true
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

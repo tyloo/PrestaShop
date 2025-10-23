@@ -242,12 +242,12 @@ abstract class AppKernel extends Kernel
      */
     protected function getKernelConfigPath(): string
     {
-        $dedicatedConfigFile = $this->getRootDir() . '/config/' . $this->getAppId() . '/config_' . $this->getEnvironment() . '.yml';
+        $dedicatedConfigFile = $this->getRootDir() . '/config/' . $this->getAppId() . '/services.yml';
         if (file_exists($dedicatedConfigFile)) {
             return $dedicatedConfigFile;
         }
 
-        return $this->getRootDir() . '/config/config_' . $this->getEnvironment() . '.yml';
+        return $this->getRootDir() . '/config/services.yml';
     }
 
     /**

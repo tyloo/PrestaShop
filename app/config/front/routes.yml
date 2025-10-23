@@ -1,0 +1,3 @@
+when@test:
+  test:
+    resource: "../../../tests/Resources/config/routes.yml"

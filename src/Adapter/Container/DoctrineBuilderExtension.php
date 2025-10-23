@@ -27,7 +27,6 @@
 namespace PrestaShop\PrestaShop\Adapter\Container;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\DoctrineExtension;
-use PrestaShop\PrestaShop\Core\EnvironmentInterface;
 use PrestaShopBundle\DependencyInjection\Compiler\ModulesDoctrineCompilerPass;
 use PrestaShopBundle\DependencyInjection\Config\ConfigYamlLoader;
 use Symfony\Component\Config\FileLocator;
@@ -42,28 +41,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class DoctrineBuilderExtension implements ContainerBuilderExtensionInterface
 {
-    /** @var EnvironmentInterface */
-    private $environment;
-
-    /**
-     * @param EnvironmentInterface $environment
-     */
-    public function __construct(EnvironmentInterface $environment)
-    {
-        $this->environment = $environment;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function build(ContainerBuilder $container)
     {
-        $configDirectories = [$container->getParameter('kernel.project_dir') . '/app/config'];
-        $fileLocator = new FileLocator($configDirectories);
-
+        $fileLocator = new FileLocator($container->getParameter('kernel.project_dir') . '/app/config');
         $configLoader = new ConfigYamlLoader($fileLocator);
-        $configPath = sprintf('config_legacy_%s.yml', $this->environment->getName());
-        $configLoader->load($configPath);
+        $configLoader->load('packages/doctrine.yml');
         $config = $configLoader->getConfig();
 
         $container->registerExtension(new DoctrineExtension());
