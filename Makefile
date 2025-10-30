@@ -4,15 +4,16 @@ DOCKER_COMP = docker compose
 # Determine if we are using docker
 DOCKER_RUNNING := $(shell docker compose ps -q)
 ifneq ($(strip $(DOCKER_RUNNING)),)
-	PHP_CONT = $(DOCKER_COMP) exec -T prestashop-git runuser -u www-data -g www-data -- bash -lc
+	PHP_CONT = $(DOCKER_COMP) exec -T prestashop-git runuser -u www-data -g www-data --
+	PHP_CONT_WITH_LOGIN = $(DOCKER_COMP) exec -T prestashop-git runuser -u www-data -g www-data -- bash -lc
 endif
 
 # Executables (local or docker)
-PHP      = $(PHP_CONT) "php"
-COMPOSER = $(PHP_CONT) "composer"
-SYMFONY  = $(PHP_CONT) "bin/console"
+PHP      = $(PHP_CONT) php
+COMPOSER = $(PHP_CONT) composer
+SYMFONY  = $(PHP_CONT) bin/console
 
-# Misc
+# Default target
 .DEFAULT_GOAL = install
 .PHONY        : help docker-build docker-up docker-start docker-restart docker-down docker-logs docker-sh composer cc test test-unit test-integration test-integration-behaviour test-api-module assets wait-assets admin front admin-default admin-new-theme front-core front-classic front-hummingbird install install-prestashop cs-fixer cs-fixer-dry phpstan scss-fixer es-linter
 
@@ -41,41 +42,41 @@ docker-sh: ## Open an interactive bash session inside the PHP container
 	@$(DOCKER_COMP) exec -it prestashop-git runuser -u www-data -g www-data -- bash -l
 
 ## —— PrestaShop 🛒 ———————————————————————————————————————————————————————————
-install: composer cc assets  ## Install PHP dependencies and build the static assets
+install: composer cc assets ## Install PHP dependencies and build static assets
 
 install-prestashop: ## Install fresh PrestaShop database (requires containers to be running)
-	$(PHP_CONT) ".docker/install/database.sh"
+	$(PHP_CONT) .docker/install/database.sh
 
 ## —— Assets 🎨 ———————————————————————————————————————————————————————————————
 assets: admin front ## Build all assets
-	$(PHP_CONT) "./tools/assets/build.sh all --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh all --force"
 
 wait-assets: ## Wait for assets to be built
 	$(PHP_CONT) "./tools/assets/wait-build.sh"
 
 admin: ## Build admin assets
-	$(PHP_CONT) "./tools/assets/build.sh admin-default --force"
-	$(PHP_CONT) "./tools/assets/build.sh admin-new-theme --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh admin-default --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh admin-new-theme --force"
 
 front: ## Build front assets
-	$(PHP_CONT) "./tools/assets/build.sh front-core --force"
-	$(PHP_CONT) "./tools/assets/build.sh front-classic --force"
-	$(PHP_CONT) "./tools/assets/build.sh front-hummingbird --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh front-core --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh front-classic --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh front-hummingbird --force"
 
 admin-default: ## Build assets for default admin theme
-	$(PHP_CONT) "./tools/assets/build.sh admin-default --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh admin-default --force"
 
 admin-new-theme: ## Build assets for new admin theme
-	$(PHP_CONT) "./tools/assets/build.sh admin-new-theme --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh admin-new-theme --force"
 
 front-core: ## Build assets for core theme
-	$(PHP_CONT) "./tools/assets/build.sh front-core --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh front-core --force"
 
 front-classic: ## Build assets for classic theme
-	$(PHP_CONT) "./tools/assets/build.sh front-classic --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh front-classic --force"
 
 front-hummingbird: ## Build assets for hummingbird theme
-	$(PHP_CONT) "./tools/assets/build.sh front-hummingbird --force"
+	$(PHP_CONT_WITH_LOGIN) "./tools/assets/build.sh front-hummingbird --force"
 
 ## —— Composer & Symfony 🧙 ————————————————————————————————————————————————————
 composer: ## Install PHP dependencies
@@ -111,12 +112,12 @@ phpstan: ## Run phpstan analysis
 	$(COMPOSER) run phpstan
 
 scss-fixer: ## Run scss-fix
-	$(PHP_CONT) "cd admin-dev/themes/new-theme && npm run scss-fix"
-	$(PHP_CONT) "cd admin-dev/themes/default && npm run scss-fix"
-	$(PHP_CONT) "cd themes/classic/_dev && npm run scss-fix"
+	$(PHP_CONT_WITH_LOGIN) "cd admin-dev/themes/new-theme && npm run scss-fix"
+	$(PHP_CONT_WITH_LOGIN) "cd admin-dev/themes/default && npm run scss-fix"
+	$(PHP_CONT_WITH_LOGIN) "cd themes/classic/_dev && npm run scss-fix"
 
 es-linter: ## Run lint-fix
-	$(PHP_CONT) "cd admin-dev/themes/new-theme && npm run lint-fix"
-	$(PHP_CONT) "cd admin-dev/themes/default && npm run lint-fix"
-	$(PHP_CONT) "cd themes/classic/_dev && npm run lint-fix"
-	$(PHP_CONT) "cd themes && npm run lint-fix"
+	$(PHP_CONT_WITH_LOGIN) "cd admin-dev/themes/new-theme && npm run lint-fix"
+	$(PHP_CONT_WITH_LOGIN) "cd admin-dev/themes/default && npm run lint-fix"
+	$(PHP_CONT_WITH_LOGIN) "cd themes/classic/_dev && npm run lint-fix"
+	$(PHP_CONT_WITH_LOGIN) "cd themes && npm run lint-fix"
