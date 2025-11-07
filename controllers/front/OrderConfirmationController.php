@@ -73,7 +73,7 @@ class OrderConfirmationControllerCore extends FrontController
          * After the order is created, we redirect to the same page without free_order parameter
          * and display the confirmation as usual.
          */
-        if (true === (bool) Tools::getValue('free_order')) {
+        if ((bool) Tools::getValue('free_order') === true) {
             $this->checkFreeOrder();
         }
 
@@ -269,6 +269,14 @@ class OrderConfirmationControllerCore extends FrontController
      */
     protected function checkFreeOrder(): void
     {
+        /*
+         * Verify if this is not a faulty or duplicate call. If an order
+         * already exists for this cart, we do not create another one.
+         */
+        if (!empty(Order::getIdByCartId((int) $this->id_cart))) {
+            return;
+        }
+
         $cart = $this->context->cart;
         if ($cart->id_customer == 0 || $cart->id_address_delivery == 0 || $cart->id_address_invoice == 0) {
             Tools::redirect($this->context->link->getPageLink('order'));
