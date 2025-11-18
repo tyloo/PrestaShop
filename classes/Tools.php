@@ -2256,35 +2256,6 @@ class ToolsCore
                     fwrite($write_fd, $domain_rewrite_cond);
                     fwrite($write_fd, 'RewriteRule ^' . ltrim($uri['virtual'], '/') . '(.*) ' . $uri['physical'] . "$1 [L]\n\n");
                 }
-
-                if ($rewrite_settings) {
-                    // Compatibility with the old image filesystem
-                    fwrite($write_fd, "# Rewrites for product images (support up to < 10 million images)\n");
-
-                    // Rewrite product images < 10 millions
-                    $path_components = [];
-                    for ($i = 1; $i <= 7; ++$i) {
-                        $path_components[] = '$' . ($i + 1); // paths start on 2
-                        $path_images = implode('/', $path_components);
-                        fwrite($write_fd, $media_domains);
-                        fwrite($write_fd, $domain_rewrite_cond);
-                        fwrite($write_fd, 'RewriteRule ^(' . str_repeat('([\d])', $i) . '(?:\-[\w-]*)?)/.+(\.(?:jpe?g|webp|png|avif))$ %{ENV:REWRITEBASE}img/p/' . $path_images . '/$1$' . ($i + 2) . " [L]\n");
-                    }
-
-                    fwrite($write_fd, "# Rewrites for category images\n");
-                    fwrite($write_fd, $media_domains);
-                    fwrite($write_fd, $domain_rewrite_cond);
-                    fwrite($write_fd, 'RewriteRule ^c/([\d]+)(|_thumb)(\-[\.*\w-]*)/.+(\.(?:jpe?g|webp|png|avif))$ %{ENV:REWRITEBASE}img/c/$1$2$3$4 [L]' . PHP_EOL);
-                    fwrite($write_fd, $media_domains);
-                    fwrite($write_fd, $domain_rewrite_cond);
-                    fwrite($write_fd, 'RewriteRule ^c/([a-zA-Z_-]+)(|_thumb)(-[\d]+)?/.+(\.(?:jpe?g|webp|png|avif))$ %{ENV:REWRITEBASE}img/c/$1$2$3$4 [L]' . PHP_EOL);
-                }
-
-                fwrite($write_fd, "# AlphaImageLoader for IE and fancybox\n");
-                if (Shop::isFeatureActive()) {
-                    fwrite($write_fd, $domain_rewrite_cond);
-                }
-                fwrite($write_fd, 'RewriteRule ^images_ie/?([^/]+)\.(jpe?g|png|gif)$ %{ENV:REWRITEBASE}js/jquery/plugins/fancybox/images/$1.$2 [L]' . PHP_EOL);
             }
 
             // Redirections to dispatcher

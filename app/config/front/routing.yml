@@ -1,0 +1,5 @@
+controllers:
+  resource:
+    path: ../../../src/PrestaShopBundle/Controller/Front/
+    namespace: PrestaShopBundle\Controller\Front
+  type: attribute
