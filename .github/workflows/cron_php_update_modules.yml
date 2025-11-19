@@ -6,6 +6,9 @@ on:
 
 jobs:
   update-prestashop-packages:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -119,7 +122,6 @@ jobs:
         if: steps.outdated.outputs.has_updates == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.JARVIS_TOKEN }}
           commit-message: "Update prestashop/* composer packages"
           title: "Update prestashop/* composer packages"
           body: ${{ steps.outdated.outputs.body }}
