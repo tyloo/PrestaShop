@@ -235,6 +235,7 @@ default:
         - Tests\Integration\Behaviour\Features\Context\Domain\TagFeatureContext
         - Tests\Integration\Behaviour\Features\Context\LanguageFeatureContext
         - Tests\Integration\Behaviour\Features\Context\ShopFeatureContext
+        - Tests\Integration\Behaviour\Features\Context\TagFeatureContext
     webservice:
       paths:
         - "%paths.base%/Features/Scenario/Webservice"
